@@ -1,0 +1,33 @@
+// SPECS
+
+CARREGAR DADOS DOS PRODUTOS
+---------------------------
+Arquivo produtos.ods (Planilha BrOffice Calc) com estas colunas:
+codigo, abreviacoes das categorias separadas por virgulas,
+descricao do produto, dimensoes
+
+As descricoes das categorias numa outra planilha, categorias.ods, contendo
+as abreviacoes e os nomes completos
+
+Classificar a planilha ODS por categoria, em seguida por codigo.
+
+A ordem dos codigos por categoria nao e' automaticamente classificada, para
+poder manualmente colocar produtos mais populares primeiro.
+
+Dimensoes no formato 1,0x2,0x3,0. Virgulas podem ser substituidas com pontos.
+
+((Ler planilha com o mesmo JAR usado no CardexSaver))
+
+CRIAR HTML
+----------
+Usar MessageFormat quando criar templates. Comentar qual informacao
+corresponde a cada numero
+
+FACILIDADE
+----------
+GUI simples para escolher local da planilha
+
+PRODUZIR JAR
+------------
+Pedir para instalar ImageMagick (testar se convert.exe existe)
+Incluir org.jopendocument jar
