@@ -1,5 +1,19 @@
 // SPECS
 
+ESTRUTURA DOS DIRETORIOS
+------------------------
+/index.html	 Criado separadamente
+/js/  diretorio global para utilidades como carrossel e colorbox
+/pontual/index.html	 mesmo que index.html
+/pontual/mapa.html	como chegar
+/pontual/pr_categoria.html	
+
+
+CLASSES REPRESENTANDO PARTES DAS PAGINAS
+----------------------------------------
+Sidebar.java
+Header.java
+
 CARREGAR DADOS DOS PRODUTOS
 ---------------------------
 Arquivo produtos.ods (Planilha BrOffice Calc) com estas colunas:
@@ -16,7 +30,7 @@ poder manualmente colocar produtos mais populares primeiro.
 
 Dimensoes no formato 1,0x2,0x3,0. Virgulas podem ser substituidas com pontos.
 
-((Ler planilha com o mesmo JAR usado no CardexSaver))
+((Ler planilha com o mesmo JAR do opendocument usado no CardexSaver))
 
 CRIAR HTML
 ----------

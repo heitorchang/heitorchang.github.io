@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">	
+	<title>Gilgame - A Gil-hoarding Turtle</title>
+	<link rel="stylesheet" href="layout.css">
+  </head>
+  <body>
+	<div class="side">
+	<div id="balances">Current balances</div>
+
+	<div id="tree_display"></div>
+	</div>
+	
+	<div id="list_display" class="side">
+	  Account: <input type="text" id="focused_account" size="8">
+
+	  Desc: <input type="text" id="search_desc" size="12">
+	  <input type="button" id="update_search" value="Update">	  
+	  <input type="button" id="clear_search_desc" value="Clear">
+	  <hr>
+	  
+	  Start date: <input type="text" id="start_date" size="5">
+	  End: <input type="text" id="end_date" size="5">
+	  <input type="button" id="update_button" value="Update">
+	  <input type="button" id="clear_dates" value="Clear dates">
+	  
+	  <hr>
+	  
+	  <table id="list_table"></table>
+	</div>
+	
+	<script src="accountdata.js"></script>
+	<script src="transactiondata.js"></script>
+	<script src="parsers.js"></script>
+	<script src="formatters.js"></script>
+	<script src="balances.js"></script>
+	<script src="test.js"></script>
+	<script src="app.js"></script>
+  </body>
+</html>
