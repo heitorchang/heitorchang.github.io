@@ -30,6 +30,13 @@ var accounts = [
   },
 
   {
+    name: "Credit card",
+    id: "credit card",
+    parent: "liabilities",
+    sign: -1,
+  },
+
+  {
     name: "Income",
     id: "income",
     parent: "accounts",
@@ -44,102 +51,117 @@ var accounts = [
   },
   
   {
-    name: "Communications",
-    id: "comm",
+    name: "Rent",
+    id: "rent",
+    parent: "expenses",
+    sign: 1,
+  },
+
+  {
+    name: "Utilities",
+    id: "utilities",
+    parent: "expenses",
+    sign: 1,
+  },
+
+  {
+    name: "Electricity",
+    id: "electricity",
+    parent: "utilities",
+    sign: 1,
+  },
+  
+  {
+    name: "Water",
+    id: "water",
+    parent: "utilities",
+    sign: 1,
+  },
+
+  {
+    name: "Home",
+    id: "home",
     parent: "expenses",
     sign: 1,
   },
   
   {
-    name: "Cellular",
-    id: "cell",
-    parent: "comm",
+    name: "Gas",
+    id: "gas",
+    parent: "utilities",
+    sign: 1,
+  },
+
+  {
+    name: "Groceries",
+    id: "groceries",
+    parent: "expenses",
+    sign: 1,
+  },
+  
+  {
+    name: "Communications",
+    id: "communications",
+    parent: "expenses",
+    sign: 1,
+  },
+  
+  {
+    name: "Cellular phone",
+    id: "cellphone",
+    parent: "communications",
     sign: 1,
   },
   
   {
     name: "Post office",
-    id: "post",
-    parent: "comm",
+    id: "post office",
+    parent: "communications",
     sign: 1,
   },
   
   {
-    name: "Medical",
-    id: "med",
+    name: "Financing",
+    id: "financing",
     parent: "expenses",
     sign: 1,
   },
   
   {
-    name: "Doctor's visits",
-    id: "doc",
-    parent: "med",
-    sign: 1,
-  },
-
-  {
-    name: "Medications",
-    id: "meds",
-    parent: "med",
-    sign: 1,
-  },
-  
-  {
-    name: "Groceries",
-    id: "groc",
-    parent: "expenses",
-    sign: 1,
-  },
-  
-  {
-    name: "Restaurants",
-    id: "rest",
-    parent: "expenses",
-    sign: 1,
-  },
-  
-  {
-    name: "Junk food",
-    id: "junk",
-    parent: "rest",
-    sign: 1,
-  },
-  
-  {
-    name: "Self-care",
-    id: "self",
+    name: "Automotive",
+    id: "car",
     parent: "expenses",
     sign: 1,
   },
 
-  {
-    name: "Services",
-    id: "svc",
-    parent: "expenses",
-    sign: 1,
-  },
-  
   {
     name: "Transit",
-    id: "tr",
-    parent: "expenses",
-    sign: 1,
-  },
-  
-  {
-    name: "Unaccounted expenses",
-    id: "unacc",
+    id: "transit",
     parent: "expenses",
     sign: 1,
   },
   
   {
     name: "Adjustments",
-    id: "adj",
+    id: "adjustments",
     parent: "equity",
     sign: -1,
   },
+
+  {
+    name: "Bus",
+    id: "bus",
+    parent: "transit",
+    sign: 1,
+  },
+
+  {
+    name: "Train",
+    id: "train",
+    parent: "transit",
+    sign: 1,
+  },
+  
 
   // ASSETS
 
@@ -151,17 +173,40 @@ var accounts = [
   },
   
   {
-    name: "Wallets",
-    id: "walall",
+    name: "Wallet",
+    id: "wallet",
     parent: "assets",
     sign: 1,
   },
 
   {
-    name: "Wallet",
-    id: "wal",
-    parent: "walall",
+    name: "Checking account",
+    id: "checking",
+    parent: "bank",
     sign: 1,
+  },
+  
+  {
+    name: "Savings account",
+    id: "savings",
+    parent: "bank",
+    sign: 1,
+  },
+
+  // INCOME
+
+  {
+    name: "Salary",
+    id: "salary",
+    parent: "income",
+    sign: -1,
+  },
+
+  {
+    name: "Interest",
+    id: "interest",
+    parent: "income",
+    sign: -1,
   },
   
   // END
