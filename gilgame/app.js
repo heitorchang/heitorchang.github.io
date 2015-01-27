@@ -98,7 +98,7 @@ function add_transaction_from_string_parts(desc, amount_str, debit, credit, date
     });
     
   } else {
-    alert(desc + ": account(s) does not exist. " + debit + "/" + credit);
+    add_warning(desc + ": account(s) does not exist. " + debit + "/" + credit);
   }
 }
 
@@ -122,7 +122,7 @@ function add_transaction(transaction) {
     });
     
   } else {
-    alert(transaction.desc + ": account(s) does not exist. " + transaction.debit + "/" + transaction.credit);
+    add_warning(transaction.desc + ": account(s) does not exist. " + transaction.debit + "/" + transaction.credit);
   }
 }
 
@@ -294,6 +294,8 @@ function set_account_and_update(account) {
 }
 
 function update_page(transactions, focused_account, start_date, end_date) {
+  warnings = "";
+  
   focused_account = focused_account || "accounts";
 
   // save date strings to include in table header
@@ -331,6 +333,8 @@ function update_page(transactions, focused_account, start_date, end_date) {
 
   document.getElementById("tree_display").innerHTML = htmlify_tree(account_tree);
 
+  document.getElementById("warnings").innerHTML = warnings;
+  
   document.getElementById("list_table").innerHTML = htmlify_transaction_list(focused_account, "<b>from</b> " + original_start_date + " to " + original_end_date, transactions_for_account_and_desc_in_time_period);
 }
 

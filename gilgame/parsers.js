@@ -35,15 +35,19 @@ function parse_dmy(dmy) {
   
   dmy = dmy.replace(/\//g, "-");
   var parts = dmy.split("-");
-  var year = parseInt(parts[2]);
+  var year = parseInt(parts[2], 10);
   if (year < 100) {
     year += 2000;
   }
-  var iso_formatted = year + "-" + parts[1] + "-" + parts[0];
-  var millis = new Date(iso_formatted).getTime();
+  var month = parseInt(parts[1], 10) + 1;
+  var day = parseInt(parts[0], 10);
+  
+  // var iso_formatted = year + "-" + parts[1] + "-" + parts[0];
+  // var millis = new Date(iso_formatted).getTime();
+  var millis = new Date(year, month, day);
 
   if (isNaN(millis)) {
-    alert("Invalid date: " + iso_formatted + ". Using today's date.");
+    add_warning("Invalid date: " + iso_formatted + ". Using today's date.");
     return new Date().getTime();
   } else {
     return millis;

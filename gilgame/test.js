@@ -1,9 +1,15 @@
 // ensure there are no duplicate ids
 var account_ids = [];
 
+var warnings = "";
+
+function add_warning(warning) {
+  warnings += "<b>Note:</b> " + warning + "<br>";
+}
+
 accounts.forEach(function(account) {
   if (account_ids.indexOf(account.id) !== -1) {
-    alert("ERROR: duplicate id found: " + account.id);
+    add_warning("ERROR: duplicate id found: " + account.id);
   }
   account_ids.push(account.id);
 });
@@ -27,7 +33,7 @@ function account_exists(id) {
 
 function test_amount_parsing(amount_str, amount_cents) {
   if (parse_amount(amount_str) !== amount_cents) {
-    alert("Amount parsed incorrectly: " + amount_str);
+    add_warning("Amount parsed incorrectly: " + amount_str);
   }
 }
 
@@ -51,7 +57,7 @@ test_amount_parsing(",02", 2);
 
 function test_balance_formatting(amount, amount_str) {
   if (display_balance(amount) !== amount_str) {
-    alert("Amount displayed incorrectly: " + amount);
+    add_warning("Amount displayed incorrectly: " + amount);
   }
 }
 
