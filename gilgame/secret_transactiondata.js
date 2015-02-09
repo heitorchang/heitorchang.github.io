@@ -3,7 +3,7 @@
 
 var transactions = [
   "1/1/15; opening balance; 10000,00; assets; open",
-
+  
   // made-up data
   "15/1/15; french fries; 100; expenses; assets",
   "19/1/15; juros diario; .10; assets; itjur",
