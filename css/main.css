@@ -8,17 +8,17 @@ img {
 }
 
 h1 {
-    font-size: 2em;
+    font-size: 18px;
     font-style: italic;
 }
 
 a {
-    font-size: 1em;
+    font-size: 14px;
     text-decoration: none;
 }
 
 .section {
-    width: 90%;
+    width: 100%;
     display: block;
     float: left;
     padding-bottom: 20px;
