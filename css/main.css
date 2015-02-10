@@ -18,6 +18,7 @@ a {
 }
 
 .section {
+    width: 90%;
     display: block;
     float: left;
     padding-bottom: 20px;
