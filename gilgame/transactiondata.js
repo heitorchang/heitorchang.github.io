@@ -2,7 +2,7 @@
 // "day-month-year; description; amount; debit; credit",
 
 var transactions = [
-  "1/1/14; opening balance; 17000; savings; open",
+  "1/1/14; opening balance; 700; savings; open",
   "3/1/14; transfer; 2500; checking; savings",
   "5/1/14; withdrawal; 200; wallet; checking",
   "5/1/14; January 2014 rent; 800; rent; checking",
