@@ -211,7 +211,11 @@ function htmlify_always_show(node) {
 function htmlify_transaction_list(focused_account, date_range, transaction_list) {
   var table_description = '<tr><td colspan="5"><b>Account:</b> ' + focused_account + ' ' + date_range + '</td></tr>';
   
-  var table_header = "<tr><td>Date</td><td>debit</td><td>credit</td><td>Description</td><td>Amount</td></tr>";
+  var table_header = '<tr><td class="transactions-header">Date</td>' +
+    '<td class="transactions-header">debit</td>' +
+    '<td class="transactions-header">credit</td>' +
+    '<td class="transactions-header">Description</td>' +
+    '<td class="amount transactions-header">Amount</td></tr>';
 
   var table_rows = "";
 
@@ -239,7 +243,7 @@ function htmlify_transaction_list(focused_account, date_range, transaction_list)
 //      transaction.credit +
       "</td><td>" +
       transaction.desc +
-      "</td><td>" +
+      '</td><td class="amount">' +
       display_balance(transaction.amount) +
       "</td></tr>";
   });
@@ -324,7 +328,7 @@ function update_page(transactions, focused_account, start_date, end_date) {
   });
 
   var transactions_for_account_and_desc_in_time_period = apply_transaction_filter(transactions_in_time_period, function(transaction) {
-    return transaction.desc.indexOf(document.getElementById("search_desc").value.trim()) !== -1 &&
+    return transaction.desc.toLowerCase().indexOf(document.getElementById("search_desc").value.toLowerCase().trim()) !== -1 &&
       (children_ids[focused_account].indexOf(transaction.debit) !== -1 ||
        children_ids[focused_account].indexOf(transaction.credit) !== -1);
   });
@@ -342,11 +346,30 @@ function initialize_account_tree() {
   save_children_ids(account_tree);
 }
 
+function reset_to_first_of_month() {
+  document.getElementById("start_date").value = first_of_month();
+  document.getElementById("end_date").value = "";
+  update_from_form();
+}
+
+function reset_account() {
+  document.getElementById("focused_account").value = "";
+  update_from_form();
+}
+
 function init() {
   initialize_account_tree();
   update_page(transactions);
+
+  // prepare static elements
   warnings = "";
   document.getElementById("balances").innerHTML = "<b>~Gilgame<br>Selected balances</b><br><br>" + htmlify_always_show(account_tree);
+  
+  // set initial date to first of month
+  document.getElementById("start_date").value = first_of_month();
+  update_from_form();
+
 }
 
 init();
+
