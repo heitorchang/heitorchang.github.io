@@ -241,7 +241,7 @@ function htmlify_transaction_list(focused_account, date_range, transaction_list)
       '</td><td><span onclick="set_account_and_update(\'' + transaction.credit + '\'); window.scrollTo(0, 0);">' + transaction.credit + "</span>" +
 //      "</td><td>" + 
 //      transaction.credit +
-      "</td><td>" +
+      '</td><td>' +
       transaction.desc +
       '</td><td class="amount">' +
       display_balance(transaction.amount) +
