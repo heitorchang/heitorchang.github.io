@@ -1,0 +1,2 @@
+27 jun 2015 - disallow adding transaction if accounts are not selected, amount
+or date is empty

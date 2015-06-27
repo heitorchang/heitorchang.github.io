@@ -1,0 +1,36 @@
+body, div {
+    font-family: sans-serif;
+	font-size: 1em;
+}
+
+select, input {
+    font-family: sans-serif;
+	font-size: 1.4em;
+}
+
+.hidden {
+    display: none;
+}
+
+.shown {
+    display: inline;
+}
+
+#banner {
+    font-weight: bold;
+}
+
+table {
+    border: 0;
+}
+
+td {
+    vertical-align: top;
+    border: 0;
+    padding-right: 1em;
+    padding-bottom: 0.3em;
+}
+
+.numberColumn {
+    text-align: right;
+}

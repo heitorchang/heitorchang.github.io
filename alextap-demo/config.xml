@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id = "br.com.pontualimportbrindes.alextaphtml5"
+        versionCode = "3"
+        version = "0.3.2">
+  <name>ALEXTap</name>
+  
+  <description>
+    Personal finances organizer
+  </description>
+
+  <author href="http://github.com/pontual" email="heitorpontual@gmail.com">
+    Heitor Chang
+  </author>
+
+  <gap:platform name="android" />
+
+  <preference name="permissions" value="none" />
+</widget>
