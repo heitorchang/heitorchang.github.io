@@ -1,1 +1,0 @@
-27 jun 2015 v. 0.3.4 - add all account balances to total 'type balance'
