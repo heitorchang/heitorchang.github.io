@@ -1,0 +1,5 @@
+27 jun 2015 v. 0.3.4 - add all account balances to total 'type balance'
+27 jun 2015 v. 0.3.5 - disable Add transaction button if data is incomplete
+27 jun 2015 v. 0.3.6 - refine transaction validation
+29 jun 2015 v. 0.3.7 - auto update summary and balances end date when a day
+passes and screen is refreshed
