@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.10"/>
-<title>Cogite Python: 1: A forma do programa</title>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>Cogite Python: 1 - O caminho do programa</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -34,7 +34,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.10 -->
+<!-- Gerado por Doxygen 1.8.11 -->
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -52,21 +52,42 @@ $(document).ready(function(){initNavTree('sec1.html','');});
 <div id="doc-content">
 <div class="header">
   <div class="headertitle">
-<div class="title">1: A forma do programa </div>  </div>
+<div class="title">1 - O caminho do programa </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Conteúdo</h3>
 <ul><li class="level1"><a href="#sec1_1">1.1 O que é um programa?</a></li>
-<li class="level1"><a href="#sec1_2">1.2 Rodando Python</a></li>
+<li class="level1"><a href="#sec1_2">1.2 Executando Python</a></li>
+<li class="level1"><a href="#sec1_3">1.3 O primeiro programa</a></li>
 </ul>
 </div>
-<div class="textblock"><p>some content</p>
+<div class="textblock"><p>O objetivo deste livro é te ensinar a pensar como um cientista da computação. Esta maneira de pensar combina algumas das melhores características de matemática, engenharia, e ciências naturais. Como matemáticos, cientistas da computação usam linguagens formais para denotar ideias (em particular, computações). Como engenheiros, eles projetam coisas, unindo componentes em sistemas e avaliando um compromisso entre alternativas. Como cientistas, eles observam o comportamento de sistemas complexos, formam hipóteses, e averiguam previsões.</p>
+<p>A habilidade mais importante para um cientista da computação é a <b>solução de problemas</b>. A aptidão de resolver problemas é poder formular problemas, pensar criativamente em soluções, e expressar uma solução claramente e precisamente. De fato, o processo de aprendizagem a programar é uma oportunidade excelente para aprimorar a capacidade de resolver problemas. É por isso que este capítulo é chamado "O caminho do programa".</p>
+<p>Num nível, você aprenderá a programar, que é por si, uma habilidade útil. Num outro nível, você utilizará programação como um meio para atingir um fim. A medida que progredirmos, esse fim ficará mais claro.</p>
 <h1><a class="anchor" id="sec1_1"></a>
 1.1 O que é um programa?</h1>
-<p>more content</p>
+<p>Um <b>programa</b> é uma sequencia de instruções que especifica como realizar uma computação. A computação pode ser algo matemático, como resolver um sistema de equações ou encontrar as raízes de um polinomial, mas também pode ser uma computação simbólica, como procurar e substituir texto num documento, ou algo gráfico, como processar uma imagem ou reproduzir um vídeo.</p>
+<p>Os detalhes parecem diferentes em linguagens diferentes, mas algumas instruções básicas estão presentes em quase todas as linguagens:</p>
+<p><b>entrada</b>: Obter dados pelo teclado, um arquivo, a rede, ou outro dispositivo.</p>
+<p><b>saída</b>: Exibir dados na tela, gravá-los num arquivo, transmiti-los pela rede, etc.</p>
+<p><b>matemática</b>: Realizar operações básicas de matemática como adição e multiplicação.</p>
+<p><b>execução condicional</b>: Verificar certas condições e executar o código apropriado.</p>
+<p><b>repetição</b>: Executar alguma ação repetidamente, geralmente com alguma variação.</p>
+<p>XXX p. 2 14:56</p>
+<p>Acredite se quiser, mas isto é praticamente tudo que há. Todo programa que você já tem utilizado, não importe o quanto complicado que seja, é feita de instruções que se parecem como esses. Então, você pode pensar sobre programação como o processo de separar uma tarefa grande e complexa em subtarefas cada vez menores até que as subtarefas sejam simples suficientes a poder serem efetuadas com uma dessas instruções básicas.</p>
 <h1><a class="anchor" id="sec1_2"></a>
-1.2 Rodando Python</h1>
-<p>even more </p>
+1.2 Executando Python</h1>
+<p>Um dos desafios de começar a usar Python é que você possivelmente terá que instalá-lo e outros softwares relacionados no seu computador. Se você tem um bom conhecimento do seu sistema operacional, e particularmente, se você se sente confortável com o interface de linha de comando, você não terá dificuldades em instalar Python. Mas para iniciantes, pode ser doloroso ter que aprender administração de sistemas e programação ao mesmo tempo.</p>
+<p>Para evitar este problema, recomendo que comece executando Python num navegador. Depois, quando se sentir confortável com Python, farei sugestões de como instalar Python no seu computador.</p>
+<p>Existem vários websites que você pode usar para executar Python. Se você já tem um preferido, vá em frente e use-o. Senão, eu recomendo PythonAnywhere.</p>
+<p>XXX Translate <a href="http://www.allendowney.com/wp/books/think-python-2e/">http://www.allendowney.com/wp/books/think-python-2e/</a></p>
+<p>XXX 15:12</p>
+<h1><a class="anchor" id="sec1_3"></a>
+1.3 O primeiro programa</h1>
+<p>Tradicionalmente, o primeiro programa que você escreve numa nova linguagem é chamada "Hello, World!" (Alô, Mundo!) porque tudo que ele faz é exibir as palavras "Alô, Mundo!". Em Python, é escrito assim:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; print(<span class="stringliteral">&#39;Alô, Mundo!&#39;</span>)</div></div><!-- fragment --><p>Este é um exemplo de um <b>comando print</b>, apesar de que não imprima nada em papel. Ele exibe um resultado na tela. Neste caso, o resultado é as palavras</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;Alô, Mundo!</div></div><!-- fragment --><p>As aspas no programa marcam o início e o fim do texto a ser exibido; eles não aparecem no resultado.</p>
+<p>Os parênteses indicam que <code>print</code> é uma função. Chegaremos a funções no <a class="el" href="sec3.html">Capítulo 3</a>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
@@ -74,7 +95,7 @@ $(document).ready(function(){initNavTree('sec1.html','');});
   <ul>
     <li class="footer">Gerado por
     <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
   </ul>
 </div>
 </body>
