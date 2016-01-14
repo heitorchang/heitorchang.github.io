@@ -139,15 +139,15 @@
                  note(['b/3'], 4, true),
                  note(['g/3'], 4, true),
                  note(['e/3'], 4, true),
-                 note(['g/3'], 4, true),
+                 note(['g/3'], 4, true).addAccidental(0, new Vex.Flow.Accidental("n")),
              ];
              var tupletBassMain1_1 = new Vex.Flow.Tuplet(notesBassMain1.slice(0, 3));
 
 
              // SECOND LINE, RIGHT
              var notesBassMain2 = [
-                 note(['g/3'], 4, true),
-                 note(['a/3'], '8d', true).addDotToAll(), // how to skip 1/16?
+                 note(['a/3'], 4, true),
+                 note(['e/3'], '8d', true).addDotToAll(), // how to skip 1/16?
                  note(['e/3'], 16, true),
                  note(['e/3'], 2, true),
              ];             
@@ -158,21 +158,21 @@
              // TREBLE
              // SECOND LINE, LEFT
              var notesTrebleMain1 = [
-                 note(['b/4', 'e/5'], 4),
-                 note(['b/4', 'e/5'], 4),
-                 note(['b/4', 'e/5'], 4),
-                 note(['b/4', 'e/5'], 4),
-                 note(['a/4', 'c/5'], 4).addAccidental(1, new Vex.Flow.Accidental("n")),
+                 note(['g/4', 'b/4', 'e/5'], 4),
+                 note(['g/4', 'b/4', 'e/5'], 4),
+                 note(['g/4', 'b/4', 'e/5'], 4),
+                 note(['g/4', 'b/4', 'e/5'], 4),
+                 note(['e/4', 'c/5'], 4).addAccidental(1, new Vex.Flow.Accidental("n")),
              ];
 
              var tupletTrebleMain1 = new Vex.Flow.Tuplet(notesTrebleMain1.slice(0, 3));
 
              // SECOND LINE, RIGHT             
              var notesTrebleMain2 = [
-                 note(['g/4', 'd/5'], 4),
-                 note(['f/4', 'e/5'], '8d').addDotToAll(), // how to skip 1/16?
-                 note(['d/4', 'd/5'], 16),
-                 note(['f/4', 'e/5'], 2),
+                 note(['f/4', 'd/5'], 4),
+                 note(['g/4', 'e/5'], '8d').addDotToAll(), // how to skip 1/16?
+                 note(['f/4', 'd/5'], 16),
+                 note(['g/4', 'e/5'], 2),
              ];
              // var beamTrebleMain1_1 = new Vex.Flow.Beam(notesTrebleMain2.slice(1, 3));
                  
