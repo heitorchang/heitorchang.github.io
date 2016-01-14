@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>my Vexflow</title>
+    </head>
+    <body>
+        <canvas width="800" height="600" id="myCanvas"></canvas>
+
+        <script src="vexflow-min.js"></script>
+        <script>
+         var stave_length = 200;
+
+         var canvas = document.getElementById("myCanvas");
+         var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
+
+         var ctx = renderer.getContext();
+
+         var staveTreble = new Vex.Flow.Stave(10, 0, 350);
+         var staveBass = new Vex.Flow.Stave(10, 80, 350);
+         
+         staveTreble.addClef("treble").addKeySignature("A").setContext(ctx).draw();
+         staveBass.addClef("bass").addKeySignature("A").setContext(ctx).draw();
+
+         var voiceTreble = new Vex.Flow.Voice({num_beats:4, beat_value: 4, resolution:Vex.Flow.RESOLUTION});
+         var voiceBass = new Vex.Flow.Voice({num_beats:4, beat_value: 4, resolution:Vex.Flow.RESOLUTION});
+
+         var notesEB1 = [
+             new Vex.Flow.StaveNote({ keys: ['e/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['b/4'], duration: '8'}),
+         ];
+
+         var notesEB2 = [
+             new Vex.Flow.StaveNote({ keys: ['e/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['b/4'], duration: '8'}),
+         ];
+
+         var notesEB3 = [
+             new Vex.Flow.StaveNote({ keys: ['e/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['b/4'], duration: '8'}),
+         ];
+
+         var notesEB4 = [
+             new Vex.Flow.StaveNote({ keys: ['e/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['b/4'], duration: '8'}),
+         ];
+
+         var beamEB1 = new Vex.Flow.Beam(notesEB1);
+         var beamEB2 = new Vex.Flow.Beam(notesEB2);
+         var beamEB3 = new Vex.Flow.Beam(notesEB3);
+         var beamEB4 = new Vex.Flow.Beam(notesEB4);
+
+         var notesBass = notesEB1.concat(notesEB2).concat(notesEB3).concat(notesEB4);
+         
+         var notesBassAll = [
+             new Vex.Flow.StaveNote({ keys: ['e/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['b/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['e/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['b/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['e/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['b/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['e/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['b/4'], duration: '8'})
+         ];
+
+         var notesTreble01 = [
+             // new Vex.Flow.StaveNote({ keys: ['d/5'], duration: '4'}).addAccidental(0, new Vex.Flow.Accidental("#")),
+             new Vex.Flow.StaveNote({ keys: ['g#/4', 'b/4'], duration: '4'}),
+             new Vex.Flow.StaveNote({ keys: ['f#/4', 'a/4'], duration: '4'}),
+             new Vex.Flow.StaveNote({ keys: ['g#/4', 'b/4'], duration: '4'}),
+         ];
+
+         var notesTrebleAD1 = [
+             new Vex.Flow.StaveNote({ keys: ['f#/4', 'a/4'], duration: '8'}),
+             new Vex.Flow.StaveNote({ keys: ['f#/4', 'd/5'], duration: '8'}),
+         ];
+         
+         var notesTreble = notesTreble01.concat(notesTrebleAD1);    
+         
+         var beamAD1 = new Vex.Flow.Beam(notesTrebleAD1);
+
+         voiceTreble.addTickables(notesTreble);
+         voiceBass.addTickables(notesBass);
+
+         var formatter = new Vex.Flow.Formatter();
+         formatter.format([voiceTreble, voiceBass], stave_length);
+
+         var max_x = Math.max(staveTreble.getNoteStartX(), staveBass.getNoteStartX());
+         staveTreble.setNoteStartX(max_x);
+         staveBass.setNoteStartX(max_x);
+         
+         voiceTreble.draw(ctx, staveTreble);
+         voiceBass.draw(ctx, staveBass);
+
+         // Vex.Flow.Formatter.FormatAndDraw(ctx, staveTreble, notesTreble);
+         // Vex.Flow.Formatter.FormatAndDraw(ctx, staveBass, notesBass);
+         beamEB1.setContext(ctx).draw();
+         beamEB2.setContext(ctx).draw();
+         beamEB3.setContext(ctx).draw();
+         beamEB4.setContext(ctx).draw();
+
+         beamAD1.setContext(ctx).draw();
+        </script>
+    </body>
+</html>
