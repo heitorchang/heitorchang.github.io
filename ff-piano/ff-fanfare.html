@@ -15,13 +15,21 @@
         <script>
 
          function translateTrebleToBass(note) {
-             var table = { 'c/4': 'a/4',
-                           'd/4': 'b/4',
-                           'e/4': 'c/5',
-                           'f/4': 'd/5',
-                           'g/4': 'e/5',
-                           'a/4': 'f/5',
-                           'b/4': 'g/5' };
+             var table = {
+                 'c/3': 'a/3',
+                 'd/3': 'b/3',
+                 'e/3': 'c/4',
+                 'f/3': 'd/4',
+                 'g/3': 'e/4',
+                 'a/3': 'f/4',
+                 'b/3': 'g/4',
+                 'c/4': 'a/4',
+                 'd/4': 'b/4',
+                 'e/4': 'c/5',
+                 'f/4': 'd/5',
+                 'g/4': 'e/5',
+                 'a/4': 'f/5',
+                 'b/4': 'g/5' };
              return table[note];
          }
          
@@ -65,8 +73,8 @@
              staveTreble1.addClef("treble").addKeySignature("A").addTimeSignature("4/4").setContext(ctx).draw();
              staveBass1.addClef("bass").addKeySignature("A").addTimeSignature("4/4").setContext(ctx).draw();
 
-             var voiceTreble1 = new Vex.Flow.Voice({num_beats:8, beat_value: 4, resolution:Vex.Flow.RESOLUTION});
-             var voiceBass1 = new Vex.Flow.Voice({num_beats:8, beat_value: 4, resolution:Vex.Flow.RESOLUTION});
+             var voiceTreble1 = new Vex.Flow.Voice({num_beats:4, beat_value: 4, resolution:Vex.Flow.RESOLUTION});
+             var voiceBass1 = new Vex.Flow.Voice({num_beats:4, beat_value: 4, resolution:Vex.Flow.RESOLUTION});
 
 
              // ACCIDENTAL
@@ -75,47 +83,23 @@
              var bar = new Vex.Flow.BarNote();
 
              var notesBassMain1 = [
-                 note(['e/4'], 8, true), note(['b/4'], 8, true),
-                 note(['e/4'], 8, true), note(['b/4'], 8, true),
+                 note(['b/4'], '2r'),
                  note(['e/4'], 8, true), note(['b/4'], 8, true),
                  note(['e/4'], 8, true), note(['b/4'], 8, true),
              ];
-             var beamBassMain1 = new Vex.Flow.Beam(notesBassMain1);
+             // var beamBassMain1 = new Vex.Flow.Beam(notesBassMain1);
              
-
-             var notesBassMain2 = [
-                 note(['d/4'], 8, true), note(['a/4'], 8, true),
-                 note(['d/4'], 8, true), note(['a/4'], 8, true),
-                 note(['d/4'], 8, true), note(['a/4'], 8, true),
-                 note(['d/4'], 8, true), note(['a/4'], 8, true),
-             ];             
-             
-             var beamBassMain2 = new Vex.Flow.Beam(notesBassMain2);
-
-             var notesBass1 = notesBassMain1.concat(bar).concat(notesBassMain2);
+             var notesBass1 = notesBassMain1;
 
 
              // TREBLE
              var notesTrebleMain1 = [
-                 note(['g/4', 'b/4'], 4),
-                 note(['f/4', 'a/4'], 4),
+                 note(['b/4'], '2r'),
                  note(['d/4', 'b/4'], 4),
                  note(['f/4', 'a/4'], 8),
                  note(['f/4', 'd/5'], 8),
              ];
-             var beamTrebleMain1_1 = new Vex.Flow.Beam(notesTrebleMain1.slice(3, 5));
-             
-             var notesTrebleMain2 = [
-                 note(['b/4'], '8r'),
-                 note(['b/4'], 8),
-                 note(['f/4', 'a/4'], 4),
-                 note(['d/4', 'b/4'], 4),
-                 note(['f/4', 'a/4'], 8),
-                 note(['f/4', 'd/5'], 8),
-             ];
-             
-             var notesTreble1 = notesTrebleMain1.concat(bar).concat(notesTrebleMain2);
-             
+             var notesTreble1 = notesTrebleMain1;
 
              voiceTreble1.addTickables(notesTreble1);
              voiceBass1.addTickables(notesBass1);
@@ -132,14 +116,12 @@
 
              // DRAW BEAMS
              
-             beamBassMain1.setContext(ctx).draw();
-             beamBassMain2.setContext(ctx).draw();
+             // beamBassMain1.setContext(ctx).draw();
 
-             beamTrebleMain1_1.setContext(ctx).draw();
-
+             // beamTrebleMain1_1.setContext(ctx).draw();
 
 
-             /////////////////////////////////////
+                          /////////////////////////////////////
              // SECOND LINE
              stave_y += line_space;
 
@@ -183,23 +165,20 @@
 
              // TREBLE
              var notesTrebleMain1 = [
-                 note(['g/4', 'b/4'], 4),
-                 note(['f/4', 'a/4'], 4),
-                 note(['d/4', 'b/4'], 4),
-                 note(['f/4', 'a/4'], 8),
-                 note(['f/4', 'd/5'], 8),
+                 note(['g/4', 'e/5'], 4),
+                 note(['f/4', 'e/5'], 4),
+                 note(['d/4', 'e/5'], 4),
+                 note(['d/4', 'c/5'], 4),
              ];
-             var beamTrebleMain1_1 = new Vex.Flow.Beam(notesTrebleMain1.slice(3, 5));
              
              var notesTrebleMain2 = [
-                 note(['b/4'], '8r'),
-                 note(['b/4'], 8),
-                 note(['f/4', 'a/4'], 4),
-                 note(['d/4', 'b/4'], 4),
-                 note(['f/4', 'a/4'], 8),
-                 note(['f/4', 'd/5'], 8),
+                 note(['g/4', 'd/5'], 4),
+                 note(['f/4', 'e/5'], '8d').addDotToAll(), // how to skip 1/16?
+                 note(['d/4', 'd/5'], 16),
+                 note(['f/4', 'e/5'], 2),
              ];
-             
+             // var beamTrebleMain1_1 = new Vex.Flow.Beam(notesTrebleMain2.slice(1, 3));
+                 
              var notesTreble1 = notesTrebleMain1.concat(bar).concat(notesTrebleMain2);
              
 
@@ -221,8 +200,8 @@
              beamBassMain1.setContext(ctx).draw();
              beamBassMain2.setContext(ctx).draw();
 
-             beamTrebleMain1_1.setContext(ctx).draw();
-
+             // beamTrebleMain1_1.setContext(ctx).draw();
+             
          }
 
 
