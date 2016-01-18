@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>Cogite Python: 1 - O caminho do programa</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="mystyles.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Cogite Python
+   </div>
+   <div id="projectbrief">Como pensar como um cientista da computação</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.11 -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('sec1.html','');});
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle">
+<div class="title">1 - O caminho do programa </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="toc"><h3>Conteúdo</h3>
+<ul><li class="level1"><a href="#sec1_1">1.1 O que é um programa?</a></li>
+<li class="level1"><a href="#sec1_2">1.2 Executando Python</a></li>
+<li class="level1"><a href="#sec1_2_1_1">1.2.1.1 Num navegador, modo interativo</a></li>
+<li class="level1"><a href="#sec1_2_1_2">1.2.1.2 Num navegador, modo de script</a></li>
+<li class="level1"><a href="#sec1_2_1_3">1.2.1.3 Instalando no seu computador</a></li>
+<li class="level1"><a href="#sec1_2_1_4">1.2.1.4 Rodando IPython/Jupyter</a></li>
+<li class="level1"><a href="#sec1_2_2">1.2.2 O interpretador Python</a></li>
+<li class="level1"><a href="#sec1_3">1.3 O primeiro programa</a></li>
+<li class="level1"><a href="#sec1_4">1.4 Operadores aritméticos</a></li>
+<li class="level1"><a href="#sec1_5">1.5 Valores e tipos</a></li>
+<li class="level1"><a href="#sec1_6">1.6 Linguagens formais e naturais</a></li>
+<li class="level1"><a href="#sec1_7">1.7 Depuração</a></li>
+<li class="level1"><a href="#sec1_8">1.8 Glossário</a></li>
+<li class="level1"><a href="#sec1_9">1.9 Exercícios</a></li>
+</ul>
+</div>
+<div class="textblock"><p>O objetivo deste livro é te ensinar a pensar como um cientista da computação. Esta maneira de pensar combina algumas das melhores características de matemática, engenharia, e ciências naturais. Como matemáticos, cientistas da computação usam linguagens formais para denotar ideias (em particular, computações). Como engenheiros, eles projetam coisas, unindo componentes em sistemas e avaliando um compromisso entre alternativas. Como cientistas, eles observam o comportamento de sistemas complexos, formam hipóteses, e averiguam previsões.</p>
+<p>A habilidade mais importante para um cientista da computação é a <b>solução de problemas</b>. A aptidão de resolver problemas é poder formular problemas, pensar criativamente em soluções, e expressar uma solução claramente e precisamente. De fato, o processo de aprendizagem a programar é uma oportunidade excelente para aprimorar a capacidade de resolver problemas. É por isso que este capítulo é chamado "O caminho do programa".</p>
+<p>Em um nível, você aprenderá a programar, que é por si, uma habilidade útil. Num outro nível, você utilizará programação como um meio para atingir um fim. A medida que progredirmos, esse fim ficará mais claro.</p>
+<h1><a class="anchor" id="sec1_1"></a>
+1.1 O que é um programa?</h1>
+<p>Um <b>programa</b> é uma sequência de instruções que especifica como realizar uma computação. A computação pode ser algo matemático, como resolver um sistema de equações ou encontrar as raízes de um polinomial, mas também pode ser uma computação simbólica, como procurar e substituir texto num documento, ou algo gráfico, como processar uma imagem ou reproduzir um vídeo.</p>
+<p>Os detalhes parecem diferentes em linguagens diferentes, mas algumas instruções básicas estão presentes em quase todas as linguagens:</p>
+<p><b>entrada:</b> Obter dados pelo teclado, um arquivo, a rede, ou outro dispositivo.</p>
+<p><b>saída:</b> Exibir dados na tela, gravá-los num arquivo, transmiti-los pela rede, etc.</p>
+<p><b>matemática:</b> Realizar operações básicas de matemática como adição e multiplicação.</p>
+<p><b>execução condicional:</b> Verificar certas condições e executar o código apropriado.</p>
+<p><b>repetição:</b> Executar alguma ação repetidamente, geralmente com alguma variação.</p>
+<p>Acredite se quiser, mas isto é praticamente tudo que há. Todo programa que você já tem utilizado, não importe o quanto complicado que seja, é feita de instruções que se parecem como esses. Então, você pode pensar sobre programação como o processo de separar uma tarefa grande e complexa em subtarefas cada vez menores até que as subtarefas sejam simples suficientes a poder serem efetuadas com uma dessas instruções básicas.</p>
+<h1><a class="anchor" id="sec1_2"></a>
+1.2 Executando Python</h1>
+<p>Um dos desafios de começar a usar Python é que você possivelmente terá que instalá-lo e outros softwares relacionados no seu computador. Se você tem um bom conhecimento do seu sistema operacional, e particularmente, se você se sente confortável com o interface de linha de comando, você não terá dificuldades pra instalar Python. Mas para iniciantes, pode ser doloroso ter que aprender administração de sistemas e programação ao mesmo tempo.</p>
+<p>Para evitar este problema, recomendo que comece executando Python num navegador. Depois, quando se sentir confortável com Python, farei sugestões de como instalar Python no seu computador.</p>
+<p>Existem vários websites que você pode usar para executar Python. Se você já tem um preferido, vá em frente e use-o. Senão, eu recomendo PythonAnywhere.</p>
+<p>A subseção 1.2.1 explica em detalhe como começar a usar Python, e é uma adaptação das <a href="http://www.allendowney.com/wp/books/think-python-2e/">instruções originais, que podem ser atualizadas futuramente.</a></p>
+<p>Para iniciantes, recomendo começar com os seguintes passos:</p>
+<ol type="1">
+<li>Usar um serviço online de "Python num navegador" como <a href="https://www.pythonanywhere.com/">PythonAnywhere</a> para executar código Python no modo interativo, que quer dizer que você pode digitar e executar código linha por linha.</li>
+<li>Ainda rodando Python num navegador, colocar código Python num arquivo, chamado um <em>script</em>, e executar o script inteiro.</li>
+<li>Instalar Python no seu próprio computador.</li>
+<li>Considerar usar <a href="http://ipython.org/">IPython</a> e <a href="http://jupyter.org/">Jupyter</a>, um ambiente de desenvolvimento interativo para Python (e outras linguagens)</li>
+</ol>
+<p>Se você se sentir confortável instalando coisas no seu computador, vá diretamente à <a class="el" href="sec1.html#sec1_2_1_3">seção 1.2.1.3</a>.</p>
+<h1><a class="anchor" id="sec1_2_1_1"></a>
+1.2.1.1 Num navegador, modo interativo</h1>
+<p>Existem vários sites que te permitem a rodar Python num navegador. Você pode usar qualquer que preferir, mas aqui darei instruções detalhadas para PythonAnywhere.</p>
+<p>1) Vá a <a href="https://www.pythonanywhere.com/">pythonanywhere.com</a> e clique em <b>Pricing &amp; signup</b> (Preços e registro) no canto superior direito. Uma conta <b>Beginner: Free!</b> (gratuita para iniciantes) é suficiente para começar.</p>
+<p>Após criar sua conta, deverá ver uma página como esta:</p>
+<div class="image">
+<img src="figures/pythonanywhere1.png"  alt="PythonAnywhere consoles"/>
+</div>
+<p>Um <em>console</em> Python é uma janela onde pode executar comandos Python. Os outros consoles te permitem a executar outros tipos de comandos.</p>
+<p>2) Em baixo de <b>Start a new console</b>, escolha "Python: 3.4", que criará um console novo rodando uma versão atual de Python 3. O resultado deve parecer a:</p>
+<div class="image">
+<img src="figures/pythonanywhere2.png"  alt="PythonAnywhere Python 3.4 console"/>
+</div>
+<p>Na janela preta, as primeiras três linhas contém informações sobre o interpretador Python e o sistema operacional em qual ele roda. A linha seguinte contém uma linha de comando e o sinal de espera, <code>&gt;&gt;&gt;</code>, que indica que o interpretador está pronto para que você digite código Python. Você pode digitar qualquer exemplo do livro aqui, e o interpretador executará-los e exibirá os resultados.</p>
+<p>3) Agora se clicar em <b>Dashboard</b> (Painel) no canto superior direito, você verá o console novo sob <b>Your consoles</b>:</p>
+<div class="image">
+<img src="figures/pythonanywhere3.png"  alt="PythonAnywhere Dashboard"/>
+</div>
+<p>Para voltar ao seu console, clique no nome dele, nesse exemplo, "Python 3.4 console 1529164". Você pode manter seus consoles por quanto tempo quiser, mas se quiser apagar um deles, clique em "kill" (matar).</p>
+<h1><a class="anchor" id="sec1_2_1_2"></a>
+1.2.1.2 Num navegador, modo de script</h1>
+<p>Rodar código Python no modo interativo é uma boa maneira de começar, mas se você está mexendo com mais que algumas linhas de código, pode ser desajeitado.</p>
+<p>A alternativa é gravar o código num arquivo chamado <b>script</b> e usar o interpretador para executar o conteúdo do script. Eis como fazê-lo em PythonAnywhere.</p>
+<p>1) Clique em <b>Dashboard</b> (Painel) no canto superior direito e selecione a guia <b>Files</b> (Arquivos). Deve parecer a:</p>
+<div class="image">
+<img src="figures/pythonanywhere4.png"  alt="PythonAnywhere Files"/>
+</div>
+<p>Você verá uma lista de arquivos que foram criadas automaticamente.</p>
+<p>2) No campo de texto que diz "Enter new file name" (Insira nome de arquivo novo), digite um nome de arquivo como <code>hello.py</code>. Por convenção, nomes de arquivos para scripts Python terminam em <code>.py</code>. Clique "New" (Novo). O resultado deve parecer a:</p>
+<div class="image">
+<img src="figures/pythonanywhere5.png"  alt="PythonAnywhere New File"/>
+</div>
+<p>A janela principal é um editor onde você pode digitar código Python como no exemplo acima.</p>
+<p>O interpretador padrão é Python 2.7. Para escolher Python 3.4, é necessário incluir, como a primeira linha do arquivo, o nome do interpretador Python 3.4:</p>
+<p><code>#!/usr/local/bin/python3.4</code></p>
+<p>Quando estiver pronto para executá-lo, clique no botão preto com os três símbolos maior que <code>&gt;&gt;&gt;</code>. Na primeira vez que fizer isso, seu navegador talvez perguntará se quer permitir pop-ups para esse site. Diga que sim.</p>
+<p>Uma janela nova deverá aparecer, que mostra o resultado do seu programa. Agora você pode editar e rodar o programa quantas vezes quiser.</p>
+<p>Se aparecer o erro "Console limit reached", quer dizer que já existem dois consoles abertos (que é o limite da conta gratuita). Neste caso, clique no link "kill some consoles on your Consoles page" para encerrar um console, e tente novamente.</p>
+<p>3) Quando terminar, feche a janela pop-up e volte à guia "Files" (Arquivos). Você deve ver o arquivo criado na lista. Clique nos ícones para fazer download, editar, ou apagar o arquivo.</p>
+<p>Se você voltar à guia "Consoles", você poderá ver um console para o arquivo que editou. Depois de terminar editando o arquivo, pode terminar esse console (mas o arquivo continuará lá).</p>
+<h1><a class="anchor" id="sec1_2_1_3"></a>
+1.2.1.3 Instalando no seu computador</h1>
+<p>Para Linux, Windows, e Mac, altamente recomendo instalar Anaconda, que é uma distribuição Python que inclui os módulos que você é mais capaz de usar. É fácil de instalar, e porque normalmente instala no seu diretório pessoal, não precisa de privilégios de administrador. Também é de graça.</p>
+<p>1) Vá à <a href="http://continuum.io/downloads">página de downloads de Anaconda</a>.</p>
+<p>2) Escolha o instalador de Python 3 apropriado para seu sistema.</p>
+<p>3) Quando o download completar, abra o instalador (a não ser que já abra automaticamente)</p>
+<p>4) O assistente de configuração perguntará algumas informações de configuração. Provavelmente poderá aceitar as opções padrão. Recomendo que deixe o instalador defina o caminho de pesquisa e registre a versão Anaconda de Python, especialmente se você tiver uma versão antiga de Python já instalada.</p>
+<p>5) A partir do menu "Iniciar", busque "idle", que é o nome de um ambiente de programação Python simples, incluso na maioria de distribuições Python. Quando você executar IDLE, deve ver uma janela de comando ou "shell" rodando um interpretador Python. Você pode digitar e executar comandos Python nessa janela.</p>
+<p>6) Para escrever um script, escolha "New" (Novo) do menu "File" (Arquivo). Digite algum código Python e depois escolha "Save" (Gravar) do menu "File". Escolha um nome pro arquivo e grave-o num local no seu diretório pessoal. (O local padrão pode ser na pasta de scripts da Anaconda).</p>
+<p>7) Para executar o script, escolha "Run Module" (Executar módulo) do menu "Run" (Executar), ou pressione F5. Os resultados deverão aparecer na janela de comandos.</p>
+<p><b>Solução de problemas</b></p>
+<p>Se você já tem Python no seu sistema, talvez encontrará problemas se acidentalmente rodar a versão préviamente instalada em vez da versão que acabou de instalar. Para verificar, execute Python ou IDLE e veja a informação de versão que é exibida ao iniciar. Você deve ver uma versão de Python 3 (quando escrevi isto a versão atual era Python 3.4.3), e alguma versão de Anaconda (como 2.3.0). Se não, você não está rodando a versão que acabou de instalar. Nesse caso, você poderá achar e executar a versão correta, alterar o caminho de pesquisa, ou rodar o instalador de novo e deixá-lo alterar o caminho de pesquisa para você.</p>
+<h1><a class="anchor" id="sec1_2_1_4"></a>
+1.2.1.4 Rodando IPython/Jupyter</h1>
+<p>Se você instalou Anaconda no passo anterior, você já tem Jupyter, que é um ambiente de desenvolvimento interativo para Python (e outras linguagens). Até recentemente, Jupyter era chamado IPython, então você poderia ver também esse nome.</p>
+<p>Do menu "Iniciar", busque IPython. Você pode ver várias opções:</p>
+<ul>
+<li><b>IPython</b> em si executa um interpretador Python com alguns recursos a mais.</li>
+<li><b>IPython QTConsole</b> executa um interpretador Python num ambiente gráfico.</li>
+<li><b>IPython Notebook</b> executa Python rodando num navegador.</li>
+</ul>
+<p>Recomendo IPython Notebook. Da linha de comando, pode executar IPython digitando:</p>
+<p><code>$ ipython notebook</code></p>
+<p>Leia <a href="https://jupyter.org/">mais sobre Jupyter/IPython aqui</a></p>
+<h1><a class="anchor" id="sec1_2_2"></a>
+1.2.2 O interpretador Python</h1>
+<p>Existem duas versões de Python, chamadas Python 2 e Python 3. São muito parecidos, então se você aprender um deles, é fácil mudar para o outro. De fato, como um iniciante, encontrará apenas poucas diferenças. Este livro foi escrito para Python 3, mas incluo algumas anotações sobre Python 2.</p>
+<p>O <b>interpretador</b> Python é um programa que lê e executa código Python. Dependendo do seu ambiente, você poderá iniciar o interpretador clicando num ícone, ou digitando <code>python</code> numa linha de comando. Quando ele começar, você deve ver a seguinte saída na sua tela:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;Python 3.4.0 (default, Jun 19 2015, 14:20:21)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;[GCC 4.8.2] on linux</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&gt;&gt;&gt;</div></div><!-- fragment --><p>As primeiras três linhas contém informações sobre o interpretador e o sistema operacional em qual ele roda, então pode ser diferente para você. Mas você deve verificar que o número da versão, que é 3.4.0 neste exemplo, começa com 3, que indica que você está rodando Python 3. Se começar com 2, você está rodando (adivinhou) Python 2.</p>
+<p>A última linha é a <b>linha de comando</b> que indica que o interpretador está pronto para você inserir código. Se você digitar uma linha de código e teclar Enter, o interpretador exibirá o resultado:</p>
+<p><code>&gt;&gt;&gt; 1 + 1</code></p>
+<p><code>2</code></p>
+<p>Agora está pronto para começar. Daqui pra frente, assumo que você saiba como rodar o interpretador Python e executar código.</p>
+<h1><a class="anchor" id="sec1_3"></a>
+1.3 O primeiro programa</h1>
+<p>Tradicionalmente, o primeiro programa que você escreve numa nova linguagem é chamada "Hello, World!" (Alô, Mundo!) porque tudo que ele faz é exibir as palavras "Alô, Mundo!". Em Python, é escrito assim:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; print(<span class="stringliteral">&#39;Alô, Mundo!&#39;</span>)</div></div><!-- fragment --><p>Nas listagens de código fonte ou interações com o Python como essa exibida acima, os três símbolos maior que <code>&gt;&gt;&gt;</code> representam o sinal de espera do interpretador e não devem ser digitados.</p>
+<p>Este é um exemplo de uma <b>instrução print</b>, apesar de que não imprima nada em papel. Ele exibe um resultado na tela. Neste caso, o resultado é as palavras</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;Alô, Mundo!</div></div><!-- fragment --><p>As aspas no programa marcam o início e o fim do texto a ser exibido; eles não aparecem no resultado.</p>
+<p>Os parênteses indicam que <code>print</code> é uma função. Chegaremos a funções no <a class="el" href="sec3.html">Capítulo 3</a>.</p>
+<p>Em Python 2, a instrução print é ligeiramente diferente; não é uma função, então não usa parênteses.</p>
+<p><code>&gt;&gt;&gt; print 'Alô, Mundo!'</code></p>
+<p>Essa diferença fará mais sentido logo, mas é o suficiente para começar.</p>
+<h1><a class="anchor" id="sec1_4"></a>
+1.4 Operadores aritméticos</h1>
+<p>Após "Alô, Mundo", o próximo passo é a aritmética. Python disponibiliza <b>operadores</b>, que são símbolos especiais que representam cálculos como adição e multiplicação.</p>
+<p>Os operadores <code>+</code>, <code>-</code>, e <code>*</code> realizam adição, subtração, e multiplicação, como nos seguintes exemplos:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; 40 + 2</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;42</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; 43 - 1</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;42</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;&gt;&gt;&gt; 6 * 7</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;42</div></div><!-- fragment --><p>O operador <code>/</code> realiza divisão:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; 84 / 2</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;42.0</div></div><!-- fragment --><p>Você pode perguntar por que o resultado é <code>42.0</code> em vez de <code>42</code>. Explicarei na próxima seção.</p>
+<p>Finalmente, o operador <code>**</code> realiza exponenciação; isto é, eleva um número a uma potência:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; 6**2 + 6</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;42</div></div><!-- fragment --><p>Em algumas outras linguagens, <code>^</code> é usada para exponenciação, mas em Python ele é um operador bit a bit chamado XOR. Se você não estiver acostumado com operadores bit a bit, o resultado de surpreenderá:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; 6 ^ 2</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;4</div></div><!-- fragment --><p>Não incluirei operadores bit a bit neste livro, mas você pode ler sobre eles em <a href="http://wiki.python.org/moin/BitwiseOperators">http://wiki.python.org/moin/BitwiseOperators</a>.</p>
+<h1><a class="anchor" id="sec1_5"></a>
+1.5 Valores e tipos</h1>
+<p>Um <b>valor</b> é uma das coisas básicas com qual um programa trabalha, como uma letra ou um número. Alguns dos valores que temos vistos até agora são <code>2</code>, <code>42.0</code>, e <code>'Alô, Mundo!'</code>.</p>
+<p>Esses valores pertencem a <b>tipos</b> diferentes: <code>2</code> é um <b>inteiro</b>, <code>42.0</code> é um <b>número de ponto flutuante</b>, e <code>'Alô, Mundo!'</code> é uma <b>string</b> (<em>cadeia</em>, ou <em>corda</em> em inglês), chamado assim porque as letras que ela contém são ligadas juntas numa cadeia.</p>
+<p>Se você não tem certeza de qual tipo um valor tem, o interpretador pode te dizer:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; type(2)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;<span class="keyword">class </span><span class="stringliteral">&#39;int&#39;</span>&gt;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; type(42.0)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&lt;<span class="keyword">class </span><span class="stringliteral">&#39;float&#39;</span>&gt;</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;&gt;&gt;&gt; type(<span class="stringliteral">&#39;Alô, Mundo!&#39;</span>)</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;&lt;<span class="keyword">class </span><span class="stringliteral">&#39;str&#39;</span>&gt;</div></div><!-- fragment --><p>Nesses resultados, a palavra <em>class</em> é usada no sentido de uma <em>categoria</em>; um tipo é uma categoria de valores.</p>
+<p>Não é de surpreender que inteiros pertencem ao tipo <em>int</em>, strings a <em>str</em>, e números de ponto flutuante pertencem a <em>float</em>.</p>
+<p>E valores como <code>'2'</code>e <code>'42.0'</code>? Eles parecem números, mas estão entre aspas como strings.</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; type(<span class="stringliteral">&#39;2&#39;</span>)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;<span class="keyword">class </span><span class="stringliteral">&#39;str&#39;</span>&gt;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; type(<span class="stringliteral">&#39;42.0&#39;</span>)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&lt;<span class="keyword">class </span><span class="stringliteral">&#39;str&#39;</span>&gt;</div></div><!-- fragment --><p>São strings.</p>
+<p>Quando você digita um inteiro grande, você talvez queira usar pontos entre grupos de dígitos, como <code>1.000.000</code>. Isto não é sintaxe considerado válido por Python.</p>
+<p>Um número inteiro deve consistir somente de dígitos. Um número pode ter um ponto como separador decimal, que separa a parte inteira da parte fracionária. O exemplo <code>1.000.000</code>, não é válido porque tem dois pontos, e algo como <code>1.500</code> será interpretado como um e meio (1.5), não mil e quinhentos.</p>
+<p>Separar as partes de um número com uma vírgula em vez de um ponto é sintaticamente aceita por Python, mas não é o valor que espera.</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; 4,2</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;(4, 2)</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; type((4, 2))</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&lt;<span class="keyword">class </span><span class="stringliteral">&#39;tuple&#39;</span>&gt;</div></div><!-- fragment --><p>Python interpreta <code>4,2</code> como uma sequência de inteiros separada por vírgulas. Aprenderemos mais sobre esse tipo de sequência mais tarde.</p>
+<h1><a class="anchor" id="sec1_6"></a>
+1.6 Linguagens formais e naturais</h1>
+<p><em>Linguagens naturais</em> são as línguas que pessoas falam, como inglês, espanhol, e francês. Não foram concebidas por pessoas (apesar que as pessoas tentam impor ordem nelas); evoluiram naturalmente.</p>
+<p><em>Linguagens formais</em> são linguagens que são projetadas por pessoas para aplicações específicas. Por exemplo, a notação que matemáticos usam é uma linguagem formal que é especialmente boa em denotar relações entre números e símbolos. Químicos usam uma linguagem formal para representar a estrutura química de moléculas. E mais importante,</p>
+<p><b>Linguagens de programação são linguagens formais que foram projetadas para expressar computações.</b></p>
+<p>Linguagens formais tendem a ter regras rigorosas de sintaxe que controlam a estrutura de declarações e expressões. Por exemplo, em matemática a expressão 3 + 3 = 6 tem sintaxe correta, mas 3+ = 3$6 não. Na química, H<sub>2</sub>O é uma fórmula sintaticamente correta, mas <sub>2</sub>Zz não é.</p>
+<p>Existem dois tipos de regras de sintaxe, referentes a <b>tokens</b> (símbolos) e a estrutura. Tokens são elementos básicos da linguagem, como palavras, números, e elementos químicos. Um dos problemas com 3+ = 3$6 é que <code>$</code> não é um token legal em matemática (pelo menos que eu saiba). Semelhantemente, <sub>2</sub>Zz não é legal porque não existe nenhum elemento com a abreviação Zz.</p>
+<p>O segundo tipo de regra de sintaxe diz respeito à maneira que tokens são combinados. A equação 3+ = 3 é ilegal porque apesar que + e = sejam tokens legais, não se pode combinar um seguido de um outro. Semelhantemente, numa fórmula química, o subscrito vem depois do nome do elemento, e não antes.</p>
+<p>Est@ é uma $entença bem estruturada com t*kens inválidos nele. Esta sentença todas válidas tokens tem, mas estrutura inválida com.</p>
+<p>Quando você lê uma sentença em português ou uma expressão numa linguagem formal, você tem que compreender a sua estrutura (mas numa linguagem natural você o faz subconscientemente). Este processo se chama <b>análise sintática</b> (parsing).</p>
+<p>Apesar que linguagens formais e naturais hajam muitas características em comum&ndash;tokens, estrutura, e sintaxe&ndash;existem algumas diferenças:</p>
+<p><b>ambiguidade:</b> Linguagens naturais estão cheias de ambiguidade, com qual as pessoas lidam usando dicas contextuais e outras informações. Linguagens formais são projetadas para ser quase ou totalmente inequívocas, que significa que qualquer expressão tenha exatamente um significado, independentemente de contexto.</p>
+<p><b>redundância:</b> Para compensar pela ambiguidade e para diminuir mal-entendidos, linguagens naturais utilizam muitas redundâncias. Como resultado, geralmente são verbosas. Linguagens formais são menos redundantes e mais concisas.</p>
+<p><b>literalidade:</b> Linguagens naturais são cheias de expressões idiomáticas e metáforas. Se eu digo, "a ficha caiu", provavelmente não haja ficha nenhuma e nada caindo (essa expressão significa que alguém entendeu algo depois de um período de confusão). Linguagens formais significam exatamente o que querem dizer.</p>
+<p>Porque todos nós crescemos falando linguagens naturais, às vezes é difícil nos ajustar a linguagens formais. A diferença entre uma linguagem formal e natural é como a diferença entre poesia e prosa, só que mais ainda:</p>
+<p><b>Poesia:</b> Palavras são usadas tanto pelos seus sons quanto para seu significado, e o poema inteiro cria um efeito ou reação emocional. Ambiguidade não é só comum, mas frequentemente usada de propósito.</p>
+<p><b>Prosa:</b> O significado literal das palavras é mais importante, e a estrutura contribui mais ao significado. Prosa é mais favorável à análise, mas ainda frequentemente ambígua.</p>
+<p><b>Programas:</b> O significado de um programa de computador é sem ambiguidade e literal, e pode ser compreendida completamente pela análise dos tokens e da estrutura.</p>
+<p>Linguagens formais são mais densas que linguagens naturais, então demoram mais para ser lidas. Além disso, a estrutura é importante, então nem sempre é melhor ler de cima pra baixo, de esquerda a direita. Em vez, aprenda a analisar o programa na sua cabeça, identificando os tokens e interpretando a estrutura. Finalmente, os detalhes importam. Pequenos erros de digitação e pontuação, de quais você pode se safar em linguagens naturais, podem fazer uma grande diferença numa linguagem formal.</p>
+<h1><a class="anchor" id="sec1_7"></a>
+1.7 Depuração</h1>
+<p>Programadores fazem erros. Por motivos caprichosos, erros de programação são chamados <b>bugs</b> (literalmente, insetos) e o processo de detectá-los, <b>debugging</b> (depuração).</p>
+<p>Programação, e em particular, depuração, podem trazer fortes emoções à superfície. Se você estiver tendo dificuldades com um bug complicado, você pode sentir bravo, desanimado, ou constrangido.</p>
+<p>Há evidência que pessoas naturalmente respondem a computadores como se fossem pessoas. Quando funcionam bem, pensamos deles como colegas de equipe, e quando são teimosos ou grosseiros, respondemos a eles da mesma maneira que respondemos a pessoas teimosas e grosseiras (Reeves e Nass, <em>The Media Equation: How People Treat Computers, Television, and New Media Like Real People and Places</em>) (A Equação da Mídia: Como Pessoas Tratam Computadores, Televisão, e Novas Mídias Como Pessoas e Lugares de Verdade).</p>
+<p>Preparar-se para essas reações poderá te ajudar a lidar com eles. Um método é considerar o computador como um empregado com certos pontos fortes, como velocidade e precisão, e pontos fracos particulares, como a falta de empatia e incapacidade de captar a perspectiva geral.</p>
+<p>Seu trabalho é ser um bom gerente: encontrar maneiras de aproveitar os pontos fortes e atenuar os pontos fracos. E encontrar maneiras de usar suas emoções para empenhar-se com o problema, sem deixar suas reações interferir com sua abilidade de trabalhar eficientemente.</p>
+<p>Aprender a depurar pode ser frustrante, mas é uma habilidade valiosa para muitas atividades além de programação. No final de cada capítulo tem uma seção, como esta, com minhas sugestões para depuração. Espero que ajudem!</p>
+<h1><a class="anchor" id="sec1_8"></a>
+1.8 Glossário</h1>
+<p><b>solução de problemas:</b> O processo de formular um problema, achar uma solução, e expressá-la.</p>
+<p><b>linguagem de alto nível:</b> Uma linguagem de programação como Python que é projetada para ser fácil para humanos lerem e escreverem.</p>
+<p><b>linguagem de baixo nível:</b> Uma linguagem de programação que é projetada para ser fácil pra um computador executar; também chamado "linguagem de máquina" ou "linguagem de montagem".</p>
+<p><b>portabilidade:</b> A propriedade de um programa que pode ser executada em mais que um tipo de computador.</p>
+<p><b>interpretador:</b> Um programa que lê um outro programa e o executa.</p>
+<p><b>sinal de espera:</b> Caracteres exibidos pelo interpretador para indicar que está pronto para aceitar a entrada do usuário.</p>
+<p><b>programa:</b> Uma série de instruções que especifica uma computação.</p>
+<p><b>instrução print</b> (literalmente, <em>imprimir</em>): Uma instrução que causa o interpretador Python a exibir um valor na tela.</p>
+<p><b>operador:</b> Um símbolo especial que representa uma computação simples como adição, multiplicação, ou concatenação de strings.</p>
+<p><b>valor:</b> Uma das unidades básicas de dados, como um número ou uma string, que um programa manipula.</p>
+<p><b>tipo:</b> Uma categoria de valores. Os tipos que vimos até agora são inteiros (tipo <code>int</code>), números de ponto flutuante (tipo <code>float</code>), e strings (tipo <code>str</code>).</p>
+<p><b>inteiro:</b> Um tipo que representa números inteiros.</p>
+<p><b>ponto flutuante:</b> Um tipo que representa números com partes fracionárias.</p>
+<p><b>string:</b> Um tipo que representa sequências de caracteres.</p>
+<p><b>linguagem natural:</b> Qualquer uma das línguas que pessoas falam que evoluíram naturalmente.</p>
+<p><b>linguagem formal:</b> Qualquer uma das linguagens que pessoas projetaram para fins específicos, tal como representar ideias matemáticas ou programas de computador; todas as linguagens de programação são linguagens formais.</p>
+<p><b>token:</b> Um dos elementos básicos da estrutura sintática de um programa, análogo a uma palavra numa linguagem natural.</p>
+<p><b>sintaxe:</b> As regras que controlam a estrutura de um programa.</p>
+<p><b>analisar sintaticamente:</b> Examinar um programa e analisar a estrutura sintática.</p>
+<p><b>bug:</b> Um erro num programa.</p>
+<p><b>depuração:</b> O processo de encontrar e corrigir bugs.</p>
+<h1><a class="anchor" id="sec1_9"></a>
+1.9 Exercícios</h1>
+<p><b>Exercício 1.1.</b> É uma boa ideia ler este livro na frente de um computador para que possa testar os exemplos enquanto avance.</p>
+<p>Quando estiver experimentando um recurso novo, você deve tentar fazer erros. Por exemplo, no programa "Alô, Mundo!", o que acontece se omitir uma das aspas? O que acontece se omitir os dois? E se você soletrar <code>print</code> incorretamente?</p>
+<p>Esse tipo de experiência te ajuda a lembrar o que você leu; te ajuda também quando programa, porque você aprende o que as mensagens de erro significam. É melhor errar agora e de propósito do que depois, e sem querer.</p>
+<ol type="1">
+<li>Numa instrução print, o que acontece se você omitir um dos parênteses, ou ambos?</li>
+<li>Se você quiser exibir uma string, o que acontece se omitir uma das aspas, ou ambas?</li>
+<li>Você pode usar o sinal de menos para fazer um número negativo, como -2. O que acontece se pôr um sinal de mais antes de um número? E que tal 2++2?</li>
+<li>Em notação matemática, zeros à esquerda estão tudo bem, como <code>02</code>. O que acontece se tentar isso em Python?</li>
+<li>O que acontece se tiver dois valores sem nenhum operador entre eles?</li>
+</ol>
+<p><b>Exercício 1.2.</b> Execute o interpretador Python e use-o como uma calculadora.</p>
+<ol type="1">
+<li>Quantos segundos tem 42 minutos e 42 segundos?</li>
+<li>Quantas milhas tem 10 quilômetros? Dica: tem 1,61 quilômetros em uma milha.</li>
+<li>Se você correr uma corrida de 10 km em 42 minutos e 42 segundos, qual é o seu ritmo médio em milhas (tempo por milha em minutos e segundos)? Qual é a sua velocidade média em milhas por hora?</li>
+</ol>
+<p><a class="el" href="sec2.html">Próxima página &gt;&gt;</a> </p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Gerado por
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
+  </ul>
+</div>
+</body>
+</html>

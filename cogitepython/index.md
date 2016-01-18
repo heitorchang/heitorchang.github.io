@@ -1,15 +1,20 @@
 # Cogite Python
 
-*Cogite Python* é uma tradução de [Think Python](http://thinkpython2.com) por Allen Downey.
+*Cogite Python* é uma tradução do livro [Think Python](http://thinkpython2.com) de Allen Downey.
 
-Este livro é uma introdução a programação na linguagem [Python](https://www.python.org/) para iniciantes. Ele começa com conceitos básicos de programação, e foi cuidadosamente desenhada para definir todos os termos novos quando forem usados pela primeira vez e desenvolver cada conceito novo numa progressão lógica.
+Esse livro é uma introdução a programação na linguagem [Python](https://www.python.org/) para iniciantes. O livro começa com conceitos básicos de programação, e foi cuidadosamente projetado para definir termos novos nos primeiros usos e elaborar cada conceito novo numa progressão lógica.
 
-Partes maiores, como recursão e programação orientada a objetos, são divididas numa sequencia de passos menores e introduzidas ao decorrer de vários capítulos.
+Assuntos maiores, como recursão e programação orientada a objetos, são divididos numa sequência de passos menores e introduzidos no decorrer de vários capítulos.
 
-![Python](figures/python-logo.png)
+*Cogite Python* é um livro livre, licenciado sob a CC BY-NC 3.0. [Detalhes sobre a licença](@ref license)
 
-*Tradução por Heitor Chang*
+![Python logo](figures/python-logo.png)
+<center><a href="http://python.org/">Python.org</a></center>
 
-*Iniciado 21 dez. 2015*
+*Tradução em português de Heitor Chang* &lt;heitor at alumni.stanford.edu&gt;
 
-*Atualizado 23 dez. 2015*
+*Iniciado 21 de dezembro de 2015*
+
+*Atualizado 8 de janeiro de 2016*
+
+[Próxima página >>](@ref secp)

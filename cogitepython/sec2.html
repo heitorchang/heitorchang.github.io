@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>Cogite Python: 2 - Variáveis, expressões, e instruções</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="mystyles.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Cogite Python
+   </div>
+   <div id="projectbrief">Como pensar como um cientista da computação</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.11 -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('sec2.html','');});
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle">
+<div class="title">2 - Variáveis, expressões, e instruções </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="toc"><h3>Conteúdo</h3>
+<ul><li class="level1"><a href="#sec2_1">2.1 Instruções de atribuição</a></li>
+<li class="level1"><a href="#sec2_2">2.2 Nomes de variáveis</a></li>
+<li class="level1"><a href="#sec2_3">2.3 Expressões e instruções</a></li>
+<li class="level1"><a href="#sec2_4">2.4 Modo de script</a></li>
+<li class="level1"><a href="#sec2_5">2.5 Ordem das operações</a></li>
+<li class="level1"><a href="#sec2_6">2.6 Operações da string</a></li>
+<li class="level1"><a href="#sec2_7">2.7 Comentários</a></li>
+<li class="level1"><a href="#sec2_8">2.8 Depuração</a></li>
+<li class="level1"><a href="#sec2_9">2.9 Glossário</a></li>
+<li class="level1"><a href="#sec2_10">2.10 Exercícios</a></li>
+</ul>
+</div>
+<div class="textblock"><p>Um dos mais possantes recursos de uma linguagem de programação é a capacidade de manipular <b>variáveis</b>. Um variável é um nome que se refere a um valor.</p>
+<h1><a class="anchor" id="sec2_1"></a>
+2.1 Instruções de atribuição</h1>
+<p>Uma <b>instrução de atribuição</b> cria um variável novo e lhe dá um valor:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; mensagem = <span class="stringliteral">&#39;E agora para algo completamente diferente&#39;</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&gt;&gt;&gt; n = 17</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; pi = 3.1415926535897932</div></div><!-- fragment --><p>Este exemplo faz três atribuições. O primeiro atribui uma string ao variável novo chamado <code>mensagem</code>; o segundo dá o inteiro <code>17</code> a <code>n</code>; o terceiro atribui o valor (aproximado) de π a <code>pi</code>.</p>
+<p>Uma forma comum de representar variáveis no papel é escrever o nome com uma flecha apontando ao seu valor. Esse tipo de figura é chamada de <b>diagrama de estado</b> porque ela mostra em qual estado cada dos variáveis estão (pense disso como o estado de mente do variável). Figura 2.1 mostra o resultado do exemplo anterior.</p>
+<div class="image">
+<img src="figures/fig2_1.png"  alt="figura 2.1"/>
+</div>
+<center>Figura 2.1: Diagrama de estado</center><h1><a class="anchor" id="sec2_2"></a>
+2.2 Nomes de variáveis</h1>
+<p>Em geral, programadores escolhem nomes significativos para seus variáveis&ndash;eles documentam para quê cada variável é usado.</p>
+<p>Nomes de variáveis podem ser tão compridos quanto você quiser. Eles podem conter letras e números, mas não podem começar com um número. É legal usar letras maiúsculas, mas é convencional usar somente letras minúsculas para nomes de variáveis.</p>
+<p>O caractere underscore (underline), <code>_</code>, pode aparecer num nome. Ele é frequentemente usado em nomes com várias palvavras, como <code>seu_nome</code> ou <code>velocidade_aérea_de_uma_andorinha_sem_carga</code>.</p>
+<p>Se você der a um variável um nome ilegal, você terá um erro de sintaxe:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; 76trombones = <span class="stringliteral">&#39;grande desfile&#39;</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;SyntaxError: invalid syntax  (sintaxe inválida)</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&gt;&gt;&gt; more@ = 1000000</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;SyntaxError: invalid syntax</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;&gt;&gt;&gt; <span class="keyword">class </span>= <span class="stringliteral">&#39;Zymurgia Teorética Avançada&#39;</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;SyntaxError: invalid syntax</div></div><!-- fragment --><p><code>76trombones</code> é ilegal porque começa com um número. <code>more@</code> é ilegal porque contém um caractere ilegal, . Mas o que há de errado com <code>class</code>?</p>
+<p>Acontece que <code>class</code> é uma das <b>palavras-chave</b> de Python. O interpretador usa palavras-chave para reconhecer a estrutura do programa, e não podem ser usadas como nomes de variáveis.</p>
+<p>Python 3 tem essas palavras-chave:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;False     class       finally    is          return</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;None      continue    for        lambda      try</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;True      def         from       nonlocal    while</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;and       del         global     not         with</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;as        elif        if         or          yield</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;assert    else        import     pass</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;break     except      in         raise</div></div><!-- fragment --><p>Você não precisa memorizar essa lista. Na maioria dos ambientes de desenvolvimento, palavras-chave são exibidas numa cor diferente; se você tentar usar uma delas como o nome de um variável, você saberá.</p>
+<h1><a class="anchor" id="sec2_3"></a>
+2.3 Expressões e instruções</h1>
+<p>Uma <b>expressão</b> é a combinação de valores, variáveis, e operadores. Um valor por si mesmo é considerado uma expressão, e também um variável. Então, o seguinte são todas expressões legais:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; 42</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;42</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; n</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;17</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;&gt;&gt;&gt; n + 25</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;42</div></div><!-- fragment --><p>Quando você digita uma expressão na linha de comando, o interpretador a <b>avalia</b>, que significa que ele encontra o valor da expressão. Nesse exemplo, <code>n</code> tem o valor de 17 e <code>n + 25</code> tem o valor de 42.</p>
+<p>Uma <b>instrução</b> é uma unidade de código que tem um efeito, como criar um variável ou exibir um valor.</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; n = 17</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&gt;&gt;&gt; print(n)</div></div><!-- fragment --><p>A primeira linha é uma instrução de atribuição que dá um valor a n. A segunda linha é uma instrução print que exibe o valor de n.</p>
+<p>Quando você digita uma instrução, o interpretador a <b>executa</b>, que significa que faz o que seja que a instrução diz. Em geral, instruções não tem valores.</p>
+<h1><a class="anchor" id="sec2_4"></a>
+2.4 Modo de script</h1>
+<p>Até agora rodamos Python no <b>modo interativo</b>, que quer dizer que você interage diretamente com o interpretador. O modo interativo é uma boa maneira de começar, mas se você estiver trabalhando com mais que algumas linhas de código, pode ser desajeitado.</p>
+<p>A alternativa é salvar código num arquivo chamado um <b>script</b> e depois executá-lo no interpretador no <b>modo de script</b>. Por convenção, scripts Python tem nomes que terminam em <code>.py</code>.</p>
+<p>Se você save como criar e rodar um script no seu computador, você está pronto para ir. Senão, recomendo de novo usar <a href="http://www.pythonanywhere.com/">PythonAnywhere</a>. Veja as instruções como na <a class="el" href="sec1.html#sec1_2_1_2">seção 1.2.1.2</a>.</p>
+<p>Por causa que Python oferece ambos os modos, você pode testar pedacinhos de código no modo interativo antes de pôr-los num script. Mas há diferenças entre o modo interativo e o modo de script que podem ser confusas.</p>
+<p>Por exemplo, se você estiver usando Python como uma calculadora, você poderá digitar</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; milhas = 26.2</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&gt;&gt;&gt; milhas * 1.61</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;42.182</div></div><!-- fragment --><p>A primeira linha atribui um valor a <code>milhas</code>, mas não tem um efeito visível. A segunda linha é uma expressão, então o interpretador o avalia e exibe o resultado. De fato, uma maratona é aproximadamente 42 quilômetros.</p>
+<p>Mas se você digitar o mesmo código num script e o executar, você não terá nenhum resultado. No modo de script, uma expressão toda sozinha não tem nenhum efeito visível. Python realmente avalia a expressão, mas não exibe o valor a não ser que você o instrua:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;miles = 26.2</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;print(miles * 1.61)</div></div><!-- fragment --><p>Este comportamento pode ser confuso a princípio.</p>
+<p>Um script geralmente contém uma sequência de instruções. Se existe mais que uma instrução, os resultados aparecem um por um com a execução das instruções.</p>
+<p>Por exemplo, o script</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;print(1)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;x = 2</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;print(x)</div></div><!-- fragment --><p>produz a saída</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;1</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;2</div></div><!-- fragment --><p>A instrução de atribuição não produz nenhuma saída.</p>
+<p>Para verificar sua compreensão, digite as seguintes instruções no interpretador Python e veja o que fazem:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;5</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;x = 5</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;x + 1</div></div><!-- fragment --><p>Agora, ponha as mesmas instruções num script e execute-o. Qual é o resultado? Modifique o script, transformando cada expressão numa instrução print e execute-o novamente.</p>
+<h1><a class="anchor" id="sec2_5"></a>
+2.5 Ordem das operações</h1>
+<p>Quando uma expressão contém mais de um operador, a ordem de avaliação depende na <b>ordem das operações</b>. Para operadores matemáticos, Python segue a convenção matemática. A abreviatura <b>PEMDAS</b> é uma maneira útil de lembrar as regras:</p>
+<ul>
+<li><b>P</b>arênteses tem a precedência mais alta e podem ser usadas para forçar uma expressão a ser avaliada na ordem que quiser. Como expressões em parênteses são avaliadas primeiro, <code>2 * (3-1)</code> é 4, e <code>(1+1)**(5-2)</code> é 8. Você também pode usar parênteses para tornar uma expressão mais legível, como <code>(minuto * 100) / 60</code>, mesmo que isso não mude o resultado.</li>
+<li><b>E</b>xponenciação tem a próxima precedência mais alta, então <code>1 + 2**3</code> é 9, não 27, e <code>2 * 3**2</code> é 18, não 36.</li>
+<li><b>M</b>ultiplicação e <b>D</b>ivisão tem precedência mais alta que <b>A</b>dição e <b>S</b>ubtração. Então, <code>2*3-1</code> é 5, não 4, e <code>6+4/2</code> é 8, não 5.</li>
+<li>Operadores com a mesma precedência são avaliados de esquerda à direita (exceto exponenciação). Então na expressão <code>graus / 2 * pi</code>, a divisão acontece primeiro e o resultado é multiplicado por <code>pi</code>. Para dividir por 2π, você pode usar parênteses ou escrever <code>graus / 2 / pi</code>.</li>
+</ul>
+<p>Não me esforço muito para lembrar a precedência de operadores. Se não consigo dizer a precedência olhando a expressão, uso parênteses para deixá-la óbvia.</p>
+<h1><a class="anchor" id="sec2_6"></a>
+2.6 Operações da string</h1>
+<p>Em geral, você não pode realizar operações matemáticas em strings, mesmo se elas pareçam a números, então essas são ilegais:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="stringliteral">&#39;2&#39;</span>-<span class="stringliteral">&#39;1&#39;</span>       <span class="stringliteral">&#39;livro&#39;</span>/<span class="stringliteral">&#39;tudo&#39;</span>       <span class="stringliteral">&#39;dez&#39;</span>*<span class="stringliteral">&#39;campeã&#39;</span></div></div><!-- fragment --><p>Mas há duas exceções, <code>+</code> e <code>*</code>.</p>
+<p>O operador <code>+</code> realiza <b>concatenação de strings</b>, que significa que ele junta strings unindo-as de ponta a ponta. Por exemplo:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; primeiro = <span class="stringliteral">&#39;auto&#39;</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&gt;&gt;&gt; segundo = <span class="stringliteral">&#39;móvel&#39;</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; primeiro + segundo</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;automóvel</div></div><!-- fragment --><p>O operador <code>*</code> também funciona em strings; ele realiza repetição. Por exemplo, <code>'Spam'*3</code> é <code>'SpamSpamSpam'</code>. Se um dos valores é uma string, o outro tem que ser um inteiro.</p>
+<p>O uso de <code>+</code> e <code>*</code> faz sentido por analogia com adição de multiplicação. Tal como <code>4*3</code> é equivalente a <code>4+4+4</code>, esperamos que <code>'Spam'*3</code> seja igual a <code>'Spam'+'Spam'+'Spam'</code>, e é assim. Por outro lado, tem uma maneira significativa na qual a concatenação e repetição de strings se diferem de adição e multiplicação de inteiros. Você consegue pensar em uma propriedade que adição tem, mas que concatenação de strings não?</p>
+<h1><a class="anchor" id="sec2_7"></a>
+2.7 Comentários</h1>
+<p>A medida que programas fiquem maiores e mais complicadas, se tornam mais difíceis para ler. Linguagens formais são densas, e é frequentemente difícil olhar num trecho de código e descobrir o que ele faz, ou porque.</p>
+<p>Por esse motivo, é uma boa ideia adicionar anotações a seus programas para explicar em linguagem natural o que seu programa está fazendo. Essas anotações são chamadas <b>comentários</b>, e começam com o símbolo <code>#</code> (cerquilha, jogo-da-velha)</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment"># calcular a porcentagem da hora que passou</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;porcentagem = (minuto * 100) / 60</div></div><!-- fragment --><p>Nesse caso, o comentário aparece sozinha numa linha. Você também pode pôr comentários no final de uma linha:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;porcentagem = (minuto * 100) / 60    <span class="comment"># porcentagem de uma hora</span></div></div><!-- fragment --><p>Tudo a partir de <code>#</code> até o final da linha é ignorado&ndash;não tem efeito sobre a execução do programa.</p>
+<p>Comentários tem a maior utilidade quando documentam características do código que não são óbvias. É sensato assumir que o leitor possa descobrir <em>o que</em> o código faz; é muito mais útil explicar <em>porque</em>.</p>
+<p>Este comentário é redundante com o código e portanto, inútil:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;v = 5    <span class="comment"># atribuir 5 a v</span></div></div><!-- fragment --><p>Este comentário contém informação útil que não está no código:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;v = 5    <span class="comment"># velocidade em metros/segundo.</span></div></div><!-- fragment --><p>Bons nomes de variáveis reduzem a necessidade de comentários, maz nomes compridos podem tornar expressões difíceis pra ler, então deve haver um equilíbrio.</p>
+<h1><a class="anchor" id="sec2_8"></a>
+2.8 Depuração</h1>
+<p>Três tipos de errors podem ocorrer num programa: erros de sintaxe, erros no tempo de execução, e erros semânticos. É útil distingui-los para poder encontrá-los mais rapidamente.</p>
+<p><b>Erro de sintaxe:</b> "Sintaxe" se refere à estrutura do programa e às regras sobre essa estrutura. Por exemplo, parênteses tem que existir em pares correspondentes, então <code>(1 + 2)</code> é legal, mas <code>8)</code> é um <b>erro de sintaxe</b>.</p>
+<p>Se existe um erro de sintaxe em qualquer lugar do seu programa, Python exibe uma mensagem de erro e para, e você não poderá executar o programa. Durante as primeiras semanas da sua carreira de programação, você poderá passar muito tempo procurando erros de sintaxe. A medida que adquira experiência, você fará menos erros e encontrará-los mais rapidamente.</p>
+<p><b>Erro no tempo de execução:</b> O segundo tipo de erro é um erro no tempo de execução, chamado assim porque o erro não aparece até depois que o programa tenha começado. Esses erros também são chamados de <b>exceções</b> porque geralmente indicam que algo excepcional (e ruim) aconteceu.</p>
+<p>Erros no tempo de execução são raros nos programas simples que você verá nos primeiros capítulos, então poderá passar um bom tempo até que encontre um.</p>
+<p><b>Erro semântico:</b> O terceiro tipo de erro é "semântico", que quer dizer, relacionado ao significado. Se há um erro semântico no seu programa, ele executará sem gerar mensagens de erro, mas não fará a coisa certa. Fará algo diferente. Em particular, fará o que você o disse a fazer.</p>
+<p>Identificar erros semânticos pode ser complicado porque exige que você trabalhe de trás pra frente, olhando o resultado do programa e tentando descobrir o que está fazendo.</p>
+<h1><a class="anchor" id="sec2_9"></a>
+2.9 Glossário</h1>
+<p><b>variável:</b> Um nome que refere a um valor.</p>
+<p><b>atribuição:</b> Uma instrução que atribui um valor a um variável.</p>
+<p><b>diagrama de estado:</b> Uma representação gráfica de um conjunto de variáveis e aos valores que se referem.</p>
+<p><b>palavra-chave:</b> Uma palavra reservada que é usada para analisar um programa sintaticamente; você não pode usar palavras-chave como <code>if</code>, <code>def</code>, e <code>while</code> como nomes de variáveis.</p>
+<p><b>operando:</b> Um dos valores sobre qual um operador opera.</p>
+<p><b>expressão:</b> Uma combinação de variáveis, operadores, e valores que representa um único resultado.</p>
+<p><b>avaliar:</b> Simplificar uma expressão pela execução das operações para produzir um único valor.</p>
+<p><b>instrução:</b> Uma seção de código que representa um comando ou ação. Até agora, as instruções que vimos foram instruções de atribuição e instruções print.</p>
+<p><b>executar:</b> Rodar uma instrução e fazer o que ela diz.</p>
+<p><b>modo interativo:</b> Um modo de usar o interpretador Python digitando código na linha de comando.</p>
+<p><b>script:</b> Um programa gravado num arquivo.</p>
+<p><b>modo de script:</b> Um modo de usar o interpretador Python para ler código de um script e executá-lo.</p>
+<p><b>ordem das operações:</b> Regras controlando a ordem de avaliação de expressões envolvendo múltiplos operadores e operandos.</p>
+<p><b>concatenar:</b> Juntar dois operandos de ponta a ponta.</p>
+<p><b>comentário:</b> Informação num programa que é destinado a outros programadores (ou qualquer um lendo o código fonte) e que não tem efeito sobre a execução do programa.</p>
+<p><b>erro de sintaxe:</b> Um erro num programa que o impossibilita de ser analisado (e portanto, impossível de interpretar).</p>
+<p><b>exceção:</b> Um erro que é detectado enquanto o programa esteja rodando.</p>
+<p><b>semântica:</b> O significado de um programa.</p>
+<p><b>erro semântico:</b> Um erro num programa que o leva a fazer algo diferente do que o programador pretendia.</p>
+<h1><a class="anchor" id="sec2_10"></a>
+2.10 Exercícios</h1>
+<p><b>Exercício 2.1.</b> Repetindo meu conselho do capítulo anterior, quando você ver um recurso novo, você deve o experimentar no modo interativo e fazer erros de propósito para ver o que acontece de errado.</p>
+<ul>
+<li>Temos visto que <code>n = 42</code> é legal. E <code>42 = n</code>?</li>
+<li>Que tal <code>x = y = 1</code>?</li>
+<li>Em algumas linguagens toda instrução termina com um ponto-e-vírgula, <code>;</code>. O que acontece se voce pôr um ponto-e-vírgula no final de uma instrução Python?</li>
+<li>O que acontece se colocar um ponto no final de uma instrução?</li>
+<li>Em notação matemática você pode multiplicar x e y assim: xy. O que acontece se você tentar isso em Python?</li>
+</ul>
+<p><b>Exercício 2.2.</b> Pratique a usar o interpretador Python como uma calculadora:</p>
+<ol type="1">
+<li>O volume de uma esfera com raio <em>r</em> é <sup>4</sup>&frasl;<sub>3</sub> π r<sup>3</sup>. Qual é o volume de uma esfera com raio 5?</li>
+<li>Suponha que o preço na capa de um livro seja R$ 24,95, mas livrarias tem um desconto de 40%. O frete para a primeira cópia é R$ 3,00 e R$ 0,75 para cada cópia adicional. Qual é o custo de atacado para 60 cópias?</li>
+<li>Se eu saio de casa às 6:52 da manhã e corro 1 quilômetro num ritmo leve (5:25 minutos por km), e depois 3 quilômetros num ritmo regular (4:30 minutos por km), e finalmente 1 quilômetro no ritmo leve, que horas volto em casa para o café da manhã?</li>
+</ol>
+<p><a class="el" href="sec3.html">Próxima página &gt;&gt;</a> </p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Gerado por
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
+  </ul>
+</div>
+</body>
+</html>

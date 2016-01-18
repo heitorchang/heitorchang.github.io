@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>Cogite Python: 3 - Funções</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="mystyles.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Cogite Python
+   </div>
+   <div id="projectbrief">Como pensar como um cientista da computação</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.11 -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('sec3.html','');});
+</script>
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle">
+<div class="title">3 - Funções </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="toc"><h3>Conteúdo</h3>
+<ul><li class="level1"><a href="#sec3_1">3.1 Chamadas de funções</a></li>
+<li class="level1"><a href="#sec3_2">3.2 Funções matemáticas</a></li>
+<li class="level1"><a href="#sec3_3">3.3 Composição</a></li>
+<li class="level1"><a href="#sec3_4">3.4 Adicionando funções novas</a></li>
+<li class="level1"><a href="#sec3_5">3.5 Definições e usos</a></li>
+<li class="level1"><a href="#sec3_6">3.6 Fluxo de execução</a></li>
+<li class="level1"><a href="#sec3_7">3.7 Parâmetros e argumentos</a></li>
+<li class="level1"><a href="#sec3_8">3.8 Variáveis e parâmetros são locais</a></li>
+<li class="level1"><a href="#sec3_9">3.9 Diagramas de pilha</a></li>
+<li class="level1"><a href="#sec3_10">3.10 Funções frutíferas e procedimentos</a></li>
+<li class="level1"><a href="#sec3_11">3.11 Por que funções?</a></li>
+<li class="level1"><a href="#sec3_12">3.12 Depuração</a></li>
+<li class="level1"><a href="#sec3_13">3.13 Glossário</a></li>
+<li class="level1"><a href="#sec3_14">3.14 Exercícios</a></li>
+</ul>
+</div>
+<div class="textblock"><p>No contexto de programação, uma <b>função</b> é uma sequência nomeada de instruções que realizam uma computação. Quando você define uma função, voce especifica o nome e a sequência de instruções. Depois, você pode "chamar" a função pelo nome.</p>
+<h1><a class="anchor" id="sec3_1"></a>
+3.1 Chamadas de funções</h1>
+<p>Já vimos um exemplo de uma <b>chamada de função</b>:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; type(42)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;<span class="keyword">class </span><span class="stringliteral">&#39;int&#39;</span>&gt;</div></div><!-- fragment --><p>O nome da função é <code>type</code>. A expressão em parênteses é chamada o <b>argumento</b> da função. O resultado, para essa função, é o tipo do argumento.</p>
+<p>É comum dizer que uma função "recebe" um argumento e "devolve", ou "retorna", um resultado. O resultado é também chamado o <b>valor devolvido</b>.</p>
+<p>Python fornece funções que convertem valores de um tipo para outro. A função <code>int</code> recebe qualquer valor e o converte para um inteiro, se puder, caso contrário, se queixa.</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; int(<span class="stringliteral">&#39;32&#39;</span>)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;32</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; int(<span class="stringliteral">&#39;Hello&#39;</span>)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;ValueError: invalid literal <span class="keywordflow">for</span> int(): Hello</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;[ErroDeValor: literal inválido para int(): Hello]</div></div><!-- fragment --><p><code>int</code> pode converter valores de ponto flutuante para inteiros, mas não arredonda; corta a parte fracional:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; int(3.99999)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;3</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; int(-2.3)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;-2</div></div><!-- fragment --><p><code>float</code> converte inteiros e strings para números de ponto flutuante:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; float(32)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;32.0</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; float(<span class="stringliteral">&#39;3.14159&#39;</span>)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;3.14159</div></div><!-- fragment --><p>Finalmente, <code>str</code> converte seu argumento para uma string:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; str(32)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="stringliteral">&#39;32&#39;</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; str(3.14159)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="stringliteral">&#39;3.14159&#39;</span></div></div><!-- fragment --><h1><a class="anchor" id="sec3_2"></a>
+3.2 Funções matemáticas</h1>
+<p>Python tem um módulo de matemática que fornece a maioria das funções matemáticas familiares. Um <b>módulo</b> é um arquivo que contém uma coleção de funções relacionadas.</p>
+<p>Antes que possamos usar as funções num módulo, devemos importá-la com uma <b>instrução import</b>:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; <span class="keyword">import</span> math</div></div><!-- fragment --><p>Essa instrução cria um <b>objeto-módulo</b> chamado <code>math</code>. Se você pedir pra exibir o objeto-módulo, você receberá alguma informação sobre ele:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; math</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;module <span class="stringliteral">&#39;math&#39;</span> (built-<span class="keywordflow">in</span>)&gt;</div></div><!-- fragment --><p>O objeto-módulo contém as funções e variáveis definidos no módulo. Para acessar uma das funções, você precisa especificar o nome módulo e o nome da função, separada por um ponto. Esse formato é chamado <b>notação de ponto</b>.</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; razão = potência_de_sinal / potência_de_ruído</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&gt;&gt;&gt; decibéis = 10 * math.log10(razão)</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&gt;&gt;&gt; radianos = 0.7</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;&gt;&gt;&gt; altura = math.sin(radianos)</div></div><!-- fragment --><p>O primeiro exemplo usa <code>math.log10</code> para calcular a razão sinal-ruído em decibéis (assumindo que <code>potência_de_sinal</code> e <code>potência_de_ruído</code> são definidas). O módulo <code>math</code> também fornece <code>log</code>, que calcula logaritmos base <code>e</code>.</p>
+<p>O segundo exemplo calcula o seno de <code>radianos</code>. O nome do variável é uma dica que <code>sin</code> e as outras funções trigonométricas (<code>cos</code>, <code>tan</code>, etc.) recebem argumentos em radianos. Para converter graus em radianos, divida por 180 e multiplique por π:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; graus = 45</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&gt;&gt;&gt; radianos = graus / 180.0 * math.pi</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; math.sin(radianos)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;0.707106781187</div></div><!-- fragment --><p>A expressão <code>math.pi</code> obtém o variável <code>pi</code> do módulo <code>math</code>. Seu valor é uma aproximação de ponto flutuante de π, com precisão de 15 dígitos.</p>
+<p>Se você sabe trigonometria, pode verificar o último resultado comparando-o com a raíz quadrada de dois dividido por dois:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; math.sqrt(2) / 2.0</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;0.707106781187</div></div><!-- fragment --><h1><a class="anchor" id="sec3_3"></a>
+3.3 Composição</h1>
+<p>Até agora, vimos os elementos de um programa&ndash;variáveis, expressões, e instruções&ndash;em isolamento, sem falar sobre como combiná-los.</p>
+<p>Uma das mais úteis características de linguagens de programação é sua habilidade de tomar pequenos elementos e <b>compor</b>-os. Por exemplo, o argumento de uma função pode ser qualquer tipo de expressão, incluindo operadores aritméticos:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;x = math.sin(graus / 360.0 * 2 * math.pi)</div></div><!-- fragment --><p>E até chamadas de funções:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;x = math.exp(math.log(x+1))</div></div><!-- fragment --><p>Em quase qualquer lugar que possa pôr um valor, pode pôr uma expressão arbitrária, com uma exceção: o lado esquerdo de uma instrução de atribuição tem que ser um nome de variável. Qualquer outra expressão no lado esquerdo é um erro de sintaxe (veremos exceções a essa regra depois).</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; minutos = horas * 60       <span class="comment"># correto</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&gt;&gt;&gt; horas * 60 = minutos       <span class="comment"># errado!</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;SyntaxError: can<span class="stringliteral">&#39;t assign to operator</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="stringliteral">[ErroDeSintaxe: não é possível atribuir a um operador]</span></div></div><!-- fragment --><h1><a class="anchor" id="sec3_4"></a>
+3.4 Adicionando funções novas</h1>
+<p>Até agora, só estávamos utilizando funções que vem com Python, mas também é possivel adicionar funções novas. Uma <b>definição de função</b> especifica o nome de uma função nova e a sequência de instruções que executam quando a função é chamada.</p>
+<p>Aqui está um exemplo:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">def </span>imprima_letra():</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    print(<span class="stringliteral">&quot;Sou um lenhador, e estou tudo bem.&quot;</span>)</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    print(<span class="stringliteral">&quot;Durmo a noite toda, e trabalho o dia todo.&quot;</span>)</div></div><!-- fragment --><p><code>def</code> é uma palavra-chave que indica que essa é uma definição de função. O nome da função é <code>imprima_letra</code>. As regras para nomes de funções são as mesmas que para nomes de variáveis: letras, números, e underscore são legais, mas o primeiro caractere não pode ser um número. Você não pode usar uma palavra-chave como o nome de uma função, e você deve evitar que um variável tenha o mesmo nome que uma função.</p>
+<p>Os parênteses vazios depois do nome indicam que essa função não recebe nenhum argumento.</p>
+<p>A primeira linha da definição de função é chamada <b>cabeçalho</b>, e o resto, <b>corpo</b>. O cabeçalho precisa terminar com dois pontos, <code>:</code>, e o corpo precisa ser endentado. Por convenção, a endentação é sempre quatro espaços. O corpo pode conter quantas instruções quiser.</p>
+<p>As strings nas instruções print são contidas entre aspas duplas. Aspas simples e duplas fazem a mesma coisa; a maioria das pessoas usam aspas simples menos nos casos quando há aspas simples (que é também um apóstrofo) na string.</p>
+<p>Todas as aspas (simples e duplas) tem que ser "verticais", localizadas à esquerda do número 1 no teclado.“Aspas curvas”, como estas nesta sentença, não são legais em Python.</p>
+<p>Se você digitar uma definição de função no modo interativo, o interpretador exibe três pontos (...) para te informar que a definição não está completa:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; <span class="keyword">def </span>imprima_letra():</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;...     print(<span class="stringliteral">&quot;Sou um lenhador, e estou tudo bem.&quot;</span>)</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;...     print(<span class="stringliteral">&quot;Durmo a noite toda, e trabalho o dia todo.&quot;</span>)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;...</div></div><!-- fragment --><p>Para terminar a função, você tem que inserir uma linha em branco.</p>
+<p>Definir uma função cria um <b>objeto-função</b>, que tem o tipo <code>function</code>:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; print(imprima_letra)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;function imprima_letra at 0x005B7F60&gt;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; type(imprima_letra)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&lt;<span class="keyword">class </span><span class="stringliteral">&#39;function&#39;</span>&gt;</div></div><!-- fragment --><p>A sintaxe para chamar a função nova é a mesma que para funções integradas:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; imprima_letra()</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;Sou um lenhador, e estou tudo bem.</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Durmo a noite toda, e trabalho o dia todo.</div></div><!-- fragment --><p>Uma vez que tiver definido uma função, você pode usá-la numa outra função. Por exemplo, para repetir o último refrão, podemos escrever uma função chamada <code>repita_letra</code>:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">def </span>repita_letra():</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    imprima_letra()</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    imprima_letra()</div></div><!-- fragment --><p>E em seguida, chamar <code>repita_letra</code>:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; repita_letra()</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;Sou um lenhador, e estou tudo bem.</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Durmo a noite toda, e trabalho o dia todo.</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Sou um lenhador, e estou tudo bem.</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;Durmo a noite toda, e trabalho o dia todo.</div></div><!-- fragment --><p>Mas a canção não é assim.</p>
+<h1><a class="anchor" id="sec3_5"></a>
+3.5 Definições e usos</h1>
+<p>Juntando os fragmentos de código seção anterior, o programa inteiro é assim:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">def </span>imprima_letra():</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    print(<span class="stringliteral">&quot;Sou um lenhador, e estou tudo bem.&quot;</span>)</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    print(<span class="stringliteral">&quot;Durmo a noite toda, e trabalho o dia todo.&quot;</span>)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">def </span>repita_letra():</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    imprima_letra()</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    imprima_letra()</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;repita_letra()</div></div><!-- fragment --><p>Este programa contém duas definições de funções: <code>imprima_letra</code> e <code>repita_letra</code>. Definições de funções são executadas igualmente a outras instruções, mas o efeito é de criar objetos-funções. As instruções dentro da função não são executadas até que a função seja chamada, e a definição de função não gera nenhuma saída.</p>
+<p>Como você deve esperar, você precisa criar uma função antes de poder executá-la. Em outras palavras, a definição de função tem que ser executada antes que a função seja chamada.</p>
+<p>Como um exercício, mova a última linha deste programa ao topo, de modo que a chamada da função apareça antes das definições. Execute o programa e veja que erro você vê.</p>
+<p>Agora mova a chamada da função de volta ao final e mova a definição de <code>imprima_letra</code> depois da definição de <code>repita_letra</code>. O que acontece quando executa esse programa?</p>
+<h1><a class="anchor" id="sec3_6"></a>
+3.6 Fluxo de execução</h1>
+<p>Para garantir que uma função seja definida antes do seu primeiro uso, você precisa saber a ordem em que as instruções são executadas, que é chamada o <b>fluxo de execução</b>.</p>
+<p>A execução sempre começa na primeira instrução do programa. Instruções são executadas uma de cada vez, em ordem de cima pra baixo.</p>
+<p>Definições de funções não alteram e fluxo de execução do programa, mas lembre-se que instruções dentro da função não são executadas até que a função é chamada.</p>
+<p>Uma chamada de função é como um desvio no fluxo de execução. Em vez de ir para a próxima instrução, o fluxo pula para o corpo da função, executa as instruções ali, e volta para continuar do ponto onde pulou.</p>
+<p>Isso parece simples o suficiente, até que você se lembre que uma função pode chamar outra. Enquanto estiver no meio de uma função, o programa poderá ter que executar instruções numa outra função. Depois, enquanto executa essa nova função, o programa poderia ter que executar ainda uma outra função!</p>
+<p>Felizmente, Python é bom em manter o lugar em onde está, então toda vez que uma função complete, o programa continua do lugar onde ele estava na função que o chamou. Quando chegue no final do programa, ele termina.</p>
+<p>Em resumo, quando você lê um programa, nem sempre deveria ler de cima pra baixo. Às vezes faz mais sentido seguir o fluxo de execução.</p>
+<h1><a class="anchor" id="sec3_7"></a>
+3.7 Parâmetros e argumentos</h1>
+<p>Algumas das funções que vimos exigem argumentos. Por exemplo, quando você chame <code>math.sin</code>, você passa um número como um argumento. Algumas funções recebem mais que um argumento: <code>math.pow</code> recebe dois, a base e o expoente.</p>
+<p>Dentro da função, os argumentos são atribuidos a variáveis chamados <b>parâmetros</b>. Aqui está uma definição para uma função que recebe um argumento:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">def </span>imprima_duas_vezes(bruce):</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    print(bruce)</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    print(bruce)</div></div><!-- fragment --><p>Esta função atribui o argumento a um parâmetro chamado <code>bruce</code>. Quando a função é chamada, ela imprime o valor do parâmetro (seja o que for) duas vezes.</p>
+<p>Esta função funciona com qualquer valor que possa ser impressa.</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; imprima_duas_vezes(<span class="stringliteral">&#39;Spam&#39;</span>)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;Spam</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Spam</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&gt;&gt;&gt; imprima_duas_vezes(42)</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;42</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;42</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;&gt;&gt;&gt; imprima_duas_vezes(math.pi)</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;3.14159265359</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;3.14159265359</div></div><!-- fragment --><p>As mesmas regras de composição que se aplicam a funções integradas também se aplicam a funções definidas por programadores, então podemos usar qualquer tipo de expressão como um argumento para <code>imprima_duas_vezes</code>:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; imprima_duas_vezes(<span class="stringliteral">&#39;Spam &#39;</span>*4)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;Spam Spam Spam Spam</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Spam Spam Spam Spam</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&gt;&gt;&gt; imprima_duas_vezes(math.cos(math.pi))</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;-1.0</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;-1.0</div></div><!-- fragment --><p>O argumento é avaliado antes que a função seja chamada, então nos exemplos acima as expressões <code>'Spam '*4 </code> e <code>math.cos(math.pi)</code> são avaliadas apenas uma vez.</p>
+<p>Você também pode usar um variável como um argumento:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; michael = <span class="stringliteral">&#39;Eric, a metade de uma abelha.&#39;</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&gt;&gt;&gt; imprima_duas_vezes(michael)</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Eric, a metade de uma abelha.</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Eric, a metade de uma abelha.</div></div><!-- fragment --><p>O nome do variável que passamos como um argumento (<code>michael</code>) não tem nada a ver com o nome do parâmetro (<code>bruce</code>). Não importa que nome o valor tinha no chamador; aqui em <code>imprima_duas_vezes</code>, chamamos todos de <code>bruce</code>.</p>
+<h1><a class="anchor" id="sec3_8"></a>
+3.8 Variáveis e parâmetros são locais</h1>
+<p>Quando você cria um variável dentro de uma função, ele é <b>local</b>, que significa que ele existe somente dentro da função. Por exemplo:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">def </span>concatene_duas_vezes(parte1, parte2):</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    cat = parte1 + parte2</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    imprima_duas_vezes(cat)</div></div><!-- fragment --><p>Esta função recebe dois argumentos, os concatena, e imprime o resultado duas vezes. Aqui está um exemplo que o usa:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; linha1 = <span class="stringliteral">&#39;Bim tidde &#39;</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&gt;&gt;&gt; linha2 = <span class="stringliteral">&#39;tidde bam.&#39;</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;&gt;&gt;&gt; concatene_duas_vezes(linha1, linha2)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Bim tidde tidde bam.</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;Bim tidde tidde bam.</div></div><!-- fragment --><p>Quando <code>concatene_duas_vezes</code> termina, o variável <code>cat</code> é destruído. Se tentamos imprimí-lo, teremos uma exceção:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; print(cat)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;NameError: name <span class="stringliteral">&#39;cat&#39;</span> <span class="keywordflow">is</span> <span class="keywordflow">not</span> defined</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;[ErroDeNome]: o nome <span class="stringliteral">&#39;cat&#39;</span> não está definido]</div></div><!-- fragment --><p>Parâmetros também são locais. Por exemplo, fora de <code>imprima_duas_vezes</code>, não há essa coisa de <code>bruce</code>.</p>
+<h1><a class="anchor" id="sec3_9"></a>
+3.9 Diagramas de pilha</h1>
+<p>Para controlar onde quais variáveis podem ser usadas, às vezes é útil desenhar uma <b>diagrama de pilha</b>. Como diagramas de estado, diagramas de pilha mostram o valor de cada variável, mas também mostram a qual função cada variável pertence.</p>
+<p>Cada função é representada por um <b>frame</b> (quadro). Um frame é uma caixa com o nome da função ao lado, e os parâmetros e variáveis da função dentro dela. O diagrama de pilha para o último exemplo é exibida na figura 3.1.</p>
+<div class="image">
+<img src="figures/fig3_1.png"  alt="Figura 3.1"/>
+</div>
+<center>Figura 3.1 Diagrama de pilha</center><p>Os frames são organizados numa pilha que indica qual função chamou qual outra, e assim por diante. Nesse exemplo, <code>imprima_duas_vezes</code> foi chamada por <code>concatene_duas_vezes</code>, e <code>concatene_duas_vezes</code> foi chamada por <code>__main__</code>, que é um nome especial para o frame mais alto. Quando você cria um variável fora de qualquer função, ele pertence a <code>__main__</code>.</p>
+<p>Cada parâmetro se refere ao mesmo valor do argumento correspondente. Então, <code>parte1</code> tem o mesmo valor que <code>linha1</code>, <code>parte2</code> tem o mesmo valor que <code>linha2</code>, e <code>bruce</code> tem o mesmo valor que <code>cat</code>.</p>
+<p>Se um erro ocorrer durante uma chamada de função, Python imprime o nome de função, o nome da função que o chamou, e o nome da função que chamou <em>aquilo</em>, andando o caminho todo até chegar a <code>__main__</code>.</p>
+<p>Por exemplo, se você tentar acessar <code>cat</code> do interior de <code>imprima_duas_vezes</code>, você recebe um <code>NameError</code>:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;Traceback (most recent call last):</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;  File <span class="stringliteral">&quot;cap03.py&quot;</span>, line 10, <span class="keywordflow">in</span> &lt;module&gt;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;  [Arquivo <span class="stringliteral">&quot;cap03.py&quot;</span>, linha 10, em &lt;módulo&gt;]</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;    concatene_duas_vezes(linha1, linha2)</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;  File <span class="stringliteral">&quot;cap03.py&quot;</span>, line 8, <span class="keywordflow">in</span> concatene_duas_vezes</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    imprima_duas_vezes(cat)</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  File <span class="stringliteral">&quot;cap03.py&quot;</span>, line 4, <span class="keywordflow">in</span> imprima_duas_vezes</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    print(cat)</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;NameError: <span class="keyword">global</span> name <span class="stringliteral">&#39;cat&#39;</span> <span class="keywordflow">is</span> <span class="keywordflow">not</span> defined</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;[ErroDeNome: nome <span class="keyword">global</span> <span class="stringliteral">&#39;cat&#39;</span> não está definido] </div></div><!-- fragment --><p>Essa lista de funções é chamado <b>traceback</b>. Ele te diz em qual arquivo do programa o erro ocorreu, em qual linha do código, e quais funções estavam executando naquele momento.</p>
+<p>A ordem das funções no traceback é a mesma que a ordem dos quadros no diagrama de pilha. A função em execução no momento está embaixo.</p>
+<h1><a class="anchor" id="sec3_10"></a>
+3.10 Funções frutíferas e procedimentos</h1>
+<p>Algumas das funções que usamos, como as funções matemáticas, devolvem resultados; pela falta de um nome melhor, os chamo <b>funções frutíferas</b>. Outras funções, como <code>imprima_duas_vezes</code>, realizam uma ação mas não devolvem um valor. São chamadas <b>procedimentos</b>.</p>
+<p>Quando você chama uma função frutífera, quase sempre quer fazer algo com o resultado; por exemplo, você poderia atribuí-lo a um variável ou usá-lo como parte de uma expressão:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;x = math.cos(radianos)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;áurea = (math.sqrt(5) + 1) / 2</div></div><!-- fragment --><p>Quando você chama uma função no modo interativo, Python exibe o resultado:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; math.sqrt(5)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;2.23606797749979</div></div><!-- fragment --><p>Mas num script, se você chamar uma função frutífera por si só, o valor devolvido é perdido para sempre!</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;math.sqrt(5)</div></div><!-- fragment --><p>Este script calcula a raiz quadrada de 5, mas como não salva nem exibe o resultado, ele não é muito útil.</p>
+<p>Procedimentos podem exibir algo na tela ou haver um outro efeito, mas não têm um valor devolvido. Se você atribuir o resultado a um variável, você terá um valor especial chamado <code>None</code>.</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; resultado = imprima_duas_vezes(<span class="stringliteral">&quot;Bim&quot;</span>)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;Bim</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Bim</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;&gt;&gt;&gt; print(resultado)</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keywordtype">None</span></div></div><!-- fragment --><p>O valor <code>None</code> não é a mesma coisa que a string <code>'None'</code>. É um valor especial que tem o seu próprio tipo:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; print(type(<span class="keywordtype">None</span>))</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;&lt;<span class="keyword">class </span><span class="stringliteral">&#39;NoneType&#39;</span>&gt;</div></div><!-- fragment --><p>As funções que temos escrito até agora foram todos procedimentos. Vamos escrever funções frutíferas em alguns capítulos.</p>
+<h1><a class="anchor" id="sec3_11"></a>
+3.11 Por que funções?</h1>
+<p>Pode não estar claro por que vale a pena dividir um programa em funções. Existem vários motivos:</p>
+<ul>
+<li>Criar uma função te dá uma oportunidade de nomear um grupo de instruções, que faz seu programa mais fácil de ler e depurar.</li>
+<li>Funções podem fazer um programa mais curto por ter eliminado código repetitivo. Depois, se tiver que fazer uma mudança, você precisa fazê-lo em apenas um lugar.</li>
+<li>Dividir um programa comprido em funções te permite a depurar as partes um por um e depois unir-los num conjunto operacional.</li>
+<li>Funções bem-concebidas geralmente são úteis para vários programas. Uma vez que você a escreva e a depure, poderá reutilizá-la.</li>
+</ul>
+<h1><a class="anchor" id="sec3_12"></a>
+3.12 Depuração</h1>
+<p>Uma das habilidades mais importantes que adquirirá é a depuração. Apesar de que possa ser frustrante, a depuração é uma das partes mais intelectualmente ricas, desafiadoras, e interessantes da programação.</p>
+<p>Em algumas maneiras, depuração é como trabalho de detetive. Você está perante pistas e tem que inferir os processos e eventos que levaram aos resultados que vê.</p>
+<p>Depuração é também como uma ciência experimental. Uma vez que você faça uma ideia sobre o que está dando errado, você modifica seu programa e tenta novamente. Se sua hipótese estava correta, você pode prever o resultado da modificação, e dará um passo pra frente, mais próximo a um programa funcional. Se sua hipótese estivesse errada, você terá que elaborar uma nova. Como Sherlock Holmes apontou, "Quando você tenha eliminado o impossível, o que sobrar, não importa o quanto improvável, tem que ser a verdade" (A. Conan Doyle, <em>O signo dos quatro</em>).</p>
+<p>Para algumas pessoas, programar e depurar são a mesma coisa. Isto é, programar é o processo de gradualmente depurar um programa até que faça o que você quer. A ideia é que você deve começar com um programa funcional e fazer pequenas modificações, depurando à medida que progrida.</p>
+<p>Por exemplo, Linux é um sistema operacional que contém milhões de linhas de código, mas começou como um simples programa que Linus Torvalds usou para explorar o chip Intel 80386. Segundo Larry Greenfield, "um dos projetos anteriores de Linus foi um programa que alternava entre imprimir AAAA e BBBB. Depois, isso evoluiu para o Linux" (<em>The Linux Users' Guide</em> versão beta 1).</p>
+<h1><a class="anchor" id="sec3_13"></a>
+3.13 Glossário</h1>
+<p><b>função:</b> Uma sequência nomeada de instruções que realizam alguma operação útil. Funções podem ou não receber argumentos e podem ou não produzir um resultado.</p>
+<p><b>definição de função:</b>: Uma instrução que cria uma função nova, especificando seu nome, parâmetros, e as instruções que ela contém.</p>
+<p><b>objeto-função:</b> Um valor criado por uma definição de função. O nome da função é um variável que se refere a um objeto-função.</p>
+<p><b>cabeçalho:</b> A primeira linha de fuma definição de função.</p>
+<p><b>corpo:</b> A sequência de instruções dentro de uma definição de função.</p>
+<p><b>parâmetro:</b> Um nome usado dentro de uma função para referir ao valor passado como um argumento.</p>
+<p><b>chamada de função:</b> Uma instrução que executa uma função. Ela é composta pelo nome da função seguida por uma lista de argumentos em parênteses.</p>
+<p><b>argumento:</b> Um valor fornecido para uma função quando a função é chamada. Esse valor é atribuido ao parâmetro correspondente na função.</p>
+<p><b>variável local:</b> Uma variável definida dentro de uma função. Um variável local só pode ser usado dentro da sua função.</p>
+<p><b>valor devolvido:</b> O resultado de uma função. Se uma chamada de função é usada como uma expressão, o valor devolvido é o valor da expressão.</p>
+<p><b>função frutífera:</b> Uma função que devolve um valor.</p>
+<p><b>procedimento:</b> Uma função que sempre devolve <code>None</code>.</p>
+<p><code>**None:**</code> Um valor especial devolvido por procedimentos.</p>
+<p><b>módulo:</b> Um arquivo que contém uma coleção de funções relacionadas e outras definições.</p>
+<p><b>instrução import:</b> Uma instrução que lê um arquivo módulo e cria um objeto-módulo.</p>
+<p><b>objeto-módulo:</b> Um valor criado por uma instrução <code>import</code> que dá acesso aos valores definidos num módulo.</p>
+<p><b>notação de ponto:</b> A sintaxe para chamar uma função num outro módulo, especificando o nome do módulo seguido por um ponto e o nome da função.</p>
+<p><b>composição:</b> Uso de uma expressão como parte de uma expressão maior, ou uma instrução como parte de uma instrução maior.</p>
+<p><b>fluxo de execução:</b> A ordem em que as instruções executam.</p>
+<p><b>diagrama de pilha:</b> A representação gráfica de uma pilha de funções, seus variáveis, e os valores aos quais se referem.</p>
+<p><b>frame:</b> Um quadro numa diagrama de pilha que representa uma chamada de função. Ele contém os variáveis locais e parâmetros da função.</p>
+<p><b>traceback:</b> A lista de funções que estão executando, impressa quando ocorre uma exceção.</p>
+<h1><a class="anchor" id="sec3_14"></a>
+3.14 Exercícios</h1>
+<p><b>Exercício 3.1.</b> Escreva uma função chamada <code>alinhe_à_direita</code> que recebe uma string nomeada <code>s</code> como parâmetro e a imprime com espaços suficientes à esquerda, de modo que a última letra da string esteja na 70ª coluna da tela. </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&gt;&gt;&gt; alinhe_à_direita(<span class="stringliteral">&#39;monty&#39;</span>)</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                                                 monty</div></div><!-- fragment --><p>Dica: Use concatenação de strings e repetição. Além disso, Python fornece uma função integrada chamada <code>len</code> (abreviação de <em>length</em>, ou comprimento), que devolve o tamanho de uma string. O valor de <code>len('monty')</code> é 5.</p>
+<p><b>Exercício 3.2.</b> Um objeto-função é um valor que você pode atribuir a um variável ou passar como um argumento. Por exemplo, <code>faça_duas_vezes</code> é uma função que recebe um objeto-função como um argumento e o chama duas vezes:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">def </span>faça_duas_vezes(f):</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    f()</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    f()</div></div><!-- fragment --><p>Aqui está um exemplo que usa <code>faça_duas_vezes</code> para chamar uma função nomeada <code>imprima_spam</code> duas vezes:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">def </span>imprima_spam():</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    print(<span class="stringliteral">&#39;spam&#39;</span>)</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;faça_duas_vezes(imprima_spam)</div></div><!-- fragment --><ol type="1">
+<li>Digite este exemplo num script e teste-o.</li>
+<li>Modifique <code>faça_duas_vezes</code> para que receba dois argumentos, um objeto-função e um valor, e chame a função duas vezes, passando o valor como um argumento.</li>
+<li>Copie a definição de <code>imprima_duas_vezes</code> feita anteriormente neste capítulo pro seu script.</li>
+<li>Use a versão modificada de <code>faça_duas_vezes</code> para chamar <code>imprima_duas_vezes</code> duas vezes, passando <code>'spam'</code> como argumento.</li>
+<li>Defina uma nova função chamada <code>faça_quatro_vezes</code> que recebe um objeto-função e um valor e chama a função quatro vezes, passando o valor como argumento. Devem ter apenas duas instruções no corpo dessa função, não quatro.</li>
+</ol>
+<p><a href="respostas/faca_quatro_vezes.py">Resposta</a></p>
+<p><b>Exercício 3.3.</b> Obs: Este exercício deve ser completada usando somente instruções e outros recursos que aprendemos até agora.</p>
+<ol type="1">
+<li>Escreva uma função que desenha uma grade como a seguinte:</li>
+</ol>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;+ - - - - + - - - - +</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;|         |         |</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;|         |         |</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;|         |         |</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;|         |         |</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;+ - - - - + - - - - +</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;|         |         |</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;|         |         |</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;|         |         |</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;|         |         |</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;+ - - - - + - - - - +</div></div><!-- fragment --><p>Dica: para imprimir mais de um valor numa linha, você pode passar a <code>print</code> uma sequência de valores strings como argumentos:</p>
+<p><code>print('+', '-')</code></p>
+<p>Por padrão, <code>print</code> avança à linha seguinte, mas você pode ignorar esse comportamento e pôr um espaço no final, assim:</p>
+<p>print('+', end='') print('-')</p>
+<p>A saída dessas instruções é '+ -.</p>
+<p>Uma instrução <code>print</code> sem argumentos termina a linha atual e vai à próxima linha.</p>
+<ol type="1">
+<li>Escreva uma função que desenha uma grade parecida com quadro linhas e quatro colunas.</li>
+</ol>
+<p><a href="respostas/grade.py">Resposta</a></p>
+<p><em>Crédito: Esse exercício é baseado num exercício em Oualline,</em> Practical C Programming, terceira edição, <em>O'Reilly Media, 1997.</em></p>
+<p><a class="el" href="sec4.html">Próxima página &gt;&gt;</a> </p>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Gerado por
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
+  </ul>
+</div>
+</body>
+</html>

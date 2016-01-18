@@ -1,0 +1,19 @@
+a {
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: 20px;
+}
+
+.level1 a {
+    text-decoration: none;
+}
+
+#projectname {
+    font: 150% Tahoma, Arial, sans-serif;
+}
+
+.lineno {
+    display: none;
+}

@@ -1,4 +1,4 @@
-# Licença
+# Licença {#license}
 
 Think Python: How to Think Like a Computer Scientist
 
@@ -6,7 +6,7 @@ Copyright (c) 2012, 2015 Allen B. Downey.
 
 http://thinkpython2.com/
 
-Tradução por Heitor Chang
+Tradução em português de Heitor Chang
 
 *Think Python*'s License: [Creative Commons Attribution-NonCommercial 3.0 Unported License] (http://creativecommons.org/licenses/by-nc/3.0/)
 

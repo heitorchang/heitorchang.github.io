@@ -1,0 +1,5 @@
+04 jan 2016 p14 ch02, 2.9 Glossary, expression
+05 jan 2016 p20 ch03, 3.4 Adding new functions
+06 jan 2016 p22 ch03
+07 jan 2016 p25 ch03, 3.12 Debugging
+08 jan 2016 p29 ch04 [beginning]

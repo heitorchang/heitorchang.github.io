@@ -1,0 +1,17 @@
+current workflow:
+
+Use thinkpython2.pdf (2nd ed. version 2.2.15) as the source
+
+find translations from linguee.com, wordreference.com and priberam.pt/dlpo.
+
+Use python_para_desenvolvedores as a second source
+
+Find out glossary terms from the portuguese version of think python (thinkpython_port) and Pense Python 2's consolidated glossary
+
+at the end, re-read the whole book side-by-side with the PDF
+
+Build final version in Ubuntu (omits the unnecessary word Documentacao in index)
+
+Translate code and solutions from http://greenteapress.com/thinkpython2/code/
+
+Submit cogitepython.github.io URL to Google

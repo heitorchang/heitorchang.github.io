@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Drawing board for Think Python figures</title>
+        <style>
+            body {
+                margin: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="800" height="600"></canvas>
+        
+        <script>
+         var canvas = document.getElementById('myCanvas');
+         var ctx = canvas.getContext('2d');
+         ctx.fillStyle = 'black';
+
+         /**
+          * Available functions:
+          * 
+          * box(cornerX, cornerY, width, height, fill) 
+          * line(beginX, beginY, endX, endY, isDashed) 
+          * arrow(beginX, beginY, endX, endY, isHollow) 
+          * arcArrow(beginX, beginY, radius) 
+          * text(x, y, str, fontSize)
+          */
+         
+         // Always begin boxes at 0, 0 and first text (10, 15) from box corner
+         // line spacing between regular text is 22 pixels
+         
+         // box
+         function box(cornerX, cornerY, width, height, fill) {
+             fill = fill || "#DDD";
+             ctx.beginPath();
+             ctx.rect(cornerX, cornerY, width, height);
+             ctx.fillStyle = fill;
+             ctx.fill();
+             ctx.lineWidth = 1;
+             ctx.strokeStyle = 'black';
+             ctx.stroke();
+         }
+
+         function boxCorners(tlCornerX, tlCornerY, brCornerX, brCornerY, fill) {
+             var width = brCornerX - tlCornerX;
+             var height = brCornerY - tlCornerY;
+             box(tlCornerX, tlCornerY, width, height, fill);
+         }         
+         
+         // line, plain and dashed
+         function line(beginX, beginY, endX, endY, isDashed) {
+             isDashed = isDashed || false;
+             if (isDashed) {
+                 ctx.setLineDash([3, 5]);
+             } else {
+                 ctx.setLineDash([]);
+             }
+             
+             ctx.beginPath();
+             ctx.moveTo(beginX, beginY);
+             ctx.lineWidth = 1;
+             ctx.lineTo(endX, endY);
+             ctx.stroke();
+         }
+         
+         // arrow, plain and hollow triangle head
+         function arrow(beginX, beginY, endX, endY, isHollow) {
+             isHollow = isHollow || false;
+             
+             var headLength = 11;
+             var headWidth = 4;
+
+             if (isHollow) {
+                 headLength = 9;
+                 headWidth = 7;
+             }
+             
+             var dx = endX - beginX;
+             var dy = endY - beginY;
+
+             var headAngleDegrees = 90;
+             var headAngle = headAngleDegrees * (Math.PI / 180);
+
+             var lineAngle = Math.atan(Math.abs(dy) / Math.abs(dx));
+             var lineAngleDegrees = lineAngle * (180 / Math.PI);
+             
+             var headBaseAngle = (90 - lineAngleDegrees + headAngleDegrees) * (Math.PI / 180);
+             
+             var xDirection = dx >= 0 ? 1 : -1;
+             var yDirection = dy >= 0 ? 1 : -1;
+             
+             var headBaseOnLineX = endX - xDirection * Math.cos(lineAngle) * headLength;
+             var headBaseOnLineY = endY - yDirection * Math.sin(lineAngle) * headLength;
+
+             var headLeftEndX = headBaseOnLineX - xDirection * Math.sin(headBaseAngle) * headWidth;
+             var headLeftEndY = headBaseOnLineY - yDirection * Math.cos(headBaseAngle) * headWidth;
+
+             var headRightEndX = headBaseOnLineX + xDirection * Math.sin(headBaseAngle) * headWidth;
+             var headRightEndY = headBaseOnLineY + yDirection * Math.cos(headBaseAngle) * headWidth;
+
+             if (isHollow) {
+                 line(endX, endY, headLeftEndX, headLeftEndY);
+                 line(endX, endY, headRightEndX, headRightEndY);
+                 line(headLeftEndX, headLeftEndY, headRightEndX, headRightEndY);
+                 line(beginX, beginY, headBaseOnLineX, headBaseOnLineY);
+             } else {
+                 line(endX, endY, headLeftEndX, headLeftEndY);
+                 line(endX, endY, headRightEndX, headRightEndY);                
+                 line(beginX, beginY, endX, endY);
+             }
+         }
+         
+         // arc arrow
+         function arcArrow(beginX, beginY, radius) {
+             // assume arc is right half of a circle and the arrow
+             // is on top of arc, pointing left, because it is the only
+             // time an arc arrow appears in the figures.
+
+             var startAngle = 1.5 * Math.PI;
+             var endAngle = 0.5 * Math.PI;
+
+             var xOffset = 10;
+             beginX += xOffset;
+
+             beginY = beginY - radius;
+             ctx.beginPath();
+             ctx.arc(beginX, beginY, radius, startAngle, endAngle, false);
+             ctx.lineWidth = 1;
+             ctx.strokeStyle = 'black';
+             ctx.stroke();
+
+             var endY = beginY - radius;
+             arrow(beginX, endY, beginX - xOffset, endY);
+             line(beginX - xOffset, beginY + radius, beginX, beginY + radius);
+         }
+         
+         // text
+         function text(x, y, str, fontSize) {
+             fontSize = fontSize || "12pt";
+
+             // assume fontSize is at least 10pt, (2 characters long)
+             var fontHeight = parseInt(fontSize.substr(0, 2), 10);
+             ctx.font = fontSize + " Lucida";
+             ctx.fillStyle = "black";
+             ctx.fillText(str, x, y + fontHeight / 2);
+         }
+
+         // dictionary
+         function dictionary(x, y, entries, drawArrows) {
+             entries.splice(0, 0, ['','']);
+             
+             if (drawArrows === undefined) {
+                 drawArrows = true;
+             }
+             
+             var rows = entries.length;
+             var lineHeight = 25;
+
+             var arrowLength = 45;
+
+             var xOffset = x;
+             var yOffset = y - lineHeight;
+
+
+             // determine max width of keys
+             var maxKeyWidth = 0;
+             for (var i = 0; i < rows; i++) {
+                 var key = entries[i][0];
+                 var keyWidth = ctx.measureText(key).width;
+                 if (keyWidth > maxKeyWidth) {
+                     maxKeyWidth = keyWidth;
+                 }
+             }
+
+             // determine max width of values
+             var maxValueWidth = 0;
+             for (var i = 0; i < rows; i++) {
+                 var value = entries[i][1];
+                 var valueWidth = ctx.measureText(value).width;
+                 if (valueWidth > maxValueWidth) {
+                     maxValueWidth = valueWidth;
+                 }
+             }
+
+             xOffset += maxKeyWidth;
+             
+             for (var i = 0; i < rows; i++) {
+                 var key = entries[i][0];
+                 var value = entries[i][1];
+                 text(xOffset + maxKeyWidth - ctx.measureText(key).width,
+                      yOffset, key);
+
+                 if (i > 0 && drawArrows && key !== '') {
+                     arrow(xOffset + 8 + maxKeyWidth, yOffset, xOffset + maxKeyWidth + arrowLength, yOffset);
+                 }
+
+                 text(xOffset + 8 + maxKeyWidth + arrowLength, yOffset, value);
+                 yOffset += lineHeight;
+             }
+         }
+
+         // draw grid
+         function grid(show) {
+             if (show) {
+                 for (var i = 0; i <= 6; i++) {
+                     var t = i * 100;
+                     line(t, 0, t, 3);
+                     line(0, t, 3, t);
+                 }
+             }
+         }
+
+         // grid(true);
+
+         // http://stackoverflow.com/questions/1114465/getting-mouse-location-in-canvas
+         function getMousePos(canvas, evt) {
+             var rect = canvas.getBoundingClientRect();
+             return {
+                 x: evt.clientX - rect.left,
+                 y: evt.clientY - rect.top
+             };
+         }
+         canvas.addEventListener('click', function(evt) {
+             var mousePos = getMousePos(canvas, evt);
+             console.log('Mouse position: ' + mousePos.x + ',' + mousePos.y);
+         }, false);
+         
+        </script>
+
+        <!-- name of figure commands' file -->
+        <!-- <script src="fig_dictionary.js"></script> -->
+        <script src="fig3_1.js"></script>
