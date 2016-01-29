@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Conway's Game of Life on a Canvas</title>
+  </head>
+  <body>
+    <button id="step">Step</button> <button id="run">Run</button>
+    <button id="stop">Stop</button> <button id="clear">Clear</button>
+    <hr>
+    <canvas id="canvas"></canvas>
+
+    <!-- add library from JSBin dropdown -->
+    <script src="../external/js/jquery-2.2.0.min.js"></script>
+    <script>
+     "use strict";
+     
+     var canvas = document.getElementById("canvas");
+     var context = canvas.getContext("2d");
+
+     // configuration, uses global variables for simplicity
+     canvas.width = 500;
+     canvas.height = 500;
+
+     var cellSize = 12;  // used in cell drawing and mouse click detection
+     var cellAliveColor = "purple";
+     var cellDeadColor = "white";
+     var cellBorderColor = "lightBlue";
+     
+     var gridRows = 30;
+     var gridCols = 20;
+
+     var running;  // used for animation
+     var frameStep = 100;  // milliseconds
+
+     function Cell() {
+       this.alive = false;
+       this.nextGenAlive = false;  // temp variable for progressing generations
+     }
+
+     Cell.prototype.draw = function(row, col) {
+       // row and col are relevant only to the grid, so these values are not
+       // kept in each individual cell. We must pass these values to the
+       // drawing function to specify where to draw the cell.
+       
+       // adding 0.5 will position border stroke at center of pixel
+       // without it, the cell borders will appear blurred.
+       var cornerX = cellSize * col + 0.5;  
+       var cornerY = cellSize * row + 0.5;
+
+       var cellColor = this.alive ? cellAliveColor : cellDeadColor;
+
+       context.fillStyle = cellColor;
+       context.fillRect(cornerX, cornerY, cellSize, cellSize);
+
+       context.lineWidth = 1;
+       context.strokeStyle = cellBorderColor;
+       context.strokeRect(cornerX, cornerY, cellSize, cellSize);
+     }
+
+     function Grid(rows, cols) {
+       this.rows = rows;
+       this.cols = cols;
+       
+       this.cells = [];  // outer array holds rows, and each row holds cols.
+
+       for (var row = 0; row < this.rows; row++) {
+         this.cells[row] = [];  // initialize array of cols
+         for (var col = 0; col < this.cols; col++) {
+           this.cells[row][col] = new Cell();
+         }
+       }
+       this.draw();
+     }
+
+     Grid.prototype.draw = function() {
+       for (var row = 0; row < this.rows; row++) {
+         for (var col = 0; col < this.cols; col++) {
+           this.cells[row][col].draw(row, col);
+         }
+       }
+     }
+
+     canvas.addEventListener('click', function(event) {
+       var boundingRect = this.getBoundingClientRect();
+       var x = event.clientX - boundingRect.left;
+       var y = event.clientY - boundingRect.top;
+       
+       var row = Math.floor(y / cellSize);
+       var col = Math.floor(x / cellSize);
+       
+       if (row < grid.rows && col < grid.cols) {
+         grid.cells[row][col].alive = !grid.cells[row][col].alive;
+         grid.cells[row][col].draw(row, col);
+       }
+     });
+
+     // cell growth and time progression
+     Grid.prototype.countLiveNeighbors = function(row, col) {
+       var liveNeighbors = 0;
+       for (var r = row - 1; r <= row + 1; r++) {
+         for (var c = col - 1; c <= col + 1; c++) {
+           // skip cell itself
+           if (!(r == row && c == col)) {
+             // validate coordinates to prevent errors
+             if (r >= 0 && r < this.rows && c >= 0 && c < this.cols) {
+               if (this.cells[r][c].alive) {
+                 liveNeighbors++;
+               }
+             }
+           }
+         }
+       }
+       return liveNeighbors;
+     }
+     
+     Grid.prototype.cellNextGen = function(row, col) {
+       var liveNeighbors = this.countLiveNeighbors(row, col);
+       var cell = this.cells[row][col];
+       
+       // Wikipedia rules
+       if (this.cells[row][col].alive) {
+         // cell is currently alive, with 2 or 3 neighbors it remains alive
+         if (liveNeighbors == 2 || liveNeighbors == 3) {
+           cell.nextGenAlive = true;
+         } else {
+           cell.nextGenAlive = false;
+         }
+       } else {
+         // a dead cell with exactly three live neighbors comes to life
+         if (liveNeighbors == 3) {
+           cell.nextGenAlive = true;
+         } else {
+           cell.nextGenAlive = false;
+         }
+       }
+     }
+
+     Grid.prototype.gridNextGen = function() {
+       var row;
+       var col;
+       
+       // compute next generation cell-by-cell
+       for (row = 0; row < this.rows; row++) {
+         for (col = 0; col < this.cols; col++) {
+           this.cellNextGen(row, col);
+         }
+       }
+
+       // then update alive property. Must be done in two steps because all
+       // cells should update simultaneously, without partial results affecting
+       // their neighbors.
+       for (row = 0; row < this.rows; row++) {
+         for (col = 0; col < this.cols; col++) {
+           this.cells[row][col].alive = this.cells[row][col].nextGenAlive;
+         }
+       }
+
+       this.draw();
+     }
+
+     Grid.prototype.clearGrid = function() {
+       for (var r = 0; r < this.rows; r++) {
+         for (var c = 0; c < this.cols; c++) {
+           grid.cells[r][c].alive = false;
+         }
+       }
+       grid.draw();
+     };
+
+     // programmatically define cells
+     Grid.prototype.giveLife = function(row, col) {
+       this.cells[row][col].alive = true;
+     };
+
+     Grid.prototype.createCreature = function(coordinates) {
+       coordinates.forEach(function (point) {
+         // unpacks the row and column values from the pair and calls giveLife
+         this.giveLife.apply(this, point);
+       }, this);
+     }
+
+     // controls, using jQuery for simplicity
+     $("#step").click(function () {
+       grid.gridNextGen();
+     });
+
+     $("#run").click(function () {
+       running = setInterval(function() { grid.gridNextGen(); }, frameStep);
+       $(this).attr("disabled", true);
+     });
+
+     $("#stop").click(function () {
+       clearInterval(running);
+       $("#run").removeAttr("disabled");
+     });
+     
+     $("#clear").click(function () {
+       grid.clearGrid();
+     });
+
+
+     // initialize
+     var grid = new Grid(gridRows, gridCols);
+
+
+     // spaceships
+     var glider1 = [[15, 1],
+                    [15, 2],
+                    [15, 3],
+                    [16, 3],
+                    [17, 2]];
+     grid.createCreature(glider1);
+
+     var glider2 = [[2, 15],
+                    [3, 14],
+                    [4, 14],
+                    [4, 15],
+                    [4, 16]];
+     grid.createCreature(glider2);
+     
+     var spaceship = [[25, 7],
+                      [25, 8],
+                      [25, 9],
+                      [26, 7],
+                      [26, 10],
+                      [27, 7],
+                      [28, 7],
+                      [29, 8],
+                      [29, 10]];
+     grid.createCreature(spaceship);
+     grid.draw();
+    </script>
+  </body>
+</html>
