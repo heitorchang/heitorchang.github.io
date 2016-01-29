@@ -50,12 +50,12 @@
 
        var cellColor = this.alive ? cellAliveColor : cellDeadColor;
 
+       context.fillStyle = cellColor;
+       context.fillRect(cornerX, cornerY, cellSize, cellSize);
+
        context.lineWidth = 1;
        context.strokeStyle = cellBorderColor;
        context.strokeRect(cornerX, cornerY, cellSize, cellSize);
-
-       context.fillStyle = cellColor;
-       context.fillRect(cornerX, cornerY, cellSize, cellSize);
      }
 
      function Grid(rows, cols) {
