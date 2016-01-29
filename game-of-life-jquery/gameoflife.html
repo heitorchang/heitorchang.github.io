@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Conway's Game of Life w/ jQuery</title>
+    <script src="jquery-2.2.0.min.js"></script>
+
+    <style>
+     #board {
+         border-collapse: collapse;
+     }
+
+     .cell {
+         width: 10px;
+         height: 10px;
+         padding: 0;
+         border: 1px solid blue;
+         background: lightgray;
+     }
+
+     .live {
+         background: green;
+     }
+
+    </style>
+  </head>
+
+  <body>
+    Conway's Game of Life
+    <table id="board"></table>  
+    <button id="step">Step</button>
+    <button id="run">Run</button>
+    <button id="stop">Stop</button>
+    <button id="clear">Clear</button>
+    
+    <script>
+     "use strict";
+     
+     var rows = 32;
+     var cols = 25;
+
+     var running;
+     var frameStep = 150;  // milliseconds
+     
+     // state (dead or alive) is maintained by the presence of the "live" CSS
+     // class.
+     function createCell(rowNum, colNum) {
+       var id = "cell" + rowNum + "-" + colNum;
+       var cell = $("<td>", { id: id, class: "cell" });
+       cell.click(function() {
+         cell.toggleClass("live");
+       });
+       
+       return cell;
+     }
+
+     // merely a placeholder
+     function createRow(rowNum) {
+       var row = $("<tr>", { id: "row" + rowNum, class: "row"});
+       return row;
+     }
+
+     function initializeBoard(rows, cols) {
+       for (var row = 0; row < rows; row++) {
+         $("#board").append(createRow(row));
+         for (var col = 0; col < cols; col++) {
+           $("#row" + row).append(createCell(row, col));
+           $("#cell" + row + "-" + col).removeClass("live");
+         }
+       }
+       $("#run").removeAttr("disabled");
+     }
+
+     function resetBoard(rows, cols) {
+       for (var row = 0; row < rows; row++) {
+         for (var col = 0; col < cols; col++) {
+           $("#cell" + row + "-" + col).removeClass("live");
+         }
+       }
+     }
+
+     function countLiveNeighbors(row, col) {
+       var liveNeighbors = 0;
+       for (var r = row - 1; r <= row + 1; r++) {
+         for (var c = col - 1; c <= col + 1; c++) {
+           // skip cell itself
+           if (!(r == row && c == col)) {
+             // non-existent cell ids are silently ignored
+             if ($("#cell" + r + "-" + c).hasClass("live")) {
+               liveNeighbors++;
+             }
+           }
+         }
+       }
+       return liveNeighbors;
+     }
+
+     function cellNextGen(row, col) {
+       var cellId = "#cell" + row + "-" + col;
+       var liveNeighbors = countLiveNeighbors(row, col);
+       var nextGenAlive;
+
+       // Wikipedia rules
+       if ($(cellId).hasClass("live")) {
+         // cell is currently alive, with 2 or 3 neighbors it remains alive
+         if (liveNeighbors == 2 || liveNeighbors == 3) {
+           nextGenAlive = true;
+         } else {
+           nextGenAlive = false;
+         }
+       } else {
+         // a dead cell with exactly three live neighbors comes alive
+         if (liveNeighbors == 3) {
+           nextGenAlive = true;
+         } else {
+           nextGenAlive = false;
+         }
+       }
+       
+       $(cellId).data("nextGenAlive", nextGenAlive);
+
+       return nextGenAlive;
+     }
+
+     function boardNextGen() {
+       // compute next generation cell-by-cell
+       for (var cellRow = 0; cellRow < rows; cellRow++) {
+         for (var cellCol = 0; cellCol < cols; cellCol++) {
+           cellNextGen(cellRow, cellCol);
+         }
+       }
+
+       // then update to live class. Must be done in two steps because all
+       // cells should update simultaneously, without partial results affecting
+       // their neighbors.
+       for (var row = 0; row < rows; row++) {
+         for (var col = 0; col < cols; col++) {
+           var cellId = "#cell" + row + "-" + col;
+           if ($(cellId).data("nextGenAlive")) {
+             $(cellId).addClass("live");
+           } else {
+             $(cellId).removeClass("live");
+           }
+         }
+       }
+     }
+     
+     $("#step").click(function () {
+       boardNextGen();
+     });
+
+     $("#run").click(function () {
+       running = setInterval(boardNextGen, frameStep);
+       $(this).attr("disabled", true);
+     });
+
+     $("#stop").click(function () {
+       clearInterval(running);
+       $("#run").removeAttr("disabled");
+     });
+     
+     $("#clear").click(function () {
+       clearBoard();
+     });
+     
+     
+     function giveLife(row, col) {
+       $("#cell" + row + "-" + col).addClass("live");
+     }  
+
+     function placeCreature(coordinates) {
+       coordinates.forEach(function (point) {
+         giveLife.apply(null, point);
+         // unpacks the row and column values from the pair
+       });
+     }
+     
+     initializeBoard(rows, cols);
+
+
+     var glider = [[16, 2],
+                   [17, 3],
+                   [18, 1],
+                   [18, 2],
+                   [18, 3]];
+
+     placeCreature(glider);
+
+     var glider2 = [[28, 17],
+                   [27, 16],
+                   [26, 16],
+                   [26, 17],
+                   [26, 18]];
+
+     placeCreature(glider2);
+
+     // starburst
+     var starburst = [[2, 4],
+                      [2, 5],
+                      [2, 6],
+
+                      [2, 10],
+                      [2, 11],
+                      [2, 12],
+
+                      [4, 2],
+                      [5, 2],
+                      [6, 2],
+
+                      [4, 7],
+                      [5, 7],
+                      [6, 7],
+
+                      [4, 9],
+                      [5, 9],
+                      [6, 9],
+
+                      [4, 14],
+                      [5, 14],
+                      [6, 14],
+
+                      [7, 4],
+                      [7, 5],
+                      [7, 6],
+
+                      [7, 10],
+                      [7, 11],
+                      [7, 12],
+
+                      [9, 4],
+                      [9, 5],
+                      [9, 6],
+
+                      [9, 10],
+                      [9, 11],
+                      [9, 12],
+
+                      [10, 2],
+                      [11, 2],
+                      [12, 2],
+
+                      [10, 7],
+                      [11, 7],
+                      [12, 7],
+
+                      [10, 9],
+                      [11, 9],
+                      [12, 9],
+
+                      [10, 14],
+                      [11, 14],
+                      [12, 14],
+
+                      [14, 4],
+                      [14, 5],
+                      [14, 6],
+
+                      [14, 10],
+                      [14, 11],
+                      [14, 12],
+
+     ];
+     placeCreature(starburst);
+
+
+     function clearBoard() {
+       resetBoard(rows, cols);
+     }     
+     
+    </script>
+  </body>
