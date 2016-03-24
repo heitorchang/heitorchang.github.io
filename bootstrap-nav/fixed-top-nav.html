@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fixed top nav</title>
+
+    <link rel="stylesheet" href="/external/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/external/css/ie10-viewport-bug-workaround.css">
+
+    <style>
+     body {
+         padding: 70px 20px 10px 20px;
+     }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Trocar navegação</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">BrAlexie</a>
+        </div> <!-- navbar-header -->
+        
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Saldos <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#saldos_bens">Bens</a></li>
+                <li><a href="#saldos_despesas">Despesas</a></li>
+                <li><a href="#saldos_obrigacoes">Obrigações</a></li>
+                <li><a href="#saldos_receitas">Receitas</a></li>
+                <li><a href="#saldos_patrimonio">Patrimônio líquido</a></li>
+              </ul>
+            </li> <!-- saldos dropdown -->
+
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nova conta <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#contas_bens">Bens</a></li>
+                <li><a href="#contas_despesas">Despesas</a></li>
+                <li><a href="#contas_obrigacoes">Obrigações</a></li>
+                <li><a href="#contas_receitas">Receitas</a></li>
+                <li><a href="#contas_patrimonio">Patrimônio líquido</a></li>
+              </ul>
+            </li> <!-- contas dropdown -->
+
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transações <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#transacoes_despesa">Nova despesa</a></li>
+                <li><a href="#transacoes_receita">Nova receita</a></li>
+                <li><a href="#transacoes_criar_bens">Criar bens</a></li>
+                <li><a href="#transacoes_transferir_bens">Transferir bens</a></li>
+                <li><a href="#transacoes_outro">Outra transação</a></li>
+              </ul>
+            </li> <!-- transacoes dropdown -->
+
+            <li><a href="#meus_dados"><span class="glyphicon glyphicon-user"></span></a></li>
+          </ul> <!-- nav navbar-nav -->
+        </div> <!-- navbar -->
+      </div> <!-- container -->
+    </nav>
+
+    <section id="transaction_list"> <!-- transaction list -->
+      Transações<br>
+      Transações<br>
+      Transações<br>
+      Transações<br>
+      Transações<br>
+      Transações<br>
+      Transações<br>
+      Transações<br>
+      Transações<br>
+      Transações<br>
+    </section> <!-- transaction list -->
+     
+    <script src="/external/js/jquery.js"></script>
+    <script src="/external/js/bootstrap.min.js"></script>
+    <script src="/external/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script>
+     window.addEventListener("hashchange", function() {
+       console.log("detected hash change");
+       $("#transaction_list").html(location.hash);
+     });
+    </script>
+  </body>
+</html>
