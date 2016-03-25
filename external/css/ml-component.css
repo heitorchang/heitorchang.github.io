@@ -250,7 +250,7 @@ html, body, .container, .scroller {
 }
 
 .mp-back::after {
-	content: "\e037";
+	content: "";
 	position: absolute;
 	right: 10px;
 	color: rgba(0,0,0,0.3);
