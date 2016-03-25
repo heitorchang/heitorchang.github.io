@@ -22,70 +22,79 @@
 
         <nav id="mp-menu" class="mp-menu">
           <div class="mp-level">
-            <h2>All categories</h2>
+            <h2>Escolha uma opção</h2>
             <ul>
               <li>
-                <a href="#">Devices</a>
+                <a class="menuTopLevel" href="#">Saldos</a>
                 <div class="mp-level">
-                  <h2>Devices</h2>
-                  <a class="mp-back" href="#">Back</a>
+                  <h2>Saldos</h2>
+                  <a class="mp-back" href="#">Voltar</a>
                   <ul>
-                    <li><a href="#" onclick="activate('a');">Device A</a></li>
-                    <li><a href="#" onclick="activate('b');">Device B</a></li>
-                    <li><a href="#" onclick="activate('c');">Device C</a></li>
-                    <li><a href="#" onclick="activate('a');">Device A</a></li>
-                    <li><a href="#" onclick="activate('b');">Device B</a></li>
-                    <li><a href="#" onclick="activate('c');">Device C</a></li>
-                    <li><a href="#" onclick="activate('a');">Device A</a></li>
-                    <li><a href="#" onclick="activate('b');">Device B</a></li>
-                    <li><a href="#" onclick="activate('c');">Device C</a></li>
-                    <li><a href="#" onclick="activate('a');">Device A</a></li>
-                    <li><a href="#" onclick="activate('b');">Device B</a></li>
-                    <li><a href="#" onclick="activate('c');">Device C</a></li>
-                    <li><a href="#" onclick="activate('a');">Device A</a></li>
-                    <li><a href="#" onclick="activate('b');">Device B</a></li>
-                    <li><a href="#" onclick="activate('c');">Device C</a></li>
+                    <li><a class="contentLink" href="#saldos_bens">Bens</a></li>
+                    <li><a class="contentLink" href="#saldos_despesas">Despesas</a></li>
+                    <li><a class="contentLink" href="#saldos_obrigacoes">Obrigações</a></li>
+                    <li><a class="contentLink" href="#saldos_receitas">Receitas</a></li>
+                    <li><a class="contentLink" href="#saldos_patrimonio">Patrimônio líquido</a></li>
                   </ul>
-                </div> <!-- mp-level 2 -->
+                </div> <!-- mp-level saldos -->
+              </li> <!-- saldos -->
+              <li>
+                <a class="menuTopLevel" href="#">Nova conta</a>
+                <div class="mp-level">
+                  <h2>Nova conta</h2>
+                  <a class="mp-back" href="#">Voltar</a>
+                  <ul>
+                    <li><a class="contentLink" href="#contas_bens">Bens</a></li>
+                    <li><a class="contentLink" href="#contas_despesas">Despesas</a></li>
+                    <li><a class="contentLink" href="#contas_obrigacoes">Obrigações</a></li>
+                    <li><a class="contentLink" href="#contas_receitas">Receitas</a></li>
+                    <li><a class="contentLink" href="#contas_patrimonio">Patrimônio líquido</a></li>
+                  </ul>
+                </div> <!-- mp-level nova conta -->
+              </li> <!-- nova conta -->
+
+              <li>
+                <a class="menuTopLevel" href="#">Transações</a>
+                <div class="mp-level">
+                  <h2>Transações</h2>
+                  <a class="mp-back" href="#">Voltar</a>
+                  <ul>
+                    <li><a class="contentLink" href="#transacoes_despesa">Nova despesa</a></li>
+                    <li><a class="contentLink" href="#transacoes_receita">Nova receita</a></li>
+                    <li><a class="contentLink" href="#transacoes_criarBens">Criar bens</a></li>
+                    <li><a class="contentLink" href="#transacoes_transferirBens">Transferir bens</a></li>
+                    <li><a class="contentLink" href="#transacoes_outra">Outra transação</a></li>
+                  </ul>
+                </div> <!-- mp-level nova conta -->
+              </li> <!-- transacoes -->
+
+              <li>
+                <a class="contentLink" href="#meusDados">Meus Dados</a>
               </li>
-            </ul>
+              
+            </ul> <!-- escolha uma opcao -->
           </div> <!-- mp-level 1 -->
         </nav> <!-- mp-menu -->
         
 		<div class="scroller"><!-- this is for emulating position fixed of the nav -->
 		  <div class="scroller-inner">
-			<!-- Top Navigation -->
-			<div class="codrops-top clearfix">
-			  <a class="codrops-icon codrops-icon-prev" href="http://tympanus.net/Tutorials/CircularNavigation/"><span>Previous Demo</span></a>
-			  <span class="right"><a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=16252"><span>Back to the Codrops Article</span></a></span>
-			</div>
-			<header class="codrops-header">
-			  <h1>Multi-Level Push Menu <span>Off-screen navigation with multiple levels</span></h1>
-			</header>
 
-            <p id="myContent">
-            </p>
+            <div class="menuTriggerBlock clearfix">
+			  <p><a href="#" id="trigger" class="menu-trigger">BrAlexie</a></p>
+            </div> <!-- menu icon -->
+
+            <div class="myBlock clearfix">
+              <div id="mainContent">
+                My Content
+              </div> <!-- mainContent -->
+            </div> <!-- myBlock -->
             
-			<div class="content clearfix">
-			  <div class="block block-40 clearfix">
-				<p><a href="#" id="trigger" class="menu-trigger">Open/Close Menu</a></p>
-				<nav class="codrops-demos">
-				  <a href="index.html">Demo 1: Overlapping levels</a>
-				  <a class="current-demo" href="index2.html">Demo 2: Covering levels</a>
-				  <a href="index3.html">Demo 3: Overlapping levels with back links</a>
-				</nav>
-			  </div>
-			  <div class="block block-60">
-				<p><strong>Demo 2:</strong> Covering levels with back link</p>
-				<p>This menu will open by pushing the website content to the right. It has multi-level functionality, allowing endless nesting of navigation elements.</p>
-				<p>The next level can optionally overlap or cover the previous one.</p>
-			  </div>
-			</div>
 		  </div><!-- /scroller-inner -->
 		</div><!-- /scroller -->
 
 	  </div><!-- /pusher -->
 	</div><!-- /container -->
+	<script src="/external/js/jquery.js"></script>
 	<script src="/external/js/classie.js"></script>
 	<script src="/external/js/mlpushmenu.js"></script>
 	<script>
@@ -97,6 +106,23 @@
        mlMenu._resetMenu();
        document.getElementById("myContent").innerHTML = "activating " + s;
      }
+
+     // respond to menu clicks that change URL hash
+     window.addEventListener("hashchange", function() {
+       refreshContent();
+     });
+
+     $("a.contentLink").click(function() {
+       mlMenu._resetMenu();
+     });
+     
+     function refreshContent() {
+       $("#mainContent").html(location.hash);       
+     }
+
+     $(window).load(function() {
+       refreshContent();
+     });
 	</script>
   </body>
 </html>
