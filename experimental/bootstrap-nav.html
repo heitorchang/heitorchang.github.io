@@ -8,12 +8,7 @@
 
     <link rel="stylesheet" href="/external/css/bootstrap.min.css">
     <link rel="stylesheet" href="/external/css/ie10-viewport-bug-workaround.css">
-
-    <style>
-     body {
-         padding: 70px 20px 10px 20px;
-     }
-    </style>
+    <link rel="stylesheet" href="/css/bralexie.css">
   </head>
   <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -35,26 +30,6 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Saldos <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a class="contentLink" href="#saldos_bens">Bens</a></li>
-                <li><a class="contentLink" href="#saldos_despesas">Despesas</a></li>
-                <li><a class="contentLink" href="#saldos_obrigacoes">Obrigações</a></li>
-                <li><a class="contentLink" href="#saldos_receitas">Receitas</a></li>
-                <li><a class="contentLink" href="#saldos_patrimonio">Patrimônio líquido</a></li>
-                <li><a class="contentLink" href="#saldos_bens">Bens</a></li>
-                <li><a class="contentLink" href="#saldos_despesas">Despesas</a></li>
-                <li><a class="contentLink" href="#saldos_obrigacoes">Obrigações</a></li>
-                <li><a class="contentLink" href="#saldos_receitas">Receitas</a></li>
-                <li><a class="contentLink" href="#saldos_patrimonio">Patrimônio líquido</a></li>
-                <li><a class="contentLink" href="#saldos_bens">Bens</a></li>
-                <li><a class="contentLink" href="#saldos_despesas">Despesas</a></li>
-                <li><a class="contentLink" href="#saldos_obrigacoes">Obrigações</a></li>
-                <li><a class="contentLink" href="#saldos_receitas">Receitas</a></li>
-                <li><a class="contentLink" href="#saldos_patrimonio">Patrimônio líquido</a></li>
-                <li><a class="contentLink" href="#saldos_bens">Bens</a></li>
-                <li><a class="contentLink" href="#saldos_despesas">Despesas</a></li>
-                <li><a class="contentLink" href="#saldos_obrigacoes">Obrigações</a></li>
-                <li><a class="contentLink" href="#saldos_receitas">Receitas</a></li>
-                <li><a class="contentLink" href="#saldos_patrimonio">Patrimônio líquido</a></li>
-                <li><a class="contentLink" href="#saldos_bens">Bens Last</a></li>
                 <li><a class="contentLink" href="#saldos_despesas">Despesas</a></li>
                 <li><a class="contentLink" href="#saldos_obrigacoes">Obrigações</a></li>
                 <li><a class="contentLink" href="#saldos_receitas">Receitas</a></li>
@@ -90,7 +65,7 @@
       </div> <!-- container -->
     </nav>
 
-    <section id="transaction_list"> <!-- transaction list -->
+    <section id="mainContent">
       Transações<br>
       Transações<br>
       Transações<br>
@@ -101,22 +76,97 @@
       Transações<br>
       Transações<br>
       Transações<br>
-    </section> <!-- transaction list -->
-     
+    </section> <!-- mainContent -->
+    
     <script src="/external/js/jquery.js"></script>
     <script src="/external/js/bootstrap.min.js"></script>
     <script src="/external/js/ie10-viewport-bug-workaround.js"></script>
 
+    <script src="/js/sampleData.js"></script>
+    
     <script>
      window.addEventListener("hashchange", function() {
-       console.log("detected hash change");
-       $("#transaction_list").html(location.hash);
+       updateContent();
      });
-     
+
+     // Hide mobile menu on selection
      $("a.contentLink").click(function() {
        if ($("#btnCollapse").css('display') != 'none') {
          $("#btnCollapse").click();
        }
+     });
+
+     function setContent(content) {
+       $("#mainContent").html(content);
+     }
+
+     function accountTableContent(accounts, accountType) {
+       var table = '<table class="accountTable">';
+
+       // filter by account type, display name and balance
+       for (var i = 0; i < accounts.length; i++) {
+         var currrentAccount = accounts[i];
+         if (currrentAccount.accountType === accountType) {
+           table += "<tr>";
+           table += "  <td>" + currrentAccount.name + "</td>";
+           table += "  <td>" + currrentAccount.balance + "</td>";
+           table += "</tr>";
+         }
+       }
+       
+       table += "</table>";
+       return table;
+     }
+
+     function newAccountContent(accounts, accountType) {
+       var output = "Nova conta (" + accountType + ")<br>";
+       output += "<input type='text' size='10' class='newAccountName'>";
+       output += "<button type='button' onclick='addAccount();'>OK</button>";
+       
+       output += accountTableContent(accounts, accountType);
+       return output;
+     }
+
+     function addAccount() {
+       // XXX FOR DEBUG ONLY
+       var existingAccounts = sampleAccounts;
+       
+       // infer account type from hash and name from input id
+       var hashParts = location.hash.split("_");
+       var accountType = hashParts[1];
+       var accountName = $(".newAccountName").val();
+       console.log("add new acct type " + accountType + " " + accountName);
+       var newAccount = {
+         id: sampleAccounts.length + 1,
+         accountType: accountType,
+         name: accountName,
+         balance: 0,
+       };
+
+       existingAccounts.push(newAccount);
+       updateContent();
+     }
+     
+     function updateContent() {
+       if (location.hash !== "") {
+         var hashParts = location.hash.substr(1).split("_");
+         var action = hashParts[0];
+         var actionType = hashParts[1];
+       
+         if (action === "saldos") {
+           setContent(accountTableContent(sampleAccounts, actionType));
+         } else if (action === "contas") {
+           setContent(newAccountContent(sampleAccounts, actionType));  
+         } else if (action === "transacoes") {
+
+         } else {
+           console.log("Ação inválida: " + action);
+         }
+       }
+     }
+
+     $(window).load(function() {
+       updateContent();
      });
     </script>
   </body>
