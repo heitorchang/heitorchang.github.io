@@ -155,7 +155,8 @@ a:hover, a:focus {
 
 .block {
 	float: left;
-	padding: 1em 3em;
+	padding: 0.1em 0.1em 0.1em 3em;
+    border: 3px solid green;
 }
 
 .block-40 {
@@ -171,6 +172,26 @@ a:hover, a:focus {
 	padding: 0 1em 0.6em;
 	font-size: 1.8em;
 	line-height: 1.5;
+}
+
+.menuTriggerBlock {
+    margin: 0;
+    padding: 0 1em;
+    font-size: 1.8em;
+}
+
+.myBlock {
+    margin: 0;
+    padding: 0 1em;
+    font-size: 1em;
+}
+
+.mp-level ul li a.contentLink {
+    font-size: 1.2em;
+}
+
+.mp-level ul li a.menuTopLevel {
+    font-size: 1.2em;
 }
 
 @media screen and (max-width: 69em) {
