@@ -117,7 +117,9 @@
      });
      
      function refreshContent() {
-       $("#mainContent").html(location.hash);       
+       if (location.hash !== "") {
+         $("#mainContent").html(location.hash);       
+       }
      }
 
      $(window).load(function() {
