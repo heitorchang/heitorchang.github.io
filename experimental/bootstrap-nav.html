@@ -40,29 +40,29 @@
 
             <!--
             <li>
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transações <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Nova despesa</a></li>
-                <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Nova receita</a></li>
-                <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Definir saldo inicial</a></li>
-                <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Transferir bens</a></li>
-                <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Outra transação</a></li>
-                -->
-                
-                <!--
-                <li><a class="contentLink" href="#transacoes_despesa">Nova despesa</a></li>
-                <li><a class="contentLink" href="#transacoes_receita">Nova receita</a></li>
-                <li><a class="contentLink" href="#transacoes_definirSaldo">Definir saldo inicial</a></li>
-                <li><a class="contentLink" href="#transacoes_transferirBens">Transferir bens</a></li>
-                <li><a class="contentLink" href="#transacoes_outro">Outra transação</a></li>
-                -->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transações <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+            <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Nova despesa</a></li>
+            <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Nova receita</a></li>
+            <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Definir saldo inicial</a></li>
+            <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Transferir bens</a></li>
+            <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Outra transação</a></li>
+            -->
+            
+            <!--
+            <li><a class="contentLink" href="#transacoes_despesa">Nova despesa</a></li>
+            <li><a class="contentLink" href="#transacoes_receita">Nova receita</a></li>
+            <li><a class="contentLink" href="#transacoes_definirSaldo">Definir saldo inicial</a></li>
+            <li><a class="contentLink" href="#transacoes_transferirBens">Transferir bens</a></li>
+            <li><a class="contentLink" href="#transacoes_outro">Outra transação</a></li>
+            -->
 
-                <!--
-              </ul>
+            <!--
+            </ul>
             </li>
-                -->
-                <!-- transacoes dropdown -->
-                
+            -->
+            <!-- transacoes dropdown -->
+            
             <!-- TODO: move to "homepage" (#) content screen
             <li><a class="contentLink" href="#meus_dados">Meus dados <span class="glyphicon glyphicon-user"></span></a></li>
             -->
@@ -108,6 +108,8 @@
     </nav>
 
     <section id="mainContent">
+
+      <!--
       <table>
         <tr class="accountSummaryRow" data-href="#conta_0">
           <td>
@@ -122,6 +124,8 @@
       Tr<br>
       Tr<br>
       Tr -1<br>
+      -->
+      
     </section> <!-- mainContent -->
 
 
@@ -133,13 +137,18 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Nova conta</h4>
           </div>
-          <div class="modal-body">
-            <input type="text" class="form-control" placeholder="Nome" id="novaContaInput" autofocus>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="resetNovaContaModal();">Cancelar</button>
-            <button type="button" class="btn btn-primary" onclick="addAccount();" id="novaContaAdicionar" disabled>Adicionar</button>
-          </div>
+
+          <form class="modalForm">
+            
+            <div class="modal-body">
+              <input type="text" class="form-control" placeholder="Nome" id="novaContaInput" autofocus>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="resetNovaContaModal();">Cancelar</button>
+              <button type="submit" class="btn btn-primary" onclick="addAccount();" id="novaContaAdicionar" disabled>Adicionar</button>
+            </div>
+
+          </form>
         </div>
       </div>
     </div> <!-- end Nova Conta Modal -->
@@ -153,19 +162,27 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Nova transação</h4>
           </div>
-          <div class="modal-body">
-            Descrição: 
-            <input type="text" class="form-control" placeholder="Nome" id="novaTransacaoInput" autofocus>
-            
-            <br>
 
-            Valor:
-            <input type="text" class="form-control" placeholder="Nome" id="novaTransacaoInput">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="resetNovaTransacaoModal();">Cancelar</button>
-            <button type="button" class="btn btn-primary" onclick="addTransaction();" id="novaTransacaoAdicionar" disabled>Adicionar</button>
-          </div>
+          <form class="modalForm">
+
+            <div class="modal-body">
+              Descrição: 
+              <input type="text" class="form-control" placeholder="Nome" id="novaTransacaoInput" autofocus>
+              
+              <br>
+              
+              Valor:
+              <input type="text" class="form-control" placeholder="Nome" id="novaTransacaoInput">
+
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="resetNovaTransacaoModal();">Cancelar</button>
+              <button type="submit" class="btn btn-primary" onclick="addTransaction();" id="novaTransacaoAdicionar" disabled>Adicionar</button>
+            </div>
+
+            
+          </form>
         </div>
       </div>
     </div> <!-- end Nova Transação Modal -->
@@ -235,6 +252,12 @@
      
      $(document).on('shown.bs.modal', '.modal', function() {
        $(this).find('[autofocus]').focus();
+     });
+
+     $('.modalForm').submit(function(e) {
+       e.preventDefault();
+       $("#novaContaModal").modal('hide');
+       $("#novaTransacaoModal").modal('hide');
      });
     </script>
     
