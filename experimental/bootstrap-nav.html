@@ -27,6 +27,10 @@
           <ul class="nav navbar-nav">
 
             <!-- Begin Nav content -->
+
+            <li><a class="contentLink" href="#menuContas">Contas</a></li>
+            
+            <!--
             <li>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contas <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -36,7 +40,7 @@
                 <li><a class="contentLink" href="#contas_receitas">Receitas</a></li>
                 <li><a class="contentLink" href="#contas_patrimonio">Patrimônio líquido</a></li>
               </ul>
-            </li> <!-- contas dropdown -->
+            </li> --> <!-- contas dropdown -->
 
             <!--
             <li>
@@ -294,7 +298,7 @@
          var transaction = transactions[i];
          
          table += "<tr>";
-         table += "  <td>" + transaction.description + "</td>";
+         table += "  <td class='headerCell'>" + transaction.description + "</td>";
          table += "  <td class='numberCell'>" + transaction.amount + "</td>";
          table += "  <td>" + sampleAccounts[transaction.debit].name + "</td>";
          table += "  <td>" + sampleAccounts[transaction.credit].name + "</td>";
@@ -332,7 +336,7 @@
          var currentAccount = accounts[i];
          if (currentAccount.accountType === accountType) {
            table += '<tr class="accountSummaryRow" onclick="updateHash(\'#conta_' +currentAccount.id + '\');">';
-           table += "  <td>" + currentAccount.name + "</td>";
+           table += "  <td class='headerCell'>" + currentAccount.name + "</td>";
            table += "  <td class='numberCell'>" + currentAccount.balance + "</td>";
            table += "  <td class='numberCell'>" + currentAccount.balance + "</td>";
 
@@ -352,13 +356,13 @@
      function accountSummaryContent(allTransactions, allAccounts, accountId) {
        var accountType = allAccounts[accountId].accountType
        var output = "";
-       output += '<h4><a href="#contas_' + accountType + '"><span class="contentHeaderLabel">' + accountTypeNames[accountType] + '</span></a></h4>';
+       output += '<h4><span class="contentHeaderLabel"><a href="#menuContas">Contas</a> &gt; <a href="#contas_' + accountType + '">' + accountTypeNames[accountType] + '</a> &gt; ' + allAccounts[accountId].name + '</span></h4>';
 
        // add Transaction button
        output += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#novaTransacaoModal">Nova transação</button>';
 
-       output += "<br><br>";
-       output += '<span class="subHeaderLabel">' + allAccounts[accountId].name + '</span>';
+       // output += "<br><br>";
+       // output += '<span class="subHeaderLabel">' + allAccounts[accountId].name + '</span>';
 
        
        output += transactionsTable(getTransactions(allTransactions, accountId));
@@ -367,8 +371,8 @@
      
      function accountTypeSummaryContent(accounts, accountType) {       
        var output = "";
-       output += '<h4><span class="contentHeaderLabel">' + accountTypeNames[accountType] + '</span></h4>';
-
+       output += '<h4><span class="contentHeaderLabel"><a href="#menuContas">Contas</a> &gt; ' + accountTypeNames[accountType] + '</span></h4>';
+ 
        output += '<button type="button" class="btn btn-nova-conta" data-toggle="modal" data-target="#novaContaModal">Nova conta</button>';
 
        output += '<br>';
@@ -427,6 +431,19 @@
        }
        return filteredTransactions;
      }
+
+     function menuContas() {
+       // accountTypeNames
+       var output = "<h4>Contas</h4>";
+
+       output += "<h4><span class='contentHeaderLabel'><a href='#contas_bens'>Bens</a></span></h4>";
+       output += "<h4><span class='contentHeaderLabel'><a href='#contas_despesas'>Despesas</a></span></h4>";
+       output += "<h4><span class='contentHeaderLabel'><a href='#contas_obrigacoes'>Obrigações</a></span></h4>";
+       output += "<h4><span class='contentHeaderLabel'><a href='#contas_receitas'>Receitas</a></span></h4>";
+       output += "<h4><span class='contentHeaderLabel'><a href='#contas_patrimonio'>Patrimônio líquido</a></span></h4>";
+
+       return output;
+     }
      
      function updateContent() {
        if (location.hash !== "") {
@@ -439,6 +456,9 @@
            
          } else if (action === "transacoes") {
            setContent(actionObject);
+
+         } else if (action === "menuContas") {
+           setContent(menuContas());
            
          } else if (action === "conta") {
            var accountId = sampleAccounts[parseInt(actionObject, 10)].id ;
@@ -453,8 +473,10 @@
            console.log("Ação inválida: " + action);
          }
        } else {
+         var menuContasList = menuContas();
          var newTransactionButton = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#novaTransacaoModal">Nova transação</button>';
-         setContent("<h4><span class='contentHeaderLabel'>Últimas transações</span></h4>" + newTransactionButton + transactionsTable(sampleTransactions));
+         
+         setContent(menuContasList + "<br><h4>Últimas transações</h4>" + newTransactionButton + transactionsTable(sampleTransactions));
        }
      }
 
