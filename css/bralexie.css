@@ -1,9 +1,34 @@
 body {
-    padding: 70px 20px 10px 20px;
+    padding: 50px 20px 10px 20px;
 }
 
-.accountTable td {
+.summaryTable td {
     border-bottom: 1px solid #CCC;
-    padding: 0 1.5em 0 0;
-    
+    padding: 0.5em 1.5em 0.5em 0;
+}
+
+.contentHeaderLabel {
+    font-style: italic;
+}
+
+.subHeaderLabel {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.actionLabel {
+    font-weight: bold;
+}
+
+.numberCell {
+    text-align: right;
+}
+
+.headerCell {
+    font-weight: bold;
+}
+
+.btn-nova-conta {
+    background: #337733;
+    color: white;
 }

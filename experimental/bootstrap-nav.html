@@ -27,19 +27,6 @@
           <ul class="nav navbar-nav">
 
             <!-- Begin Nav content -->
-            
-            <!--
-            <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contas <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-            <li><a class="contentLink" href="#saldos_bens">Bens</a></li>
-            <li><a class="contentLink" href="#saldos_despesas">Despesas</a></li>
-            <li><a class="contentLink" href="#saldos_obrigacoes">Obrigações</a></li>
-            <li><a class="contentLink" href="#saldos_receitas">Receitas</a></li>
-            <li><a class="contentLink" href="#saldos_patrimonio">Patrimônio líquido</a></li>
-            </ul>
-            </li> --> <!-- Contas dropdown -->
-
             <li>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contas <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -51,17 +38,31 @@
               </ul>
             </li> <!-- contas dropdown -->
 
+            <!--
             <li>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transações <span class="caret"></span></a>
               <ul class="dropdown-menu">
+                <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Nova despesa</a></li>
+                <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Nova receita</a></li>
+                <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Definir saldo inicial</a></li>
+                <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Transferir bens</a></li>
+                <li><a class="contentLink" data-toggle="modal" data-target="#novaTransacaoModal">Outra transação</a></li>
+                -->
+                
+                <!--
                 <li><a class="contentLink" href="#transacoes_despesa">Nova despesa</a></li>
                 <li><a class="contentLink" href="#transacoes_receita">Nova receita</a></li>
-                <li><a class="contentLink" href="#transacoes_definir_bens">Definir bens</a></li>
-                <li><a class="contentLink" href="#transacoes_transferir_bens">Transferir bens</a></li>
+                <li><a class="contentLink" href="#transacoes_definirSaldo">Definir saldo inicial</a></li>
+                <li><a class="contentLink" href="#transacoes_transferirBens">Transferir bens</a></li>
                 <li><a class="contentLink" href="#transacoes_outro">Outra transação</a></li>
-              </ul>
-            </li> <!-- transacoes dropdown -->
+                -->
 
+                <!--
+              </ul>
+            </li>
+                -->
+                <!-- transacoes dropdown -->
+                
             <!-- TODO: move to "homepage" (#) content screen
             <li><a class="contentLink" href="#meus_dados">Meus dados <span class="glyphicon glyphicon-user"></span></a></li>
             -->
@@ -107,16 +108,20 @@
     </nav>
 
     <section id="mainContent">
-      Transações 01<br>
-      Transações 02<br>
-      Transações<br>
-      Transações<br>
-      Transações<br>
-      Transações<br>
-      Transações<br>
-      Transações<br>
-      Transações<br>
-      Transações -1<br>
+      <table>
+        <tr class="accountSummaryRow" data-href="#conta_0">
+          <td>
+            Conta 0
+          </td>
+        </tr>
+
+        
+      </table>
+      Tr 01<br>
+      Tr 02<br>
+      Tr<br>
+      Tr<br>
+      Tr -1<br>
     </section> <!-- mainContent -->
 
 
@@ -137,8 +142,34 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> <!-- end Nova Conta Modal -->
     
+
+    <!-- Nova Transação Modal -->
+    <div class="modal fade" id="novaTransacaoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Nova transação</h4>
+          </div>
+          <div class="modal-body">
+            Descrição: 
+            <input type="text" class="form-control" placeholder="Nome" id="novaTransacaoInput" autofocus>
+            
+            <br>
+
+            Valor:
+            <input type="text" class="form-control" placeholder="Nome" id="novaTransacaoInput">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="resetNovaTransacaoModal();">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="addTransaction();" id="novaTransacaoAdicionar" disabled>Adicionar</button>
+          </div>
+        </div>
+      </div>
+    </div> <!-- end Nova Transação Modal -->
+
     
     <script src="/external/js/jquery.js"></script>
     <script src="/external/js/bootstrap.min.js"></script>
@@ -150,6 +181,14 @@
      // content updates
      var currentMonth = 1;    // default date
      var currentYear = 2015;  // default date
+
+     var accountTypeNames = {
+       bens: "Bens",
+       despesas: "Despesas",
+       obrigacoes: "Obrigações",
+       receitas: "Receitas",
+       patrimonio: "Patrimônio líquido",
+     };
      
      function updateMonth(monthNumber) {
        currentMonth = monthNumber;
@@ -169,7 +208,7 @@
     </script>
 
     <script>
-      // UI
+     // UI
      function validateAccountName() {
        $("#novaContaInput").keyup(function() {
          if ($("#novaContaInput").val() === "") {
@@ -182,10 +221,21 @@
 
      validateAccountName();
 
+     function validateTransactionName() {
+       $("#novaTransacaoInput").keyup(function() {
+         if ($("#novaTransacaoInput").val() === "") {
+           $("#novaTransacaoAdicionar").prop('disabled', true);
+         } else {
+           $("#novaTransacaoAdicionar").prop('disabled', false);
+         }
+       });
+     }
+
+     validateTransactionName();
+     
      $(document).on('shown.bs.modal', '.modal', function() {
        $(this).find('[autofocus]').focus();
      });
-     
     </script>
     
     <script>
@@ -204,6 +254,33 @@
        $("#mainContent").html(content);
      }
 
+     function transactionsTable(transactions) {
+       var table = '<table class="summaryTable">';
+
+       // header row
+       table += "<thead>";
+       table += "<tr>";
+       table += "  <td>&nbsp;</td>";
+       table += "  <td>Valor</td>"
+       table += "  <td>Dr</td>";
+       table += "  <td>Cr</td>";
+       table += "</tr>";
+       table += "</thead>";
+
+       for (var i = 0; i < transactions.length; i++) {
+         var transaction = transactions[i];
+         
+         table += "<tr>";
+         table += "  <td>" + transaction.description + "</td>";
+         table += "  <td class='numberCell'>" + transaction.amount + "</td>";
+         table += "  <td>" + sampleAccounts[transaction.debit].name + "</td>";
+         table += "  <td>" + sampleAccounts[transaction.credit].name + "</td>";
+         table += "</tr>";
+       }
+       
+       return table;
+     }
+
      function accountTypeSummaryTable(accounts, accountType) {
        var leadingZero = "";
        if (currentMonth < 10) {
@@ -211,17 +288,17 @@
        }
        
        var monthTableLabel = leadingZero + currentMonth.toString() + "/" + currentYear.toString();
-       var table = '<table class="accountTable">';
+       var table = '<table class="summaryTable">';
 
        // header row
        table += "<thead>";
        table += "<tr>";
        table += "  <td>&nbsp;</td>";
-       table += "  <td>Saldo</td>"
-       table += "  <td id='accountTypeSummaryMonth'>" + monthTableLabel + "</td>";
+       table += "  <td class='numberCell headerCell'>Saldo</td>"
+       table += "  <td class='numberCell headerCell' id='accountTypeSummaryMonth'>" + monthTableLabel + "</td>";
 
        if (accountType === "despesas") {
-         table += "  <td>Orçamento</td>";
+         table += "  <td class='numberCell headerCell'>Orçamento</td>";
        }
        
        table += "</tr>";
@@ -229,15 +306,15 @@
 
        // filter by account type, display name and balance
        for (var i = 0; i < accounts.length; i++) {
-         var currrentAccount = accounts[i];
-         if (currrentAccount.accountType === accountType) {
-           table += "<tr>";
-           table += "  <td>" + currrentAccount.name + "</td>";
-           table += "  <td>" + currrentAccount.balance + "</td>";
-           table += "  <td>" + currrentAccount.balance + "</td>";
+         var currentAccount = accounts[i];
+         if (currentAccount.accountType === accountType) {
+           table += '<tr class="accountSummaryRow" onclick="updateHash(\'#conta_' +currentAccount.id + '\');">';
+           table += "  <td>" + currentAccount.name + "</td>";
+           table += "  <td class='numberCell'>" + currentAccount.balance + "</td>";
+           table += "  <td class='numberCell'>" + currentAccount.balance + "</td>";
 
            if (accountType === "despesas") {
-             table += "  <td> 0 </td>";
+             table += "  <td class='numberCell'>" + Math.round(currentAccount.balance / 1.2)+ "</td>";
            }
            
            table += "</tr>";
@@ -245,29 +322,33 @@
        }
        
        table += "</table>";
+
        return table;
      }
 
-     function accountTypeSummaryContent(accounts, accountType) {
-       var accountTypeNames = {
-         bens: "Bens",
-         despesas: "Despesas",
-         obrigacoes: "Obrigações",
-         receitas: "Receitas",
-         patrimonio: "Patrimônio líquido",
-       };
-       
+     function accountSummaryContent(allTransactions, allAccounts, accountId) {
+       var accountType = allAccounts[accountId].accountType
        var output = "";
-       output += '<h4><span class="accountTypeLabel">' + accountTypeNames[accountType] + '</span></h4>';
+       output += '<h4><a href="#contas_' + accountType + '"><span class="contentHeaderLabel">' + accountTypeNames[accountType] + '</span></a></h4>';
 
-       output += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#novaContaModal">Nova conta</button>';
+       // add Transaction button
+       output += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#novaTransacaoModal">Nova transação</button>';
 
-       output += '<br><br>';
-       // output += '<span class="glyphicon glyphicon-plus-sign"></span> ';
-       // output += '<span class="actionLabel">Nova conta</span>';
+       output += "<br><br>";
+       output += '<span class="subHeaderLabel">' + allAccounts[accountId].name + '</span>';
+
        
-       // output += "<input type='text' size='10' class='newAccountName'>";
-       // output += "<button type='button' onclick='addAccount();'>OK</button>";
+       output += transactionsTable(getTransactions(allTransactions, accountId));
+       return output;
+     }
+     
+     function accountTypeSummaryContent(accounts, accountType) {       
+       var output = "";
+       output += '<h4><span class="contentHeaderLabel">' + accountTypeNames[accountType] + '</span></h4>';
+
+       output += '<button type="button" class="btn btn-nova-conta" data-toggle="modal" data-target="#novaContaModal">Nova conta</button>';
+
+       output += '<br>';
        
        output += accountTypeSummaryTable(accounts, accountType);
        return output;
@@ -284,7 +365,7 @@
        var accountName = $("#novaContaInput").val();
        console.log("add new acct type " + accountType + " " + accountName);
        var newAccount = {
-         id: sampleAccounts.length + 1,
+         id: sampleAccounts.length,
          accountType: accountType,
          name: accountName,
          balance: 0,
@@ -297,25 +378,65 @@
        $("#novaContaModal").modal('hide');
      }
 
+     function addTransaction() { 
+       resetNovaTransacaoModal();
+       $("#novaTransacaoModal").modal('hide');      
+     }
+
      function resetNovaContaModal() {
        $("#novaContaInput").val("");
        $("#novaContaAdicionar").prop("disabled", true);
+     }
+
+     function resetNovaTransacaoModal() {
+       $("#novaTransacaoInput").val("");
+       $("#novaTransacaoAdicionar").prop("disabled", true);
+     }
+
+     function getTransactions(allTransactions, accountId) {
+       var filteredTransactions = [];
+       for (var i = 0; i < allTransactions.length; i++) {
+         var currentTransaction = allTransactions[i];  // use slice() if mutating
+         if (currentTransaction.debit === accountId || currentTransaction.credit === accountId) {
+           console.log("match " + currentTransaction.description);
+           filteredTransactions.push(currentTransaction);
+         }
+       }
+       return filteredTransactions;
      }
      
      function updateContent() {
        if (location.hash !== "") {
          var hashParts = location.hash.substr(1).split("_");
          var action = hashParts[0];
-         var actionType = hashParts[1];
-       
+         var actionObject = hashParts[1];
+         
          if (action === "contas") {
-           setContent(accountTypeSummaryContent(sampleAccounts, actionType));  
+           setContent(accountTypeSummaryContent(sampleAccounts, actionObject));
+           
          } else if (action === "transacoes") {
+           setContent(actionObject);
+           
+         } else if (action === "conta") {
+           var accountId = sampleAccounts[parseInt(actionObject, 10)].id ;
+           // var accountId = parseInt(actionObject, 10);
+           setContent(accountSummaryContent(sampleTransactions, sampleAccounts, accountId));
 
+           // transactionsTable(getTransactions(sampleTransactions, accountId)));
+           
+         } else if (action === "novaTransacaoModal") {
+           
          } else {
            console.log("Ação inválida: " + action);
          }
+       } else {
+         var newTransactionButton = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#novaTransacaoModal">Nova transação</button>';
+         setContent("<h4><span class='contentHeaderLabel'>Últimas transações</span></h4>" + newTransactionButton + transactionsTable(sampleTransactions));
        }
+     }
+
+     function updateHash(newHash) {
+       window.document.location = newHash;
      }
 
      $(window).load(function() {
