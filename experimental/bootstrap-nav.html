@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Fixed top nav</title>
 
-    <link rel="stylesheet" href="/external/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/external/css/bootstrap.bralexie.min.css">
     <link rel="stylesheet" href="/external/css/ie10-viewport-bug-workaround.css">
     <link rel="stylesheet" href="/css/bralexie.css">
   </head>
@@ -28,19 +28,38 @@
 
             <!-- Begin Nav content -->
 
-            <li><a class="contentLink" href="#menuContas">Contas</a></li>
-            
+            <!--
+            <li class="dropdown">
+              <a id="adicionarLabel" data-target="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Adicionar <span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="monthLabel">
+                <li><a class="contentLink" data-target="#" onclick="">Conta</a></li>
+                <li><a class="contentLink" data-target="#" onclick="">Transação</a></li>
+              </ul>
+            </li>
+            -->
+
             <!--
             <li>
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contas <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Navegar<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a class="contentLink" href="#contas_bens">Bens</a></li>
-                <li><a class="contentLink" href="#contas_despesas">Despesas</a></li>
-                <li><a class="contentLink" href="#contas_obrigacoes">Obrigações</a></li>
-                <li><a class="contentLink" href="#contas_receitas">Receitas</a></li>
-                <li><a class="contentLink" href="#contas_patrimonio">Patrimônio líquido</a></li>
+                <li><a class="contentLink" href="#contasTab">Contas</a></li>
+                <li><a class="contentLink" href="#transacoesTab">Transações</a></li>
+                <li><a class="contentLink" href="#periodoTab">Período</a></li>
               </ul>
             </li> --> <!-- contas dropdown -->
+
+            <!-- Corresponding to tabs -->
+            <li>
+              <a class="contentLink" href="#contasAction">Contas</a>
+            </li>
+
+            <li>
+              <a class="contentLink" href="#transacoesAction">Transações</a>
+            </li>
+
+            <li>
+              <a class="contentLink" href="#periodoAction">Período</a>
+            </li>
 
             <!--
             <li>
@@ -72,6 +91,8 @@
             -->
 
             <!-- Mes -->
+
+            <!--
             <li class="dropdown">
               <a id="monthLabel" data-target="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mês <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="monthLabel">
@@ -88,10 +109,12 @@
                 <li><a class="contentLink" data-target="#" onclick="updateMonth(11);">Novembro</a></li>
                 <li><a class="contentLink" data-target="#" onclick="updateMonth(12);">Dezembro</a></li>
               </ul>
-            </li> <!-- mes dropdown -->
+            </li> --> <!-- mes dropdown -->
             
             
             <!-- Ano -->
+
+            <!--
             <li class="dropdown">
               <a id="yearLabel" data-target="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ano <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="yearLabel">
@@ -103,8 +126,9 @@
                 <li><a class="contentLink" data-target="#" onclick="updateYear(2020);">2020</a></li>
                 <li><a class="contentLink" data-target="#" onclick="updateYear(2021);">2021</a></li>
               </ul>
-            </li> <!-- ano dropdown -->
+            </li> --> <!-- ano dropdown -->
             
+            <li><a class="contentLink" href="#meus_dados">Meus dados <span class="glyphicon glyphicon-user"></span></a></li>
             
           </ul> <!-- nav navbar-nav -->
         </div> <!-- navbar -->
@@ -115,13 +139,13 @@
 
       <!--
       <table>
-        <tr class="accountSummaryRow" data-href="#conta_0">
-          <td>
-            Conta 0
-          </td>
-        </tr>
+      <tr class="accountSummaryRow" data-href="#conta_0">
+      <td>
+      Conta 0
+      </td>
+      </tr>
 
-        
+      
       </table>
       Tr 01<br>
       Tr 02<br>
@@ -129,6 +153,107 @@
       Tr<br>
       Tr -1<br>
       -->
+
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a id="contasTabToggle" href="#contasTab" role="tab" data-toggle="tab">Contas</a></li>
+        <li role="presentation"><a id="transacoesTabToggle" href="#transacoesTab" role="tab" data-toggle="tab">Transações</a></li>
+        <li role="presentation"><a id="periodoTabToggle" href="#periodoTab" role="tab" data-toggle="tab">Período</a></li>
+      </ul> <!-- Nav tabs -->
+
+      <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane active" id="contasTab">
+          <br>
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="tipoContaDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              Tipo de conta
+              <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu" aria-labelledby="tipoContaDropdown">
+              <li><a href="#contasAction_bens">Bens</a></li>
+              <li><a href="#contasAction_despesas">Despesas</a></li>
+              <li><a href="#contasAction_obrigacoes">Obrigações</a></li>
+              <li><a href="#contasAction_receitas">Receitas</a></li>
+              <li><a href="#contasAction_patrimonio">Patrimônio líquido</a></li>
+            </ul>
+          </div> <!-- tipoContaDropdown -->
+
+          <h4 id="contasTabHeader">Bens</h4>
+
+          b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>b<br>e<br>
+
+        </div> <!-- contasTab -->
+        
+        <div role="tabpanel" class="tab-pane" id="transacoesTab">
+          <br>
+          <div class="dropdown">
+              
+            <button class="btn btn-default dropdown-toggle" type="button" id="tipoTransacaoDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              Nova transação
+              <span class="caret"></span>
+            </button>
+
+            <ul class="dropdown-menu" aria-labelledby="tipoTransacaoDropdown">
+              <li><a href="#transacoesAction_despesa">Despesa</a></li>
+              <li><a href="#transacoesAction_receita">Receita</a></li>
+              <li><a href="#transacoesAction_definicao">Definição de bens</a></li>
+              <li><a href="#transacoesAction_transferencia">Transferência entre bens</a></li>
+              <li><a href="#transacoesAction_outra">Outra transação</a></li>
+            </ul>
+          </div> <!-- tipo Transacao dropdown -->
+
+          <h4>load latest 10-15 transactions</h4>
+          tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>tr<br>a<br>
+        </div> <!-- transacoesTab -->
+
+        <div role="tabpanel" class="tab-pane" id="periodoTab">
+          <br>
+          <div> <!-- periodo dropdowns -->
+            <ul class="nav nav-pills" role="tablist">
+              <li role="presentation" class="dropdown">
+                <button id="mesButton" class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded='true'>
+                  <span id="monthDropdownLabel">Mês <span class="caret"></span></span>
+
+                </button>
+                <ul id="mesMenu" class="dropdown-menu" aria-labelledby="mesDropdown">
+                  <li><a href="#periodoTab_mes_jan" onclick="updateMonth(1);">Janeiro</a></li>
+                  <li><a href="#periodoTab_mes_fev" onclick="updateMonth(2);">Fevereiro</a></li>
+                  <li><a href="#periodoTab_mes_mar" onclick="updateMonth(3);">Março</a></li>
+                  <li><a href="#periodoTab_mes_abr" onclick="updateMonth(4);">Abril</a></li>
+                  <li><a href="#periodoTab_mes_mai" onclick="updateMonth(5);">Maio</a></li>
+                  <li><a href="#periodoTab_mes_jun" onclick="updateMonth(6);">Junho</a></li>
+                  <li><a href="#periodoTab_mes_jul" onclick="updateMonth(7);">Julho</a></li>
+                  <li><a href="#periodoTab_mes_ago" onclick="updateMonth(8);">Agosto</a></li>
+                  <li><a href="#periodoTab_mes_set" onclick="updateMonth(9);">Setembro</a></li>
+                  <li><a href="#periodoTab_mes_out" onclick="updateMonth(10);">Outubro</a></li>
+                  <li><a href="#periodoTab_mes_nov" onclick="updateMonth(11);">Novembro</a></li>
+                  <li><a href="#periodoTab_mes_dez" onclick="updateMonth(12);">Dezembro</a></li>
+                </ul>
+              </li> <!-- mes dropdown -->
+              
+              <li role="presentation" class="dropdown">
+                <button id="anoButton" class="btn btn-default dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded='true'>
+                  <span id="yearDropdownLabel">Ano <span class="caret"></span></span>
+                </button>
+                <ul id="anoMenu" class="dropdown-menu" aria-labelledby="anoDropdown">
+                  <li><a href="#periodoTab_ano_2012" onclick="updateYear(2012);">2012</a></li> 
+                  <li><a href="#periodoTab_ano_2013" onclick="updateYear(2013);">2013</a></li> 
+                  <li><a href="#periodoTab_ano_2014" onclick="updateYear(2014);">2014</a></li> 
+                  <li><a href="#periodoTab_ano_2015" onclick="updateYear(2015);">2015</a></li>
+                  <li><a href="#periodoTab_ano_2016" onclick="updateYear(2016);">2016</a></li>
+                  <li><a href="#periodoTab_ano_2017" onclick="updateYear(2017);">2017</a></li>
+                </ul>
+              </li> <!-- ano dropdown -->
+            </ul> <!-- nav nav-pills -->
+          </div> <!-- periodo dropdowns -->
+
+          <h4>load Despesas list</h4>
+          per<br>b<br>per<br>b<br>per<br>b
+        </div> <!-- transacoesTab -->
+        
+      </div> <!-- tab-content -->
       
     </section> <!-- mainContent -->
 
@@ -217,6 +342,8 @@
        var monthNames = ["", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
        $("#monthLabel").html(monthNames[monthNumber] + " <span class='caret'></span>");
+
+       $("#monthDropdownLabel").html(monthNames[monthNumber] + " <span class='caret'></span>");
        updateContent();
      }
 
@@ -224,6 +351,7 @@
        currentYear = yearNumber;
        
        $("#yearLabel").html(yearNumber + " <span class='caret'></span>");
+       $("#yearDropdownLabel").html(yearNumber + " <span class='caret'></span>")
        updateContent();
      }
     </script>
@@ -372,7 +500,7 @@
      function accountTypeSummaryContent(accounts, accountType) {       
        var output = "";
        output += '<h4><span class="contentHeaderLabel"><a href="#menuContas">Contas</a> &gt; ' + accountTypeNames[accountType] + '</span></h4>';
- 
+       
        output += '<button type="button" class="btn btn-nova-conta" data-toggle="modal" data-target="#novaContaModal">Nova conta</button>';
 
        output += '<br>';
@@ -444,6 +572,10 @@
 
        return output;
      }
+
+     function scrollToTop() {
+       document.body.scrollTop = document.documentElement.scrollTop = 0;
+     }
      
      function updateContent() {
        if (location.hash !== "") {
@@ -469,6 +601,18 @@
            
          } else if (action === "novaTransacaoModal") {
            
+         } else if (action === "contasAction") {
+           scrollToTop();
+           $("#contasTabToggle").click();
+           if (actionObject) {
+             $("#contasTabHeader").html(accountTypeNames[actionObject]);
+           }
+         } else if (action === "transacoesAction") {
+           scrollToTop();
+           $("#transacoesTabToggle").click();
+         } else if (action === "periodoAction") {
+           scrollToTop();
+           $("#periodoTabToggle").click();
          } else {
            console.log("Ação inválida: " + action);
          }
@@ -476,7 +620,7 @@
          var menuContasList = menuContas();
          var newTransactionButton = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#novaTransacaoModal">Nova transação</button>';
          
-         setContent(menuContasList + "<br><h4>Últimas transações</h4>" + newTransactionButton + transactionsTable(sampleTransactions));
+         // setContent(menuContasList + "<br><h4>Últimas transações</h4>" + newTransactionButton + transactionsTable(sampleTransactions));
        }
      }
 
@@ -494,6 +638,24 @@
        updateYear(currentYear);
        
        updateContent();
+
+       
+       // Bootstrap tabs and location hash
+       // http://stackoverflow.com/questions/9685968/best-way-to-make-twitter-bootstrap-tabs-persistent
+          
+       // show active tab on reload
+       if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
+
+       // remember the hash in the URL without jumping
+       $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+         if(history.pushState) {
+           history.pushState(null, null, '#'+$(e.target).attr('href').substr(1));
+         } else {
+           location.hash = '#'+$(e.target).attr('href').substr(1);
+         }
+       });
+       // end Bootstrap location hash
+       
      });
     </script>
   </body>
