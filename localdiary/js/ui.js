@@ -35,8 +35,13 @@ function setFromSelectsToToday() {
 
 function setToSelectsToNextMonth() {
   var now = new Date();
-  makeSelection("to_year", now.getFullYear());
-  makeSelection("to_month", now.getMonth() + 2);
+  var nextMonth = now.getMonth() + 1;
+
+  var setAsYear = now.getFullYear() + Math.floor(nextMonth / 11);
+  var setAsMonth = nextMonth % 12;
+
+  makeSelection("to_year", setAsYear);
+  makeSelection("to_month", setAsMonth + 1);  // select starts at 1
   makeSelection("to_day", 1);
 }
 
