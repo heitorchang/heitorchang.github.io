@@ -36,7 +36,6 @@ function setFromSelectsToToday() {
 function setToSelectsToNextMonth() {
   var now = new Date();
   var nextMonth = now.getMonth() + 1;
-
   var setAsYear = now.getFullYear() + Math.floor(nextMonth / 11);
   var setAsMonth = nextMonth % 12;
 

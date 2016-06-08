@@ -38,3 +38,15 @@ function epochToShort(epoch) {
     pad(d.getHours().toString()) + ":" +
     pad(d.getMinutes().toString());
 }
+
+function isLeapYear(year) {
+  return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+}
+
+function lastDayOfMonth(month, year) {
+  if (month == 2 && isLeapYear(year)) {
+    return 29;
+  } else {
+    return [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
+  }
+}
