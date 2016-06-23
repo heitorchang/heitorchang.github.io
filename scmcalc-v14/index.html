@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="styles.css">      
   </head>
   <body>
-    Enter expression(s) in <a href="https://en.wikipedia.org/wiki/Polish_notation" target="_blank">Polish notation</a>:<br>
+    Enter expression(s) in <a href="https://en.wikipedia.org/wiki/Polish_notation" target="_blank">Polish notation</a>.
+    <br>
+    Buttons auto-add opening parenthesis (<br>
     <span class="smallTextButton">Example: Convert 98.6 &deg;F to &deg;C</span> <code onclick="runDemo();">(* (- 98.6 32) (/ 5 9))</code>
     <br>
 	<input type="text" id="singleLineCode" autofocus>
@@ -28,39 +30,43 @@
     <table id="keypad">
       <tr>
         <!-- <td class="tableKeypadButton largeTextButton" id="leftParen">(</td> -->
-        <td class="tableKeypadButton smallTextButton" id="lcm">lcm</td>
+        <!--
+        <span class="openParen">(</span>
+        -->
+        
+        <td class="tableKeypadButton smallTextButton" id="lcm"><span class="openParen">(</span>lcm</td>
         <td class="tableKeypadButton largeTextButton" id="rightParen">)</td>
-        <td class="tableKeypadButton smallTextButton" id="bksp">bksp</td>
-        <td class="tableKeypadButton smallTextButton" id="expt">expt</td>
+        <td class="tableKeypadButton smallTextButton" id="bksp">erase</td>
+        <td class="tableKeypadButton smallTextButton" id="expt"><span class="openParen">(</span>expt<br><br><span class="explanation">[b^n]</span></td>
         <td class="tableKeypadButton smallTextButton" id="clear"><b>clear</b><br><i>[esc]</i></td>
       </tr>
       <tr>
         <td class="tableKeypadButton largeTextButton" id="seven">7</td>
         <td class="tableKeypadButton largeTextButton" id="eight">8</td>
         <td class="tableKeypadButton largeTextButton" id="nine">9</td>
-        <td class="tableKeypadButton largeTextButton" id="divide">/</td>
-        <td class="tableKeypadButton smallTextButton" id="sqrt">sqrt</td>
+        <td class="tableKeypadButton largeTextButton" id="divide"><span class="openParen">(</span> /</td>
+        <td class="tableKeypadButton smallTextButton" id="sqrt"><span class="openParen">(</span>sqrt</td>
       </tr>
       <tr>
         <td class="tableKeypadButton largeTextButton" id="four">4</td>
         <td class="tableKeypadButton largeTextButton" id="five">5</td>
         <td class="tableKeypadButton largeTextButton" id="six">6</td>
-        <td class="tableKeypadButton largeTextButton" id="multiply">*</td>
-        <td class="tableKeypadButton smallTextButton" id="log">log</td>
+        <td class="tableKeypadButton largeTextButton" id="multiply"><span class="openParen">(</span> *</td>
+        <td class="tableKeypadButton smallTextButton" id="log"><span class="openParen">(</span>log<br><br><span class="explanation">(ln)</span></td>
       </tr>
       <tr>
         <td class="tableKeypadButton largeTextButton" id="one">1</td>
         <td class="tableKeypadButton largeTextButton" id="two">2</td>
         <td class="tableKeypadButton largeTextButton" id="three">3</td>
-        <td class="tableKeypadButton largeTextButton" id="subtract">-</td>
-        <td class="tableKeypadButton smallTextButton" id="exp">exp</td>
+        <td class="tableKeypadButton largeTextButton" id="subtract"><span class="openParen">(</span> -</td>
+        <td class="tableKeypadButton smallTextButton" id="exp"><span class="openParen">(</span>exp<br><br><span class="explanation">[e^x]</span></td>
       </tr>
       <tr>
         <td class="tableKeypadButton largeTextButton" id="dot">.</td>
         <td class="tableKeypadButton largeTextButton" id="zero">0</td>
         <td class="tableKeypadButton smallTextButton" id="space">space</td>
-        <td class="tableKeypadButton largeTextButton" id="add">+</td>
-        <td class="tableKeypadButton smallTextButton" id="eval"><b>eval</b><br><i>[enter]</i></td>
+        <td class="tableKeypadButton largeTextButton" id="add"><span class="openParen">(</span> +</td>
+        <td class="tableKeypadButton smallTextButton" id="eval"><b>EVAL</b><br><i>[enter]</i></td>
       </tr>
       <tr>
         <td colspan="5" class="credits">

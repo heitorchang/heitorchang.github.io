@@ -79,3 +79,12 @@ a {
     text-decoration: none;
     font-weight: bold;
 }
+
+.openParen {
+    color: #292;
+}
+
+.explanation {
+    color: #F00;
+    font-style: italic;
+}
