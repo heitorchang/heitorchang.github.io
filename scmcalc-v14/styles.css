@@ -1,21 +1,22 @@
 body {
-    font-size: 1.4em;
+    font-size: 16px;
     font-family: sans-serif;
     margin-left: 10%;
     margin-top: 20px;
 }
 
 #singleLineCode {
-    font-size: 1.4em;
+    font-size: 16px;
+    font-family: monospace;
     width: 90%;
 }
 
 .largeTextButton {
-    font-size: 1.2em;
+    font-size: 20px;
 }
 
 .smallTextButton {
-    font-size: 0.7em;
+    font-size: 14px;
 }
 
 .keypadRow {
@@ -49,8 +50,8 @@ table, th, td {
 
 
 .tableKeypadButton {
-    width: 80px;
-    height: 75px;
+    width: 65px;
+    height: 65px;
     text-align: center;
     vertical-align: middle;
     align-items: center;
@@ -62,11 +63,11 @@ table, th, td {
     margin-top: 5px;
     margin-left: 4%;
     padding: 6px;
-    font-size: 1.4em;
+    font-size: 16px;;
 }
 
 .credits {
-    font-size: 0.8em;
+    font-size: 14px;
 }
 
 code {
