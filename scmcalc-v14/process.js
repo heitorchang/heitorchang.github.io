@@ -123,6 +123,7 @@ function addClickListener(id, str) {
     // document.getElementById("lastPressed").innerHTML = id;
     flash(id);
     addToInput(str);
+    $("#eval").click();
   });
 }
 
@@ -165,6 +166,6 @@ function runDemo() {
   $("#eval").click();
 }
 
-// $("#singleLineCode").change(function () {
-//   $("#eval").click();
-// });
+$("#singleLineCode").change(function () {
+  $("#eval").click();
+});
