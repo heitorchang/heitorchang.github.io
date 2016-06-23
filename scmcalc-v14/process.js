@@ -7,7 +7,16 @@ intp.evaluate("(define (lcm a b) (/ (* a b) (gcd a b)))");
 // custom print
 intp.evaluate("(define (interleave-sep sep args) (if (null? args) '() (cons (car args) (cons sep (interleave-sep sep (cdr args))))))");
 intp.evaluate("(define (butlast lst) (reverse (cdr (reverse lst))))");
-intp.evaluate('(define (print-many . args) (apply print (butlast (interleave-sep "; " args))))');
+intp.evaluate('(define (print-many . args) (apply print (butlast (interleave-sep ";" args))))');
+
+function limitDecimals(str) {
+  var indexOfPeriod = str.indexOf(".");
+  if (indexOfPeriod >= 0) {
+    return str.substring(0, str.indexOf(".") + 5).trim();
+  } else {
+    return str.trim();
+  }
+}
 
 // listen for Enter on input
 $("#singleLineCode").keyup(function (e) {
@@ -41,6 +50,17 @@ document.getElementById("eval").addEventListener("click", function () {
 
   if (bsConsole.innerHTML === "") {
     bsConsole.innerHTML = "Error: please revise your input";
+  } else {
+    var consoleText = $(bsConsole).text();
+    // limit decimals
+    var results = consoleText.split(";");
+    var newResult = "";
+    for (var i = 0, len = results.length; i < len; i++) {
+      newResult += limitDecimals(results[i].trim()) + "; ";
+    }
+
+    // remove last semicolon
+    bsConsole.innerHTML = newResult.substring(0, newResult.length - 2);
   }
 });
 
