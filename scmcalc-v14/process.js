@@ -7,7 +7,7 @@ intp.evaluate("(define (lcm a b) (/ (* a b) (gcd a b)))");
 // custom print
 intp.evaluate("(define (interleave-sep sep args) (if (null? args) '() (cons (car args) (cons sep (interleave-sep sep (cdr args))))))");
 intp.evaluate("(define (butlast lst) (reverse (cdr (reverse lst))))");
-intp.evaluate('(define (print-many . args) (apply print (butlast (interleave-sep ", " args))))');
+intp.evaluate('(define (print-many . args) (apply print (butlast (interleave-sep "; " args))))');
 
 // listen for Enter on input
 $("#singleLineCode").keyup(function (e) {
