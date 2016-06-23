@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Scheme Calculator</title>
+    <link rel="stylesheet" href="styles.css">      
+  </head>
+  <body>
+    Enter a Scheme expression:<br>
+    <span class="smallTextButton">Example: Convert 98.6 &deg;F to &deg;C</span> <code onclick="runDemo();">(* (- 98.6 32) (/ 5 9))</code>
+    <br>
+	<input type="text" id="singleLineCode" autofocus>
+	<br>
+
+	<div id="bs-console">
+      0
+    </div>
+
+    <!--
+    <div id="lastPressed" class="smallTextButton">
+      lastInput
+    </div>
+    -->
+
+    <br>
+
+    <table id="keypad">
+      <tr>
+        <!-- <td class="tableKeypadButton largeTextButton" id="leftParen">(</td> -->
+        <td class="tableKeypadButton smallTextButton" id="lcm">lcm</td>
+        <td class="tableKeypadButton largeTextButton" id="rightParen">)</td>
+        <td class="tableKeypadButton smallTextButton" id="bksp">bksp</td>
+        <td class="tableKeypadButton smallTextButton" id="expt">expt</td>
+        <td class="tableKeypadButton smallTextButton" id="clear"><b>clear</b><br><i>[esc]</i></td>
+      </tr>
+      <tr>
+        <td class="tableKeypadButton largeTextButton" id="seven">7</td>
+        <td class="tableKeypadButton largeTextButton" id="eight">8</td>
+        <td class="tableKeypadButton largeTextButton" id="nine">9</td>
+        <td class="tableKeypadButton largeTextButton" id="divide">/</td>
+        <td class="tableKeypadButton smallTextButton" id="sqrt">sqrt</td>
+      </tr>
+      <tr>
+        <td class="tableKeypadButton largeTextButton" id="four">4</td>
+        <td class="tableKeypadButton largeTextButton" id="five">5</td>
+        <td class="tableKeypadButton largeTextButton" id="six">6</td>
+        <td class="tableKeypadButton largeTextButton" id="multiply">*</td>
+        <td class="tableKeypadButton smallTextButton" id="log">log</td>
+      </tr>
+      <tr>
+        <td class="tableKeypadButton largeTextButton" id="one">1</td>
+        <td class="tableKeypadButton largeTextButton" id="two">2</td>
+        <td class="tableKeypadButton largeTextButton" id="three">3</td>
+        <td class="tableKeypadButton largeTextButton" id="subtract">-</td>
+        <td class="tableKeypadButton smallTextButton" id="exp">exp</td>
+      </tr>
+      <tr>
+        <td class="tableKeypadButton largeTextButton" id="dot">.</td>
+        <td class="tableKeypadButton largeTextButton" id="zero">0</td>
+        <td class="tableKeypadButton smallTextButton" id="space">space</td>
+        <td class="tableKeypadButton largeTextButton" id="add">+</td>
+        <td class="tableKeypadButton smallTextButton" id="eval"><b>eval</b><br><i>[enter]</i></td>
+      </tr>
+      <tr>
+        <td colspan="5" class="credits">
+	      Running <a href="http://biwascheme.org/" target="_blank">BiwaScheme 0.6.2</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5" class="credits">
+	      <a href="https://build.phonegap.com/apps/2138810/share" target="_blank">Download for Android</a>
+        </td>
+      </tr>
+    </table>        
+    <!-- 
+    <div class="keypadRow">
+      <div class="keypadButton largeTextButton" id="leftParen">(</div>
+      <div class="keypadButton largeTextButton" id="rightParen">)</div>
+      <div class="keypadButton smallTextButton" id="bksp">bksp</div>
+      <div class="keypadButton largeTextButton" id="none">&nbsp;</div>
+      <div class="keypadButton smallTextButton" id="clear">clear</div>
+    </div>
+    <div class="keypadRow">
+      <div class="keypadButton largeTextButton" id="seven">7</div>
+      <div class="keypadButton largeTextButton" id="eight">8</div>
+      <div class="keypadButton largeTextButton" id="nine">9</div>
+      <div class="keypadButton largeTextButton" id="divide">/</div>
+      <div class="keypadButton smallTextButton" id="sqrt">sqrt</div>
+    </div>
+    <div class="keypadRow">
+      <div class="keypadButton largeTextButton" id="four">4</div>
+      <div class="keypadButton largeTextButton" id="five">5</div>
+      <div class="keypadButton largeTextButton" id="six">6</div>
+      <div class="keypadButton largeTextButton" id="multiply">*</div>
+      <div class="keypadButton smallTextButton" id="log">log</div>
+    </div>
+    <div class="keypadRow">
+      <div class="keypadButton largeTextButton" id="one">1</div>
+      <div class="keypadButton largeTextButton" id="two">2</div>
+      <div class="keypadButton largeTextButton" id="three">3</div>
+      <div class="keypadButton largeTextButton" id="subtract">-</div>
+      <div class="keypadButton smallTextButton" id="exp">exp</div>
+    </div>
+    <div class="keypadRow">
+      <div class="keypadButton largeTextButton" id="dot">.</div>
+      <div class="keypadButton largeTextButton" id="zero">0</div>
+      <div class="keypadButton largeTextButton" id="space">_</div>
+      <div class="keypadButton largeTextButton" id="add">+</div>
+      <div class="keypadButton smallTextButton" id="eval">eval</div>
+    </div>
+    -->
+
+    <script src="../external/js/jquery.js"></script>
+	<script src="biwascheme-0.6.2-min.js"></script>
+	<script src="process.js"></script>
+  </body>
+</html>

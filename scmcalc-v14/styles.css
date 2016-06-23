@@ -1,0 +1,80 @@
+body {
+    font-size: 1.4em;
+    font-family: sans-serif;
+    margin-left: 10%;
+    margin-top: 20px;
+}
+
+#singleLineCode {
+    font-size: 1.4em;
+    width: 90%;
+}
+
+.largeTextButton {
+    font-size: 1.2em;
+}
+
+.smallTextButton {
+    font-size: 0.7em;
+}
+
+.keypadRow {
+    display: table-row;
+}
+
+.keypadWrapper {
+    display: table;
+    height: 100%;
+}
+
+.keypadButton {
+    width: 16vw;
+    height: 16vw;
+    float: left;
+
+    border: 2px solid #CCF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#keypad {
+    border-collapse: collapse;
+    width: 372px;
+}
+
+table, th, td {
+    border: 2px solid #CCF;
+}
+
+
+.tableKeypadButton {
+    width: 80px;
+    height: 75px;
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+}
+
+#bs-console {
+    width: 85%;
+    background-color: #D8E3DA;
+    margin-top: 5px;
+    margin-left: 4%;
+    padding: 6px;
+    font-size: 1.4em;
+}
+
+.credits {
+    font-size: 0.8em;
+}
+
+code {
+    font-size: 1.2em;
+    color: #33F;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
