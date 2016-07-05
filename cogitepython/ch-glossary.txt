@@ -1,0 +1,44 @@
+SEE GOOGLE DOCS instead. There, can sort by chapter or alphabetically
+
+Ch. 1
+
+problem solving -
+high-level language -
+low-level language -
+portability -
+interpreter -
+prompt -
+program - programa
+print statement -
+operator - operador
+value - valor
+type - tipo
+integer -
+floating-point -
+string -
+natural language -
+formal language -
+token -
+syntax - sintaxe
+parse -
+bug -
+debugging -
+
+Ch. 2
+
+variable - variável
+assignment -
+state diagram -
+keyword -
+operand -
+expression - expressão
+evaluate -
+statement -
+execute - executar
+interactive mode - modo interativo
+script mode -
+script -
+order of operations -
+concatenate -
+comment -
+syntax error - 

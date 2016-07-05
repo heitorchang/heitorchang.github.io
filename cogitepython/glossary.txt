@@ -1,44 +1,277 @@
-SEE GOOGLE DOCS instead. There, can sort by chapter or alphabetically
-
-Ch. 1
-
-problem solving -
-high-level language -
-low-level language -
-portability -
-interpreter -
-prompt -
-program - programa
-print statement -
-operator - operador
-value - valor
-type - tipo
-integer -
-floating-point -
-string -
-natural language -
-formal language -
-token -
-syntax - sintaxe
-parse -
-bug -
-debugging -
-
-Ch. 2
-
-variable - variável
-assignment -
-state diagram -
-keyword -
-operand -
-expression - expressão
-evaluate -
-statement -
-execute - executar
-interactive mode - modo interativo
-script mode -
-script -
-order of operations -
-concatenate -
-comment -
-syntax error - 
+Chapter,word order,abs word ord,English,Portuguese,ppd progress p34,Notes,abbreviations,,??
+14,9,1409,absolute path,caminho absoluto,google,,,,c
+10,4,1004,accumulator,acumulador,pp2,,,,a
+7,8,708,algorithm,algoritmo,self,,,,a
+10,13,1013,aliasing,apelidamento,pp2,,,,a
+21,1,2101,analysis of algorithms,ana'lise de algoritmos,pp2,,,,a
+3,8,308,argument,argumento,pp2,,,,a
+16,7,1607,assert statement,instrucao assert,pp2,,,,i
+2,2,202,assignment,atribuição,ppd 31,,,,a
+15,5,1505,attribute,atributo,ppd 25,,,,a
+10,5,1005,augmented assignment,atribuição combinada,pp2,,,,a
+0,0,0,backslash,"barra invertida, contrabarra","ppd 22, wikipedia",,tpp,think python portugues,b
+5,14,514,base case,caso base,pp2,,,,c
+0,0,0,batteries included,baterias inclusas,ppd 69,,,,b
+13,5,1305,benchmarking,teste de desempenho,pp2,,,,t
+21,7,2107,Big-Oh notation,notacao assinto'tica,pp2,,,,n
+0,0,0,bitwise,bit a bit,"ppd 127, wikipedia",,,,b
+3,5,305,body,corpo,pp2,,,,c
+5,3,503,boolean expression,expressao booleana,pp2,,,,e
+0,0,0,braces,chaves,ppd 83,,,,c
+5,9,509,branch,desvio,pp2,,,,d
+1,20,120,bug,falha,wikipedia,,,,f
+0,0,0,built-in,"builtin, integrado","ppd 31, linguee",,,,b
+0,0,0,bytecode,bytecode,ppd 13,,ppd,"python para desenvolvedores, 2nd ed",b
+14,12,1412,bytes object,objeto bytes,pp2,,,,o
+11,15,1115,call graph,diagrama de chamadas,pp2,,,,d
+14,10,1410,catch,capturar,pp2,,,,c
+5,10,510,chained conditional,condicional encadeado,pp2,,,,c
+18,7,1807,child class,classe derivada,"pp2, google devmedia",,,,c
+15,1,1501,class,classe,ppd sum,,,,c
+18,2,1802,class attribute,atributo de classe,pp2,,,,a
+18,11,1811,class diagram,diagrama de classe,pp2,,,,d
+15,2,1502,class object,objeto-classe,pp2,,,,o
+0,0,0,clause,clausula,ppd 26,,,,c
+0,0,0,coercion,coerção,ppd 16,,,,c
+2,15,215,comment,comentário,ppd 22,,,,c
+3,18,318,composition,composicao,pp2,,,,c
+5,8,508,compound statement,instrucao composta,pp2,,,,i
+2,14,214,concatenate,concatenar,ppd 35,,,,c
+5,7,507,condition,condicao,pp2,,,,c
+19,1,1901,conditional expression,expressao condicional,pp2,,,,e
+5,6,506,conditional statement,instrucao condicional,pp2,,,,i
+0,0,0,console window,janela de console,ppd 15,,,,j
+0,0,0,control structure,estrutura de controle,ppd 23,,,,e
+8,10,810,counter,contador,pp2,,,,c
+21,5,2105,crossover point,ponto de cruzamento,pp2,,,,p
+0,0,0,curly brackets,chaves,ppd 83,full list of symbols,,,c
+18,13,1813,data encapsulation,encapsulamento de dados,pp2,,,,e
+12,7,1207,data structure,estrutura de dados,ppd 25,,,,e
+14,11,1411,database,banco de dados,ppd sum,,,,b
+6,2,602,dead code,codigo morto,pp2,,,,c
+1,21,121,debugging,depurar,wikipedia,,,,d
+11,20,1120,declaration,declaracao,pp2,,,,d
+7,5,705,decrement,decrementar,pp2,,,,d
+15,8,1508,deep copy,co'pia profunda,pp2,,,,c
+13,3,1303,default value,valor padrao,linguee,,,,v
+10,14,1014,delimiter,delimitador,pp2,,,,d
+18,10,1810,dependency,depende^ncia,pp2,,,,d
+16,2,1602,designed development,desenvolvimento planejado,pp2,,,,d
+13,1,1301,deterministic,determini'stico,pp2,,,,d
+4,8,408,development plan,plano de desenvolvimento,pp2,,,,p
+11,2,1102,dictionary,dicionário,ppd sumario,,,,d
+14,6,1406,directory,direto'rio,pp2,,,,d
+4,9,409,docstring,docstring,pp2,,,,d
+3,17,317,dot notation,notacao de ponto,pp2,,,,n
+0,0,0,dynamic typing,tipagem dinâmica,ppd 6,,,,t
+10,2,1002,element,elemento,pp2,,,,e
+15,6,1506,embedded object,objeto embutido,pp2,,,,o
+8,6,806,empty string,string vazia,pp2,,,,s
+4,3,403,encapsulation,encapsulamento,pp2,,,,e
+18,1,1801,encode,codificar,pp2,,,,c
+10,10,1010,equivalent,equivalente,pp2,,,,e
+2,7,207,evaluate,avaliar,"pp2, ppd 57",,,,a
+2,17,217,exception,exceção,ppd sum,,,,e
+2,9,209,execute,executar,pp2,,,,e
+0,0,0,exponent,"expoente, elevar","ppd 33, 34",,,,e
+2,6,206,expression,expressão,ppd 50,,,,e
+19,5,1905,factory,fa'brica,pp2,,,,f
+0,0,0,feature,"recurso, característica",linguee,,,,
+9,1,901,file object,objeto-arquivo,pp2,,,,o
+10,8,1008,filter,"filtrar, filtragem",ppd sum,,,,f
+11,19,1119,flag,indicador,pp2,,,,i
+1,13,113,floating-point,real de ponto flutuante,ppd 32,,,,r
+5,1,501,floor division,divisao pelo piso,pp2,,,,d
+3,19,319,flow of execution,fluxo de execução,ppd 26,,,,f
+1,16,116,formal language,linguagem formal,self,,,,l
+14,2,1402,format operator,operador de formatacao,pp2,,,,o
+14,4,1404,format sequence,seque^ncia de formatacao,pp2,,,,s
+14,3,1403,format string,string de formatacao,pp2,,,,s
+3,21,321,frame,um frame,"pp2, google maxima depuracao",,,,u
+3,11,311,fruitful function,função frutifera,tpp 32,,,,f
+3,1,301,function,função,ppd sum,,,,f
+3,7,307,function call,chamada de funcao,pp2,,,,c
+3,2,302,function definition,definicao de funcao,pp2,,,,d
+3,3,303,function object,objeto-funcao,pp2,,,,o
+16,5,1605,functional programming style,estilo de programação funcional,"self, ppd sum",,,,e
+0,0,0,garbage collector,coletor de lixo,ppd 31,,,,c
+12,3,1203,gather,reunir,pp2,,,,r
+4,4,404,generalization,generalizacao,pp2,,,,g
+19,3,1903,generator expression,expressão geradora,pp2,,,,e
+0,0,0,"gets (from module, etc)",pega,ppd 217,,,,
+11,18,1118,global statement,declaracao global,pp2,,,,d
+11,17,1117,global variable,varia'vel global,pp2,,,,v
+0,0,0,greater than (sign),maior que,google,,,,m
+0,0,0,greater than operator,operador maior,ppd 33,,,,o
+6,5,605,guardian,guarda (padrao de),pp2,,,,g
+18,9,1809,HAS-A relationship,relacao TEM-UM,pp2,,,,r
+11,9,1109,hash function,funcao de hash,pp2,,,,f
+11,10,1110,hashable,hashable,self,converti'vel a um valor de hash,,,h
+11,8,1108,hashtable,tabela de hash,pp2,,,,t
+21,11,2111,hashtable,tabela de hash,pp2,,,,t
+3,4,304,header,cabecalho,pp2,,,,c
+1,2,102,high-level language,linguagem de alto nível,ppd 13,,,,l
+10,11,1011,identical,ide^ntico,pp2,,,,i
+8,7,807,immutable,imutável,ppd 31,,,,i
+11,7,1107,implementation,implementacao,pp2,,,,i
+3,15,315,import statement,instrucao import,pp2,,,,i
+7,4,704,increment,incrementar,pp2,,,,i
+6,3,603,incremental development,desenvolvimento incremental,pp2,,,,d
+0,1,1,indentation,endentação,ppd 23,,,,e
+8,4,804,index,i'ndice,pp2,,,,i
+0,0,0,inequality (operator),diferente,ppd 34,,,,d
+7,7,707,infinite loop,laço infinito,pp2,,,,l
+5,15,515,infinite recursion,recursao infinita,pp2,,,,r
+17,9,1709,information hiding,ocultacao de informacoes,pp2,,,,o
+18,5,1805,inheritance,herança,pp2,,,,h
+7,3,703,initialization,inicializacao,pp2,,,,i
+0,0,0,input,entrada,ppd 27,,,,e
+15,3,1503,instance,insta^ncia,pp2,,,,i
+18,3,1803,instance attribute,atributo de insta^ncia,pp2,,,,a
+15,4,1504,instantiate,instanciar,pp2,,,,i
+1,12,112,integer,inteiro,ppd 16 footnote,,,,i
+2,10,210,interactive mode,modo interativo,pp2,,,,m
+4,6,406,interface,"interface, assinatura","self, pp2",,,,i
+1,5,105,interpreter,interpretador,ppd 15,,,,i
+16,6,1606,invariant,invariante,pp2,,,,i
+8,11,811,invocation,invocacao,"pp2, tpp 81",,,,i
+18,8,1808,IS-A relationship,relacao E'-UM,pp2,,,,r
+8,3,803,item,item,pp2,,,,i
+11,4,1104,item,item,pp2,,,,i
+7,6,706,iteration,iteracao,pp2,,,,i
+0,0,0,iterator,iterador,ppd 28,,,,i
+12,6,1206,iterator,iterador,pp2,,,,i
+11,5,1105,key,chave,ppd 155,,,,c
+11,3,1103,key-value pair,par chave-valor,pp2,,,,p
+2,4,204,keyword,palavra-chave,pp2,,,,p
+4,5,405,keyword argument,argumento nomeado,pp2,,,,a
+21,4,2104,leading term,termo dominante,pp2,,,,t
+0,0,0,less than (sign),menor que,google,,,,m
+0,0,0,less than operator,operador menor,ppd 33,,,,o
+21,8,2108,linear,linear,pp2,,,,l
+10,1,1001,list,lista,ppd 31,,,,l
+19,2,1902,list comprehension,list comprehension,ppd,,,,l
+3,9,309,local variable,varia'vel local,pp2,,,,v
+5,5,505,logical operator,operador lo'gico,pp2,,,,o
+11,11,1111,lookup,busca,pp2,,,,b
+4,2,402,loop,laço,ppd sum,,,,l
+1,3,103,low-level language,linguagem de baixo nível,ppd 13 inferred,,,,l
+21,2,2102,machine model,ma'quina-modelo,pp2,,,,m
+10,7,1007,map,"mapear, mapeamento",ppd sum,seq traversal,,,m
+11,1,1101,mapping,mapeamento,pp2,set relationship,,,m
+11,16,1116,memo,lembrete,pp2,,,,l
+4,1,401,method,método,ppd 25,,,,m
+17,3,1703,method,método,ppd 25,,,,m
+16,4,1604,modifier,modificadora,pp2,,,,m
+3,14,314,module,módulo,ppd sum,,,,m
+3,16,316,module object,objeto-mo'dulo,pp2,,,,o
+5,2,502,modulus operator,operador de módulo,ppd 24,,,,o
+18,12,1812,multiplicity,cardinalidade,pp2,,,,c
+19,4,1904,multiset,multiconjunto,wikipedia,,,,m
+1,15,115,natural language,linguagem natural,wikipedia,,,,l
+5,11,511,nested conditional,condicional aninhado,pp2,,,,c
+10,3,1003,nested list,lista aninhada,pp2,,,,l
+3,13,313,None,nulo,ppd 49,ver ppd,,,n
+8,1,801,object,objeto,self,,,,o
+10,9,1009,object,objeto,self,,,,o
+15,9,1509,object diagram,diagrama de objetos,pp2,,,,d
+17,1,1701,object-oriented language,linguagem orientada a objetos,ppd 12,,,,l
+17,2,1702,object-oriented programming,programação orientada a objetos,ppd 12,,,,p
+0,2,2,open source,código aberto,ppd 11,,,,c
+2,5,205,operand,operando,pp2,,,,o
+1,9,109,operator,operador,ppd 110,,,,o
+17,6,1706,operator overloading,sobrecarga de operadores,ppd sum,,,,s
+8,12,812,optional argument,argumento opcional,pp2,,,,a
+21,6,2106,order of growth,ordem de crescimento,pp2,,,,o
+2,13,213,order of operations,ordem das operacoes,pp2,,,,o
+0,0,0,output,saída,ppd 26,,,,s
+13,4,1304,override,sobrepor,pp2,,,,s
+0,0,0,packages,pacotes,ppd 6,,,,p
+3,6,306,parameter,parâmetro,pp2,,,,p
+18,6,1806,parent class,classe base,"pp2, google devmedia",,,,c
+0,0,0,parentheses,parenteses,ppd 83,,,,p
+1,19,119,parse,analisar sintaticamente,wikipedia,,,,a
+0,0,0,pass an argument,passar um argumento,ppd 309,,,,
+14,7,1407,path,caminho,pp2,,,,c
+14,1,1401,persistent,persistente,ppd sum,,,,p
+14,14,1414,pipe object,objeto pipe,pp2,,,,o
+17,8,1708,polymorphic,polimo'rfico,pp2,,,,p
+1,4,104,portability,portabilidade,ppd 328,,,,p
+17,5,1705,positional argument,argumento posicional,pp2,,,,a
+4,11,411,postcondition,po's-condicao,pp2,,,,p
+0,0,0,power,potência,ppd 33,,,,p
+4,10,410,precondition,pre'-condicao,pp2,,,,p
+1,8,108,print statement,instrucao print,pp2,,,,i
+1,1,101,problem solving,solução de problemas,tpp 14,,,,s
+1,7,107,program,programa,self,,,,p
+1,6,106,prompt,"linha de comando, >>> sinal de espera",ppd 17,,,,l
+16,1,1601,prototype and patch,prototipar e ajustar,pp2,,,,p
+13,2,1302,pseudorandom,pseudo-aleato'rio,pp2,,,,p
+16,3,1603,pure function,funcao pura,pp2,,,,f
+21,9,2109,quadratic,quadra'tico,pp2,,,,q
+0,0,0,quotation marks,aspas simples / duplas,google,,,,a
+11,13,1113,raise statement,instrucao raise,pp2,,,,i
+7,1,701,reassignment,reatribuicao,pp2,,,,r
+5,13,513,recursion,recursao,pp2,,,,r
+10,6,1006,reduce,"reduzir, redução",ppd sum,,,,r
+9,2,902,reduction to a previously solved problem,reducao a um problema resolvido,pp2,,,,r
+4,7,407,refactoring,refatoracao,pp2,,,,r
+10,12,1012,reference,referência,ppd 31,,,,r
+5,4,504,relational operator,operador relacional,pp2,,,,o
+14,8,1408,relative path,caminho relativo,pp2,,,,c
+0,0,0,remainder,resto da divisão,ppd 24,,,,r
+5,12,512,return statement,instrucao return,pp2,,,,i
+3,10,310,return value,"valor devolvido, valor de retorno","pp2, tpp 35",,,,v
+0,0,0,returns (function),"retorna, devolve","ppd 29, pp2",,,,
+11,12,1112,reverse lookup,busca invertida,pp2,,,,b
+13,6,1306,rubber duck debugging,depuracao com patinho de borracha,pp2,,,,d
+0,0,0,runtime,tempo de execução,linguee,,,,
+6,4,604,scaffolding,codigo provisorio,pp2,,,,c
+12,4,1204,scatter,explodir,pp2,,,,e
+0,0,0,scientific notation,notação científica,ppd 33,,,,n
+0,0,0,scope,escopo,ppd 66,,,,e
+2,12,212,script,script,tpp 14,,,,s
+2,11,211,script mode,modo de script,pp2,,,,m
+8,9,809,search,busca,pp2,,,,b
+21,10,2110,search,busca,pp2,,,,b
+2,19,219,semantic error,erro semântico,pp2,,,,e
+2,18,218,semantics,semântica,self,,,,s
+8,2,802,sequence,seque^ncia,"self, pp2",,,,s
+0,0,0,shadow (a variable),ofuscar,ppd 66,,,,o
+15,7,1507,shallow copy,co'pia rasa,pp2,,,,c
+12,8,1208,shape error,erro estrutural,pp2,,,,e
+14,13,1413,shell,shell,"pp2, linguee",,,,s
+11,14,1114,singleton,singleton,pp2,,,,s
+8,5,805,slice,fatia,ppd 37,,,,f
+0,0,0,source code file,código fonte,wikipedia,,,,c
+9,3,903,special case,caso especial,pp2,,,,c
+0,0,0,square brackets,colchetes,ppd 83,,,,c
+3,20,320,stack diagram,diagrama de pilha,pp2,,,,d
+0,0,0,standard library,biblioteca padrão,ppd 69,,,,b
+2,3,203,state diagram,diagrama de estado,pp2,,,,d
+2,8,208,statement,"instrução, comando","ppd 24, 26, 28",,,,i
+1,14,114,string,(uma) string,ppd 34,,,,(
+17,4,1704,subject,sujeito,pp2,,,,s
+1,18,118,syntax,sintaxe,ppd 10,,,,s
+2,16,216,syntax error,erro de sintaxe,self,,,,e
+0,0,0,tab,tabulação,ppd 23,,,,t
+0,0,0,take an argument,receber um argumento,ppd 302,,,,
+6,1,601,temporary variable,varia'vel tempora'ria,pp2,,,,v
+14,5,1405,text file,arquivo texto,ppd 338,,,,a
+1,17,117,token,"token, símbolo, átomo","tpp 16, 17, wikipedia",,,,t
+3,22,322,traceback,traceback,"pp2, tpp 26",,,,t
+8,8,808,traverse,percorrer,pp2,,,,p
+12,1,1201,tuple,tupla,ppd sumario,,,,t
+12,2,1202,tuple assignment,desempacotamento de tupla,pp2,,,,d
+1,11,111,type,tipo,ppd sumario,,,,t
+17,7,1707,type-based dispatch,despacho por tipo,pp2,,,,d
+0,3,3,typing (of a language),tipagem (dinâmica e forte),ppd 13,,,,t
+7,2,702,update,atualizacao,pp2,,,,a
+1,10,110,value,valor,self,,,,v
+11,6,1106,value,valor,self,,,,v
+2,1,201,variable,variável,ppd 27,,,,v
+18,4,1804,veneer,fachada,pp2,,,,f
+3,12,312,void function,procedimento,pp2,Returns None,,,p
+0,0,0,while,executa atendendo a uma condição,ppd 29,,,,e
+21,3,2103,worst case,pior caso,pp2,,,,p
+12,5,1205,zip object,objeto zip,pp2,,,,o
