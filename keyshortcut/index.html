@@ -1,0 +1,51 @@
+<!-- Open a new tab on pressing a key -->
+<html>
+<head>
+    <title>KeyShortcuts</title>
+    <script>
+     function myOpen(url) {
+       window.open(url, '_blank');
+     }
+
+     function process(e) {
+       e = e || window.event;
+       var kc = e.keyCode;
+       var ltr = String.fromCharCode(kc).toLowerCase();
+       // console.log("process " + ltr);
+
+       var myLinks = {
+         '1': "https://mail.google.com/mail/u/0/#inbox",
+         '3': "https://www.google.com/",
+
+         'g': "https://www.youtube.com/watch?v=HjL_SV8GXyw",
+         'e': "https://www.youtube.com/watch?v=R9J0_RYhWMw",
+         'p': "https://www.youtube.com/watch?v=LHhARDSKSiA",
+
+         'a': "http://tinacg.com/tinalert/",
+         'm': "http://tinacg.com/googlemaps/distance.html?#"
+         'f': "https://www.facebook.com/",
+       }
+
+       var myLink = myLinks[ltr] || "";
+       if (myLink !== "") {
+         myOpen(myLink);
+       }       
+     }
+    </script>
+</head>    
+<body onkeyup="process(event);">
+    <pre id="desc">
+1: Gmail
+3: Google
+
+g: Grima
+e: End of All
+p: Prelude
+
+a: TiNAlert
+m: TiNAmap
+f: fb
+
+    </pre>
+</body>
+</html>
