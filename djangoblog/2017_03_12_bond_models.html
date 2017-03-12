@@ -16,20 +16,123 @@
         <h3>12 March, 2017</h3>
 
         <p>
-            <a href="2017_03_11_new_project_besouro_direto.html">Previously</a>, we created a new Django project and logged into the Admin app.
+            <a href="2017_03_11_new_project_besouro_direto.html">Previously</a>, we created a new Django project and successfully logged into the Admin site.
         </p>
 
         <p>
-            models.py
+            I believe it's best to segregate sections of the project, so that our models.py and views.py don't become too big. I will put all the common (shared) bond information into a <code>bonds</code> app, even though it will only store the bond models. That is, it won't directly have any views or URLs.
+        </p>
+        
         <p>
-            From now on, I will omit the terminal prompt <code>(venv) heitor:~/besouro_direto$</code> and only write <code>$</code>. Remember to activate your virtualenv before running commands!
-            makemigrations, migrate
+            First, create a new <code>bonds</code> app:
+
+            <pre>
+(venv) heitor:~besouro_direto$ python manage.py startapp bonds
+            </pre>
+
+            Once the app is created, we must install the app in the project-wide settings file.
         </p>
 
+        <p>
+            Edit the file <code>besouro_direto/settings.py</code> (located in the subdirectory <code>besouro_direto</code>). Find the <code>INSTALLED_APPS</code> list, and add to it <code>'bonds.apps.BondsConfig',</code> as shown below. Don't forget the comma at the end.
+
+            <pre class="py">
+# besouro_direto/settings.py
+
+"""
+Django settings for besouro_direto project.
+
+# ... many lines omitted ...
+
+INSTALLED_APPS = [
+    'bonds.apps.BondsConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+
+# ... rest of settings.py ...
+            </pre>
+
+            If you're curious, the AppConfig is defined in <code>bonds/apps.py</code>.
+        </p>
+
+        <p>
+            Now open <code>bonds/models.py</code> in your favorite text editor:
+            <pre class="py">
+from django.db import models
+
+# Create your models here.
+
+class BondType(models.Model):
+    """A type of bond, independent of maturity"""
+    name = models.CharField(max_length=80)
+    code = models.CharField(max_length=20)
+    prefixed = models.BooleanField()
+    hasCoupon = models.BooleanField()
+
+    def __str__(self):
+        return "{} ({})".format(self.code, self.name)
+
+class Bond(models.Model):
+    bond_type = models.ForeignKey(BondType, on_delete=models.CASCADE)
+    maturity = models.DateField()
+
+    def __str__(self):
+        return "{} {}".format(str(self.bond_type.code),
+                              self.maturity.strftime("%Y"))
+
+class BondPrice(models.Model):
+    bond = models.ForeignKey(Bond, on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=9, decimal_places=2)
+    price_date = models.DateField()
+
+    def __str__(self):
+        return "{} R$ {} ({})".format(self.bond,
+                                      self.price,
+                                      self.price_date)
+            </pre>
+        </p>
         
-        
+        <p>
+            I won't go into the details of the models, because this series of posts is meant to be an outline, quickly guiding you from start to finish. Details are found in the <a href="https://docs.djangoproject.com/en/1.10/ref/models/fields/" target="_blank">official documentation</a>.
+        </p>
+
+        <p>
+            Now that our models are in place, we must update the database. Go back to the project's base directory, and run:
+            <pre>
+(venv) heitor:~besouro_direto$ python manage makemigrations
+(venv) heitor:~besouro_direto$ python manage migrate
+            </pre>
+        </p>
+
+        <p>
+            We didn't write any HTML or forms, yet it is possible to create, edit, and delete bonds from the Admin site. However, since you might not want to expose all models automatically, we must explicitly register our models for them to appear in the Admin site.
+        </p>
+
+        <p>
+            Open <code>bonds/admin.py</code>:
+            <pre>
+# bonds/admin.py
+
+from django.contrib import admin
+
+from .models import BondType, Bond, BondPrice
+
+# Register your models here.
+
+admin.site.register(BondType)
+admin.site.register(Bond)
+admin.site.register(BondPrice)
+            </pre>
+
+            Now navigate to <a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a> and log in, if needed.
+        </p>
+
+        <p>
+            From each of the links, we may now add relevant data that will be shared among every user (the bond characteristics and prices are publicly available).
+        </p>
         
         For NEXT TIME
+        <ol>
             <li>
                 Set up static
             </li>
@@ -41,6 +144,6 @@
             <li>
                 Set up urls.py
             </li>
-
+        </ol>
     </body>
 </html>

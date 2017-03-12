@@ -45,6 +45,10 @@
                     There are many ways to install virtualenv; the easiest is probably with your system's package manager. You may also want virtualenvwrapper to make managing multiple virtualenvs easier. Here, I show the bare minimum.
                 </p>
 
+                <p>
+                    In your home directory, or a base directory for your projects, run:
+                </p>
+                
                 <pre>
 heitor:~$ virtualenv -p /usr/bin/python3 venv
                 </pre>
@@ -68,7 +72,7 @@ heitor:~$ source venv/bin/activate
             </li>
 
             <li>
-                I want a few "default" Django apps available: sitewide and experimental. Sitewide templates such as the root index.html and navigation code can be placed there. The experimental folder will store views, computations, and JavaScript that I want to try out without polluting the main apps.
+                I want a few "default" Django apps available: sitewide and experimental. Sitewide templates such as the root index.html, navigation code, and stylesheets will be placed there. The experimental folder will store views, calculations, and JavaScript that I first want to try out without polluting the main apps' files and folders.
 
                 <pre>
 (venv) heitor:~$ cd besouro_direto
@@ -78,7 +82,7 @@ heitor:~$ source venv/bin/activate
             </li>
 
             <li>
-                I'm impatient, so I frequently check that things are working as expected. Right now, I can check that the built-in Admin app works. I set up the default database tables with <code>migrate</code> and then create a superuser. Fill in the prompts.
+                I'm impatient, so I frequently check whether things are working as expected. Right now, I can check that the built-in Admin site works. I set up the default database tables with <code>migrate</code> and then create a superuser. Fill in the prompts.
                 
                 <pre>
 (venv) heitor:~/besouro_direto$ python manage.py migrate
@@ -87,21 +91,26 @@ heitor:~$ source venv/bin/activate
             </li>
 
             <li>
-                Test the development server (by default, it listens on port 8000)
+                Start the development server (by default, it listens on port 8000)
 
                 <pre>
 (venv) heitor:~/besouro_direto$ python manage.py runserver
                 </pre>
 
-                The only meaningful thing that is available is the Admin interface, reachable at <a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a> Use the superuser account created above. The only thing we can do is manage the site's users and groups.
+                The only meaningful thing available is the Admin site, reachable at <a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a> Use the superuser account created above. The only thing we can do is manage the site's users and groups.
             </li>
 
             <li>
-                Now that we checked that the basic setup works, we should start planning our project. I usually create README.txt, TODO.txt, and LICENSE.txt.
+                Now that we checked that the basic setup works, we should start planning our project. I usually create
+                <ul type="disc">
+                    <li>README.txt (describes what the project is about)</li>
+                    <li>TODO.txt (a list of tasks and ideas to be tested and implemented)</li>
+                    <li>LICENSE.txt (says how your code can be used by others)</li>
+                </ul>
             </li>
 
             <li>
-                Create a .gitignore file to avoid saving bytecode and the local database.
+                Create a <code>.gitignore</code> file in the base directory to avoid saving bytecode and the local database.
                 <pre class="py">
 # .gitignore
 
@@ -120,13 +129,52 @@ db.sqlite3
             </li>
 
         </ol>
-
-        <p>
-            As a superuser, we can manage our site's users, but there is not yet any content to manage! Next time, we will create models for Tesouro Direto bonds. Once they are in place, anyone should be able to browse their basic characteristics.
-        </p>
         
         <p>
-            Next, read about how to <a href="2017_03_12_bond_models.html">create models for Tesouro Direto bonds</a>.
-        </p>        
+            The <code>besouro_direto</code> base directory looks like this, excluding all <code>__init__.py</code> and <code>__pycache__</code>:
+            <pre>
+besouro_direto (the Django project's base directory)
+|
++- besouro_direto
+|  |   (yes, it is a subdirectory with the same name as the 
+|  |    base directory and I find it confusing)
+|  +- settings.py (project-wide settings that must be updated
+|  |               every time a new app is created)
+|  +- urls.py (routes URLs to views)
+|  +- wsgi.py (default settings for deployment)
+|
++- experimental (we created this app with python manage.py startapp)
+|  +- migrations (currently empty)
+|  +- admin.py   (models registered here appear in the Admin site)
+|  +- apps.py    (define app metadata here)
+|  +- models.py  (define data models here)
+|  +- tests.py   (test your app's logic)
+|  +- views.py   (decide what to present to the end user)
+|
++- sitewide
+|  +- migrations (same file structure as 'experimental')
+|  +- admin.py
+|  +- apps.py
+|  +- models.py
+|  +- tests.py
+|  +- views.py
+|
++- LICENSE.txt
++- README.txt 
++- TODO.txt
++- db.sqlite3 (the development database)
++- manage.py (executes administration commands like starting the
+              development server, creating apps, and applying
+              migrations)
+            </pre>
+        </p>
+
+        <p>
+            As a superuser, we can manage our site's users, but there is not yet any content to manage!
+        </p>
+
+        <p>
+            Next, we will <a href="2017_03_12_bond_models.html">create models for Tesouro Direto bonds</a>, whose data is meant to be shared by everyone.
+        </p>
     </body>
 </html>
