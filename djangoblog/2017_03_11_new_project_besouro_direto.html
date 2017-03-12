@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heitor's Django Blog - Besouro Direto</title>
+        <style>
+         body {
+             margin-left: 8%;
+             width: 65%;
+         }
+
+         pre {
+             background-color: #000;
+             color: #6C6;
+             padding: 1em;
+             border-radius: 0.8em;
+         }
+
+         .py {
+             background-color: #FF9;
+             padding: 1em;
+             color: #000;
+         }
+
+         a:link, a:visited, a:hover, a:active {
+             color: #559;
+             font-weight: bold;
+             text-decoration: none;
+         }
+
+         li {
+             margin-top: 1.5em;
+         }
+        </style>
+    </head>
+    
+    <body>
+        <h1>Besouro Direto, a New Django Project</h1>
+        <h3>11 March, 2017</h3>
+        
+        <p>
+            After starting and stopping multiple Django projects, I finally decided to take some notes. What I usually do is keep two windows in Emacs: one with an older project and the other with the new one, then copy and paste code.
+        </p>
+
+        <p>
+            Here, I hope to create a more organized, step-by-step guide from the beginning.
+        </p>
+
+        <p>
+            The current Django project I am developing is called Besouro Direto, a calculator and record-keeping app for investments in Brazil's government bond program called <a href="http://www.tesouro.fazenda.gov.br/tesouro-direto">Tesouro Direto</a>.
+        </p>
+
+        <p>
+            A Besouro is a beetle and is somewhat related to growing investments. Some (or all?) species roll a ball of dung around, gradually making it bigger. As I feel Tesouro Direto won't make you rich overnight, it is a fitting analogy.
+        </p>
+
+        <p>
+            Now, let's proceed to the setup and the coding
+        </p>
+        
+        <ol>
+            <li>
+                <p>
+                    First, I want Python 3 and Django. (You may prefer Python 2.7 and that's OK. But I want the future of the language). I am developing in Ubuntu and Python 2 seems to be the default, so I set up a <a href="https://pypi.python.org/pypi/virtualenv">virtualenv</a>.
+                </p>
+
+                <pre>
+heitor:~$ virtualenv -p /usr/bin/python3 venv
+                </pre>
+
+                <p>
+                    Now activate the virtualenv.
+                </p>
+
+                <pre>
+heitor:~$ source venv/bin/activate
+(venv) heitor:~$ pip install Django
+                </pre>
+
+                <p>
+                    After all this setup, start a new Django project. (dashes are not OK in project names, so I use an underscore).
+                </p>
+
+                <pre>
+(venv) heitor:~$ django-admin startproject besouro_direto
+                </pre>
+            </li>
+
+            <li>
+                I want a few "default" Django apps available: sitewide and experimental. Sitewide templates such as the root index.html and navigation code can be placed there. The experimental folder will store views, computations, and JavaScript that I want to try out without polluting the main apps.
+
+                <pre>
+(venv) heitor:~$ cd besouro_direto
+(venv) heitor:~/besouro_direto$ python manage.py startapp sitewide
+(venv) heitor:~/besouro_direto$ python manage.py startapp experimental
+                </pre>
+            </li>
+
+            <li>
+                I'm impatient, so I want to make sure I can get a quick login check. I set up the default database tables with <code>migrate</code> and then create a superuser. Fill in the prompts.
+                
+                <pre>
+(venv) heitor:~/besouro_direto$ python manage.py migrate
+(venv) heitor:~/besouro_direto$ python manage.py createsuperuser
+                </pre>
+            </li>
+
+            <li>
+                Test the development server (by default, it listens on port 8000)
+
+                <pre>
+(venv) heitor:~/besouro_direto$ python manage.py runserver
+                </pre>
+
+                The only meaningful thing that is available is the Admin interface, reachable at <a href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a>. Use the superuser account created above.
+            </li>
+
+            <li>
+                Now that we checked that the basic setup works, we should start planning our project. I usually create README.txt, TODO.txt, and LICENSE.txt.
+            </li>
+
+            <li>
+                Create a .gitignore file to avoid saving bytecode and the local database.
+                <pre class="py">
+# .gitignore
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+db.sqlite3
+                </pre>
+            </li>
+            
+            <li>
+                Once we have the description of our project done, we should set up a repo on <a href="">Github</a> (or another online version control system) to save our work.
+            </li>
+
+            <li>
+                Set up static
+            </li>
+
+            <li>
+                Set up index.html
+            </li>
+
+            <li>
+                Set up urls.py
+            </li>
+
+        </ol>
+        
+        
+    </body>
+</html>
