@@ -22,7 +22,7 @@
         <p>
             I believe it's best to segregate sections of the project, so that our models.py and views.py don't become too big. I will put all the common (shared) bond information into a <code>bonds</code> app, even though it won't have much interactivity.
         </p>
-        
+
         <p>
             First, create a new <code>bonds</code> app:
 
@@ -127,14 +127,14 @@ admin.site.register(BondPrice)
             Now navigate to <a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a> and log in, if needed.
         </p>
 
-        <p>
-            From each of the links, we may now add relevant data that will be visible to every user (the bond characteristics and prices are publicly available).
+        <p>        
+            From each of the links, we may now add relevant data that will be visible to every user (the bond types and prices are publicly available).
         </p>
-        
+
         For NEXT TIME
         <ol>
             <li>
-                Set up static
+                Set up static (for fonts and css)
             </li>
 
             <li>
@@ -143,6 +143,14 @@ admin.site.register(BondPrice)
 
             <li>
                 Set up urls.py
+            </li>
+
+            <li>
+                Set up bonds index (list of all bonds) and URL
+            </li>
+
+            <li>
+                Set up individual bond's price history and URL
             </li>
         </ol>
     </body>
