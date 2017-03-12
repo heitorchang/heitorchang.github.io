@@ -19,7 +19,15 @@
 body {
     font-family: 'Roboto', sans-serif;
     margin-left: 35px;
+    margin-bottom: 90px;
     max-width: 800px;
+}
+
+code {
+    background-color: #DDD;
+    color: #151;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 pre {
