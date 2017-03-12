@@ -1,0 +1,47 @@
+@font-face {
+    font-family: "Roboto Mono";
+    src: url('RobotoMono-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url('Roboto-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url('Roboto-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin-left: 35px;
+    max-width: 800px;
+}
+
+pre {
+    font-family: 'Roboto Mono', monospace;
+    background-color: #DDD;
+    color: #151;
+    padding: 1em;
+    border-radius: 0.8em;
+}
+
+.py {
+    background-color: #FFB;
+    padding: 1em;
+    color: #000;
+}
+
+a:link, a:visited, a:hover, a:active {
+                                color: #18A;
+                                font-weight: bold;
+                                text-decoration: none;
+                            }
+
+li {
+    margin-top: 1.5em;
+}

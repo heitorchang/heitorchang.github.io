@@ -4,38 +4,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Heitor's Django Blog - Besouro Direto</title>
-        <style>
-         body {
-             margin-left: 8%;
-             width: 65%;
-         }
-
-         pre {
-             background-color: #000;
-             color: #6C6;
-             padding: 1em;
-             border-radius: 0.8em;
-         }
-
-         .py {
-             background-color: #FF9;
-             padding: 1em;
-             color: #000;
-         }
-
-         a:link, a:visited, a:hover, a:active {
-             color: #559;
-             font-weight: bold;
-             text-decoration: none;
-         }
-
-         li {
-             margin-top: 1.5em;
-         }
-        </style>
+        <link rel="stylesheet" href="css/style.css">
     </head>
     
     <body>
+        <p>
+            <a href="index.html">Back to blog's home</a>
+        </p>
+        
         <h1>Besouro Direto, a New Django Project</h1>
         <h3>11 March, 2017</h3>
         
@@ -48,7 +24,7 @@
         </p>
 
         <p>
-            The current Django project I am developing is called Besouro Direto, a calculator and record-keeping app for investments in Brazil's government bond program called <a href="http://www.tesouro.fazenda.gov.br/tesouro-direto">Tesouro Direto</a>.
+            The current Django project I am developing is called Besouro Direto, a calculator and record-keeping app for investments in Brazil's government bond program called <a href="http://www.tesouro.fazenda.gov.br/tesouro-direto" target="_blank">Tesouro Direto</a>.
         </p>
 
         <p>
@@ -62,7 +38,11 @@
         <ol>
             <li>
                 <p>
-                    First, I want Python 3 and Django. (You may prefer Python 2.7 and that's OK. But I want the future of the language). I am developing in Ubuntu and Python 2 seems to be the default, so I set up a <a href="https://pypi.python.org/pypi/virtualenv">virtualenv</a>.
+                    First, I want Python 3 and Django. (You may prefer Python 2.7 and that's OK. But I want the future of the language). I am developing in Ubuntu and Python 2 seems to be the default, so I set up a <a href="https://pypi.python.org/pypi/virtualenv" target="_blank">virtualenv</a>.
+                </p>
+
+                <p>
+                    There are many ways to install virtualenv; the easiest is probably with your system's package manager. You may also want virtualenvwrapper to make managing multiple virtualenvs easier. Here, I show the bare minimum.
                 </p>
 
                 <pre>
@@ -98,7 +78,7 @@ heitor:~$ source venv/bin/activate
             </li>
 
             <li>
-                I'm impatient, so I want to make sure I can get a quick login check. I set up the default database tables with <code>migrate</code> and then create a superuser. Fill in the prompts.
+                I'm impatient, so I frequently check that things are working as expected. Right now, I can check that the built-in admin app works. I set up the default database tables with <code>migrate</code> and then create a superuser. Fill in the prompts.
                 
                 <pre>
 (venv) heitor:~/besouro_direto$ python manage.py migrate
@@ -113,7 +93,7 @@ heitor:~$ source venv/bin/activate
 (venv) heitor:~/besouro_direto$ python manage.py runserver
                 </pre>
 
-                The only meaningful thing that is available is the Admin interface, reachable at <a href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a> Use the superuser account created above.
+                The only meaningful thing that is available is the Admin interface, reachable at <a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a> Use the superuser account created above. The only thing we can do is manage the site's users and groups.
             </li>
 
             <li>
@@ -136,30 +116,17 @@ db.sqlite3
             </li>
             
             <li>
-                Once we have the description of our project done, we should set up a repo on <a href="">Github</a> (or another online version control system) to save our work.
+                Once we have the description of our project done, we should set up a repo on <a href="https://github.com/" target="_blank">Github</a> (or another online version control system) to save our work.
             </li>
 
         </ol>
 
         <p>
-            Keep reading (LINK TO 12 MARCH)
+            As a superuser, we can manage our site's users, but there is not yet any content to manage! Next time, we will create models for Tesouro Direto bonds. Once they are in place, anyone should be able to browse their basic characteristics.
         </p>
-
-        For 12 MARCH
-            <li>
-                Set up static
-            </li>
-
-            <li>
-                Set up index.html
-            </li>
-
-            <li>
-                Set up urls.py
-            </li>
-
-        </ol>
         
-        
+        <p>
+            Continue reading  (LINK TO 12 MARCH)
+        </p>        
     </body>
 </html>
