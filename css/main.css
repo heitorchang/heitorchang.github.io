@@ -1,15 +1,24 @@
+@font-face {
+    font-family: 'Cantarell';
+    src: url('Cantarell-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Cantarell', Arial, Helvetica, sans-serif;
+}
+
+tt {
+    font-family: 'Cantarell', Arial, Helvetica, sans-serif;
 }
 
 img {
-    border: 2px solid #136C31;
+    /* border: 2px solid #136C31; */
     margin: 5px;
 }
 
 h1 {
-    font-size: 18px;
-    font-style: italic;
+    font-size: 1.5em;
 }
 
 a {
@@ -21,12 +30,15 @@ a {
     width: 100%;
     display: block;
     float: left;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
 }
 
 .galleryItem {
     display: block;
     float: left;
+    box-shadow: 6px 5px 5px #CCC;
+    margin: 0 20px 20px 0;
+    padding: 0 15px 15px 15px;
 }
 
 img.small-logo {
