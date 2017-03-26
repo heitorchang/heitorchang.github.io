@@ -22,20 +22,17 @@ h1 {
 }
 
 a {
-    font-size: 14px;
     text-decoration: none;
 }
 
 .section {
     width: 100%;
-    display: block;
-    float: left;
+    display: inline-block;
     padding-bottom: 5px;
 }
 
 .galleryItem {
-    display: block;
-    float: left;
+    display: inline-block;
     box-shadow: 6px 5px 5px #CCC;
     margin: 0 20px 20px 0;
     padding: 0 15px 15px 15px;
@@ -43,4 +40,16 @@ a {
 
 img.small-logo {
     border: none;
+}
+
+.med_lg {
+    font-size: 1.2em;
+}
+
+.ctr {
+    text-align: center;
+}
+
+.lg {
+    font-size: 1.4em;
 }
