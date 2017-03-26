@@ -53,3 +53,8 @@ img.small-logo {
 .lg {
     font-size: 1.4em;
 }
+
+hr {
+    width: 42%;
+    border-color: #88F;
+}
