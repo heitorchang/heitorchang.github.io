@@ -50,7 +50,7 @@ INSTALLED_APPS = [
             <pre>
 ~/lira $ mkdir static
 ~/lira $ cd static
-~/lira $ mkdir css
+~/lira/static $ mkdir css
             </pre>
         </p>
 
@@ -96,5 +96,129 @@ urlpatterns = [
 
         <p>
             Let's save a font in the <code>lira/static/css</code> folder. I downloaded the <a href="https://fonts.google.com/specimen/Yesteryear" target="_blank">Google font Yesteryear</a>. To save time, you may download <a href="css/Yesteryear-Regular.ttf">my copy of the TrueType file</a>. Note that there is also the <a href="css/OFL.txt">OFL license</a> included with the Google download.
+        </p>
+
+        <p>
+            Now, let's create a CSS stylesheet defining the custom font:
+            <pre>
+/* lira/static/css/fonts.css */
+
+@font-face {
+    font-family: 'Yesteryear';
+    src: url('Yesteryear-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+
+.yesteryear {
+    font-family: 'Yesteryear';
+}
+            </pre>
+        </p>
+
+        <p>
+            Now, let's make sure our work is functioning properly. Start the development server (<code>runserver</code>) and go to <a href="http://127.0.0.1:8000/static/css/fonts.css">http://127.0.0.1:8000/static/css/fonts.css</a>. You should be able to see the CSS file. 
+        </p>
+
+        <p>
+            HTML templates are conventionally placed in a <code>templates/APP_NAME</code> folder. Let's create this folder for the <code>sitewide</code> app:
+
+            <pre>
+~/lira $ cd sitewide
+~/lira/sitewide $ mkdir templates
+~/lira/sitewide $ cd templates
+~/lira/sitewide/templates $ mkdir sitewide
+            </pre>
+        </p>
+
+        <p>
+            In the newly created folder, create a <code>base.html</code> file. We define blocks in this base template and later, other templates that extend it will fill in the blocks.
+            <pre>
+&lt;!-- lira/sitewide/templates/sitewide/base.html --&gt;
+
+{% load static %}
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;Lira - {% block title %}{% endblock %}&lt;/title&gt;
+        &lt;link rel="stylesheet" href="{% static "css/fonts.css" %}"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        {% block header %}{% endblock %}
+        {% block content %}{% endblock %}
+        {% block footer %}{% endblock %}
+    &lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+        </p>
+
+        <p>Our <code>index.html</code> will extend the base template:
+            <pre>
+&lt;!-- lira/sitewide/templates/sitewide/index.html --&gt;
+
+{% extends 'sitewide/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+&lt;div class="yesteryear"&gt;
+    &lt;h1&gt;Welcome to Lira&lt;/h1&gt;
+&lt;/div&gt;
+
+{% endblock %}
+            </pre>
+        </p>
+
+        <p>
+            The template will be rendered through a view:
+            <pre>
+# lira/sitewide/views.py
+
+from django.shortcuts import render
+
+# Create your views here.
+
+def index(request):
+    return render(request, 'sitewide/index.html')
+            </pre>
+        </p>
+
+        <p>
+            Create a <code>urls.py</code> file to define a pattern that will lead to the index view:
+            <pre>
+# lira/sitewide/urls.py
+
+from django.conf.urls import url
+
+from . import views
+
+app_name = 'sitewide'
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+]
+            </pre>
+        </p>
+
+        <p>
+            Finally, in <code>lira/lira/urls.py</code> we need to include the <code>sitewide</code> URLs:
+            <pre>
+from django.conf import settings
+from django.conf.urls.static import static
+from django.conf.urls import url<span class="code_highlight">, include</span>
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+<span class="code_highlight">    url(r'^', include('sitewide.urls')),</span>
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+            </pre>
+        </p>
+
+        <p>
+            Now, going to <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a> will display our welcome message.
+        </p>
     </body>
 </html>

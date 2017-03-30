@@ -27,7 +27,7 @@
         </p>
 
         <p>
-            A Lira user will be able to define multiple accounts, such as a <span class="highlight_i">bank checking account</span>, that belongs to an account type, in this case, <span class="highlight_i">Assets</span>.
+            A Lira user should be able to define multiple accounts, such as a <span class="highlight_i">bank checking account</span>, that belongs to an account type, in this case, <span class="highlight_i">Assets</span>.
         </p>
 
         <p>
@@ -58,7 +58,7 @@
 ~/lira $ python manage.py runserver
             </pre>
 
-            By default, the development server is accessible through port 8000. Go to <a href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a> and use the superuser account created above.
+            By default, the development server is accessible through port 8000. To specify another port number, add it after <code>runserver</code>. Go to <a href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a> and use the superuser account created above.
         </p>
 
         <p>
@@ -66,7 +66,25 @@
         </p>
 
         <p>
+            Now that we made sure the default setup works well, let's add a <code>.gitignore</code> file for saving our work through Git.
+            <pre>
+# lira/.gitignore
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+db.sqlite3
+            </pre>    
+        </p>
+        
+        <p>
             Next, we will <a href="2017_03_30_index_custom_font.html">create a sitewide index with a custom font</a>.
         </p>
     </body>
 </html>
+
+
+
