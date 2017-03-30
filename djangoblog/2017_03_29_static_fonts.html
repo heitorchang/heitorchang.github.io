@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heitor's Django Blog - Adding fonts in a static folder</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    
+    <body>
+        <p>
+            <a href="index.html">Back to blog's home</a>
+        </p>
+
+        <h1>Adding fonts in a static folder</h1>
+        <h3>29 March, 2017</h3>
+
+        <p>
+            Here, we will set up a sitewide <code>static</code> folder, following <a href="https://docs.djangoproject.com/en/1.10/howto/static-files/" target="_blank">the official documentation</a>.
+        </p>
+
+        <p>
+            In order to test loading a font from the static folder, we will add a simple <code>index.html</code> to the <code>sitewide</code> app.
+        </p>
+
+        <p>
+            Install the <code>sitewide</code> app in <code>settings.py</code>
+
+            <pre>
+# besouro_direto/settings.py
+
+# ... many lines omitted ...
+
+INSTALLED_APPS = [
+    'sitewide.apps.SitewideConfig',
+    'bonds.apps.BondsConfig',
+    'django.contrib.admin',
+
+# ... other apps and the rest of settings.py
+            </pre>
+        </p>
+
+        <p>
+            Create a folder named <code>static</code> at the project's root level:
+            <pre>
+(venv) heitor:~/besouro_direto$ mkdir static
+(venv) heitor:~/besouro_direto$ ls
+besouro_direto
+bonds
+db.sqlite3
+experimental
+manage.py
+sitewide
+static
+            </pre>
+        </p>
+
+        <p>
+            At the end of <code>settings.py</code>, define the newly created static folder:
+            <pre>
+# besouro_direto/settings.py
+
+# ... go to the end of the file
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+STATIC_URL = '/static/'
+            </pre>
+        </p>
+
+        <p>
+            In the main <code>urls.py</code>, we have to add the static folder to the <code>urlpatterns</code>:
+            <pre>
+# besouro_direto/urls.py
+
+from django.conf import settings
+from django.conf.urls import url
+from django.conf.urls.static import static
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+            </pre>
+        </p>
+        
+        <p>
+            Make a <code>css</code> folder inside the <code>static</code> folder, and save a font in it. I downloaded the <a href="https://fonts.google.com/specimen/Yesteryear" target="_blank">Google font Yesteryear</a>.
+        </p>
+
+        <p>
+            Create a CSS stylesheet for custom fonts:
+            <pre>
+/* static/css/fonts.css */
+
+@font-face {
+    font-family: 'Yesteryear';
+    src: url('Yesteryear-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+            </pre>
+        </p>
+
+        <p>
+            Create a sitewide stylesheet:
+            <pre>
+/* static/css/sitewide_style.css */
+
+.yesteryear {
+    font-family: 'Yesteryear';
+    font-size: 2.5em;
+}
+            </pre>
+        </p>
+
+        <p>
+            Create a template folder to hold the index template:
+            <pre>
+(venv) heitor:~/besouro_direto/sitewide$ mkdir templates
+(venv) heitor:~/besouro_direto/sitewide$ cd templates
+(venv) heitor:~/besouro_direto/sitewide$ mkdir sitewide
+            </pre>
+        </p>
+        
+        <p>
+            Now, create the <code>index.html</code> template inside the folder just created. Later, we will create a base template; for now we just want to see that the static folder setup works:
+            <pre>
+{% load static %}
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;Sitewide Index&lt;/title&gt;
+        &lt;link rel="stylesheet" href="{% static "css/fonts.css" %}"&gt;
+        &lt;link rel="stylesheet" href="{% static "css/sitewide_style.css" %}"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;span class="yesteryear"&gt;Static Font Test&lt;/span&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+        <p>
+            Define a view for the index page in <code>sitewide/views.py</code>
+            <pre>
+# sitewide/views.py
+
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'sitewide/index.html')
+            </pre>
+        </p>
+
+        <p>
+            Create a <code>urls.py</code> in <code>sitewide</code>:
+            <pre>
+# sitewide/urls.py
+
+from django.conf.urls import url
+
+from . import views
+
+app_name = 'sitewide'
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+]
+            </pre>
+        </p>
+
+        <p>
+            Include sitewide's <code>urls.py</code> in the main <code>urls.py</code>. Import <code>include</code> from <code>django.conf.urls</code>:
+            <pre>
+# besouro_direto/urls.py
+
+from django.conf import settings
+from django.conf.urls import url, include
+from django.conf.urls.static import static
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^', include('sitewide.urls')),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+            </pre>
+        </p>
+        
+        <p>
+            Next time: Base Template
+        </p>
+            
+    </body>
+</html>

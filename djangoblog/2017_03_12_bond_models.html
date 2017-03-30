@@ -99,7 +99,7 @@ class BondPrice(models.Model):
         <p>
             Now that our models are in place, we must update the database. Go back to the project's base directory, and run:
             <pre>
-(venv) heitor:~besouro_direto$ python manage makemigrations
+(venv) heitor:~/besouro_direto$ python manage makemigrations
 (venv) heitor:~besouro_direto$ python manage migrate
             </pre>
         </p>
@@ -131,27 +131,8 @@ admin.site.register(BondPrice)
             From each of the links, we may now add relevant data that will be visible to every user (the bond types and prices are publicly available).
         </p>
 
-        For NEXT TIME
-        <ol>
-            <li>
-                Set up static (for fonts and css)
-            </li>
-
-            <li>
-                Set up index.html
-            </li>
-
-            <li>
-                Set up urls.py
-            </li>
-
-            <li>
-                Set up bonds index (list of all bonds) and URL
-            </li>
-
-            <li>
-                Set up individual bond's price history and URL
-            </li>
-        </ol>
+        <p>
+            Next, we will <a href="2017_03_29_static_fonts.html">create a temporary sitewide index with a font located in a static folder</a>
+        </p>
     </body>
 </html>
