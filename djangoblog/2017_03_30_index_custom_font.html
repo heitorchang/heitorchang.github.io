@@ -205,6 +205,10 @@ urlpatterns = [
         <p>
             Finally, in <code>lira/lira/urls.py</code> we need to include the <code>sitewide</code> URLs:
             <pre>
+# lira/lira/urls.py
+
+# ... default documentation ...
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url<span class="code_highlight">, include</span>
