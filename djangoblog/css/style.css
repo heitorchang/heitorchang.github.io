@@ -24,9 +24,10 @@ body {
 }
 
 code {
-    background-color: #DDD;
-    color: #151;
-    padding: 5px;
+    font-family: "Roboto";
+    background-color: #DEF;
+    color: #030;
+    padding: 2px 5px;
     border-radius: 5px;
 }
 
@@ -50,6 +51,11 @@ a:link, a:visited, a:hover, a:active {
                                 text-decoration: none;
                             }
 
-li {
-    margin-top: 1.5em;
+.highlight_i {
+    font-style: italic;
+}
+
+.code_highlight {
+    background-color: #FF8;
+    font-weight: bold;
 }

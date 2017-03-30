@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heitor's Django Blog - Creating the site's index with a custom font</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    
+    <body>
+        <p>
+            <a href="index.html">Back to blog's home</a>
+        </p>
+
+        <h1>Creating the site's index with a custom font</h1>
+        <h3>30th March, 2017</h3>
+
+        <p>
+            Previously, we <a href="2017_03_30_starting_lira.html">logged in to the built-in Admin app</a>.
+        </p>
+        
+        <p>
+            Lira will have multiple apps to compartmentalize different types of functionality. We will place general content that doesn't fit well anywhere in the <code>sitewide</code> app.
+
+            <pre>
+~/lira $ python manage.py startapp sitewide
+            </pre>
+        </p>
+
+        <p>
+            After creating an app, we need to install it in the project's <code>settings.py</code> in the <code>lira/lira</code> folder. Add the app's <code>AppConfig</code> to <code>INSTALLED_APPS</code>. To explicitly indicate the <code>lira</code> folder inside the base <code>lira</code> folder, my file paths will be relative to my home directory (as in the shell prompts).
+
+            <pre>
+# lira/lira/settings.py
+
+# ... lines skipped ...
+
+# Application definition
+
+INSTALLED_APPS = [
+<span class="code_highlight">    'sitewide.apps.SitewideConfig',</span>
+    'django.contrib.admin',
+    'django.contrib.auth',
+            </pre>
+        </p>
+
+        <p>
+            We will place our custom font, CSS and JavaScript content in a special <code>static</code> folder. In the base <code>lira</code> folder, create a <code>static</code> folder:
+
+            <pre>
+~/lira $ mkdir static
+~/lira $ cd static
+~/lira $ mkdir css
+            </pre>
+        </p>
+
+        <p>
+            For now, we will serve the <code>static</code> folder in development mode. At the end of <code>lira/lira/settings.py</code>, add the static folder definitions:
+
+            <pre>
+# lira/lira/settings.py
+
+# ... go to the end of the file
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
+
+STATIC_URL = '/static/'
+
+<span class="code_highlight">STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]</span>
+            </pre>
+        </p>
+        
+        <p>
+            Once the settings for static files are in place, we need to update <code>lira/lira/urls.py</code>:
+
+            <pre>
+# lira/lira/urls.py
+
+# ... default documentation ...
+
+<span class="code_highlight">from django.conf import settings
+from django.conf.urls.static import static</span>
+from django.conf.urls import url
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+]<span class="code_highlight"> + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)</span>
+            </pre>
+
+            By default, <code>STATIC_ROOT</code> is <code>None</code>, and is used as the path to the directory where <code>collectstatic</code> places static files for deployment.
+        </p>
+
+        <p>
+            Let's save a font in the <code>lira/static/css</code> folder. I downloaded the <a href="https://fonts.google.com/specimen/Yesteryear" target="_blank">Google font Yesteryear</a>. To save time, you may download <a href="css/Yesteryear-Regular.ttf">my copy of the TrueType file</a>. Note that there is also the <a href="css/OFL.txt">OFL license</a> included with the Google download.
+    </body>
+</html>
