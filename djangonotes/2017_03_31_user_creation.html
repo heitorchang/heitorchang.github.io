@@ -50,7 +50,9 @@
 {% endblock %}
             </pre>
         </p>
-            
+
+        <!-- SUBOPTIMAL: DOES NOT LOGIN AUTOMATICALLY AFTER SUCCESSFUL CREATION
+        
         <p>
             Now, we define the URL that will use this template. Create a <code>urls.py</code> in the app's base folder:
             <pre>
@@ -59,6 +61,7 @@
 from django.conf.urls import url
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
 
 app_name = 'users'
 
@@ -66,7 +69,7 @@ urlpatterns = [
     url(r'^create/', CreateView.as_view(
         template_name='users/user_creation.html',
         form_class=UserCreationForm,
-        success_url='/')),
+        success_url=reverse_lazy('sitewide:index')), name='create'),
 ]
             </pre>
         </p>
@@ -87,9 +90,56 @@ urlpatterns = [
         </p>
 
         <p>
-            As defined in the two <code>urls.py</code> files, navigating to <a href="http://127.0.0.1:8000/users/create/">http://127.0.0.1:8000/users/create/</a> will display the user creation form.
+            As defined in the two <code>urls.py</code> files, navigating to <a href="http://127.0.0.1:8000/users/create/" target="_blank">http://127.0.0.1:8000/users/create/</a> will display the user creation form.
         </p>
-     
+     -->
+
+        <p>
+            Now, let's create a view to save the new user and automatically login if successful. Though it is possible to create new users with a <code>CreateView</code>, it does not have the auto-login feature that I want. So we must create our own view:
+            <pre>
+# lira/users/views.py
+
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
+
+# Create your views here.
+
+def create_and_login(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            new_user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'])
+            login(request, new_user)
+            return HttpResponseRedirect(reverse('sitewide:index'))
+    else:
+        form = UserCreationForm()
+    return render(request, "users/user_creation.html", {'form': form})
+            </pre>
+        </p>
+
+        <p>
+            And define a URL for this view:
+            <pre>
+# lira/users/urls.py
+
+from django.conf.urls import url
+
+from . import views
+
+app_name = 'users'
+
+urlpatterns = [
+    url(r'^create_and_login/', views.create_and_login, name='create_and_login'),
+]
+            </pre>
+        </p>
+        
         <p>
             Let's edit <code>lira/sitewide/templates/sitewide/index.html</code> so it greets the currently identified user:
 
@@ -111,7 +161,16 @@ Hello {{ request.user }}!
         </p>
 
         <p>
-            If you load the new index, you will see that even after creating a new user, no login was performed. You will see the greeting to <code>AnonymousUser</code> or your superuser's username in case you were logged in to the Admin app. Next, we will <a href="2017_03_31_login_logout.html">add login and logout components</a>.
+            Finally, go to <a href="http://127.0.0.1:8000/users/create_and_login/" target="_blank">http://127.0.0.1:8000/users/create_and_login/</a> to create a new user.
+        </p>
+        
+        <p>
+            Going to the index without being logged in will display <code>AnonymousUser</code>. Note that the Admin app's login and logout functionality is equivalent to what we are building. After creating a new user, you will be redirected to the index, which should display the new username.
+        </p>
+
+        <p>
+            Next, we will <a href="2017_03_31_login_logout.html">add login and logout components</a>.
         </p>
     </body>
 </html>
+
