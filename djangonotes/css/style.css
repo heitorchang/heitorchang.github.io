@@ -24,11 +24,12 @@ body {
 }
 
 code {
-    font-family: "Roboto";
+    font-family: "Roboto Mono";
     background-color: #DDF;
     color: #030;
     padding: 2px 5px;
     border-radius: 5px;
+    font-size: 0.9em;
 }
 
 pre {

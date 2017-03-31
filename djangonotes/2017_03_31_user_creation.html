@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heitor's Django Notes - Creating new users</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    
+    <body>
+        <p>
+            <a href="index.html">Back to home</a>
+        </p>
+
+        <h1>Creating new users</h1>
+        <h3>31st March, 2017</h3>
+
+        <p>
+            Before we define the accounting models, let's put together the components for adding new users. Every account and transaction will have to belong to a specific user.
+        </p>
+
+        <p>
+            Start a new app called <code>users</code>. Follow the <a href="2017_03_30_index_custom_font.html">steps shown for the sitewide app</a>, and install the app in <code>lira/lira/settings.py</code>. In addition, create the folder <code>templates/users</code> in the app's base folder, <code>lira/users</code>.
+        </p>
+
+        <p>
+            In the <code>templates/users</code> folder, we will create a minimal HTML template, <code>user_creation.html</code>.
+            <pre>
+&lt;!-- lira/users/templates/users/user_creation.html --&gt;
+
+{% extends 'sitewide/base.html' %}
+
+{% block title %}User creation{% endblock %}
+
+{% block content %}
+
+&lt;h1&gt;Create new user&lt;/h1&gt;
+
+&lt;form action="" method="POST"&gt;
+    {% csrf_token %}
+    &lt;table&gt;
+        {{ form.as_table }}
+    &lt;/table&gt;
+    
+    &lt;p&gt;
+        &lt;input type="submit"&gt;
+    &lt;/p&gt;
+&lt;/form&gt;
+
+{% endblock %}
+            </pre>
+        </p>
+            
+        <p>
+            Now, we define the URL that will use this template. Create a <code>urls.py</code> in the app's base folder:
+            <pre>
+# lira/users/urls.py
+
+from django.conf.urls import url
+from django.views.generic.edit import CreateView
+from django.contrib.auth.forms import UserCreationForm
+
+app_name = 'users'
+
+urlpatterns = [
+    url(r'^create/', CreateView.as_view(
+        template_name='users/user_creation.html',
+        form_class=UserCreationForm,
+        success_url='/')),
+]
+            </pre>
+        </p>
+
+        <p>
+            As before, include the <code>users</code> URLs in <code>lira/lira/urls.py</code>:
+            <pre>
+# lira/lira/urls.py
+
+# ... lines omitted
+
+urlpatterns = [
+<span class="code_highlight">    url(r'^users/', include('users.urls')),</span>
+    url(r'^admin/', admin.site.urls),
+    url(r'^', include('sitewide.urls')),
+]
+            </pre>
+        </p>
+
+        <p>
+            As defined in the two <code>urls.py</code> files, navigating to <a href="http://127.0.0.1:8000/users/create/">http://127.0.0.1:8000/users/create/</a> will display the user creation form.
+        </p>
+     
+        <p>
+            Let's edit <code>lira/sitewide/templates/sitewide/index.html</code> so it greets the currently identified user:
+
+            <pre>
+&lt;!-- lira/sitewide/templates/sitewide/index.html -->
+
+&lt;!-- Skipped several lines -->
+
+{% block content %}
+
+&lt;div class="yesteryear">
+    &lt;h1>Welcome to Lira&lt;/h1>
+&lt;/div>
+
+Hello {{ request.user }}!
+
+{% endblock %}
+            </pre>
+        </p>
+
+        <p>
+            If you load the new index, you will see that even after creating a new user, no login was performed. You will see the greeting to <code>AnonymousUser</code> or your superuser's username in case you were logged in to the Admin app. Next, we will <a href="2017_03_31_login_logout.html">add login and logout components</a>.
+        </p>
+    </body>
+</html>
