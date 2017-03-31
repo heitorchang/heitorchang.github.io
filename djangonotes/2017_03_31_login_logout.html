@@ -16,11 +16,72 @@
         <h3>31st March, 2017</h3>
 
         <p>
+            DO NOT USE, CONTENT MOVED TO 2017_03_31_user_creation
+        <p>
             Previously, we <a href="2017_03_31_user_creation.html">created new users with the built-in form</a>. Now, we'll work on logging users in and out.
         </p>
 
         <p>
             Again, there are built-in components that do most of the work for us.
+            Add the following URLs to <code>lira/users/urls.py</code>:
+            <pre>
+# lira/users/urls.py
+
+from django.contrib.auth.views import login, logout
+from django.urls import reverse_lazy
+from django.conf.urls import url
+
+from . import views
+
+app_name = 'users'
+
+urlpatterns = [
+    url(r'^create_and_login/', views.create_and_login, name='create_and_login'),
+
+    url(r'^login/$', login,
+        {'template_name': 'users/login.html',
+         'extra_context':
+         {'next': reverse_lazy('sitewide:index')}}, name='login'),
+
+    url(r'^logout/$', logout,
+        {'next_page': reverse_lazy('sitewide:index')}, name='logout'),
+]
+            </pre>
+        </p>
+
+        <p>
+            Now we add some links to use these URLs in our sitewide index:
+ 
+            <pre>
+&lt;!-- lira/sitewide/templates/sitewide/index.html --&gt;
+
+{% extends 'sitewide/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+&lt;div class="yesteryear"&gt;
+    &lt;h1&gt;Welcome to Lira&lt;/h1&gt;
+&lt;/div&gt;
+
+{% if not user.is_authenticated %}
+
+&lt;a href="{% url 'users:login' %}"&gt;Please login&lt;/a&gt;
+or &lt;a href="{% url 'users:create_and_login' %}"&gt;sign up&lt;/a&gt;
+
+{% else %}
+
+Hello {{ user }}!
+
+&lt;a href="{% url 'users:logout' %}"&gt;Logout&lt;/a&gt;
+
+{% endif %}
+
+{% endblock %}
+            </pre>
+        </p>
+            
             Content
             <pre>
 Code and shell

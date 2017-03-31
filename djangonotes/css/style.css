@@ -27,14 +27,14 @@ code {
     font-family: "Roboto Mono";
     background-color: #DDF;
     color: #030;
-    padding: 2px 5px;
+    padding: 0 5px;
     border-radius: 5px;
     font-size: 0.9em;
 }
 
 pre {
     font-family: 'Roboto Mono', monospace;
-    background-color: #DDD;
+    background-color: #E9E9E9;
     color: #151;
     padding: 1em;
     border-radius: 0.8em;

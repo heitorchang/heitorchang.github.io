@@ -154,7 +154,7 @@ urlpatterns = [
     &lt;h1>Welcome to Lira&lt;/h1>
 &lt;/div>
 
-Hello {{ request.user }}!
+Hello {{ user }}!
 
 {% endblock %}
             </pre>
@@ -169,8 +169,94 @@ Hello {{ request.user }}!
         </p>
 
         <p>
-            Next, we will <a href="2017_03_31_login_logout.html">add login and logout components</a>.
+            With our new users, we can work on logging users in and out. There are built-in components that do most of the work for us. Add login and logout URLs to <code>lira/users/urls.py</code>:
+            <pre>
+# lira/users/urls.py
+
+<span class="code_highlight">from django.contrib.auth.views import login, logout
+from django.urls import reverse_lazy</span>
+from django.conf.urls import url
+
+from . import views
+
+app_name = 'users'
+
+urlpatterns = [
+    url(r'^create_and_login/', views.create_and_login, name='create_and_login'),
+<span class="code_highlight">
+    url(r'^login/$', login,
+        {'template_name': 'users/login.html',
+         'extra_context':
+         {'next': reverse_lazy('sitewide:index')}}, name='login'),
+
+    url(r'^logout/$', logout,
+        {'next_page': reverse_lazy('sitewide:index')}, name='logout'),
+</span>
+]
+            </pre>
         </p>
+
+        <p>
+            Create a login form template in <code>lira/users/templates/users/login.html</code>:
+
+            <pre>
+&lt;!-- lira/users/templates/users/login.html --&gt;
+
+{% extends "sitewide/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+&lt;form action="" method="POST"&gt;
+    {% csrf_token %}
+    &lt;table&gt;
+        {{ form.as_table }}
+    &lt;/table&gt;
+
+    &lt;p&gt;
+        &lt;input type="hidden" name="next" value="{{ next }}"&gt;
+        &lt;input type="submit"&gt;
+    &lt;/p&gt;
+&lt;/form&gt;
+
+{% endblock %}
+            </pre>
+        </p>
+        
+        <p>
+            Now we add some links to use these URLs in our sitewide index:
+ 
+            <pre>
+&lt;!-- lira/sitewide/templates/sitewide/index.html --&gt;
+
+{% extends 'sitewide/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+&lt;div class="yesteryear"&gt;
+    &lt;h1&gt;Welcome to Lira&lt;/h1&gt;
+&lt;/div&gt;
+                <span class="code_highlight">
+{% if not user.is_authenticated %}
+
+&lt;a href="{% url 'users:login' %}"&gt;Please login&lt;/a&gt;
+or &lt;a href="{% url 'users:create_and_login' %}"&gt;sign up&lt;/a&gt;
+
+{% else %}
+
+Hello {{ user }}!
+
+&lt;a href="{% url 'users:logout' %}"&gt;Logout&lt;/a&gt;
+
+{% endif %}
+
+{% endblock %}</span>
+            </pre>
+        </p>
+
+
     </body>
 </html>
 
