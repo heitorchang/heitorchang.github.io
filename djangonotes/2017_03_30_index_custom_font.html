@@ -8,26 +8,26 @@
     </head>
     
     <body>
-        <p>
+        <div>
             <a href="index.html">Back to home</a>
-        </p>
+        </div>
 
         <h1>Creating the site's index with a custom font</h1>
         <h3>30th March, 2017</h3>
 
-        <p>
+        <div>
             Previously, we <a href="2017_03_30_starting_lira.html">logged in to the built-in Admin app</a>.
-        </p>
+        </div>
         
-        <p>
+        <div>
             Lira will have multiple apps to compartmentalize different types of functionality. We will place general content that doesn't fit well anywhere in the <code>sitewide</code> app.
 
             <pre>
 ~/lira $ python manage.py startapp sitewide
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             After creating an app, we need to install it in the project's <code>settings.py</code> in the <code>lira/lira</code> folder. Add the app's <code>AppConfig</code> to <code>INSTALLED_APPS</code>. To explicitly indicate the <code>lira</code> folder inside the base <code>lira</code> folder, my file paths will be relative to my home directory (as in the shell prompts).
 
             <pre>
@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             We will place our custom font, CSS and JavaScript content in a special <code>static</code> folder. In the base <code>lira</code> folder, create a <code>static</code> folder:
 
             <pre>
@@ -52,9 +52,9 @@ INSTALLED_APPS = [
 ~/lira $ cd static
 ~/lira/static $ mkdir css
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             For now, we will serve the <code>static</code> folder in development mode. At the end of <code>lira/lira/settings.py</code>, add the static folder definitions:
 
             <pre>
@@ -71,9 +71,9 @@ STATIC_URL = '/static/'
     os.path.join(BASE_DIR, 'static'),
 ]</span>
             </pre>
-        </p>
+        </div>
         
-        <p>
+        <div>
             Once the settings for static files are in place, we need to update <code>lira/lira/urls.py</code>:
 
             <pre>
@@ -92,13 +92,13 @@ urlpatterns = [
             </pre>
 
             By default, <code>STATIC_ROOT</code> is <code>None</code>, and is used as the path to the directory where <code>collectstatic</code> places static files for deployment.
-        </p>
+        </div>
 
-        <p>
+        <div>
             Let's save a font in the <code>lira/static/css</code> folder. I downloaded the <a href="https://fonts.google.com/specimen/Yesteryear" target="_blank">Google font Yesteryear</a>. To save time, you may download <a href="css/Yesteryear-Regular.ttf">my copy of the TrueType file</a>. Note that there is also the <a href="css/OFL.txt">OFL license</a> included with the Google download.
-        </p>
+        </div>
 
-        <p>
+        <div>
             Now, let's create a CSS stylesheet defining the custom font:
             <pre>
 /* lira/static/css/fonts.css */
@@ -113,13 +113,13 @@ urlpatterns = [
     font-family: 'Yesteryear';
 }
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Now, let's make sure our work is functioning properly. Start the development server (<code>runserver</code>) and go to <a href="http://127.0.0.1:8000/static/css/fonts.css" target="_blank">http://127.0.0.1:8000/static/css/fonts.css</a>. You should be able to see the CSS file. 
-        </p>
+        </div>
 
-        <p>
+        <div>
             HTML templates are conventionally placed in a <code>templates/APP_NAME</code> folder. Let's create this folder for the <code>sitewide</code> app:
 
             <pre>
@@ -128,9 +128,9 @@ urlpatterns = [
 ~/lira/sitewide $ cd templates
 ~/lira/sitewide/templates $ mkdir sitewide
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             In the newly created folder, create a <code>base.html</code> file. We define blocks in this base template and later, other templates that extend it will fill in the blocks.
             <pre>
 &lt;!-- lira/sitewide/templates/sitewide/base.html --&gt;
@@ -151,9 +151,9 @@ urlpatterns = [
     &lt;/body&gt;
 &lt;/html&gt;
             </pre>
-        </p>
+        </div>
 
-        <p>Our <code>index.html</code> will extend the base template:
+        <div>Our <code>index.html</code> will extend the base template:
             <pre>
 &lt;!-- lira/sitewide/templates/sitewide/index.html --&gt;
 
@@ -169,9 +169,9 @@ urlpatterns = [
 
 {% endblock %}
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             The template will be rendered through a view:
             <pre>
 # lira/sitewide/views.py
@@ -183,9 +183,9 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'sitewide/index.html')
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Create a <code>urls.py</code> file to define a pattern that will lead to the index view:
             <pre>
 # lira/sitewide/urls.py
@@ -200,9 +200,9 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 ]
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Finally, in <code>lira/lira/urls.py</code> we need to include the <code>sitewide</code> URLs:
             <pre>
 # lira/lira/urls.py
@@ -219,14 +219,14 @@ urlpatterns = [
 <span class="code_highlight">    url(r'^', include('sitewide.urls')),</span>
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Now, going to <a href="http://127.0.0.1:8000/" target="_blank">http://127.0.0.1:8000/</a> will display our welcome message.
-        </p>
+        </div>
 
-        <p>
-            Next, we will use a predefined form and view to <a href="2017_03_31_user_creation.html">create new users</a>.
-        </p>
+        <div>
+            Next, we will use a predefined form to <a href="2017_03_31_user_creation.html">create new users</a>.
+        </div>
     </body>
 </html>

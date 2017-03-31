@@ -8,22 +8,22 @@
     </head>
     
     <body>
-        <p>
+        <div>
             <a href="index.html">Back to home</a>
-        </p>
+        </div>
 
         <h1>Creating new users</h1>
         <h3>31st March, 2017</h3>
 
-        <p>
+        <div>
             Before we define the accounting models, let's put together the components for adding new users. Every account and transaction will have to belong to a specific user.
-        </p>
+        </div>
 
-        <p>
+        <div>
             Start a new app called <code>users</code>. Follow the <a href="2017_03_30_index_custom_font.html">steps shown for the sitewide app</a>, and install the app in <code>lira/lira/settings.py</code>. In addition, create the folder <code>templates/users</code> in the app's base folder, <code>lira/users</code>.
-        </p>
+        </div>
 
-        <p>
+        <div>
             In the <code>templates/users</code> folder, we will create a minimal HTML template, <code>user_creation.html</code>.
             <pre>
 &lt;!-- lira/users/templates/users/user_creation.html --&gt;
@@ -49,11 +49,11 @@
 
 {% endblock %}
             </pre>
-        </p>
+        </div>
 
         <!-- SUBOPTIMAL: DOES NOT LOGIN AUTOMATICALLY AFTER SUCCESSFUL CREATION
         
-        <p>
+        <div>
             Now, we define the URL that will use this template. Create a <code>urls.py</code> in the app's base folder:
             <pre>
 # lira/users/urls.py
@@ -72,9 +72,9 @@ urlpatterns = [
         success_url=reverse_lazy('sitewide:index')), name='create'),
 ]
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             As before, include the <code>users</code> URLs in <code>lira/lira/urls.py</code>:
             <pre>
 # lira/lira/urls.py
@@ -87,14 +87,14 @@ urlpatterns = [
     url(r'^', include('sitewide.urls')),
 ]
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             As defined in the two <code>urls.py</code> files, navigating to <a href="http://127.0.0.1:8000/users/create/" target="_blank">http://127.0.0.1:8000/users/create/</a> will display the user creation form.
-        </p>
+        </div>
      -->
 
-        <p>
+        <div>
             Now, let's create a view to save the new user and automatically login if successful. Though it is possible to create new users with a <code>CreateView</code>, it does not have the auto-login feature that I want. So we must create our own view:
             <pre>
 # lira/users/views.py
@@ -121,9 +121,9 @@ def create_and_login(request):
         form = UserCreationForm()
     return render(request, "users/user_creation.html", {'form': form})
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             And define a URL for this view:
             <pre>
 # lira/users/urls.py
@@ -138,9 +138,9 @@ urlpatterns = [
     url(r'^create_and_login/', views.create_and_login, name='create_and_login'),
 ]
             </pre>
-        </p>
+        </div>
         
-        <p>
+        <div>
             Let's edit <code>lira/sitewide/templates/sitewide/index.html</code> so it greets the currently identified user:
 
             <pre>
@@ -158,17 +158,17 @@ Hello {{ user }}!
 
 {% endblock %}
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Finally, go to <a href="http://127.0.0.1:8000/users/create_and_login/" target="_blank">http://127.0.0.1:8000/users/create_and_login/</a> to create a new user.
-        </p>
+        </div>
         
-        <p>
+        <div>
             Going to the index without being logged in will display <code>AnonymousUser</code>. Note that the Admin app's login and logout functionality is equivalent to what we are building. After creating a new user, you will be redirected to the index, which should display the new username.
-        </p>
+        </div>
 
-        <p>
+        <div>
             With our new users, we can work on logging users in and out. There are built-in components that do most of the work for us. Add login and logout URLs to <code>lira/users/urls.py</code>:
             <pre>
 # lira/users/urls.py
@@ -194,9 +194,9 @@ urlpatterns = [
 </span>
 ]
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Create a login form template in <code>lira/users/templates/users/login.html</code>:
 
             <pre>
@@ -221,9 +221,9 @@ urlpatterns = [
 
 {% endblock %}
             </pre>
-        </p>
+        </div>
         
-        <p>
+        <div>
             Now we add some links to use these URLs in our sitewide index:
  
             <pre>
@@ -254,7 +254,7 @@ Hello {{ user }}!
 
 {% endblock %}</span>
             </pre>
-        </p>
+        </div>
 
 
     </body>

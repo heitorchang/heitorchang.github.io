@@ -8,22 +8,22 @@
     </head>
     
     <body>
-        <p>
+        <div>
             <a href="index.html">Back to blog's home</a>
-        </p>
+        </div>
 
         <h1>Adding fonts in a static folder</h1>
         <h3>29 March, 2017</h3>
 
-        <p>
+        <div>
             Here, we will set up a sitewide <code>static</code> folder, following <a href="https://docs.djangoproject.com/en/1.10/howto/static-files/" target="_blank">the official documentation</a>.
-        </p>
+        </div>
 
-        <p>
+        <div>
             In order to test loading a font from the static folder, we will add a simple <code>index.html</code> to the <code>sitewide</code> app.
-        </p>
+        </div>
 
-        <p>
+        <div>
             Install the <code>sitewide</code> app in <code>settings.py</code>
 
             <pre>
@@ -38,9 +38,9 @@ INSTALLED_APPS = [
 
 # ... other apps and the rest of settings.py
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Create a folder named <code>static</code> at the project's root level:
             <pre>
 (venv) heitor:~/besouro_direto$ mkdir static
@@ -53,9 +53,9 @@ manage.py
 sitewide
 static
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             At the end of <code>settings.py</code>, define the newly created static folder:
             <pre>
 # besouro_direto/settings.py
@@ -71,9 +71,9 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             In the main <code>besouro_direto/urls.py</code>, we have to add the static folder to the <code>urlpatterns</code>:
             <pre>
 # besouro_direto/urls.py
@@ -87,13 +87,13 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
             </pre>
-        </p>
+        </div>
         
-        <p>
+        <div>
             Make a <code>css</code> folder inside the <code>static</code> folder, and save a font in it. I downloaded the <a href="https://fonts.google.com/specimen/Yesteryear" target="_blank">Google font Yesteryear</a>. To save time, you may download <a href="css/Yesteryear-Regular.ttf">my copy of the TrueType file</a>. Note that there is also the <a href="css/OFL.txt">OFL license</a> included with the Google download.
-        </p>
+        </div>
 
-        <p>
+        <div>
             Create a CSS stylesheet for custom fonts:
             <pre>
 /* static/css/fonts.css */
@@ -104,9 +104,9 @@ urlpatterns = [
     font-style: normal;
 }
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Create a sitewide stylesheet:
             <pre>
 /* static/css/sitewide_style.css */
@@ -116,18 +116,18 @@ urlpatterns = [
     font-size: 2.5em;
 }
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Create a template folder to hold the index template:
             <pre>
 (venv) heitor:~/besouro_direto/sitewide$ mkdir templates
 (venv) heitor:~/besouro_direto/sitewide$ cd templates
 (venv) heitor:~/besouro_direto/sitewide$ mkdir sitewide
             </pre>
-        </p>
+        </div>
         
-        <p>
+        <div>
             Now, create the <code>index.html</code> template inside the folder just created. Later, we will create a base template; for now we just want to see that the static folder setup works:
             <pre>
 {% load static %}
@@ -144,7 +144,7 @@ urlpatterns = [
     &lt;/body&gt;
 &lt;/html&gt;
             </pre>
-        <p>
+        <div>
             Define a view for the index page in <code>sitewide/views.py</code>
             <pre>
 # sitewide/views.py
@@ -154,9 +154,9 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'sitewide/index.html')
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Create a <code>urls.py</code> in <code>sitewide</code>:
             <pre>
 # sitewide/urls.py
@@ -171,9 +171,9 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 ]
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             Include sitewide's <code>urls.py</code> in the main <code>besouro_direto/urls.py</code>. Import <code>include</code> from <code>django.conf.urls</code>:
             <pre>
 # besouro_direto/urls.py
@@ -188,11 +188,11 @@ urlpatterns = [
     url(r'^', include('sitewide.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
             </pre>
-        </p>
+        </div>
         
-        <p>
+        <div>
             Next time: Base Template
-        </p>
+        </div>
             
     </body>
 </html>

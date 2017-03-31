@@ -44,12 +44,6 @@ div {
     margin-bottom: 1.2em;
 }
 
-.py {
-    background-color: #FFB;
-    padding: 1em;
-    color: #000;
-}
-
 a:link, a:visited, a:hover, a:active {
                                 color: #18A;
                                 font-weight: bold;

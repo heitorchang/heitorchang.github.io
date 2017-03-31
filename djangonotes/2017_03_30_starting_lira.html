@@ -8,14 +8,14 @@
     </head>
     
     <body>
-        <p>
+        <div>
             <a href="index.html">Back to home</a>
-        </p>
+        </div>
 
         <h1>Starting a new project, Lira</h1>
         <h3>30th March, 2017</h3>
 
-        <p>
+        <div>
             In this series of posts I would like to outline the creation of a Django 1.10 app with these features:
             <ul>
                 <li>User management</li>
@@ -24,29 +24,29 @@
             </ul>
 
             Lira is a double-entry personal accounting app named after the Turkish and old Italian currencies.
-        </p>
+        </div>
 
-        <p>
+        <div>
             A Lira user should be able to define multiple accounts, such as a <span class="highlight_i">bank checking account</span>, that belongs to an account type, in this case, <span class="highlight_i">Assets</span>.
-        </p>
+        </div>
 
-        <p>
+        <div>
             Other accounts may include expenses, such as groceries, and income. Once several accounts are created, every single, new transaction is posted to two accounts simultaneously. This behavior explains the name <span class="highlight_i">double-entry accounting</span>. Due to the self-balancing nature of double-entry accounting, it is always possible to find the source of entry errors.
-        </p>
+        </div>
 
-        <p>
+        <div>
             I work in both Windows and Ubuntu, and a useful tool to have is <a href="https://virtualenv.pypa.io/" target="_blank">virtualenv</a> and the set of extensions <a href="https://virtualenvwrapper.readthedocs.io/" target="_blank">virtualenvwrapper</a>. They create <span class="highlight_i">isolated Python environments</span>. There are many ways to set it up so I won't go into details here. I am using Python 3.5 in both Windows and Ubuntu.
-        </p>
+        </div>
 
-        <p>
+        <div>
             To begin, I will create the <code>lira</code> Django app in my home folder, and display the shell commands in a gray box shown below. Following UNIX convention, <code>~</code> refers to my home directory, and <code>$</code>, the shell prompt. After installing Django (my app is using version 1.10), start the new project:
             
             <pre>
 ~ $ django-admin startproject lira
             </pre>
-        </p>
+        </div>
 
-        <p>
+        <div>
             The new project isn't completely empty&mdash;Django includes an Admin app. But to make it usable, we need to apply the default migrations to update the database. Let's also create a superuser to access the Admin app.
             <pre>
 ~/lira $ python manage.py migrate
@@ -59,13 +59,13 @@
             </pre>
 
             By default, the development server is accessible through port 8000. To specify another port number, add it after <code>runserver</code>. Go to <a href="http://127.0.0.1:8000/admin/" target="_blank">http://127.0.0.1:8000/admin/</a> and use the superuser account created above.
-        </p>
+        </div>
 
-        <p>
+        <div>
             We will use the built-in user management later for logins and associating them to accounts and transactions.
-        </p>
+        </div>
 
-        <p>
+        <div>
             Now that we made sure the default setup works well, let's add a <code>.gitignore</code> file for saving our work through Git.
             <pre>
 # lira/.gitignore
@@ -78,11 +78,11 @@ __pycache__/
 *.log
 db.sqlite3
             </pre>    
-        </p>
+        </div>
         
-        <p>
+        <div>
             Next, we will <a href="2017_03_30_index_custom_font.html">create a sitewide index with a custom font</a>.
-        </p>
+        </div>
     </body>
 </html>
 

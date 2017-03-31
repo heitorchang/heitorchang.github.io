@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heitor's Notes on Notes - File structure</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    
+    <body>
+        <div>
+            <a href="index.html">Back to home</a>
+        </div>
+
+        <h1>File structure</h1>
+        <h3>31st March, 2017</h3>
+
+        <div>
+            All my notes are written in HTML. I keep three separate "core" files, <code>index.html</code>, <code>template.html</code>, and <code>TODO.html</code>. The filenames and other code-related items are highlighted with the &lt;code&gt; tag.
+        </div>
+
+        <div>
+            <code>index.html</code> lists all the available posts:
+            <pre>
+&lt;!-- index.html --&gt;
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+        &lt;title&gt;Heitor's Notes on Taking Notes - Home&lt;/title&gt;
+        &lt;link rel="stylesheet" href="css/style.css"&gt;
+    &lt;/head&gt;
+    
+    &lt;body&gt;
+        &lt;div&gt
+            &lt;a href="/index.html"&gt;Back to home&lt;/a&gt;
+        &lt;/div&gt
+        
+        &lt;h1&gt;Heitor's Notes on Taking Notes&lt;/h1&gt;
+
+        &lt;div&gt
+            &lt;a href="2017_03_31_why.html"&gt;Why take notes?&lt;/a&gt;
+        &lt;/div&gt
+
+        &lt;hr&gt;
+        &lt;div&gt
+            &lt;a href="TODO.html"&gt;To do&lt;/a&gt;
+        &lt;/div&gt
+    &lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+        </div>
+
+        <div>
+            <code>template.html</code> is the common HTML for every new post. Either save it as the new post's filename, or paste it into the new post's file.
+            <pre>
+&lt;!-- template.html --&gt;
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+        &lt;title&gt;Heitor's Notes on Notes - &lt;/title&gt;
+        &lt;link rel="stylesheet" href="css/style.css"&gt;
+    &lt;/head&gt;
+    
+    &lt;body&gt;
+        &lt;div&gt
+            &lt;a href="index.html"&gt;Back to home&lt;/a&gt;
+        &lt;/div&gt
+
+        &lt;h1&gt;POST TITLE&lt;/h1&gt;
+        &lt;h3&gt;, 2017&lt;/h3&gt;
+
+        &lt;div&gt
+            Content
+            &lt;pre&gt;
+Code and shell
+            &lt;/pre&gt;
+        &lt;/div&gt
+    &lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+        </div>
+
+        <div>
+            When writing a new post, update the HTML <code>&lt;title&gt;</code> and <code>&lt;h1&gt;POST TITLE&lt;/h1&gt;</code>. Monospace content like code and file listings should go inside <code>&lt;pre&gt;</code> tags.
+        </div>
+
+        <div>
+            The biggest shortcoming of writing technical posts in plain HTML is the lack of syntax highlighting and need to escape &lt; and &gt; with &amp;lt; and &amp;gt;. If you are writing a lot about HTML, you should consider another method that allows embedding pure HTML.
+        </div>
+
+        <div>
+            <a href="TODO.html" target="_blank">TODO.html</a> is a regular post that holds a list of items and ideas that I should write about:
+            <pre>
+&lt;!-- TODO.html --&gt;
+
+&lt;!-- many lines skipped --&gt;
+
+        &lt;h1&gt;TODO&lt;/h1&gt;
+
+        &lt;div&gt
+            &lt;ul&gt;
+                &lt;li&gt;Edit title, post name, date&lt;/li&gt;
+                &lt;li&gt;css, fonts&lt;/li&gt;
+                &lt;li&gt;template.html&lt;/li&gt;
+                &lt;li&gt;GitHub, surge&lt;/li&gt;
+            &lt;/ul&gt;
+
+            How to take notes
+            &lt;ul&gt;
+                &lt;li&gt;edit index&lt;/li&gt;
+                &lt;li&gt;start with template, or paste into new post&lt;/li&gt;
+                &lt;li&gt;pre tags, replace &lt; and &gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt
+            </pre>
+        </div>
+
+        <div>
+            The last piece is <a href="2017_03_31_css.html">CSS styling</a>.
+        </div>            
+    </body>
+</html>
