@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heitor's PHP with DB Notes - Database connection</title>
+        <link rel="stylesheet" href="../css/notes_style.css">
+    </head>
+    
+    <body>
+        <div>
+            <a href="index.html">Back to home</a>
+        </div>
+
+        <h1>Database connection</h1>
+        <h3>1st April, 2017</h3>
+
+        <div>
+            In this series of posts I will be creating a "code blog" where you can save short, independent blocks of code with a description, tags, and date.
+        </div>
+
+        <div>
+            First, let's create a MySQL database connection. Because there are web hosts that only allow database creation through their interface or phpMyAdmin, we will assume the same here. You must manually create a database for this project. I will call this database <code>codeblog</code>.
+        </div>
+
+        <div>
+            We want to keep our database credentials hidden from view when we push to a Git repository, so let's create two folders, <code>private</code> and <code>public</code>. The <code>private</code> folder will not be served in production. In a <code>.gitignore</code> file, write:
+            
+            <pre>
+# .gitignore
+
+private/db_credentials.php           
+            </pre>
+        </div>
+
+        <div>
+            I will use PDO, so the necessary info in <code>db_credentials.php</code> looks like this:
+            <pre>
+&lt;?php
+
+// private/db_credentials.php
+
+$db_credentials = [
+    "host" =&gt; "localhost",
+    "db_name" =&gt; "codeblog",
+    "user" =&gt; "blogger",
+    "password" =&gt; "MY SECRET PASSWORD"
+];
+            </pre>
+        </div>
+
+        <div>
+            I keep a copy of <code>db_credentials.php</code> in <code>public</code> with the actual user and password deleted, so that when I clone the repository elsewhere, I have a template.
+        </div>
+
+        <div>
+            Connecting to the database will be done nearly in every page, so I saved the function in <code>db_connect.php</code>, in the <code>public</code> folder:
+
+            <pre>
+&lt;?php
+
+// public/db_connect.php
+
+require("../private/db_credentials.php");
+
+function connect($db_credentials) {
+    $dsn = "mysql:host={$db_credentials['host']};"
+    . "dbname={$db_credentials['db_name']};charset=utf8";
+
+    try {
+        $dbh = new PDO($dsn, $db_credentials['user'],
+                       $db_credentials['password']);
+        $dbh-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh-&gt;setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $dbh-&gt;setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $dbh-&gt;exec("SET CHARACTER SET 'utf8'");
+    } catch (PDOException $e) {
+        die("DB connection error " . $e-&gt;getMessage());
+    }
+    return $dbh;
+}
+            </pre>
+        </div>
+
+        <div>
+            Let's test the connection:
+            <pre>
+&lt;?php
+
+// public/test_connection.php
+
+require("db_connect.php");
+
+$dbh = connect($db_credentials);
+
+$stmt = $dbh-&gt;query("SELECT now()");
+$row = $stmt-&gt;fetch();
+
+print_r($row);
+            </pre>
+        </div>
+
+        <div>
+            Next, we will <a href="2017_04_01_create_tables.html">create our tables</a>.
+        </div>
+    </body>
+</html>
