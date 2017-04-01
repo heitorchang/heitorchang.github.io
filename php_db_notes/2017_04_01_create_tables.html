@@ -33,7 +33,7 @@ $dbh = connect($db_credentials);
 $dbh-&gt;exec("CREATE TABLE IF NOT EXISTS user
 (id INTEGER NOT NULL AUTO_INCREMENT,
 username VARCHAR(64) NOT NULL,
-password VARCHAR(255) NOT NULL,
+password_hash VARCHAR(255) NOT NULL,
 CONSTRAINT pk_user PRIMARY KEY (id),
 CONSTRAINT uk_user_username UNIQUE KEY (username))
 ENGINE=InnoDB");
@@ -73,6 +73,10 @@ ENGINE=InnoDB");
 
         <div>
             Since we wrote the table creation script in <code>private</code>, we should run the script in a shell. (Or you may temporarily serve the whole <code>codeblog</code> folder, navigate to <code>private/create_tables.php</code>, then remove the <code>private</code> folder).
+        </div>
+
+        <div>
+            Next, we will <a href="2017_04_01_user_signup.html">add new users</a>.
         </div>
     </body>
 </html>

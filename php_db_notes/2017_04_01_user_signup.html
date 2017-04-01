@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heitor's PHP with DB Notes - User signup</title>
+        <link rel="stylesheet" href="../css/notes_style.css">
+    </head>
+    
+    <body>
+        <div>
+            <a href="index.html">Back to home</a>
+        </div>
+
+        <h1>User signup</h1>
+        <h3>1st April, 2017</h3>
+
+        <div>
+            Before we can post, we need to have users. Now, user and session management have layers of complexity (such as having cookies or not). With user identities present in our blog, security issues such as CSRF emerge. Popular frameworks solve these problems, and I will not reinvent the wheel. What I show here is the bare minimum needed to give users their own space.
+        </div>
+
+        <div>
+            Let's create a <code>users</code> folder inside <code>public/</code>, and create a form:
+            <pre>
+&lt;!-- public/users/signup_form.html --&gt;
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;Code Blog - Sign Up&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Sign up&lt;/h1&gt;
+        &lt;form action="signup.php" method="POST"&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;Username&lt;/td&gt;
+                    &lt;td&gt;&lt;input type="username"&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;Password&lt;/td&gt;
+                    &lt;td&gt;&lt;input type="password" type="password"&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;input type="submit"&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+        </div>
+
+        <div>
+            The form above takes us to <code>signup.php</code>:
+            
+            <pre>
+&lt;?php
+
+// users/signup.php
+
+require("../db_connect.php");
+require("login.php");
+
+$dbh = connect($db_credentials);
+
+$username = $_POST["username"];
+$password = $_POST["password"];
+$password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+$stmt = $dbh-&gt;prepare("INSERT INTO user (username, password_hash)
+VALUES (:username, :password_hash)");
+
+$stmt-&gt;execute([':username' =&gt; $username,
+                ':password_hash' =&gt; $password_hash]);
+
+login($dbh, $username, $password);
+
+header("Location: ../index.php");
+            </pre>
+        </div>
+
+        <div>
+            Calling <code>login()</code> from <code>login.php</code> will automatically log in the user after creating the account in the database:
+
+            <pre>
+&lt;?php
+
+// users/login.php
+
+function login($dbh, $username, $password) {
+    $check_user_sql = "SELECT password_hash, id FROM user WHERE username = :username";
+    $stmt = $dbh-&gt;prepare($check_user_sql);
+    $stmt-&gt;execute([':username' =&gt; $username]);
+    $user_row = $stmt-&gt;fetch();
+    $password_hash = $user_row['password_hash'];
+    $user_id = $user_row['id'];
+    
+    if (password_verify($password, $password_hash)) {
+        session_start();
+        $_SESSION['username'] = $username;
+        $_SESSION['user_id'] = $user_id;
+    } else {
+        die('Could not log in $username. Check the user and password combination. <a href="javascript:history.back()">Go back</a>');
+    }
+}
+            </pre>
+        </div>
+
+        <div>
+            <code>index.php</code> checks whether a user is logged in (by looking at the <code>$_SESSION['username']</code> variable):
+            <pre>
+&lt;?php
+
+// index.php
+
+session_start();
+
+if (isset($_SESSION['username'])) {
+    echo("Welcome back, {$_SESSION['username']}."
+       . "(id {$_SESSION['user_id']}) ");
+    echo('&lt;a href="users/logout.php"&gt;Log out&lt;/a&gt;');
+} else {
+    // display login link
+    echo('&lt;a href="users/login_form.html"&gt;Please log in&lt;/a&gt;');
+}
+            </pre>
+        </div>
+
+        <div>
+            <code>logout.php</code> uses the code from <a href="http://php.net/session_destroy" target="_blank">the official documentation</a>:
+            <pre>
+&lt;?php
+
+// users/logout.php
+
+session_start();
+$_SESSION = array();
+
+if (ini_get("session.use_cookies")) {
+    $params = session_get_cookie_params();
+    setcookie(session_name(), '', time() - 42000,
+              $params["path"], $params["domain"],
+              $params["secure"], $params["httponly"]
+    );
+}
+
+session_destroy();
+
+header("Location: ../index.php");
+            </pre>
+        </div>
+
+        <div>
+            <code>login_form.html</code> looks a lot like the signup form:
+            <pre>
+&lt;!-- users/login_form.html --&gt;
+
+&lt;h1&gt;Log in&lt;/h1&gt;
+&lt;form action="try_login.php" method="POST"&gt;
+    &lt;table&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Username&lt;/td&gt;
+            &lt;td&gt;&lt;input name="username"&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Password&lt;/td&gt;
+            &lt;td&gt;&lt;input name="password" type="password"&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;input type="submit"&gt;
+&lt;/form&gt;
+            </pre>
+        </div>
+
+        <div>
+            <code>login_form.html</code> goes to <code>try_login.php</code>:
+            <pre>
+&lt;?php
+
+// users/try_login.php
+
+require("../db_connect.php");
+require("login.php");
+
+$dbh = connect($db_credentials);
+
+login($dbh, $_POST['username'], $_POST['password']);
+
+header("Location: ../index.php");
+            </pre>
+        </div>
+    </body>
+</html>

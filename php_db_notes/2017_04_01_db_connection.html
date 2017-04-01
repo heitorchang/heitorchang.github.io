@@ -61,7 +61,7 @@ $db_credentials = [
 
 // public/db_connect.php
 
-require("../private/db_credentials.php");
+require(__DIR__ . "/../private/db_credentials.php");
 
 function connect($db_credentials) {
     $dsn = "mysql:host={$db_credentials['host']};"
