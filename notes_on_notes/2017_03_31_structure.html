@@ -95,6 +95,23 @@ Code and shell
         </div>
 
         <div>
+            I use Emacs for nearly everything, and found <a href="http://shallowsky.com/blog/linux/editors/emacs-escape-html.html" target="_blank">a function that will do the escaping in a selected region</a>. It is called <code>unhtml</code> but I renamed it to <code>escape-html</code>:
+            <pre>
+(defun escape-html (start end)
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (replace-string "&amp;" "&amp;amp;")
+      (goto-char (point-min))
+      (replace-string "&lt;" "&amp;lt;")
+      (goto-char (point-min))
+      (replace-string "&gt;" "&amp;gt;"))))
+            </pre>
+        </div>
+        
+        <div>
             <a href="TODO.html" target="_blank">TODO.html</a> is a regular post that holds a list of items and ideas that I should write about:
             <pre>
 &lt;!-- TODO.html --&gt;
