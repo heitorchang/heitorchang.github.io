@@ -16,7 +16,7 @@
         <h3>1st April, 2017</h3>
 
         <div>
-            Before we can post, we need to have users. Now, user and session management have layers of complexity (such as having cookies or not). With user identities present in our blog, security issues such as CSRF emerge. Popular frameworks solve these problems, and I will not reinvent the wheel. What I show here is the bare minimum needed to give users their own space.
+            Before we can post, we need to have users. Now, user and session management have layers of complexity (such as having cookies or not). With user identities present in our blog, security issues such as CSRF emerge. Popular frameworks solve these problems, and I will not reinvent the wheel. What I show here is the bare minimum needed to give users their own space. For serious projects, you should use a serious framework.
         </div>
 
         <div>
@@ -51,7 +51,7 @@
         </div>
 
         <div>
-            The form above takes us to <code>signup.php</code>:
+            The form above takes us to <code>signup.php</code>. I will exclude tags with <code>strip_tags()</code>.
             
             <pre>
 &lt;?php
@@ -61,9 +61,9 @@
 require("../db_connect.php");
 require("login.php");
 
-$dbh = connect($db_credentials);
+$dbh = db_connect($db_credentials);
 
-$username = $_POST["username"];
+$username = strip_tags($_POST["username"]);
 $password = $_POST["password"];
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -80,19 +80,33 @@ header("Location: ../index.php");
         </div>
 
         <div>
-            Calling <code>login()</code> from <code>login.php</code> will automatically log in the user after creating the account in the database:
-
+            Calling <code>login()</code> from <code>login.php</code> will automatically log in the user after creating the account in the database. Because we don't ask for an user's email, to reset a user's password, the user's <code>password_hash</code> column has to be manually set to "" (empty) in the database.
             <pre>
 &lt;?php
 
 // users/login.php
 
 function login($dbh, $username, $password) {
-    $check_user_sql = "SELECT password_hash, id FROM user WHERE username = :username";
+    $check_user_sql = "SELECT password_hash, id FROM user "
+                    . "WHERE username = :username";
     $stmt = $dbh-&gt;prepare($check_user_sql);
     $stmt-&gt;execute([':username' =&gt; $username]);
-    $user_row = $stmt-&gt;fetch();
+
+    if ($stmt-&gt;rowCount() == 0) {
+        die('Could not log in ' . $username
+          . '. Check the user and password combination. '
+          . '&lt;a href="javascript:history.back()"&gt;Go back&lt;/a&gt;');
+    }
+
+    $user_row = $stmt-&gt;fetch();    
     $password_hash = $user_row['password_hash'];
+
+    if ($password_hash == "") {
+        session_start();
+        $_SESSION['reset_username'] = $username;
+        header("Location: set_new_password_form.php");
+    }
+    
     $user_id = $user_row['id'];
     
     if (password_verify($password, $password_hash)) {
@@ -100,12 +114,71 @@ function login($dbh, $username, $password) {
         $_SESSION['username'] = $username;
         $_SESSION['user_id'] = $user_id;
     } else {
-        die('Could not log in $username. Check the user and password combination. <a href="javascript:history.back()">Go back</a>');
+        die('Could not log in ' . $username
+          . '. Check the user and password combination. '
+          . '&lt;a href="javascript:history.back()"&gt;Go back&lt;/a&gt;');
     }
 }
             </pre>
         </div>
 
+        <div>
+            <code>set_new_password_form.php</code> looks like <code>signup_form.html</code>, but with the username prefilled from the session data.
+            <pre>
+&lt;?php
+
+// public/users/set_new_password_form.php
+
+session_start();
+?&gt;
+
+&lt;h1&gt;Set new password&lt;/h1&gt;
+&lt;form action="set_new_password.php" method="POST"&gt;
+    &lt;table&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Username&lt;/td&gt;
+            &lt;td&gt;&lt;?= $_SESSION['reset_username'] ?&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Password&lt;/td&gt;
+            &lt;td&gt;&lt;input name="password" type="password"&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;input type="submit"&gt;
+&lt;/form&gt;
+            </pre>
+        </div>
+
+        <div>
+            <code>set_new_password.php</code> also looks like <code>signup.php</code>, but updating instead of inserting into the database.
+            <pre>
+&lt;?php
+
+// users/set_new_password.php
+
+require("../db_connect.php");
+require("login.php");
+
+session_start();
+
+$dbh = db_connect($db_credentials);
+
+$username = $_SESSION["reset_username"];
+$password = $_POST["password"];
+$password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+$stmt = $dbh-&gt;prepare("UPDATE user SET password_hash = :password_hash
+WHERE username = :username");
+
+$stmt-&gt;execute([':username' =&gt; $username,
+                ':password_hash' =&gt; $password_hash]);
+
+login($dbh, $username, $password);
+
+header("Location: ../index.php");
+            </pre>
+        </div>
+        
         <div>
             <code>index.php</code> checks whether a user is logged in (by looking at the <code>$_SESSION['username']</code> variable):
             <pre>
@@ -116,12 +189,13 @@ function login($dbh, $username, $password) {
 session_start();
 
 if (isset($_SESSION['username'])) {
-    echo("Welcome back, {$_SESSION['username']}."
+    echo("Welcome back, {$_SESSION['username']}. "
        . "(id {$_SESSION['user_id']}) ");
     echo('&lt;a href="users/logout.php"&gt;Log out&lt;/a&gt;');
 } else {
     // display login link
     echo('&lt;a href="users/login_form.html"&gt;Please log in&lt;/a&gt;');
+    echo('&lt;br&gt;&lt;a href="users/signup_form.html"&gt;Sign up&lt;/a&gt;');
 }
             </pre>
         </div>
@@ -160,7 +234,7 @@ header("Location: ../index.php");
     &lt;table&gt;
         &lt;tr&gt;
             &lt;td&gt;Username&lt;/td&gt;
-            &lt;td&gt;&lt;input name="username"&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;input name="username" autofocus&gt;&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
             &lt;td&gt;Password&lt;/td&gt;
@@ -182,12 +256,16 @@ header("Location: ../index.php");
 require("../db_connect.php");
 require("login.php");
 
-$dbh = connect($db_credentials);
+$dbh = db_connect($db_credentials);
 
 login($dbh, $_POST['username'], $_POST['password']);
 
 header("Location: ../index.php");
             </pre>
+        </div>
+
+        <div>
+            Next, we will begin adding content, starting with <a href="2017_04_01_creating_languages.html">adding languages</a>.
         </div>
     </body>
 </html>

@@ -12,11 +12,15 @@
             <a href="index.html">Back to home</a>
         </div>
 
-        <h1>Database connection</h1>
+        <h1>Code Blog: Database connection</h1>
         <h3>1st April, 2017</h3>
 
         <div>
-            In this series of posts I will be creating a "code blog" where you can save short, independent blocks of code with a description, tags, and date.
+            In this series of posts I will be creating a "code blog" where you can save short, independent chunks of code with a description, tags, and date.
+        </div>
+
+        <div>
+            The project aims to have the minimal amount of components needed for multiple users to add their code entries. If you are looking to build a robust, professional project, use one of the popular frameworks. I do not cover important security issues, for example, those related to user credentials.
         </div>
 
         <div>
@@ -63,7 +67,7 @@ $db_credentials = [
 
 require(__DIR__ . "/../private/db_credentials.php");
 
-function connect($db_credentials) {
+function db_connect($db_credentials) {
     $dsn = "mysql:host={$db_credentials['host']};"
     . "dbname={$db_credentials['db_name']};charset=utf8";
 
@@ -91,7 +95,7 @@ function connect($db_credentials) {
 
 require("db_connect.php");
 
-$dbh = connect($db_credentials);
+$dbh = db_connect($db_credentials);
 
 $stmt = $dbh-&gt;query("SELECT now()");
 $row = $stmt-&gt;fetch();

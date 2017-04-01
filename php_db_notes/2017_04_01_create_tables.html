@@ -28,7 +28,7 @@
 
 require("../public/db_connect.php");
 
-$dbh = connect($db_credentials);
+$dbh = db_connect($db_credentials);
 
 $dbh-&gt;exec("CREATE TABLE IF NOT EXISTS user
 (id INTEGER NOT NULL AUTO_INCREMENT,
@@ -51,9 +51,13 @@ user_id INTEGER NOT NULL,
 entry_date DATE NOT NULL,
 title VARCHAR(255),
 details TEXT,
-language INTEGER NOT NULL,
+language_id INTEGER NOT NULL,
 code TEXT NOT NULL,
-CONSTRAINT pk_entry PRIMARY KEY (id))
+CONSTRAINT pk_entry PRIMARY KEY (id),
+CONSTRAINT fk_entry_user FOREIGN KEY (user_id)
+  REFERENCES user (id) ON DELETE CASCADE,
+CONSTRAINT fk_entry_language FOREIGN KEY (language_id)
+  REFERENCES language (id) ON DELETE CASCADE)
 ENGINE=InnoDB");
 
 $dbh-&gt;exec("CREATE TABLE IF NOT EXISTS tag
@@ -66,8 +70,14 @@ ENGINE=InnoDB");
 $dbh-&gt;exec("CREATE TABLE IF NOT EXISTS entry_tag
 (entry_id INTEGER NOT NULL,
 tag_id INTEGER NOT NULL,
-CONSTRAINT pk_entry_tag PRIMARY KEY (entry_id, tag_id))
+CONSTRAINT pk_entry_tag PRIMARY KEY (entry_id, tag_id),
+CONSTRAINT fk_entry_tag_entry FOREIGN KEY (entry_id)
+  REFERENCES entry (id) ON DELETE CASCADE,
+CONSTRAINT fk_entry_tag_tag FOREIGN KEY (tag_id)
+  REFERENCES tag (id) ON DELETE CASCADE)
 ENGINE=InnoDB");
+
+echo("All tables created successfully.");
             </pre>
         </div>
 

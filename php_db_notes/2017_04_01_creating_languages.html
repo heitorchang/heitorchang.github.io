@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heitor's PHP with DB Notes - Creating languages</title>
+        <link rel="stylesheet" href="../css/notes_style.css">
+    </head>
+    
+    <body>
+        <div>
+            <a href="index.html">Back to home</a>
+        </div>
+
+        <h1>Creating languages</h1>
+        <h3>1st April, 2017</h3>
+
+        <div>
+            We will allow any user to add a language, because they might have created their own. We also want content to be shared among all users. In fact, since there is no association between a user and a language in the database, I will not require a valid login to create a language.
+        </div>
+
+        <div>
+            Let's make a <code>languages</code> folder in <code>public/</code>, and create a form:
+            <pre>
+&lt;!-- languages/create_language_form.html --&gt;
+
+&lt;form action="create_language.php" method="POST"&gt;
+    Language name: &lt;input name="language_name" autofocus&gt;
+    &lt;input type="submit"&gt;
+&lt;/form&gt;
+            </pre>
+        </div>
+
+        <div>
+            And the corresponding PHP that will add the language:
+            <pre>
+&lt;?php
+
+// languages/create_language.php
+
+require("../db_connect.php");
+
+$dbh = db_connect($db_credentials);
+
+$add_language_sql = "INSERT INTO language (name)
+VALUES (:language)";
+
+$stmt = $dbh-&gt;prepare($add_language_sql);
+$stmt-&gt;execute([':language' =&gt; strip_tags($_POST['language_name'])]);
+
+header("Location: ../index.php");
+            </pre>
+        </div>
+
+        <div>
+            Let's update <code>index.php</code> to display all available languages:
+            <pre>
+&lt;h1&gt;Languages available&lt;/h1&gt;
+&lt;a href="languages/create_language_form.html"&gt;Add a language&lt;/a&gt;
+&lt;br&gt;&lt;br&gt;
+
+&lt;?php
+
+require("db_connect.php");
+
+$dbh = db_connect($db_credentials);
+
+$all_languages_sql = "SELECT name FROM language ORDER BY name";
+
+$languages = $dbh-&gt;query($all_languages_sql);
+
+foreach ($languages as $language) {
+    echo($language['name'] . "&lt;br&gt;");
+}
+
+?&gt;
+            </pre>
+        </div>
+
+        <div>
+            Next, let's <a href="2017_04_01_entries.html">add code entries</a>.
+        </div>
+    </body>
+</html>
