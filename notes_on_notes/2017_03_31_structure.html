@@ -30,7 +30,7 @@
         &lt;meta charset="utf-8"&gt;
         &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
         &lt;title&gt;Heitor's Notes on Taking Notes - Home&lt;/title&gt;
-        &lt;link rel="stylesheet" href="css/style.css"&gt;
+        &lt;link rel="stylesheet" href="../css/notes_style.css"&gt;
     &lt;/head&gt;
     
     &lt;body&gt;
@@ -64,7 +64,7 @@
         &lt;meta charset="utf-8"&gt;
         &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
         &lt;title&gt;Heitor's Notes on Notes - &lt;/title&gt;
-        &lt;link rel="stylesheet" href="css/style.css"&gt;
+        &lt;link rel="stylesheet" href="../css/notes_style.css"&gt;
     &lt;/head&gt;
     
     &lt;body&gt;
@@ -94,6 +94,23 @@ Code and shell
             The biggest shortcoming of writing technical posts in plain HTML is the lack of syntax highlighting and need to escape &lt; and &gt; with &amp;lt; and &amp;gt;. If you are writing a lot about HTML, you should consider another method that allows embedding pure HTML.
         </div>
 
+        <div>
+            I use Emacs for nearly everything, and found <a href="http://shallowsky.com/blog/linux/editors/emacs-escape-html.html" target="_blank">a function that will do the escaping in a selected region</a>. It is called <code>unhtml</code> but I renamed it to <code>escape-html</code>:
+            <pre>
+(defun escape-html (start end)
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (replace-string "&amp;" "&amp;amp;")
+      (goto-char (point-min))
+      (replace-string "&lt;" "&amp;lt;")
+      (goto-char (point-min))
+      (replace-string "&gt;" "&amp;gt;"))))
+            </pre>
+        </div>
+        
         <div>
             <a href="TODO.html" target="_blank">TODO.html</a> is a regular post that holds a list of items and ideas that I should write about:
             <pre>
