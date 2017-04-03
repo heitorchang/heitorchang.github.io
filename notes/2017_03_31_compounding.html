@@ -1,0 +1,73 @@
+<!-- template.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heitor's Notes - Compounding Interest</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    
+    <body>
+        <div>
+            <a href="index.html">Back to home</a>
+        </div>
+
+        <h1>Compounding Interest</h1>
+        <h3>31st March, 2017</h3>
+
+        <div>
+            We will begin with the basic equations of going forward in time (using percentage units):
+            <pre>
+# compounding.py
+
+from math import exp, log
+
+# FUNCTIONS SHOULD RETURN NUMBERS, FORMAT SEPARATELY
+
+def simple_compounding(rate, times, pv=100):
+    return "{:.4f}".format(pv * (1 + (rate/100)) ** times)
+
+def continuous_compounding(rate, times, pv=100):
+    return "{:.4f}".format(pv * exp((rate/100) * times))
+            </pre>
+        </div>
+
+        <div>
+            A useful conversion is taking a long period, such as a year, and finding the equivalent monthly rate that when compounded simply, will result in the original rate.
+            <pre>
+def divide_rate(rate, times):
+    fv = 1 + (rate/100)
+    r = log(fv) / times
+    return "{:.6f}%".format((exp(r) - 1) * 100)
+            </pre>
+        </div>
+
+        <div>
+            Suppose I have an investment yielding 10% in a year. What would be the equivalent monthly rate if the investment were to be compounded monthly?
+            <pre>
+>>> divide_rate(10, 12)
+'0.797414%'
+>>> simple_compounding(0.797414, 12)
+'110.0000'
+>>> (1+0.00797414) ** 12
+1.0999999943832588
+            </pre>
+        </div>
+
+        <div>
+            If an investment compounds yearly at 10%, what is the equivalent continuously compounding rate?
+            <pre>
+
+            </pre>
+        </div>
+        
+        <div>
+            Suppose I will need $100,000 in five years, and I have $50,000 to invest. What rate of return do I need?
+            <pre>
+def 
+            </pre>
+        </div>
+    </body>
+</html>
