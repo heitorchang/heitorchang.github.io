@@ -36,34 +36,35 @@
         </div>
         
         <div>
-            To begin, I will create the <code>lira</code> Django app in my home folder, and display the shell commands in a gray box shown below. Following UNIX convention, <code>~</code> refers to my home directory, and <code>$</code>, the shell prompt. After installing Django (my app is using version 1.10), start the new project:
-            
-            <pre>
-~ $ django-admin startproject lira
-            </pre>
-        </div>
-
-        <div>
             I work in both Windows and Ubuntu, and a useful tool to have is <a href="https://virtualenv.pypa.io/" target="_blank">virtualenv</a> and the set of extensions <a href="https://virtualenvwrapper.readthedocs.io/" target="_blank">virtualenvwrapper</a>. They create <span class="highlight_i">isolated Python environments</span>. There are many ways to set it up so I won't go into many details here. I am using Python 3.5 in both Windows and Ubuntu.
         </div>
 
         <div>
             The bare minimum virtualenv setup that I use is as follows. I am using Ubuntu, and the instructions below will vary between different operating systems.
             <pre>
-~ $ cd lira
-~/lira $ virtualenv -p /usr/bin/python3 venv
-~/lira $ source venv/bin/activate
+~ $ mkdir projects
+~ $ cd projects
+~/projects $ virtualenv -p /usr/bin/python3 venv
+~/projects $ source venv/bin/activate
 
-~/lira $ pip install Django
+~/projects $ pip install Django
 
 # To leave the virtualenv:
-~/lira $ deactivate
+~/projects $ deactivate
 
 # To use the virtualenv later:
-~/lira $ source venv/bin/activate
+~/projects $ source venv/bin/activate
             </pre>
         </div>
 
+        <div>
+            To begin, I will create the <code>lira</code> Django app in my home folder, and display the shell commands in a gray box shown below. Following UNIX convention, <code>~</code> refers to my home directory, and <code>$</code>, the shell prompt. After installing Django (my app is using version 1.10), start the new project:
+            
+            <pre>
+~ $ django-admin startproject lira
+            </pre>
+        </div>
+        
         <div>
             The new project isn't completely empty&mdash;Django includes an Admin app. But to make it usable, we need to apply the default migrations to update the database. Let's also create a superuser to access the Admin app.
             <pre>
