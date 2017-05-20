@@ -30,6 +30,13 @@
 
         <hr>
         <div>
+            <b>General notes:</b>
+            <p>
+                Avoid using null on string-based fields such as CharField and TextField. Exception: if a CharField has unique=True and blank=True set, then null=True is required to avoid constraint violations.
+            </p>
+        </div>
+        
+        <div>
             <a href="TODO.html">To do</a>
         </div>
     </body>
