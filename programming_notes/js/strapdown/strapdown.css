@@ -50,11 +50,11 @@ http://google-code-prettify.googlecode.com
 .pln { color: #000 }  /* plain text */
 
 @media screen {
-  .str { color: #f39}		/* 080 string content */
-  .kwd { color: #00f}  		/* a keyword */
-  .com { color: #090}  		/* 800 a comment */
+  .str { color: #172}		/* 080 string content */
+  .kwd { color: #00c}  		/* a keyword */
+  .com { color: #c30}  		/* 800 a comment */
   .typ { color: #00d}  		/* 606 a type name */
-  .lit { color: #f00}  		/* 066 a literal value - numbers*/
+  .lit { color: #03b}  		/* 066 a literal value - numbers*/
   .pun, .opn, .clo { color: #660} /*660 punctuation, lisp open bracket, lisp close bracket */
   .tag { color: #800} 		/* 008 a markup tag name */
   .atn { color: #f39}  		/* a markup attribute name */

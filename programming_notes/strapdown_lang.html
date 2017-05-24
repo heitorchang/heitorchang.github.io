@@ -9,9 +9,30 @@
     <textarea>
 # Languages demo
 
-## Python
+## Py
 
-```python
+```py
+
+from math import floor
+from fractions import gcd
+
+# max Vassal
+def maxVassal(num):
+    startNum = floor(num ** (1/3))
+    for k in range(startNum, 0, -1):
+        kCubed = k ** 3
+        pr('kCubed')
+        if gcd(kCubed, num) != 1:
+            return k
+
+def test():
+    testeql(maxVassal(42), 3)
+    testeql(maxVassal(810), 9)
+
+class MyClass(models.Model):
+    def __str__(self):
+        return "abc" + self.name
+
 def f(x):
     while True:
         print("in while loop")
@@ -34,6 +55,7 @@ e = \u2000
 ## JavaScript
 
 ```js
+// a comment
 function f() {
   return 2;
 }
@@ -75,6 +97,9 @@ function f() {
   return 2;
 }
 ```
+
+some text
+abc
 </textarea>
 <script src="js/strapdown/strapdown.js"></script>
 </body>
