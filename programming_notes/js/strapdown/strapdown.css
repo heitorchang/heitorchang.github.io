@@ -50,7 +50,7 @@ http://google-code-prettify.googlecode.com
 .pln { color: #000 }  /* plain text */
 
 @media screen {
-  .str { color: #172}		/* 080 string content */
+  .str { color: #052}		/* 080 string content */
   .kwd { color: #00c}  		/* a keyword */
   .com { color: #c30}  		/* 800 a comment */
   .typ { color: #00d}  		/* 606 a type name */
