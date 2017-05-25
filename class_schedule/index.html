@@ -3,10 +3,19 @@
     <head>
         <meta charset="utf-8">
         <title>ClassSched</title>
+        <style>
+            td {
+                padding: 3px 10px;
+            }
+        </style>
     </head>
     <body>
         Class Schedule
 
+        <table id="sched">
+
+        </table>
+        
         <script>
          var classes = [
              ["14:00", "14:55", "CompSci"],
@@ -14,6 +23,11 @@
              ["16:00", "16:55", "Mandarin"],
          ];
 
+         // display classes in page
+         for (var i = 0, len = classes.length; i < len; i++) {
+            document.getElementById("sched").innerHTML += "<tr><td>" + classes[i][0] + "</td><td>" + classes[i][1] + "</td><td>" + classes[i][2] + "</td></tr>";
+         }
+         
          var intv;
 
          var startDate = new Date();
