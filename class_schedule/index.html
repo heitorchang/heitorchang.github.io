@@ -15,11 +15,14 @@
         <table id="sched">
 
         </table>
-        
+
+        Credits:<br>buzz.min.js by Jay Salvat.<br>Bell mp3 by Daniel Simon. Downloaded from soundbible.com
+        <script src="buzz.min.js"></script>
+
         <script>
          var classes = [
              ["14:00", "14:55", "CS"],
-             ["15:00", "15:55", "NonFic"],
+             ["15:00", "15:55", "Book"],
              ["16:00", "16:55", "國語"],
          ];
 
@@ -39,6 +42,9 @@
         
          var elapsed = 0;
 
+         var inClass = false;
+         var buzzSound = new buzz.sound("clock-chimes-daniel_simon.mp3");
+         
          function parsehhmm(s) {
              var parts = s.split(":");
              var hh = parseInt(parts[0]);
@@ -98,19 +104,33 @@
              return hoursdisp + ":" + secstominOnly(secsleft);
          }
 
+         function bell(newState) {
+             if (newState != inClass) {
+                 // play bell
+                 buzzSound.play();
+                 inClass = !inClass;
+             }
+         }
 
          function checkForClass(curTime) {
              // check if any class falls in between current time
+
+             var noneFound = true;
              for (var i = 0, len = classes.length; i < len; i++) {
                  var cStart = parsehhmm(classes[i][0]);
                  var cEnd = parsehhmm(classes[i][1]);
                  
                  if (curTime > cStart && curTime < cEnd) {
                      document.title = classes[i][2] + " / ";
+
+                     bell(true);
+                     noneFound = false;
                      break;
-                 } else {
-                     document.title = "";
-                 }
+                 }  
+             }
+             if (noneFound) {
+                 bell(false);
+                 document.title = "";
              }
              document.title += secstohm(curTime) + " ";
          }
@@ -119,7 +139,8 @@
 
          // refresh rate, in milliseconds
          var tick = 29000;
-         
+         // var tick = 10000;
+
          intv = setInterval(function () {
              var curTime = startTime + elapsed;
              checkForClass(curTime);
