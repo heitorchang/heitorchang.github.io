@@ -40,7 +40,7 @@
 
          var startTime = startHour * 3600 + startMinute * 60 + startSecs;
         
-         var elapsed = 0;
+         // var elapsed = 0;
 
          var inClass = false;
          var buzzSound = new buzz.sound("clock-chimes-daniel_simon.mp3");
@@ -142,9 +142,15 @@
          // var tick = 10000;
 
          intv = setInterval(function () {
-             var curTime = startTime + elapsed;
+             // var curTime = startTime + elapsed;
+             var nowDate = new Date();
+             var nowHour = nowDate.getHours();
+             var nowMinute = nowDate.getMinutes();
+             var nowSecs = nowDate.getSeconds();
+
+             var curTime = nowHour * 3600 + nowMinute * 60 + nowSecs;
              checkForClass(curTime);
-             elapsed += Math.round(tick / 1000);
+             // elapsed += Math.round(tick / 1000);
          }, tick);
 
         </script>
