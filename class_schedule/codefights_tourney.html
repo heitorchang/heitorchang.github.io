@@ -29,7 +29,6 @@
         
          // var elapsed = 0;
 
-         var inClass = false;
          var buzzSound = new buzz.sound("sms-alert-2-daniel_simon.mp3");
          
          function parsehhmm(s) {
@@ -91,12 +90,8 @@
              return hoursdisp + ":" + secstominOnly(secsleft);
          }
 
-         function bell(newState) {
-             if (newState != inClass) {
-                 // play bell
-                 buzzSound.play();
-                 inClass = !inClass;
-             }
+         function bell() {
+             buzzSound.play();
          }
 
          function checkForClass(curTime) {
@@ -128,8 +123,8 @@
              var start = [14, 29, 44, 59];
              if (start.indexOf(mins) != -1 && !inAlertMin) {
                  inAlertMin = true;
-                 bell(true);
-             } else if (start.indexOf(mins == -1)) {
+                 bell();
+             } else if (start.indexOf(mins) == -1) {
                  inAlertMin = false;
              }
              document.title = secstohms(curTime);
