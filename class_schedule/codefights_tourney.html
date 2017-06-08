@@ -119,9 +119,10 @@
 
          var inAlertMin = false;
          
-         function checkQuarterHour(mins, curTime) {
+         function checkQuarterHour(mins, secs, curTime) {
              var start = [14, 29, 44, 59];
-             if (start.indexOf(mins) != -1 && !inAlertMin) {
+             
+             if (start.indexOf(mins) != -1 && secs > 30 && !inAlertMin) {
                  inAlertMin = true;
                  bell();
              } else if (start.indexOf(mins) == -1) {
@@ -141,7 +142,7 @@
              var nowSecs = nowDate.getSeconds();
 
              var curTime = nowHour * 3600 + nowMinute * 60 + nowSecs;
-             checkQuarterHour(nowMinute, curTime);
+             checkQuarterHour(nowMinute, nowSecs, curTime);
              
              // elapsed += Math.round(tick / 1000);
          }, tick);

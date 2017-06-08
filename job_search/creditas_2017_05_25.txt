@@ -1,0 +1,66 @@
+25 may 2017 
+
+Frontend Engineer $18k - 42k
+Creditas
+
+    Itaim Bibi, Brazil 
+
+ember.js javascript tdd
+Frontend Engineer $18k - 42k
+Creditas
+Apply now
+Permanent Mid-Level, Senior, Lead Full Stack Developer, Frontend Developer Financial Services, Financial Technology
+Job Description
+
+Creditas is a Technology company. Our Engineering team develops solutions to help consumers along the loan application process. You will have the opportunity to develop high quality code and to work in multi-disciplinary high-performance teams. 
+Skills & Requirements
+
+Front-end experience
+
+    Experience with Ember.js or another single-page application framework
+    Knowing how to implement tests in JS
+    Semantic HTML
+    Scalable and modular CSS architecture, knowing good patterns like SMACSS
+    Modular Javascript development, with design patterns (for example: Mediator and Pubsub), with or without MV* frameworks
+    DOM manipulation without having needs of libs such as jQuery or Zepto
+    Knowledge of cross browsers problems and how to solve them
+    Good practices in how to optimize web pages to make the user experience sweeter
+
+About Creditas
+
+Creditas is one of the hottest Fintech Startups in Brazil. Headquartered in São Paulo, Creditas is a digital lending platform on a mission to lower the interest rates for the Brazilian population. By offering secured loans, using cutting edge technology with data driven mindset, we are reinventing the credit experience in Brazil.
+
+Creditas is backed by top VC funds: Redpoint eventures, Kaszek Ventures, Accion's Frontier Fund, QED Investors, World Bank's IFC and Naspers Fintech
+
+Creditas was part of Google Launchpad Accelerator Class 2 (listed as BankFacil): https://developers.google.com/startups/accelerator/latam/
+
+Get to know more about what drives us: https://www.youtube.com/watch?v=zN7wTpo2oUo
+
+You will fit here...
+
+    We value individual and team effort, we expect high performance of everyone in the team
+    We have a relaxed and extremely productive environment
+    We want to be happy at our work environment and also in our personal lives
+    We want to grow both as individuals and as professionals
+    We constantly share knowledge related and unrelated to our individual tasks
+    We thrive for knowledge and we love to get out of our comfort zones
+    We believe and contribute to the engineering community
+    We celebrate every single victory
+    We love what we do!
+
+Joel Test score: 10 out of 12
+
+The Joel Test is a twelve-question measure of the quality of a software team.
+
+    Do you use source control?
+    Can you make a build in one step?
+    Do you make daily builds?
+    Do you have a bug database?
+NO  Do you fix bugs before writing new code?
+NO  Do you have an up-to-date schedule?
+    Do you have a spec?
+    Do programmers have quiet working conditions?
+    Do you use the best tools money can buy?
+    Do you have testers?
+    Do new candidates write code during their interview?
+    Do you do hallway usability testing?
