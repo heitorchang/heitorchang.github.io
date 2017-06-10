@@ -122,7 +122,7 @@
          function checkQuarterHour(mins, secs, curTime) {
              var start = [14, 29, 44, 59];
              
-             if (start.indexOf(mins) != -1 && secs > 30 && !inAlertMin) {
+             if (start.indexOf(mins) != -1 && secs > 22 && !inAlertMin) {
                  inAlertMin = true;
                  bell();
              } else if (start.indexOf(mins) == -1) {
