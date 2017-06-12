@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Codefights tourney</title>
+        <style>
+            td {
+                padding: 3px 10px;
+            }
+        </style>
+    </head>
+    <body>
+        Codefights tourney sound alert every quarter hour at :14, :29, :44, :59
+
+        <hr>
+
+        Credits:<br>buzz.min.js by Jay Salvat: MIT license<br>
+        Text message alert #2 mp3 by Daniel Simon / Simion: Creative Commons Attribution 3.0 license. Downloaded from <a href="http://soundbible.com/royalty-free-sounds-5.html" target="_blank">soundbible.com</a><br>
+        This page: MIT license
+        
+        <script src="buzz.min.js"></script>
+
+        <script>         
+         var intv;
+
+         var startDate = new Date();
+         var startHour = startDate.getHours();
+         var startMinute = startDate.getMinutes();
+         var startSecs = startDate.getSeconds();
+
+         var startTime = startHour * 3600 + startMinute * 60 + startSecs;
+        
+         // var elapsed = 0;
+
+         var buzzSound = new buzz.sound("sms-alert-2-daniel_simon.mp3");
+         
+         function parsehhmm(s) {
+             var parts = s.split(":");
+             var hh = parseInt(parts[0]);
+             var mm = parseInt(parts[1]);
+
+             if (isNaN(hh)) {
+                 hh = 0;
+             }
+
+             if (isNaN(mm)) {
+                 mm = 0;
+             }
+             
+             // return { hh: hh, mm: mm };
+             return hh * 3600 + mm * 60;
+         }
+         
+         function secsDiff(start) {
+             return Math.floor(((new Date()).getTime() - start) / 1000);
+         }
+
+         function secstomins(s) {
+             var secsdisp = s % 60;
+             var minsdisp = Math.floor(s / 60);
+             if (minsdisp < 10) {
+                 minsdisp = "0" + minsdisp;
+             }
+             if (secsdisp < 10) {
+	             secsdisp = "0" + secsdisp;
+             }
+             return minsdisp + ":" + secsdisp;
+         }
+
+         function secstominOnly(s) {
+             var secsdisp = s % 60;
+             var minsdisp = Math.floor(s / 60);
+             if (minsdisp < 10) {
+                 minsdisp = "0" + minsdisp;
+             }
+             if (secsdisp < 10) {
+	             secsdisp = "0" + secsdisp;
+             }
+             return minsdisp;
+         }
+
+         function secstohms(s) {
+             // s < 3600 is 0:59:59
+             var hoursdisp = Math.floor(s / 3600);
+             var secsleft = s - hoursdisp * 3600;
+             return hoursdisp + ":" + secstomins(secsleft);
+         }
+
+         function secstohm(s) {
+             // s < 3600 is 0:59:59
+             var hoursdisp = Math.floor(s / 3600);
+             var secsleft = s - hoursdisp * 3600;
+             return hoursdisp + ":" + secstominOnly(secsleft);
+         }
+
+         function bell() {
+             buzzSound.play();
+         }
+
+         function checkForClass(curTime) {
+             // check if any class falls in between current time
+
+             var noneFound = true;
+             for (var i = 0, len = classes.length; i < len; i++) {
+                 var cStart = parsehhmm(classes[i][0]);
+                 var cEnd = parsehhmm(classes[i][1]);
+                 
+                 if (curTime > cStart && curTime < cEnd) {
+                     document.title = classes[i][2] + " / ";
+
+                     bell(true);
+                     noneFound = false;
+                     break;
+                 }  
+             }
+             if (noneFound) {
+                 bell(false);
+                 document.title = "";
+             }
+             document.title += secstohm(curTime) + " ";
+         }
+
+         var inAlertMin = false;
+         
+         function checkQuarterHour(mins, secs, curTime) {
+             var start = [23, 25, 27, 29];
+             
+             if (start.indexOf(mins) != -1 && secs > 22 && !inAlertMin) {
+                 inAlertMin = true;
+                 bell();
+             } else if (start.indexOf(mins) == -1) {
+                 inAlertMin = false;
+             }
+             document.title = secstohm(curTime);
+         }
+         
+         // refresh rate, in milliseconds
+         var tick = 6000;
+
+         intv = setInterval(function () {
+             // var curTime = startTime + elapsed;
+             var nowDate = new Date();
+             var nowHour = nowDate.getHours();
+             var nowMinute = nowDate.getMinutes();
+             var nowSecs = nowDate.getSeconds();
+
+             var curTime = nowHour * 3600 + nowMinute * 60 + nowSecs;
+             checkQuarterHour(nowMinute, nowSecs, curTime);
+             
+             // elapsed += Math.round(tick / 1000);
+         }, tick);
+
+        </script>
+    </body>
+</html>
