@@ -219,6 +219,20 @@ sudo -u postgres psql postgres
             6b. No diretório <code>Biblivre-5/sql/</code> execute
         </p>
 
+
+        <p>
+            O Locale pode estar em LATIN 1. Para corrigir:
+        </p>
+
+        <p>
+            <pre>
+sudo -u postgres pg_dumpall > /tmp/postgres.sql
+sudo pg_dropcluster --stop 9.1 main
+sudo pg_createcluster --locale pt_BR.UTF-8 --start 9.1 main
+sudo -u postgres psql -f /tmp/postgres.sql
+            </pre>
+        </p>
+        
         <p>
             <pre>
 sudo -u postgres psql -U postgres -f createdatabase.sql
@@ -251,7 +265,7 @@ sudo -u postgres psql -U postgres -f biblivre4.sql -d biblivre4
         </p>
 
         <p>
-            6d. Segundo StackOverflow, tomcat-jdbc.jar precisa estar no diretório /usr/share/tomcat7/lib
+            6d. Segundo StackOverflow, tomcat-jdbc-9.0.0.M26.jar precisa estar no diretório /usr/share/tomcat7/lib
         </p>
 
         <p>
