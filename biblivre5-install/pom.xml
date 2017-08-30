@@ -41,14 +41,14 @@
 
 	<dependencies>
 
-	    <!--
+      <!-- there are JSTL errors, keep the original -->
         <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-	    -->
-<!-- org.jzkit.search.provider.iface  -->
+
+    <!-- org.jzkit.search.provider.iface  -->
   <dependency>
     <groupId>org.jzkit</groupId>
     <artifactId>jzkit2_core</artifactId>

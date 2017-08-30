@@ -584,6 +584,63 @@ org.apache.catalina.core.ContainerBase.[Catalina].handlers=java.util.logging.Con
         <p>
             <a href="createold.sql">createold.sql</a>
         </p>
+
+        <hr>
+
+        <p>
+            Problemas
+        </p>
+
+        <p>
+            PostgreSQL está com codificação Latin-1 em vez de UTF-8
+        </p>
+        
+        <p>    
+            Possívelmente é necessário trocar o locale para en_US.UTF-8 primeiro
+        </p>
+
+        <p>
+            <pre>
+sudo -u postgres pg_dumpall > /tmp/postgres.sql
+sudo pg_dropcluster --stop 9.1 main
+sudo pg_createcluster --locale en_US.UTF-8 --start 9.1 main
+sudo -u postgres psql -f /tmp/postgres.sql
+            </pre>
+        </p>
+        
+        <p>
+            <pre>
+emacs /etc/postgresql/9.1/main/postgresql.conf
+
+Adicionar localhost,127.0.0.1 a clientes permitidos
+Usar port 5432
+            </pre>
+        </p>
+
+        <p>
+            Problema: PSQLException: valor inválido para parâmetro "search_path": "global, public, pg_catalog"
+        </p>
+
+        <p>
+            DataSource na configuração de Tomcat
+        </p>
+        
+        <p>
+            <pre>
+   &lt;Resource name="jdbc/Postgres" auth="Container"
+              type="javax.sql.DataSource"
+	      username="biblivre"
+	      password="oca-secreto"
+	      driverClassName="org.postgresql.Driver"
+	      url="jdbc:postgresql://localhost:5432/biblivre3"
+	      maxTotal="100"
+	      maxIdle="20"
+              description="User database that can be updated and saved" /&gt;
+
+            </pre>
+        </p>
+        
+        
     </body>
 </html>
 
