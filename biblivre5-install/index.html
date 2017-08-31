@@ -27,6 +27,16 @@
         <p>
             <a href="https://github.com/Biblivre/Biblivre-5">https://github.com/Biblivre/Biblivre-5</a>
         </p>
+
+        <p>
+            Versões recomendadas:
+            <ul>
+                <li>PostgreSQL 9.1</li>
+                <li>Apache Tomcat 7.0</li>
+                <li>Apache Maven 3.2</li>
+            </ul>
+            
+        </p>
         
         <p>
             1. Instalar Java
@@ -54,28 +64,17 @@ sudo apt-get install default-jdk
 
         <p>
             <pre>
-sudo apt-get install postgresql postgresql-contrib
+sudo apt-get install postgresql-9.1
             </pre>
         </p>
 
         <p>
-            3. Instalar Maven
+            3a. Instalar Maven
         </p>
 
         <p>
             <pre>
 sudo apt-get install maven
-            </pre>
-        </p>
-
-        <p>
-            3a. Criar grupo 'tomcat'
-        </p>
-
-        <p>
-            <pre>
-sudo groupadd tomcat
-sudo useradd -s /bin/false -g tomcat -d /opt/tomcat tomcat
             </pre>
         </p>
 
