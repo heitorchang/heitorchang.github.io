@@ -639,7 +639,23 @@ Usar port 5432
 
             </pre>
         </p>
+
+        <p>
+            Não fazer "skip JARs", pois os dados necessários não serão incluídos
+        </p>
         
+
+        <p>
+            Redirecionar port 80 (WWW) para port 8080 (Tomcat):
+        </p>
+
+        <p>
+            <pre>
+iptables -t nat -I PREROUTING --src 0/0 --dst {{IP DO SERVIDOR}} -p tcp --dport 80 -j REDIRECT --to-ports 8080
+
+iptables-save
+            </pre>
+        </p>
         
     </body>
 </html>
