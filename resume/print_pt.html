@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <!-- 25 mar 2017 -->
-    <!-- EDIT index.html THEN SAVE HERE -->
+    <!-- 08 fev 2018 -->
+    <!-- Translation to Portuguese -->
+    
+    <!-- For print.html, remove all from body {} except font-family -->
     
     <head>
         <meta charset="utf-8">
         <title>Heitor Chang</title>
         <style>
          @font-face {
-             font-family: 'Neuton';
-             src: url('Neuton-Regular.ttf') format('truetype');
+             font-family: 'Gentium';
+             src: url('GenBkBasR.ttf') format('truetype');
              font-style: normal;
          }
          
          @font-face {
-             font-family: 'Neuton';
-             src: url('Neuton-Italic.ttf') format('truetype');
+             font-family: 'Gentium';
+             src: url('GenBkBasI.ttf') format('truetype');
              font-style: italic;
          }
          
          @font-face {
-             font-family: 'Neuton';
-             src: url('Neuton-Bold.ttf') format('truetype');
+             font-family: 'Gentium';
+             src: url('GenBkBasB.ttf') format('truetype');
              font-weight: bold;
          }
 
+         @font-face {
+             font-family: 'Gentium';
+             src: url('GenBkBasBI.ttf') format('truetype');
+             font-weight: bold;
+             font-style: italic;
+         }
+
          body {
-             font-family: 'Neuton';
+             font-family: 'Gentium';
          }
          
          table {
@@ -34,13 +43,19 @@
          }
 
          .place_role {
-             width: 75%;
+             width: 80%;
+             font-style: italic;
              padding-left: 25px;
          }
 
+         .place {
+             width: 80%;
+         }
+
          .date {
-             width: 25%;
+             width: 20%;
              font-style: italic;
+             white-space: nowrap;
          }
 
          .center {
@@ -63,6 +78,10 @@
              margin: 0;
          }
 
+         li {
+             margin-left: 1.5em;
+         }
+         
          a:link, a:visited {
              text-decoration: none;
              color: #000;
@@ -86,17 +105,48 @@
         <table>
             <tr><td colspan="2" class="bold">EXPERIÊNCIA PROFISSIONAL</td></tr>
             
-            <tr><td colspan="2" class="bold">Pontual Exportação e Importação, Ltda., São Paulo, SP</td></tr>
+            <tr><td colspan="2" class="bold">Pontual Exportação e Importação, Ltda., São Paulo, SP, Brasil</td></tr>
+
+       
             <tr>
-                <td class="place_role">Analista de Vendas e Webmaster</td>
-                <td class="date">Nov. 2011 &mdash; atual</td>
+                <td class="place_role">Supervisor de Vendas</td>
+                <td class="date">Jun. 2015 &mdash; atual</td>
             </tr>
             <tr>
                 <td colspan="2">
                     <ul>
-                        <lI>Desenvolver e manter o catálogo de produtos em PHP, <a href="http://pontualimportbrindes.com.br/" target="_blank">http://pontualimportbrindes.com.br/</a></lI>
-                        <li>Fazer previsões de demanda para mais de 500 produtos para determinar a quantidade e frequência de reposição.</li>
-                        <li>Manter a ordem de listas de pré-pedidos e reservas de clientes, intermediando entre cinco vendedoras.</li>
+                        <li>Fazer previsões de demanda para mais de 500 produtos, determinando a quantidade e frequência de reposição.</li>
+                        <li>Conferir condições, prazos e descontos para vendas excedendo limites pré-estabelecidos.</a></li>
+                        <li>Manter a ordem de listas de pré-pedidos e reservas para clientes de cinco vendedoras.</li>
+                    </ul>
+                </td>
+            </tr>
+
+            
+            <tr>
+                <td class="place_role">Desenvolvedor Full-Stack e Webmaster</td>
+                <td class="date">Jan. 2014 &mdash; atual</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <ul>
+                        <li>Modernizar o controle de compras e vendas com um site Django.</li> 
+                        <li>Desenvolver e manter o catálogo de produtos em PHP, <a href="http://pontualimportbrindes.com.br/" target="_blank">http://pontualimportbrindes.com.br/</a></li>
+                        <li>Criar um aplicativo de página única com AngularJS e Firebase para controlar pedidos e reservas.</li>
+                    </ul>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="place_role">Auxiliar Administrativo</td>
+                <td class="date">Nov. 2011 &mdash; Dez. 2013</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <ul>
+                        <li>Receber pedidos e reservas de clientes, formalizando-os na hora de retirada ou despacho.</li>
+                        <li>Manter o Showroom organizado e atualizado, quando chegarem amostras novas dos fabricantes.</li>
                     </ul>
                 </td>
             </tr>
@@ -154,7 +204,7 @@
             <tr><td colspan="2" class="bold">FORMAÇÃO ACADÊMICA</td></tr>
 
             <tr>
-                <td class="place_role bold">Graduação: Stanford University, Stanford, CA</td>
+                <td class="place bold">Graduação: Stanford University, Stanford, CA</td>
                 <td class="date">Set. 2001 &mdash; Jun. 2005</td>
             </tr>
 
@@ -163,7 +213,7 @@
             </tr>
 
             <tr>
-                <td class="place_role bold">Pós-graduação: Stanford University, Stanford, CA</td>
+                <td class="place bold">Pós-graduação: Stanford University, Stanford, CA</td>
                 <td class="date">Set. 2005 &mdash; Jun. 2007</td>
             </tr>
             
@@ -172,7 +222,7 @@
             </tr>
             
             <tr>
-                <td class="place_role bold">Pós-graduação: New York University, New York, NY</td>
+                <td class="place bold">Pós-graduação: New York University, New York, NY</td>
                 <td class="date">Set. 2007 &mdash; Jan. 2009</td>
             </tr>
 
@@ -201,13 +251,7 @@
                     </ul>
                 </td>
             </tr>
-        </table>
-        
-            <!-- Page Break -->
-        <div  style="page-break-before: always;">&nbsp;</div>
-
-        <table>
-                
+            
             <!-- Carnegie -->
             <tr><td colspan="2" class="bold">Carnegie Institution for Science, Stanford, CA</td></tr>
             <tr>
@@ -232,7 +276,7 @@
             <tr><td colspan="2" class="bold">Criar &amp; Criar Art Design, São Paulo, SP</td></tr>
             <tr>
                 <td class="place_role">Web Designer</td>
-                <td class="date">Out. 2017 &mdash; atual</td>
+                <td class="date">Out. 2017 &mdash; Dez. 2017</td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -251,14 +295,11 @@
             <tr>
                 <td colspan="2">
                     <ul>
-                        <li>Configurar e instalar o gerenciador de bibliotecas Biblivre 5 em um ambiente em nuvem.</li>
+                        <li>Configurar e instalar o gerenciador de bibliotecas Biblivre 5 dentro de um ambiente em nuvem.</li>
                     </ul>
                 </td>
             </tr>
         </table>
 
-    </body>
-</html>
-        
     </body>
 </html>
