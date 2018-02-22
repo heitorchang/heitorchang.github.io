@@ -11,7 +11,10 @@
     </head>
     <body>
         Class Schedule
-
+        <br>
+        
+        <b><span id="active"></span></b>
+        
         <table id="sched">
 
         </table>
@@ -21,11 +24,10 @@
 
         <script>
          var classes = [
-             ["21:00", "21:55", "Med, Py"],
-             
-             // ["14:00", "14:55", "CS"],
-             // ["15:00", "15:55", "Book"],
-             // ["16:00", "16:55", "國語"],
+             ["14:00", "14:55", "Chinese"],
+             ["15:00", "15:55", "Python"],
+             ["16:00", "16:55", "Book"],
+             ["17:00", "17:45", "Writing"],
          ];
 
          // display classes in page
@@ -125,6 +127,8 @@
                  if (curTime > cStart && curTime < cEnd) {
                      document.title = classes[i][2] + " / ";
 
+                     active.innerText = "Active now: " + classes[i][2];
+                     
                      bell(true);
                      noneFound = false;
                      break;
