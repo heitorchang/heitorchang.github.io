@@ -10,7 +10,7 @@
         </style>
     </head>
     <body>
-        Class Schedule
+        Class Schedule (<span id="curtime"></span>)
         <br>
         
         <b><span id="active"></span></b>
@@ -24,13 +24,10 @@
 
         <script>
          var classes = [
-             ["14:00", "14:55", "Chinese"],
-             ["15:00", "15:55", "Python"],
-             ["16:00", "16:55", "Book"],
+             ["14:00", "14:55", "CodeFights"],
+             ["15:00", "15:55", "Java"],
+             ["16:00", "16:55", "Baricco"],
              ["17:00", "17:45", "Writing"],
-             // ["17:28", "17:29", "debug 1"],
-             // ["17:30", "17:31", "debug 2"],
-             
          ];
 
          // display classes in page
@@ -154,6 +151,7 @@
                  active.innerText = "";
              }
              document.title += secstohm(curTime) + " ";
+             document.getElementById("curtime").innerText = secstohm(curTime);
          }
 
          checkForClass(startTime);
