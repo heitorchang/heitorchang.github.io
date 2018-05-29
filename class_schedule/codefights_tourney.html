@@ -14,13 +14,25 @@
 
         <hr>
 
+        <span id="interactWithMe">Did not interact</span>
+        <button id="doInteract" onclick="changeInteract();">Click me!</button>
+        
+        <hr>
+
+        
         Credits:<br>buzz.min.js by Jay Salvat: MIT license<br>
         Text message alert #2 mp3 by Daniel Simon / Simion: Creative Commons Attribution 3.0 license. Downloaded from <a href="http://soundbible.com/royalty-free-sounds-5.html" target="_blank">soundbible.com</a><br>
         This page: MIT license
         
         <script src="buzz.min.js"></script>
 
-        <script>         
+        <script>
+
+         // interaction promise bug
+         function changeInteract() {
+             document.getElementById("interactWithMe").innerText = "interacted, yay!";
+         }
+         
          var intv;
 
          var startDate = new Date();
