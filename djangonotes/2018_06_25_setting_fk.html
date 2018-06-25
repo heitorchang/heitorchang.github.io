@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Heitor's Django Notes - Setting a FK</title>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    
+    <body>
+        <div>
+            <a href="index.html">Back to home</a>
+        </div>
+
+        <h1>Setting the ForeignKey programmatically</h1>
+        <h3>25th June, 2018</h3>
+
+        <div>
+            In my SimCup project for simulating World Cup results, I wanted to dynamically assign a match's team by saying "the 1st place team in group A". However, it seems like I have to define a method to set a ForeignKey.
+        </div>
+
+        <div>
+            To test this idea, I set up a project representing a classroom and several students. We wish to assign the Classroom's best student to one of the students with the highest grade.
+        </div>
+
+        <div>
+            <pre>
+from django.db import models
+from django.db.models import Max
+
+class Student(models.Model):
+    name = models.CharField(max_length=16)
+    grade = models.IntegerField()
+    
+    def __str__(self):
+        return "{} {}".format(self.name, self.grade)
+
+class Classroom(models.Model):
+    teacher = models.CharField(max_length=16)
+    best = models.ForeignKey(Student, on_delete=models.CASCADE)
+
+    def setbest(self):
+        bestgrade = Student.objects.all().aggregate(Max('grade'))['grade__max']
+        beststudent = Student.objects.get(grade=bestgrade)
+        self.best = beststudent
+        self.save()
+    
+    def __str__(self):
+        return "{} {}".format(self.teacher, self.best)
+            </pre>
+        </div>
+
+        <div>
+            I tested the code in the Admin and shell. Note that changing a student's grade won't automatically update the Classroom's best student. Either a hook is needed or I have to call setbest() every time.
+        </div>
+
+    </body>
+</html>
+
