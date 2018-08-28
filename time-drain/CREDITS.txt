@@ -1,0 +1,7 @@
+Productivity Drain is MIT Licensed
+
+Software used:
+
+jQuery
+
+jQuery UI

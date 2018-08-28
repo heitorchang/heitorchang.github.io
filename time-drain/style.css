@@ -1,0 +1,65 @@
+body {
+    font-family: sans-serif;
+    font-size: 1em;
+}
+
+a {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-decoration: none;
+}
+
+#sortable li {
+    list-style: none;
+    margin-bottom: 1em;
+    padding: 1em 1.5em;
+    background-color: #FFA;
+    box-shadow: 0 0 12px
+    rgba(0,0,0,0.29), 3px 6px 6px
+    rgba(0,0,0,0.12);
+}
+
+.siteLink {
+    margin-left: 1em;
+    padding: 0 0 0 1em;
+}
+
+.strike {
+    color: #AAA;
+    font-weight: normal;
+    text-decoration: line-through;
+    
+}
+
+.small {
+    color: #555;
+    font-size: 0.8em;
+    padding: 0 0.5em;
+}
+
+.redButton {
+    background-color: #800;
+    color: #FFF;
+}
+
+.blueButton {
+    background-color: #25A;
+    color: #FFF;
+}
+
+.greenButton {
+    background-color: #061;
+    color: #FFF;
+}
+
+.grayButton {
+    background-color: #EEE;
+}
+
+#addSiteTable {
+    border: none;
+}
+
+.dialogDiv {
+    display: none;
+}

@@ -1,0 +1,6 @@
+New opens a dialog
+
+Edit opens a dialog to edit a state.sites[index]. saveState afterwards
+
+Delete 'splices' the state.sites array. saveState afterwards
+

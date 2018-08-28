@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Time Drain</title>
+        <link rel="stylesheet" href="jq-ui/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="style.css" type="text/css">
+    </head>
+    <body>
+        <h3>
+            Time Drain
+        </h3>
+        <p>
+            Keep track of how many times you visit time-wasting sites.
+            Clicking on a site's link will automatically check a box. You may manually uncheck them.
+            Data is stored only on your local device.
+        </p>
+
+        <p>
+            <button class="ui-button ui-widget ui-corner-all greenButton" id="addSite">Add a website</button>
+            &nbsp;&nbsp;
+            <button class="ui-button ui-widget ui-corner-all grayButton" id="resetAll">Clear all checkboxes</button>
+        </p>
+        
+        <div id="explanation">
+        </div>
+
+        <div id="sites">
+            <ul id="sortable">
+            </ul>
+        </div>
+
+        <div id="dialog-add-form" title="Add a website" class="dialogDiv">
+            <form>
+                <table id="addSiteTable">
+                    <tr>
+                        <td>
+                            <label for="addSiteName">Site name</label>
+                        </td>
+                        <td>
+                            <input type="text" id="addSiteName" class="text ui-widget-content ui-corner-all">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="addSiteURL">Site URL</label>
+                        </td>
+                        <td>
+                            <input type="text" id="addSiteURL" class="text ui-widget-content ui-corner-all">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="addSiteTimes">Max. number of visits</label>
+                        </td>
+                        <td>
+                            <input type="text" id="addSiteTimes" class="text ui-widget-content ui-corner-all" size="3">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div id="dialog-edit-form" title="Edit a website" class="dialogDiv">
+            <form>
+                <table id="editSiteTable">
+                    <tr>
+                        <td>
+                            <label for="editSiteName">Site name</label>
+                        </td>
+                        <td>
+                            <input type="text" id="editSiteName" class="text ui-widget-content ui-corner-all">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="editSiteURL">Site URL</label>
+                        </td>
+                        <td>
+                            <input type="text" id="editSiteURL" class="text ui-widget-content ui-corner-all">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="editSiteTimes">Max. number of visits</label>
+                        </td>
+                        <td>
+                            <input type="text" id="editSiteTimes" class="text ui-widget-content ui-corner-all" size="3">
+                            <input type="hidden" id="editSiteIndex">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <a href="https://github.com/heitorchang/productivity-drain" id="source9999">Source on GitHub</a>
+    </body>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="jq-ui/jquery-ui.min.js"></script>
+    <script src="app.js"></script>
+    <script src="ui.js"></script>
+</html>
