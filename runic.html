@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Roman to Runic</title>
+  </head>
+
+  <body>
+	<textarea id="roman" rows="16" cols="80" autofocus></textarea>
+
+	<br>
+	<button id="convert">Convert and Copy to Clipboard</button>
+	<br><br>
+	
+	<textarea id="runic" rows="16" cols="80"></textarea>
+
+	<script>
+	  function convltrs(orig) {
+	  var out = orig.toLowerCase();
+
+	  var rom = 'abcdefghijklmnopqrstuvwxyz';
+	  var run = 'ᚫᛒᚳᛞᛖᚠᚷᚺᛁᛃᚲᛚᛗᚾᛟᛈᚩᚱᛋᛏᚢᚴᚹᛡᛇᛉ';
+	  // var run = 'FxxxMxxHIjklmnOpqrsTxvwxyZ';
+
+	  for (var i = 0; i < 26; i++) {
+	  out = out.split(rom[i]).join(run[i]);
+	  }
+
+	  return out;
+	  }
+	  
+	  function r2r() {
+	  var rom = document.getElementById("roman");
+	  var run = document.getElementById("runic");
+
+	  run.value = convltrs(rom.value);
+	  }
+	  
+	  var btn = document.getElementById("convert").onclick = function () {
+		r2r();
+		document.getElementById("runic").select();
+		document.execCommand("copy");
+	  };
+
+	  
+	</script>
+  </body>
+</html>
