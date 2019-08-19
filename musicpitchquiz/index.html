@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sheet Music C Major Pitch Quiz</title>
+    <style>
+    body {
+    font-family: sans-serif;
+    text-align: center;
+    }
+
+    div {
+    display: inline-block;
+    margin-left: 20px;
+    }
+
+    .blue {
+    color: blue;
+    font-size: 1.2em;
+    }
+    
+    .red {
+    color: red;
+    font-size: 1.2em;
+    }
+    </style>
+  </head>
+  <body>
+    <script src="jquery.min.js"></script>
+    <h3>Sheet Music Pitch Quiz (C major notes)</h3>
+    <div>
+    Play this note<br>
+    <canvas width="200" height="170" id="quizNote"></canvas>
+    </div>
+
+    <div>
+    You clicked on<br>
+    <canvas width="200" height="170" id="clickNote">></canvas>
+    </div>
+
+    <br>
+    <div>
+    <span id="message" class="blue">Please click on the key matching the note on the left</span><br>
+    <img src="midc.jpg" alt="keyboard" id="roland">
+    </div>
+    <script src="vexflow.min.js"></script>
+    <script src="audiosynth.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

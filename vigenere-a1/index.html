@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!-- (c) 2016 Heitor Chang. MIT License -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>A1 Vigenère Cipher</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    
+    <body>
+        <div id="controls">
+            A1 Vigenere version <span id="ver"></span><br>
+            <span class="red">
+                IMPORTANT: Use in a trusted computer, without keyloggers.<br>
+                RECOMMENDED: Add random characters at the beginning of plaintext to prevent repeating initial ciphertext</span>
+            <br><br>
+            
+            <button id="clear">Clear inputs</button> &nbsp;&nbsp;&nbsp;
+            <input type="radio" name="direction" value="encrypt" id="dirEnc" checked><label for="dirEnc">Encrypt</label> &nbsp;&nbsp;&nbsp; <input type="radio" name="direction" value="decrypt" id="dirDec" ><label for="dirDec">Decrypt</label><br>
+
+            <br>
+            Secret Key: <input id="key" size="32" autofocus>
+
+            <br>
+
+            <span id="inputLabel"></span><br>
+            
+            <textarea id="inputText" rows="5" cols="60"></textarea>
+
+            <br>
+            
+            <button id="convert"></button>
+
+            <br>
+            
+            <span id="result"></span><br>
+            <textarea id="resultText" rows="5" cols="60"></textarea>
+
+			<br>
+
+			<button id="copyResult">Copy</button>
+        </div>
+        <div id="calculations">
+        </div>
+
+        <div id="about">
+            <pre>
+
+Why Vigenère? This method can be done easily in your head
+or with pen and paper.
+
+How to encrypt and decrypt
+
+Plaintext (P)
+Key (K)
+Ciphertext (C)
+
+The formula for individual characters is:
+
+Encrypt: P + K = C
+Decrypt: C - K = P
+
+First, assign a number to each of the 26 letters of the alphabet.
+Typically, we see A = 1, B = 2, C = 3, and all the way to Z = 26.
+
+
+What is "A1"?
+
+"A1" means A = 1. The encoding table used in this page differs
+from the traditional Vigenère table by an offset of one space.
+
+Looking at the top-left corner of the table, ...
+
+It is much more common to see the alphabet start with A = 1 and end
+at Z = 26. 
+
+So, when adding A + A, it means 1 + 1 = 2 (B). With the traditional
+table, the calculation result, 1 + 1 = 2, would have to be subtracted
+by 1 to give the expected result of A (1).
+
+Subtract/add 26 so that the result falls in the range of 1-26.
+The encrypted alphabet wraps around both ways.
+
+Spaces from the plaintext are removed to make cracking even more
+difficult (by eliminating guesses of short words like THE, I, and OF).
+
+However, the ciphertext is grouped into chunks of four characters, to
+reduce the possibility of errors when copying by hand.
+            </pre>
+        </div>
+        <script src="app.js"></script>           
+    </body> 
+</html>
