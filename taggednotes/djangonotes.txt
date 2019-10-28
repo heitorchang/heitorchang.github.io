@@ -1,28 +1,72 @@
-Hello Django
-tutorial
+New Project
+installation, tutorial
 28 oct 2019
-# Django Tutorial
 
-* a
-* b
-* c
+As of 28 oct 2019, the latest versions are 2.2.6 for Django and 3.8.0 for Python.
 
-*hello*
+Change to your desired directory. Commands below are for Windows. Use Git Bash in Windows.
+
+```
+> mkdir mydjangoproject
+> cd mydjangoproject
+> python -m venv venv
+> source venv/Scripts/activate
+> python -m pip install --upgrade pip  # optional
+> pip install django
+> django-admin.py startproject mydjangoproject .  # the dot at the end creates project in current directory
+> python manage.py startapp myapp
+```
+
+To leave the virtualenv:
+```
+> deactivate
+```
 --
-Virtualenv
-tutorial, set up, python 3
+Saving the virtualenv packages
+deployment
 28 oct 2019
-```
-> source
 
+Inside the virtualenv, change to the top-level directory and run
+```
+> pip freeze > requirements.txt
+```
+
+To install them in the server, create a virtualenv there and run
+```
+> pip install -r requirements.txt
 ```
 --
-Random HTML
-tutorial
+.gitignore
+setup
 28 oct 2019
-# Random HTML
 
-```html
-<b>Bold</b>
 ```
-<b>Bold outside codeblock</b>
+# Emacs
+
+*~
+\#*
+.\#*
+
+
+# Python
+
+__pycache__/
+
+
+# Virtualenv
+
+venv/
+
+
+# Django
+
+secrets.py
+db.sqlite3
+
+
+# touch these files so you can autocomplete the manage.py commands
+
+runserver
+makemigrations
+migrate
+```
