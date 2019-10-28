@@ -81,5 +81,110 @@ migrate \n\
 ``` \n\
 " },
 
-numNotes: 3
+note3: { 
+id: "note3", 
+title: "Do not use null with string fields, except when unique and blank are True",
+tags: ['models'],
+reference: "28 oct 2019",
+body: " \n\
+[Django docs](https://docs.djangoproject.com/en/2.2/ref/models/fields/) \n\
+ \n\
+Avoid using null on string-based fields such as CharField and TextField. \n\
+ \n\
+The Django convention is to use the empty string, not NULL. \n\
+ \n\
+One exception is when a CharField has both unique=True and blank=True set. In this situation, null=True is required to avoid unique constraint violations when saving multiple objects with blank values. \n\
+" },
+
+note4: { 
+id: "note4", 
+title: "PostgreSQL Setup",
+tags: ['setup', 'databases'],
+reference: "28 oct 2019",
+body: " \n\
+``` \n\
+DATABASES = { \n\
+    'default': { \n\
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', \n\
+        'NAME': 'hellopost', \n\
+        'USER': 'hellopost', \n\
+        'PASSWORD': 'secretpass', \n\
+        'HOST': '127.0.0.1', \n\
+        'PORT': '',  # default port \n\
+    } \n\
+} \n\
+``` \n\
+" },
+
+note5: { 
+id: "note5", 
+title: "Initial data for models",
+tags: ['models'],
+reference: "28 oct 2019",
+body: " \n\
+[Django docs](https://docs.djangoproject.com/en/2.2/topics/migrations/#data-migrations) \n\
+ \n\
+`RunPython` is the main operation used for data migrations. \n\
+ \n\
+After creating the tables (making and running migrations), run \n\
+ \n\
+``` \n\
+> python manage.py makemigrations --empty yourappname \n\
+``` \n\
+ \n\
+Edit the newly created migration: \n\
+ \n\
+``` \n\
+def create_default_genres(apps, schema_editor): \n\
+    Genre = apps.get_model('yourappname', 'Genre') \n\
+    fiction = Genre(name=&quot;Fiction&quot;) \n\
+    fiction.save() \n\
+ \n\
+ \n\
+class Migration(migrations.Migration): \n\
+ \n\
+    dependencies = [ \n\
+        ('yourappname', '0001_initial'), \n\
+    ] \n\
+ \n\
+    operations = [ \n\
+        migrations.RunPython(create_default_genres), \n\
+    ] \n\
+``` \n\
+" },
+
+note6: { 
+id: "note6", 
+title: "related_name",
+tags: ['models'],
+reference: "28 oct 2019",
+body: " \n\
+The default `related_name` is `manyobject_set`. \n\
+ \n\
+For example, in the official Polls tutorial, we can get all Choices for a Poll Question with `q.choice_set.all()` \n\
+ \n\
+When a model has two fields that refer to the same Foreign Key, `related_name` is mandatory. \n\
+ \n\
+For example, in double-entry accounting, a Transaction that is recorded in a debit account and credit account must have unique related_names. The `Transaction` class has: \n\
+ \n\
+* `debit = models.ForeignKey(Account, related_name='debit_set', on_delete=...)` \n\
+* `credit = models.ForeignKey(Account, related_name='credit_set', on_delete=...)` \n\
+" },
+
+note7: { 
+id: "note7", 
+title: "Redirecting in `urls.py`",
+tags: ['routing', 'setup'],
+reference: "28 oct 2019",
+body: " \n\
+``` \n\
+from django.views.generic.base import RedirectView \n\
+ \n\
+# ... \n\
+ \n\
+path('', RedirectView.as_view(url='/NEWURL/', permanent=False), name='pathname'), \n\
+``` \n\
+" },
+
+numNotes: 8
 };

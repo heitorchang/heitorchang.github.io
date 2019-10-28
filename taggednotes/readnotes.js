@@ -6,7 +6,7 @@ function createNote(noteObj) {
   
   var title = document.createElement("p");
 
-  title.innerHTML = '<span class="noteTitle" onclick="toggleNote(\'' + noteObj.id + '\')"><b>' + noteObj.title + '</b></span><hr>';
+  title.innerHTML = '<span class="noteTitle" onclick="toggleNote(\'' + noteObj.id + '\')"><b>' + marked(noteObj.title) + '</b></span><hr>';
 
   var noteContents = document.createElement("p");
   noteContents.setAttribute("id", noteObj.id);
