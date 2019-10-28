@@ -51,7 +51,11 @@ p {
 }
 
 .sidebar {
-    margin-left: 10px;
+    padding-left: 10px;
+    background-color: #9af;
+    color: white;
+    font-weight: bold;
+    line-height: 1.8em;
     width: 17%;
     height: 100%;
     vertical-align: top;
@@ -65,6 +69,14 @@ p {
     vertical-align: top;
     white-space: normal;
     overflow: auto;
+}
+
+.tag {
+    font-weight: bold;
+    padding: 1px;
+    margin-right: 9px;
+    background-color: #ff2;
+    color: #129;
 }
 
 .tags {

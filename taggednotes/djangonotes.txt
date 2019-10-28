@@ -10,10 +10,8 @@ tutorial
 *hello*
 --
 Virtualenv
-tutorial
+tutorial, set up, python 3
 28 oct 2019
-# Virtualenv
-
 ```
 > source
 

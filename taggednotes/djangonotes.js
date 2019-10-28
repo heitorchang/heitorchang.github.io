@@ -16,11 +16,9 @@ body: "# Django Tutorial \n\
 note1: { 
 id: "note1", 
 title: "Virtualenv",
-tags: ['tutorial'],
+tags: ['tutorial', 'set up', 'python 3'],
 reference: "28 oct 2019",
-body: "# Virtualenv \n\
- \n\
-``` \n\
+body: "``` \n\
 > source \n\
  \n\
 ``` \n\

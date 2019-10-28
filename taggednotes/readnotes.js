@@ -15,14 +15,14 @@ function createNote(noteObj) {
   var tags = document.createElement("span");
 
   noteObj.tags.forEach(function(tag) {
-    tags.innerHTML += "[" + createTag(tag) + "] ";
+    tags.innerHTML += "<span class='tag'>[" + createTag(tag) + "]</span> ";
   });
 
-  tags.innerHTML += "<br><br>"
+  tags.innerHTML += "<br>"
 
   var ref = document.createElement("p");
   ref.innerHTML = noteObj.reference;
-  ref.innerHTML += "<br><br>";
+  ref.innerHTML += "<br>";
   
   var body = document.createElement("div");
 
@@ -56,6 +56,8 @@ function createNotes(tagName) {
   
   document.getElementById("notes").innerHTML = "<br>&nbsp;" + unescape(tagName) + ' <span onclick="expandAll();">(expand all)</span> <span onclick="collapseAll();">(collapse all)</span>';
   document.getElementById("notes").appendChild(notesHTML);
+  
+  collapseAll();
   document.getElementById("notes").scrollTop = 0;
 }
 
