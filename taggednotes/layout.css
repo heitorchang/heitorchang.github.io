@@ -28,9 +28,7 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
-	line-height: 1;
-}
+
 blockquote, q {
 	quotes: none;
 }
@@ -97,7 +95,7 @@ p {
 }
 
 .noteTitle {
-    color: blue;
+    color: #36C;
     font-weight: bold;
 }
 
@@ -122,3 +120,10 @@ p {
 .codeblock > code {
     font-family: "Fira";
 }    
+
+.expandall {
+    padding: 2px;
+    margin-left: 6px;
+    background-color: #62C;
+    color: #FFC;
+}

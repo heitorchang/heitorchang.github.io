@@ -6,7 +6,7 @@ function createNote(noteObj) {
   
   var title = document.createElement("p");
 
-  title.innerHTML = '<span class="noteTitle" onclick="toggleNote(\'' + noteObj.id + '\')"><b>' + marked(noteObj.title) + '</b></span><hr>';
+  title.innerHTML = '<span class="noteTitle" onclick="toggleNote(\'' + noteObj.id + '\')"><b>' + marked("&#x25b6; " + noteObj.title) + '</b></span>';
 
   var noteContents = document.createElement("p");
   noteContents.setAttribute("id", noteObj.id);
@@ -39,7 +39,7 @@ function createNote(noteObj) {
   note.appendChild(title);
   note.appendChild(noteContents);
 
-  $(body).find("code").parent().addClass("codeblock");
+  $(body).find("pre").addClass("codeblock");
   return note;
 }
 
@@ -56,7 +56,7 @@ function createNotes(tagName) {
     availableNotes.push(noteId);
   });
   
-  document.getElementById("notes").innerHTML = "<br>&nbsp;" + unescape(tagName) + ' <span onclick="expandAll();">(expand all)</span> <span onclick="collapseAll();">(collapse all)</span>';
+  document.getElementById("notes").innerHTML = "<br>&nbsp;" + unescape(tagName) + ' <span onclick="expandAll();" class="expandall">(expand all)</span> <span onclick="collapseAll();" class="expandall">(collapse all)</span>';
   document.getElementById("notes").appendChild(notesHTML);
   
   collapseAll();
@@ -73,7 +73,7 @@ function createAllNotes() {
     availableNotes.push(noteId);
   }
   
-  document.getElementById("notes").innerHTML = '<br>All notes<span onclick="expandAll();"> (expand all)</span> <span onclick="collapseAll();">(collapse all)</span>';
+  document.getElementById("notes").innerHTML = '<br>All notes<span onclick="expandAll();" class="expandall">(expand all)</span> <span onclick="collapseAll();" class="expandall">(collapse all)</span>';
   document.getElementById("notes").appendChild(notesHTML);
 
   collapseAll();
