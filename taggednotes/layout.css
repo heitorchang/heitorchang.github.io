@@ -10,9 +10,15 @@
 }
 
 @font-face {
-    font-family: "Overlock";
-    src: url("Overlock-Regular.ttf") format("truetype");
+    font-family: "Roboto";
+    src: url('Roboto-Regular.ttf') format('truetype');
     font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url('Roboto-Bold.ttf') format('truetype');
+    font-weight: bold;
 }
 
 html, body {
@@ -20,7 +26,7 @@ html, body {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font-family: "Overlock";
+	font-family: "Roboto";
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
