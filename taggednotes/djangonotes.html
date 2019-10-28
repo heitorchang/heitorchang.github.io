@@ -43,13 +43,5 @@
 	<script src="djangonotes.js"></script>
 	<script src="readnotes.js"></script>
 	<script src="setupnotes.js"></script>
-        <script>
-         console.log("hello");
-         availableNotes.forEach(function(noteId) {
-           console.log(noteId);
-           let note = document.getElementById(noteId);
-           note.innerHTML = marked(note.innerText);
-         });
-        </script>
   </body>
 </html>
