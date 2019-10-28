@@ -1,3 +1,15 @@
+To-do
+todo
+28 oct 2019
+
+Remember to run `python process.py`
+
+List of topics to write about
+
+* User login/logout
+* Timezones
+* Sending email
+--
 New Project
 installation, tutorial
 28 oct 2019

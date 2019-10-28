@@ -1,6 +1,21 @@
 var notes = {
 note0: { 
 id: "note0", 
+title: "To-do",
+tags: ['todo'],
+reference: "28 oct 2019",
+body: " \n\
+Remember to run `python process.py` \n\
+ \n\
+List of topics to write about \n\
+ \n\
+* User login/logout \n\
+* Timezones \n\
+* Sending email \n\
+" },
+
+note1: { 
+id: "note1", 
 title: "New Project",
 tags: ['installation', 'tutorial'],
 reference: "28 oct 2019",
@@ -26,8 +41,8 @@ To leave the virtualenv: \n\
 ``` \n\
 " },
 
-note1: { 
-id: "note1", 
+note2: { 
+id: "note2", 
 title: "Saving the virtualenv packages",
 tags: ['deployment'],
 reference: "28 oct 2019",
@@ -43,8 +58,8 @@ To install them in the server, create a virtualenv there and run \n\
 ``` \n\
 " },
 
-note2: { 
-id: "note2", 
+note3: { 
+id: "note3", 
 title: "Hosting",
 tags: ['deployment'],
 reference: "28 oct 2019",
@@ -57,8 +72,8 @@ Look for: \n\
 * Uptime guarantees \n\
 " },
 
-note3: { 
-id: "note3", 
+note4: { 
+id: "note4", 
 title: ".gitignore",
 tags: ['setup'],
 reference: "28 oct 2019",
@@ -95,8 +110,8 @@ migrate \n\
 ``` \n\
 " },
 
-note4: { 
-id: "note4", 
+note5: { 
+id: "note5", 
 title: "Do not use null with string fields, except when unique and blank are True",
 tags: ['models'],
 reference: "28 oct 2019",
@@ -110,8 +125,8 @@ The Django convention is to use the empty string, not NULL. \n\
 One exception is when a CharField has both unique=True and blank=True set. In this situation, null=True is required to avoid unique constraint violations when saving multiple objects with blank values. \n\
 " },
 
-note5: { 
-id: "note5", 
+note6: { 
+id: "note6", 
 title: "PostgreSQL Setup",
 tags: ['setup', 'databases'],
 reference: "28 oct 2019",
@@ -130,8 +145,8 @@ DATABASES = { \n\
 ``` \n\
 " },
 
-note6: { 
-id: "note6", 
+note7: { 
+id: "note7", 
 title: "Initial data for models",
 tags: ['models'],
 reference: "28 oct 2019",
@@ -167,8 +182,8 @@ class Migration(migrations.Migration): \n\
 ``` \n\
 " },
 
-note7: { 
-id: "note7", 
+note8: { 
+id: "note8", 
 title: "related_name",
 tags: ['models'],
 reference: "28 oct 2019",
@@ -185,8 +200,8 @@ For example, in double-entry accounting, a Transaction that is recorded in a deb
 * `credit = models.ForeignKey(Account, related_name='credit_set', on_delete=...)` \n\
 " },
 
-note8: { 
-id: "note8", 
+note9: { 
+id: "note9", 
 title: "Redirecting in `urls.py`",
 tags: ['routing', 'setup'],
 reference: "28 oct 2019",
@@ -200,5 +215,5 @@ path('', RedirectView.as_view(url='/NEWURL/', permanent=False), name='pathname')
 ``` \n\
 " },
 
-numNotes: 9
+numNotes: 10
 };

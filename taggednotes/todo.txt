@@ -1,2 +1,1 @@
-[  ] User login/logout
-[  ] Timezones
+Place to-do items at the top of djangonotes.txt
