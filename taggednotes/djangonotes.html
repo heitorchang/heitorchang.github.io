@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">
+	<title>Django - Tagged Notes</title>
+	<link rel="stylesheet" href="layout.css" type="text/css">
+  </head>
+  <body>
+	<div id="container">
+	  <div class="sidebar">
+		<div class="tags" id="tags">
+		  <p onclick="">arrays</p>
+		  <p>strings</p>
+		</div>
+	  </div> <!-- END sidebar -->
+	  <div class="notes" id="notes">
+		<br>
+		Django notes, started 28 oct 2015
+		<br><br>
+
+		Choose a topic on the left
+		<hr>
+
+		<pre>
+		  
+  Format:
+  
+  title
+  tags, comma-separated
+  date and reference, page number
+  notes
+  ... more notes
+  ... even more notes
+  --
+  next title
+  next tags...
+
+  Run python process.py hrnotes
+		</pre>
+	  </div>
+	</div> <!-- END div id="container" -->
+	<script src="marked.min.js"></script>
+	<script src="djangonotes.js"></script>
+	<script src="readnotes.js"></script>
+	<script src="setupnotes.js"></script>
+        <script>
+         console.log("hello");
+         availableNotes.forEach(function(noteId) {
+           console.log(noteId);
+           let note = document.getElementById(noteId);
+           note.innerHTML = marked(note.innerText);
+         });
+        </script>
+  </body>
+</html>

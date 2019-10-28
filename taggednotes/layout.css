@@ -1,0 +1,84 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* http://stackoverflow.com/questions/10105160/create-a-scroll-bar-in-a-sidebar */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+p {
+    padding-left: 5px;
+}
+
+#container {
+    height: 100%;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.sidebar {
+    margin-left: 10px;
+    width: 17%;
+    height: 100%;
+    vertical-align: top;
+    position: fixed;
+}
+
+.notes {
+    width: 81%;
+    height: 100%;
+    margin-left: 19%;
+    vertical-align: top;
+    white-space: normal;
+    overflow: auto;
+}
+
+.tags {
+    height: 100%;
+    overflow: auto;
+    white-space: normal;
+}
+
+.noteTitle {
+    color: blue;
+    font-weight: bold;
+}
+
+.alert {
+    color: red;
+    font-weight: bold;
+}
