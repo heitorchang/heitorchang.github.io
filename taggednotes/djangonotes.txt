@@ -7,6 +7,8 @@ Remember to run `python process.py`
 List of topics to write about
 
 * User login/logout
+* variables at the end of settings.py
+* Django REST Framework serialization, views
 * Timezones
 * Sending email
 --

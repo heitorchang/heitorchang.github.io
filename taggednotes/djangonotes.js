@@ -10,6 +10,8 @@ Remember to run `python process.py` \n\
 List of topics to write about \n\
  \n\
 * User login/logout \n\
+* variables at the end of settings.py \n\
+* Django REST Framework serialization, views \n\
 * Timezones \n\
 * Sending email \n\
 " },
