@@ -36,6 +36,17 @@ To install them in the server, create a virtualenv there and run
 > pip install -r requirements.txt
 ```
 --
+Hosting
+deployment
+28 oct 2019
+
+Look for:
+
+* ssh access
+* PostgreSQL
+* Python 3.7+
+* Uptime guarantees
+--
 .gitignore
 setup
 28 oct 2019

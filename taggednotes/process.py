@@ -1,7 +1,7 @@
 import sys
 
 if len(sys.argv) != 2:
-    print("Assuming djangonotes. For other notes, run python process.py languagenotes")
+    print("Processing djangonotes. For other notes, run python process.py languagenotes")
     language = "djangonotes"
 else:
     language = sys.argv[1].replace(".", "")
