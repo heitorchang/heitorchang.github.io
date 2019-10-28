@@ -70,3 +70,93 @@ runserver
 makemigrations
 migrate
 ```
+--
+Do not use null with string fields, except when unique and blank are True
+models
+28 oct 2019
+
+[Django docs](https://docs.djangoproject.com/en/2.2/ref/models/fields/)
+
+Avoid using null on string-based fields such as CharField and TextField.
+
+The Django convention is to use the empty string, not NULL.
+
+One exception is when a CharField has both unique=True and blank=True set. In this situation, null=True is required to avoid unique constraint violations when saving multiple objects with blank values.
+--
+PostgreSQL Setup
+setup, databases
+28 oct 2019
+
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hellopost',
+        'USER': 'hellopost',
+        'PASSWORD': 'secretpass',
+        'HOST': '127.0.0.1',
+        'PORT': '',  # default port
+    }
+}
+```
+--
+Initial data for models
+models
+28 oct 2019
+
+[Django docs](https://docs.djangoproject.com/en/2.2/topics/migrations/#data-migrations)
+
+`RunPython` is the main operation used for data migrations.
+
+After creating the tables (making and running migrations), run
+
+```
+> python manage.py makemigrations --empty yourappname
+```
+
+Edit the newly created migration:
+
+```
+def create_default_genres(apps, schema_editor):
+    Genre = apps.get_model('yourappname', 'Genre')
+    fiction = Genre(name="Fiction")
+    fiction.save()
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('yourappname', '0001_initial'),
+    ]
+
+    operations = [
+        migrations.RunPython(create_default_genres),
+    ]
+```
+--
+related_name
+models
+28 oct 2019
+
+The default `related_name` is `manyobject_set`.
+
+For example, in the official Polls tutorial, we can get all Choices for a Poll Question with `q.choice_set.all()`
+
+When a model has two fields that refer to the same Foreign Key, `related_name` is mandatory.
+
+For example, in double-entry accounting, a Transaction that is recorded in a debit account and credit account must have unique related_names. The `Transaction` class has:
+
+* `debit = models.ForeignKey(Account, related_name='debit_set', on_delete=...)`
+* `credit = models.ForeignKey(Account, related_name='credit_set', on_delete=...)`
+--
+Redirecting in `urls.py`
+routing, setup
+28 oct 2019
+
+```
+from django.views.generic.base import RedirectView
+
+# ...
+
+path('', RedirectView.as_view(url='/NEWURL/', permanent=False), name='pathname'),
+```
