@@ -125,7 +125,15 @@ p {
 
 .codeblock > code {
     font-family: "Fira";
-}    
+}
+
+code {
+    font-family: "Fira";
+    background-color: #eff;
+    color: #309;
+    padding: 2px;
+    line-height: 1.8em;
+}
 
 .expandall {
     padding: 2px;
