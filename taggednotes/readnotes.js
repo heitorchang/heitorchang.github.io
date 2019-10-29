@@ -56,7 +56,7 @@ function createNotes(tagName) {
     availableNotes.push(noteId);
   });
   
-  document.getElementById("notes").innerHTML = "<br>&nbsp;" + unescape(tagName) + ' <span onclick="expandAll();" class="expandall">(expand all)</span> <span onclick="collapseAll();" class="expandall">(collapse all)</span>';
+  document.getElementById("notes").innerHTML = "<br>&nbsp;" + unescape(tagName) + ' <span onclick="expandAll();" class="expandall">expand all</span> <span onclick="collapseAll();" class="expandall">collapse all</span>';
   document.getElementById("notes").appendChild(notesHTML);
   
   collapseAll();
@@ -73,7 +73,7 @@ function createAllNotes() {
     availableNotes.push(noteId);
   }
   
-  document.getElementById("notes").innerHTML = '<br>All notes<span onclick="expandAll();" class="expandall">(expand all)</span> <span onclick="collapseAll();" class="expandall">(collapse all)</span>';
+  document.getElementById("notes").innerHTML = '<br>All notes<span onclick="expandAll();" class="expandall">expand all</span> <span onclick="collapseAll();" class="expandall">collapse all</span>';
   document.getElementById("notes").appendChild(notesHTML);
 
   collapseAll();
