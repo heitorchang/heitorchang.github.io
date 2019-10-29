@@ -32,10 +32,12 @@ with open(language + ".js", 'w') as output:
             print('tags: ' + tags + ',', file=output)
             print('reference: "' + reference + '",', file=output)
             print('body: "', file=output, end="")
+
             while True:
                 body_line = input.readline()
                 if body_line == "" or body_line.strip() == "--":
                     break
+                    
                 body_line = body_line.rstrip()
                 body_line = body_line.replace("\\", "\\\\")
                 # body_line = body_line.replace("`", "\\`")
@@ -43,7 +45,9 @@ with open(language + ".js", 'w') as output:
                 # body_line = body_line.replace("<", "&lt;")
                 # body_line = body_line.replace(">", "&gt;")
 
-                print(body_line.replace('"', "&quot;"), file=output, end=" \\n\\\n") 
+                body_line = body_line.replace('"', r'\"')
+                    
+                print(body_line, file=output, end="\\n\\\n") 
             print('" },\n', file=output)
 
     print("numNotes: " + str(id), file=output)

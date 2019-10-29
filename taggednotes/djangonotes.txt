@@ -36,6 +36,63 @@ To leave the virtualenv:
 > deactivate
 ```
 --
+Django Official Tutorial summary
+tutorial
+29 oct 2019
+
+## Part 1
+
+* Creating projects and apps
+* Running development server
+* HttpResponse view
+* urls.py include
+
+```
+from django.urls import include, path
+
+urlpatterns = [
+    path('polls/', include('polls.urls')),
+```
+
+## Part 2
+
+* Database setup
+* Creating and activating models (`INSTALLED_APPS`)
+* `migrate`
+* Shell
+* Django admin
+
+## Part 3
+
+* Views
+* Templates
+* Shortcuts (`render`, `get_object_or_404()`, `get_list_or_404()`)
+* `url` template tag
+* Namespacing URLs with `app_name = "polls"` in `urls.py`
+
+## Part 4
+
+* Manual form
+* `request.POST`
+* `reverse("polls:results", args=(question.id,))`
+* `F()` to avoid race conditions
+* Generic views expect `pk`
+
+## Part 5
+
+* Create a test to expose the bug
+* Test views with the test client
+* LiveServerTestCase
+
+## Part 6
+
+* Static files
+
+## Part 7
+
+* Customizing the Admin form
+* Copy default admin templates to a custom directory (app must be installed before Django's admin) and edit it
+--
 Saving the virtualenv packages
 deployment
 28 oct 2019
