@@ -15,7 +15,7 @@ function createNote(noteObj) {
   var tags = document.createElement("span");
 
   noteObj.tags.forEach(function(tag) {
-    tags.innerHTML += "<span class='tag'>[" + createTag(tag) + "]</span> ";
+    tags.innerHTML += "<span class='tag'>" + createTag(tag) + "</span> ";
   });
 
   tags.innerHTML += "<br>"
