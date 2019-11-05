@@ -24,10 +24,9 @@
 
         <script>
          var classes = [
-             ["14:00", "14:55", "Italiano"],
-             ["15:00", "15:55", "Django"],
-             ["16:00", "16:55", "Writing"],
-             ["17:00", "17:45", "Free"],
+           ["14:00", "14:55", "Django"],
+           ["15:00", "15:25", "Italiano"],
+           ["15:30", "15:55", "Mandarin"],
          ];
 
          // display classes in page
@@ -150,23 +149,23 @@
              document.title += secstohm(curTime) + " ";
          }
 
-         checkForClass(startTime);
+             checkForClass(startTime);
 
-         // refresh rate, in milliseconds
-         var tick = 29000;
-         // var tick = 10000;
+             // refresh rate, in milliseconds
+             var tick = 29000;
+             // var tick = 10000;
 
-         intv = setInterval(function () {
-             // var curTime = startTime + elapsed;
-             var nowDate = new Date();
-             var nowHour = nowDate.getHours();
-             var nowMinute = nowDate.getMinutes();
-             var nowSecs = nowDate.getSeconds();
+             intv = setInterval(function () {
+               // var curTime = startTime + elapsed;
+               var nowDate = new Date();
+               var nowHour = nowDate.getHours();
+               var nowMinute = nowDate.getMinutes();
+               var nowSecs = nowDate.getSeconds();
 
-             var curTime = nowHour * 3600 + nowMinute * 60 + nowSecs;
-             checkForClass(curTime);
-             // elapsed += Math.round(tick / 1000);
-         }, tick);
+               var curTime = nowHour * 3600 + nowMinute * 60 + nowSecs;
+               checkForClass(curTime);
+               // elapsed += Math.round(tick / 1000);
+             }, tick);
 
         </script>
     </body>
