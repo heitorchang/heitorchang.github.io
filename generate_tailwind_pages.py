@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
         print("""
 <div>
-    <div class="flex bg-white rounded-lg p-6 max-w-sm mx-auto shadow-lg">
+    <div class="flex bg-white rounded-lg p-6 max-w-sm mx-auto shadow-lg mt-8">
         <img class="h-24 w-24 rounded-full m-auto" src="img/heitor_profile.jpg" alt="profile">
         <div class="text-left">
             <h2 class="text-lg">Heitor Chang</h2>
