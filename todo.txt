@@ -1,0 +1,5 @@
+Tailwind homepage
+
+[  ] PDF link in CV
+[  ] Fade bottom of project screenshots
+[  ] Github links on homepage
