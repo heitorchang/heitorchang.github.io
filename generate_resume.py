@@ -45,6 +45,9 @@ merrill = Company("Merrill Lynch &amp; Co., Inc., New York, NY",
 
 
 stux = Company("Stux Capital Management, LLC, New York, NY",
+               [])
+
+adair = Company("", [])
 
 COMPANIES = [pontual, merrill, stux, adair]
 

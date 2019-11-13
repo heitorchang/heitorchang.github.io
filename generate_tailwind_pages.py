@@ -43,7 +43,7 @@ if __name__ == "__main__":
             <div class="text-gray-600">(11) 99907-4867</div>
         </div>
     </div>
-    <div class="gent max-w-3xl mx-auto mt-8 text-gray-800">        
+    <div class="gent max-w-3xl mx-auto mt-8 text-gray-800 px-8">        
         """, file=fout)
         
         for section in SECTIONS:
