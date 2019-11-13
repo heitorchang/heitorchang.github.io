@@ -45,22 +45,67 @@ merrill = Company("Merrill Lynch &amp; Co., Inc., New York, NY",
 
 
 stux = Company("Stux Capital Management, LLC, New York, NY",
-               [])
+               [Job("Estagiário, Investimentos em Ações",
+               "Feb. 2008 &mdash; Abr. 2008",
+               ["Consolidar, otimizar e checar erros em planilhas de rendas mensais.",
+                "Desenvolver uma interface visual que comunica em tempo real com um banco de dados para ver o lucro de um fundo de investimentos, aumentando a produtividade e minimizando erros."])])
 
-adair = Company("", [])
 
+adair = Company("Adair Capital, LLC, New York, NY",
+                [Job("Estagiário, Fundo de Fundos de Cobertura",
+                "Set. 2007 &mdash; Jan. 2008",
+                ["Calcular níveis de risco entre fundos, correlacionando estratégias de fundos de cobertura com fatores de risco macroeconômicos para prever os lucros de fundos específicos.",
+                 "Desenvolver um GUI no Matlab que implementa um processo Brownian Bridge para medir a exposição de fundos de cobertura a índices de referência e detectar possíveis mudanças nas suas estratégias de investimento."])])
+
+                 
 COMPANIES = [pontual, merrill, stux, adair]
 
 
+stan_ug = Company("Graduação: Stanford University, Stanford, CA",
+                  [Job("Ciências Matemáticas e Computacionais",
+                       "Set. 2001 &mdash; Jun. 2005",
+                       ["Bachelor of Science, GPA 3.7/4.0"])])
+
+grad_school = Company("Pós-graduação: Stanford University, Stanford, CA",
+                      [Job("Ciência e Engenharia de Materiais",
+                           "Set. 2005 &mdash; Jun. 2007",
+                           ["Master of Science, GPA 3.6/4.0"])])
+
+nyu = Company("Pós-graduação: New York University, New York, NY",
+              [Job("Matemática Financeira",
+                   "Set. 2007 &mdash; Jan. 2009",
+                   ["Master of Science, GPA 3.4/4.0"])])
+
+SCHOOLS = [nyu, grad_school, stan_ug]
+
+
+materiais = Company("Departamento de Ciência e Engenharia de Materiais, Stanford University, Stanford, CA",
+                    [Job("Assistente de Pesquisas de Propriedades Mecânicas, Prof. R. H. Dauskardt",
+                         "Jun. 2005 &mdash; Fev. 2007",
+                         ["Construir simulações de fratura para prever a estabilidade de nanomateriais porosos inovadores.",
+                          "Otimizar scripts Matlab em programas C, acelerando cálculos que demoravam um dia para aproximadamente duas horas."])])
+
+
+carnegie = Company("Carnegie Institution for Science, Stanford, CA",
+                   [Job("Assistente de Pesquisas Genéticas, Dra. Susan S. Thayer",
+                        "Mar. 2004 &mdash; Jun. 2004",
+                        ["Realizar análises de regressão em SAS para identificar correlações estatisticamente significativas entre oito conjuntos de dados."])])
+
+
+ACADEMICA = [materiais, carnegie]
+
+
+# VOLUNTARIO = [criar, oca]
+                 
 # Sections
 
 experiencia_profissional = ResumeSection("Experiência Profissional",
                                          COMPANIES)
 
 formacao_academica = ResumeSection("Formação Acadêmica",
-                                   [])
+                                   SCHOOLS)
 
-experiencia_academica = ResumeSection("Experiência Acadêmica", [])
+experiencia_academica = ResumeSection("Experiência Acadêmica", ACADEMICA)
 
 trabalho_voluntario = ResumeSection("Trabalho Voluntário", [])
 

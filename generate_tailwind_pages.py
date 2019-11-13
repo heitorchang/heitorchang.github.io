@@ -35,7 +35,7 @@ if __name__ == "__main__":
         print("""
 <div>
     <div class="flex bg-white rounded-lg p-6 max-w-sm mx-auto shadow-lg">
-        <img class="h-24 w-24 rounded-full m-auto" src="img/heitor_profile.jpg">
+        <img class="h-24 w-24 rounded-full m-auto" src="img/heitor_profile.jpg" alt="profile">
         <div class="text-left">
             <h2 class="text-lg">Heitor Chang</h2>
             <div class="text-indigo-800">Desenvolvedor Full-Stack</div>
@@ -43,7 +43,15 @@ if __name__ == "__main__":
             <div class="text-gray-600">(11) 99907-4867</div>
         </div>
     </div>
-    <div class="gent max-w-3xl mx-auto mt-8 text-gray-800 px-8">        
+        
+    <div class="gent max-w-3xl mx-auto mt-8 text-gray-800 px-8">
+
+        <div class="flex bg-white p-2 mx-auto">
+        <a href="resume/HeitorChang_pt_2019_11_13.pdf">
+        <img src="img/pdficon.png" alt="PDF">
+        </a>
+        </div>
+
         """, file=fout)
         
         for section in SECTIONS:
@@ -59,8 +67,8 @@ if __name__ == "__main__":
                 for job in company.jobs:
                     print(f"""
         <div class="flex items-stretch border-solid border-b border-gray-500 mt-2">
-            <div class="flex-1 text-left italic">{job.title}</div>
-            <div class="flex-1 text-right italic">{job.dates}</div>
+            <div class="w-2/3 text-left italic">{job.title}</div>
+            <div class="w-1/3 text-right italic">{job.dates}</div>
         </div>
                     
         <ul class="list-disc ml-8">
@@ -76,6 +84,8 @@ if __name__ == "__main__":
                     """, file=fout)
 
                     
-        print("</div>", file=fout)
+        print("""</div>
+        </div>
+        """, file=fout)
         print(open(FOOTER, encoding="utf-8").read(), file=fout)
             
