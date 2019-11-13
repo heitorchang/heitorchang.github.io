@@ -12,7 +12,7 @@ PROJECTS = [Project('PTL.png',
                     "Pontual Import Brindes",
                     "Catálogo de produtos",
                     "http://pontualimportbrindes.com.br/",
-                    "https://github.com/pontual/kitweb-v2/"),
+                    "https://github.com/pontual/site-admin-live/"),
             
             Project('pangloss.png',
                     'Pangloss',
