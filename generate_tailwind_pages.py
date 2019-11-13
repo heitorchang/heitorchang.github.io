@@ -56,12 +56,12 @@ if __name__ == "__main__":
         
         for section in SECTIONS:
             print(f"""
-        <h2 class="text-xl text-teal-800 mt-6 uppercase">{section.name}</h2>
+        <h2 class="text-xl text-teal-800 mt-8 uppercase">{section.name}</h2>
             """, file=fout)
 
             for company in section.companies:
                 print(f"""
-            <h3 class="text-lg text-teal-700 mt-3 uppercase">{company.name}</h3>
+            <h3 class="text-lg text-teal-700 mt-8 uppercase">{company.name}</h3>
                 """, file=fout)
 
                 for job in company.jobs:
