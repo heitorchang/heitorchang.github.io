@@ -4,7 +4,7 @@ from generate_resume import print_cv
 
 
 TAILWIND_DIR = "tailwind/"
-CONTENT = ["index_tailwind.html"]
+CONTENT = ["index.html"]
 
 CV_HEADER = TAILWIND_DIR + "cv_header.html"
 HEADER = TAILWIND_DIR + "tailwind_navbar.html"
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         for project in PROJECTS:
             print(f"""
             <div class="lg:inline-block max-w-xl rounded-lg overflow-hidden m-6 text-center">
-  <div class="px-6 py-2">
+  <div class="px-4 py-2">
     <div class="font-bold text-teal-700 text-xl mb-2 hover:text-teal-500">
             <a href="{project.demo}" target="_blank">
             {project.title}
@@ -38,15 +38,16 @@ if __name__ == "__main__":
        {project.desc}
     </p>
             
-    <p class="inline-block bg-gray-900 text-green-600 rounded p-2 mt-3 text-sm text-gray-700 mr-2 monosp hover:text-green-300">
+    <p class="inline-block bg-gray-900 text-green-600 rounded p-2 mt-3 text-sm text-gray-700 monosp hover:text-green-300">
        <a href="{project.code}" target="_blank">
        Código-fonte
        </a>
     </p>
   </div>
+            
   <div class="mx-2 flex justify-center">
     <a href="{project.demo}" target="_blank">
-      <img class="shadow-md hover:shadow-xl px-4 pb-4" src="img/screenshots/{project.img}" alt="{project.title}">
+      <img class="shadow-md hover:shadow-xl px-4 py-2" src="img/screenshots/{project.img}" alt="{project.title}">
     </a>
   </div>
 </div>
