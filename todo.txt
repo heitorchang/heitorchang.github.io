@@ -1,6 +1,7 @@
 Tailwind homepage
 
-[  ] PDF link in CV
+[OK] PDF link in CV
 [  ] Fade bottom of project screenshots
 [  ] Github links on homepage
+[  ] technologies logos on homepage
 [  ] Test all links (demo and source code)

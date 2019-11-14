@@ -23,10 +23,36 @@ if __name__ == "__main__":
     # Projects
     with open("projects.html", 'w', encoding='utf-8') as fout:
         print(open(HEADER, encoding="utf-8").read(), file=fout)
-        
-        for project in PROJECTS:
-            print(project.title, file=fout)
 
+        print("""<div class="text-center">""", file=fout)
+        for project in PROJECTS:
+            print(f"""
+            <div class="lg:inline-block max-w-xl rounded-lg overflow-hidden m-6 text-center">
+  <div class="px-6 py-4">
+    <div class="font-bold text-teal-700 text-xl mb-2">
+            <a href="{project.demo}" target="_blank">
+            {project.title}
+            </a>
+            </div>
+    <p class="text-gray-700 text-base">
+       {project.desc}
+    </p>
+            
+    <p class="inline-block bg-gray-900 text-green-300 rounded-lg p-2 mt-3 text-sm text-gray-700 mr-2 monosp">
+       <a href="{project.code}" target="_blank">
+       Código-fonte
+       </a>
+    </p>
+  </div>
+  <div class="m-2 flex justify-center">
+    <a href="{project.demo}" target="_blank">
+      <img class="shadow-xl" src="img/screenshots/{project.img}" alt="{project.title}">
+    </a>
+  </div>
+</div>
+            """, file=fout)
+
+        print("</div> <!-- content -->", file=fout)
         print(open(FOOTER, encoding="utf-8").read(), file=fout)
 
             
@@ -55,29 +81,33 @@ if __name__ == "__main__":
 
 
     # Resume printable
-    with open("cv_print.html", 'w', encoding='utf-8') as fout:
-        print(open(CV_HEADER, encoding="utf-8").read(), file=fout)
 
-        print("""
-<div>
-    <div class="gent max-w-3xl text-2xl mx-auto mt-2 text-teal-900 px-8">
-        <h2 class="text-center uppercase">Heitor Chang</h2>
-    </div>
+    print_resume = False
+    
+    if print_resume:
+        with open("cv_print.html", 'w', encoding='utf-8') as fout:
+            print(open(CV_HEADER, encoding="utf-8").read(), file=fout)
 
-    <div class="gent max-w-3xl mx-auto mt-2 text-gray-900 text-center px-8">
-
-        <div class="w-auto border-solid border-b border-gray-500 pb-2">
-        heitorpontual@gmail.com &nbsp;&diams;&nbsp; (11) 3312-8845 &nbsp;&diams;&nbsp; (11) 99907-4867 &nbsp;&diams;&nbsp; https://heitorchang.github.io/
+            print("""
+    <div>
+        <div class="gent max-w-3xl text-2xl mx-auto mt-2 text-teal-900 px-8">
+            <h2 class="text-center uppercase">Heitor Chang</h2>
         </div>
-    </div>
 
-        """, file=fout)
+        <div class="gent max-w-3xl mx-auto mt-2 text-gray-900 text-center px-8">
 
-        print_cv(fout, False)
+            <div class="w-auto border-solid border-b border-gray-500 pb-2">
+            heitorpontual@gmail.com &nbsp;&diams;&nbsp; (11) 3312-8845 &nbsp;&diams;&nbsp; (11) 99907-4867 &nbsp;&diams;&nbsp; https://heitorchang.github.io/
+            </div>
+        </div>
 
-        print("""
-        <div class="mb-8">&nbsp;</div>
-        </div></body></html> <!-- content -->""", file=fout)
+            """, file=fout)
+
+            print_cv(fout, False)
+
+            print("""
+            <div class="mb-8">&nbsp;</div>
+            </div></body></html> <!-- content -->""", file=fout)
 
 
     print("Manually add page break in cv_print.html with")
