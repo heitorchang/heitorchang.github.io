@@ -139,3 +139,127 @@ projetos_pessoais = ResumeSection("Projetos Pessoais", PESSOAIS)
 
 
 SECTIONS = [experiencia_profissional, formacao_academica, experiencia_academica, trabalho_voluntario, projetos_pessoais]
+
+
+def print_cv(fout, print_pdf=True):
+
+    try:
+        print("""
+    <div class="gent max-w-3xl mx-auto mt-8 text-gray-800 px-8">
+""", file=fout)
+
+        if print_pdf:
+            print("""
+        <!-- PDF icon -->
+        <div class="flex bg-white p-2 mx-auto">
+        <a href="resume/HeitorChang_pt_2019_11_14.pdf">
+        <img src="img/pdficon.png" alt="PDF">
+        </a>
+        </div>
+
+        """, file=fout)
+
+        for section in SECTIONS:
+            if not print_pdf:
+                section_mt = "mt-6"
+                company_mt = "mt-3"
+                li_mt = "mt-1"
+            else:
+                section_mt = "mt-10"
+                company_mt = "mt-6"
+                li_mt = "mt-3"
+                
+                
+            print(f"""
+        <h2 class="text-xl text-teal-800 {section_mt} uppercase">{section.name}</h2>
+            """, file=fout)
+
+            for company in section.companies:
+                print(f"""
+            <h3 class="text-lg text-teal-700 {company_mt} border-solid border-b border-gray-500 uppercase">{company.name}</h3>
+                """, file=fout)
+
+                for job in company.jobs:
+                    print(f"""
+        <div class="flex items-stretch mt-2">
+            <div class="w-2/3 text-left italic">{job.title}</div>
+            <div class="w-1/3 text-right italic">{job.dates}</div>
+        </div>
+                    
+        <ul class="list-disc ml-8">
+        """, file=fout)
+
+                    for item in job.items:
+                        print(f"""
+            <li class="{li_mt}">{item}</li>
+                        """, file=fout)
+
+                    print("""
+        </ul>
+                    """, file=fout)
+
+
+        # Idiomas
+        IDIOMAS = (('Inglês', 'Fluente'),
+                   ('Mandarim', 'Intermediário'),
+                   ('Italiano', 'Intermediário'),
+                   ('Francês', 'Básico'),
+                   ('Espanhol', 'Básico'),
+                   ('Grego moderno', 'Básico'))
+        
+        print("""        <h2 class="text-xl text-teal-800 mt-8 uppercase">Idiomas</h2>""", file=fout)
+
+        print("""
+
+        <ul class="list-disc ml-8">
+        """, file=fout)
+
+        for idioma in IDIOMAS:
+            print(f"""
+          <li class="mt-1">
+            <div class="flex w-auto">
+              <div class="w-40">{idioma[0]}</div>
+              <div class="w-40 italic">{idioma[1]}</div>
+            </div>
+          </li>
+            """, file=fout)
+            
+        print("""
+        </ul>
+        """, file=fout)
+
+        # Programacao
+        LINGUAGENS = (('Python 3', 'Avançado'),
+                      ('HTML5', 'Avançado'),
+                      ('JavaScript (ES6)', 'Intermediário'),
+                      ('CSS3', 'Intermediário'),
+                      ('PHP 7', 'Intermediário'),
+                      ('Emacs Lisp', 'Básico'),
+                      ('MySQL', 'Básico'))
+                      
+        print("""        <h2 class="text-xl text-teal-800 mt-8 uppercase">Linguagens de Programação</h2>""", file=fout)
+
+        print("""
+
+        <ul class="list-disc ml-8">
+        """, file=fout)
+
+        for ling in LINGUAGENS:
+            print(f"""
+          <li class="mt-1">
+            <div class="flex w-auto">
+              <div class="w-40">{ling[0]}</div>
+              <div class="w-40 italic">{ling[1]}</div>
+            </div>
+          </li>
+            """, file=fout)
+            
+        print("""
+        </ul>
+        """, file=fout)
+
+
+        print("""    </div> <!-- CV gent font -->""", file=fout)
+
+    except Exception as e:
+        print("An exception occurred", e)
