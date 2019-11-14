@@ -11,13 +11,14 @@ FOOTER = TAILWIND_DIR + "tailwind_footer.html"
 
 
 if __name__ == "__main__":
-    # Index and CV
+    # Index
     for fname in CONTENT:
         with open(fname, 'w', encoding="utf-8") as fout:
             print(open(HEADER, encoding="utf-8").read(), file=fout)
             print(open(TAILWIND_DIR + fname, encoding="utf-8").read(), file=fout)
             print(open(FOOTER, encoding="utf-8").read(), file=fout)
-                
+
+            
     # Projects
     with open("projects.html", 'w', encoding='utf-8') as fout:
         print(open(HEADER, encoding="utf-8").read(), file=fout)
@@ -46,6 +47,7 @@ if __name__ == "__main__":
         
     <div class="gent max-w-3xl mx-auto mt-8 text-gray-800 px-8">
 
+        <!-- PDF icon -->
         <div class="flex bg-white p-2 mx-auto">
         <a href="resume/HeitorChang_pt_2019_11_13.pdf">
         <img src="img/pdficon.png" alt="PDF">
@@ -83,9 +85,69 @@ if __name__ == "__main__":
         </ul>
                     """, file=fout)
 
-                    
-        print("""</div>
-        </div>
+
+        # Idiomas
+        IDIOMAS = (('Inglês', 'Fluente'),
+                   ('Mandarim', 'Intermediário'),
+                   ('Italiano', 'Intermediário'),
+                   ('Francês', 'Básico'),
+                   ('Espanhol', 'Básico'),
+                   ('Grego moderno', 'Básico'))
+        
+        print("""        <h2 class="text-xl text-teal-800 mt-8 uppercase">Idiomas</h2>""", file=fout)
+
+        print("""
+
+        <ul class="list-disc ml-8">
         """, file=fout)
+
+        for idioma in IDIOMAS:
+            print(f"""
+          <li class="mt-3">
+            <div class="flex w-auto">
+              <div class="w-40">{idioma[0]}</div>
+              <div class="w-40 italic">{idioma[1]}</div>
+            </div>
+          </li>
+            """, file=fout)
+            
+        print("""
+        </ul>
+        """, file=fout)
+
+        # Programacao
+        LINGUAGENS = (('Python 3', 'Avançado'),
+                      ('HTML5', 'Avançado'),
+                      ('JavaScript (ES6)', 'Intermediário'),
+                      ('CSS3', 'Intermediário'),
+                      ('PHP 7', 'Intermediário'),
+                      ('Emacs Lisp', 'Básico'),
+                      ('MySQL', 'Básico'))
+                      
+        print("""        <h2 class="text-xl text-teal-800 mt-8 uppercase">Linguagens de Programação</h2>""", file=fout)
+
+        print("""
+
+        <ul class="list-disc ml-8">
+        """, file=fout)
+
+        for ling in LINGUAGENS:
+            print(f"""
+          <li class="mt-3">
+            <div class="flex w-auto">
+              <div class="w-40">{ling[0]}</div>
+              <div class="w-40 italic">{ling[1]}</div>
+            </div>
+          </li>
+            """, file=fout)
+            
+        print("""
+        </ul>
+        """, file=fout)
+
+
+        print("""    </div> <!-- CV gent font -->""", file=fout)
+
+        print("""</div> <!-- content -->""", file=fout)
         print(open(FOOTER, encoding="utf-8").read(), file=fout)
             

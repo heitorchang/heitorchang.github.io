@@ -95,8 +95,34 @@ carnegie = Company("Carnegie Institution for Science, Stanford, CA",
 ACADEMICA = [materiais, carnegie]
 
 
-# VOLUNTARIO = [criar, oca]
-                 
+criar = Company("Criar &amp; Criar Art Design, São Paulo, SP",
+                [Job("Web Designer",
+                     "Out. 2017 &mdash; Dez. 2017",
+                     ["Atualizar e manter o catálogo de produtos decorativos e sustentáveis no Blogspot."])])
+
+oca = Company("OCA Escola Cultural, Carapicuíba, SP",
+              [Job("Manutenção de Sistema, Ubuntu Linux",
+                   "Set. 2017",
+                   ["Configurar e instalar o gerenciador de bibliotecas Biblivre 5 dentro de um ambiente em nuvem."])])
+
+VOLUNTARIO = [criar, oca]
+
+
+polylexis = Company("Polylexis.com",
+                    [Job("Desenvolvedor Full-Stack",
+                         "Ago. 2019 &mdash; atual",
+                         ["Desenvolver e manter o site Django com vocabulário, testes e um mini-dicionário do grego moderno."])])
+
+
+hellokey = Company("Hello Key English",
+                   [Job("Designer e Desenvolvedor Full-Stack",
+                        "Out. 2019 &mdash; Nov. 2019",
+                        ["Gerenciar uma lista de alunos e um calendário de aulas particulares de inglês com o site Django.",
+                        "Desenhar uma interface otimizada para celular com o framework Bootstrap 4."])])
+
+
+PESSOAIS = [polylexis, hellokey]
+
 # Sections
 
 experiencia_profissional = ResumeSection("Experiência Profissional",
@@ -107,9 +133,9 @@ formacao_academica = ResumeSection("Formação Acadêmica",
 
 experiencia_academica = ResumeSection("Experiência Acadêmica", ACADEMICA)
 
-trabalho_voluntario = ResumeSection("Trabalho Voluntário", [])
+trabalho_voluntario = ResumeSection("Trabalho Voluntário", VOLUNTARIO)
 
-projetos_pessoais = ResumeSection("Projetos Pessoais", [])
+projetos_pessoais = ResumeSection("Projetos Pessoais", PESSOAIS)
 
 
 SECTIONS = [experiencia_profissional, formacao_academica, experiencia_academica, trabalho_voluntario, projetos_pessoais]
