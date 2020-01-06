@@ -153,7 +153,7 @@ def print_cv(fout, print_pdf=True):
             print("""
         <!-- PDF icon -->
         <div class="flex bg-white p-2 mx-auto">
-        <a href="resume/HeitorChang_pt_2019_11_14.pdf">
+        <a href="resume/HeitorChang_pt_2019_11_25.pdf">
         <img src="img/pdficon.png" alt="PDF">
         </a>
         </div>
