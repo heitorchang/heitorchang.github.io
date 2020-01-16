@@ -32,4 +32,10 @@ PROJECTS = [Project('PTL.png',
                     'Quiz de vocabulário grego e mandarim',
                     "https://www.polylexis.com/",
                     "https://github.com/heitorchang/polylexis"),
+
+            Project('MandarinPhrasebooks.png',
+                    'Mandarin Phrasebooks',
+                    'Coleção de frases em mandarim',
+                    "https://mandarinphrasebooks.surge.sh/",
+                    "https://github.com/heitorchang/mandarin-phrasebooks"),
 ]            
