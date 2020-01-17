@@ -36,6 +36,6 @@ PROJECTS = [Project('PTL.png',
             Project('MandarinPhrasebooks.png',
                     'Mandarin Phrasebooks',
                     'Coleção de frases em mandarim',
-                    "https://mandarinphrasebooks.surge.sh/",
+                    "https://mandarinphrasebooks.netlify.com/",
                     "https://github.com/heitorchang/mandarin-phrasebooks"),
 ]            
