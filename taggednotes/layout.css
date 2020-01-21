@@ -77,6 +77,10 @@ p {
     position: fixed;
 }
 
+.sidebar span {
+    cursor: pointer;
+}
+
 .notes {
     width: 81%;
     height: 100%;
@@ -95,6 +99,7 @@ p {
              rgba(0,0,0,0.15);
     background-color: #ff2;
     color: #129;
+    cursor: pointer;
 }
 
 .tags {
@@ -106,6 +111,7 @@ p {
 .noteTitle {
     color: #36C;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .alert {
@@ -143,4 +149,5 @@ code {
     margin-left: 6px;
     background-color: #34C;
     color: #FFC;
+    cursor: pointer;
 }
