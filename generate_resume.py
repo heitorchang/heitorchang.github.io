@@ -24,10 +24,10 @@ class ResumeSection:
 pontual = Company("Pontual Exportação e Importação Ltda., São Paulo, SP",
                   [Job("Desenvolvedor Full-Stack",
                        "Jan. 2014 &mdash; atual",                       
-                       ["Criar uma API REST com o framework Slim (em PHP) para ser consumida por clientes que desejam obter as características e estoque de mais de 600 produtos.",
+                       ["Criar uma API REST dos produtos com o framework Slim (em PHP) para ser consumida por um cliente React que gera o site público da empresa.",
                         "Usar indicadores MA (Moving Average) em um projeto Django e Python para prever a demanda de produtos e calcular a quantidade adequada para reposições.",
                         "Visualizar históricos de vendas com NumPy e Pandas, obtendo médias e valores extremos para cada produto.",
-                        "Desenvolver com PHP puro e MySQL o lado público e painel de administração do site, <a href=\"http://pontualimportbrindes.com.br/\" target=\"_blank\">http://pontualimportbrindes.com.br/</a>",
+                        "Desenvolver com PHP puro e MySQL o painel de administração do site, <a href=\"http://pontualimportbrindes.com.br/\" target=\"_blank\">http://pontualimportbrindes.com.br/</a>",
                         "Automatizar a coleta de dados do estoque atual com um robô escrito em Python, reformatando-os em uma página HTML para o uso de clientes.",
                         "Criar um SPA (aplicativo de página única) com AngularJS e Firebase para organizar listas de pedidos e reservas em tempo real."]),
 
