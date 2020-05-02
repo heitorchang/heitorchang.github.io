@@ -1,3 +1,4 @@
+import sys
 from collections import namedtuple
 from generate_projects import PROJECTS
 from generate_resume import print_cv
@@ -83,7 +84,16 @@ if __name__ == "__main__":
 
     # Resume printable
 
-    print_resume = False
+    try:
+        print_resume = len(sys.argv[1]) > 0
+    except IndexError:
+        print_resume = False    
+
+    print()
+    if print_resume:
+        print("Generating printable resume")
+    else:
+        print("Skipping generation of printable resume")
     
     if print_resume:
         with open("cv_print.html", 'w', encoding='utf-8') as fout:
@@ -111,8 +121,12 @@ if __name__ == "__main__":
             </div></body></html> <!-- content -->""", file=fout)
 
 
-    print("Manually add page break in cv_print.html with")
-    print("""
+    if print_resume:
+        print("Manually add page break in cv_print.html with")
+        print("""
     <p style="page-break-after: always;">&nbsp;</p>
     <p style="page-break-before: always;">&nbsp;</p>
-    """)
+        """)
+
+    print()
+    print("Edit the PDF link in cv.html")
