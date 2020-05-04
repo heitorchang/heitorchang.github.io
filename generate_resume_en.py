@@ -30,16 +30,16 @@ class ResumeSection:
         self.companies = companies
         
         
-pontual = Company("Pontual Import Brindes, São Paulo, SP",
+pontual = Company("Pontual Export &amp; Import Ltd., São Paulo, SP",
                   [Job("Full-Stack Developer",
                        "Jan. 2014 &mdash; now",                       
-                       ["Create a REST API with the PHP Slim micro framework to be consumed by a React app that renders the company website, <a href=\"http://pontualimportbrindes.com.br/\" target=\"_blank\">http://pontualimportbrindes.com.br/</a>",
-                        "Use MA (Moving Average) indicators in a Django and Python project to predict the demand of 600 products and calculate an adequate amount for restocking.",
-                        "Visualize historical sales with NumPy and Pandas, computing averages and outliers for each product.",
-                        "Create a Single-Page App with AngularJS and Firebase to organize the reservations corresponding to five salespeople in real time."]),
+                       ["Use MA (Moving Average) indicators in a Django and Python project to predict the demand of 600 products and calculate an adequate amount for restocking.",
+                        "Create a REST API with the Slim micro framework (PHP) to be consumed by a React app that renders the company's website, <a href=\"http://pontualimportbrindes.com.br/\" target=\"_blank\">http://pontualimportbrindes.com.br/</a>",
+                        "Visualize historical sales with NumPy and Pandas, reporting averages and outliers for each product.",
+                        "Create a Single-Page App with AngularJS and Firebase to organize the reservations by client and salesperson in real time."]),
 
                    Job("Administrative Assistant",
-                       "Nov. 2011 &mdash; Dez. 2013",
+                       "Nov. 2011 &mdash; Dec. 2013",
                        ["Fulfill client orders and reservations and formalize them upon delivery.",
                         "Prepare sales forecasts in Excel for the bestselling products and summarize important statistics."])])
 
@@ -224,9 +224,9 @@ def print_cv(fout, print_pdf=True):
 
 
         # Idiomas
-        IDIOMAS = (('Fluent in <b>English</b> and <b>Portuguese</b>. Intermediate knowledge of <b>Mandarin</b>, <b>Spanish</b> and <b>French</b>', ''),
-                   ('Advanced knowledge of <b>Python 3</b> and <b>JavaScript (ES6)</b>', ''),
-                   ('Intermediate knowledge of <b>PHP 7</b> and <b>Java 8</b>', ''))
+        IDIOMAS = (('Fluent in <b>English</b> and <b>Portuguese</b>. Intermediate knowledge of <b>Mandarin</b>, <b>Spanish</b> and <b>French</b>.', ''),
+                   ('Advanced knowledge of <b>Python 3</b> and <b>JavaScript (ES6)</b>.', ''),
+                   ('Intermediate knowledge of <b>PHP 7</b> and <b>Java 8</b>.', ''))
         
         
         
