@@ -9,6 +9,14 @@ class Job:
         self.dates = dates
         self.items = items
 
+
+class Stanford:
+    def __init__(self, title, dates, title2, dates2):
+        self.title = title
+        self.dates = dates
+        self.title2 = title2
+        self.dates2 = dates2
+    
         
 class Company:
     def __init__(self, name, jobs):
@@ -23,27 +31,25 @@ class ResumeSection:
         
         
 pontual = Company("Pontual Import Brindes, São Paulo, SP",
-                  [Job("Desenvolvedor Full-Stack",
-                       "Jan. 2014 &mdash; atual",                       
-                       ["Criar uma API REST com o framework Slim (em PHP) para ser consumida por um app React que gera o site público da empresa, <a href=\"http://pontualimportbrindes.com.br/\" target=\"_blank\">http://pontualimportbrindes.com.br/</a>",
-                        "Usar indicadores MA (Moving Average) em um projeto Django e Python para prever a demanda de produtos e calcular a quantidade adequada para reposições.",
-                        "Visualizar históricos de vendas com NumPy e Pandas, obtendo médias e valores extremos para cada produto.",
-                        "Desenvolver com PHP puro e MySQL o painel de administração do site.",
-                        "Automatizar a coleta de dados do estoque atual com um robô escrito em Python, reformatando-os em uma página HTML para o uso de clientes.",
-                        "Criar um SPA (aplicativo de página única) com AngularJS e Firebase para organizar listas de pedidos e reservas em tempo real."]),
+                  [Job("Full-Stack Developer",
+                       "Jan. 2014 &mdash; now",                       
+                       ["Create a REST API with the PHP Slim micro framework to be consumed by a React app that renders the company website, <a href=\"http://pontualimportbrindes.com.br/\" target=\"_blank\">http://pontualimportbrindes.com.br/</a>",
+                        "Use MA (Moving Average) indicators in a Django and Python project to predict the demand of 600 products and calculate an adequate amount for restocking.",
+                        "Visualize historical sales with NumPy and Pandas, computing averages and outliers for each product.",
+                        "Create a Single-Page App with AngularJS and Firebase to organize the reservations corresponding to five salespeople in real time."]),
 
-                   Job("Auxiliar Administrativo",
+                   Job("Administrative Assistant",
                        "Nov. 2011 &mdash; Dez. 2013",
-                       ["Receber pedidos e reservas de clientes, formalizando-os na hora de retirada ou despacho.",
-                        "Fazer previsões de demanda com Excel para cada produto, determinando a quantidade e frequência de reposição.",
-                        "Manter a ordem de listas de pré-pedidos e reservas para clientes de cinco vendedoras."])])
+                       ["Fulfill client orders and reservations and formalize them upon delivery.",
+                        "Prepare sales forecasts in Excel for the bestselling products and summarize important statistics."])])
+
 
 merrill = Company("Merrill Lynch &amp; Co., Inc., New York, NY",
-                  [Job("Associado de Verão, Pesquisas Globais",
-                       "Jun. 2008 &mdash; Ago. 2008",
-                       ["Modelar a frequência de pagamentos de títulos públicos hipotecários e calcular seus valores e perfis de risco.",
-                        "Testar a performance de um portfólio de futuros como um produto novo para substituir um portfólio tradicional de ações.",
-                        "Comparar o valor e volatilidade de futuros de petróleo relativo a ações de refinarias de grande porte."])])
+                  [Job("Summer Associate, Global Research",
+                       "June 2008 &mdash; Aug. 2008",
+                       ["Modeled the prepayment speeds of mortgage revenue bonds and calculated their prices and risk profiles.",
+                        "Backtested the performance of a cash-collaterized portfolio of futures as a potential new product.",
+                        "Compared the returns and volatility of crude oil futures relative to large-cap refinery equities."])])
 
 
 stux = Company("Stux Capital Management, LLC, New York, NY",
@@ -60,25 +66,26 @@ adair = Company("Adair Capital, LLC, New York, NY",
                  "Desenvolver um GUI no Matlab que implementa um processo Brownian Bridge para medir a exposição de fundos de cobertura a índices de referência e detectar possíveis mudanças nas suas estratégias de investimento."])])
 
                  
-COMPANIES = [pontual, merrill, stux, adair]
+COMPANIES = [pontual, merrill] # , stux, adair]
 
 
-stan_ug = Company("Graduação: Stanford University, Stanford, CA",
-                  [Job("Ciências Matemáticas e Computacionais",
-                       "Set. 2001 &mdash; Jun. 2005",
-                       ["Bachelor of Science, GPA 3.7/4.0"])])
+stan_ug = Company("Stanford University, Stanford, CA",
+                  [Stanford("M.S. in Materials Science and Engineering, GPA 3.6/4.0",
+                            "Sept. 2005 &mdash; June 2007",
+                            "B.S. in Mathematical and Computational Sciences, GPA 3.7/4.0",
+                            "Sept. 2001 &mdash; June 2005")])
+
 
 grad_school = Company("Pós-graduação: Stanford University, Stanford, CA",
                       [Job("Ciência e Engenharia de Materiais",
                            "Set. 2005 &mdash; Jun. 2007",
                            ["Master of Science, GPA 3.6/4.0"])])
 
-nyu = Company("Pós-graduação: New York University, New York, NY",
-              [Job("Matemática Financeira",
-                   "Set. 2007 &mdash; Jan. 2009",
-                   ["Master of Science, GPA 3.4/4.0"])])
+nyu = Company("New York University, New York, NY",
+              [Job("M.S. in Mathematics in Finance, GPA 3.4/4.0",
+                   "Sept. 2007 &mdash; Jan. 2009", [])])
 
-SCHOOLS = [nyu, grad_school, stan_ug]
+SCHOOLS = [nyu, stan_ug]
 
 
 materiais = Company("Departamento de Ciência e Engenharia de Materiais, Stanford University, Stanford, CA",
@@ -127,10 +134,10 @@ PESSOAIS = [polylexis, hellokey]
 
 # Sections
 
-experiencia_profissional = ResumeSection("Experiência Profissional",
+experiencia_profissional = ResumeSection("Professional Experience",
                                          COMPANIES)
 
-formacao_academica = ResumeSection("Formação Acadêmica",
+formacao_academica = ResumeSection("Education",
                                    SCHOOLS)
 
 experiencia_academica = ResumeSection("Experiência Acadêmica", ACADEMICA)
@@ -140,14 +147,14 @@ trabalho_voluntario = ResumeSection("Trabalho Voluntário", VOLUNTARIO)
 projetos_pessoais = ResumeSection("Projetos Pessoais", PESSOAIS)
 
 
-SECTIONS = [experiencia_profissional, formacao_academica, experiencia_academica, trabalho_voluntario, projetos_pessoais]
+SECTIONS = [experiencia_profissional, formacao_academica] # , experiencia_academica, trabalho_voluntario, projetos_pessoais]
 
 
 def print_cv(fout, print_pdf=True):
 
     try:
         print("""
-    <div class="gent max-w-3xl mx-auto mt-8 text-gray-800 px-8">
+    <div class="gent max-w-3xl mx-auto mt-2 text-gray-800 px-8">
 """, file=fout)
 
         if print_pdf:
@@ -163,11 +170,11 @@ def print_cv(fout, print_pdf=True):
 
         for section in SECTIONS:
             if not print_pdf:
-                section_mt = "mt-6"
+                section_mt = "mt-4"
                 company_mt = "mt-3"
                 li_mt = "mt-1"
             else:
-                section_mt = "mt-10"
+                section_mt = "mt-4"
                 company_mt = "mt-6"
                 li_mt = "mt-3"
                 
@@ -182,34 +189,48 @@ def print_cv(fout, print_pdf=True):
                 """, file=fout)
 
                 for job in company.jobs:
-                    print(f"""
-        <div class="flex items-stretch mt-2">
-            <div class="w-2/3 text-left italic">{job.title}</div>
-            <div class="w-1/3 text-right italic">{job.dates}</div>
-        </div>
-                    
-        <ul class="list-disc ml-8">
-        """, file=fout)
 
-                    for item in job.items:
+                    if isinstance(job, Job):
                         print(f"""
-            <li class="{li_mt}">{item}</li>
+                        <div class="flex items-stretch mt-2">
+                        <div class="w-2/3 text-left italic">{job.title}</div>
+                        <div class="w-1/3 text-right italic">{job.dates}</div>
+                        </div>
+                        
+                        <ul class="list-disc ml-8">
+                        """, file=fout)
+                        for item in job.items:
+                            print(f"""
+                            <li class="{li_mt}">{item}</li>
+                            """, file=fout)
+                            
+                        print("""
+                        </ul>
+                        """, file=fout)
+                    else:
+                        print(f"""
+                        <div class="flex items-stretch mt-2">
+                        <div class="w-2/3 text-left italic">{job.title}</div>
+                        <div class="w-1/3 text-right italic">{job.dates}</div>
+                        </div>
+
+                        <div class="flex items-stretch mt-2">
+                        <div class="w-2/3 text-left italic">{job.title2}</div>
+                        <div class="w-1/3 text-right italic">{job.dates2}</div>
+                        </div>
+
                         """, file=fout)
 
-                    print("""
-        </ul>
-                    """, file=fout)
 
 
         # Idiomas
-        IDIOMAS = (('Inglês', 'Fluente'),
-                   ('Mandarim', 'Intermediário'),
-                   ('Italiano', 'Intermediário'),
-                   ('Francês', 'Básico'),
-                   ('Espanhol', 'Básico'),
-                   ('Grego moderno', 'Básico'))
+        IDIOMAS = (('Fluent in <b>English</b> and <b>Portuguese</b>. Intermediate knowledge of <b>Mandarin</b>, <b>Spanish</b> and <b>French</b>', ''),
+                   ('Advanced knowledge of <b>Python 3</b> and <b>JavaScript (ES6)</b>', ''),
+                   ('Intermediate knowledge of <b>PHP 7</b> and <b>Java 8</b>', ''))
         
-        print("""        <h2 class="text-xl text-teal-800 mt-8 uppercase">Idiomas</h2>""", file=fout)
+        
+        
+        print("""        <h2 class="text-xl text-teal-800 mt-4 uppercase">Languages</h2>""", file=fout)
 
         print("""
 
@@ -220,38 +241,7 @@ def print_cv(fout, print_pdf=True):
             print(f"""
           <li class="mt-1">
             <div class="flex w-auto">
-              <div class="w-40">{idioma[0]}</div>
-              <div class="w-40 italic">{idioma[1]}</div>
-            </div>
-          </li>
-            """, file=fout)
-            
-        print("""
-        </ul>
-        """, file=fout)
-
-        # Programacao
-        LINGUAGENS = (('Python 3', 'Avançado'),
-                      ('HTML5', 'Avançado'),
-                      ('JavaScript (ES6)', 'Intermediário'),
-                      ('CSS3', 'Intermediário'),
-                      ('PHP 7', 'Intermediário'),
-                      ('Emacs Lisp', 'Básico'),
-                      ('MySQL', 'Básico'))
-                      
-        print("""        <h2 class="text-xl text-teal-800 mt-8 uppercase">Linguagens de Programação</h2>""", file=fout)
-
-        print("""
-
-        <ul class="list-disc ml-8">
-        """, file=fout)
-
-        for ling in LINGUAGENS:
-            print(f"""
-          <li class="mt-1">
-            <div class="flex w-auto">
-              <div class="w-40">{ling[0]}</div>
-              <div class="w-40 italic">{ling[1]}</div>
+              <div class="w-full">{idioma[0]}</div>
             </div>
           </li>
             """, file=fout)
@@ -280,7 +270,7 @@ if __name__ == "__main__":
     <div class="gent max-w-3xl mx-auto mt-2 text-gray-900 text-center px-8">
 
         <div class="w-auto border-solid border-b border-gray-500 pb-2">
-        heitorpontual@gmail.com &nbsp;&diams;&nbsp; (11) 3312-8845 &nbsp;&diams;&nbsp; (11) 99907-4867 &nbsp;&diams;&nbsp; https://heitorchang.github.io/
+        heitorpontual@gmail.com &nbsp;&diams;&nbsp; (11) 99907-4867 &nbsp;&diams;&nbsp; https://heitorchang.github.io/
         </div>
     </div>
 
@@ -289,7 +279,6 @@ if __name__ == "__main__":
         print_cv(fout, False)
 
         print("""
-        <div class="mb-8">&nbsp;</div>
         </div></body></html> <!-- content -->""", file=fout)
 
         print("Manually add page break in cv_print.html with")
