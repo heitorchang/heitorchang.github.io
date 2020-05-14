@@ -108,7 +108,7 @@ if __name__ == "__main__":
         <div class="gent max-w-3xl mx-auto mt-2 text-gray-900 text-center px-8">
 
             <div class="w-auto border-solid border-b border-gray-500 pb-2">
-            heitorpontual@gmail.com &nbsp;&diams;&nbsp; (11) 3312-8845 &nbsp;&diams;&nbsp; (11) 99907-4867 &nbsp;&diams;&nbsp; https://heitorchang.github.io/
+            heitorpontual@gmail.com &nbsp;&diams;&nbsp; (11) 99907-4867 &nbsp;&diams;&nbsp; https://heitorchang.github.io/
             </div>
         </div>
 
