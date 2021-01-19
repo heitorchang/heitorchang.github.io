@@ -217,6 +217,9 @@ function normalize(s) {
 
 function normalizeKey(s) {
   s = s.trim().toLowerCase();
+  if (s == "") {
+    return "0";
+  }
   s = s.replace(/[^a-z0-9 ]/g, "");
   return s;
 }
