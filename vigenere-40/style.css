@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'SourceCodePro';
+    src: url('SourceCodePro-Regular.ttf') format('truetype');
+    font-style: normal;
+}
+
+textarea {
+    font-family: 'SourceCodePro';
+    font-size: 1.1em;
+    padding: 0.3em;
+}
+
+input {
+    font-family: 'SourceCodePro';
+    font-size: 1.1em;
+    padding: 0.3em;
+}
+
+#calculations {
+    width: 100%;
+}
+
+#calculations table {
+    float: left;
+    margin-top: 22px;
+    margin-right: 10px;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+#calculations table tr td {
+    padding: 0 8px;
+    text-align: right;
+}
+
+#calculations table tr td.char {
+    padding: 0 8px;
+    text-align: center;
+}
+
+#about {
+    display: block;
+    clear: both;
+}
+
+.input-row {    
+    display: flex;
+    align-items: center;
+}
+
+.input-box {
+    margin: 5px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;    
+}
+
+#plaintext {
+    background-color: #ffc;
+}
+
+#ciphertext {
+    background-color: #cfd;
+}

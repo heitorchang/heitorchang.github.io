@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Vigenère-40 Cipher</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    
+    <body>
+        <h3>Vigenère-40</h1>
+        
+        <span class="red">
+            IMPORTANT: Use in a trusted computer, without keyloggers.<br>
+            RECOMMENDED: Add random characters at the beginning of plaintext to prevent repeating initial ciphertext with similar inputs.</span>
+        
+        <br><br>
+
+        <strong>Valid characters: </strong>a-z, 0-9, (space), (comma), (period), (question mark)
+        <br><br>
+
+        <strong>Key</strong> (only a-z, 0-9, and space): <input id="key" size="40" autofocus>
+        <br><br>
+
+        <div class="input-row">
+            <div class="input-box">
+                Plaintext<br>
+                <textarea id="plaintext" rows="10" cols="25"></textarea>
+                <br>
+                &nbsp;
+            </div>
+            
+            <div class="input-box">
+                <button id="encryptBtn">Encrypt &gt;</button>
+                <br><br><br>
+                <button id="decryptBtn">&lt; Decrypt</button>
+            </div>
+            
+            <div class="input-box">
+                Ciphertext<br>
+                <textarea id="ciphertext" rows="10" cols="25"></textarea>
+                <br>
+                <button id="copyResult">Copy</button>
+            </div>
+        </div>
+        <button id="clearInputs">Clear all</button>
+        <br><br>
+        Messages
+        <br>
+        <textarea id="messages" rows="3" cols="60"></textarea>
+        
+        <div id="calculations">
+        </div>
+
+        <div id="about">
+            <pre>
+
+How to encrypt and decrypt
+
+Plaintext (P)
+Key (K)
+Ciphertext (C)
+
+The formula for individual characters is:
+
+Encrypt: P + K = C
+Decrypt: C - K = P
+
+First, assign a number to each of the 26 letters of the alphabet.
+Typically, we see A = 1, B = 2, C = 3, and all the way to Z = 26.
+
+Also, the following characters are included for convenience:
+27 = (space)
+28 = , (comma)
+29 = . (period)
+30 = ?
+
+31 = 1
+32 = 2
+...
+39 = 9
+40 = 0
+
+So, when adding A + A, it means 1 + 1 = 2 (B). With the traditional
+table, the calculation result, 1 + 1 = 2, would have to be subtracted
+by 1 to give the expected result of A (1).
+
+Subtract/add 40 so that the result falls in the range of 1-40.
+The encrypted alphabet wraps around both ways.
+
+The ciphertext is grouped into chunks of four characters and surrounded
+by pound signs to reduce the possibility of errors when copying the
+result by hand.
+            </pre>
+        </div>
+        <script src="app.js"></script>           
+    </body> 
+</html>
