@@ -61,15 +61,18 @@ Plaintext (P)
 Key (K)
 Ciphertext (C)
 
-The formula for individual characters is:
+The formula for individual characters:
 
 Encrypt: P + K = C
 Decrypt: C - K = P
 
-First, assign a number to each of the 26 letters of the alphabet.
-Typically, we see A = 1, B = 2, C = 3, and all the way to Z = 26.
+First, assign a number to each of the
+26 letters of the alphabet.
+Typically, we see A = 1, B = 2, C = 3,
+ and all the way to Z = 26.
 
-Also, the following characters are included for convenience:
+Also, the following characters are
+included for convenience:
 27 = (space)
 28 = , (comma)
 29 = . (period)
@@ -81,15 +84,22 @@ Also, the following characters are included for convenience:
 39 = 9
 40 = 0
 
-So, when adding A + A, it means 1 + 1 = 2 (B). With the traditional
-table, the calculation result, 1 + 1 = 2, would have to be subtracted
-by 1 to give the expected result of A (1).
+So, when adding A + A, it means
+1 + 1 = 2 (B). With the traditional
+table, the calculation result,
+1 + 1 = 2, would have to be subtracted
+by 1 to give the expected result
+of A (1).
 
-Subtract/add 40 so that the result falls in the range of 1-40.
-The encrypted alphabet wraps around both ways.
+Subtract/add 40 so that the result
+falls in the range of 1-40.
+The encrypted alphabet wraps around
+both ways.
 
-The ciphertext is grouped into chunks of four characters and surrounded
-by pound signs to reduce the possibility of errors when copying the
+The ciphertext is grouped into chunks
+of four characters and surrounded
+by pound signs to reduce the
+possibility of errors when copying the
 result by hand.
             </pre>
         </div>
