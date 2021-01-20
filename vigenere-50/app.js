@@ -2,7 +2,7 @@
 
 const version = "0.1 (2021 jan 19)";
 
-const charlist = "abcdefghijklmnopqrstuvwxyz_,.:?!-@#$%&/'1234567890";
+const charlist = "abcdefghijklmnopqrstuvwxyz_,.?!@#$%/&:-'1234567890";
 let errors = "";
 
 // Collect letters of string s into groups of n characters

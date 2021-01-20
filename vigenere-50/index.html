@@ -8,49 +8,47 @@
     </head>
     
     <body>
-        <h3>Vigenère-50</h1>
-        
-        <span class="red">
+        <h3>Vigenère-50</h1>            
             IMPORTANT: Use in a trusted computer, without keyloggers<br>
-            RECOMMENDED: Add random characters at the beginning of plaintext (prevents repeating ciphertext with similar inputs)</span>
-        
-        <br><br>
-
-        <strong>Valid characters: </strong>
-        <pre>abcdefghijklmnopqrstuvwxyz_,.:?!-@#$%&/'1234567890</pre>
-
-        <strong>Key</strong> (a-z, 0-9, spaces): <input id="key" size="22" spellcheck="false" autofocus tabindex="1">
-        <br><br>
-
-        <div class="input-row">
-            <div class="input-box">
-                Plaintext<br>
-                <textarea id="plaintext" rows="8" cols="18" spellcheck="false" tabindex="2"></textarea>
-                <br>
-                &nbsp;
-            </div>
+            RECOMMENDED: Add random characters at the beginning of plaintext (prevents repeating ciphertext with similar inputs)
             
-            <div class="input-box">
-                <button id="encryptBtn" tabindex="2">encrypt &gt;</button>
-                <br><br><br>
-                <button id="decryptBtn" tabindex="4">decrypt &lt;</button>
-            </div>
-            
-            <div class="input-box">
-                Ciphertext<br>
-                <textarea id="ciphertext" rows="8" cols="18" spellcheck="false" tabindex="3"></textarea>
-                <br>
-                <button id="copyResult" tabindex="4">Copy</button>
-            </div>
-        </div>
-        <button id="clearInputs" tabindex="5">Clear all</button>
-        <br><br>
-        Messages
-        <br>
-        <textarea id="messages" rows="3" cols="50" tabindex="6"></textarea>
+            <br><br>
 
-        <div id="about">
-            <pre>How to encrypt and decrypt
+            <strong>Valid characters: </strong>
+            <pre>abcdefghijklmnopqrstuvwxyz_,.?!@#$%/&:-'1234567890</pre>
+
+            <strong>Key</strong> (a-z, 0-9, spaces): <input id="key" size="22" spellcheck="false" autofocus tabindex="1">
+            <br><br>
+
+            <div class="input-row">
+                <div class="input-box">
+                    Plaintext<br>
+                    <textarea id="plaintext" rows="8" cols="18" spellcheck="false" tabindex="2"></textarea>
+                    <br>
+                    &nbsp;
+                </div>
+                
+                <div class="input-box">
+                    <button id="encryptBtn" tabindex="2">encrypt &gt;</button>
+                    <br><br><br>
+                    <button id="decryptBtn" tabindex="4">decrypt &lt;</button>
+                </div>
+                
+                <div class="input-box">
+                    Ciphertext<br>
+                    <textarea id="ciphertext" rows="8" cols="18" spellcheck="false" tabindex="3"></textarea>
+                    <br>
+                    <button id="copyResult" tabindex="4">Copy</button>
+                </div>
+            </div>
+            <button id="clearInputs" tabindex="5">Clear all</button>
+            <br><br>
+            Messages
+            <br>
+            <textarea id="messages" rows="3" cols="50" tabindex="6"></textarea>
+
+            <div id="about">
+                <pre>How to encrypt and decrypt
 
 Plaintext (P)
 Key (K)
@@ -60,8 +58,8 @@ The formula for individual characters:
 
 Encrypt: P + K = C
 Decrypt: C - K = P
-            </pre>
-        </div>
-        <script src="app.js"></script>           
+                </pre>
+            </div>
+            <script src="app.js"></script>           
     </body> 
 </html>
