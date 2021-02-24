@@ -4,3 +4,4 @@ Programador Full-Stack Python
 
 Me formei em matemática aplicada na Stanford University e fiz mestrado em matemática financeira na New York University. Resolvo problemas de maneira multidisciplinar, e aprendo novas tecnologias rapidamente. Atualmente sou um desenvolvedor full-stack, principalmente usando PHP e Django para agilizar a análise de dados comerciais da minha empresa. Tenho interesse no setor comercial, organização e uniformização de dados para realçar pontos fortes que contribuam ao melhor funcionamento da empresa.
 
+Vue, Python, JS
