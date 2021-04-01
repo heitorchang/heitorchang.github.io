@@ -19,11 +19,17 @@ class ResumeSection:
     def __init__(self, name, companies):
         self.name = name
         self.companies = companies
-        
+
+
+tempook = Company("Tempo OK Tecnologia em Meteorologia Ltda., São Paulo, SP",
+                  [Job("Desenvolvedor Full-Stack",
+                       "Jun. 2020 &mdash; atual",
+                       ["Flask, Django, PostgreSQL, bash"]),
+                  ])
         
 pontual = Company("Pontual Exportação e Importação Ltda., São Paulo, SP",
                   [Job("Desenvolvedor Full-Stack",
-                       "Jan. 2014 &mdash; atual",                       
+                       "Jan. 2014 &mdash; Jun. 2020",                       
                        ["Criar uma API REST com o framework Slim (em PHP) para ser consumida por um app React que gera o site público da empresa, <a href=\"http://pontualimportbrindes.com.br/\" target=\"_blank\">http://pontualimportbrindes.com.br/</a>",
                         "Usar indicadores MA (Moving Average) em um projeto Django e Python para prever a demanda de produtos e calcular a quantidade adequada para reposições.",
                         "Visualizar históricos de vendas com NumPy e Pandas, obtendo médias e valores extremos para cada produto.",
@@ -59,7 +65,7 @@ adair = Company("Adair Capital, LLC, New York, NY",
                  "Desenvolver um GUI no Matlab que implementa um processo Brownian Bridge para medir a exposição de fundos de cobertura a índices de referência e detectar possíveis mudanças nas suas estratégias de investimento."])])
 
                  
-COMPANIES = [pontual, merrill, stux, adair]
+COMPANIES = [tempook, pontual, merrill, stux, adair]
 
 
 stan_ug = Company("Graduação: Stanford University, Stanford, CA",

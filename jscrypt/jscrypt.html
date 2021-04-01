@@ -390,7 +390,7 @@ if(document.getElementById("key").keytype[0].checked){var charA=("A")
 {k+=String.fromCharCode(charA+prng.nextInt(25));}}}else{var hexDigits="0123456789ABCDEF";
 for(i=0;i<64;i++){k+=hexDigits.charAt(prng.nextInt(15));}}
 document.getElementById("key").text.value=k;prng=null;}function Encrypt_text()
-{var v,i;var prefix="#####  Encrypted: decrypt with http://www.fourmilab.ch/javascrypt/\n",suffix="#####  End encrypted message\n";if(document.getElementById("key")
+{var v,i;var prefix="",suffix="";if(document.getElementById("key")
 .text.value.length==0){alert("Please specify a key with which to encrypt the message.");return;}if(document.getElementById("plain")
 .text.value.length==0){alert("No plain text to encrypt!  Please enter or paste plain text in the field above.");return;}document.getElementById("cipher")
 .text.value="";setKey();addEntropyTime();prng=new AESprng(keyFromEntropy());
