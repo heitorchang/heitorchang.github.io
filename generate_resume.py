@@ -24,7 +24,8 @@ class ResumeSection:
 tempook = Company("Tempo OK Tecnologia em Meteorologia Ltda., São Paulo, SP",
                   [Job("Desenvolvedor Full-Stack",
                        "Jun. 2020 &mdash; atual",
-                       ["Flask, Django, PostgreSQL, bash"]),
+                       ["Flask, Django, PostgreSQL, Bash",
+                        "Criar 4 produtos: Geração hídrica, Geração eólica, Mapa de usinas e Gerenciador de arquivos"]),
                   ])
         
 pontual = Company("Pontual Exportação e Importação Ltda., São Paulo, SP",
