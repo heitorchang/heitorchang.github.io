@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Gwoyeu Romatzyh Input</title>
+        <style>
+         textarea {
+             font-size: 1.2em;
+         }
+
+         #completions {
+             font-size: 2.2em;
+         }
+        </style>
+    </head>
+    <body>
+        <!-- Enter Gwoyeu Romatzyh and choose a character. It is added at the end of the text (a limitation of the code).
+             <br> -->
+        <textarea id="main" rows="10" cols="80" autofocus></textarea>
+        <br>
+        <textarea id="completions" rows="3" cols="36" readonly></textarea>
+        <br>        
+        <input type="button" id="prevPage" value="Prev">
+        <input type="button" id="nextPage" value="Next">
+        <br>
+        <br>
+        <br>
+        Scratch:<br>
+        <textarea rows="4" cols="80"></textarea>
+        <script src="data.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
