@@ -21,11 +21,13 @@ class ResumeSection:
         self.companies = companies
 
 
+#TODO: replace criar with criei, etc.
+
 tempook = Company("Tempo OK Tecnologia em Meteorologia Ltda., São Paulo, SP",
                   [Job("Desenvolvedor Full-Stack",
                        "Jun. 2020 &mdash; atual",
-                       ["Flask, Django, PostgreSQL, Bash",
-                        "Criar 4 produtos: Geração hídrica, Geração eólica, Mapa de usinas e Gerenciador de arquivos"]),
+                       ["Flask, Django, PostgreSQL, Bash, Google Cloud Platform",
+                        "Criei back-end e API em PostgreSQL, front-end de geração de energia, mapa de estacoes da INMET e usinas, e gerenciador de arquivos"]),
                   ])
         
 pontual = Company("Pontual Exportação e Importação Ltda., São Paulo, SP",

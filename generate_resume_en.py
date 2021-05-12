@@ -28,7 +28,9 @@ class ResumeSection:
     def __init__(self, name, companies):
         self.name = name
         self.companies = companies
-        
+
+
+# tempook: see generate_resume.py
         
 pontual = Company("Pontual Export &amp; Import Ltd., São Paulo, SP",
                   [Job("Full-Stack Developer",
