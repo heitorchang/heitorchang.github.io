@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <title>Arabic with Emacs input method</title>
+        <style>
+         body {
+             font-size: 20px;
+         }
+         
+         .key {
+             display: inline-block;
+             margin: 4px;
+             border: 3px outset #ccc;
+             border-radius: 8px;
+             width: 2em;
+             padding: 6px;
+         }
+
+         .spacer {
+             display: inline-block;
+             width: 1em;
+         }
+
+         .r {
+             font-size: 80%;
+         }
+
+         .a {
+             width: 100%;
+             text-align: center;
+         }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div class="key"><div class="r">`</div><div class="a">ذ</div></div>
+        </div>
+        <div>
+            <div class="spacer">&nbsp;</div>
+            <div class="key"><div class="r">Q</div><div class="a">ض</div></div>
+            <div class="key"><div class="r">W</div><div class="a">ص</div></div>
+            <div class="key"><div class="r">E</div><div class="a">ث</div></div>
+            <div class="key"><div class="r">R</div><div class="a">ق</div></div>
+            <div class="key"><div class="r">T</div><div class="a">ف</div></div>
+            <div class="key"><div class="r">Y</div><div class="a">غ</div></div>
+            <div class="key"><div class="r">U</div><div class="a">ع</div></div>
+            <div class="key"><div class="r">I</div><div class="a">ه</div></div>
+            <div class="key"><div class="r">O</div><div class="a">خ</div></div>
+            <div class="key"><div class="r">P</div><div class="a">ح</div></div>
+            <div class="key"><div class="r">[</div><div class="a">ج</div></div>
+            <div class="key"><div class="r">]</div><div class="a">د</div></div>
+        </div>
+        
+        <div>
+            <div class="spacer">&nbsp;</div>
+            <div class="spacer">&nbsp;</div>
+            <div class="key"><div class="r">A</div><div class="a">ش</div></div>
+            <div class="key"><div class="r">S</div><div class="a">س</div></div>
+            <div class="key"><div class="r">D</div><div class="a">ي</div></div>
+            <div class="key"><div class="r">F</div><div class="a">ب</div></div>
+            <div class="key"><div class="r">G</div><div class="a">ل</div></div>
+            <div class="key"><div class="r">H</div><div class="a">ا</div></div>
+            <div class="key"><div class="r">J</div><div class="a">ت</div></div>
+            <div class="key"><div class="r">K</div><div class="a">ن</div></div>
+            <div class="key"><div class="r">L</div><div class="a">م</div></div>
+            <div class="key"><div class="r">:</div><div class="a">ك</div></div>
+            <div class="key"><div class="r">"</div><div class="a">ط</div></div>
+        </div>
+
+        <div>
+            <div class="spacer">&nbsp;</div>
+            <div class="spacer">&nbsp;</div>
+            <div class="spacer">&nbsp;</div>
+            <div class="spacer">&nbsp;</div>
+            <div class="key"><div class="r">Z</div><div class="a">ئ</div></div>
+            <div class="key"><div class="r">X</div><div class="a">ء</div></div>
+            <div class="key"><div class="r">C</div><div class="a">ؤ</div></div>
+            <div class="key"><div class="r">V</div><div class="a">ر</div></div>
+            <div class="key"><div class="r">B</div><div class="a">لا</div></div>
+            <div class="key"><div class="r">N</div><div class="a">ى</div></div>
+            <div class="key"><div class="r">M</div><div class="a">ة</div></div>
+            <div class="key"><div class="r">&lt;</div><div class="a">و</div></div>
+            <div class="key"><div class="r">&gt;</div><div class="a">ز</div></div>
+            <div class="key"><div class="r">?</div><div class="a">ظ</div></div>
+        </div>
+
+        <br>
+        <h3>Shift +</h3>
+        <div>
+            <div class="key"><div class="r">~</div><div class="a">ّ</div></div>
+        </div>
+        <div>
+            <div class="spacer">&nbsp;</div>
+            <div class="key"><div class="r">Q</div><div class="a">َ</div></div>
+            <div class="key"><div class="r">W</div><div class="a">ً</div></div>
+            <div class="key"><div class="r">E</div><div class="a">ُ</div></div>
+            <div class="key"><div class="r">R</div><div class="a">ٌ</div></div>
+            <div class="key"><div class="r">T</div><div class="a">لإ</div></div>
+            <div class="key"><div class="r">Y</div><div class="a">إ</div></div>
+            <div class="key"><div class="r">U</div><div class="a">`</div></div>
+            <div class="key"><div class="r">I</div><div class="a">÷</div></div>
+            <div class="key"><div class="r">O</div><div class="a">×</div></div>
+            <div class="key"><div class="r">P</div><div class="a">؛</div></div>
+            <div class="key"><div class="r">[</div><div class="a">&lt;</div></div>
+            <div class="key"><div class="r">]</div><div class="a">&gt;</div></div>
+        </div>
+        
+        <div>
+            <div class="spacer">&nbsp;</div>
+            <div class="spacer">&nbsp;</div>
+            <div class="key"><div class="r">A</div><div class="a">ِ</div></div>
+            <div class="key"><div class="r">S</div><div class="a">ٍ</div></div>
+            <div class="key"><div class="r">D</div><div class="a">]</div></div>
+            <div class="key"><div class="r">F</div><div class="a">[</div></div>
+            <div class="key"><div class="r">G</div><div class="a">لأ</div></div>
+            <div class="key"><div class="r">H</div><div class="a">أ</div></div>
+            <div class="key"><div class="r">J</div><div class="a">ـ</div></div>
+            <div class="key"><div class="r">K</div><div class="a">،</div></div>
+            <div class="key"><div class="r">L</div><div class="a">/</div></div>
+            <div class="key"><div class="r">:</div><div class="a">:</div></div>
+            <div class="key"><div class="r">"</div><div class="a">"</div></div>
+        </div>
+
+        <div>
+            <div class="spacer">&nbsp;</div>
+            <div class="spacer">&nbsp;</div>
+            <div class="spacer">&nbsp;</div>
+            <div class="key"><div class="r">Z</div><div class="a">~</div></div>
+            <div class="key"><div class="r">X</div><div class="a">ْ</div></div>
+            <div class="key"><div class="r">C</div><div class="a">}</div></div>
+            <div class="key"><div class="r">V</div><div class="a">{</div></div>
+            <div class="key"><div class="r">B</div><div class="a">لآ</div></div>
+            <div class="key"><div class="r">N</div><div class="a">آ</div></div>
+            <div class="key"><div class="r">M</div><div class="a">'</div></div>
+            <div class="key"><div class="r">&lt;</div><div class="a">,</div></div>
+            <div class="key"><div class="r">&gt;</div><div class="a">.</div></div>
+            <div class="key"><div class="r">?</div><div class="a"></div>؟</div>
+        </div>
+    </body>
+</html>
