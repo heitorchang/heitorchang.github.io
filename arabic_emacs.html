@@ -6,6 +6,12 @@
         <link rel="stylesheet" href="css/style.css">
         <title>Arabic with Emacs input method</title>
         <style>
+         @font-face {
+             font-family: Mirza;
+             src: url('fonts/Mirza-Regular.ttf') format('truetype');
+             font-style: normal;
+         }
+
          body {
              font-size: 20px;
          }
@@ -29,9 +35,17 @@
          }
 
          .a {
+             font-family: Mirza;
+             font-size: 42px;
              width: 100%;
              text-align: center;
          }
+
+         #scratch {
+             font-family: Mirza;
+             font-size: 42px;
+         }
+         
         </style>
     </head>
     <body>
@@ -138,6 +152,11 @@
             <div class="key"><div class="r">&lt;</div><div class="a">,</div></div>
             <div class="key"><div class="r">&gt;</div><div class="a">.</div></div>
             <div class="key"><div class="r">?</div><div class="a"></div>؟</div>
+        </div>
+
+        <br><br>
+        <div>
+            <textarea id="scratch" rows="8" cols="80"></textarea>
         </div>
     </body>
 </html>
