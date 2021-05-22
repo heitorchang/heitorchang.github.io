@@ -1,7 +1,16 @@
 ﻿<body>
-    <button onclick="jumpToBookmark();">Jump to Bookmark</button>
+    <div style="position: fixed; top: 20px; right: 20px;">
+        <button onclick="saveBookmark();">Save bookmark</button>
+    </div>
+
+    <div style="position: fixed; top: 20px; left: 20px;">
+        <button onclick="jumpToBookmark();">Jump to Bookmark</button>
+    </div>
     <br>
     <pre id="book" style="font-family: serif; margin-left: 2em;">
+
+
+
 AROUND THE WORLD IN EIGHTY DAYS
 
 PROJECT GUTENBERG
@@ -8018,10 +8027,9 @@ Truly, would you not for less than that make the tour around the world?
    window.localStorage.setItem('verne_aroundworld_bookmark', e.pageY);
  });
 
- book.addEventListener("touch", function (e) {
-   console.log("Setting bookmark: " + e.pageY);
-   window.localStorage.setItem('verne_aroundworld_bookmark', e.pageY);
- });
+ function saveBookmark() {
+   window.localStorage.setItem('verne_aroundworld_bookmark', window.pageYOffset);
+ }
 
  function jumpToBookmark() {
    console.log("jumpTo: " + localStorage.getItem('verne_aroundworld_bookmark'));
