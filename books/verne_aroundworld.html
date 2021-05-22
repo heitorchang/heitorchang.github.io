@@ -8018,6 +8018,11 @@ Truly, would you not for less than that make the tour around the world?
    window.localStorage.setItem('verne_aroundworld_bookmark', e.pageY);
  });
 
+ book.addEventListener("touch", function (e) {
+   console.log("Setting bookmark: " + e.pageY);
+   window.localStorage.setItem('verne_aroundworld_bookmark', e.pageY);
+ });
+
  function jumpToBookmark() {
    console.log("jumpTo: " + localStorage.getItem('verne_aroundworld_bookmark'));
    window.scrollTo(0, Number(localStorage.getItem('verne_aroundworld_bookmark')));
