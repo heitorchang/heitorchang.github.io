@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <title>BOOK TITLE</title>
+    </head>
+    <body>
+        <div style="position: fixed; top: 20px; right: 20px;">
+            <button onclick="saveBookmark();">Save bookmark</button>
+        </div>
+
+        <div style="position: fixed; top: 20px; left: 20px;">
+            <button onclick="jumpToBookmark();">Jump to Bookmark</button>
+        </div>
+        <br>
+        <div id="book" style="font-family: serif; font-size: 90%; margin-left: 1em; margin-right: 0.8em;">
+            <p>
+                <!-- Replace blank lines (starting from the line above) with </p><p> -->
+            </p>
+        </div>
+        <script>
+         book.addEventListener("dblclick", function (e) {
+           console.log("Setting bookmark: " + e.pageY);
+           window.alert("Bookmark saved.");
+           window.localStorage.setItem('verne_aroundworld_bookmark', e.pageY);
+         });
+
+         function saveBookmark() {
+           window.localStorage.setItem('verne_aroundworld_bookmark', window.pageYOffset);
+         }
+
+         function jumpToBookmark() {
+           console.log("jumpTo: " + localStorage.getItem('verne_aroundworld_bookmark'));
+           window.scrollTo(0, Number(localStorage.getItem('verne_aroundworld_bookmark')));
+         }
+        </script>
+    </body>
+</html>
