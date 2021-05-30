@@ -42,7 +42,7 @@ function ctoi(c) {
 
   if (!charlist.includes(c)) {
     errors += c;
-    return 27;
+    return 63;
   }
   
   var i = charlist.indexOf(c) + 1;
@@ -247,7 +247,7 @@ function handleDecrypt() {
   document.getElementById("key").value = key;
 
   processToArr(input, key, direction);
-  document.getElementById("plaintext").value = decrypt(input, key);
+  document.getElementById("plaintext").value = decrypt(input, key).replace(/_/g, " ");
 }
 
 document.getElementById("clearInputs").onclick = function() {
