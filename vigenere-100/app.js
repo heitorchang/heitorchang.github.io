@@ -40,6 +40,10 @@ function ctoi(c) {
     c = "_";
   }
 
+  if (c == "\n") {
+    c = "~";
+  }
+
   if (!charlist.includes(c)) {
     errors += c;
     return 63;
@@ -247,7 +251,7 @@ function handleDecrypt() {
   document.getElementById("key").value = key;
 
   processToArr(input, key, direction);
-  document.getElementById("plaintext").value = decrypt(input, key).replace(/_/g, " ");
+  document.getElementById("plaintext").value = decrypt(input, key).replace(/_/g, " ").replace(/~/g, "\n");
 }
 
 document.getElementById("clearInputs").onclick = function() {
