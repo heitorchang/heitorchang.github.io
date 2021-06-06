@@ -1,4 +1,9 @@
-* To update Portuguese resume:
+***
+* 2021-06-06
+* Update index.html directly
+***
+
+* To update Portuguese resume (and generate page with script):
 
 Edit generate_resume.py
 
