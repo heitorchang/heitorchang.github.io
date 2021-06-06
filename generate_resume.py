@@ -26,9 +26,11 @@ class ResumeSection:
 tempook = Company("Tempo OK Tecnologia em Meteorologia Ltda., São Paulo, SP",
                   [Job("Desenvolvedor Full-Stack",
                        "Jun. 2020 &mdash; atual",
-                       ["Flask, Django, PostgreSQL, Bash, Google Cloud Platform",
-                        "Criei back-end e API em PostgreSQL, front-end de geração de energia, mapa de estacoes da INMET e usinas, e gerenciador de arquivos"]),
-                  ])
+                       ["Migrei o front-end de um projeto Flask em Python 2.7 para Django 3, criando um gerenciador novo de usuários e de arquivos com um sistema de permissões.",
+                        "Desenvolvi o fluxo de dados meteorológicos do back-end com PostgreSQL até o front-end com Flask (ambos no Google Cloud), criando mais de 50 tabelas, várias com milhões de linhas representando dados horários.",
+                        "Criei páginas para exibir dados relevantes aos clientes em gráficos e mapas, com controles e layouts do framework Vuetify (Vue 2).",
+                        "Criei scripts auxiliares em Python e Bash para facilitar a transferência de dados entre a equipe de meteorologia e o desenvolvimento web."])
+                   ])
         
 pontual = Company("Pontual Exportação e Importação Ltda., São Paulo, SP",
                   [Job("Desenvolvedor Full-Stack",
