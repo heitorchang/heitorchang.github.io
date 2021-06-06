@@ -26,48 +26,49 @@ class ResumeSection:
 tempook = Company("Tempo OK Tecnologia em Meteorologia Ltda., São Paulo, SP",
                   [Job("Desenvolvedor Full-Stack",
                        "Jun. 2020 &mdash; atual",
-                       ["Migrei o front-end de um projeto Flask em Python 2.7 para Django 3, criando um gerenciador novo de usuários e de arquivos com um sistema de permissões.",
-                        "Desenvolvi o fluxo de dados meteorológicos do back-end com PostgreSQL até o front-end com Flask (ambos no Google Cloud), criando mais de 50 tabelas, várias com milhões de linhas representando dados horários.",
+                       ["Migrei um projeto front-end de <a href=\"http://docs.gae-init.appspot.com/\" target=\"_blank\">gae-init</a> para Django 3, criando um gerenciador novo de usuários e de arquivos com um sistema de permissões.",
+                        "Desenvolvi o fluxo de dados meteorológicos do back-end com PostgreSQL até o front-end com Flask (ambos no Google Cloud), criando mais de 80 tabelas, algumas com milhões de linhas representando dados horários.",
                         "Criei páginas para exibir dados relevantes aos clientes em gráficos e mapas, com controles e layouts do framework Vuetify (Vue 2).",
                         "Criei scripts auxiliares em Python e Bash para facilitar a transferência de dados entre a equipe de meteorologia e o desenvolvimento web."])
                    ])
-        
+
+
 pontual = Company("Pontual Exportação e Importação Ltda., São Paulo, SP",
                   [Job("Desenvolvedor Full-Stack",
                        "Jan. 2014 &mdash; Jun. 2020",                       
-                       ["Criar uma API REST com o framework Slim (em PHP) para ser consumida por um app React que gera o site público da empresa, <a href=\"http://pontualimportbrindes.com.br/\" target=\"_blank\">http://pontualimportbrindes.com.br/</a>",
-                        "Usar indicadores MA (Moving Average) em um projeto Django e Python para prever a demanda de produtos e calcular a quantidade adequada para reposições.",
-                        "Visualizar históricos de vendas com NumPy e Pandas, obtendo médias e valores extremos para cada produto.",
-                        "Desenvolver com PHP puro e MySQL o painel de administração do site.",
-                        "Automatizar a coleta de dados do estoque atual com um robô escrito em Python, reformatando-os em uma página HTML para o uso de clientes.",
-                        "Criar um SPA (aplicativo de página única) com AngularJS e Firebase para organizar listas de pedidos e reservas em tempo real."]),
+                       ["Usei indicadores MA (Moving Average) em um projeto Django e Python para prever a demanda de produtos e calculei a quantidade adequada para reposições.",
+                        "Criei uma API REST com o framework Slim (em PHP) para ser consumida por um app React que gera o site público da empresa.",
+                        "Visualizei históricos de vendas com NumPy e Pandas, obtendo médias e valores extremos para cada produto.",
+                        "Desenvolvi com PHP puro e MySQL o painel de administração do site.",
+                        "Automatizei a coleta de dados do estoque atual com um robô escrito em Python, reformatando-os em uma página HTML para o uso de clientes.",
+                        "Criei um SPA com AngularJS e Firebase para organizar listas de pedidos e reservas em tempo real."]),
 
                    Job("Auxiliar Administrativo",
                        "Nov. 2011 &mdash; Dez. 2013",
-                       ["Receber pedidos e reservas de clientes, formalizando-os na hora de retirada ou despacho.",
-                        "Fazer previsões de demanda com Excel para cada produto, determinando a quantidade e frequência de reposição.",
-                        "Manter a ordem de listas de pré-pedidos e reservas para clientes de cinco vendedoras."])])
+                       ["Recebi pedidos e reservas de clientes, formalizando-os na hora de retirada ou despacho.",
+                        "Fiz previsões de demanda com Excel para cada produto, determinando a quantidade e frequência de reposição.",
+                        "Mantive a ordem de listas de pré-pedidos e reservas para clientes de cinco vendedoras."])])
 
 merrill = Company("Merrill Lynch &amp; Co., Inc., New York, NY",
                   [Job("Associado de Verão, Pesquisas Globais",
                        "Jun. 2008 &mdash; Ago. 2008",
-                       ["Modelar a frequência de pagamentos de títulos públicos hipotecários e calcular seus valores e perfis de risco.",
-                        "Testar a performance de um portfólio de futuros como um produto novo para substituir um portfólio tradicional de ações.",
-                        "Comparar o valor e volatilidade de futuros de petróleo relativo a ações de refinarias de grande porte."])])
+                       ["Modelei a frequência de pagamentos de títulos públicos hipotecários e calculei seus valores e perfis de risco.",
+                        "Testei a performance de um portfólio de futuros como um produto novo para substituir um portfólio tradicional de ações.",
+                        "Comparei o valor e volatilidade de futuros de petróleo relativo a ações de refinarias de grande porte."])])
 
 
 stux = Company("Stux Capital Management, LLC, New York, NY",
                [Job("Estagiário, Investimentos em Ações",
                "Feb. 2008 &mdash; Abr. 2008",
-               ["Consolidar, otimizar e checar erros em planilhas de rendas mensais.",
-                "Desenvolver uma interface visual que comunica em tempo real com um banco de dados para ver o lucro de um fundo de investimentos, aumentando a produtividade e minimizando erros."])])
+               ["Consolidei, otimizei e chequei erros em planilhas de rendas mensais.",
+                "Desenvolvi uma interface visual que comunica em tempo real com um banco de dados para ver o lucro de um fundo de investimentos, aumentando a produtividade e minimizando erros."])])
 
 
 adair = Company("Adair Capital, LLC, New York, NY",
                 [Job("Estagiário, Fundo de Fundos de Cobertura",
                 "Set. 2007 &mdash; Jan. 2008",
-                ["Calcular níveis de risco entre fundos, correlacionando estratégias de fundos de cobertura com fatores de risco macroeconômicos para prever os lucros de fundos específicos.",
-                 "Desenvolver um GUI no Matlab que implementa um processo Brownian Bridge para medir a exposição de fundos de cobertura a índices de referência e detectar possíveis mudanças nas suas estratégias de investimento."])])
+                ["Calculei níveis de risco entre fundos, correlacionando estratégias de fundos de cobertura com fatores de risco macroeconômicos para prever os lucros de fundos específicos.",
+                 "Desenvolvi um GUI em Matlab que implementa um processo Brownian Bridge para medir a exposição de fundos de cobertura a índices de referência e detectei possíveis mudanças nas suas estratégias de investimento."])])
 
                  
 COMPANIES = [tempook, pontual, merrill, stux, adair]
@@ -94,14 +95,14 @@ SCHOOLS = [nyu, grad_school, stan_ug]
 materiais = Company("Departamento de Ciência e Engenharia de Materiais, Stanford University, Stanford, CA",
                     [Job("Assistente de Pesquisas de Propriedades Mecânicas, Prof. R. H. Dauskardt",
                          "Jun. 2005 &mdash; Fev. 2007",
-                         ["Construir simulações de fratura para prever a estabilidade de nanomateriais porosos inovadores.",
-                          "Otimizar scripts Matlab em programas C, acelerando cálculos que demoravam um dia para aproximadamente duas horas."])])
+                         ["Construi simulações de fratura para prever a estabilidade de nanomateriais porosos inovadores.",
+                          "Otimizei scripts Matlab em programas C, acelerando cálculos que demoravam um dia para aproximadamente duas horas."])])
 
 
 carnegie = Company("Carnegie Institution for Science, Stanford, CA",
                    [Job("Assistente de Pesquisas Genéticas, Dra. Susan S. Thayer",
                         "Mar. 2004 &mdash; Jun. 2004",
-                        ["Realizar análises de regressão em SAS para identificar correlações estatisticamente significativas entre oito conjuntos de dados."])])
+                        ["Realizei análises de regressão em SAS para identificar correlações estatisticamente significativas entre oito conjuntos de dados."])])
 
 
 ACADEMICA = [materiais, carnegie]
@@ -110,12 +111,12 @@ ACADEMICA = [materiais, carnegie]
 criar = Company("Criar &amp; Criar Art Design, São Paulo, SP",
                 [Job("Web Designer",
                      "Out. 2017 &mdash; Dez. 2017",
-                     ["Atualizar e manter o catálogo de produtos decorativos e sustentáveis no Blogspot."])])
+                     ["Atualizei e mantive o catálogo de produtos decorativos e sustentáveis no Blogspot."])])
 
 oca = Company("OCA Escola Cultural, Carapicuíba, SP",
               [Job("Manutenção de Sistema, Ubuntu Linux",
                    "Set. 2017",
-                   ["Configurar e instalar o gerenciador de bibliotecas Biblivre 5 dentro de um ambiente em nuvem."])])
+                   ["Configurei e instalei o gerenciador de bibliotecas Biblivre 5 dentro de um ambiente em nuvem."])])
 
 VOLUNTARIO = [criar, oca]
 
@@ -123,14 +124,14 @@ VOLUNTARIO = [criar, oca]
 polylexis = Company("Polylexis.com",
                     [Job("Desenvolvedor Full-Stack",
                          "Ago. 2019 &mdash; atual",
-                         ["Desenvolver e manter o site Django com vocabulário, testes e um mini-dicionário do grego moderno."])])
+                         ["Desenvolvi e mantive um site Django com vocabulário, testes e um mini-dicionário do grego moderno."])])
 
 
 hellokey = Company("Hello Key English",
                    [Job("Designer e Desenvolvedor Full-Stack",
                         "Out. 2019 &mdash; Nov. 2019",
-                        ["Gerenciar uma lista de alunos e um calendário de aulas particulares de inglês com o site Django.",
-                        "Desenhar uma interface otimizada para celular com o framework Bootstrap 4."])])
+                        ["Gerenciei uma lista de alunos e um calendário de aulas particulares de inglês com o site Django.",
+                        "Desenhei uma interface otimizada para celular com o framework Bootstrap 4."])])
 
 
 PESSOAIS = [polylexis, hellokey]
