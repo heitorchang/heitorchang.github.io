@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Capítulo 4: Estudo de caso: projeto de interface - Pense Python</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Cap\u00edtulo 4: Estudo de caso: projeto de interface";
+    var mkdocs_page_input_path = "04-caso-interface.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pense Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Pense em Python</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../00-prefacio/">Prefácio</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-jornada/">Capítulo 1: A jornada do programa</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-vars-expr-instr/">Capítulo 2: Variáveis, expressões e instruções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-funcoes/">Capítulo 3: Funções</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Capítulo 4: Estudo de caso: projeto de interface</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#41-modulo-turtle">4.1 - Módulo turtle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#42-repeticao-simples">4.2 - Repetição simples</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#43-exercicios">4.3 - Exercícios</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#44-encapsulamento">4.4 - Encapsulamento</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#45-generalizacao">4.5 - Generalização</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#46-projeto-da-interface">4.6 - Projeto da interface</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#47-refatoracao">4.7 - Refatoração</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#48-um-plano-de-desenvolvimento">4.8 - Um plano de desenvolvimento</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#49-docstring">4.9 - docstring</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#410-depuracao">4.10 - Depuração</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#411-glossario">4.11 - Glossário</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#412-exercicios">4.12 - Exercícios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-41">Exercício 4.1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-42">Exercício 4.2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-43">Exercício 4.3</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-44">Exercício 4.4</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-45">Exercício 4.5</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-cond-recur/">Capítulo 5: Condicionais e recursividade</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-funcoes-result/">Capítulo 6: Funções com resultado</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-iteracao/">Capítulo 7: Iteração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-strings/">Capítulo 8: Strings</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-caso-palavras/">Capítulo 9: Estudo de caso: jogos de palavras</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-listas/">Capítulo 10: Listas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../11-dicionarios/">Capítulo 11: Dicionários</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../12-tuplas/">Capítulo 12: Tuplas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../13-caso-estruturas/">Capítulo 13: Estudo de caso: seleção de estrutura de dados</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../14-arquivos/">Capítulo 14: Arquivos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../15-classes-objetos/">Capítulo 15: Classes e objetos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../16-classes-funcoes/">Capítulo 16: Classes e funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../17-classes-metodos/">Capítulo 17: Classes e métodos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../18-heranca/">Capítulo 18: Herança</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../19-extra/">Capítulo 19: Extra</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../A-depuracao/">Apêndice A: Depuração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../B-analise-algorit/">Apêndice B: Análise de algoritmos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../C-colofao-autor/">Colofão</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pense Python</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Capítulo 4: Estudo de caso: projeto de interface</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="capitulo-4-estudo-de-caso-projeto-de-interface">Capítulo 4: Estudo de caso: projeto de interface</h1>
+<p>Este capítulo apresenta um estudo de caso que demonstra o processo de criação de funções que operam simultaneamente.</p>
+<p>Ele apresenta o módulo turtle, que permite criar imagens usando [<em>turtle graphics</em>][1]. O módulo turtle é incluído na maior parte das instalações do Python, mas se estiver executando a linguagem com o PythonAnywhere você não poderá executar os exemplos do turtle (pelo menos não era possível quando escrevi este livro).</p>
+<p>Se já tiver instalado o Python no seu computador, você poderá executar os exemplos. Caso não, agora é uma boa hora para instalar. Publiquei instruções no site http://tinyurl.com/thinkpython2e.</p>
+<p>Os exemplos de código deste capítulo estão disponíveis em http://thinkpython2.com/code/polygon.py.</p>
+<h2 id="41-modulo-turtle">4.1 - Módulo turtle</h2>
+<p>Para conferir se você tem o módulo turtle, abra o interpretador do Python e digite:</p>
+<pre><code class="language-python">&gt;&gt;&gt; import turtle
+&gt;&gt;&gt; bob = turtle.Turtle()
+</code></pre>
+<p>Ao executar este código o programa deve abrir uma nova janela com uma pequena flecha que representa o turtle. Feche a janela.</p>
+<p>Crie um arquivo chamado mypolygon.py e digite o seguinte código:</p>
+<pre><code class="language-python">import turtle
+bob = turtle.Turtle()
+print(bob)
+turtle.mainloop()
+</code></pre>
+<p>O módulo turtle (com t minúsculo) apresenta uma função chamada Turtle (com T maiúsculo), que cria um objeto Turtle, ao qual atribuímos uma variável chamada bob. Exibir bob faz algo assim:</p>
+<pre><code class="language-python">&lt;turtle.Turtle object at 0xb7bfbf4c&gt;
+</code></pre>
+<p>Isto significa que bob se refere a um objeto com o tipo Turtle definido no módulo turtle.</p>
+<p>mainloop diz que a janela deve esperar que o usuário faça algo, embora neste caso não haja muito a fazer, exceto fechar a janela.</p>
+<p>Uma vez que tenha criado o Turtle, você pode chamar um método para movê-lo pela janela. Método é semelhante a uma função, mas usa uma sintaxe ligeiramente diferente. Por exemplo, para mover o turtle para a frente:</p>
+<pre><code class="language-python">bob.fd(100)
+</code></pre>
+<p>O método fd é associado com o objeto turtle, que denominamos bob. Chamar de um método é como fazer um pedido: você está pedindo que bob avance.</p>
+<p>O argumento de fd é uma distância em píxeis, então o tamanho real depende da sua tela.</p>
+<p>Outros métodos que você pode chamar em um Turtle são bk para mover-se para trás, lt para virar à esquerda e rt para virar à direita. O argumento para lt e rt é um ângulo em graus.</p>
+<p>Além disso, cada Turtle segura uma caneta, que está abaixada ou levantada; se a caneta estiver abaixada, o Turtle deixa um rastro quando se move. Os métodos pu e pd representam “caneta para cima” e “caneta para baixo”.</p>
+<p>Para desenhar um ângulo reto, acrescente estas linhas ao programa (depois de criar bob e antes de chamar o mainloop):</p>
+<pre><code class="language-python">bob.fd(100)
+bob.lt(90)
+bob.fd(100)
+</code></pre>
+<p>Ao executar este programa, você deveria ver bob mover-se para o leste e depois para o norte, deixando dois segmentos de reta para trás.</p>
+<p>Agora altere o programa para desenhar um quadrado. Só siga adiante neste capítulo se ele funcionar adequadamente!</p>
+<h2 id="42-repeticao-simples">4.2 - Repetição simples</h2>
+<p>Provavelmente você escreveu algo assim:</p>
+<pre><code class="language-python">bob.fd(100)
+bob.lt(90)
+bob.fd(100)
+bob.lt(90)
+bob.fd(100)
+bob.lt(90)
+bob.fd(100)
+</code></pre>
+<p>Podemos fazer a mesma coisa de forma mais concisa com uma instrução for. Acrescente este exemplo a mypolygon.py e execute-o novamente:</p>
+<pre><code class="language-python">for i in range(4):
+    print('Hello!')
+</code></pre>
+<p>Você deve ver algo assim:</p>
+<pre><code class="language-python">Hello!
+Hello!
+Hello!
+Hello!
+</code></pre>
+<p>Este é o uso mais simples da instrução for; depois veremos mais sobre isso. Mas isso deve ser o suficiente para que você possa reescrever o seu programa de desenhar quadrados. Não continue a leitura até que dê certo.</p>
+<p>Aqui está uma instrução for que desenha um quadrado:</p>
+<pre><code class="language-python">for i in range(4):
+    bob.fd(100)
+    bob.lt(90)
+</code></pre>
+<p>A sintaxe de uma instrução for é semelhante à definição de uma função. Tem um cabeçalho que termina em dois pontos e um corpo endentado. O corpo pode conter qualquer número de instruções.</p>
+<p>Uma instrução for também é chamada de loop porque o fluxo da execução passa pelo corpo e depois volta ao topo. Neste caso, ele passa pelo corpo quatro vezes.</p>
+<p>Esta versão, na verdade, é um pouco diferente do código anterior que desenha quadrados porque faz outra volta depois de desenhar o último lado do quadrado. A volta extra leva mais tempo, mas simplifica o código se fizermos a mesma coisa a cada vez pelo loop. Esta versão também tem o efeito de trazer o turtle de volta à posição inicial, de frente para a mesma direção em que estava.</p>
+<h2 id="43-exercicios">4.3 - Exercícios</h2>
+<p>A seguir, uma série de exercícios usando TurtleWorld. Eles servem para divertir, mas também têm outro objetivo. Enquanto trabalha neles, pense que objetivo pode ser.</p>
+<p>As seções seguintes têm as soluções para os exercícios, mas não olhe até que tenha terminado (ou, pelo menos, tentado).</p>
+<ol>
+<li>Escreva uma função chamada square que receba um parâmetro chamado t, que é um turtle. Ela deve usar o turtle para desenhar um quadrado.</li>
+</ol>
+<p>Escreva uma chamada de função que passe bob como um argumento para o square e então execute o programa novamente.</p>
+<ol>
+<li>
+<p>Acrescente outro parâmetro, chamado length, ao square. Altere o corpo para que o comprimento dos lados seja length e então altere a chamada da função para fornecer um segundo argumento. Execute o programa novamente. Teste o seu programa com uma variedade de valores para length.</p>
+</li>
+<li>
+<p>Faça uma cópia do square e mude o nome para polygon. Acrescente outro parâmetro chamado n e altere o corpo para que desenhe um polígono regular de n lados.</p>
+</li>
+</ol>
+<p>Dica: os ângulos exteriores de um polígono regular de n lados são 360/n graus.</p>
+<ol>
+<li>Escreva uma função chamada circle que use o turtle, t e um raio r como parâmetros e desenhe um círculo aproximado ao chamar polygon com um comprimento e número de lados adequados. Teste a sua função com uma série de valores de r.</li>
+</ol>
+<p>Dica: descubra a circunferência do círculo e certifique-se de que length * n = circumference.</p>
+<ol>
+<li>Faça uma versão mais geral do circle chamada arc, que receba um parâmetro adicional de angle, para determinar qual fração do círculo deve ser desenhada. angle está em unidades de graus, então quando angle=360, o arc deve desenhar um círculo completo.</li>
+</ol>
+<h2 id="44-encapsulamento">4.4 - Encapsulamento</h2>
+<p>O primeiro exercício pede que você ponha seu código para desenhar quadrados em uma definição de função e então chame a função, passando o turtle como parâmetro. Aqui está uma solução:</p>
+<pre><code class="language-python">def square(t):
+    for i in range(4):
+        t.fd(100)
+        t.lt(90)
+
+square(bob)
+</code></pre>
+<p>As instruções mais internas, fd e lt, são endentadas duas vezes para mostrar que estão dentro do loop for, que está dentro da definição da função. A linha seguinte, square(bob), está alinhada à margem esquerda, o que indica tanto o fim do loop for como da definição de função.</p>
+<p>Dentro da função, o t indica o mesmo turtle bob, então t.lt (90) tem o mesmo efeito que bob.lt (90). Neste caso, por que não chamar o parâmetro bob? A ideia é que t pode ser qualquer turtle, não apenas bob, então você pode criar um segundo turtle e passá-lo como argumento ao square:</p>
+<pre><code class="language-python">alice = turtle.Turtle()
+square(alice)
+</code></pre>
+<p>Incluir uma parte do código em uma função chama-se encapsulamento. Um dos benefícios do encapsulamento é que ele atribui um nome ao código, o que serve como uma espécie de documentação. Outra vantagem é que se você reutilizar o código, é mais conciso chamar uma função duas vezes que copiar e colar o corpo!</p>
+<h2 id="45-generalizacao">4.5 - Generalização</h2>
+<p>O próximo passo é acrescentar um parâmetro length ao square. Aqui está uma solução:</p>
+<pre><code class="language-python">def square(t, length):
+    for i in range(4):
+        t.fd(length)
+        t.lt(90)
+
+square(bob, 100)
+</code></pre>
+<p>Acrescentar um parâmetro a uma função chama-se generalização porque ele torna a função mais geral: na versão anterior, o quadrado é sempre do mesmo tamanho; nesta versão, pode ser de qualquer tamanho.</p>
+<p>O próximo passo também é uma generalização. Em vez de desenhar quadrados, polygon desenha polígonos regulares com qualquer número de lados. Aqui está uma solução:</p>
+<pre><code class="language-python">def polygon(t, n, length):
+    angle = 360 / n
+    for i in range(n):
+        t.fd(length)
+        t.lt(angle)
+
+polygon(bob, 7, 70)
+</code></pre>
+<p>Este exemplo desenha um polígono de 7 lados, cada um de comprimento 70.</p>
+<p>Se estiver usando Python 2, o valor do angle poderia estar errado por causa da divisão de número inteiro. Uma solução simples é calcular angle = 360.0 / n. Como o numerador é um número de ponto flutuante, o resultado é em ponto flutuante.</p>
+<p>Quando uma função tem vários argumentos numéricos, é fácil esquecer o que eles são ou a ordem na qual eles devem estar. Neste caso, muitas vezes é uma boa ideia incluir os nomes dos parâmetros na lista de argumentos:</p>
+<pre><code class="language-python">polygon (bob, n=7, length=70)
+</code></pre>
+<p>Esses são os argumentos de palavra-chave porque incluem os nomes dos parâmetros como “palavras-chave” (para não confundir com palavras-chave do Python, tais como while e def).</p>
+<p>Esta sintaxe torna o programa mais legível. Também é uma lembrança sobre como os argumentos e os parâmetros funcionam: quando você chama uma função, os argumentos são atribuídos aos parâmetros.</p>
+<h2 id="46-projeto-da-interface">4.6 - Projeto da interface</h2>
+<p>O próximo passo é escrever circle, que recebe um raio r, como parâmetro. Aqui está uma solução simples que usa o polygon para desenhar um polígono de 50 lados:</p>
+<pre><code class="language-python">import math
+def circle(t, r):
+    circumference = 2 * math.pi * r
+    n = 50
+    length = circumference / n
+    polygon(t, n, length)
+</code></pre>
+<p>A primeira linha calcula a circunferência de um círculo com o raio r usando a fórmula 2πr. Já que usamos math.pi, temos que importar math. Por convenção, instruções import normalmente ficam no início do script.</p>
+<p>n é o número de segmentos de reta na nossa aproximação de um círculo, então length é o comprimento de cada segmento. Assim, polygon desenha um polígono 50 lados que se aproxima de um círculo com o raio r.</p>
+<p>Uma limitação desta solução é que n é uma constante. Para círculos muito grandes, os segmentos de reta são longos demais, e para círculos pequenos, perdemos tempo desenhando segmentos muito pequenos. Uma solução seria generalizar a função tomando n como parâmetro. Isso daria ao usuário (seja quem for que chame circle) mais controle, mas a interface seria menos limpa.</p>
+<p>A interface de uma função é um resumo de como ela é usada: Quais são os parâmetros? O que a função faz? E qual é o valor de retorno? Uma interface é “limpa” se permitir à pessoa que a chama fazer o que quiser sem ter que lidar com detalhes desnecessários.</p>
+<p>Neste exemplo, r pertence à interface porque especifica o círculo a ser desenhado. n é menos adequado porque pertence aos detalhes de como o círculo deve ser apresentado.</p>
+<p>Em vez de poluir a interface, é melhor escolher um valor adequado para n, dependendo da circumference:</p>
+<pre><code class="language-python">def circle(t, r):
+    circumference = 2 * math.pi * r
+    n = int(circumference / 3) + 1
+    length = circumference / n
+    polygon(t, n, length)
+</code></pre>
+<p>Neste ponto, o número de segmentos é um número inteiro próximo a circumference/3, então o comprimento de cada segmento é aproximadamente 3, pequeno o suficiente para que os círculos fiquem bons, mas grandes o suficiente para serem eficientes e aceitáveis para círculos de qualquer tamanho.</p>
+<p><a id="sec:4.7 - Refatoração"></a></p>
+<h2 id="47-refatoracao">4.7 - Refatoração</h2>
+<p>Quando escrevi circle, pude reutilizar polygon porque um polígono de muitos lados é uma boa aproximação de um círculo. Mas o arc não é tão cooperativo; não podemos usar polygon ou circle para desenhar um arco.</p>
+<p>Uma alternativa é começar com uma cópia de polygon e transformá-la em arc. O resultado poderia ser algo assim:</p>
+<pre><code class="language-python">def arc(t, r, angle):
+    arc_length = 2 * math.pi * r * angle / 360
+    n = int(arc_length / 3) + 1
+    step_length = arc_length / n
+    step_angle = angle / n
+    for i in range(n):
+        t.fd(step_length)
+        t.lt(step_angle)
+</code></pre>
+<p>A segunda metade desta função parece com a do polygon, mas não é possível reutilizar o polygon sem mudar a interface. Poderíamos generalizar polygon para receber um ângulo como um terceiro argumento, mas então polygon não seria mais um nome adequado! Em vez disso, vamos chamar a função mais geral de polyline:</p>
+<pre><code class="language-python">def polyline(t, n, length, angle):
+    for i in range(n):
+        t.fd(length)
+        t.lt(angle)
+</code></pre>
+<p>Agora podemos reescrever polygon e arc para usar polyline:</p>
+<pre><code class="language-python">def polygon(t, n, length):
+    angle = 360.0 / n
+    polyline(t, n, length, angle)
+def arc(t, r, angle):
+    arc_length = 2 * math.pi * r * angle / 360
+    n = int(arc_length / 3) + 1
+    step_length = arc_length / n
+    step_angle = float(angle) / n
+    polyline(t, n, step_length, step_angle)
+</code></pre>
+<p>Finalmente, podemos reescrever circle para usar arc:</p>
+<pre><code class="language-python">def circle(t, r):
+    arc(t, r, 360)
+</code></pre>
+<p>Este processo – recompor um programa para melhorar interfaces e facilitar a reutilização do código – é chamado de refatoração. Neste caso, notamos que houve código semelhante em arc e polygon, então nós o “fatoramos” no polyline.</p>
+<p>Se tivéssemos planejado, poderíamos ter escrito polyline primeiro e evitado a refatoração, mas muitas vezes não sabemos o suficiente já no início de um projeto para projetar todas as interfaces. Quando começarmos a escrever código, entenderemos melhor o problema. Às vezes, a refatoração é um sinal de que aprendemos algo.</p>
+<h2 id="48-um-plano-de-desenvolvimento">4.8 - Um plano de desenvolvimento</h2>
+<p>Um plano de desenvolvimento é um processo para escrever programas. O processo que usamos neste estudo de caso é “encapsulamento e generalização”. Os passos deste processo são:</p>
+<ol>
+<li>
+<p>Comece escrevendo um pequeno programa sem definições de função.</p>
+</li>
+<li>
+<p>Uma vez que o programa esteja funcionando, identifique uma parte coerente dele, encapsule essa parte em uma função e dê um nome a ela.</p>
+</li>
+<li>
+<p>Generalize a função acrescentando os parâmetros adequados.</p>
+</li>
+<li>
+<p>Repita os passos 1-3 até que tenha um conjunto de funções operantes. Copie e cole o código operante para evitar a redigitação (e redepuração).</p>
+</li>
+<li>
+<p>Procure oportunidades de melhorar o programa pela refatoração. Por exemplo, se você tem um código semelhante em vários lugares, pode ser uma boa ideia fatorá-lo em uma função geral adequada.</p>
+</li>
+</ol>
+<p>Este processo tem algumas desvantagens – veremos alternativas mais tarde – mas pode ser útil se você não souber de antemão como dividir o programa em funções. Esta abordagem permite criar o projeto no decorrer do trabalho.</p>
+<h2 id="49-docstring">4.9 - docstring</h2>
+<p>Uma docstring é uma string no início de uma função que explica a interface (“doc” é uma abreviação para “documentação”). Aqui está um exemplo:</p>
+<pre><code class="language-python">def polyline(t, n, length, angle):
+    &quot;&quot;&quot;Desenha n segmentos de reta com o comprimento dado e
+    ângulo (em graus) entre eles. t é um turtle.
+    &quot;&quot;&quot;
+    for i in range(n):
+        t.fd(length)
+        t.lt(angle)
+</code></pre>
+<p>Por convenção, todas as docstrings têm aspas triplas, também conhecidas como strings multilinha porque as aspas triplas permitem que a string se estenda por mais de uma linha.</p>
+<p>É conciso, mas contém a informação essencial que alguém precisaria para usar esta função. Explica sucintamente o que a função faz (sem entrar nos detalhes de como o faz). Explica que efeito cada parâmetro tem sobre o comportamento da função e o tipo que cada parâmetro deve ser (se não for óbvio).</p>
+<p>Escrever este tipo de documentação é uma parte importante do projeto da interface. Uma interface bem projetada deve ser simples de explicar; se não for assim, talvez a interface possa ser melhorada.</p>
+<h2 id="410-depuracao">4.10 - Depuração</h2>
+<p>Uma interface é como um contrato entre uma função e quem a chama. Quem chama concorda em fornecer certos parâmetros e a função concorda em fazer certa ação.</p>
+<p>Por exemplo, polyline precisa de quatro argumentos: t tem que ser um Turtle; n tem que ser um número inteiro; length deve ser um número positivo; e o angle tem que ser um número, que se espera estar em graus.</p>
+<p>Essas exigências são chamadas de precondições porque se supõe que sejam verdade antes que a função seja executada. De forma inversa, as condições no fim da função são pós-condições. As pós-condições incluem o efeito desejado da função (como o desenho de segmentos de reta) e qualquer efeito colateral (como mover o Turtle ou fazer outras mudanças).</p>
+<p>Precondições são responsabilidade de quem chama. Se quem chama violar uma precondição (adequadamente documentada!) e a função não funcionar corretamente, o problema está nesta pessoa, não na função.</p>
+<p>Se as precondições forem satisfeitas e as pós-condições não forem, o problema está na função. Se as suas precondições e pós-condições forem claras, elas podem ajudar na depuração.</p>
+<h2 id="411-glossario">4.11 - Glossário</h2>
+<dl>
+<dt><a id="glos:método" href="#termo:método">método</a></dt>
+<dd>Uma função associada a um objeto e chamada usando a notação de ponto.</dd>
+
+<dt><a id="glos:loop" href="#termo:loop">loop</a></dt>
+<dd>Parte de um programa que pode ser executada repetidamente.</dd>
+
+<dt><a id="glos:encapsulamento" href="#termo:encapsulamento">encapsulamento</a></dt>
+<dd>O processo de transformar uma sequência de instruções em uma definição de função.</dd>
+
+<dt><a id="glos:generalização" href="#termo:generalização">generalização</a></dt>
+<dd>O processo de substituir algo desnecessariamente específico (como um número) por algo adequadamente geral (como uma variável ou parâmetro).</dd>
+
+<dt><a id="glos:argumento de palavra-chave" href="#termo:argumento de palavra-chave">argumento de palavra-chave</a></dt>
+<dd>Um argumento que inclui o nome do parâmetro como uma “palavra-chave”.</dd>
+
+<dt><a id="glos:interface" href="#termo:interface">interface</a></dt>
+<dd>Uma descrição de como usar uma função, incluindo o nome e as descrições dos argumentos e do valor de retorno.</dd>
+
+<dt><a id="glos:refatoração" href="#termo:refatoração">refatoração</a></dt>
+<dd>O processo de alterar um programa funcional para melhorar a interface de funções e outras qualidades do código.</dd>
+
+<dt><a id="glos:plano de desenvolvimento" href="#termo:plano de desenvolvimento">plano de desenvolvimento</a></dt>
+<dd>Um processo de escrever programas.</dd>
+
+<dt><a id="glos:docstring" href="#termo:docstring">docstring</a></dt>
+<dd>Uma string que aparece no início de uma definição de função para documentar a interface da função.</dd>
+
+<dt><a id="glos:precondição" href="#termo:precondição">precondição</a></dt>
+<dd>Uma exigência que deve ser satisfeita por quem chama a função, antes de executá-la.</dd>
+
+<dt><a id="glos:pós-condição" href="#termo:pós-condição">pós-condição</a></dt>
+<dd>Uma exigência que deve ser satisfeita pela função antes que ela seja encerrada.</dd>
+
+</dl>
+
+<h2 id="412-exercicios">4.12 - Exercícios</h2>
+<h3 id="exercicio-41">Exercício 4.1</h3>
+<p>Baixe o código deste capítulo no site http://thinkpython2.com/code/polygon.py.</p>
+<ol>
+<li>
+<p>Desenhe um diagrama da pilha que mostre o estado do programa enquanto executa circle (bob, radius). Você pode fazer a aritmética à mão ou acrescentar instruções print ao código.</p>
+</li>
+<li>
+<p>A versão de <code>arc</code> na seção <a href="#sec:4.7 - Refatoração">4.7 - Refatoração</a> não é muito precisa porque a aproximação linear do círculo está sempre do lado de fora do círculo verdadeiro. Consequentemente, o Turtle acaba ficando alguns píxeis de distância do destino correto. Minha solução mostra um modo de reduzir o efeito deste erro. Leia o código e veja se faz sentido para você. Se desenhar um diagrama, poderá ver como funciona.</p>
+</li>
+</ol>
+<h3 id="exercicio-42">Exercício 4.2</h3>
+<p>Escreva um conjunto de funções adequadamente geral que possa desenhar flores como as da Figura 4.1.</p>
+<p><img alt="Figura 4.1 – Flores de tartaruga." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_0401.png" />
+<br><em>Figura 4.1 – Flores de tartaruga.</em></p>
+<p>Solução: http://thinkpython2.com/code/flower.py, também exige http://thinkpython2.com/code/polygon.py.</p>
+<h3 id="exercicio-43">Exercício 4.3</h3>
+<p>Escreva um conjunto de funções adequadamente geral que possa desenhar formas como as da Figura 4.2.</p>
+<p><img alt="Figura 4.2 – Tortas de tartaruga." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_0402.png" />
+<br><em>Figura 4.2 – Tortas de tartaruga.</em></p>
+<p>Solução: http://thinkpython2.com/code/pie.py.</p>
+<h3 id="exercicio-44">Exercício 4.4</h3>
+<p>As letras do alfabeto podem ser construídas a partir de um número moderado de elementos básicos, como linhas verticais e horizontais e algumas curvas. Crie um alfabeto que possa ser desenhado com um número mínimo de elementos básicos e então escreva funções que desenhem as letras.</p>
+<p>Você deve escrever uma função para cada letra, com os nomes draw_a, draw_b etc., e colocar suas funções em um arquivo chamado letters.py. Você pode baixar uma “máquina de escrever de turtle” no site http://thinkpython2.com/code/typewriter.py para ajudar a testar o seu código.</p>
+<p>Você pode ver uma solução no site http://thinkpython2.com/code/letters.py; ela também exige http://thinkpython2.com/code/polygon.py.</p>
+<h3 id="exercicio-45">Exercício 4.5</h3>
+<p>Leia sobre espirais em https://pt.wikipedia.org/wiki/Espiral; então escreva um programa que desenhe uma espiral de Arquimedes (ou um dos outros tipos).</p>
+<p>[1] <em>turtle graphics</em> ou gráficos de tartaruga é o sistema de desenho popularizado pela linguagem Logo, onde os comandos movimentam um cursor triangular pela tela, conhecido como <em>turtle</em> ou tartaruga. A tartaruga deixa um rastro à medida que é movimentada, e é com esses rastros que se forma um desenho. Diferente dos sistemas usuais de desenho em computação gráfica, o sistema <em>turtle graphics</em> não exige o uso de coordenadas cartesianas.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../05-cond-recur/" class="btn btn-neutral float-right" title="Capítulo 5: Condicionais e recursividade">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../03-funcoes/" class="btn btn-neutral" title="Capítulo 3: Funções"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../03-funcoes/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../05-cond-recur/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

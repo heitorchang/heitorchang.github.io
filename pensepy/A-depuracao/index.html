@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Apêndice A: Depuração - Pense Python</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Ap\u00eandice A: Depura\u00e7\u00e3o";
+    var mkdocs_page_input_path = "A-depuracao.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pense Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Pense em Python</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../00-prefacio/">Prefácio</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-jornada/">Capítulo 1: A jornada do programa</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-vars-expr-instr/">Capítulo 2: Variáveis, expressões e instruções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-funcoes/">Capítulo 3: Funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-caso-interface/">Capítulo 4: Estudo de caso: projeto de interface</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-cond-recur/">Capítulo 5: Condicionais e recursividade</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-funcoes-result/">Capítulo 6: Funções com resultado</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-iteracao/">Capítulo 7: Iteração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-strings/">Capítulo 8: Strings</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-caso-palavras/">Capítulo 9: Estudo de caso: jogos de palavras</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-listas/">Capítulo 10: Listas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../11-dicionarios/">Capítulo 11: Dicionários</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../12-tuplas/">Capítulo 12: Tuplas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../13-caso-estruturas/">Capítulo 13: Estudo de caso: seleção de estrutura de dados</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../14-arquivos/">Capítulo 14: Arquivos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../15-classes-objetos/">Capítulo 15: Classes e objetos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../16-classes-funcoes/">Capítulo 16: Classes e funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../17-classes-metodos/">Capítulo 17: Classes e métodos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../18-heranca/">Capítulo 18: Herança</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../19-extra/">Capítulo 19: Extra</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Apêndice A: Depuração</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#a1-erros-de-sintaxe">A.1 - Erros de sintaxe</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#a11-continuo-fazendo-alteracoes-e-nao-faz-nenhuma-diferenca">A.1.1 - Continuo fazendo alterações e não faz nenhuma diferença</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#a2-erros-de-tempo-de-execucao">A.2 - Erros de tempo de execução</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#a21-meu-programa-nao-faz-nada">A.2.1 - Meu programa não faz nada</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a22-meu-programa-trava">A.2.2 - Meu programa trava</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#loop-infinito">Loop infinito</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#recursividade-infinita">Recursividade infinita</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#fluxo-de-execucao">Fluxo de execução</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a23-quando-executo-o-programa-recebo-uma-excecao">A.2.3 - Quando executo o programa recebo uma exceção</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#nameerror">NameError</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#typeerror">TypeError</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#keyerror">KeyError</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#attributeerror">AttributeError</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#indexerror">IndexError</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a24-acrescentei-tantas-instrucoes-print-que-fui-inundado-pelos-resultados">A.2.4 - Acrescentei tantas instruções print que fui inundado pelos resultados</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#a3-erros-semanticos">A.3 - Erros semânticos</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#a31-meu-programa-nao-funciona">A.3.1 - Meu programa não funciona</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a32-tenho-uma-baita-expressao-cabeluda-e-ela-nao-faz-o-que-espero">A.3.2 - Tenho uma baita expressão cabeluda e ela não faz o que espero</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a33-tenho-uma-funcao-que-nao-retorna-o-que-espero">A.3.3 - Tenho uma função que não retorna o que espero</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a34-estou-perdido-e-preciso-de-ajuda">A.3.4 - Estou perdido e preciso de ajuda</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a35-serio-preciso-mesmo-de-ajuda">A.3.5 - Sério, preciso mesmo de ajuda</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../B-analise-algorit/">Apêndice B: Análise de algoritmos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../C-colofao-autor/">Colofão</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pense Python</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Apêndice A: Depuração</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="apendice-a-depuracao">Apêndice A: Depuração</h1>
+<p>Durante a depuração, você deve distinguir entre tipos diferentes de erros para rastreá-los mais rapidamente:</p>
+<ul>
+<li>
+<p>Erros de sintaxe são descobertos pelo interpretador quando ele está traduzindo o código-fonte para código de bytes. Eles indicam que há algo errado com a estrutura do programa. Exemplo: a omissão dos dois pontos no fim de uma instrução def gera a mensagem um tanto redundante SyntaxError: invalid syntax.</p>
+</li>
+<li>
+<p>Erros de tempo de execução são produzidos pelo interpretador se algo der errado durante a execução do programa. A maior parte das mensagens de erro de tempo de execução inclui informações sobre onde o erro ocorreu e o que as funções estavam fazendo. Exemplo: a recursividade infinita eventualmente leva ao erro de tempo de execução maximum recursion depth exceeded.</p>
+</li>
+<li>
+<p>Erros semânticos são problemas com um programa que é executado sem produzir mensagens de erro, mas que não faz a coisa certa. Exemplo: uma expressão que não pode ser avaliada na ordem esperada, produzindo um resultado incorreto.</p>
+</li>
+</ul>
+<p>O primeiro passo da depuração é compreender com que tipo de erro você está lidando. Embora as próximas seções sejam organizadas pelo tipo de erro, algumas técnicas são aplicáveis em mais de uma situação.</p>
+<h2 id="a1-erros-de-sintaxe">A.1 - Erros de sintaxe</h2>
+<p>Os erros de sintaxe normalmente são fáceis de corrigir, uma vez que você descubra quais são. Infelizmente, as mensagens de erro muitas vezes não são úteis. As mensagens mais comuns são SyntaxError: invalid syntax e SyntaxError: invalid token, e nenhuma das duas é muito informativa.</p>
+<p>Por outro lado, a mensagem diz onde no programa o problema ocorreu. E, na verdade, diz a você onde o Python notou um problema, que é não necessariamente onde o erro está. Às vezes, o erro está antes da posição da mensagem de erro, muitas vezes na linha precedente.</p>
+<p>Se estiver construindo o programa incrementalmente, você terá uma boa ideia sobre onde encontrar o erro. Estará na última linha que acrescentou.</p>
+<p>Se estiver copiando o código de um livro, comece comparando com atenção o seu código e o do livro. Verifique cada caractere. Ao mesmo tempo, lembre-se de que o livro pode estar errado, então, se vir algo que parece um erro de sintaxe, pode ser mesmo.</p>
+<p>Aqui estão algumas formas de evitar os erros de sintaxe mais comuns:</p>
+<ol>
+<li>
+<p>Confira se não está usando uma palavra-chave do Python para um nome de variável.</p>
+</li>
+<li>
+<p>Verifique se há dois pontos no fim do cabeçalho de cada instrução composta, incluindo instruções for, while, if e def.</p>
+</li>
+<li>
+<p>Confira se as strings no código têm as aspas correspondentes. Verifique se todas as aspas são retas, em vez de curvas.</p>
+</li>
+<li>
+<p>Se tiver strings com várias linhas com aspas triplas (simples ou duplas), confira se fechou a string adequadamente. Uma string não fechada pode causar um erro de invalid token no fim do seu programa, ou pode tratar a parte seguinte do programa como uma string até chegar à string seguinte. No segundo caso, o programa pode nem produzir uma mensagem de erro!</p>
+</li>
+<li>
+<p>Um operador inicial aberto – <code>(</code>, <code>{</code> ou <code>[</code> – faz o Python continuar até a linha seguinte, como se esta fosse parte da instrução atual. Geralmente, um erro ocorre quase imediatamente na linha seguinte.</p>
+</li>
+<li>
+<p>Confira se há o clássico <code>=</code> em vez do <code>==</code> dentro de uma condicional.</p>
+</li>
+<li>
+<p>Verifique a endentação para ter certeza de que está alinhada como deveria. O Python pode lidar com espaços e tabulações, mas, se misturá-los, isso pode causar problemas. A melhor forma de evitar esse problema é usar um editor de texto que identifique o Python e gere endentação consistente.</p>
+</li>
+<li>
+<p>Se há caracteres não ASCII no código (incluindo strings e comentários), isso pode causar problemas, embora o Python 3 normalmente lide com caracteres não ASCII. Tenha cuidado se colar texto de uma página web ou outra fonte.</p>
+</li>
+</ol>
+<p>Se nada funcionar, vá para a próxima seção...</p>
+<h3 id="a11-continuo-fazendo-alteracoes-e-nao-faz-nenhuma-diferenca">A.1.1 - Continuo fazendo alterações e não faz nenhuma diferença</h3>
+<p>Se o interpretador disser que há um erro e você não o encontra, pode ser que você e o interpretador não estejam olhando para o mesmo código. Verifique o seu ambiente de programação para ter certeza de que o programa que está editando é o mesmo que o Python está tentando executar.</p>
+<p>Se não estiver certo, tente pôr um erro de sintaxe óbvio e deliberado no início do programa. Agora execute-o novamente. Se o interpretador não encontrar o novo erro, você não está executando o novo código.</p>
+<p>Há alguns culpados prováveis:</p>
+<ul>
+<li>
+<p>Você editou o arquivo e esqueceu de salvar as alterações antes de executá-lo novamente. Alguns ambientes de programação fazem isso para você, mas alguns não fazem.</p>
+</li>
+<li>
+<p>Você mudou o nome do arquivo, mas ainda está executando o nome antigo.</p>
+</li>
+<li>
+<p>Algo no seu ambiente de desenvolvimento está configurado incorretamente.</p>
+</li>
+<li>
+<p>Se estiver escrevendo um módulo e usando import, confira se não usou o mesmo nome no seu módulo que os dos módulos padrão do Python.</p>
+</li>
+<li>
+<p>Se você estiver usando import para ler um módulo, lembre-se de que é preciso reiniciar o interpretador ou usar reload para ler um arquivo alterado. Se importar o módulo novamente, ele não faz nada.</p>
+</li>
+</ul>
+<p>Se já esgotou as possibilidades e não conseguiu descobrir o que está acontecendo, uma abordagem é começar novamente com um programa como “Hello, World!”, para ter certeza de que consegue executar um programa conhecido. Então, gradualmente acrescente as partes do programa original ao novo.</p>
+<h2 id="a2-erros-de-tempo-de-execucao">A.2 - Erros de tempo de execução</h2>
+<p>Uma vez que o seu programa esteja sintaticamente correto, o Python pode lê-lo e, pelo menos, começar a executá-lo. O que poderia dar errado?</p>
+<h3 id="a21-meu-programa-nao-faz-nada">A.2.1 - Meu programa não faz nada</h3>
+<p>Este problema é mais comum quando o seu arquivo é composto de funções e classes, mas na verdade não invoca uma função para começar a execução. Isso pode ser intencional se você só planeja importar este módulo para fornecer classes e funções.</p>
+<p>Se não for intencional, tenha certeza de que há uma chamada de função no programa, e que o fluxo de execução o alcança (veja “Fluxo da execução” a seguir).</p>
+<h3 id="a22-meu-programa-trava">A.2.2 - Meu programa trava</h3>
+<p>Se um programa parar e parecer que não está fazendo nada, ele está “travado”. Muitas vezes isso significa que está preso em um loop ou recursão infinita.</p>
+<ul>
+<li>
+<p>Se houver determinado loop que você suspeita ser o problema, acrescente uma instrução print imediatamente antes do loop que diga “entrando no loop”, e outra imediatamente depois que diga “saindo do loop”.
+<br><br>Execute o programa. Se receber a primeira mensagem e a segunda não, você tem um loop infinito. Vá à seção “Loop infinito” mais adiante.</p>
+</li>
+<li>
+<p>Na maior parte do tempo, a recursividade infinita fará com que o programa seja executado durante algum tempo e então gere um erro “RuntimeError: Maximum recursion depth exceeded”. Se isso acontecer, vá à seção “Recursividade infinita” mais adiante.
+<br><br>Se não estiver recebendo este erro, mas suspeita que há um problema com um método ou função recursiva, você ainda pode usar as técnicas da seção “Recursividade infinita”.</p>
+</li>
+<li>
+<p>Se nenhum desses passos funcionar, comece a testar outros loops e outras funções e métodos recursivos.</p>
+</li>
+<li>
+<p>Se isso não funcionar, então é possível que você não entenda o fluxo de execução do seu programa. Vá à seção “Fluxo de execução” mais adiante.</p>
+</li>
+</ul>
+<h4 id="loop-infinito">Loop infinito</h4>
+<p>Se você acha que há um loop infinito e talvez saiba qual loop está causando o problema, acrescente uma instrução print no fim do loop que exiba os valores das variáveis na condição e o valor da condição.</p>
+<p>Por exemplo:</p>
+<pre><code class="language-python">while x &gt; 0 and y &lt; 0 :
+    # faz algo com x
+    # faz algo com y
+    print('x: ', x)
+    print('y: ', y)
+    print(&quot;condition: &quot;, (x &gt; 0 and y &lt; 0))
+</code></pre>
+<p>Agora, quando executar o programa, você verá três linhas de saída para cada vez que o programa passar pelo loop. Na última vez que passar pelo loop, a condição deve ser False. Se o loop continuar, você poderá ver os valores de x e y, e compreender porque não estão sendo atualizados corretamente.</p>
+<h4 id="recursividade-infinita">Recursividade infinita</h4>
+<p>Na maioria das vezes, a recursividade infinita faz o programa rodar durante algum tempo e então produzir um erro de "Maximum recursion depth exceeded".</p>
+<p>Se suspeitar que uma função está causando recursividade infinita, confira se há um caso-base. Deve haver alguma condição que faz a função retornar sem fazer uma invocação recursiva. Do contrário, você terá que repensar o algoritmo e identificar um caso-base.</p>
+<p>Se houver um caso-base, mas o programa não parece alcançá-lo, acrescente uma instrução print no início da função para exibir os parâmetros. Agora, quando executar o programa, você verá algumas linhas de saída cada vez que a função for invocada, e verá os valores dos parâmetros. Se os parâmetros não estiverem se movendo em direção ao caso-base, você terá algumas ideias sobre a razão disso.</p>
+<h4 id="fluxo-de-execucao">Fluxo de execução</h4>
+<p>Se não tiver certeza de como o fluxo de execução está se movendo pelo seu programa, acrescente instruções print ao começo de cada função com uma mensagem como “entrada na função foo”, onde foo é o nome da função.</p>
+<p>Agora, quando executar o programa, ele exibirá cada função que for invocada.</p>
+<h3 id="a23-quando-executo-o-programa-recebo-uma-excecao">A.2.3 - Quando executo o programa recebo uma exceção</h3>
+<p>Se algo der errado durante o tempo de execução, o Python exibe uma mensagem que inclui o nome da exceção, a linha do programa onde o problema ocorreu, e um traceback.</p>
+<p>O traceback identifica a função que está rodando atualmente, e a função que a chamou, assim como a função que chamou esta, e assim por diante. Em outras palavras, ele traça a sequência de chamadas de função que fez com que você chegasse onde está, incluindo o número da linha no seu arquivo onde cada chamada ocorreu.</p>
+<p>O primeiro passo é examinar o lugar no programa onde o erro ocorreu e ver se consegue compreender o que aconteceu. Esses são alguns dos erros de tempo de execução mais comuns:</p>
+<h4 id="nameerror">NameError</h4>
+<p>Você está tentando usar uma variável que não existe no ambiente atual. Confira se o nome está escrito corretamente e de forma consistente. E lembre-se de que as variáveis locais são locais; você não pode se referir a elas a partir do exterior da função onde são definidas.</p>
+<h4 id="typeerror">TypeError</h4>
+<p>Há várias causas possíveis:</p>
+<ul>
+<li>
+<p>Você está tentando usar um valor de forma inadequada. Exemplo: indexar uma string, lista ou tupla com algo diferente de um número inteiro.</p>
+</li>
+<li>
+<p>Não há correspondência entre os itens em uma string de formatação e os itens passados para conversão. Isso pode acontecer se o número de itens não tiver correspondência ou uma conversão inválida for chamada.</p>
+</li>
+<li>
+<p>Você está passando o número incorreto de argumentos a uma função. Para métodos, olhe para a definição do método e verifique se o primeiro parâmetro é self. Então olhe para a invocação do método; confira se está invocando o método a um objeto com o tipo correto e fornecendo os outros argumentos corretamente.</p>
+</li>
+</ul>
+<h4 id="keyerror">KeyError</h4>
+<p>Você está tentando acessar um elemento de um dicionário usando uma chave que o dicionário não contém. Se as chaves forem strings, lembre-se de que letras maiúsculas são diferentes de minúsculas.</p>
+<h4 id="attributeerror">AttributeError</h4>
+<p>Você está tentando acessar um atributo ou método que não existe. Verifique a ortografia! Você pode usar a função integrada vars para listar os atributos que existem mesmo.</p>
+<p>Se um AttributeError indicar que um objeto é do tipo NoneType, fica subentendido que é None. Então o problema não é o nome do atributo, mas o objeto.</p>
+<p>Pode ser que o objeto seja none porque você se esqueceu de retornar um valor de uma função; se chegar ao fim de uma função sem chegar a uma instrução return, ela retorna None. Outra causa comum é usar o resultado de um método de lista, como sort, que retorne None.</p>
+<h4 id="indexerror">IndexError</h4>
+<p>O índice que você está usando para acessar uma lista, string ou tupla é maior que o seu comprimento menos um. Imediatamente antes do local do erro, acrescente uma instrução print para exibir o valor do índice e o comprimento do array. O array é do tamanho certo? O índice tem o valor certo?</p>
+<p>O depurador do Python (pdb) é útil para rastrear exceções porque permite examinar o estado do programa imediatamente antes do erro. Você pode ler sobre o pdb em https://docs.python.org/3/library/pdb.html.</p>
+<h3 id="a24-acrescentei-tantas-instrucoes-print-que-fui-inundado-pelos-resultados">A.2.4 - Acrescentei tantas instruções print que fui inundado pelos resultados</h3>
+<p>Um dos problemas com a utilização de instruções print para a depuração é que você pode terminar enterrado pelos resultados. Há duas formas de prosseguir: simplifique a saída ou simplifique o programa.</p>
+<p>Para simplificar a saída, você pode retirar ou transformar as instruções print que não estão ajudando em comentários, ou combiná-las, ou formatar a saída para que seja mais fácil de entender.</p>
+<p>Para simplificar o programa, há várias coisas que você pode fazer. Em primeiro lugar, reduza o problema no qual o programa está trabalhando. Por exemplo, se está fazendo uma busca em uma lista, procure em uma lista pequena. Se o programa receber entradas do usuário, dê a entrada mais simples possível que cause o problema.</p>
+<p>Em segundo lugar, limpe o programa. Retire o código morto e reorganize o programa para torná-lo o mais fácil possível de ler. Por exemplo, se você suspeitar que o problema está em uma parte profundamente aninhada do programa, tente reescrever aquela parte com uma estrutura mais simples. Se suspeitar de uma função grande, tente quebrá-la em funções menores para testá-las separadamente.</p>
+<p>Muitas vezes, o próprio processo de encontrar o caso de teste mínimo leva você ao problema. Se descobrir que um programa funciona em uma situação, mas não em outra, isso dá uma pista sobre o que está acontecendo.</p>
+<p>De forma similar, reescrever uma parte do código pode ajudar a encontrar erros sutis. Se fizer uma alteração que você ache que não vai afetar o programa, mas que acabe afetando, isso pode ajudá-lo.</p>
+<h2 id="a3-erros-semanticos">A.3 - Erros semânticos</h2>
+<p>De algumas formas, os erros semânticos são os mais difíceis de depurar, porque o interpretador não fornece nenhuma informação sobre qual é o problema. Só você sabe o que o programa deve fazer.</p>
+<p>O primeiro passo é fazer uma conexão entre o texto do programa e o comportamento que está vendo. Você precisa de uma hipótese sobre o que o programa está fazendo de fato. Uma das coisas que torna isso difícil é que os computadores são rápidos.</p>
+<p>Pode ser que você queira diminuir a velocidade do programa para ser equivalente à humana; com alguns depuradores é possível fazer isso. No entanto, o tempo que leva para inserir instruções print bem colocadas muitas vezes é curto em comparação ao da configuração do depurador, inserção e remoção de marcações e colocação do “compasso” do programa onde o erro está ocorrendo.</p>
+<h3 id="a31-meu-programa-nao-funciona">A.3.1 - Meu programa não funciona</h3>
+<p>Você deve se perguntar o seguinte:</p>
+<ul>
+<li>
+<p>Há algo que o programa deveria fazer, mas que não parece acontecer? Encontre a seção do código que executa a função em questão e confira se está sendo executada quando você acha que deveria.</p>
+</li>
+<li>
+<p>Algo está acontecendo, mas não o que deveria? Encontre o código no seu programa que executa a função em questão e veja se está sendo executada na hora errada.</p>
+</li>
+<li>
+<p>Uma seção do código está produzindo um efeito que não é o esperado? Tenha certeza de que entende o código em questão, especialmente se envolver funções ou métodos de outros módulos do Python. Leia a documentação das funções que chama. Teste-as escrevendo casos de teste simples e verificando os resultados.</p>
+</li>
+</ul>
+<p>Para programar, é preciso ter um modelo mental de como os programas funcionam. Se escrever um programa que não faz o que espera, muitas vezes o problema não está no programa, está no seu modelo mental.</p>
+<p>A melhor forma de corrigir o seu modelo mental é quebrar o programa nos seus componentes (normalmente as funções e métodos) e testar cada componente em separado. Uma vez que encontre a discrepância entre o seu modelo e a realidade, poderá resolver o problema.</p>
+<p>Naturalmente, você deveria construir e testar componentes conforme desenvolva o programa. Assim, se encontrar um problema, deve haver só uma pequena quantidade de código novo que não sabe se está correto.</p>
+<h3 id="a32-tenho-uma-baita-expressao-cabeluda-e-ela-nao-faz-o-que-espero">A.3.2 - Tenho uma baita expressão cabeluda e ela não faz o que espero</h3>
+<p>Escrever expressões complexas é ótimo enquanto são legíveis, mas elas podem ser difíceis de depurar. Muitas vezes é uma boa ideia quebrar uma expressão complexa em uma série de atribuições a variáveis temporárias.</p>
+<p>Por exemplo:</p>
+<pre><code class="language-python">self.hands[i].addCard(self.hands[self.findNeighbor(i)].popCard())
+</code></pre>
+<p>A expressão pode ser reescrita assim:</p>
+<pre><code class="language-python">neighbor = self.findNeighbor(i)
+pickedCard = self.hands[neighbor].popCard()
+self.hands[i].addCard(pickedCard)
+</code></pre>
+<p>A versão explícita é mais fácil de ler porque os nomes das variáveis oferecem documentação adicional, e é mais fácil de depurar porque você pode verificar os tipos das variáveis intermediárias e exibir seus valores.</p>
+<p>Outro problema que pode ocorrer com grandes expressões é que a ordem da avaliação pode não ser o que você espera. Por exemplo, se estiver traduzindo a expressão <img alt="Fórmula – x / (2 * pi) em notação matemática." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/p242f1.png" /> para o Python, poderia escrever:</p>
+<pre><code class="language-python">y = x / 2 * math.pi
+</code></pre>
+<p>Isso não está correto porque a multiplicação e a divisão têm a mesma precedência e são avaliadas da esquerda para a direita. Então, é assim que essa expressão é calculada: xπ/2.</p>
+<p>Uma boa forma de depurar expressões é acrescentar parênteses para tornar a ordem da avaliação explícita:</p>
+<pre><code class="language-python">y = x / (2 * math.pi)
+</code></pre>
+<p>Sempre que não tiver certeza sobre a ordem da avaliação, use parênteses. Além de o programa ficar correto (quanto à execução do que era pretendido), ele também será mais legível para outras pessoas que não memorizaram a ordem de operações.</p>
+<h3 id="a33-tenho-uma-funcao-que-nao-retorna-o-que-espero">A.3.3 - Tenho uma função que não retorna o que espero</h3>
+<p>Se tiver uma instrução return com uma expressão complexa, não há possibilidade de exibir o resultado antes do retorno. Novamente, você pode usar uma variável temporária. Por exemplo, em vez de:</p>
+<pre><code class="language-python">return self.hands[i].removeMatches()
+</code></pre>
+<p>você poderia escrever:</p>
+<pre><code class="language-python">count = self.hands[i].removeMatches()
+return count
+</code></pre>
+<p>Agora você tem a oportunidade de exibir o valor de count antes do retorno.</p>
+<h3 id="a34-estou-perdido-e-preciso-de-ajuda">A.3.4 - Estou perdido e preciso de ajuda</h3>
+<p>Em primeiro lugar, afaste-se do computador por alguns minutos. Computadores emitem ondas que afetam o cérebro, causando estes sintomas:</p>
+<ul>
+<li>
+<p>frustração e raiva;</p>
+</li>
+<li>
+<p>crenças supersticiosas (“o computador me odeia”) e pensamento mágico (“o programa só funciona quando uso o meu chapéu virado para trás”);</p>
+</li>
+<li>
+<p>programação aleatória (a tentativa de programar escrevendo todos os programas possíveis e escolhendo aquele que faz a coisa certa).</p>
+</li>
+</ul>
+<p>Se estiver sofrendo algum desses sintomas, levante-se e dê uma volta. Quando se acalmar, pense no programa. O que ele está fazendo? Quais são algumas causas possíveis para esse comportamento? Quando foi a última vez que tinha um programa funcionando, e o que fez depois disso?</p>
+<p>Às vezes leva tempo para encontrar um erro. Com frequência encontro erros quando estou longe do computador e deixo a minha mente vagar. Os melhores lugares para encontrar erros são os trens, o chuveiro e a cama, logo antes de adormecer.</p>
+<h3 id="a35-serio-preciso-mesmo-de-ajuda">A.3.5 - Sério, preciso mesmo de ajuda</h3>
+<p>Acontece. Mesmo os melhores programadores ocasionalmente empacam. Pode ocorrer de você trabalhar tanto em um programa que não consegue enxergar o erro. Precisa de outro par de olhos.</p>
+<p>Antes de trazer mais alguém, não se esqueça de se preparar. Seu programa deve ser o mais simples possível, e deve estar funcionando com a menor entrada possível que cause o erro. Deve ter instruções print nos lugares adequados (e a saída que produzem deve ser compreensível). Você deve entender o problema o suficiente para descrevê-lo de forma concisa.</p>
+<p>Ao trazer alguém para ajudar, lembre-se de dar as informações de que a pessoa possa precisar:</p>
+<ul>
+<li>
+<p>Se houver uma mensagem de erro, qual é e que parte do programa indica?</p>
+</li>
+<li>
+<p>Qual foi a última coisa que fez antes de este erro ocorrer? Quais foram as últimas linhas de código que escreveu, ou qual é o novo caso de teste que falhou?</p>
+</li>
+<li>
+<p>O que tentou até agora e o que aprendeu?</p>
+</li>
+</ul>
+<p>Quando encontrar o erro, pense por um segundo no que poderia ter feito para encontrá-lo mais rápido. Na próxima vez em que vir algo similar, poderá encontrar o erro mais rapidamente.</p>
+<p>Lembre-se, a meta não é só fazer o programa funcionar. A meta é aprender como fazer o programa funcionar.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../B-analise-algorit/" class="btn btn-neutral float-right" title="Apêndice B: Análise de algoritmos">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../19-extra/" class="btn btn-neutral" title="Capítulo 19: Extra"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../19-extra/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../B-analise-algorit/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

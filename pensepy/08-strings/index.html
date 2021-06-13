@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Capítulo 8: Strings - Pense Python</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Cap\u00edtulo 8: Strings";
+    var mkdocs_page_input_path = "08-strings.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pense Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Pense em Python</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../00-prefacio/">Prefácio</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-jornada/">Capítulo 1: A jornada do programa</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-vars-expr-instr/">Capítulo 2: Variáveis, expressões e instruções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-funcoes/">Capítulo 3: Funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-caso-interface/">Capítulo 4: Estudo de caso: projeto de interface</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-cond-recur/">Capítulo 5: Condicionais e recursividade</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-funcoes-result/">Capítulo 6: Funções com resultado</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-iteracao/">Capítulo 7: Iteração</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Capítulo 8: Strings</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#81-uma-string-e-uma-sequencia">8.1 - Uma string é uma sequência</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#82-len">8.2 - len</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#83-travessia-com-loop-for">8.3 - Travessia com loop for</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#84-fatiamento-de-strings">8.4 - Fatiamento de strings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#85-strings-sao-imutaveis">8.5 - Strings são imutáveis</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#86-buscando">8.6 - Buscando</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#87-loop-e-contagem">8.7 - Loop e contagem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#88-metodos-de-strings">8.8 - Métodos de strings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#89-operador-in">8.9 - Operador in</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#810-comparacao-de-strings">8.10 - Comparação de strings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#811-depuracao">8.11 - Depuração</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#812-glossario">8.12 - Glossário</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#813-exercicios">8.13 - Exercícios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-81">Exercício 8.1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-82">Exercício 8.2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-83">Exercício 8.3</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-84">Exercício 8.4</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-85">Exercício 8.5</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-caso-palavras/">Capítulo 9: Estudo de caso: jogos de palavras</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-listas/">Capítulo 10: Listas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../11-dicionarios/">Capítulo 11: Dicionários</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../12-tuplas/">Capítulo 12: Tuplas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../13-caso-estruturas/">Capítulo 13: Estudo de caso: seleção de estrutura de dados</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../14-arquivos/">Capítulo 14: Arquivos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../15-classes-objetos/">Capítulo 15: Classes e objetos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../16-classes-funcoes/">Capítulo 16: Classes e funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../17-classes-metodos/">Capítulo 17: Classes e métodos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../18-heranca/">Capítulo 18: Herança</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../19-extra/">Capítulo 19: Extra</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../A-depuracao/">Apêndice A: Depuração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../B-analise-algorit/">Apêndice B: Análise de algoritmos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../C-colofao-autor/">Colofão</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pense Python</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Capítulo 8: Strings</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="capitulo-8-strings">Capítulo 8: Strings</h1>
+<p>Strings não são como números inteiros, de ponto flutuante ou booleanos. Uma string é uma sequência, ou seja, uma coleção ordenada de outros valores. Neste capítulo você verá como acessar os caracteres que compõem uma string e aprenderá alguns métodos que as strings oferecem.</p>
+<h2 id="81-uma-string-e-uma-sequencia">8.1 - Uma string é uma sequência</h2>
+<p>Uma string é uma sequência de caracteres. Você pode acessar um caractere de cada vez com o operador de colchete:</p>
+<pre><code class="language-python">&gt;&gt;&gt; fruit = 'banana'
+&gt;&gt;&gt; letter = fruit[1]
+</code></pre>
+<p>A segunda instrução seleciona o caractere número 1 de fruit e o atribui a letter.</p>
+<p>A expressão entre colchetes chama-se índice. O índice aponta qual caractere da sequência você quer (daí o nome).</p>
+<pre><code class="language-python">Mas pode ser que você não obtenha o que espera:
+&gt;&gt;&gt; letter
+'a'
+</code></pre>
+<p>Para a maior parte das pessoas, a primeira letra de 'banana' é b, não a. Mas para os cientistas da computação, o índice é uma referência do começo da string, e a referência da primeira letra é zero.</p>
+<pre><code class="language-python">&gt;&gt;&gt; letter = fruit[0]
+&gt;&gt;&gt; letter
+'b'
+</code></pre>
+<p>Então b é a 0ª (“zerésima”) letra de 'banana', a é a 1ª (primeira) letra e n é a 2ª (segunda) letra.</p>
+<p>Você pode usar uma expressão que contenha variáveis e operadores como índice:</p>
+<pre><code class="language-python">&gt;&gt;&gt; i = 1
+&gt;&gt;&gt; fruit[i]
+'a'
+&gt;&gt;&gt; fruit[i+1]
+'n'
+</code></pre>
+<p>Porém, o valor do índice tem que ser um número inteiro. Se não for, é isso que aparece:</p>
+<pre><code class="language-python">&gt;&gt;&gt; letter = fruit[1.5]
+TypeError: string indices must be integers
+</code></pre>
+<h2 id="82-len">8.2 - len</h2>
+<p>len é uma função integrada que devolve o número de caracteres em uma string:</p>
+<pre><code class="language-python">&gt;&gt;&gt; fruit = 'banana'
+&gt;&gt;&gt; len(fruit)
+6
+</code></pre>
+<p>Para obter a última letra de uma string, pode parecer uma boa ideia tentar algo assim:</p>
+<pre><code class="language-python">&gt;&gt;&gt; length = len(fruit)
+&gt;&gt;&gt; last = fruit[length]
+IndexError: string index out of range
+</code></pre>
+<p>A razão de haver um IndexError aqui é que não há nenhuma letra em 'banana' com o índice 6. Como a contagem inicia no zero, as seis letras são numeradas de 0 a 5. Para obter o último caractere, você deve subtrair 1 de length:</p>
+<pre><code class="language-python">&gt;&gt;&gt; last = fruit[length-1]
+&gt;&gt;&gt; last
+'a'
+</code></pre>
+<p>Ou você pode usar índices negativos, que contam de trás para a frente a partir do fim da string. A expressão fruit[-1] apresenta a última letra, fruit[-2] apresenta a segunda letra de trás para a frente, e assim por diante.</p>
+<h2 id="83-travessia-com-loop-for">8.3 - Travessia com loop for</h2>
+<p>Muitos cálculos implicam o processamento de um caractere por vez em uma string. Muitas vezes começam no início, selecionam um caractere por vez, fazem algo e continuam até o fim. Este modelo do processamento chama-se travessia. Um modo de escrever uma travessia é com o loop while:</p>
+<pre><code class="language-python">index = 0
+while index &lt; len(fruit):
+    letter = fruit[index]
+    print(letter)
+    index = index + 1
+</code></pre>
+<p>Este loop atravessa a string e exibe cada letra sozinha em uma linha. A condição do loop é index &lt;len (fruit), então quando index é igual ao comprimento da string, a condição é falsa e o corpo do loop não é mais executado. O último caractere acessado é aquele com o índice len (fruit)-1, que é o último caractere na string.</p>
+<p>Como exercício, escreva uma função que receba uma string como argumento e exiba as letras de trás para a frente, uma por linha.</p>
+<p>Outra forma de escrever uma travessia é com um loop for:</p>
+<pre><code class="language-python">for letter in fruit:
+    print(letter)
+</code></pre>
+<p>Cada vez que o programa passar pelo loop, o caractere seguinte na string é atribuído à variável letter. O loop continua até que não sobre nenhum caractere.</p>
+<p>O próximo exemplo mostra como usar a concatenação (adição de strings) e um loop for para gerar uma série abecedária (isto é, em ordem alfabética). No livro de Robert McCloskey, Make Way for Ducklings (Abram caminho para os patinhos), os nomes dos patinhos são Jack, Kack, Lack, Mack, Nack, Ouack, Pack e Quack. Este loop produz estes nomes em ordem:</p>
+<pre><code class="language-python">prefixes = 'JKLMNOPQ'
+suffix = 'ack'
+for letter in prefixes:
+    print(letter + suffix)
+A saída é:
+Jack
+Kack
+Lack
+Mack
+Nack
+Oack
+Pack
+Qack
+</code></pre>
+<p>Claro que não está exatamente certo porque “Ouack” e “Quack” foram mal soletrados. Como exercício, altere o programa para corrigir este erro.</p>
+<h2 id="84-fatiamento-de-strings">8.4 - Fatiamento de strings</h2>
+<p>Um segmento de uma string é chamado de fatia. Selecionar uma fatia é como selecionar um caractere:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = 'Monty Python'
+&gt;&gt;&gt; s[0:5]
+'Monty'
+&gt;&gt;&gt; s[6:12]
+'Python'
+</code></pre>
+<p>O operador <code>[n:m]</code> retorna a parte da string do “enésimo” caractere ao “emésimo” caractere, incluindo o primeiro, mas excluindo o último. Este comportamento é contraintuitivo, porém pode ajudar a imaginar os índices que indicam a parte entre os caracteres, como na Figura 8.1.</p>
+<p><img alt="Figura 8.1 – Índices de fatias." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_0801.png" />
+<br><em>Figura 8.1 – Índices de fatias.</em></p>
+<p>Se você omitir o primeiro índice (antes dos dois pontos), a fatia começa no início da string. Se omitir o segundo índice, a fatia vai ao fim da string:</p>
+<pre><code class="language-python">&gt;&gt;&gt; fruit = 'banana'
+&gt;&gt;&gt; fruit[:3]
+'ban'
+&gt;&gt;&gt; fruit[3:]
+'ana'
+</code></pre>
+<p>Se o primeiro índice for maior ou igual ao segundo, o resultado é uma string vazia, representada por duas aspas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; fruit = 'banana'
+&gt;&gt;&gt; fruit[3:3]
+''
+</code></pre>
+<p>Uma string vazia não contém nenhum caractere e tem o comprimento 0, fora isso, é igual a qualquer outra string.</p>
+<p>Continuando este exemplo, o que você acha que <code>fruit[:]</code> significa? Teste e veja.</p>
+<h2 id="85-strings-sao-imutaveis">8.5 - Strings são imutáveis</h2>
+<p>É tentador usar o operador <code>[]</code> no lado esquerdo de uma atribuição, com a intenção de alterar um caractere em uma string. Por exemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; greeting = 'Hello, world!'
+&gt;&gt;&gt; greeting[0] = 'J'
+TypeError: 'str' object does not support item assignment
+</code></pre>
+<p>O “objeto” neste caso é a string e o “item” é o caractere que você tentou atribuir. Por enquanto, um objeto é a mesma coisa que um valor, mas refinaremos esta definição mais adiante (<a href="&lt;a href=" title="10-listas.md#sec:10.10">Objetos e valores</a>, no capítulo 10).</p>
+<p>A razão do erro é que as strings são imutáveis, o que significa que você não pode alterar uma string existente. O melhor que você pode fazer é criar uma string que seja uma variação da original:</p>
+<pre><code class="language-python">&gt;&gt;&gt; greeting = 'Hello, world!'
+&gt;&gt;&gt; new_greeting = 'J' + greeting[1:]
+&gt;&gt;&gt; new_greeting
+'Jello, world!'
+</code></pre>
+<p>Esse exemplo concatena uma nova primeira letra a uma fatia de <code>greeting</code>. Não tem efeito sobre a string original.</p>
+<h2 id="86-buscando">8.6 - Buscando</h2>
+<pre><code class="language-python">O que faz a seguinte função?
+def find(word, letter):
+    index = 0
+    while index &lt; len(word):
+        if word[index] == letter:
+            return index
+        index = index + 1
+    return-1
+</code></pre>
+<p>De certo modo, <code>find</code> é o inverso do operador <code>[]</code>. Em vez de tomar um índice e extrair o caractere correspondente, ele toma um caractere e encontra o índice onde aquele caractere aparece. Se o caractere não for encontrado, a função retorna -1.</p>
+<p>Esse é o primeiro exemplo que vimos de uma instrução <code>return</code> dentro de um loop. Se <code>word[index] == letter</code>, a função sai do loop e retorna imediatamente.</p>
+<p>Se o caractere não aparecer na string, o programa sai do loop normalmente e devolve -1.</p>
+<p>Este modelo de cálculo – atravessar uma sequência e retornar quando encontramos o que estamos procurando – chama-se busca.</p>
+<p>Como exercício, altere <code>find</code> para que tenha um terceiro parâmetro: o índice em <code>word</code> onde deve começar a busca.</p>
+<h2 id="87-loop-e-contagem">8.7 - Loop e contagem</h2>
+<p>O seguinte programa conta o número de vezes que a letra a aparece em uma string:</p>
+<pre><code class="language-python">word = 'banana'
+count = 0
+for letter in word:
+    if letter == 'a':
+        count = count + 1
+print(count)
+</code></pre>
+<p>Este programa demonstra outro padrão de computação chamado contador. A variável <code>count</code> é inicializada com 0 e então incrementada cada vez que um a é encontrado. Ao sair do loop, <code>count</code> contém o resultado – o número total de letras <code>'a'</code>.</p>
+<p>Como exercício, encapsule este código em uma função denominada <code>count</code> e generalize-o para que aceite a string e a letra como argumentos.</p>
+<p>Então reescreva a função para que, em vez de atravessar a string, ela use a versão de três parâmetros do find da seção anterior.</p>
+<h2 id="88-metodos-de-strings">8.8 - Métodos de strings</h2>
+<p>As strings oferecem métodos que executam várias operações úteis. Um método é semelhante a uma função – toma argumentos e devolve um valor –, mas a sintaxe é diferente. Por exemplo, o método upper recebe uma string e devolve uma nova string com todas as letras maiúsculas.</p>
+<p>Em vez da sintaxe de função <code>upper(word)</code>, ela usa a sintaxe de método <code>word.upper()</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; word = 'banana'
+&gt;&gt;&gt; new_word = word.upper()
+&gt;&gt;&gt; new_word
+'BANANA'
+</code></pre>
+<p>Esta forma de notação de ponto especifica o nome do método, <code>upper</code> e o nome da string, <code>word</code>, à qual o método será aplicado. Os parênteses vazios indicam que este método não toma nenhum argumento.</p>
+<p>Uma chamada de método denomina-se invocação; neste caso, diríamos que estamos invocando <code>upper</code> em <code>word</code>.</p>
+<p>E, na verdade, há um método de string denominado <code>find</code>, que é notavelmente semelhante à função que escrevemos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; word = 'banana'
+&gt;&gt;&gt; index = word.find('a')
+&gt;&gt;&gt; index
+1
+</code></pre>
+<p>Neste exemplo, invocamos <code>find</code> em <code>word</code> e passamos a letra que estamos procurando como um parâmetro.</p>
+<p>Na verdade, o método <code>find</code> é mais geral que a nossa função; ele pode encontrar substrings, não apenas caracteres:</p>
+<pre><code class="language-python">&gt;&gt;&gt; word.find('na')
+2
+</code></pre>
+<p>Por padrão, <code>find</code> inicia no começo da string, mas pode receber um segundo argumento, o índice onde deve começar:</p>
+<pre><code class="language-python">&gt;&gt;&gt; word.find('na', 3)
+4
+</code></pre>
+<p>Este é um exemplo de um argumento opcional. <code>find</code> também pode receber um terceiro argumento, o índice para onde deve parar:</p>
+<pre><code class="language-python">&gt;&gt;&gt; name = 'bob'
+&gt;&gt;&gt; name.find('b', 1, 2)
+-1
+</code></pre>
+<p>Esta busca falha porque <code>'b'</code> não aparece no intervalo do índice de 1 a 2, não incluindo 2. Fazer buscas até (mas não incluindo) o segundo índice torna <code>find</code> similar ao operador de fatiamento.</p>
+<h2 id="89-operador-in">8.9 - Operador in</h2>
+<p>A palavra <code>in</code> é um operador booleano que recebe duas strings e retorna <code>True</code> se a primeira aparecer como uma substring da segunda:</p>
+<pre><code class="language-python">&gt;&gt;&gt; 'a' in 'banana'
+True
+&gt;&gt;&gt; 'seed' in 'banana'
+False
+</code></pre>
+<p>Por exemplo, a seguinte função imprime todas as letras de <code>word1</code> que também aparecem em <code>word2</code>:</p>
+<pre><code class="language-python">def in_both(word1, word2):
+    for letter in word1:
+        if letter in word2:
+            print(letter)
+</code></pre>
+<p>Com nomes de variáveis bem escolhidos, o Python às vezes pode ser lido como um texto em inglês. Você pode ler este loop, “para (cada) letra em (a primeira) palavra, se (a) letra (aparecer) em (a segunda) palavra, exiba (a) letra”.</p>
+<p>Veja o que é apresentado ao se comparar maçãs e laranjas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; in_both('apples', 'oranges')
+a
+e
+s
+</code></pre>
+<h2 id="810-comparacao-de-strings">8.10 - Comparação de strings</h2>
+<p>Os operadores relacionais funcionam em strings. Para ver se duas strings são iguais:</p>
+<pre><code class="language-python">if word == 'banana':
+    print('All right, bananas.')
+</code></pre>
+<p>Outras operações relacionais são úteis para colocar palavras em ordem alfabética:</p>
+<pre><code class="language-python">if word &lt; 'banana':
+    print('Your word, ' + word + ', comes before banana.')
+elif word &gt; 'banana':
+    print('Your word, ' + word + ', comes after banana.')
+else:
+    print('All right, bananas.')
+</code></pre>
+<p>O Python não lida com letras maiúsculas e minúsculas do mesmo jeito que as pessoas. Todas as letras maiúsculas vêm antes de todas as letras minúsculas, portanto:</p>
+<pre><code class="language-python">Your word, Pineapple, comes before banana.
+</code></pre>
+<p>Uma forma comum de lidar com este problema é converter strings em um formato padrão, como letras minúsculas, antes de executar a comparação. Lembre-se disso caso tenha que se defender de um homem armado com um abacaxi.</p>
+<h2 id="811-depuracao">8.11 - Depuração</h2>
+<p>Ao usar índices para atravessar os valores em uma sequência, é complicado acertar o começo e o fim da travessia. Aqui está uma função que supostamente compara duas palavras e retorna True se uma das palavras for o reverso da outra, mas contém dois erros:</p>
+<pre><code class="language-python">def is_reverse(word1, word2):
+    if len(word1) != len(word2):
+        return False
+    i = 0
+    j = len(word2)
+    while j &gt; 0:
+        if word1[i] != word2[j]:
+            return False
+        i = i+1
+        j = j-1
+    return True
+</code></pre>
+<p>A primeira instrução if verifica se as palavras têm o mesmo comprimento. Se não for o caso, podemos retornar False imediatamente. Do contrário, para o resto da função, podemos supor que as palavras tenham o mesmo comprimento. Este é um exemplo do modelo de guardião em “Verificação de tipos”, na página 101.</p>
+<p>i e j são índices: i atravessa word1 para a frente, enquanto j atravessa word2 para trás. Se encontrarmos duas letras que não combinam, podemos retornar False imediatamente. Se terminarmos o loop inteiro e todas as letras corresponderem, retornamos True.</p>
+<p>Se testarmos esta função com as palavras “pots” e “stop”, esperamos o valor de retorno True, mas recebemos um IndexError:</p>
+<pre><code class="language-python">&gt;&gt;&gt; is_reverse('pots', 'stop')
+...
+  File &quot;reverse.py&quot;, line 15, in is_reverse
+    if word1[i] != word2[j]:
+IndexError: string index out of range
+</code></pre>
+<p>Para depurar este tipo de erro, minha primeira ação é exibir os valores dos índices imediatamente antes da linha onde o erro aparece.</p>
+<pre><code class="language-python">while j &gt; 0:
+    print(i, j)        # exibir aqui
+    if word1[i] != word2[j]:
+        return False
+    i = i+1
+    j = j-1
+</code></pre>
+<p>Agora quando executo o programa novamente, recebo mais informação:</p>
+<pre><code class="language-python">&gt;&gt;&gt; is_reverse('pots', 'stop')
+0 4
+...
+IndexError: string index out of range
+</code></pre>
+<p>Na primeira vez que o programa passar pelo loop, o valor de j é 4, que está fora do intervalo da string 'pots'. O índice do último caractere é 3, então o valor inicial de j deve ser len(word2)-1.</p>
+<p>Se corrigir esse erro e executar o programa novamente, recebo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; is_reverse('pots', 'stop')
+0 3
+1 2
+2 1
+True
+</code></pre>
+<p>Desta vez, recebemos a resposta certa, mas parece que o loop só foi executado três vezes, o que é suspeito. Para ter uma ideia melhor do que está acontecendo, é útil desenhar um diagrama de estado. Durante a primeira iteração, o frame de <code>is_reverse</code> é mostrado na Figura 8.2.</p>
+<p><img alt="Figura 8.2 – Diagrama de estado de is_reverse." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_0802.png" />
+<br><em>8.2 – Diagrama de estado de is_reverse.</em></p>
+<p>Tomei a liberdade de arrumar as variáveis no frame e acrescentei linhas pontilhadas para mostrar que os valores de i e j indicam caracteres em word1 e word2.</p>
+<p>Começando com este diagrama, execute o programa em papel, alterando os valores de i e j durante cada iteração. Encontre e corrija o segundo erro desta função.</p>
+<h2 id="812-glossario">8.12 - Glossário</h2>
+<dl>
+<dt><a id="glos:objeto" href="#termo:objeto">objeto</a></dt>
+<dd>Algo a que uma variável pode se referir. Por enquanto, você pode usar “objeto” e “valor” de forma intercambiável.</dd>
+
+<dt><a id="glos:sequência" href="#termo:sequência">sequência</a></dt>
+<dd>Uma coleção ordenada de valores onde cada valor é identificado por um índice de número inteiro.</dd>
+
+<dt><a id="glos:item" href="#termo:item">item</a></dt>
+<dd>Um dos valores em uma sequência.</dd>
+
+<dt><a id="glos:índice" href="#termo:índice">índice</a></dt>
+<dd>Um valor inteiro usado para selecionar um item em uma sequência, como um caractere em uma string. No Python, os índices começam em 0.</dd>
+
+<dt><a id="glos:fatia" href="#termo:fatia">fatia</a></dt>
+<dd>Parte de uma string especificada por um intervalo de índices.</dd>
+
+<dt><a id="glos:string vazia" href="#termo:string vazia">string vazia</a></dt>
+<dd>Uma string sem caracteres e de comprimento 0, representada por duas aspas.</dd>
+
+<dt><a id="glos:imutável" href="#termo:imutável">imutável</a></dt>
+<dd>A propriedade de uma sequência cujos itens não podem ser alterados.</dd>
+
+<dt><a id="glos:atravessar" href="#termo:atravessar">atravessar</a></dt>
+<dd>Repetir os itens em uma sequência, executando uma operação semelhante em cada um.</dd>
+
+<dt><a id="glos:busca" href="#termo:busca">busca</a></dt>
+<dd>Um modelo de travessia que é interrompido quando encontra o que está procurando.</dd>
+
+<dt><a id="glos:contador" href="#termo:contador">contador</a></dt>
+<dd>Uma variável usada para contar algo, normalmente inicializada com zero e então incrementada.</dd>
+
+<dt><a id="glos:invocação" href="#termo:invocação">invocação</a></dt>
+<dd>Uma instrução que chama um método.</dd>
+
+<dt><a id="glos:argumento opcional" href="#termo:argumento opcional">argumento opcional</a></dt>
+<dd>Um argumento de função ou método que não é necessário.</dd>
+
+</dl>
+
+<h2 id="813-exercicios">8.13 - Exercícios</h2>
+<h3 id="exercicio-81">Exercício 8.1</h3>
+<p>Leia a documentação dos métodos de strings em http://docs.python.org/3/library/stdtypes.html#string-methods. Pode ser uma boa ideia experimentar alguns deles para entender como funcionam. <code>strip</code> e <code>replace</code> são especialmente úteis.</p>
+<p>A documentação usa uma sintaxe que pode ser confusa. Por exemplo, em <code>find(sub[, start[, end]])</code>, os colchetes indicam argumentos opcionais. Então <code>sub</code> é exigido, mas <code>start</code> é opcional, e se você incluir <code>start</code>, então <code>end</code> é opcional.</p>
+<h3 id="exercicio-82">Exercício 8.2</h3>
+<p>Há um método de string chamado <code>count</code>, que é semelhante à função em “Loop e contagem”, na página 123. Leia a documentação deste método e escreva uma invocação que conte o número de letras <code>'a'</code> em 'banana'.</p>
+<h3 id="exercicio-83">Exercício 8.3</h3>
+<p>Uma fatia de string pode receber um terceiro índice que especifique o “tamanho do passo”; isto é, o número de espaços entre caracteres sucessivos. Um tamanho de passo 2 significa tomar um caractere e outro não; 3 significa tomar um e dois não etc.</p>
+<pre><code class="language-python">&gt;&gt;&gt; fruit = 'banana'
+&gt;&gt;&gt; fruit[0:5:2]
+'bnn'
+</code></pre>
+<p>Um tamanho de passo -1 atravessa a palavra de trás para a frente, então a fatia <code>[::-1]</code> gera uma string invertida.</p>
+<p>Use isso para escrever uma versão de uma linha de <code>is_palindrome</code> do Exercício 6.3.</p>
+<h3 id="exercicio-84">Exercício 8.4</h3>
+<p>As seguintes funções pretendem verificar se uma string contém alguma letra minúscula, mas algumas delas estão erradas. Para cada função, descreva o que ela faz (assumindo que o parâmetro seja uma string).</p>
+<pre><code class="language-python">def any_lowercase1(s):
+    for c in s:
+        if c.islower():
+            return True
+        else:
+            return False
+
+def any_lowercase2(s):
+    for c in s:
+        if 'c'.islower():
+            return 'True'
+        else:
+            return 'False'
+
+def any_lowercase3(s):
+    for c in s:
+        flag = c.islower()
+    return flag
+
+def any_lowercase4(s):
+    flag = False
+    for c in s:
+        flag = flag or c.islower()
+    return flag
+
+def any_lowercase5(s):
+    for c in s:
+        if not c.islower():
+            return False
+    return True
+</code></pre>
+<h3 id="exercicio-85">Exercício 8.5</h3>
+<p>Uma cifra de César é uma forma fraca de criptografia que implica “rotacionar” cada letra por um número fixo de lugares. Rotacionar uma letra significa deslocá-lo pelo alfabeto, voltando ao início se for necessário, portanto ‘A’ rotacionado por 3 é ‘D’ e ‘Z’ rotacionado por 1 é ‘A’.</p>
+<p>Para rotacionar uma palavra, faça cada letra se mover pela mesma quantidade de posições. Por exemplo, “cheer” rotacionado por 7 é “jolly” e “melon” rotacionado por -10 é “cubed”. No filme 2001: Uma odisseia no espaço, o computador da nave chama-se HAL, que é IBM rotacionado por -1.</p>
+<p>Escreva uma função chamada <code>rotate_word</code> que receba uma string e um número inteiro como parâmetros, e retorne uma nova string que contém as letras da string original rotacionadas pelo número dado.</p>
+<p>Você pode usar a função integrada ord, que converte um caractere em um código numérico e chr, que converte códigos numéricos em caracteres. As letras do alfabeto são codificadas em ordem alfabética, então, por exemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; ord('c') - ord('a')
+2
+</code></pre>
+<p>Porque <code>'c'</code> é a “segunda” letra do alfabeto. Mas tenha cuidado: os códigos numéricos de letras maiúsculas são diferentes.</p>
+<p>Piadas potencialmente ofensivas na internet às vezes são codificadas em ROT13, que é uma cifra de César com rotação 13. Se não se ofender facilmente, encontre e decifre algumas delas.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../09-caso-palavras/" class="btn btn-neutral float-right" title="Capítulo 9: Estudo de caso: jogos de palavras">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../07-iteracao/" class="btn btn-neutral" title="Capítulo 7: Iteração"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../07-iteracao/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../09-caso-palavras/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

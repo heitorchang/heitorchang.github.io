@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Capítulo 16: Classes e funções - Pense Python</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Cap\u00edtulo 16: Classes e fun\u00e7\u00f5es";
+    var mkdocs_page_input_path = "16-classes-funcoes.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pense Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Pense em Python</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../00-prefacio/">Prefácio</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-jornada/">Capítulo 1: A jornada do programa</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-vars-expr-instr/">Capítulo 2: Variáveis, expressões e instruções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-funcoes/">Capítulo 3: Funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-caso-interface/">Capítulo 4: Estudo de caso: projeto de interface</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-cond-recur/">Capítulo 5: Condicionais e recursividade</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-funcoes-result/">Capítulo 6: Funções com resultado</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-iteracao/">Capítulo 7: Iteração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-strings/">Capítulo 8: Strings</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-caso-palavras/">Capítulo 9: Estudo de caso: jogos de palavras</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-listas/">Capítulo 10: Listas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../11-dicionarios/">Capítulo 11: Dicionários</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../12-tuplas/">Capítulo 12: Tuplas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../13-caso-estruturas/">Capítulo 13: Estudo de caso: seleção de estrutura de dados</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../14-arquivos/">Capítulo 14: Arquivos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../15-classes-objetos/">Capítulo 15: Classes e objetos</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Capítulo 16: Classes e funções</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#161-time">16.1 - Time</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#162-funcoes-puras">16.2 - Funções puras</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#163-modificadores">16.3 - Modificadores</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#164-prototipacao-versus-planejamento">16.4 - Prototipação versus planejamento</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#165-depuracao">16.5 - Depuração</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#166-glossario">16.6 - Glossário</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#167-exercicios">16.7 - Exercícios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-161">Exercício 16.1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-162">Exercício 16.2</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../17-classes-metodos/">Capítulo 17: Classes e métodos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../18-heranca/">Capítulo 18: Herança</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../19-extra/">Capítulo 19: Extra</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../A-depuracao/">Apêndice A: Depuração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../B-analise-algorit/">Apêndice B: Análise de algoritmos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../C-colofao-autor/">Colofão</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pense Python</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Capítulo 16: Classes e funções</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="capitulo-16-classes-e-funcoes">Capítulo 16: Classes e funções</h1>
+<p>Agora que sabemos como criar tipos, o próximo passo deve ser escrever funções que recebam objetos definidos pelo programador como parâmetros e os retornem como resultados. Neste capítulo também vou apresentar o “estilo funcional de programação” e dois novos planos de desenvolvimento de programas.</p>
+<p>Os exemplos de código deste capítulo estão disponíveis em http://thinkpython2.com/code/Time1.py. As soluções para os exercícios estão em http://thinkpython2.com/code/Time1_soln.py.</p>
+<h2 id="161-time">16.1 - Time</h2>
+<p>Para ter mais um exemplo de tipo definido pelo programador, criaremos uma classe chamada <code>Time</code> (hora), que registra um horário no dia. A definição da classe é assim:</p>
+<pre><code class="language-python">class Time:
+    &quot;&quot;&quot;Represents the time of day.
+    attributes: hour, minute, second
+    &quot;&quot;&quot;
+</code></pre>
+<p>Podemos criar um objeto <code>Time</code> e ter atributos para horas, minutos e segundos:</p>
+<pre><code class="language-python">time = Time()
+time.hour = 11
+time.minute = 59
+time.second = 30
+</code></pre>
+<p>O diagrama de estado do objeto Time está na Figura 16.1.</p>
+<p><img alt="Figura 16.1 – Diagrama de um objeto Time." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1601.png" />
+<br><em>Figura 16.1 – Diagrama de um objeto</em> <code>Time</code>.</p>
+<p>Como exercício, escreva uma função chamada <code>print_time</code>, que receba um objeto Time e o exiba na forma hour:minute:second. Dica: a sequência de formatação <code>'%.2d'</code> exibe um número inteiro com, pelo menos, dois dígitos, incluindo um zero à esquerda, se for necessário.</p>
+<p>Escreva uma função booleana chamada <code>is_after</code>, que receba dois objetos Time, <code>t1</code> e <code>t2</code>, e devolva <code>True</code> se <code>t1</code> for cronologicamente depois de <code>t2</code> e <code>False</code> se não for. Desafio: não use uma instrução <code>if</code>.</p>
+<h2 id="162-funcoes-puras">16.2 - Funções puras</h2>
+<p>Nas próximas seções, vamos escrever duas funções que adicionam valores de tempo. Elas demonstram dois tipos de funções: funções puras e modificadores. Também demonstram um plano de desenvolvimento que chamarei de protótipo e correção, que é uma forma de atacar um problema complexo começando com um protótipo simples e lidando com as complicações de forma incremental.</p>
+<p>Aqui está um protótipo simples de <code>add_time</code>:</p>
+<pre><code class="language-python">def add_time(t1, t2):
+    sum = Time()
+    sum.hour = t1.hour + t2.hour
+    sum.minute = t1.minute + t2.minute
+    sum.second = t1.second + t2.second
+    return sum
+</code></pre>
+<p>A função cria um novo objeto <code>Time</code>, inicializa seus atributos e retorna uma referência ao novo objeto. A função pura é chamada assim porque não altera nenhum dos objetos passados a ela como argumentos; além disso, ela não tem efeitos, como exibir um valor ou receber entradas de usuário, apenas retorna um valor.</p>
+<p>Para testar esta função, criarei objetos <code>Time</code>: <code>start</code>, que contém o tempo de início de um filme, como <em>Monty Python e o cálice sagrado</em>, e <code>duration</code>, que contém o tempo de execução do filme, que é de 1 hora e 35 minutos.</p>
+<p><code>add_time</code> calcula quando o filme acaba:</p>
+<pre><code class="language-python">&gt;&gt;&gt; start = Time()
+&gt;&gt;&gt; start.hour = 9
+&gt;&gt;&gt; start.minute = 45
+&gt;&gt;&gt; start.second = 0
+&gt;&gt;&gt; duration = Time()
+&gt;&gt;&gt; duration.hour = 1
+&gt;&gt;&gt; duration.minute = 35
+&gt;&gt;&gt; duration.second = 0
+&gt;&gt;&gt; done = add_time(start, duration)
+&gt;&gt;&gt; print_time(done)
+10:80:00
+</code></pre>
+<p>O resultado, 10:80:00, pode não ser o que você esperava. O problema é que esta função não trata casos onde o número de segundos ou minutos é maior que 60. Quando isso acontece, precisamos transportar os segundos extras à coluna dos minutos ou os minutos extras à coluna das horas.</p>
+<p>Aqui está uma versão melhorada:</p>
+<pre><code class="language-python">def add_time(t1, t2):
+    sum = Time()
+    sum.hour = t1.hour + t2.hour
+    sum.minute = t1.minute + t2.minute
+    sum.second = t1.second + t2.second
+    if sum.second &gt;= 60:
+        sum.second -= 60
+        sum.minute += 1
+    if sum.minute &gt;= 60:
+        sum.minute -= 60
+        sum.hour += 1
+    return sum
+</code></pre>
+<p>Embora esta função esteja correta, é um pouco extensa. Veremos uma alternativa menor mais adiante.</p>
+<h2 id="163-modificadores">16.3 - Modificadores</h2>
+<p>Às vezes é útil uma função alterar os objetos que recebe como parâmetros. Nesse caso, as mudanças são visíveis a quem chama a função. As funções que fazem isso chamam-se modificadores.</p>
+<p><code>increment</code>, que acrescenta um dado número de segundos a um objeto <code>Time</code>, pode ser escrita naturalmente como um modificador. Aqui está um primeiro esboço:</p>
+<pre><code class="language-python">def increment(time, seconds):
+    time.second += seconds
+    if time.second &gt;= 60:
+        time.second -= 60
+        time.minute += 1
+    if time.minute &gt;= 60:
+        time.minute -= 60
+        time.hour += 1
+</code></pre>
+<p>A primeira linha executa a operação básica; o resto lida com os casos especiais que vimos antes.</p>
+<p>Esta função está correta? O que acontece se <code>second</code> for muito mais que 60?</p>
+<p>Neste caso não basta transportar uma vez, temos que continuar fazendo isso até que time.second seja menos de 60. Uma solução é substituir a instrução <code>if</code> pela instrução <code>while</code>. Isso tornaria a função correta, mas não muito eficiente. Como exercício, escreva uma versão correta de <code>increment</code> que não contenha loops.</p>
+<p>O que se faz com modificadores também pode ser feito com funções puras. Na verdade, algumas linguagens de programação só permitem funções puras. Há evidências de que os programas que usam funções puras são mais rápidos para serem desenvolvidos e menos propensos a erros que programas que usam modificadores. No entanto, modificadores são convenientes de vez em quando, e os programas funcionais tendem a ser menos eficientes.</p>
+<p>De forma geral, recomendo que você escreva funções puras sempre que achar razoável e recorra a modificadores só se houver alguma vantagem clara. Esta abordagem pode ser chamada de <strong>programação funcional</strong>.</p>
+<p>Como exercício, escreva uma versão “pura” de increment que cria e retorna um objeto <code>Time</code> em vez de alterar o parâmetro.</p>
+<h2 id="164-prototipacao-versus-planejamento">16.4 - Prototipação versus planejamento</h2>
+<p>O plano de desenvolvimento que estou demonstrando chama-se “protótipo e correção”. Para cada função, escrevi um protótipo que executa o cálculo básico e então testa a função, corrigindo erros no decorrer do caminho.</p>
+<p>Esta abordagem pode ser eficaz, especialmente se você ainda não tem uma compreensão profunda do problema. Porém, as correções incrementais podem gerar código que se complica desnecessariamente (pois trata de muitos casos especiais) e pouco confiáveis (já que é difícil saber se todos os erros foram encontrados).</p>
+<p>Uma alternativa é o desenvolvimento planejado, no qual a compreensão de alto nível do problema pode facilitar muito a programação. Neste caso, descobre-se que um objeto Time é, na verdade, um número de três dígitos na base 60 (veja http://en.wikipedia.org/wiki/Sexagesimal)! O atributo second é a “coluna de unidades”, o atributo minute é a “coluna dos 60”, e o atributo hour é a “coluna do 3.600”.</p>
+<p>Quando escrevemos <code>add_time</code> e <code>increment</code>, estávamos na verdade fazendo adições na base 60, e por isso transportávamos os resultados de uma coluna à seguinte.</p>
+<p>Essa observação sugere outra abordagem para o problema inteiro – podemos converter objetos <code>Time</code> em números inteiros e aproveitar o fato de que o computador sabe trabalhar com aritmética de números inteiros.</p>
+<p>Aqui está uma função que converte objetos <code>Time</code> em números inteiros:</p>
+<pre><code class="language-python">def time_to_int(time):
+    minutes = time.hour * 60 + time.minute
+    seconds = minutes * 60 + time.second
+    return seconds
+</code></pre>
+<p>E aqui está uma função que converte um número inteiro em um <code>Time</code> (lembre-se de que <code>divmod</code> divide o primeiro argumento pelo segundo e devolve o quociente e o resto como uma tupla):</p>
+<pre><code class="language-python">def int_to_time(seconds):
+    time = Time()
+    minutes, time.second = divmod(seconds, 60)
+    time.hour, time.minute = divmod(minutes, 60)
+    return time
+</code></pre>
+<p>Você pode ter que pensar um pouco e fazer alguns testes, para se convencer de que essas funções estão corretas. Um modo de testá-las é ver se <code>time_to_int(int_to_time(x)) == x</code> para muitos valores de <code>x</code>. Este é um exemplo de uma verificação de consistência.</p>
+<p>Uma vez que esteja convencido de que estão corretas, você pode usá-las para reescrever <code>add_time</code>:</p>
+<pre><code class="language-python">def add_time(t1, t2):
+    seconds = time_to_int(t1) + time_to_int(t2)
+    return int_to_time(seconds)
+</code></pre>
+<p>Esta versão é mais curta que a original, e mais fácil de verificar. Como exercício, reescreva <code>increment</code> usando <code>time_to_int</code> e <code>int_to_time</code>.</p>
+<p>Em algumas situações, converter da base 60 para a base 10 e de volta é mais difícil que apenas lidar com as horas. A conversão de base é mais abstrata; nossa intuição para lidar com valores temporais é melhor.</p>
+<p>No entanto, se tivermos discernimento para lidar com horas como números de base 60 e investirmos esforço em escrever as funções de conversão (<code>time_to_int</code> e <code>int_to_time</code>), chegamos a um programa que é mais curto, mais fácil de ler e depurar, e mais confiável.</p>
+<p>Também é mais fácil acrescentar recursos depois. Por exemplo, imagine subtrair dois objetos <code>Time</code> para encontrar a duração entre eles. Uma abordagem ingênua seria implementar a subtração com transporte. Porém, usar funções de conversão seria mais fácil e, provavelmente, mais correto.</p>
+<p>Ironicamente, tornar um problema mais difícil (ou mais geral) facilita (porque há menos casos especiais e menos oportunidades de erro).</p>
+<h2 id="165-depuracao">16.5 - Depuração</h2>
+<p>Um objeto <code>Time</code> é bem formado se os valores de <code>minute</code> e <code>second</code> estiverem entre 0 e 60 (incluindo 0, mas não 60) e se <code>hour</code> for positivo. <code>hour</code> e <code>minute</code> devem ser valores inteiros, mas podemos permitir que <code>second</code> tenha uma parte fracionária.</p>
+<p>Requisitos como esses chamam-se invariáveis porque sempre devem ser verdadeiros. Para dizer de outra forma, se não forem verdadeiros, algo deu errado.</p>
+<p>Escrever código para verificar requisitos invariáveis pode ajudar a descobrir erros e encontrar suas causas. Por exemplo, você pode ter uma função como valid_time, que receba um objeto Time e retorne False se ele violar um requisito invariável:</p>
+<pre><code class="language-python">def valid_time(time):
+    if time.hour &lt; 0 or time.minute &lt; 0 or time.second &lt; 0:
+        return False
+    if time.minute &gt;= 60 or time.second &gt;= 60:
+        return False
+    return True
+</code></pre>
+<p>No início de cada função você pode verificar os argumentos para ter certeza de que são válidos:</p>
+<pre><code class="language-python">def add_time(t1, t2):
+    if not valid_time(t1) or not valid_time(t2):
+        raise ValueError('invalid Time object in add_time')
+
+    seconds = time_to_int(t1) + time_to_int(t2)
+    return int_to_time(seconds)
+</code></pre>
+<p>Ou você pode usar uma instrução <code>assert</code>, que verifica determinado requisito invariável e cria uma exceção se ela falhar:</p>
+<pre><code class="language-python">def add_time(t1, t2):
+    assert valid_time(t1) and valid_time(t2)
+    seconds = time_to_int(t1) + time_to_int(t2)
+    return int_to_time(seconds)
+</code></pre>
+<p>Instruções assert são úteis porque distinguem o código que lida com condições normais do código que verifica erros.</p>
+<h2 id="166-glossario">16.6 - Glossário</h2>
+<dl>
+<dt><a id="glos:protótipo e correção" href="#termo:protótipo e correção">protótipo e correção</a></dt>
+<dd>Plano de desenvolvimento no qual a escrita do programa parte de um esboço inicial, e depois segue ao teste e correção de erros, conforme sejam encontrados.</dd>
+
+<dt><a id="glos:desenvolvimento planejado" href="#termo:desenvolvimento planejado">desenvolvimento planejado</a></dt>
+<dd>Plano de desenvolvimento que implica uma compreensão de alto nível do problema e mais planejamento que desenvolvimento incremental ou desenvolvimento prototipado.</dd>
+
+<dt><a id="glos:função pura" href="#termo:função pura">função pura</a></dt>
+<dd>Função que não altera nenhum dos objetos que recebe como argumento. A maior parte das funções puras gera resultado.</dd>
+
+<dt><a id="glos:modificador" href="#termo:modificador">modificador</a></dt>
+<dd>Função que modifica um ou vários dos objetos que recebe como argumento. A maior parte dos modificadores são nulos; isto é, retornam None.</dd>
+
+<dt><a id="glos:programação funcional" href="#termo:programação funcional">programação funcional</a></dt>
+<dd>Estilo de projeto de programa no qual a maioria das funções são puras.</dd>
+
+<dt><a id="glos:invariável" href="#termo:invariável">invariável</a></dt>
+<dd>Condição que sempre deve ser verdadeira durante a execução de um programa.</dd>
+
+<dt><a id="glos:instrução assert" href="#termo:instrução assert">instrução assert</a></dt>
+<dd>Instrução que verifica uma condição e levanta uma exceção se esta falhar.</dd>
+
+</dl>
+
+<h2 id="167-exercicios">16.7 - Exercícios</h2>
+<p>Os exemplos de código deste capítulo estão disponíveis em http://thinkpython2.com/code/Time1.py; as soluções para os exercícios estão disponíveis em http://thinkpython2.com/code/Time1_soln.py.</p>
+<h3 id="exercicio-161">Exercício 16.1</h3>
+<p>Escreva uma função chamada <code>mul_time</code> que receba um objeto <code>Time</code> e um número e retorne um novo objeto <code>Time</code> que contenha o produto do <code>Time</code> original e do número.</p>
+<p>Então use <code>mul_time</code> para escrever uma função que receba um objeto <code>Time</code> representando o tempo até o fim de uma corrida e um número que represente a distância, e retorne um objeto <code>Time</code> com o passo médio (tempo por milha).</p>
+<h3 id="exercicio-162">Exercício 16.2</h3>
+<p>O módulo <code>datetime</code> fornece objetos <code>time</code> que são semelhantes aos objetos <code>Time</code> deste capítulo, mas ele oferece um grande conjunto de métodos e operadores. Leia a documentação em http://docs.python.org/3/library/datetime.html.</p>
+<ol>
+<li>
+<p>Use o módulo <code>datetime</code> para escrever um programa que receba a data atual e exiba o dia da semana.</p>
+</li>
+<li>
+<p>Escreva um programa que receba um aniversário como entrada e exiba a idade do usuário e o número de dias, horas, minutos e segundos até o seu próximo aniversário.</p>
+</li>
+<li>
+<p>Para duas pessoas nascidas em dias diferentes, há um dia em que a idade de uma equivale a duas vezes a da outra. Este é o Dia Duplo delas. Escreva um programa que receba dois aniversários e calcule o Dia Duplo dos aniversariantes.</p>
+</li>
+<li>
+<p>Para um desafio um pouco maior, escreva a versão mais geral que calcule o dia em que uma pessoa é N vezes mais velha que a outra.</p>
+</li>
+</ol>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../17-classes-metodos/" class="btn btn-neutral float-right" title="Capítulo 17: Classes e métodos">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../15-classes-objetos/" class="btn btn-neutral" title="Capítulo 15: Classes e objetos"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../15-classes-objetos/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../17-classes-metodos/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

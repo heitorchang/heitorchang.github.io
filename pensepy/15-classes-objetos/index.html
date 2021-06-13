@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Capítulo 15: Classes e objetos - Pense Python</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Cap\u00edtulo 15: Classes e objetos";
+    var mkdocs_page_input_path = "15-classes-objetos.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pense Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Pense em Python</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../00-prefacio/">Prefácio</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-jornada/">Capítulo 1: A jornada do programa</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-vars-expr-instr/">Capítulo 2: Variáveis, expressões e instruções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-funcoes/">Capítulo 3: Funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-caso-interface/">Capítulo 4: Estudo de caso: projeto de interface</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-cond-recur/">Capítulo 5: Condicionais e recursividade</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-funcoes-result/">Capítulo 6: Funções com resultado</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-iteracao/">Capítulo 7: Iteração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-strings/">Capítulo 8: Strings</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-caso-palavras/">Capítulo 9: Estudo de caso: jogos de palavras</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-listas/">Capítulo 10: Listas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../11-dicionarios/">Capítulo 11: Dicionários</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../12-tuplas/">Capítulo 12: Tuplas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../13-caso-estruturas/">Capítulo 13: Estudo de caso: seleção de estrutura de dados</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../14-arquivos/">Capítulo 14: Arquivos</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Capítulo 15: Classes e objetos</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#151-tipos-definidos-pelos-programadores">15.1 - Tipos definidos pelos programadores</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#152-atributos">15.2 - Atributos</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#153-retangulos">15.3 - Retângulos</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#154-instancias-como-valores-de-retorno">15.4 - Instâncias como valores de retorno</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#155-objetos-sao-mutaveis">15.5 - Objetos são mutáveis</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#156-copia">15.6 - Cópia</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#157-depuracao">15.7 - Depuração</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#158-glossario">15.8 - Glossário</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#159-exercicios">15.9 - Exercícios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-151">Exercício 15.1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-152">Exercício 15.2</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../16-classes-funcoes/">Capítulo 16: Classes e funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../17-classes-metodos/">Capítulo 17: Classes e métodos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../18-heranca/">Capítulo 18: Herança</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../19-extra/">Capítulo 19: Extra</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../A-depuracao/">Apêndice A: Depuração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../B-analise-algorit/">Apêndice B: Análise de algoritmos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../C-colofao-autor/">Colofão</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pense Python</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Capítulo 15: Classes e objetos</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="capitulo-15-classes-e-objetos">Capítulo 15: Classes e objetos</h1>
+<p>A esta altura você já sabe como usar funções para organizar código e tipos integrados para organizar dados. O próximo passo é aprender “programação orientada a objeto”, que usa tipos definidos pelos programadores para organizar tanto o código quanto os dados. A programação orientada a objeto é um tópico abrangente; será preciso passar por alguns capítulos para abordar o tema.</p>
+<p>Os exemplos de código deste capítulo estão disponíveis em http://thinkpython2.com/code/Point1.py; as soluções para os exercícios estão disponíveis em http://thinkpython2.com/code/Point1_soln.py.</p>
+<h2 id="151-tipos-definidos-pelos-programadores">15.1 - Tipos definidos pelos programadores</h2>
+<p>Já usamos muitos tipos integrados do Python; agora vamos definir um tipo próprio. Como exemplo, criaremos um tipo chamado <code>Point</code>, que representa um ponto no espaço bidimensional.</p>
+<p>Na notação matemática, os pontos muitas vezes são escritos entre parênteses, com uma vírgula separando as coordenadas. Por exemplo, (0,0) representa a origem e (x, y) representa o ponto que está x unidades à direita e y unidades acima da origem.</p>
+<p>Há várias formas para representar pontos no Python:</p>
+<ul>
+<li>
+<p>Podemos armazenar as coordenadas separadamente em duas variáveis, x e y.</p>
+</li>
+<li>
+<p>Podemos armazenar as coordenadas como elementos em uma lista ou tupla.</p>
+</li>
+<li>
+<p>Podemos criar um tipo para representar pontos como objetos.</p>
+</li>
+</ul>
+<p>Criar um tipo é mais complicado que outras opções, mas tem vantagens que logo ficarão evidentes.</p>
+<p>Um tipo definido pelo programador também é chamado de classe. Uma definição de classe pode ser assim:</p>
+<pre><code class="language-python">class Point:
+    &quot;&quot;&quot;Represents a point in 2-D space.&quot;&quot;&quot;
+</code></pre>
+<p>O cabeçalho indica que a nova classe se chama <code>Point</code>. O corpo é uma docstring que explica para que a classe serve. Você pode definir variáveis e métodos dentro de uma definição de classe, mas voltaremos a isso depois.</p>
+<p>Definir uma classe denominada <code>Point</code> cria um objeto de classe:</p>
+<pre><code class="language-python">&gt;&gt;&gt; Point
+&lt;class '__main__.Point'&gt;
+</code></pre>
+<p>Como <code>Point</code> é definido no nível superior, seu “nome completo” é <code>__main__.Point</code>.</p>
+<p>O objeto de classe é como uma fábrica para criar objetos. Para criar um <code>Point</code>, você chama <code>Point</code> como se fosse uma função:</p>
+<pre><code class="language-python">&gt;&gt;&gt; blank = Point()
+&gt;&gt;&gt; blank
+&lt;__main__.Point object at 0xb7e9d3ac&gt;
+</code></pre>
+<p>O valor de retorno é uma referência a um objeto <code>Point</code>, ao qual atribuímos blank.</p>
+<p>Criar um objeto chama-se instanciação, e o objeto é uma instância da classe.</p>
+<p>Quando você exibe uma instância, o Python diz a que classe ela pertence e onde está armazenada na memória (o prefixo o 0x significa que o número seguinte está em formato hexadecimal).</p>
+<p>Cada objeto é uma instância de alguma classe, então “objeto” e “instância” são intercambiáveis. Porém, neste capítulo uso “instância” para indicar que estou falando sobre um tipo definido pelo programador.</p>
+<h2 id="152-atributos">15.2 - Atributos</h2>
+<p>Você pode atribuir valores a uma instância usando a notação de ponto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; blank.x = 3.0
+&gt;&gt;&gt; blank.y = 4.0
+</code></pre>
+<p>Essa sintaxe é semelhante à usada para selecionar uma variável de um módulo, como math.pi ou string.whitespace. Nesse caso, entretanto, estamos atribuindo valores a elementos nomeados de um objeto. Esses elementos chamam-se atributos.</p>
+<p>Em inglês, quando é um substantivo, a palavra “AT-trib-ute” é pronunciada com ênfase na primeira sílaba, ao contrário de “a-TRIB-ute”, que é um verbo.</p>
+<p>O diagrama seguinte mostra o resultado dessas atribuições. Um diagrama de estado que mostra um objeto e seus atributos chama-se diagrama de objeto; veja a Figura 15.1.</p>
+<p><img alt="Figura 15.1 – Diagrama de um objeto Point." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1501.png" />
+<br><em>Figura 15.1 – Diagrama de um objeto</em> <code>Point</code>.</p>
+<p>A variável blank refere-se a um objeto <code>Point</code>, que contém dois atributos. Cada atributo refere-se a um número de ponto flutuante.</p>
+<p>Você pode ler o valor de um atributo usando a mesma sintaxe:</p>
+<pre><code class="language-python">&gt;&gt;&gt; blank.y
+4.0
+&gt;&gt;&gt; x = blank.x
+&gt;&gt;&gt; x
+3.0
+</code></pre>
+<p>A expressão <code>blank.x</code> significa “Vá ao objeto a que blank se refere e pegue o valor de x”. No exemplo, atribuímos este valor a uma variável <code>x</code>. Não há nenhum conflito entre a variável <code>x</code> e o atributo <code>x</code>.</p>
+<p>Você pode usar a notação de ponto como parte de qualquer expressão. Por exemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; '(%g, %g)' % (blank.x, blank.y)
+'(3.0, 4.0)'
+&gt;&gt;&gt; distance = math.sqrt(blank.x ** 2 + blank.y ** 2)
+&gt;&gt;&gt; distance
+5.0
+</code></pre>
+<p>Você pode passar uma instância como argumento da forma habitual. Por exemplo:</p>
+<pre><code class="language-python">def print_point(p):
+    print('(%g, %g)' % (p.x, p.y))
+</code></pre>
+<p><code>print_point</code> toma um ponto como argumento e o exibe em notação matemática. Para invocá-lo, você pode passar <code>blank</code> como argumento:</p>
+<pre><code class="language-python">&gt;&gt;&gt; print_point(blank)
+(3.0, 4.0)
+</code></pre>
+<p>Dentro da função, <code>p</code> é um alias para <code>blank</code>, então, se a função altera <code>p</code>, <code>blank</code> também muda.</p>
+<p>Como exercício, escreva uma função chamada <code>distance_between_points</code>, que toma dois pontos como argumentos e retorna a distância entre eles.</p>
+<h2 id="153-retangulos">15.3 - Retângulos</h2>
+<p>Às vezes, é óbvio quais deveriam ser os atributos de um objeto, mas outras é preciso decidir entre as possibilidades. Por exemplo, vamos supor que você esteja criando uma classe para representar retângulos. Que atributos usaria para especificar a posição e o tamanho de um retângulo? Você pode ignorar ângulo; para manter as coisas simples, suponha que o retângulo seja vertical ou horizontal.</p>
+<p>Há duas possibilidades, no mínimo:</p>
+<ul>
+<li>
+<p>Você pode especificar um canto do retângulo (ou o centro), a largura e a altura.</p>
+</li>
+<li>
+<p>Você pode especificar dois cantos opostos.</p>
+</li>
+</ul>
+<p>Nesse ponto é difícil dizer qual opção é melhor, então implementaremos a primeira, como exemplo.</p>
+<p>Aqui está a definição de classe:</p>
+<pre><code class="language-python">class Rectangle:
+    &quot;&quot;&quot;Represents a rectangle.
+    attributes: width, height, corner.
+    &quot;&quot;&quot;
+</code></pre>
+<p>A docstring lista os atributos: width e height são números; corner é um objeto <code>Point</code> que especifica o canto inferior esquerdo.</p>
+<p>Para representar um retângulo, você tem que instanciar um objeto <code>Rectangle</code> e atribuir valores aos atributos:</p>
+<pre><code class="language-python">box = Rectangle()
+box.width = 100.0
+box.height = 200.0
+box.corner = Point()
+box.corner.x = 0.0
+box.corner.y = 0.0
+</code></pre>
+<p>A expressão <code>box.corner.x</code> significa “Vá ao objeto ao qual <code>box</code> se refere e pegue o atributo denominado <code>corner</code>; então vá a este objeto e pegue o atributo denominado <code>x</code>”.</p>
+<p>A Figura 15.2 mostra o estado deste objeto. Um objeto que é um atributo de outro objeto é integrado.</p>
+<p>A Figura 10.1 mostra o diagrama de estado para cheeses, numbers e empty.</p>
+<p><img alt="Figura 15.2 – Diagrama de um objeto Rectangle." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1502.png" />
+<br><em>Figura 15.2 – Diagrama de um objeto</em> <code>Rectangle</code>.</p>
+<h2 id="154-instancias-como-valores-de-retorno">15.4 - Instâncias como valores de retorno</h2>
+<p>As funções podem retornar instâncias. Por exemplo, <code>find_center</code> recebe um <code>Rectangle</code> como argumento e devolve um <code>Point</code>, que contém as coordenadas do centro do retângulo:</p>
+<pre><code class="language-python">def find_center(rect):
+    p = Point()
+    p.x = rect.corner.x + rect.width/2
+    p.y = rect.corner.y + rect.height/2
+    return p
+</code></pre>
+<p>Aqui está um exemplo que passa <code>box</code> como um argumento para <code>find_center</code> e atribui o <code>ponto</code> resultante à variável <code>center</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; center = find_center(box)
+&gt;&gt;&gt; print_point(center)
+(50, 100)
+</code></pre>
+<h2 id="155-objetos-sao-mutaveis">15.5 - Objetos são mutáveis</h2>
+<p>Você pode alterar o estado de um objeto fazendo uma atribuição a um dos seus atributos. Por exemplo, para mudar o tamanho de um retângulo sem mudar sua posição, você pode alterar os valores de width e height:</p>
+<pre><code class="language-python">box.width = box.width + 50
+box.height = box.height + 100
+</code></pre>
+<p>Você também pode escrever funções que alteram objetos. Por exemplo, <code>grow_rectangle</code> recebe um objeto <code>Rectangle</code> e dois números, <code>dwidth</code> e <code>dheight</code>, e adiciona os números à largura e altura do retângulo:</p>
+<pre><code class="language-python">def grow_rectangle(rect, dwidth, dheight):
+    rect.width += dwidth
+    rect.height += dheight
+</code></pre>
+<p>Eis um exemplo que demonstra o efeito:</p>
+<pre><code class="language-python">&gt;&gt;&gt; box.width, box.height
+(150.0, 300.0)
+&gt;&gt;&gt; grow_rectangle(box, 50, 100)
+&gt;&gt;&gt; box.width, box.height
+(200.0, 400.0)
+</code></pre>
+<p>Dentro da função, <code>rect</code> é um alias de <code>box</code>, então quando a função altera <code>rect</code>, <code>box</code> aponta para o objeto alterado.</p>
+<p>Como exercício, escreva uma função chamada <code>move_rectangle</code> que toma um Rectangle e dois números chamados dx e dy. Ela deve alterar a posição do retângulo, adicionando dx à coordenada x de corner e adicionando dy à coordenada y de corner.</p>
+<h2 id="156-copia">15.6 - Cópia</h2>
+<p>Alias podem tornar um programa difícil de ler porque as alterações em um lugar podem ter efeitos inesperados em outro lugar. É difícil monitorar todas as variáveis que podem referir-se a um dado objeto.</p>
+<p>Em vez de usar alias, copiar o objeto pode ser uma alternativa. O módulo <code>copy</code> contém uma função chamada <code>copy</code> que pode duplicar qualquer objeto:</p>
+<pre><code class="language-python">&gt;&gt;&gt; p1 = Point()
+&gt;&gt;&gt; p1.x = 3.0
+&gt;&gt;&gt; p1.y = 4.0
+&gt;&gt;&gt; import copy
+&gt;&gt;&gt; p2 = copy.copy(p1)
+</code></pre>
+<p><code>p1</code> e <code>p2</code> contêm os mesmos dados, mas não são o mesmo <code>Point</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; print_point(p1)
+(3, 4)
+&gt;&gt;&gt; print_point(p2)
+(3, 4)
+&gt;&gt;&gt; p1 is p2
+False
+&gt;&gt;&gt; p1 == p2
+False
+</code></pre>
+<p>O operador <code>is</code> indica que <code>p1</code> e <code>p2</code> não são o mesmo objeto, que é o que esperamos. Porém, você poderia ter esperado que <code>==</code> fosse apresentado como <code>True</code>, porque esses pontos contêm os mesmos dados. Nesse caso, pode ficar desapontado ao saber que, para instâncias, o comportamento padrão do operador <code>==</code> é o mesmo que o do operador <code>is</code>; ele verifica a identidade dos objetos, não a sua equivalência. Isso acontece porque, para tipos definidos pelo programador, o Python não sabe o que deve ser considerado equivalente. Pelo menos, ainda não.</p>
+<p>Se você usar <code>copy.copy</code> para duplicar um retângulo, descobrirá que ele copia o objeto <code>Rectangle</code>, mas não o <code>Point</code> embutido nele:</p>
+<pre><code class="language-python">&gt;&gt;&gt; box2 = copy.copy(box)
+&gt;&gt;&gt; box2 is box
+False
+&gt;&gt;&gt; box2.corner is box.corner
+True
+</code></pre>
+<p>A Figura 15.3 mostra como fica o diagrama de objeto. Esta operação chama-se cópia superficial porque copia o objeto e qualquer referência que contenha, mas não os objetos integrados.</p>
+<p><img alt="Figura 15.3 – Diagrama: dois objetos Rectangle compartilhando o mesmo Point." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1503.png" />
+<br><em>Figura 15.3 – Diagrama: dois objetos</em> <code>Rectangle</code> <em>compartilhando o mesmo</em> <code>Point</code>.</p>
+<p>Para a maior parte das aplicações, não é isso que você quer. Nesse exemplo, invocar <code>grow_rectangle</code> em um dos Rectangles não afetaria o outro, mas invocar <code>move_rectangle</code> em qualquer um deles afetaria a ambos! Esse comportamento é confuso e propenso a erros.</p>
+<p>Felizmente, o módulo <code>copy</code> oferece um método chamado <code>deepcopy</code> que copia não só o objeto, mas também os objetos aos quais ele se refere, e os objetos aos quais estes se referem, e assim por diante. Você não se surpreenderá ao descobrir que esta operação se chama cópia profunda.</p>
+<pre><code class="language-python">&gt;&gt;&gt; box3 = copy.deepcopy(box)
+&gt;&gt;&gt; box3 is box
+False
+&gt;&gt;&gt; box3.corner is box.corner
+False
+box3 e box são objetos completamente separados.
+</code></pre>
+<p>Como exercício, escreva uma versão de <code>move_rectangle</code> que cria e retorne um novo retângulo em vez de alterar o antigo.</p>
+<h2 id="157-depuracao">15.7 - Depuração</h2>
+<p>Ao começar a trabalhar com objetos, provavelmente você encontrará algumas novas exceções. Se tentar acessar um atributo que não existe, recebe um <code>AttributeError</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; p = Point()
+&gt;&gt;&gt; p.x = 3
+&gt;&gt;&gt; p.y = 4
+&gt;&gt;&gt; p.z
+AttributeError: Point instance has no attribute 'z'
+</code></pre>
+<p>Se não estiver certo sobre o tipo que um objeto é, pode perguntar:</p>
+<pre><code class="language-python">&gt;&gt;&gt; type(p)
+&lt;class '__main__.Point'&gt;
+</code></pre>
+<p>Você também pode usar <code>isinstance</code> para verificar se um objeto é uma instância de uma classe:</p>
+<pre><code class="language-python">&gt;&gt;&gt; isinstance(p, Point)
+True
+</code></pre>
+<p>Caso não tenha certeza se um objeto tem determinado atributo, você pode usar a função integrada <code>hasattr</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; hasattr(p, 'x')
+True
+&gt;&gt;&gt; hasattr(p, 'z')
+False
+</code></pre>
+<p>O primeiro argumento pode ser qualquer objeto; o segundo argumento é uma <code>string</code> com o nome do atributo.</p>
+<p>Você também pode usar uma instrução <code>try</code> para ver se o objeto tem os atributos de que precisa:</p>
+<pre><code class="language-python">try:
+    x = p.x
+except AttributeError:
+    x = 0
+</code></pre>
+<p>Essa abordagem pode facilitar a escrita de funções que atuam com tipos diferentes; você verá mais informações sobre isso em “Polimorfismo”, na página 248.</p>
+<h2 id="158-glossario">15.8 - Glossário</h2>
+<dl>
+<dt><a id="glos:classe" href="#termo:classe">classe</a></dt>
+<dd>Tipo definido pelo programador. Uma definição de classe cria um objeto de classe.</dd>
+
+<dt><a id="glos:objeto de classe" href="#termo:objeto de classe">objeto de classe</a></dt>
+<dd>Objeto que contém a informação sobre um tipo definido pelo programador. O objeto de classe pode ser usado para criar instâncias do tipo.</dd>
+
+<dt><a id="glos:instância" href="#termo:instância">instância</a></dt>
+<dd>Objeto que pertence a uma classe.</dd>
+
+<dt><a id="glos:instanciar" href="#termo:instanciar">instanciar</a></dt>
+<dd>Criar um objeto.</dd>
+
+<dt><a id="glos:atributo" href="#termo:atributo">atributo</a></dt>
+<dd>Um dos valores denominados associados a um objeto.</dd>
+
+<dt><a id="glos:objeto integrado" href="#termo:objeto integrado">objeto integrado</a></dt>
+<dd>Objeto que é armazenado como um atributo de outro objeto.</dd>
+
+<dt><a id="glos:cópia superficial" href="#termo:cópia superficial">cópia superficial</a></dt>
+<dd>Copiar o conteúdo de um objeto, inclusive qualquer referência a objetos integrados; implementada pela função copy no módulo copy.</dd>
+
+<dt><a id="glos:cópia profunda" href="#termo:cópia profunda">cópia profunda</a></dt>
+<dd>Copiar o conteúdo de um objeto, bem como qualquer objeto integrado, e qualquer objeto integrado a estes, e assim por diante; implementado pela função deepcopy no módulo copy.</dd>
+
+<dt><a id="glos:diagrama de objeto" href="#termo:diagrama de objeto">diagrama de objeto</a></dt>
+<dd>Diagrama que mostra objetos, seus atributos e os valores dos atributos.</dd>
+
+</dl>
+
+<h2 id="159-exercicios">15.9 - Exercícios</h2>
+<h3 id="exercicio-151">Exercício 15.1</h3>
+<ol>
+<li>
+<p>Escreva uma definição para uma classe denominada <code>Circle</code>, com os atributos center e radius, onde center é um objeto <code>Point</code> e radius é um número.</p>
+</li>
+<li>
+<p>Instancie um objeto <code>Circle</code>, que represente um círculo com o centro em 150, 100 e raio 75.</p>
+</li>
+<li>
+<p>Escreva uma função denominada <code>point_in_circle</code>, que tome um <code>Circle</code> e um <code>Point</code> e retorne <code>True</code>, se o ponto estiver dentro ou no limite do círculo.</p>
+</li>
+<li>
+<p>Escreva uma função chamada <code>rect_in_circle</code>, que tome um <code>Circle</code> e um Rectangle e retorne <code>True</code>, se o retângulo estiver totalmente dentro ou no limite do círculo.</p>
+</li>
+<li>
+<p>Escreva uma função denominada <code>rect_circle_overlap</code>, que tome um <code>Circle</code> e um Rectangle e retorne <code>True</code>, se algum dos cantos do retângulo cair dentro do círculo. Ou, em uma versão mais desafiadora, retorne <code>True</code> se alguma parte do retângulo cair dentro do círculo.</p>
+</li>
+</ol>
+<p>Solução: http://thinkpython2.com/code/Circle.py.</p>
+<h3 id="exercicio-152">Exercício 15.2</h3>
+<ol>
+<li>
+<p>Escreva uma função chamada <code>draw_rect</code> que receba um objeto <code>Turtle</code> e um <code>Rectangle</code> e use o <code>Turtle</code> para desenhar o retângulo. Veja no Capítulo 4 os exemplos de uso de objetos <code>Turtle</code>.</p>
+</li>
+<li>
+<p>Escreva uma função chamada <code>draw_circle</code>, que tome um Turtle e um <code>Circle</code> e desenhe o círculo.</p>
+</li>
+</ol>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../16-classes-funcoes/" class="btn btn-neutral float-right" title="Capítulo 16: Classes e funções">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../14-arquivos/" class="btn btn-neutral" title="Capítulo 14: Arquivos"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../14-arquivos/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../16-classes-funcoes/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

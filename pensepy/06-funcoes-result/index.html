@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Capítulo 6: Funções com resultado - Pense Python</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Cap\u00edtulo 6: Fun\u00e7\u00f5es com resultado";
+    var mkdocs_page_input_path = "06-funcoes-result.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pense Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Pense em Python</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../00-prefacio/">Prefácio</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-jornada/">Capítulo 1: A jornada do programa</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-vars-expr-instr/">Capítulo 2: Variáveis, expressões e instruções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-funcoes/">Capítulo 3: Funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-caso-interface/">Capítulo 4: Estudo de caso: projeto de interface</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-cond-recur/">Capítulo 5: Condicionais e recursividade</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Capítulo 6: Funções com resultado</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#61-valores-de-retorno">6.1 - Valores de retorno</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#62-desenvolvimento-incremental">6.2 - Desenvolvimento incremental</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#63-composicao">6.3 - Composição</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#64-funcoes-booleanas">6.4 - Funções booleanas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#65-mais-recursividade">6.5 - Mais recursividade</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#66-salto-de-fe">6.6 - Salto de fé</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#67-mais-um-exemplo">6.7 - Mais um exemplo</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#68-verificacao-de-tipos">6.8 - Verificação de tipos</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#69-depuracao">6.9 - Depuração</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#610-glossario">6.10 - Glossário</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#611-exercicios">6.11 - Exercícios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-61">Exercício 6.1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-62">Exercício 6.2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-63">Exercício 6.3</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-64">Exercício 6.4</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-65">Exercício 6.5</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-iteracao/">Capítulo 7: Iteração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-strings/">Capítulo 8: Strings</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-caso-palavras/">Capítulo 9: Estudo de caso: jogos de palavras</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-listas/">Capítulo 10: Listas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../11-dicionarios/">Capítulo 11: Dicionários</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../12-tuplas/">Capítulo 12: Tuplas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../13-caso-estruturas/">Capítulo 13: Estudo de caso: seleção de estrutura de dados</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../14-arquivos/">Capítulo 14: Arquivos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../15-classes-objetos/">Capítulo 15: Classes e objetos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../16-classes-funcoes/">Capítulo 16: Classes e funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../17-classes-metodos/">Capítulo 17: Classes e métodos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../18-heranca/">Capítulo 18: Herança</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../19-extra/">Capítulo 19: Extra</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../A-depuracao/">Apêndice A: Depuração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../B-analise-algorit/">Apêndice B: Análise de algoritmos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../C-colofao-autor/">Colofão</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pense Python</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Capítulo 6: Funções com resultado</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="capitulo-6-funcoes-com-resultado">Capítulo 6: Funções com resultado</h1>
+<p>Muitas das funções do Python que usamos, como as matemáticas, produzem valores de retorno. Mas as funções que escrevemos até agora são todas nulas: têm um efeito, como exibir um valor ou mover uma tartaruga, mas não têm um valor de retorno. Neste capítulo você aprenderá a escrever funções com resultados.</p>
+<h2 id="61-valores-de-retorno">6.1 - Valores de retorno</h2>
+<p>A chamada de função gera um valor de retorno, que normalmente atribuímos a uma variável ou usamos como parte de uma expressão.</p>
+<pre><code class="language-python">e = math.exp(1.0)
+height = radius * math.sin(radians)
+</code></pre>
+<p>As funções que descrevemos, por enquanto, são todas nulas. Resumindo, elas não têm valores de retorno; mais precisamente, o seu valor de retorno é None.</p>
+<p>Neste capítulo veremos (finalmente) como escrever funções com resultados. O primeiro exemplo é area, que devolve a área de um círculo com o raio dado:</p>
+<pre><code class="language-python">def area(radius):
+    a = math.pi * radius**2
+    return a
+</code></pre>
+<p>Já vimos a instrução return, mas em uma função com resultado ela inclui uma expressão. Esta instrução significa: “Volte imediatamente desta função e use a seguinte expressão como valor de retorno”. A expressão pode ser arbitrariamente complicada, então poderíamos ter escrito esta função de forma mais concisa:</p>
+<pre><code class="language-python">def area(radius):
+    return math.pi * radius**2
+</code></pre>
+<p>Por outro lado, variáveis temporárias como a, tornam a depuração mais fácil.</p>
+<p>Às vezes, é útil ter várias instruções de retorno, uma em cada ramo de uma condicional:</p>
+<pre><code class="language-python">def absolute_value(x):
+    if x &lt; 0:
+        return -x
+    else:
+        return x
+</code></pre>
+<p>Como essas instruções return estão em uma condicional alternativa, apenas uma é executada.</p>
+<p>Logo que uma instrução de retorno seja executada, a função termina sem executar nenhuma instrução subsequente. Qualquer código que apareça depois de uma instrução return, ou em qualquer outro lugar que o fluxo da execução não atinja, é chamado de código morto.</p>
+<p>Em uma função com resultado, é uma boa ideia garantir que cada caminho possível pelo programa atinja uma instrução return. Por exemplo:</p>
+<pre><code class="language-python">def absolute_value(x):
+    if x &lt; 0:
+        return -x
+    if x &gt; 0:
+        return x
+</code></pre>
+<p>Essa função é incorreta porque se x for 0, nenhuma condição é verdade, e a função termina sem chegar a uma instrução return. Se o fluxo de execução chegar ao fim de uma função, o valor de retorno é None, que não é o valor absoluto de 0:</p>
+<pre><code class="language-python">&gt;&gt;&gt; absolute_value(0)
+None
+</code></pre>
+<p>A propósito, o Python oferece uma função integrada chamada abs, que calcula valores absolutos.</p>
+<p>Como exercício, escreva uma função compare que receba dois valores, x e y, e retorne 1 se x &gt; y, 0 se x == y e -1 se x &lt; y.</p>
+<h2 id="62-desenvolvimento-incremental">6.2 - Desenvolvimento incremental</h2>
+<p>Conforme você escrever funções maiores, pode ser que passe mais tempo as depurando.</p>
+<p>Para lidar com programas cada vez mais complexos, você pode querer tentar usar um processo chamado de desenvolvimento incremental. A meta do desenvolvimento incremental é evitar longas sessões de depuração, acrescentando e testando pequenas partes do código de cada vez.</p>
+<p>Como um exemplo, vamos supor que você queira encontrar a distância entre dois pontos dados pelas coordenadas (x1, y1) e(x2, y2). Pelo teorema de Pitágoras, a distância é:</p>
+<p><img alt="Fórmula – Distância entre dois pontos." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/p63f1.png" /></p>
+<p>O primeiro passo é pensar como uma função distance deveria ser no Python. Em outras palavras, quais são as entradas (parâmetros) e qual é a saída (valor de retorno)?</p>
+<p>Nesse caso, as entradas são dois pontos que você pode representar usando quatro números. O valor de retorno é a distância representada por um valor de ponto flutuante.</p>
+<p>Imediatamente, é possível escrever um rascunho da função:</p>
+<pre><code class="language-python">def distance(x1, y1, x2, y2):
+    return 0.0
+</code></pre>
+<p>Claro que esta versão não calcula distâncias; sempre retorna zero. Mas está sintaticamente correta, e pode ser executada, o que significa que você pode testá-la antes de torná-la mais complicada.</p>
+<p>Para testar a nova função, chame-a com argumentos de amostra:</p>
+<pre><code class="language-python">&gt;&gt;&gt; distance(1, 2, 4, 6)
+0.0
+</code></pre>
+<p>Escolhi esses valores para que a distância horizontal seja 3 e a distância vertical, 4; assim, o resultado final é 5, a hipotenusa de um triângulo 3-4-5. Ao testar uma função, é útil saber a resposta certa.</p>
+<p>Neste ponto confirmamos que a função está sintaticamente correta, e podemos começar a acrescentar código ao corpo. Um próximo passo razoável é encontrar as diferenças x2 − x1 e y2 − y1. A próxima versão guarda esses valores em variáveis temporárias e os exibe:</p>
+<pre><code class="language-python">def distance(x1, y1, x2, y2):
+    dx = x2 - x1
+    dy = y2 - y1
+    print('dx is', dx)
+    print('dy is', dy)
+    return 0.0
+</code></pre>
+<p>Se a função estiver funcionando, deve exibir dx is 3 e dy is 4. Nesse caso sabemos que a função está recebendo os argumentos corretos e executando o primeiro cálculo acertadamente. Se não, há poucas linhas para verificar.</p>
+<p>Depois calculamos a soma dos quadrados de dx e dy:</p>
+<pre><code class="language-python">def distance(x1, y1, x2, y2):
+    dx = x2 - x1
+    dy = y2 - y1
+    dsquared = dx**2 + dy**2
+    print('dsquared is: ', dsquared)
+    return 0.0
+</code></pre>
+<p>Nesta etapa você executaria o programa mais uma vez e verificaria a saída (que deve ser 25). Finalmente, pode usar math.sqrt para calcular e devolver o resultado:</p>
+<pre><code class="language-python">def distance(x1, y1, x2, y2):
+    dx = x2 - x1
+    dy = y2 - y1
+    dsquared = dx**2 + dy**2
+    result = math.sqrt(dsquared)
+    return result
+</code></pre>
+<p>Se funcionar corretamente, pronto. Senão, uma ideia é exibir o valor result antes da instrução de retorno.</p>
+<p>A versão final da função não exibe nada ao ser executada; apenas retorna um valor. As instruções print que escrevemos são úteis para depuração, mas assim que conferir se a função está funcionando você deve retirá-las. Códigos desse tipo são chamados de scaffolding (andaime) porque são úteis para construir o programa, mas não são parte do produto final.</p>
+<p>Ao começar, você deveria acrescentar apenas uma linha ou duas de código de cada vez. Conforme adquira mais experiência, poderá escrever e depurar parcelas maiores. De qualquer forma, o desenvolvimento incremental pode economizar muito tempo de depuração.</p>
+<p>Os principais aspectos do processo são:</p>
+<ol>
+<li>
+<p>Comece com um programa que funcione e faça pequenas alterações incrementais. Se houver um erro em qualquer ponto, será bem mais fácil encontrá-lo.</p>
+</li>
+<li>
+<p>Use variáveis para guardar valores intermediários, assim poderá exibi-los e verificá-los.</p>
+</li>
+<li>
+<p>Uma vez que o programa esteja funcionando, você pode querer remover uma parte do scaffolding ou consolidar várias instruções em expressões compostas, mas apenas se isso não tornar o programa difícil de ler.</p>
+</li>
+</ol>
+<p>Como exercício, use o desenvolvimento incremental para escrever uma função chamada hypotenuse, que devolva o comprimento da hipotenusa de um triângulo retângulo dados os comprimentos dos outros dois lados como argumentos. Registre cada etapa do processo de desenvolvimento no decorrer do processo.</p>
+<h2 id="63-composicao">6.3 - Composição</h2>
+<p>Como você já deveria esperar a essa altura, é possível chamar uma função de dentro de outra. Como exemplo, escreveremos uma função que recebe dois pontos, o centro do círculo e um ponto no perímetro, para calcular a área do círculo.</p>
+<p>Suponha que o ponto do centro seja guardado nas variáveis xc e yc e o ponto de perímetro está em xp e yp. O primeiro passo deve ser encontrar o raio do círculo, que é a distância entre os dois pontos. Acabamos de escrever uma função, distance, que faz isto:</p>
+<pre><code class="language-python">radius = distance(xc, yc, xp, yp)
+</code></pre>
+<p>O próximo passo deve ser encontrar a área de um círculo com aquele raio; acabamos de escrever isso também:</p>
+<pre><code class="language-python">result = area(radius)
+</code></pre>
+<p>Encapsulando esses passos em uma função, temos:</p>
+<pre><code class="language-python">def circle_area(xc, yc, xp, yp):
+    radius = distance(xc, yc, xp, yp)
+    result = area(radius)
+    return result
+</code></pre>
+<p>As variáveis temporárias radius e result são úteis para desenvolvimento e depuração, e uma vez que o programa esteja funcionando podemos torná-lo mais conciso compondo chamadas de função:</p>
+<pre><code class="language-python">def circle_area(xc, yc, xp, yp):
+    return area(distance(xc, yc, xp, yp))
+</code></pre>
+<h2 id="64-funcoes-booleanas">6.4 - Funções booleanas</h2>
+<p>As funções podem retornar booleans, o que pode ser conveniente para esconder testes complicados dentro de funções. Por exemplo:</p>
+<pre><code class="language-python">def is_divisible(x, y):
+    if x % y == 0:
+        return True
+    else:
+        return False
+</code></pre>
+<p>É comum dar nomes de funções booleanas que pareçam perguntas de sim ou não; is_divisible retorna True ou False para indicar se x é divisível por y.</p>
+<p>Aqui está um exemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; is_divisible(6, 4)
+False
+&gt;&gt;&gt; is_divisible(6, 3)
+True
+</code></pre>
+<p>O resultado do operador == é um booleano, então podemos escrever a função de forma mais concisa, retornando-o diretamente:</p>
+<pre><code class="language-python">def is_divisible(x, y):
+    return x % y == 0
+</code></pre>
+<p>As funções booleanas muitas vezes são usadas em instruções condicionais:</p>
+<pre><code class="language-python">if is_divisible(x, y):
+    print('x is divisible by y')
+</code></pre>
+<p>Pode ser tentador escrever algo assim:</p>
+<pre><code class="language-python">if is_divisible(x, y) == True:
+    print('x is divisible by y')
+</code></pre>
+<p>Mas a comparação extra é desnecessária.</p>
+<p>Como um exercício, escreva uma função <code>is_between(x, y, z)</code> que retorne True, se x ≤ y ≤ z, ou False, se não for o caso.</p>
+<h2 id="65-mais-recursividade">6.5 - Mais recursividade</h2>
+<p>Cobrimos apenas um pequeno subconjunto do Python, mas talvez seja bom você saber que este subconjunto é uma linguagem de programação completa, ou seja, qualquer coisa que possa ser calculada pode ser expressa nesta linguagem. Qualquer programa que já foi escrito pode ser reescrito apenas com os recursos da linguagem que você aprendeu até agora (na verdade, seria preciso alguns comandos para dispositivos de controle como mouse, discos etc., mas isso é tudo).</p>
+<p>Comprovar esta declaração é um exercício nada trivial realizado pela primeira vez por Alan Turing, um dos primeiros cientistas da computação (alguns diriam que ele foi matemático, mas muitos dos primeiros cientistas da computação começaram como matemáticos). Assim, é conhecida como a Tese de Turing. Para uma exposição mais completa (e exata) da Tese de Turing, recomendo o livro de Michael Sipser, Introduction to the Theory of Computation (Introdução à teoria da computação, Course Technology, 2012).</p>
+<p>Para dar uma ideia do que podemos fazer com as ferramentas que aprendeu até agora, avaliaremos algumas funções matemáticas definidas recursivamente. Uma definição recursiva é semelhante a uma definição circular, no sentido de que a definição contém uma referência à coisa que é definida. Uma definição realmente circular não é muito útil:</p>
+<dl>
+<dt>vorpal</dt>
+<dd>Adjetivo usado para descrever algo que é vorpal.</dd>
+</dl>
+
+<p>Ver uma definição assim no dicionário pode ser irritante. Por outro lado, se procurar a definição da função de fatorial, denotada pelo símbolo !, você pode encontrar algo assim:</p>
+<pre><code>0! = 1
+n! = n·(n − 1)!
+</code></pre>
+<p>Esta definição diz que o fatorial de 0 é 1, e o fatorial de qualquer outro valor, n, é n multiplicado pelo fatorial de n-1.</p>
+<p>Então 3! é 3 vezes 2!, que é 2 vezes 1!, que é 1 vez 0!. Juntando tudo, 3! é igual a 3 vezes 2 vezes 1 vezes 1, que é 6.</p>
+<p>Se puder escrever uma definição recursiva de algo, você poderá escrever um programa em Python que a avalie. O primeiro passo deve ser decidir quais parâmetros ela deve ter. Neste caso, deve estar claro que factorial recebe um número inteiro:</p>
+<pre><code class="language-python">def factorial(n):
+</code></pre>
+<p>Se o argumento for 0, tudo que temos de fazer é retornar 1:</p>
+<pre><code class="language-python">def factorial(n):
+    if n == 0:
+        return 1
+</code></pre>
+<p>Senão, e aí é que fica interessante, temos que fazer uma chamada recursiva para encontrar o fatorial de n-1 e então multiplicá-lo por n:</p>
+<pre><code class="language-python">def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        recurse = factorial(n-1)
+        result = n * recurse
+        return result
+</code></pre>
+<p>O fluxo de execução deste programa é semelhante ao fluxo de countdown em “Recursividade”, na página 81. Se chamarmos factorial com o valor 3:</p>
+<p>Como 3 não é 0, tomamos o segundo ramo e calculamos o fatorial de n-1...</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;Como 2 não é 0, tomamos o segundo ramo e calculamos o fatorial de n-1...</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como 1 não é 0, tomamos o segundo ramo e calculamos o fatorial de n-1...</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Como 0 é igual a 0, tomamos o primeiro ramo e devolvemos 1 sem fazer mais chamadas recursivas.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O valor de retorno, 1, é multiplicado por n, que é 1, e o resultado é devolvido.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;O valor de retorno, 1, é multiplicado por n, que é 2, e o resultado é devolvido.</p>
+<p>O valor devolvido (2) é multiplicado por n, que é 3, e o resultado, 6, torna-se o valor devolvido pela chamada de função que começou o processo inteiro.</p>
+<p>A Figura 6.1 mostra como é o diagrama da pilha para esta sequência de chamadas de função.</p>
+<p><img alt="Figura 6.1 – Diagrama da pilha para factorial." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_0601.png" />
+<br><em>Figura 6.1 – Diagrama da pilha para factorial.</em></p>
+<p>Os valores devolvidos são mostrados ao serem passados de volta até o alto da pilha. Em cada frame, o valor devolvido é o valor de <code>result</code>, que é o produto de <code>n</code> e <code>recurse</code>.</p>
+<p>No último frame, as variáveis locais recurse e result não existem, porque o ramo que os cria não é executado.</p>
+<h2 id="66-salto-de-fe">6.6 - Salto de fé</h2>
+<p>Seguir o fluxo da execução é uma forma de ler programas, mas poderá ser trabalhoso demais. Uma alternativa é o que chamo de “salto de fé” (leap of faith). Ao chegar a uma chamada de função, em vez de seguir o fluxo de execução suponha que a função esteja funcionando corretamente e que está retornando o resultado certo.</p>
+<p>Na verdade, você já está praticando este salto de fé quando usa funções integradas. Quando chama math.cos ou math.exp, você não examina o corpo dessas funções. Apenas supõe que funcionem porque as pessoas que as escreveram eram bons programadores.</p>
+<p>O mesmo acontece ao chamar uma das suas próprias funções. Por exemplo, em “Funções booleanas”, na página 97, escrevemos uma função chamada is_divisible que determina se um número é divisível por outro. Uma vez que estejamos convencidos de que esta função está correta – examinando o código e testando – podemos usar a função sem ver o corpo novamente.</p>
+<p>O mesmo é verdade para programas recursivos. Quando chega à chamada recursiva, em vez de seguir o fluxo de execução, você deveria supor que a chamada recursiva funcione (devolva o resultado correto) e então perguntar-se: “Supondo que eu possa encontrar o fatorial de n-1, posso calcular o fatorial de n?”. É claro que pode, multiplicando por n.</p>
+<p>Naturalmente, é um pouco estranho supor que a função funcione corretamente quando ainda não terminou de escrevê-la, mas é por isso que se chama um salto de fé!</p>
+<h2 id="67-mais-um-exemplo">6.7 - Mais um exemplo</h2>
+<p>Depois do factorial, o exemplo mais comum de uma função matemática definida recursivamente é fibonacci, que tem a seguinte definição (ver http://en.wikipedia.org/wiki/Fibonacci_number):</p>
+<pre><code>fibonacci(0) = 0
+fibonacci(1) = 1
+fibonacci(n) = fibonacci(n − 1) + fibonacci(n − 2)
+</code></pre>
+<p>Traduzida para Python, ela fica assim:</p>
+<pre><code class="language-python">def fibonacci (n):
+    if n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+</code></pre>
+<p>Se tentar seguir o fluxo de execução aqui, até para valores razoavelmente pequenos de n, sua cabeça explode. Porém, seguindo o salto de fé, supondo que as duas chamadas recursivas funcionem corretamente, então é claro que vai receber o resultado correto adicionando-as juntas.</p>
+<h2 id="68-verificacao-de-tipos">6.8 - Verificação de tipos</h2>
+<p>O que acontece se chamarmos factorial e usarmos 1.5 como argumento?</p>
+<pre><code class="language-python">&gt;&gt;&gt; factorial(1.5)
+RuntimeError: Maximum recursion depth exceeded
+</code></pre>
+<p>Parece uma recursividade infinita. No entanto, por que isso acontece? A função tem um caso-base – quando n == 0. Mas se n não é um número inteiro, podemos perder o caso-base e recorrer para sempre.</p>
+<p>Na primeira chamada recursiva, o valor de n é 0.5. No seguinte, é -0.5. Daí, torna-se menor (mais negativo), mas nunca será 0.</p>
+<p>Temos duas escolhas. Podemos tentar generalizar a função factorial para trabalhar com números de ponto flutuante, ou podemos fazer factorial controlar o tipo de argumento que recebe. A primeira opção chama-se função gamma e está um pouco além do alcance deste livro. Então usaremos a segunda opção.</p>
+<p>Podemos usar a função integrada isinstance para verificar o tipo de argumento. E vamos aproveitar para verificar também se o argumento é positivo:</p>
+<pre><code class="language-python">def factorial (n):
+    if not isinstance(n, int):
+        print('Factorial is only defined for integers.')
+        return None
+    elif n &lt; 0:
+        print('Factorial is not defined for negative integers.')
+        return None
+    elif n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+</code></pre>
+<p>O primeiro caso-base lida com números não inteiros; o segundo, com números inteiros negativos. Em ambos os casos o programa exibe uma mensagem de erro e retorna None para indicar que algo deu errado:</p>
+<pre><code class="language-python">&gt;&gt;&gt; factorial('fred')
+Factorial is only defined for integers.
+None
+&gt;&gt;&gt; factorial(-2)
+Factorial is not defined for negative integers.
+None
+</code></pre>
+<p>Se passarmos por ambas as verificações, sabemos que n é positivo ou zero, então podemos comprovar que a recursividade termina.</p>
+<p>Esse programa demonstra um padrão às vezes chamado de guardião. As duas primeiras condicionais atuam como guardiãs, protegendo o código que segue de valores que poderiam causar um erro. As guardiãs permitem comprovar a correção do código.</p>
+<p>Na “Busca reversa”, na página 165, veremos uma alternativa mais flexível para a exibição de uma mensagem de erro: o levantamento de exceções.</p>
+<h2 id="69-depuracao">6.9 - Depuração</h2>
+<p>Quebrar um grande programa em funções menores cria controles naturais da depuração. Se uma função não estiver funcionando, há três possibilidades a considerar:</p>
+<ul>
+<li>
+<p>Há algo errado com os argumentos que a função está recebendo; uma precondição está sendo violada.</p>
+</li>
+<li>
+<p>Há algo errado com a função; uma pós-condição foi violada.</p>
+</li>
+<li>
+<p>Há algo errado com o valor de retorno ou a forma na qual está sendo usado.</p>
+</li>
+</ul>
+<p>Para excluir a primeira possibilidade, você pode acrescentar uma instrução print no início da função e exibir os valores dos parâmetros (e talvez os seus tipos). Ou escrever código que verifique as precondições explicitamente.</p>
+<p>Se os parâmetros parecerem bons, acrescente uma instrução print antes de cada instrução return e exiba o valor de retorno. Se possível, verifique o resultado à mão. Uma possibilidade é chamar a função com valores facilitem a verificação do resultado (como no “Desenvolvimento incremental”, da página 94).</p>
+<p>Se a função parecer funcionar, veja a chamada da função para ter certeza de que o valor de retorno está sendo usado corretamente (ou se está sendo usado mesmo!).</p>
+<p>Acrescentar instruções de exibição no começo e no fim de uma função pode ajudar a tornar o fluxo de execução mais visível. Por exemplo, aqui está uma versão de factorial com instruções de exibição:</p>
+<pre><code class="language-python">def factorial(n):
+    space = ' ' * (4 * n)
+    print(space, 'factorial', n)
+    if n == 0:
+        print(space, 'returning 1')
+        return 1
+    else:
+        recurse = factorial(n-1)
+        result = n * recurse
+        print(space, 'returning', result)
+        return result
+</code></pre>
+<p>space é uma string de caracteres especiais que controla a endentação da saída. Aqui está o resultado de factorial(4):</p>
+<pre><code>                factorial 4
+            factorial 3
+        factorial 2
+    factorial 1
+factorial 0
+returning 1
+    returning 1
+        returning 2
+            returning 6
+                returning 24
+</code></pre>
+<p>Se o fluxo de execução parecer confuso a você, este tipo de saída pode ser útil. Leva um tempo para desenvolver um scaffolding eficaz, mas um pouco dele pode economizar muita depuração.</p>
+<h2 id="610-glossario">6.10 - Glossário</h2>
+<dl>
+<dt><a id="glos:variável temporária" href="#termo:variável temporária">variável temporária</a></dt>
+<dd>Uma variável usada para guardar um valor intermediário em um cálculo complexo.</dd>
+
+<dt><a id="glos:código morto" href="#termo:código morto">código morto</a></dt>
+<dd>A parte de um programa que nunca pode ser executada, muitas vezes porque aparece depois de uma instrução return.</dd>
+
+<dt><a id="glos:desenvolvimento incremental" href="#termo:desenvolvimento incremental">desenvolvimento incremental</a></dt>
+<dd>Um plano de desenvolvimento de programa para evitar a depuração, que acrescenta e testa poucas linhas de código de cada vez.</dd>
+
+<dt><a id="glos:scaffolding (andaime)" href="#termo:scaffolding (andaime)">scaffolding (andaime)</a></dt>
+<dd>O código que se usa durante o desenvolvimento de programa, mas que não faz parte da versão final.</dd>
+
+<dt><a id="glos:guardião" href="#termo:guardião">guardião</a></dt>
+<dd>Um padrão de programação que usa uma instrução condicional para verificar e lidar com circunstâncias que possam causar erros.</dd>
+
+</dl>
+
+<h2 id="611-exercicios">6.11 - Exercícios</h2>
+<h3 id="exercicio-61">Exercício 6.1</h3>
+<p>Desenhe um diagrama da pilha do seguinte programa. O que o programa exibe?</p>
+<pre><code class="language-python">def b(z):
+    prod = a(z, z)
+    print(z, prod)
+    return prod
+
+def a(x, y):
+    x = x + 1
+    return x * y
+
+def c(x, y, z):
+    total = x + y + z
+    square = b(total)**2
+    return square
+
+x = 1
+y = x + 1
+print(c(x, y+3, x+y))
+</code></pre>
+<h3 id="exercicio-62">Exercício 6.2</h3>
+<p>A função de Ackermann, A(m, n), é definida assim:</p>
+<p><img alt="Fórmula – Função de Ackermann." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/p72f1.png" /></p>
+<p>Veja http://en.wikipedia.org/wiki/Ackermann_function. Escreva uma função denominada ack que avalie a função de Ackermann. Use a sua função para avaliar <code>ack(3, 4)</code>, cujo resultado deve ser 125. O que acontece para valores maiores de m e n?</p>
+<p>Solução: http://thinkpython2.com/code/ackermann.py.</p>
+<h3 id="exercicio-63">Exercício 6.3</h3>
+<p>Um palíndromo é uma palavra que se soletra da mesma forma nos dois sentidos, como “osso” e “reviver”. Recursivamente, uma palavra é um palíndromo se a primeira e última letras forem iguais e o meio for um palíndromo.</p>
+<p>As funções seguintes recebem uma string como argumento e retornam as letras iniciais, finais e do meio das palavras:</p>
+<pre><code class="language-python">def first(word):
+    return word[0]
+def last(word):
+    return word[-1]
+def middle(word):
+    return word[1:-1]
+</code></pre>
+<p>Veremos como funcionam no Capítulo 8.</p>
+<ol>
+<li>
+<p>Digite essas funções em um arquivo chamado palindrome.py e teste-as. O que acontece se chamar middle com uma string de duas letras? Uma letra? E se a string estiver vazia, escrita com <code>''</code> e não contiver nenhuma letra?</p>
+</li>
+<li>
+<p>Escreva uma função chamada <code>is_palindrome</code> que receba uma string como argumento e retorne True se for um palíndromo e False se não for. Lembre-se de que você pode usar a função integrada len para verificar o comprimento de uma string.</p>
+</li>
+</ol>
+<p>Solução: http://thinkpython2.com/code/palindrome_soln.py.</p>
+<h3 id="exercicio-64">Exercício 6.4</h3>
+<p>Um número a é uma potência de b se for divisível por b e a/b for uma potência de b. Escreva uma função chamada is_power que receba os parâmetros a e b e retorne True se a for uma potência de b. Dica: pense no caso-base.</p>
+<h3 id="exercicio-65">Exercício 6.5</h3>
+<p>O maior divisor comum (MDC, ou GCD em inglês) de a e b é o maior número que divide ambos sem sobrar resto.</p>
+<p>Um modo de encontrar o MDC de dois números é observar qual é o resto r quando a é dividido por b, verificando que gcd(a, b) = gcd(b, r). Como caso-base, podemos usar gcd(a, 0) = a.</p>
+<p>Escreva uma função chamada gcd que receba os parâmetros a e b e devolva o maior divisor comum.</p>
+<p>Crédito: Este exercício é baseado em um exemplo do livro de Abelson e Sussman, Structure and Interpretation of Computer Programs (Estrutura e interpretação de programas de computador, MIT Press, 1996).</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../07-iteracao/" class="btn btn-neutral float-right" title="Capítulo 7: Iteração">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../05-cond-recur/" class="btn btn-neutral" title="Capítulo 5: Condicionais e recursividade"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../05-cond-recur/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../07-iteracao/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

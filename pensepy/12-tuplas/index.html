@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Capítulo 12: Tuplas - Pense Python</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Cap\u00edtulo 12: Tuplas";
+    var mkdocs_page_input_path = "12-tuplas.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pense Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Pense em Python</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../00-prefacio/">Prefácio</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-jornada/">Capítulo 1: A jornada do programa</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-vars-expr-instr/">Capítulo 2: Variáveis, expressões e instruções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-funcoes/">Capítulo 3: Funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-caso-interface/">Capítulo 4: Estudo de caso: projeto de interface</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-cond-recur/">Capítulo 5: Condicionais e recursividade</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-funcoes-result/">Capítulo 6: Funções com resultado</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-iteracao/">Capítulo 7: Iteração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-strings/">Capítulo 8: Strings</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-caso-palavras/">Capítulo 9: Estudo de caso: jogos de palavras</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-listas/">Capítulo 10: Listas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../11-dicionarios/">Capítulo 11: Dicionários</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Capítulo 12: Tuplas</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#121-tuplas-sao-imutaveis">12.1 - Tuplas são imutáveis</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#122-atribuicao-de-tuplas">12.2 - Atribuição de tuplas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#123-tuplas-como-valores-de-retorno">12.3 - Tuplas como valores de retorno</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#124-tuplas-com-argumentos-de-comprimento-variavel">12.4 - Tuplas com argumentos de comprimento variável</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#125-listas-e-tuplas">12.5 - Listas e tuplas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#126-dicionarios-e-tuplas">12.6 - Dicionários e tuplas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#127-sequencias-de-sequencias">12.7 - Sequências de sequências</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#128-depuracao">12.8 - Depuração</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#129-glossario">12.9 - Glossário</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1210-exercicios">12.10 - Exercícios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-121">Exercício 12.1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-122">Exercício 12.2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-123">Exercício 12.3</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-124">Exercício 12.4</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../13-caso-estruturas/">Capítulo 13: Estudo de caso: seleção de estrutura de dados</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../14-arquivos/">Capítulo 14: Arquivos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../15-classes-objetos/">Capítulo 15: Classes e objetos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../16-classes-funcoes/">Capítulo 16: Classes e funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../17-classes-metodos/">Capítulo 17: Classes e métodos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../18-heranca/">Capítulo 18: Herança</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../19-extra/">Capítulo 19: Extra</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../A-depuracao/">Apêndice A: Depuração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../B-analise-algorit/">Apêndice B: Análise de algoritmos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../C-colofao-autor/">Colofão</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pense Python</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Capítulo 12: Tuplas</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="capitulo-12-tuplas">Capítulo 12: Tuplas</h1>
+<p>Este capítulo apresenta mais um tipo integrado, a tupla, e descreve como as listas, os dicionários e as tuplas trabalham juntos. Além disso, apresento um recurso útil para listas de argumentos de comprimento variável: os operadores gather e scatter.</p>
+<p>Uma observação: não há consenso sobre como pronunciar “tuple” (em inglês). Algumas pessoas dizem “tuhple”, que rima com “supple”. Porém, no contexto da programação, a maioria das pessoas diz “too-ple”, que rima com “quadruple”.</p>
+<h2 id="121-tuplas-sao-imutaveis">12.1 - Tuplas são imutáveis</h2>
+<p>Uma tupla é uma sequência de valores. Os valores podem ser de qualquer tipo, e podem ser indexados por números inteiros, portanto, nesse sentido, as tuplas são muito parecidas com as listas. A diferença importante é que as tuplas são imutáveis.</p>
+<p>Sintaticamente, uma tupla é uma lista de valores separados por vírgulas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = 'a', 'b', 'c', 'd', 'e'
+</code></pre>
+<p>Embora não seja sempre necessário, é comum colocar tuplas entre parênteses:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = ('a', 'b', 'c', 'd', 'e')
+</code></pre>
+<p>Para criar uma tupla com um único elemento, é preciso incluir uma vírgula final:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t1 = 'a',
+&gt;&gt;&gt; type(t1)
+&lt;class 'tuple'&gt;
+</code></pre>
+<p>Um único valor entre parênteses não é uma tupla:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t2 = ('a')
+&gt;&gt;&gt; type(t2)
+&lt;class 'str'&gt;
+</code></pre>
+<p>Outra forma de criar uma tupla é com a função integrada <code>tuple</code>. Sem argumentos, cria uma tupla vazia:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = tuple()
+&gt;&gt;&gt; t
+()
+</code></pre>
+<p>Se os argumentos forem uma sequência (string, lista ou tupla), o resultado é uma tupla com os elementos da sequência:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = tuple('lupins')
+&gt;&gt;&gt; t
+('l', 'u', 'p', 'i', 'n', 's')
+</code></pre>
+<p>Como <code>tuple</code> é o nome de uma função integrada, você deve evitar usá-lo como nome de variável.</p>
+<p>A maior parte dos operadores de lista também funciona em tuplas. O operador de colchetes indexa um elemento:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = ('a', 'b', 'c', 'd', 'e')
+&gt;&gt;&gt; t[0]
+'a'
+</code></pre>
+<p>E o operador de fatia seleciona vários elementos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t[1:3]
+('b', 'c')
+</code></pre>
+<p>Entretanto, se tentar alterar um dos elementos da tupla, vai receber um erro:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t[0] = 'A'
+TypeError: object doesn't support item assignment
+</code></pre>
+<p>Como tuplas são imutáveis, você não pode alterar os elementos, mas pode substituir uma tupla por outra:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = ('A',) + t[1:]
+&gt;&gt;&gt; t
+('A', 'b', 'c', 'd', 'e')
+</code></pre>
+<p>Essa instrução faz uma nova tupla e então a atribui a <code>t</code>.</p>
+<p>Os operadores relacionais funcionam com tuplas e outras sequências; o Python começa comparando o primeiro elemento de cada sequência. Se forem iguais, vai para os próximos elementos, e assim por diante, até que encontre elementos que sejam diferentes. Os elementos subsequentes não são considerados (mesmo se forem muito grandes).</p>
+<pre><code class="language-python">&gt;&gt;&gt; (0, 1, 2) &lt; (0, 3, 4)
+True
+&gt;&gt;&gt; (0, 1, 2000000) &lt; (0, 3, 4)
+True
+</code></pre>
+<h2 id="122-atribuicao-de-tuplas">12.2 - Atribuição de tuplas</h2>
+<p>Muitas vezes, é útil trocar os valores de duas variáveis. Com a atribuição convencional, é preciso usar uma variável temporária. Por exemplo, trocar a e b.</p>
+<pre><code class="language-python">&gt;&gt;&gt; temp = a
+&gt;&gt;&gt; a = b
+&gt;&gt;&gt; b = temp
+</code></pre>
+<p>Essa solução é trabalhosa; a atribuição de tuplas é mais elegante:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a, b = b, a
+</code></pre>
+<p>O lado esquerdo é uma tupla de variáveis; o lado direito é uma tupla de expressões. Cada valor é atribuído à sua respectiva variável. Todas as expressões no lado direito são avaliadas antes de todas as atribuições.</p>
+<p>O número de variáveis à esquerda e o número de valores à direita precisam ser iguais:</p>
+<pre><code class="language-python">&gt;&gt;&gt; a, b = 1, 2, 3
+ValueError: too many values to unpack
+</code></pre>
+<p>De forma geral, o lado direito pode ter qualquer tipo de sequência (string, lista ou tupla). Por exemplo, para dividir um endereço de email em um nome de usuário e um domínio, você poderia escrever:</p>
+<pre><code class="language-python">&gt;&gt;&gt; addr = 'monty@python.org'
+&gt;&gt;&gt; uname, domain = addr.split('@')
+</code></pre>
+<p>O valor de retorno do <code>split</code> é uma lista com dois elementos; o primeiro elemento é atribuído a <code>uname</code>, o segundo a <code>domain</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; uname
+'monty'
+&gt;&gt;&gt; domain
+'python.org'
+</code></pre>
+<h2 id="123-tuplas-como-valores-de-retorno">12.3 - Tuplas como valores de retorno</h2>
+<p>Falando estritamente, uma função só pode retornar um valor, mas se o valor for uma tupla, o efeito é o mesmo que retornar valores múltiplos. Por exemplo, se você quiser dividir dois números inteiros e calcular o quociente e resto, não é eficiente calcular x/y e depois x%y. É melhor calcular ambos ao mesmo tempo.</p>
+<p>A função integrada divmod toma dois argumentos e devolve uma tupla de dois valores: o quociente e o resto. Você pode guardar o resultado como uma tupla:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = divmod(7, 3)
+&gt;&gt;&gt; t
+(2, 1)
+</code></pre>
+<p>Ou usar a atribuição de tuplas para guardar os elementos separadamente:</p>
+<pre><code class="language-python">&gt;&gt;&gt; quot, rem = divmod(7, 3)
+&gt;&gt;&gt; quot
+2
+&gt;&gt;&gt; rem
+1
+</code></pre>
+<p>Aqui está um exemplo de função que retorna uma tupla:</p>
+<pre><code class="language-python">def min_max(t):
+    return min(t), max(t)
+</code></pre>
+<p><code>max</code> e <code>min</code> são funções integradas que encontram os maiores e menores elementos de uma sequência. <code>min_max</code> calcula ambos e retorna uma tupla de dois valores.</p>
+<h2 id="124-tuplas-com-argumentos-de-comprimento-variavel">12.4 - Tuplas com argumentos de comprimento variável</h2>
+<p>As funções podem receber um número variável de argumentos. Um nome de parâmetro que comece com <code>*</code> reúne vários argumentos em uma tupla. Por exemplo, <code>printall</code> recebe qualquer número de argumentos e os exibe:</p>
+<pre><code class="language-python">def printall(*args):
+    print(args)
+</code></pre>
+<p>O parâmetro com o prefixo <code>*</code> pode ter qualquer nome que você goste, mas <code>args</code> é o convencional. É assim que a função funciona:</p>
+<pre><code class="language-python">&gt;&gt;&gt; printall(1, 2.0, '3')
+(1, 2.0, '3')
+</code></pre>
+<p>O complemento de reunir é espalhar. Se você tiver uma sequência de valores e quiser passá-la a uma função como argumentos múltiplos, pode usar o operador <code>*</code>. Por exemplo, o <code>divmod</code> recebe exatamente dois argumentos; ele não funciona com uma tupla:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = (7, 3)
+&gt;&gt;&gt; divmod(t)
+TypeError: divmod expected 2 arguments, got 1
+</code></pre>
+<p>No entanto, se você espalhar a tupla, aí funciona:</p>
+<pre><code class="language-python">&gt;&gt;&gt; divmod(*t)
+(2, 1)
+</code></pre>
+<p>Muitas das funções integradas usam tuplas com argumentos de comprimento variável. Por exemplo, <code>max</code> e <code>min</code> podem receber qualquer número de argumentos:</p>
+<pre><code class="language-python">&gt;&gt;&gt; max(1, 2, 3)
+3
+</code></pre>
+<p>Mas sum, não:</p>
+<pre><code class="language-python">&gt;&gt;&gt; sum(1, 2, 3)
+TypeError: sum expected at most 2 arguments, got 3
+</code></pre>
+<p>Como exercício, escreva uma função chamada <code>sumall</code> que receba qualquer número de argumentos e retorne a soma deles.</p>
+<h2 id="125-listas-e-tuplas">12.5 - Listas e tuplas</h2>
+<p><code>zip</code> é uma função integrada que recebe duas ou mais sequências e devolve uma lista de tuplas onde cada tupla contém um elemento de cada sequência. O nome da função tem a ver com o zíper, que se junta e encaixa duas carreiras de dentes.</p>
+<p>Este exemplo encaixa uma string e uma lista:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = 'abc'
+&gt;&gt;&gt; t = [0, 1, 2]
+&gt;&gt;&gt; zip(s, t)
+&lt;zip object at 0x7f7d0a9e7c48&gt;
+</code></pre>
+<p>O resultado é um objeto <code>zip</code> que sabe como percorrer os pares. O uso mais comum de <code>zip</code> é em um loop <code>for</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for pair in zip(s, t):
+...     print(pair)
+...
+('a', 0)
+('b', 1)
+('c', 2)
+</code></pre>
+<p>Um objeto <code>zip</code> é um tipo de iterador, ou seja, qualquer objeto que percorre ou itera sobre uma sequência. Iteradores são semelhantes a listas em alguns aspectos, mas, ao contrário de listas, não é possível usar um índice para selecionar um elemento de um iterador.</p>
+<p>Se quiser usar operadores e métodos de lista, você pode usar um objeto <code>zip</code> para fazer uma lista:</p>
+<pre><code class="language-python">&gt;&gt;&gt; list(zip(s, t))
+[('a', 0), ('b', 1), ('c', 2)]
+</code></pre>
+<p>O resultado é uma lista de tuplas; neste exemplo, cada tupla contém um caractere da string e o elemento correspondente da lista.</p>
+<p>Se as sequências não forem do mesmo comprimento, o resultado tem o comprimento da mais curta:</p>
+<pre><code class="language-python">&gt;&gt;&gt; list(zip('Anne', 'Elk'))
+[('A', 'E'), ('n', 'l'), ('n', 'k')]
+</code></pre>
+<p>Você pode usar a atribuição de tuplas em um loop for para atravessar uma lista de tuplas:</p>
+<pre><code class="language-python">t = [('a', 0), ('b', 1), ('c', 2)]
+for letter, number in t:
+    print(number, letter)
+</code></pre>
+<p>Cada vez que o programa passa pelo loop, o Python seleciona a próxima tupla na lista e atribui os elementos letter e number. A saída deste loop é:</p>
+<pre><code class="language-python">0 a
+1 b
+2 c
+</code></pre>
+<p>Se combinar <code>zip</code>, <code>for</code> e atribuição de tuplas, você pode fazer uma expressão útil para percorrer duas (ou mais) sequências ao mesmo tempo. Por exemplo, <code>has_match</code> recebe duas sequências, <code>t1</code> e <code>t2</code> e retorna <code>True</code> se houver um índice <code>i</code> tal que <code>t1[i] == t2[i]</code>:</p>
+<pre><code class="language-python">def has_match(t1, t2):
+    for x, y in zip(t1, t2):
+        if x == y:
+            return True
+    return False
+</code></pre>
+<p>Se precisar atravessar os elementos de uma sequência e seus índices, você pode usar a função integrada <code>enumerate</code>:</p>
+<pre><code class="language-python">for index, element in enumerate('abc'):
+    print(index, element)
+</code></pre>
+<p>O resultado de <code>enumerate</code> é um objeto <code>enumerate</code>, que itera sobre uma sequência de pares; cada par contém um índice (começando de 0) e um elemento da sequência dada. Neste exemplo, a saída é</p>
+<pre><code class="language-python">0 a
+1 b
+2 c
+</code></pre>
+<p>De novo.</p>
+<h2 id="126-dicionarios-e-tuplas">12.6 - Dicionários e tuplas</h2>
+<p>Os dicionários têm um método chamado <code>items</code> que devolve uma sequência de tuplas, onde cada tupla é um par chave-valor:</p>
+<pre><code class="language-python">&gt;&gt;&gt; d = {'a':0, 'b':1, 'c':2}
+&gt;&gt;&gt; t = d.items()
+&gt;&gt;&gt; t
+dict_items([('c', 2), ('a', 0), ('b', 1)])
+</code></pre>
+<p>O resultado é um objeto <code>dict_items</code>, que é um iterador que percorre os pares chave-valor. Você pode usá-lo em um loop <code>for</code>, desta forma:</p>
+<pre><code class="language-python">&gt;&gt;&gt; for key, value in d.items():
+...     print(key, value)
+...
+c 2
+a 0
+b 1
+</code></pre>
+<p>Como se poderia esperar de um dicionário, os itens não estão em nenhuma ordem em particular.</p>
+<p>Indo em outra direção, você pode usar uma lista de tuplas para inicializar um novo dicionário:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t = [('a', 0), ('c', 2), ('b', 1)]
+&gt;&gt;&gt; d = dict(t)
+&gt;&gt;&gt; d
+{'a': 0, 'c': 2, 'b': 1}
+</code></pre>
+<p>Combinar <code>dict</code> com <code>zip</code> produz uma forma concisa de criar um dicionário:</p>
+<pre><code class="language-python">&gt;&gt;&gt; d = dict(zip('abc', range(3)))
+&gt;&gt;&gt; d
+{'a': 0, 'c': 2, 'b': 1}
+</code></pre>
+<p>O método de dicionário <code>update</code> também recebe uma lista de tuplas e as adiciona, como pares chave-valor, a um dicionário existente.</p>
+<p>É comum usar tuplas como chaves em dicionários (principalmente porque você não pode usar listas). Por exemplo, uma lista telefônica poderia mapear pares de sobrenome e primeiro nome a números de telefone. Supondo que tenhamos definido last, first e number, podemos escrever:</p>
+<pre><code class="language-python">directory[last, first] = number
+</code></pre>
+<p>A expressão entre chaves é uma tupla. Podemos usar atribuição de tuplas para atravessar este dicionário:</p>
+<pre><code class="language-python">for last, first in directory:
+    print(first, last, directory[last,first])
+</code></pre>
+<p>Este loop atravessa as chaves em directory, que são tuplas. Ele atribui os elementos de cada tupla para <code>last</code> e <code>first</code>, e então exibe o nome e número de telefone correspondente.</p>
+<p>Há duas formas de representar tuplas em um diagrama de estado. A versão mais detalhada mostra os índices e elementos como aparecem em uma lista. Por exemplo, a tupla ('Cleese', 'John') apareceria como na Figura 12.1.</p>
+<p><img alt="Figura 12.1 – Diagrama de estado de uma tupla." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1201.png" />
+<br><em>Figura 12.1 – Diagrama de estado de uma tupla.</em></p>
+<p>No entanto, em um diagrama maior, você pode querer omitir os detalhes. Por exemplo, um diagrama da lista telefônica poderia ser como o da Figura 12.2.</p>
+<p><img alt="Figura 12.2 – Diagrama de estado de um dicionário com chaves do tipo tupla." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1202.png" />
+<br><em>Figura 12.2 – Diagrama de estado de um dicionário com chaves do tipo tupla.</em></p>
+<p>Aqui as tuplas são mostradas usando a sintaxe do Python para simplificar o gráfico. O número de telefone no diagrama é a linha de reclamações da BBC, então, por favor, não ligue para lá.</p>
+<h2 id="127-sequencias-de-sequencias">12.7 - Sequências de sequências</h2>
+<p>Eu me concentrei em listas de tuplas, mas quase todos os exemplos neste capítulo também funcionam com listas de listas, tuplas de tuplas e tuplas de listas. Para evitar enumerar as combinações possíveis, às vezes é mais fácil falar sobre sequências de sequências.</p>
+<p>Em muitos contextos, os tipos diferentes de sequências (strings, listas e tuplas) podem ser usados de forma intercambiável. Então, como escolher uma em vez da outra?</p>
+<p>Para começar com o óbvio, as strings são mais limitadas que outras sequências porque os elementos têm de ser caracteres. Também são imutáveis. Se precisar da capacidade de alterar caracteres em uma string (em vez de criar outra string) você pode querer usar uma lista de caracteres.</p>
+<p>As listas são mais comuns que as tuplas, principalmente porque são mutáveis. Mas há alguns casos em que você pode preferir tuplas:</p>
+<ol>
+<li>
+<p>Em alguns contextos, como em uma instrução <code>return</code>, é sintaticamente mais simples criar uma tupla que uma lista.</p>
+</li>
+<li>
+<p>Se quiser usar uma sequência como uma chave de dicionário, é preciso usar um tipo imutável como uma tupla ou string.</p>
+</li>
+<li>
+<p>Se estiver passando uma sequência como um argumento a uma função, usar tuplas reduz o potencial de comportamento inesperado devido a alias.</p>
+</li>
+</ol>
+<p>Como tuplas são imutáveis, elas não fornecem métodos como <code>sort</code> e <code>reverse</code>, que alteram listas existentes. Porém, o Python fornece a função integrada <code>sorted</code>, que recebe qualquer sequência e retorna uma nova lista com os mesmos elementos ordenados, e <code>reversed</code>, que recebe uma sequência e retorna um iterador que percorre a lista em ordem reversa.</p>
+<h2 id="128-depuracao">12.8 - Depuração</h2>
+<p>As listas, os dicionários e as tuplas são exemplos de estruturas de dados; neste capítulo estamos começando a ver estruturas de dados compostas, como as listas de tuplas ou dicionários que contêm tuplas como chaves e listas como valores. As estruturas de dados compostas são úteis, mas são propensas ao que chamo de erros de forma; isto é, erros causados quando uma estrutura de dados tem o tipo, tamanho ou estrutura incorretos. Por exemplo, se você estiver esperando uma lista com um número inteiro e eu der apenas o número inteiro (não em uma lista), não vai funcionar.</p>
+<p>Para ajudar a depurar esses tipos de erro, escrevi um módulo chamado <code>structshape</code>, que fornece uma função, também chamada <code>structshape</code>, que recebe qualquer tipo de estrutura de dados como argumento e retorna uma string, que resume sua forma. Você pode baixá-la em http://thinkpython2.com/code/structshape.py.</p>
+<p>Aqui está o resultado de uma lista simples:</p>
+<pre><code class="language-python">&gt;&gt;&gt; from structshape import structshape
+&gt;&gt;&gt; t = [1, 2, 3]
+&gt;&gt;&gt; structshape(t)
+'list of 3 int'
+</code></pre>
+<p>Um programa mais sofisticado pode escrever “list of 3 ints”, mas é mais fácil não lidar com plurais. Aqui está uma lista de listas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t2 = [[1,2], [3,4], [5,6]]
+&gt;&gt;&gt; structshape(t2)
+'list of 3 list of 2 int'
+</code></pre>
+<p>Se os elementos da lista não forem do mesmo tipo, <code>structshape</code> os agrupa, na ordem, por tipo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; t3 = [1, 2, 3, 4.0, '5', '6', [7], [8], 9]
+&gt;&gt;&gt; structshape(t3)
+'list of (3 int, float, 2 str, 2 list of int, int)'
+</code></pre>
+<p>Aqui está uma lista de tuplas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; s = 'abc'
+&gt;&gt;&gt; lt = list(zip(t, s))
+&gt;&gt;&gt; structshape(lt)
+'list of 3 tuple of (int, str)'
+</code></pre>
+<p>E aqui está um dicionário com três itens que mapeia números inteiros a strings:</p>
+<pre><code class="language-python">&gt;&gt;&gt; d = dict(lt)
+&gt;&gt;&gt; structshape(d)
+'dict of 3 int-&gt;str'
+</code></pre>
+<p>Se estiver com problemas para monitorar suas estruturas de dados, o <code>structshape</code> pode ajudar.</p>
+<h2 id="129-glossario">12.9 - Glossário</h2>
+<dl>
+<dt><a id="glos:tupla" href="#termo:tupla">tupla</a></dt>
+<dd>Sequência imutável de elementos.</dd>
+
+<dt><a id="glos:atribuição de tupla" href="#termo:atribuição de tupla">atribuição de tupla</a></dt>
+<dd>Atribuição com uma sequência no lado direito e uma tupla de variáveis à esquerda. O lado direito é avaliado e então seus elementos são atribuídos às variáveis à esquerda.</dd>
+
+<dt><a id="glos:gather" href="#termo:gather">gather</a></dt>
+<dd>Operação para montar uma tupla com argumento de comprimento variável.</dd>
+
+<dt><a id="glos:scatter" href="#termo:scatter">scatter</a></dt>
+<dd>Operação para tratar uma sequência como uma lista de argumentos.</dd>
+
+<dt><a id="glos:objeto zip" href="#termo:objeto zip">objeto zip</a></dt>
+<dd>O resultado de chamar uma função integrada zip; um objeto que se repete por uma sequência de tuplas.</dd>
+
+<dt><a id="glos:iterador" href="#termo:iterador">iterador</a></dt>
+<dd>Objeto que pode se repetir por uma sequência, mas que não oferece operadores de lista e métodos.</dd>
+
+<dt><a id="glos:estrutura de dados" href="#termo:estrutura de dados">estrutura de dados</a></dt>
+<dd>Coleção de valores relacionados, muitas vezes organizados em listas, dicionários, tuplas etc.</dd>
+
+<dt><a id="glos:erro de forma" href="#termo:erro de forma">erro de forma</a></dt>
+<dd>Erro causado pelo fato de o valor ter a forma incorreta; isto é, tipo ou tamanho incorreto.</dd>
+
+</dl>
+
+<h2 id="1210-exercicios">12.10 - Exercícios</h2>
+<h3 id="exercicio-121">Exercício 12.1</h3>
+<p>Escreva uma função chamada <code>most_frequent</code> que receba uma string e exiba as letras em ordem decrescente de frequência. Encontre amostras de texto de vários idiomas diferentes e veja como a frequência das letras varia entre os idiomas. Compare seus resultados com as tabelas em http://en.wikipedia.org/wiki/Letter_frequencies.</p>
+<p>Solução: http://thinkpython2.com/code/most_frequent.py.</p>
+<h3 id="exercicio-122">Exercício 12.2</h3>
+<p>Mais anagramas!</p>
+<ol>
+<li>Escreva um programa que leia uma lista de palavras de um arquivo (veja “Leitura de listas de palavras”, na página 133) e imprima todos os conjuntos de palavras que são anagramas.</li>
+</ol>
+<p>Aqui está um exemplo de como a saída pode parecer:</p>
+<pre><code class="language-python">        ['deltas', 'desalt', 'lasted', 'salted', 'slated', 'staled']
+        ['retainers', 'ternaries']
+        ['generating', 'greatening']
+        ['resmelts', 'smelters', 'termless']
+</code></pre>
+<p>Dica: você pode querer construir um dicionário que mapeie uma coleção de letras a uma lista de palavras que podem ser soletradas com essas letras. A pergunta é: como representar a coleção de letras de forma que possa ser usada como uma chave?</p>
+<ol>
+<li>
+<p>Altere o programa anterior para que exiba a lista mais longa de anagramas primeiro, seguido pela segunda mais longa, e assim por diante.</p>
+</li>
+<li>
+<p>No Scrabble, um “bingo” é quando você joga todas as sete peças na sua estante, junto com uma peça no tabuleiro, para formar uma palavra de oito letras. Que coleção de oito letras forma o maior número possível de bingos? Dica: há sete.</p>
+</li>
+</ol>
+<p>Solução: http://thinkpython2.com/code/anagram_sets.py.</p>
+<h3 id="exercicio-123">Exercício 12.3</h3>
+<p>Duas palavras formam um “par de metátese” se você puder transformar uma na outra trocando duas letras, por exemplo, “converse” e “conserve”. Escreva um programa que descubra todos os pares de metátese no dicionário. Dica: não teste todos os pares de palavras e não teste todas as trocas possíveis.</p>
+<p>Solução: http://thinkpython2.com/code/metathesis.py. Crédito: este exercício foi inspirado por um exemplo em http://puzzlers.org.</p>
+<h3 id="exercicio-124">Exercício 12.4</h3>
+<p>Aqui está outro quebra-cabeça do programa Car Talk (http://www.cartalk.com/content/puzzlers):</p>
+<p>Qual é a palavra inglesa mais longa, que permanece uma palavra inglesa válida, conforme vai removendo suas letras, uma após a outra?</p>
+<p>Agora, as letras podem ser retiradas do fim ou do meio, mas você não pode reajustar nenhuma delas. Cada vez que remove uma letra, você acaba com outra palavra inglesa. Se fizer isto, eventualmente você acabará com uma letra e isso também será uma palavra inglesa; uma encontrada no dicionário. Quero saber qual é a palavra mais longa e quantas letras tem?</p>
+<p>Vou dar um pequeno exemplo modesto: Sprite. Ok? Você começa com sprite, tira uma letra do interior da palavra, tira o r, e ficamos com a palavra spite, então tiramos o e do fim, ficamos com spit, tiramos o s, ficamos com pit, it e I.</p>
+<p>Escreva um programa que encontre todas as palavras que podem ser reduzidas desta forma, e então encontre a mais longa.</p>
+<p>Este exercício é um pouco mais desafiador que a maioria, então aqui estão algumas sugestões:</p>
+<ol>
+<li>
+<p>Você pode querer escrever uma função que receba uma palavra e calcule uma lista de todas as palavras que podem ser formadas retirando uma letra. Esses são os “filhos” da palavra.</p>
+</li>
+<li>
+<p>Recursivamente, uma palavra é redutível se algum de seus filhos for redutível. Como caso base, você pode considerar a string vazia redutível.</p>
+</li>
+<li>
+<p>A lista de palavras que forneci, words.txt, não contém palavras de uma letra só. Portanto, você pode querer acrescentar “I”, “a”, e a string vazia.</p>
+</li>
+<li>
+<p>Para melhorar o desempenho do seu programa, você pode querer memorizar as palavras conhecidas por serem redutíveis.</p>
+</li>
+</ol>
+<p>Solução: http://thinkpython2.com/code/reducible.py.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../13-caso-estruturas/" class="btn btn-neutral float-right" title="Capítulo 13: Estudo de caso: seleção de estrutura de dados">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../11-dicionarios/" class="btn btn-neutral" title="Capítulo 11: Dicionários"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../11-dicionarios/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../13-caso-estruturas/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

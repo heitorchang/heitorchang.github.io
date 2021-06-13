@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Capítulo 18: Herança - Pense Python</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Cap\u00edtulo 18: Heran\u00e7a";
+    var mkdocs_page_input_path = "18-heranca.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pense Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Pense em Python</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../00-prefacio/">Prefácio</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-jornada/">Capítulo 1: A jornada do programa</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-vars-expr-instr/">Capítulo 2: Variáveis, expressões e instruções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-funcoes/">Capítulo 3: Funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-caso-interface/">Capítulo 4: Estudo de caso: projeto de interface</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-cond-recur/">Capítulo 5: Condicionais e recursividade</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-funcoes-result/">Capítulo 6: Funções com resultado</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-iteracao/">Capítulo 7: Iteração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-strings/">Capítulo 8: Strings</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-caso-palavras/">Capítulo 9: Estudo de caso: jogos de palavras</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-listas/">Capítulo 10: Listas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../11-dicionarios/">Capítulo 11: Dicionários</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../12-tuplas/">Capítulo 12: Tuplas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../13-caso-estruturas/">Capítulo 13: Estudo de caso: seleção de estrutura de dados</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../14-arquivos/">Capítulo 14: Arquivos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../15-classes-objetos/">Capítulo 15: Classes e objetos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../16-classes-funcoes/">Capítulo 16: Classes e funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../17-classes-metodos/">Capítulo 17: Classes e métodos</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Capítulo 18: Herança</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#181-objetos-card">18.1 - Objetos Card</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#182-atributos-de-classe">18.2 - Atributos de classe</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#183-comparacao-de-cartas">18.3 - Comparação de cartas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#184-baralhos">18.4 - Baralhos</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#185-exibicao-do-baralho">18.5 - Exibição do baralho</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#186-adicao-remocao-embaralhamento-e-classificacao">18.6 - Adição, remoção, embaralhamento e classificação</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#187-heranca">18.7 - Herança</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#188-diagramas-de-classe">18.8 - Diagramas de classe</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#189-encapsulamento-de-dados">18.9 - Encapsulamento de dados</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1810-depuracao">18.10 - Depuração</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1811-glossario">18.11 - Glossário</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1812-exercicios">18.12 - Exercícios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-181">Exercício 18.1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-182">Exercício 18.2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-183">Exercício 18.3</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../19-extra/">Capítulo 19: Extra</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../A-depuracao/">Apêndice A: Depuração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../B-analise-algorit/">Apêndice B: Análise de algoritmos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../C-colofao-autor/">Colofão</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pense Python</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Capítulo 18: Herança</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="capitulo-18-heranca">Capítulo 18: Herança</h1>
+<p>O termo mais associado com a programação orientada a objeto é herança. A herança é a capacidade de definir uma nova classe que seja uma versão modificada de uma classe existente. Neste capítulo demonstrarei a herança usando classes que representam jogos de cartas, baralhos e mãos de pôquer.</p>
+<p>Se você não joga pôquer, pode ler sobre ele em http://en.wikipedia.org/wiki/Poker, mas não é necessário; vou dizer tudo o que precisa saber para os exercícios.</p>
+<p>Os exemplos de código deste capítulo estão disponíveis em http://thinkpython2.com/code/Card.py.</p>
+<h2 id="181-objetos-card">18.1 - Objetos Card</h2>
+<p>Há 52 cartas em um baralho, e cada uma pertence a 1 dos 4 naipes e a 1 dos 13 valores. Os naipes são espadas, copas, ouros e paus (no bridge, em ordem descendente). A ordem dos valores é ás, 2, 3, 4, 5, 6, 7, 8, 9, 10, valete, dama e rei. Dependendo do jogo que estiver jogando, um ás pode ser mais alto que o rei ou mais baixo que 2.</p>
+<p>Se quiséssemos definir um novo objeto para representar uma carta de jogo, os atributos óbvios seriam rank (valor) e suit (naipe). Mas não é tão óbvio qual tipo de atributo deveriam ser. Uma possibilidade é usar strings com palavras como 'Spade' (Espadas) para naipes e 'Queen' (Dama) para valores. Um problema com esta implementação é que não seria fácil comparar cartas para ver qual valor ou naipe tem classificação mais alta em relação aos outros.</p>
+<p>Uma alternativa é usar números inteiros para codificar os valores e os naipes. Neste contexto, “codificar” significa que vamos definir um mapeamento entre números e naipes, ou entre números e valores. Este tipo de codificação não tem nada a ver com criptografia.</p>
+<p>Por exemplo, esta tabela mostra os naipes e os códigos de número inteiro correspondentes:</p>
+<pre><code>Spades (Espadas)     ↦ 3
+Hearts (Copas)       ↦ 2
+Diamonds (Ouros)     ↦ 1
+Clubs (Paus)         ↦ 0
+</code></pre>
+<p>Este código facilita a comparação entre as cartas; como naipes mais altos mapeiam a números mais altos, podemos comparar naipes aos seus códigos.</p>
+<p>O mapeamento de valores é até óbvio; cada um dos valores numéricos é mapeado ao número inteiro correspondente, e para cartas com figuras:</p>
+<pre><code>Jack (Valete)       ↦ 11
+Queen (Dama)        ↦ 12
+King (Rei)          ↦ 13
+</code></pre>
+<p>Estou usando o símbolo <code>↦</code> para deixar claro que esses mapeamentos não são parte do programa em Python. Eles são parte do projeto do programa, mas não aparecem explicitamente no código.</p>
+<p>A definição de classe para Card (carta) é assim:</p>
+<pre><code class="language-python">class Card:
+    &quot;&quot;&quot;Represents a standard playing card.&quot;&quot;&quot;
+    def __init__(self, suit=0, rank=2):
+        self.suit = suit
+        self.rank = rank
+</code></pre>
+<p>Como sempre, o método <code>__init__</code> recebe um parâmetro opcional de cada atributo. A carta padrão é 2 de paus.</p>
+<p>Para criar um Card, você chama Card com o naipe e valor desejados:</p>
+<pre><code class="language-python">queen_of_diamonds = Card(1, 12)
+</code></pre>
+<h2 id="182-atributos-de-classe">18.2 - Atributos de classe</h2>
+<p>Para exibir objetos Card de uma forma que as pessoas possam ler com facilidade, precisamos de um mapeamento dos códigos de número inteiro aos naipes e valores correspondentes. Uma forma natural de fazer isso é com listas de strings. Atribuímos essas listas a atributos de classe:</p>
+<pre><code class="language-python"># dentro da classe Card:
+
+    suit_names = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
+    rank_names = [None, 'Ace', '2', '3', '4', '5', '6', '7',
+                  '8', '9', '10', 'Jack', 'Queen', 'King']
+
+    def __str__(self):
+        return '%s of %s' % (Card.rank_names[self.rank],
+                             Card.suit_names[self.suit])
+</code></pre>
+<p>Variáveis como <code>suit_names</code> e <code>rank_names</code>, que são definidas dentro de uma classe, mas fora de qualquer método, chamam-se atributos de classe porque são associadas com o objeto de classe Card.</p>
+<p>Este termo as distingue de variáveis como <code>suit</code> e <code>rank</code>, chamadas de atributos de instância porque são associados com determinada instância.</p>
+<p>Ambos os tipos de atributo são acessados usando a notação de ponto. Por exemplo, em <code>__str__</code>, <code>self</code> é um objeto <code>Card</code>, e <code>self.rank</code> é o seu valor. De forma semelhante, Card é um objeto de classe, e <code>Card.rank_names</code> é uma lista de strings associadas à essa classe.</p>
+<p>Cada carta tem seu próprio suit e rank, mas há só uma cópia de suit_names e rank_names.</p>
+<p>Juntando tudo, a expressão <code>Card.rank_names[self.rank]</code> significa “use o rank (valor) do atributo do objeto self como um índice na lista rank_names da classe Card e selecione a string adequada”.</p>
+<p>O primeiro elemento de rank_names é None, porque não há nenhuma carta com valor zero. Incluindo None para ocupar uma variável, conseguimos fazer um belo mapeamento onde o índice 2 é associado à string '2', e assim por diante. Para evitar ter que usar esse truque, poderíamos usar um dicionário em vez de uma lista.</p>
+<p>Com os métodos que temos por enquanto, podemos criar e exibir cartas:</p>
+<pre><code class="language-python">&gt;&gt;&gt; card1 = Card(2, 11)
+&gt;&gt;&gt; print(card1)
+Jack of Hearts
+</code></pre>
+<p>A Figura 18.1 é um diagrama do objeto de classe Card e uma instância de Card. Card é um objeto de classe; seu tipo é type. card1 é uma instância de Card, então seu tipo é Card. Para economizar espaço, não incluí o conteúdo de suit_names e rank_names.</p>
+<p><img alt="Figura 18.1 – Diagrama de objetos: classe Card e card1, uma instância de Card." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1801.png" />
+<br><em>Figura 18.1 – Diagrama de objetos: classe</em> <code>Card</code> <em>e</em> <code>card1</code>, <em>uma instância de</em> <code>Card</code>.</p>
+<h2 id="183-comparacao-de-cartas">18.3 - Comparação de cartas</h2>
+<p>Para tipos integrados, há operadores relacionais (<code>&lt;</code>, <code>&gt;</code>, <code>==</code> etc.) que comparam valores e determinam quando um é maior, menor ou igual a outro. Para tipos definidos pelo programador, podemos ignorar o comportamento dos operadores integrados fornecendo um método denominado <code>__lt__</code>, que representa “menos que”.</p>
+<p><code>__lt__</code> recebe dois parâmetros, <code>self</code> e <code>other</code>, e <code>True</code> se self for estritamente menor que <code>other</code>.</p>
+<p>A ordem correta das cartas não é óbvia. Por exemplo, qual é melhor, o 3 de paus ou o 2 de ouros? Uma tem o valor mais alto, mas a outra tem um naipe mais alto. Para comparar cartas, é preciso decidir o que é mais importante, o valor ou o naipe.</p>
+<p>A resposta pode depender de que jogo você está jogando, mas, para manter a simplicidade, vamos fazer a escolha arbitrária de que o naipe é mais importante, então todas as cartas de espadas são mais importantes que as de ouros, e assim por diante.</p>
+<p>Com isto decidido, podemos escrever <code>__lt__</code>:</p>
+<pre><code class="language-python"># dentro da classe Card:
+
+    def __lt__(self, other):
+        # conferir os naipes
+        if self.suit &lt; other.suit: return True
+        if self.suit &gt; other.suit: return False
+
+        # os naipes são os mesmos... conferir valores
+        return self.rank &lt; other.rank
+</code></pre>
+<p>Você pode escrever isso de forma mais concisa usando uma comparação de tuplas:</p>
+<pre><code class="language-python"># dentro da classe Card:
+
+    def __lt__(self, other):
+        t1 = self.suit, self.rank
+        t2 = other.suit, other.rank
+        return t1 &lt; t2
+</code></pre>
+<p>Como exercício, escreva um método <code>__lt__</code> para objetos Time. Você pode usar uma comparação de tuplas, mas também pode usar a comparação de números inteiros.</p>
+<h2 id="184-baralhos">18.4 - Baralhos</h2>
+<p>Agora que temos Card, o próximo passo é definir Deck (baralho). Como um baralho é composto de cartas, é natural que um baralho contenha uma lista de cartas como atributo.</p>
+<p>Veja a seguir uma definição de classe para <code>Deck</code>. O método init cria o atributo cards e gera o conjunto padrão de 52 cartas:</p>
+<pre><code class="language-python">class Deck:
+    def __init__(self):
+        self.cards = []
+        for suit in range(4):
+            for rank in range(1, 14):
+                card = Card(suit, rank)
+                self.cards.append(card)
+</code></pre>
+<p>A forma mais fácil de preencher o baralho é com um loop aninhado. O loop exterior enumera os naipes de 0 a 3. O loop interior enumera os valores de 1 a 13. Cada iteração cria um novo Card com o naipe e valor atual, e a acrescenta a self.cards.</p>
+<h2 id="185-exibicao-do-baralho">18.5 - Exibição do baralho</h2>
+<p>Aqui está um método <strong>str</strong> para Deck:</p>
+<pre><code class="language-python"># dentro da classe Deck:
+
+    def __str__(self):
+        res = []
+        for card in self.cards:
+            res.append(str(card))
+        return '\n'.join(res)
+</code></pre>
+<p>Este método demonstra uma forma eficiente de acumular uma string grande: a criação de uma lista de strings e a utilização do método de string join. A função integrada str invoca o método <code>__str__</code> em cada carta e retorna a representação da string.</p>
+<p>Como invocamos join em um caractere newline, as cartas são separadas por quebras de linha. O resultado é esse:</p>
+<pre><code class="language-python">&gt;&gt;&gt; deck = Deck()
+&gt;&gt;&gt; print(deck)
+Ace of Clubs
+2 of Clubs
+3 of Clubs
+...
+10 of Spades
+Jack of Spades
+Queen of Spades
+King of Spades
+</code></pre>
+<p>Embora o resultado apareça em 52 linhas, na verdade ele é uma string longa com quebras de linha.</p>
+<h2 id="186-adicao-remocao-embaralhamento-e-classificacao">18.6 - Adição, remoção, embaralhamento e classificação</h2>
+<p>Para lidar com as cartas, gostaríamos de ter um método que removesse uma carta do baralho e a devolvesse. O método de lista pop oferece uma forma conveniente de fazer isso:</p>
+<pre><code class="language-python"># dentro da classe Deck:
+
+    def pop_card(self):
+        return self.cards.pop()
+</code></pre>
+<p>Como pop retira a última carta na lista, estamos lidando com o fundo do baralho.</p>
+<p>Para adicionar uma carta, podemos usar o método de lista append:</p>
+<pre><code class="language-python"># dentro da classe Deck:
+
+    def add_card(self, card):
+        self.cards.append(card)
+</code></pre>
+<p>Um método como esse, que usa outro método sem dar muito trabalho, às vezes é chamado de folheado. A metáfora vem do trabalho em madeira, onde o folheado é uma camada fina de madeira de boa qualidade colada à superfície de uma madeira mais barata para melhorar a aparência.</p>
+<p>Nesse caso, <code>add_card</code> é um método “fino” que expressa uma operação de lista em termos adequados a baralhos. Ele melhora a aparência ou interface da implementação.</p>
+<p>Em outro exemplo, podemos escrever um método Deck denominado shuffle, usando a função shuffle do módulo random:</p>
+<pre><code class="language-python"># dentro da classe Deck:
+
+    def shuffle(self):
+        random.shuffle(self.cards)
+</code></pre>
+<p>Não se esqueça de importar random.</p>
+<p>Como exercício, escreva um método de Deck chamado sort, que use o método de lista sort para classificar as cartas em um Deck. sort usa o método <code>__lt__</code> que definimos para determinar a ordem.</p>
+<h2 id="187-heranca">18.7 - Herança</h2>
+<p>A herança é a capacidade de definir uma nova classe que seja uma versão modificada de uma classe existente. Como exemplo, digamos que queremos que uma classe represente uma “mão”, isto é, as cartas mantidas por um jogador. Uma mão é semelhante a um baralho: ambos são compostos por uma coleção de cartas, e ambos exigem operações como adicionar e remover cartas.</p>
+<p>Uma mão também é diferente de um baralho; há operações que queremos para mãos que não fazem sentido para um baralho. Por exemplo, no pôquer poderíamos comparar duas mãos para ver qual ganha. No bridge, poderíamos calcular a pontuação de uma mão para fazer uma aposta.</p>
+<p>Essa relação entre classes – semelhante, mas diferente – adequa-se à herança. Para definir uma nova classe que herda algo de uma classe existente, basta colocar o nome da classe existente entre parênteses:</p>
+<pre><code class="language-python">class Hand(Deck):
+    &quot;&quot;&quot;Represents a hand of playing cards.&quot;&quot;&quot;
+</code></pre>
+<p>Esta definição indica que Hand herda de Deck; isso significa que podemos usar métodos como pop_card e add_card para Hand bem como para Deck.</p>
+<p>Quando uma nova classe herda de uma existente, a existente chama-se pai e a nova classe chama-se filho.</p>
+<p>Neste exemplo, Hand herda <code>__init__</code> de Deck, mas na verdade não faz o que queremos: em vez de preencher a mão com 52 cartas novas, o método init de Hand deve inicializar card com uma lista vazia.</p>
+<p>Se fornecermos um método init na classe Hand, ele ignora o da classe Deck:</p>
+<pre><code class="language-python"># dentro da classe Hand:
+
+    def __init__(self, label=''):
+        self.cards = []
+        self.label = label
+</code></pre>
+<p>Ao criar Hand, o Python invoca este método init, não o de Deck.</p>
+<pre><code class="language-python">&gt;&gt;&gt; hand = Hand('new hand')
+&gt;&gt;&gt; hand.cards
+[]
+&gt;&gt;&gt; hand.label
+'new hand'
+</code></pre>
+<p>Outros métodos são herdados de Deck, portanto podemos usar <code>pop_card</code> e <code>add_card</code> para lidar com uma carta:</p>
+<pre><code class="language-python">&gt;&gt;&gt; deck = Deck()
+&gt;&gt;&gt; card = deck.pop_card()
+&gt;&gt;&gt; hand.add_card(card)
+&gt;&gt;&gt; print(hand)
+King of Spades
+</code></pre>
+<p>Um próximo passo natural seria encapsular este código em um método chamado <code>move_cards</code>:</p>
+<pre><code class="language-python"># dentro da classe Deck:
+
+    def move_cards(self, hand, num):
+        for i in range(num):
+            hand.add_card(self.pop_card())
+</code></pre>
+<p><code>move_cards</code> recebe dois argumentos, um objeto Hand e o número de cartas com que vai lidar. Ele altera tanto self como hand e retorna None.</p>
+<p>Em alguns jogos, as cartas são movidas de uma mão a outra, ou de uma mão de volta ao baralho. É possível usar <code>move_cards</code> para algumas dessas operações: self pode ser um Deck ou Hand, e hand, apesar do nome, também pode ser um Deck.</p>
+<p>A herança é um recurso útil. Alguns programas que poderiam ser repetitivos sem herança podem ser escritos de forma mais elegante com ela. A herança pode facilitar a reutilização de código, já que você pode personalizar o comportamento de classes pais sem ter que alterá-las. Em alguns casos, a estrutura de herança reflete a estrutura natural do problema, o que torna o projeto mais fácil de entender.</p>
+<p>De outro lado, a herança pode tornar os programas difíceis de ler. Quando um método é invocado, às vezes não está claro onde encontrar sua definição. O código relevante pode ser espalhado por vários módulos. Além disso, muitas das coisas que podem ser feitas usando a herança podem ser feitas sem elas, às vezes, até de forma melhor.</p>
+<h2 id="188-diagramas-de-classe">18.8 - Diagramas de classe</h2>
+<p>Por enquanto vimos diagramas de pilha, que mostram o estado de um programa e diagramas de objeto, que mostram os atributos de um objeto e seus valores. Esses diagramas representam um retrato da execução de um programa, então eles mudam no decorrer da execução do programa.</p>
+<p>Eles também são altamente detalhados; para alguns objetivos, detalhados demais. Um diagrama de classe é uma representação mais abstrata da estrutura de um programa. Em vez de mostrar objetos individuais, ele mostra classes e as relações entre elas.</p>
+<p>Há vários tipos de relações entre as classes:</p>
+<ul>
+<li>
+<p>Os objetos de uma classe podem conter referências a objetos em outra classe. Por exemplo, cada Rectangle contém uma referência a um Point, e cada Deck contém referências a muitos Cards. Esse tipo de relação chama-se composição. É uma relação do tipo HAS-A (tem um), com a ideia de “um Rectangle tem um Point”.</p>
+</li>
+<li>
+<p>Uma classe pode herdar de outra. Esta relação chama-se IS-A (é um), com a ideia de “um Hand é um tipo de Deck”.</p>
+</li>
+<li>
+<p>Uma classe pode depender de outra no sentido de que os objetos em uma classe possam receber objetos na segunda classe como parâmetros ou usar esses objetos como parte de um cálculo. Este tipo de relação chama-se dependência.</p>
+</li>
+</ul>
+<p>Um diagrama de classe é uma representação gráfica dessas relações. Por exemplo, a Figura 18.2 mostra as relações entre Card, Deck e Hand.</p>
+<p><img alt="Figura 18.2 – Diagrama de classes." src="https://github.com/PenseAllen/PensePython2e/raw/master/fig/tnkp_1802.png" />
+<br><em>Figura 18.2 – Diagrama de classes.</em></p>
+<p>A flecha com um triângulo oco representa uma relação IS-A; nesse caso, indica que Hand herda de Deck.</p>
+<p>A ponta de flecha padrão representa uma relação HAS-A; nesse caso, um Deck tem referências a objetos Card.</p>
+<p>A estrela <strong>*</strong>  perto da ponta de flecha indica a multiplicidade; ela indica quantos Cards um Deck tem. Uma multiplicidade pode ser um número simples como 52, um intervalo como 5..7 ou uma estrela, que indica que um Deck pode ter qualquer número de Cards.</p>
+<p>Não há nenhuma dependência neste diagrama. Elas normalmente apareceriam com uma flecha tracejada. Ou, se houver muitas dependências, às vezes elas são omitidas.</p>
+<p>Um diagrama mais detalhado poderia mostrar que um Deck na verdade contém uma lista de Cards, mas os tipos integrados como lista e dict não são normalmente incluídos em diagramas de classe.</p>
+<h2 id="189-encapsulamento-de-dados">18.9 - Encapsulamento de dados</h2>
+<p>Os capítulos anteriores demonstram um plano de desenvolvimento que poderíamos chamar de “projeto orientado a objeto”. Identificamos os objetos de que precisamos – como Point, Rectangle e Time – e definimos classes para representá-los. Em cada caso há uma correspondência óbvia entre o objeto e alguma entidade no mundo real (ou, pelo menos, no mundo matemático).</p>
+<p>Mas, às vezes, é menos óbvio quais objetos você precisa e como eles devem interagir. Nesse caso é necessário um plano de desenvolvimento diferente. Da mesma forma em que descobrimos interfaces de função por encapsulamento e generalização, podemos descobrir interfaces de classe por encapsulamento de dados.</p>
+<p>A análise de Markov, de “Análise de Markov”, na página 200, apresenta um bom exemplo. Se baixar o meu código em http://thinkpython2.com/code/markov.py, você vai ver que ele usa duas variáveis globais – suffix_map e prefix – que são lidas e escritas a partir de várias funções.</p>
+<pre><code class="language-python">suffix_map = {}
+prefix = ()
+</code></pre>
+<p>Como essas variáveis são globais, só podemos executar uma análise de cada vez. Se lermos dois textos, seus prefixos e sufixos seriam acrescentados às mesmas estruturas de dados (o que geraria textos interessantes).</p>
+<p>Para executar análises múltiplas e guardá-las separadamente, podemos encapsular o estado de cada análise em um objeto. É assim que fica:</p>
+<pre><code class="language-python">class Markov:
+    def __init__(self):
+        self.suffix_map = {}
+        self.prefix = ()
+</code></pre>
+<p>Em seguida, transformamos as funções em métodos. Por exemplo, aqui está process_word:</p>
+<pre><code class="language-python">def process_word(self, word, order=2):
+    if len(self.prefix) &lt; order:
+        self.prefix += (word,)
+        return
+    try:
+        self.suffix_map[self.prefix].append(word)
+    except KeyError:
+        # se não houver entradas deste prefixo, crie uma.
+        self.suffix_map[self.prefix] = [word]
+
+    self.prefix = shift(self.prefix, word)
+</code></pre>
+<p>Transformar um programa como esse – alterando o projeto sem mudar o comportamento – é outro exemplo de refatoração (veja “Refatoração”, na página 70).</p>
+<p>Este exemplo sugere um plano de desenvolvimento para projetar objetos e métodos:</p>
+<ol>
+<li>
+<p>Comece escrevendo funções que leiam e criem variáveis globais (quando necessário).</p>
+</li>
+<li>
+<p>Uma vez que o programa esteja funcionando, procure associações entre variáveis globais e funções que as usem.</p>
+</li>
+<li>
+<p>Encapsule variáveis relacionadas como atributos de objeto.</p>
+</li>
+<li>
+<p>Transforme as funções associadas em métodos da nova classe.</p>
+</li>
+</ol>
+<p>Como exercício, baixe o meu código de Markov de http://thinkpython2.com/code/markov.py e siga os passos descritos acima para encapsular as variáveis globais como atributos de uma nova classe chamada Markov.</p>
+<p>Solução: http://thinkpython2.com/code/Markov.py (observe o M maiúsculo).</p>
+<h2 id="1810-depuracao">18.10 - Depuração</h2>
+<p>A herança pode dificultar a depuração porque quando você invoca um método em um objeto, pode ser difícil compreender qual método será invocado.</p>
+<p>Suponha que esteja escrevendo uma função que funcione com objetos Hand. Você gostaria que ela funcionasse com todos os tipos de Hand, como PokerHands, BridgeHands etc. Se invocar um método como shuffle, poderá receber o que foi definido em Deck, mas se alguma das subclasses ignorar este método, você receberá outra versão. Este comportamento pode ser bom, mas também confuso.</p>
+<p>A qualquer momento em que não esteja seguro a respeito do fluxo de execução do seu programa, a solução mais simples é acrescentar instruções de exibição no início dos métodos em questão. Se Deck.shuffle exibir uma mensagem que diz algo como Running Deck.shuffle, então no decorrer da execução do programa ele monitora seu fluxo.</p>
+<p>Uma alternativa é usar esta função, que recebe um objeto e um nome de método (como uma string) e retorna a classe que fornece a definição do método:</p>
+<pre><code class="language-python">def find_defining_class(obj, meth_name):
+    for ty in type(obj).mro():
+        if meth_name in ty.__dict__:
+            return ty
+</code></pre>
+<p>Aqui está um exemplo:</p>
+<pre><code class="language-python">&gt;&gt;&gt; hand = Hand()
+&gt;&gt;&gt; find_defining_class(hand, 'shuffle')
+&lt;class 'Card.Deck'&gt;
+</code></pre>
+<p>Então o método shuffle deste Hand é o de Deck.</p>
+<p><code>find_defining_class</code> usa o método mro para obter a lista de objetos de classe (tipos) onde os métodos serão procurados. “MRO” significa “ordem de resolução do método”, que é a sequência de classes que o Python pesquisa para “descobrir” um nome de método.</p>
+<p>Aqui está uma sugestão de projeto: quando você ignora um método, a interface do novo método deve ser a mesma que a do antigo. Ela deve receber os mesmos parâmetros, retornar o mesmo tipo e obedecer às mesmas precondições e pós-condições. Se seguir esta regra, você descobrirá que qualquer função projetada para funcionar com uma instância de uma classe pai, como Deck, também funcionará com instâncias de classes filho como Hand e PokerHand.</p>
+<p>Se violar esta regra, o que se chama de “princípio de substituição de Liskov”, seu código cairá como (desculpe) um castelo de cartas.</p>
+<h2 id="1811-glossario">18.11 - Glossário</h2>
+<dl>
+<dt><a id="glos:codificar" href="#termo:codificar">codificar</a></dt>
+<dd>Representar um conjunto de valores usando outro conjunto de valores construindo um mapeamento entre eles.</dd>
+
+<dt><a id="glos:atributo de classe" href="#termo:atributo de classe">atributo de classe</a></dt>
+<dd>Atributo associado a um objeto de classe. Os atributos de classe são definidos dentro de uma definição de classe, mas fora de qualquer método.</dd>
+
+<dt><a id="glos:atributo de instância" href="#termo:atributo de instância">atributo de instância</a></dt>
+<dd>Atributo associado a uma instância de uma classe.</dd>
+
+<dt><a id="glos:folheado" href="#termo:folheado">folheado</a></dt>
+<dd>Método ou função que apresenta uma interface diferente para outra função sem fazer muitos cálculos.</dd>
+
+<dt><a id="glos:herança" href="#termo:herança">herança</a></dt>
+<dd>Capacidade de definir uma nova classe que seja uma versão modificada de uma classe definida anteriormente.</dd>
+
+<dt><a id="glos:classe-pai" href="#termo:classe-pai">classe-pai</a></dt>
+<dd>Classe da qual uma classe-filho herda.</dd>
+
+<dt><a id="glos:classe-filho" href="#termo:classe-filho">classe-filho</a></dt>
+<dd>Nova classe criada por herança de uma classe existente; também chamada de “subclasse”.</dd>
+
+<dt><a id="glos:relação IS-A" href="#termo:relação IS-A">relação IS-A</a></dt>
+<dd>Relação entre uma classe-filho e sua classe-pai. Também chamada de herança.</dd>
+
+<dt><a id="glos:relação HAS-A" href="#termo:relação HAS-A">relação HAS-A</a></dt>
+<dd>Relação entre duas classes onde as instâncias de uma classe contêm referências a instâncias da outra. Também chamada de composição.</dd>
+
+<dt><a id="glos:dependência" href="#termo:dependência">dependência</a></dt>
+<dd>Relação entre duas classes onde as instâncias de uma classe usam instâncias de outra classe, mas não as guardam como atributos.</dd>
+
+<dt><a id="glos:diagrama de classe" href="#termo:diagrama de classe">diagrama de classe</a></dt>
+<dd>Diagrama que mostra as classes em um programa e as relações entre elas.</dd>
+
+<dt><a id="glos:multiplicidade" href="#termo:multiplicidade">multiplicidade</a></dt>
+<dd>Notação em um diagrama de classe que mostra, para uma relação HAS-A, quantas referências a instâncias da outra classe podem existir.</dd>
+
+<dt><a id="glos:encapsulamento de dados" href="#termo:encapsulamento de dados">encapsulamento de dados</a></dt>
+<dd>Plano de desenvolvimento de programa que envolve um protótipo usando variáveis globais e uma versão final que transforma as variáveis globais em atributos de instância.</dd>
+
+</dl>
+
+<h2 id="1812-exercicios">18.12 - Exercícios</h2>
+<h3 id="exercicio-181">Exercício 18.1</h3>
+<p>Para o seguinte programa, desenhe um diagrama de classe UML que mostre estas classes e as relações entre elas.</p>
+<pre><code class="language-python">class PingPongParent:
+    pass
+
+class Ping(PingPongParent):
+    def __init__(self, pong):
+        self.pong = pong
+
+class Pong(PingPongParent):
+    def __init__(self, pings=None):
+        if pings is None:
+            self.pings = []
+        else:
+            self.pings = pings
+    def add_ping(self, ping):
+        self.pings.append(ping)
+
+pong = Pong()
+ping = Ping(pong)
+pong.add_ping(ping)
+</code></pre>
+<h3 id="exercicio-182">Exercício 18.2</h3>
+<p>Escreva um método Deck chamado <code>deal_hands</code> que receba dois parâmetros: o número de mãos e o número de cartas por mão. Ele deve criar o número adequado de objetos Hand, lidar com o número adequado de cartas por mão e retornar uma lista de Hands.</p>
+<h3 id="exercicio-183">Exercício 18.3</h3>
+<p>A seguir, as mãos possíveis no pôquer, em ordem crescente de valor e ordem decrescente de probabilidade:</p>
+<dl>
+<dt>par</dt>
+<dd>Duas cartas com o mesmo valor.</dd>
+
+<dt>dois pares</dt>
+<dd>Dois pares de cartas com o mesmo valor.</dd>
+
+<dt>trinca</dt>
+<dd>Três cartas com o mesmo valor.</dd>
+
+<dt>sequência</dt>
+<dd>Cinco cartas com valores em sequência (os ases podem ser altos ou baixos, então Ace-2-3-4-5 é uma sequência, assim como 10-Jack-Queen-King-Ace, mas Queen-King-Ace-2-3 não é.)</dd>
+
+<dt>flush</dt>
+<dd>Cinco cartas com o mesmo naipe.</dd>
+
+<dt>full house</dt>
+<dd>Três cartas com um valor, duas cartas com outro.</dd>
+
+<dt>quadra</dt>
+<dd>Quatro cartas com o mesmo valor.</dd>
+
+<dt>straight flush</dt>
+<dd>Cinco cartas em sequência (como definido acima) e com o mesmo naipe.</dd>
+
+</dl>
+
+<p>A meta desses exercícios é estimar a probabilidade de ter estas várias mãos.</p>
+<ol>
+<li>
+<p>Baixe os seguintes arquivos de http://thinkpython2.com/code:</p>
+</li>
+<li>
+<p><code>Card.py</code>: Versão completa das classes Card, Deck e Hand deste capítulo.</p>
+</li>
+<li>
+<p><code>PokerHand.py</code>: Uma implementação incompleta de uma classe que representa uma mão de pôquer e código para testá-la.</p>
+</li>
+<li>
+<p>Se executar PokerHand.py, você verá que o programa cria mãos de pôquer com 7 cartas e verifica se alguma delas contém um flush. Leia este código com atenção antes de continuar.</p>
+</li>
+<li>
+<p>Acrescente métodos a PokerHand.py chamados <code>has_pair</code>, <code>has_twopair</code>, etc. que retornem True ou False conforme a mão cumpra os critérios em questão. Seu código deve funcionar corretamente para “mãos” que contenham qualquer número de cartas (embora 5 e 7 sejam as quantidades mais comuns).</p>
+</li>
+<li>
+<p>Escreva um método chamado classify que descubra a classificação do valor mais alto para uma mão e estabeleça o atributo label em questão. Por exemplo, uma mão de 7 cartas poderia conter um flush e um par; ela deve ser marcada como “flush”.</p>
+</li>
+<li>
+<p>Quando se convencer de que os seus métodos de classificação estão funcionando, o próximo passo deve ser estimar as probabilidades de várias mãos. Escreva uma função em PokerHand.py que embaralhe cartas, divida-as em mãos, classifique as mãos e conte o número de vezes em que várias classificações aparecem.</p>
+</li>
+<li>
+<p>Exiba uma tabela das classificações e suas probabilidades. Execute seu programa com números cada vez maiores de mãos até que os valores de saída convirjam a um grau razoável de exatidão. Compare seus resultados com os valores em http://en.wikipedia.org/wiki/Hand_rankings.</p>
+</li>
+</ol>
+<p>Solução: http://thinkpython2.com/code/PokerHandSoln.py.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../19-extra/" class="btn btn-neutral float-right" title="Capítulo 19: Extra">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../17-classes-metodos/" class="btn btn-neutral" title="Capítulo 17: Classes e métodos"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../17-classes-metodos/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../19-extra/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

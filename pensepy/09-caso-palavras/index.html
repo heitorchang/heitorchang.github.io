@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Capítulo 9: Estudo de caso: jogos de palavras - Pense Python</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Cap\u00edtulo 9: Estudo de caso: jogos de palavras";
+    var mkdocs_page_input_path = "09-caso-palavras.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pense Python</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Pense em Python</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../00-prefacio/">Prefácio</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../01-jornada/">Capítulo 1: A jornada do programa</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-vars-expr-instr/">Capítulo 2: Variáveis, expressões e instruções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-funcoes/">Capítulo 3: Funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-caso-interface/">Capítulo 4: Estudo de caso: projeto de interface</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-cond-recur/">Capítulo 5: Condicionais e recursividade</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-funcoes-result/">Capítulo 6: Funções com resultado</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-iteracao/">Capítulo 7: Iteração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-strings/">Capítulo 8: Strings</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Capítulo 9: Estudo de caso: jogos de palavras</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#91-leitura-de-listas-de-palavras">9.1 - Leitura de listas de palavras</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#92-exercicios">9.2 - Exercícios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-91">Exercício 9.1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-92">Exercício 9.2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-93">Exercício 9.3</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-94">Exercício 9.4</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-95">Exercício 9.5</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-96">Exercício 9.6</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#93-busca">9.3 - Busca</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#94-loop-com-indices">9.4 - Loop com índices</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#95-depuracao">9.5 - Depuração</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#96-glossario">9.6 - Glossário</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#97-exercicios">9.7 - Exercícios</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-97">Exercício 9.7</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-98">Exercício 9.8</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exercicio-99">Exercício 9.9</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-listas/">Capítulo 10: Listas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../11-dicionarios/">Capítulo 11: Dicionários</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../12-tuplas/">Capítulo 12: Tuplas</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../13-caso-estruturas/">Capítulo 13: Estudo de caso: seleção de estrutura de dados</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../14-arquivos/">Capítulo 14: Arquivos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../15-classes-objetos/">Capítulo 15: Classes e objetos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../16-classes-funcoes/">Capítulo 16: Classes e funções</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../17-classes-metodos/">Capítulo 17: Classes e métodos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../18-heranca/">Capítulo 18: Herança</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../19-extra/">Capítulo 19: Extra</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../A-depuracao/">Apêndice A: Depuração</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../B-analise-algorit/">Apêndice B: Análise de algoritmos</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../C-colofao-autor/">Colofão</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pense Python</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Capítulo 9: Estudo de caso: jogos de palavras</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="capitulo-9-estudo-de-caso-jogos-de-palavras">Capítulo 9: Estudo de caso: jogos de palavras</h1>
+<p>Este capítulo apresenta o segundo estudo de caso que envolve solucionar quebra-cabeças usando palavras com certas propriedades. Por exemplo, encontraremos os palíndromos mais longos em inglês e procuraremos palavras cujas letras apareçam em ordem alfabética. E apresentarei outro plano de desenvolvimento de programa: a redução a um problema resolvido anteriormente.</p>
+<h2 id="91-leitura-de-listas-de-palavras">9.1 - Leitura de listas de palavras</h2>
+<p>Para os exercícios deste capítulo vamos usar uma lista de palavras em inglês. Há muitas listas de palavras disponíveis na internet, mas a mais conveniente ao nosso propósito é uma das listas de palavras disponibilizadas em domínio público por Grady Ward como parte do projeto lexical Moby (ver http://wikipedia.org/wiki/Moby_Project). É uma lista de 113.809 palavras cruzadas oficiais; isto é, as palavras que se consideram válidas em quebra-cabeças de palavras cruzadas e outros jogos de palavras. Na coleção Moby, o nome do arquivo é 113809of.fic; você pode baixar uma cópia, com um nome mais simples como words.txt, de http://thinkpython2.com/code/words.txt.</p>
+<p>Este arquivo está em texto simples, então você pode abri-lo com um editor de texto, mas também pode lê-lo no Python. A função integrada open recebe o nome do arquivo como um parâmetro e retorna um objeto de arquivo que você pode usar para ler o arquivo.</p>
+<pre><code class="language-python">&gt;&gt;&gt; fin = open('words.txt')
+</code></pre>
+<p><code>fin</code> é um nome comum de objeto de arquivo usado para entrada de dados. O objeto de arquivo oferece vários métodos de leitura, inclusive readline, que lê caracteres no arquivo até chegar a um comando de nova linha, devolvendo o resultado como uma string:</p>
+<pre><code class="language-python">&gt;&gt;&gt; fin.readline()
+'aa\r\n'
+</code></pre>
+<p>A primeira palavra nesta lista específica é “aa”, uma espécie de lava. A sequência <code>'\r\n'</code> representa dois caracteres que representam espaços em branco (whitespace), um retorno de carro e uma nova linha, que separa esta palavra da seguinte.</p>
+<p>O objeto de arquivo grava a posição em que está no arquivo, então se você chamar readline mais uma vez, receberá a seguinte palavra:</p>
+<pre><code class="language-python">&gt;&gt;&gt; fin.readline()
+'aah\r\n'
+</code></pre>
+<p>A palavra seguinte é “aah”, uma palavra perfeitamente legítima, então pare de olhar para mim desse jeito. Ou, se é o whitespace que está incomodando você, podemos nos livrar dele com o método de string <code>strip</code>:</p>
+<pre><code class="language-python">&gt;&gt;&gt; line = fin.readline()
+&gt;&gt;&gt; word = line.strip()
+&gt;&gt;&gt; word
+'aahed'
+</code></pre>
+<p>Você também pode usar um objeto de arquivo como parte de um loop <code>for</code>. Este programa lê words.txt e imprime cada palavra, uma por linha:</p>
+<pre><code class="language-python">fin = open('words.txt')
+for line in fin:
+    word = line.strip()
+    print(word)
+</code></pre>
+<h2 id="92-exercicios">9.2 - Exercícios</h2>
+<p>Há soluções para estes exercícios na próxima seção. Mas é bom você tentar fazer cada um antes de ver as soluções.</p>
+<h3 id="exercicio-91">Exercício 9.1</h3>
+<p>Escreva um programa que leia words.txt e imprima apenas as palavras com mais de 20 caracteres (sem contar whitespace).</p>
+<h3 id="exercicio-92">Exercício 9.2</h3>
+<p>Em 1939, Ernest Vincent Wright publicou uma novela de 50.000 palavras, chamada Gadsby, que não contém a letra “e”. Como o “e” é a letra mais comum em inglês, isso não é algo fácil de fazer.</p>
+<p>Na verdade, é difícil até construir um único pensamento sem usar o símbolo mais comum do idioma. No início é lento, mas com prudência e horas de treino, vai ficando cada vez mais fácil.</p>
+<pre><code class="language-python">Muito bem, agora eu vou parar.
+</code></pre>
+<p>Escreva uma função chamada <code>has_no_e</code> que retorne <code>True</code> se a palavra dada não tiver a letra “e” nela.</p>
+<p>Altere seu programa na seção anterior para imprimir apenas as palavras que não têm “e” e calcule a porcentagem de palavras na lista que não têm “e”.</p>
+<h3 id="exercicio-93">Exercício 9.3</h3>
+<p>Escreva uma função chamada avoids que receba uma palavra e uma série de letras proibidas, e retorne True se a palavra não usar nenhuma das letras proibidas.</p>
+<p>Altere o código para que o usuário digite uma série de letras proibidas e o programa imprima o número de palavras que não contêm nenhuma delas. Você pode encontrar uma combinação de cinco letras proibidas que exclua o menor número possível de palavras?</p>
+<h3 id="exercicio-94">Exercício 9.4</h3>
+<p>Escreva uma função chamada <code>uses_only</code> que receba uma palavra e uma série de letras e retorne <code>True</code>, se a palavra só contiver letras da lista. Você pode fazer uma frase usando só as letras acefhlo? Que não seja “Hoe alfalfa?”</p>
+<h3 id="exercicio-95">Exercício 9.5</h3>
+<p>Escreva uma função chamada <code>uses_all</code> que receba uma palavra e uma série de letras obrigatórias e retorne <code>True</code> se a palavra usar todas as letras obrigatórias pelo menos uma vez. Quantas palavras usam todas as vogais (aeiou)? E que tal aeiouy?</p>
+<h3 id="exercicio-96">Exercício 9.6</h3>
+<p>Escreva uma função chamada <code>is_abecedarian</code> que retorne <code>True</code> se as letras numa palavra aparecerem em ordem alfabética (tudo bem se houver letras duplas). Quantas palavras em ordem alfabética existem?</p>
+<h2 id="93-busca">9.3 - Busca</h2>
+<p>Todos os exercícios na seção anterior têm algo em comum; eles podem ser resolvidos com o modelo de busca que vimos em <a href="../08-strings/#86---buscando">Buscando</a>. O exemplo mais simples é:</p>
+<pre><code class="language-python">def has_no_e(word):
+    for letter in word:
+        if letter == 'e':
+            return False
+    return True
+</code></pre>
+<p>O loop for atravessa os caracteres em word. Se encontrarmos a letra “e”, podemos retornar False imediatamente; se não for o caso, temos que ir à letra seguinte. Se sairmos do loop normalmente, isso quer dizer que não encontramos um “e”, então retornamos True.</p>
+<p>Você pode escrever esta função de forma mais concisa usando o operador in, mas comecei com esta versão porque ela demonstra a lógica do modelo de busca.</p>
+<p><code>avoids</code> é uma versão mais geral de <code>has_no_e</code>, mas tem a mesma estrutura:</p>
+<pre><code class="language-python">def avoids(word, forbidden):
+    for letter in word:
+        if letter in forbidden:
+            return False
+    return True
+</code></pre>
+<p>Podemos retornar <code>False</code> logo que encontrarmos uma letra proibida; se chegarmos ao fim do loop, retornamos <code>True</code>.</p>
+<p><code>uses_only</code> é semelhante, exceto pelo sentido da condição, que se inverte:</p>
+<pre><code class="language-python">def uses_only(word, available):
+    for letter in word:
+        if letter not in available:
+            return False
+    return True
+</code></pre>
+<p>Em vez de uma lista de letras proibidas, temos uma lista de letras disponíveis. Se encontrarmos uma letra em word que não está em <code>available</code>, podemos retornar <code>False</code>.</p>
+<p><code>uses_all</code> é semelhante, mas invertemos a função da palavra e a string de letras:</p>
+<pre><code class="language-python">def uses_all(word, required):
+    for letter in required:
+        if letter not in word:
+            return False
+    return True
+</code></pre>
+<p>Em vez de atravessar as letras em <code>word</code>, o loop atravessa as letras obrigatórias. Se alguma das letras obrigatórias não aparecer na palavra, podemos retornar <code>False</code>.</p>
+<p>Se você realmente estivesse pensando como um cientista da computação, teria reconhecido que <code>uses_all</code> foi um exemplo de um problema resolvido anteriormente e escreveria:</p>
+<pre><code class="language-python">def uses_all(word, required):
+    return uses_only(required, word)
+</code></pre>
+<p>Esse é um exemplo de um plano de desenvolvimento de programa chamado <strong>redução a um problema resolvido anteriormente</strong>, ou seja, você reconhece o problema no qual está trabalhando como um exemplo de um problema já resolvido e aplica uma solução existente.</p>
+<h2 id="94-loop-com-indices">9.4 - Loop com índices</h2>
+<p>Escrevi as funções na seção anterior com loops <code>for</code> porque eu só precisava dos caracteres nas strings; não precisava fazer nada com os índices.</p>
+<p>Para <code>is_abecedarian</code> temos que comparar letras adjacentes, o que é um pouco complicado para o loop for:</p>
+<pre><code class="language-python">def is_abecedarian(word):
+    previous = word[0]
+    for c in word:
+        if c &lt; previous:
+            return False
+        previous = c
+    return True
+</code></pre>
+<p>Uma alternativa é usar a recursividade:</p>
+<pre><code class="language-python">def is_abecedarian(word):
+    if len(word) &lt;= 1:
+        return True
+    if word[0] &gt; word[1]:
+        return False
+    return is_abecedarian(word[1:])
+</code></pre>
+<p>Outra opção é usar um loop <code>while</code>:</p>
+<pre><code class="language-python">def is_abecedarian(word):
+    i = 0
+    while i &lt; len(word)-1:
+        if word[i+1] &lt; word[i]:
+            return False
+        i = i+1
+    return True
+</code></pre>
+<p>O loop começa com <code>i == 0</code> e termina quando <code>i == len(word)-1</code>. Cada vez que passa pelo loop, o programa compara o “i-ésimo” caractere (que você pode considerar o caractere atual) com o caractere de posição <code>i+1</code> (que pode ser considerado o caractere seguinte).</p>
+<p>Se o próximo caractere for de uma posição anterior (alfabeticamente anterior) à atual, então descobrimos uma quebra na tendência alfabética, e retornamos <code>False</code>.</p>
+<p>Se chegarmos ao fim do loop sem encontrar uma quebra, então a palavra passa no teste. Para convencer-se de que o loop termina corretamente, considere um exemplo como <code>'flossy'</code>. O comprimento da palavra é 6, então o loop é executado pela última vez quando i for igual a 4, que é o índice do segundo caractere de trás para frente. Na última iteração, o programa compara o penúltimo caractere com o último, que é o que queremos.</p>
+<p>Aqui está uma versão de <code>is_palindrome</code> (veja o Exercício 6.3) que usa dois índices: um começa no início e aumenta; o outro começa no final e diminui.</p>
+<pre><code class="language-python">def is_palindrome(word):
+    i = 0
+    j = len(word)-1
+    while i&lt;j:
+        if word[i] != word[j]:
+            return False
+        i = i+1
+        j = j-1
+    return True
+</code></pre>
+<p>Ou podemos reduzir a um problema resolvido anteriormente e escrever:</p>
+<pre><code class="language-python">def is_palindrome(word):
+    return is_reverse(word, word)
+</code></pre>
+<p>Usando <code>is_reverse</code> da seção 8.11.</p>
+<h2 id="95-depuracao">9.5 - Depuração</h2>
+<p>Testar programas é difícil. As funções neste capítulo são relativamente fáceis para testar porque é possível verificar os resultados à mão. Ainda assim, pode ser difícil ou até impossível escolher um grupo de palavras que teste todos os erros possíveis.</p>
+<p>Tomando <code>has_no_e</code> como exemplo, há dois casos óbvios para verificar: as palavras que têm um ‘e’ devem retornar False, e as palavras que não têm devem retornar True. Não deverá ser um problema pensar em um exemplo de cada uma.</p>
+<p>Dentro de cada caso, há alguns subcasos menos óbvios. Entre as palavras que têm um “e”, você deve testar palavras com um “e” no começo, no fim e em algum lugar no meio. Você deve testar palavras longas, palavras curtas e palavras muito curtas, como a string vazia. A string vazia é um exemplo de um caso especial, não óbvio, onde erros muitas vezes espreitam.</p>
+<p>Além dos casos de teste que você gerar, também pode ser uma boa ideia testar seu programa com uma lista de palavras como words.txt. Ao analisar a saída, pode ser que os erros apareçam, mas tenha cuidado: você pode pegar um tipo de erro (palavras que não deveriam ser incluídas, mas foram) e não outro (palavras que deveriam ser incluídas, mas não foram).</p>
+<p>Em geral, o teste pode ajudar a encontrar bugs, mas não é fácil gerar um bom conjunto de casos de teste, e, mesmo se conseguir, não há como ter certeza de que o programa está correto. Segundo um lendário cientista da computação:</p>
+<p>Testar programas pode ser usado para mostrar a presença de bugs, mas nunca para mostrar a ausência deles! – Edsger W. Dijkstra</p>
+<h2 id="96-glossario">9.6 - Glossário</h2>
+<dl>
+<dt><a id="glos:objeto de arquivo" href="#termo:objeto de arquivo">objeto de arquivo</a></dt>
+<dd>Um valor que representa um arquivo aberto.</dd>
+
+<dt><a id="glos:redução a um problema resolvido anteriormente" href="#termo:redução a um problema resolvido anteriormente">redução a um problema resolvido anteriormente</a></dt>
+<dd>Um modo de resolver um problema expressando-o como uma instância de um problema resolvido anteriormente.</dd>
+
+<dt><a id="glos:caso especial" href="#termo:caso especial">caso especial</a></dt>
+<dd>Um caso de teste que é atípico ou não é óbvio (e com probabilidade menor de ser tratado corretamente).</dd>
+
+</dl>
+
+<h2 id="97-exercicios">9.7 - Exercícios</h2>
+<h3 id="exercicio-97">Exercício 9.7</h3>
+<p>Esta pergunta é baseada em um quebra-cabeça veiculado em um programa de rádio chamado Car Talk (http://www.cartalk.com/content/puzzlers):</p>
+<p>Dê uma palavra com três letras duplas consecutivas. Vou dar exemplos de palavras que quase cumprem a condição, mas não chegam lá. Por exemplo, a palavra committee, c-o-m-m-i-t-t-e-e. Seria perfeita se não fosse aquele ‘i’ que se meteu ali no meio. Ou Mississippi: M-i-s-s-i-s-s-i-p-p-i. Se pudesse tirar aqueles ‘is’, daria certo. Mas há uma palavra que tem três pares consecutivos de letras e, que eu saiba, pode ser a única palavra que existe. É claro que provavelmente haja mais umas 500, mas só consigo pensar nessa. Qual é a palavra?</p>
+<p>Escreva um programa que a encontre.</p>
+<p>Solução: http://thinkpython2.com/code/cartalk1.py.</p>
+<h3 id="exercicio-98">Exercício 9.8</h3>
+<p>Aqui está outro quebra-cabeça do programa Car Talk (http://www.cartalk.com/content/puzzlers):</p>
+<p>“Estava dirigindo outro dia e percebi algo no hodômetro que chamou a minha atenção. Como a maior parte dos hodômetros, ele mostra seis dígitos, apenas em milhas inteiras. Por exemplo, se o meu carro tivesse 300.000 milhas, eu veria 3-0-0-0-0-0.</p>
+<p>“Agora, o que vi naquele dia foi muito interessante. Notei que os últimos 4 dígitos eram um palíndromo; isto é, podiam ser lidos da mesma forma no sentido correto e no sentido inverso. Por exemplo, 5-4-4-5 é um palíndromo, então no meu hodômetro poderia ser 3-1-5-4-4-5.</p>
+<p>“Uma milha depois, os últimos 5 números formaram um palíndromo. Por exemplo, poderia ser 3-6-5-4-5-6. Uma milha depois disso, os 4 números do meio, dentro dos 6, formavam um palíndromo. E adivinhe só? Um milha depois, todos os 6 formavam um palíndromo!</p>
+<p>“A pergunta é: o que estava no hodômetro quando olhei primeiro?”</p>
+<p>Escreva um programa Python que teste todos os números de seis dígitos e imprima qualquer número que satisfaça essas condições.</p>
+<p>Solução: http://thinkpython2.com/code/cartalk2.py.</p>
+<h3 id="exercicio-99">Exercício 9.9</h3>
+<p>Aqui está outro problema do Car Talk que você pode resolver com uma busca (http://www.cartalk.com/content/puzzlers):</p>
+<p>“Há pouco tempo recebi uma visita da minha mãe e percebemos que os dois dígitos que compõem a minha idade, quando invertidos, representavam a idade dela. Por exemplo, se ela tem 73 anos, eu tenho 37 anos. Ficamos imaginando com que frequência isto aconteceu nos anos anteriores, mas acabamos mudando de assunto e não chegamos a uma resposta.</p>
+<p>“Quando cheguei em casa, cheguei à conclusão de que os dígitos das nossas idades tinham sido reversíveis seis vezes até então. Também percebi que, se tivéssemos sorte, isso aconteceria novamente dali a alguns anos, e se fôssemos muito sortudos, aconteceria mais uma vez depois disso. Em outras palavras, aconteceria 8 vezes no total. Então a pergunta é: quantos anos tenho agora?”</p>
+<p>Escreva um programa em Python que busque soluções para esse problema. Dica: pode ser uma boa ideia usar o método de string zfill.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../10-listas/" class="btn btn-neutral float-right" title="Capítulo 10: Listas">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../08-strings/" class="btn btn-neutral" title="Capítulo 8: Strings"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../08-strings/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../10-listas/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
