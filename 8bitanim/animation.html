@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <style>
+         @font-face {
+             font-family: 'PressStart';
+             src: url('pressstart.ttf') format('truetype');
+             font-style: normal;
+         }
+
+         body {
+             font-family: 'PressStart';
+             background-color: #00c;
+             color: #fff;
+         }
+
+         #firstrow {
+             text-align: center;
+             margin-top: 90px;
+         }
+
+         #secondrow {
+             text-align: center;
+             margin-top: 120px;
+             display: none;
+             color: #fe3;
+         }
+         
+         #letter {
+             animation-name: zoom-in;
+             animation-duration: 2s;
+             animation-timing-function: ease;
+             animation-iteration-count: 1;
+         }
+
+         span {
+             display: none;
+         }
+         
+         @keyframes zoom-in {
+             0% {
+                 transform: scale(1);
+             }
+             50% {
+                 transform: scale(1);
+             }
+             100% {
+                 transform: scale(1);
+             }
+         }
+        </style>
+    </head>
+    <body>
+        <div id="firstrow">
+            <span id="letter">C</span><span id="letter2">E</span><span id="letter3">P</span><span id="letter4">H</span><span id="letter5">A</span><span id="letter6">&nbsp;</span><span id="letter7">N</span>
+        </div>
+
+        <div id="secondrow">
+            <span id="scnd">C</span><span id="scnd2">E</span>
+        </div>
+        <script>
+         const letters = [
+           document.getElementById("letter"),
+           document.getElementById("letter2"),
+           document.getElementById("letter3"),
+           document.getElementById("letter4"),
+           document.getElementById("letter5"),
+           document.getElementById("letter6"),
+           document.getElementById("letter7"),
+
+           document.getElementById("scnd"),
+           document.getElementById("scnd2"),
+         ];
+         const secondrow = document.getElementById('secondrow');
+         let size = 20;
+         let idx = 0;
+         const FIRST_ROW_LENGTH = 7;
+         const anim = window.setInterval(function () {
+           if (idx == FIRST_ROW_LENGTH) {
+             secondrow.style.display = 'block';             
+           }
+           try {
+             letters[idx].style.display = 'inline';
+             letters[idx].style.fontSize = `${size}px`;
+           } catch (e) {
+             window.clearInterval(anim);
+           }
+           if (size > 62) {
+             size = 20;
+             idx += 1;
+           } else {
+             size += 5;
+           }
+         }, 80);
+        </script>
+    </body>
+</html>
