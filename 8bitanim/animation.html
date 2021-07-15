@@ -40,11 +40,11 @@
     <body>
         <!-- label letters with index numbers, update FIRST_ROW_LENGTH below -->
         <div id="firstrow">
-            <span id="letter">C</span><span id="letter2">E</span><span id="letter3">P</span><span id="letter4">H</span><span id="letter5">A</span><span id="letter6">&nbsp;</span><span id="letter7">N</span>
+            <span id="letter">H</span><span id="letter2">A</span><span id="letter3">P</span><span id="letter4">P</span><span id="letter5">Y</span><span id="letter6">&nbsp;</span><span id="letter7">B</span><span id="letter8">I</span><span id="letter9">R</span><span id="letter10">T</span><span id="letter11">H</span><span id="letter12">D</span><span id="letter13">A</span><span id="letter14">Y</span>
         </div>
 
         <div id="secondrow">
-            <span id="scnd">C</span><span id="scnd2">E</span><span id="scnd3">!</span>
+            <span id="scnd">C</span><span id="scnd2">H</span><span id="scnd3">R</span><span id="scnd4">I</span><span id="scnd5">S</span><span id="scnd6">!</span>
         </div>
 
         <div id="cake">
@@ -61,10 +61,20 @@
             document.getElementById("letter5"),
             document.getElementById("letter6"),
             document.getElementById("letter7"),
+            document.getElementById("letter8"),
+            document.getElementById("letter9"),
+            document.getElementById("letter10"),
+            document.getElementById("letter11"),
+            document.getElementById("letter12"),
+            document.getElementById("letter13"),
+            document.getElementById("letter14"),
 
             document.getElementById("scnd"),
             document.getElementById("scnd2"),
             document.getElementById("scnd3"),
+            document.getElementById("scnd4"),
+            document.getElementById("scnd5"),
+            document.getElementById("scnd6"),
 
             document.getElementById("thrd"),
             document.getElementById("thrd2"),
@@ -72,7 +82,7 @@
          const secondrow = document.getElementById('secondrow');
          let size = 20;
          let idx = 0;
-         const FIRST_ROW_LENGTH = 7;
+         const FIRST_ROW_LENGTH = 14;
          const anim = window.setInterval(function () {
            if (idx == FIRST_ROW_LENGTH) {
              secondrow.style.display = 'block';             
@@ -90,7 +100,7 @@
            } else {
              size += 3;
            }
-         }, 50);
+         }, 30);
         </script>
     </body>
 </html>
