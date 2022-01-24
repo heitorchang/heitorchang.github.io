@@ -30,12 +30,18 @@ class ResumeSection:
         self.companies = companies
 
 
-# tempook: see generate_resume.py
+tempook = Company("Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP",
+                  [Job("Full-Stack Developer",
+                       "June 2020 &mdash; now",
+                       ["Django",
+                        "Stack Overflow for Teams",
+                        ]),
+                   ])
         
 pontual = Company("Pontual Export &amp; Import Ltd., São Paulo, SP",
                   [Job("Full-Stack Developer",
-                       "Jan. 2014 &mdash; now",                       
-                       ["Use MA (Moving Average) indicators in a Django and Python project to predict the demand of 600 products and calculate an adequate amount for restocking.",
+                       "Jan. 2014 &mdash; June 2020",
+                       ["Use MA (Moving Average) indicators in a Django and Python project to predict the demand of 600 products and calculate an appropriate amount for restocking.",
                         "Create a REST API with the Slim micro framework (PHP) to be consumed by a React app that renders the company's website, <a href=\"http://pontualimportbrindes.com.br/\" target=\"_blank\">http://pontualimportbrindes.com.br/</a>",
                         "Visualize historical sales with NumPy and Pandas, reporting averages and outliers for each product.",
                         "Create a Single-Page App with AngularJS and Firebase to organize the reservations by client and salesperson in real time."]),
@@ -68,7 +74,7 @@ adair = Company("Adair Capital, LLC, New York, NY",
                  "Desenvolver um GUI no Matlab que implementa um processo Brownian Bridge para medir a exposição de fundos de cobertura a índices de referência e detectar possíveis mudanças nas suas estratégias de investimento."])])
 
                  
-COMPANIES = [pontual, merrill] # , stux, adair]
+COMPANIES = [tempook, pontual, merrill] # , stux, adair]
 
 
 stan_ug = Company("Stanford University, Stanford, CA",

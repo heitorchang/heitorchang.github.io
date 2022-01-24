@@ -2,6 +2,12 @@
 # HEITOR CHANG
 # heitorpontual@gmail.com  (11) 3312-8845   (11) 99907-4867   https://heitorchang.github.io/
 
+######
+# Edit generate_resume_en.py
+#
+# Look for international jobs
+######
+
 class Job:
     def __init__(self, title, dates, items):
         self.title = title
