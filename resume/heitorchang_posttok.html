@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <title>Heitor Chang</title>
+    </head>
+    <body>
+        <div id="mainDiv">This is my page</div>
+        <div id="sourceDiv"></div>
+        <script>
+         const source = {
+           'name': 'Heitor Chang',
+
+         }
+
+         function displaySource () {
+           document.getElementById('sourceDiv').innerText = JSON.stringify(source);
+         }
+
+         function renderSource () {
+           let html = '';
+           Object.keys(source).forEach(key => {
+             html += key;
+             html += source[key];
+           });
+           document.getElementById('mainDiv').innerText = html;
+         }
+
+         displaySource();
+         renderSource();
+        </script>
+    </body>
+</html>
