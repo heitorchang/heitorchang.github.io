@@ -1,4 +1,4 @@
-Unsure which is the newest version
+Use /heitorchang.github.io/cv_en_print.html
 
 * say I created a Documentation system in Markdown (December 2021 TOK Docs)
 
