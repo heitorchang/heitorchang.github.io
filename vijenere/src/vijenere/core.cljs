@@ -1,12 +1,14 @@
 ;; Vigenere-100 with special symbols for CR (¢), LF (£), and Space (§)
 
-(ns vijenere.core)
+(ns vijenere.core
+  (:require [clojure.string :as str]
+            [clojure.pprint :as pprint]))
 
 (def charlist "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¢£§ªº·")
 
 (defn char->int [c]
   "Converts a char to the corresponding location in charlist."
-  (let [index (clojure.string/index-of charlist c)]
+  (let [index (str/index-of charlist c)]
     (if index
       index
       99))) ; return 99 if index is nil
@@ -36,15 +38,15 @@
   (map - a b))
 
 (defn encode-whitespace [s]
-  (let [no-spaces (clojure.string/replace s #" " "§")
-        no-line-feed (clojure.string/replace no-spaces #"\n" "£")
-        no-carriage-return (clojure.string/replace no-line-feed #"\s" "¢")]
+  (let [no-spaces (str/replace s #" " "§")
+        no-line-feed (str/replace no-spaces #"\n" "£")
+        no-carriage-return (str/replace no-line-feed #"\s" "¢")]
     no-carriage-return))
 
 (defn decode-whitespace [s]
-  (let [with-spaces (clojure.string/replace s #"§" " ")
-        with-line-feeds (clojure.string/replace with-spaces #"£" "\n")
-        with-carriage-returns (clojure.string/replace with-line-feeds #"¢" "\n")]
+  (let [with-spaces (str/replace s #"§" " ")
+        with-line-feeds (str/replace with-spaces #"£" "\n")
+        with-carriage-returns (str/replace with-line-feeds #"¢" "\n")]
     with-carriage-returns))
 
 (defn my-partition [s n]
@@ -75,7 +77,7 @@ Assumes characters in s are all found in charlist."
 
 (defn ^:export decrypt [e k]
   "Decrypt encrypted string e (possibly partitioned) with key k."
-  (let [no-spaces (clojure.string/replace e #" " "")
+  (let [no-spaces (str/replace e #" " "")
         difference-of-indices (subtract-lists (str->int-list no-spaces) (repeat-key-for-content no-spaces k))
         normalized-indices (map normalize-index difference-of-indices)
         list-of-chars (map int->char normalized-indices)
