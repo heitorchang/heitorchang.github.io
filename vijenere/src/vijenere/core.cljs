@@ -69,18 +69,18 @@
 Assumes characters in s are all found in charlist."
   (let [whitespace-encoded (encode-whitespace s)
         sum-of-indices (sum-lists (str->int-list whitespace-encoded) (repeat-key-for-content whitespace-encoded k))
-        normalized-indices (map normalize-index sum-of-indices)
-        list-of-chars (map int->char normalized-indices)
-        encrypted (apply str list-of-chars)
-        chunked (my-partition encrypted 5)]
-    chunked))
+        encrypted (->> sum-of-indices
+                       (map normalize-index)
+                       (map int->char)
+                       (apply str))]
+    (my-partition encrypted 5)))
 
 (defn ^:export decrypt [e k]
   "Decrypt encrypted string e (possibly partitioned) with key k."
   (let [no-spaces (str/replace e #" " "")
-        difference-of-indices (subtract-lists (str->int-list no-spaces) (repeat-key-for-content no-spaces k))
-        normalized-indices (map normalize-index difference-of-indices)
-        list-of-chars (map int->char normalized-indices)
-        decrypted (apply str list-of-chars)
-        whitespace-decoded (decode-whitespace decrypted)]
-    whitespace-decoded))
+        difference-of-indices (subtract-lists (str->int-list no-spaces) (repeat-key-for-content no-spaces k))]
+    (->> difference-of-indices
+         (map normalize-index)
+         (map int->char)
+         (apply str)
+         decode-whitespace)))
