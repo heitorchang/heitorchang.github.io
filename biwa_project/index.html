@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <body>
+
+    BiwaScheme console:
+    <pre id="bs-console"></pre>
+
+    <script src="biwascheme-0.7.4.js"></script>
+    <script type="text/biwascheme">
+    (define wheels 2)
+    (define cars 0)
+
+    (display "Hello, BiwaScheme!")
+    (display (string-append "Pi approx." (number->string (/ 355 113))))
+    (set! wheels 4)
+    (set! cars 20)
+    (display "Car wheels:")
+    (display (* cars wheels))
+    (set! cars 16)
+    (display "Car wheels:")
+    (display (* cars wheels))
+    </script>
+
+  </body>
+</html>
