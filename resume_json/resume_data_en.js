@@ -1,4 +1,4 @@
-{
+const resumeData = {
   "header": {
     "name": "Heitor Chang",
     "email": "heitorpontual@gmail.com",
@@ -99,4 +99,4 @@
     "Intermediate knowledge of PHP, CSS and PostgreSQL.",
     "Basic knowledge of Common Lisp and Clojure."
   ],
-}
+};
