@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    #console {
+      position: fixed;
+      bottom: 2rem;
+      left: 0.1rem;
+      background-color: #eee;
+      height: 5rem;
+      width: 90%;
+      border-top: 1px dotted #555;
+      font-family: monospace;
+    }
+
+    #replui {
+      position: fixed;
+      bottom: 0.2rem;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    #replInput {
+      font-family: monospace;
+    }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <textarea id="console"></textarea>
+    <div id="replui">
+      Enter an expression: <input id="replInput" size="56" value="(circle 250 100 30)" autofocus>
+      <button id="replRun">Evaluate</button>
+    </div>
+
+    <script src="js/biwascheme-mod-0.7.5.js"></script>
+    <script type="text/biwascheme">
+    (load "scheme/repl.scm")
+    (load "scheme/biwa-canvas.scm")
+    </script>
+  </body>
+</html>
