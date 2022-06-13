@@ -23,6 +23,10 @@
       font-size: 1.2rem;
       width: 50%;
     }
+
+    #historyui {
+      margin-top: 0.5rem;
+    }
     </style>
   </head>
   <body>
@@ -31,7 +35,15 @@
       Expr: <span style="font-size: 1.2rem;">(</span> <input id="replInput" autofocus> <span style="font-size: 1.2rem;">)</span>
       <button id="replRun">eval</button>
     </div>
+    <div id="historyui">
+      <button id="clearInput">clear input</button>
+      &nbsp;&nbsp;
+      <button id="historyUp">hist. up</button>
+      &nbsp;&nbsp;
+      <button id="historyDown">hist. down</button>
+    </div>
 
+    <span id="historyIndex"></span>
     <script src="js/biwascheme-mod-0.7.5.js"></script>
     <script type="text/biwascheme">
     (load "scheme/scheme-calc.scm")

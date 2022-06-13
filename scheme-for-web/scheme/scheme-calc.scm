@@ -25,27 +25,57 @@
 
 (define (repl-run)
   (let ((input-str (string-append "(" (element-content repl-input-elem) ")")))
-    (set! *history-index* 0)
-    (set! *history* (cons (element-content repl-input-elem) *history*))
-    (print input-str)
-    (let ((exp-result (eval (read (open-input-string input-str)))))
-      (cond ((string? exp-result) (print exp-result))
-            ((number? exp-result) (print (number->string exp-result)))
-            ((symbol? exp-result) (print (symbol->string exp-result))))
-      (print "")
-      (set-input "")
-      (js-eval "document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight"))))
+    (if (not (string=? input-str "()"))
+        (begin
+          (set! *history-index* -1)
+          (set! *history* (cons (element-content repl-input-elem) *history*))
+          (print input-str)
+          (let ((exp-result (eval (read (open-input-string input-str)))))
+            (cond ((string? exp-result) (print exp-result))
+                  ((number? exp-result) (print (number->string exp-result)))
+                  ((symbol? exp-result) (print (symbol->string exp-result))))
+            (print "")
+            (set-input "")
+            (js-eval "document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight"))))))
 
-(add-handler! "#replRun" "click" (lambda (event) (repl-run)))
+(define (update-history-index-display)
+  ;; (set-content! "#historyIndex" (number->string *history-index*)))
+  (set-content! "#historyIndex" ""))
+
+(add-handler! "#replRun" "click"
+              (lambda (event)
+                (repl-run)
+                (js-eval "document.getElementById('replInput').focus()")))
+
 (add-handler! "#replInput" "keyup"
               (lambda (event)
                 (let ((key-code (js-ref event "keyCode")))
                   (cond ((= key-code 13) (repl-run))
                         ((= key-code 38)
                          (begin
+                           (set! *history-index* (min (- (length *history*) 1) (+ *history-index* 1)))
                            (set-input (list-ref *history* *history-index*))
-                           (set! *history-index* (min (- (length *history*) 1) (+ *history-index* 1)))))
+                           (update-history-index-display)))
                         ((= key-code 40)
                          (begin
                            (set! *history-index* (max 0 (- *history-index* 1)))
-                           (set-input (list-ref *history* *history-index*))))))))
+                           (set-input (list-ref *history* *history-index*))
+                           (update-history-index-display)))))))
+
+;; history buttons
+(add-handler! "#historyUp" "click"
+              (lambda (event)
+                (set! *history-index* (min (- (length *history*) 1) (+ *history-index* 1)))
+                (set-input (list-ref *history* *history-index*))
+                (update-history-index-display)))
+
+(add-handler! "#historyDown" "click"
+              (lambda (event)
+                (set! *history-index* (max 0 (- *history-index* 1)))
+                (set-input (list-ref *history* *history-index*))
+                (update-history-index-display)))
+
+(add-handler! "#clearInput" "click"
+              (lambda (event)
+                (set-input "")
+                (js-eval "document.getElementById('replInput').focus()")))
