@@ -58,8 +58,12 @@
                            (update-history-index-display)))
                         ((= key-code 40)
                          (begin
-                           (set! *history-index* (max 0 (- *history-index* 1)))
-                           (set-input (list-ref *history* *history-index*))
+                           (set! *history-index* (max -1 (- *history-index* 1)))
+                           (if (= *history-index* -1)
+                               (begin
+                                 (set-input "")
+                                 (js-eval "document.getElementById('replInput').focus()"))
+                               (set-input (list-ref *history* *history-index*)))
                            (update-history-index-display)))))))
 
 ;; history buttons
@@ -71,8 +75,12 @@
 
 (add-handler! "#historyDown" "click"
               (lambda (event)
-                (set! *history-index* (max 0 (- *history-index* 1)))
-                (set-input (list-ref *history* *history-index*))
+                (set! *history-index* (max -1 (- *history-index* 1)))
+                (if (= *history-index* -1)
+                    (begin
+                      (set-input "")
+                      (js-eval "document.getElementById('replInput').focus()"))
+                    (set-input (list-ref *history* *history-index*)))
                 (update-history-index-display)))
 
 (add-handler! "#clearInput" "click"
