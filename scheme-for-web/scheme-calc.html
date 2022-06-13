@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Scheme Calc</title>
     <style>
+    body {
+      padding: 1.2rem;
+    }
+
     #console {
       background-color: #f9f9f9;
-      height: 12rem;
+      height: 10rem;
       width: 95%;
       font-family: monospace;
     }
@@ -42,8 +46,19 @@
       &nbsp;&nbsp;
       <button id="historyDown">hist. down</button>
     </div>
+    <div style="margin-top: 0.6rem;">
+      Type r then click to reload: <input id="reloadConfirm" size="3">
+      <button id="doReload" onclick="runReload()">Reload</button>
+    </div>
 
     <span id="historyIndex"></span>
+    <script>
+    function runReload() {
+      if (document.getElementById("reloadConfirm").value === "r") {
+        window.location.reload(true);
+      }
+    }
+    </script>
     <script src="js/biwascheme-mod-0.7.5.js"></script>
     <script type="text/biwascheme">
     (load "scheme/scheme-calc.scm")

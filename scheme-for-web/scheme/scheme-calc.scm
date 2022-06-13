@@ -8,7 +8,7 @@
                 (string-append (element-content console-elem) str "\n")))
 
 (print "BiwaScheme-Mod 0.7.5 Calc (Up and Down gets command history)
-(a)dd (s)ubtract (d)ivide (m)ultiply a(v)erage e(x)pt
+(a)dd (s)ubtract (d)ivide (m)ultiply a(v)erage e(x)pt (reload)
 ")
 
 (define a +)
@@ -19,9 +19,11 @@
   (/ (apply + args)
      (length args)))
 (define x expt)
+(define (reload) (js-eval "window.location.reload(true);"))
+(define q 0)
 
 (define (set-input str)
-  (js-eval (string-append "document.getElementById('replInput').value = '" str "'")))
+  (js-eval (string-append "document.getElementById('replInput').value = '" str "';")))
 
 (define (repl-run)
   (let ((input-str (string-append "(" (element-content repl-input-elem) ")")))
@@ -32,16 +34,16 @@
           (print input-str)
           (let ((exp-result (eval (read (open-input-string input-str)))))
             (cond ((string? exp-result) (print exp-result))
-                  ((number? exp-result) (print (number->string exp-result)))
+                  ((number? exp-result) (print (number->string exp-result)) (set! q exp-result))
                   ((symbol? exp-result) (print (symbol->string exp-result))))
             (print "")
             (set-input "")
-            (js-eval "document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight"))))))
+            (js-eval "document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight;"))))))
 
 (add-handler! "#replRun" "click"
               (lambda (event)
                 (repl-run)
-                (js-eval "document.getElementById('replInput').focus()")))
+                (js-eval "document.getElementById('replInput').focus();")))
 
 (add-handler! "#replInput" "keyup"
               (lambda (event)
@@ -57,7 +59,7 @@
                            (if (= *history-index* -1)
                                (begin
                                  (set-input "")
-                                 (js-eval "document.getElementById('replInput').focus()"))
+                                 (js-eval "document.getElementById('replInput').focus();"))
                                (set-input (list-ref *history* *history-index*)))))))))
 
 ;; history buttons
@@ -72,10 +74,10 @@
                 (if (= *history-index* -1)
                     (begin
                       (set-input "")
-                      (js-eval "document.getElementById('replInput').focus()"))
+                      (js-eval "document.getElementById('replInput').focus();"))
                     (set-input (list-ref *history* *history-index*)))))
 
 (add-handler! "#clearInput" "click"
               (lambda (event)
                 (set-input "")
-                (js-eval "document.getElementById('replInput').focus()")))
+                (js-eval "document.getElementById('replInput').focus();")))
