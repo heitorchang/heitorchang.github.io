@@ -7,7 +7,7 @@
   (set-content! "#console"
                 (string-append (element-content console-elem) str "\n")))
 
-(print "BiwaScheme-Mod 0.7.5 auto-parens console (press Up and Down to retrieve command history)
+(print "BiwaScheme-Mod 0.7.5 Calc (Up and Down gets command history)
 (a)dd (s)ubtract (d)ivide (m)ultiply a(v)erage e(x)pt
 ")
 
@@ -38,10 +38,6 @@
             (set-input "")
             (js-eval "document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight"))))))
 
-(define (update-history-index-display)
-  ;; (set-content! "#historyIndex" (number->string *history-index*)))
-  (set-content! "#historyIndex" ""))
-
 (add-handler! "#replRun" "click"
               (lambda (event)
                 (repl-run)
@@ -54,8 +50,7 @@
                         ((= key-code 38)
                          (begin
                            (set! *history-index* (min (- (length *history*) 1) (+ *history-index* 1)))
-                           (set-input (list-ref *history* *history-index*))
-                           (update-history-index-display)))
+                           (set-input (list-ref *history* *history-index*))))
                         ((= key-code 40)
                          (begin
                            (set! *history-index* (max -1 (- *history-index* 1)))
@@ -63,15 +58,13 @@
                                (begin
                                  (set-input "")
                                  (js-eval "document.getElementById('replInput').focus()"))
-                               (set-input (list-ref *history* *history-index*)))
-                           (update-history-index-display)))))))
+                               (set-input (list-ref *history* *history-index*)))))))))
 
 ;; history buttons
 (add-handler! "#historyUp" "click"
               (lambda (event)
                 (set! *history-index* (min (- (length *history*) 1) (+ *history-index* 1)))
-                (set-input (list-ref *history* *history-index*))
-                (update-history-index-display)))
+                (set-input (list-ref *history* *history-index*))))
 
 (add-handler! "#historyDown" "click"
               (lambda (event)
@@ -80,8 +73,7 @@
                     (begin
                       (set-input "")
                       (js-eval "document.getElementById('replInput').focus()"))
-                    (set-input (list-ref *history* *history-index*)))
-                (update-history-index-display)))
+                    (set-input (list-ref *history* *history-index*)))))
 
 (add-handler! "#clearInput" "click"
               (lambda (event)
