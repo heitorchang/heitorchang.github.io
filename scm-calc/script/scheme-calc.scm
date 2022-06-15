@@ -7,8 +7,8 @@
   (set-content! "#console"
                 (string-append (element-content (getelem "#console")) str "\n")))
 
-(print "Biwa-Mod 0.7.5 Calc v0.3, readonly console
-(a)dd (s)ubtract (d)ivide (m)ultiply (avg) (exp)t (reload)
+(print "Biwa-Mod 0.7.5 Calc v0.4
+(a)dd (s)ubtract (d)ivide (m)ultiply (avg) (reload)
 Up/Down for history, q stores last value
 ")
 
@@ -19,7 +19,6 @@ Up/Down for history, q stores last value
 (define (avg . args)
   (/ (apply + args)
      (length args)))
-(define exp expt)
 (define (reload) (js-eval "window.location.reload(true);"))
 (define q 0)
 
