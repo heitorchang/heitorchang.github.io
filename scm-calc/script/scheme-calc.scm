@@ -5,7 +5,7 @@
 
 (define (print str)
   (set-content! "#console"
-                (string-append (element-content console-elem) str "\n")))
+                (string-append (element-content (getelem "#console")) str "\n")))
 
 (print "Biwa-Mod 0.7.5 Calc v0.2, q stores last value.
 (a)dd (s)ubtract (d)ivide (m)ultiply a(v)erage e(x)pt (reload)
