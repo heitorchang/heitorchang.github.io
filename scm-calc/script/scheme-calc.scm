@@ -7,19 +7,19 @@
   (set-content! "#console"
                 (string-append (element-content (getelem "#console")) str "\n")))
 
-(print "Biwa-Mod 0.7.5 Calc v0.2, q stores last value.
-(a)dd (s)ubtract (d)ivide (m)ultiply a(v)erage e(x)pt (reload)
-Up/Down for history
+(print "Biwa-Mod 0.7.5 Calc v0.3, readonly console
+(a)dd (s)ubtract (d)ivide (m)ultiply (avg) (exp)t (reload)
+Up/Down for history, q stores last value
 ")
 
 (define a +)
 (define s -)
 (define d /)
 (define m *)
-(define (v . args)
+(define (avg . args)
   (/ (apply + args)
      (length args)))
-(define x expt)
+(define exp expt)
 (define (reload) (js-eval "window.location.reload(true);"))
 (define q 0)
 
