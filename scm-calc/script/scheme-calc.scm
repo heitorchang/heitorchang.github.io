@@ -8,7 +8,8 @@
                 (string-append (element-content (getelem "#console")) str "\n")))
 
 (print "Biwa-Mod 0.7.5 Calc v0.5 larger console
-(a)dd (s)ubtract (d)ivide (m)ultiply (avg) (reload)
+(a)dd (s)ubtract (d)ivide (m)ultiply (e x: sci. notation)
+(avg) (reload)
 Up/Down for history, q stores last value
 ")
 
@@ -21,6 +22,9 @@ Up/Down for history, q stores last value
      (length args)))
 (define (reload) (js-eval "window.location.reload(true);"))
 (define q 0)
+
+(define (e x)
+  (print (js-eval (string-append "(" (number->string x) ").toExponential()"))))
 
 (define (set-input str)
   (js-eval (string-append "document.getElementById('replInput').value = '" str "';")))
