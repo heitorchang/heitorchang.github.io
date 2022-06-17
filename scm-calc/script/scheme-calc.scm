@@ -7,7 +7,7 @@
   (set-content! "#console"
                 (string-append (element-content (getelem "#console")) str "\n")))
 
-(print "Biwa-Mod 0.7.5 Calc v0.4
+(print "Biwa-Mod 0.7.5 Calc v0.5 larger console
 (a)dd (s)ubtract (d)ivide (m)ultiply (avg) (reload)
 Up/Down for history, q stores last value
 ")
