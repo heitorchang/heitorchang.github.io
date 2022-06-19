@@ -7,7 +7,7 @@
   (set-content! "#console"
                 (string-append (element-content (getelem "#console")) str "\n")))
 
-(print "Biwa-Mod 0.7.5 Calc v0.6 sci notation
+(print "BiwaScheme-Calc 0.7.2 sci notation
 (a)dd (s)ubtract (d)ivide (m)ultiply (e x: sci. notation)
 (avg) (reload)
 Up/Down for history, q stores last value
@@ -87,4 +87,6 @@ Up/Down for history, q stores last value
                 (js-eval "document.getElementById('replInput').focus();")))
 
 (add-handler! "#showSci" "click"
-              (lambda (event) (e q)))
+              (lambda (event) (e q)
+                      (print "")
+                      (js-eval "document.getElementById('replInput').focus();")))
