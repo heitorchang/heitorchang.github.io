@@ -85,3 +85,6 @@ Up/Down for history, q stores last value
               (lambda (event)
                 (set-input "")
                 (js-eval "document.getElementById('replInput').focus();")))
+
+(add-handler! "#showSci" "click"
+              (lambda (event) (e q)))
