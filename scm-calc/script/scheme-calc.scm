@@ -7,10 +7,11 @@
   (set-content! "#console"
                 (string-append (element-content (getelem "#console")) str "\n")))
 
-(print "BiwaScheme-Calc 0.8.0 number shortcut
-(a)dd (s)ubtr (d)iv (m)ult (e x: sci. notat.)
+(print "BiwaScheme-Calc 0.8.1 num short, def
+(a)dd (s)ubtr (d)iv (m)ult (e x: sci.not.)
 (avg) (reset) Up/Down history, q: last val
 single number x: (a q x), (a) resets q
+(def x val)
 ")
 
 (define a +)
@@ -30,7 +31,7 @@ single number x: (a q x), (a) resets q
   (js-eval (string-append "document.getElementById('replInput').value = '" str "';")))
 
 (define (repl-run)
-  (let ((raw-input (element-content repl-input-elem)))
+  (let ((raw-input (regexp-replace-all "def " (element-content repl-input-elem) "define ")))
     (let ((input-str (string-append "("
                                     (if (number? (string->number raw-input))
                                         (string-append "a q " raw-input)
