@@ -7,10 +7,10 @@
   (set-content! "#console"
                 (string-append (element-content (getelem "#console")) str "\n")))
 
-(print "BiwaScheme-Calc 0.7.2 sci notation
-(a)dd (s)ubtract (d)ivide (m)ultiply (e x: sci. notation)
-(avg) (reload)
-Up/Down for history, q stores last value
+(print "BiwaScheme-Calc 0.8.0 number shortcut
+(a)dd (s)ubtr (d)iv (m)ult (e x: sci. notat.)
+(avg) (reset) Up/Down history, q: last val
+single number x: (a q x), (a) resets q
 ")
 
 (define a +)
@@ -20,7 +20,7 @@ Up/Down for history, q stores last value
 (define (avg . args)
   (/ (apply + args)
      (length args)))
-(define (reload) (js-eval "window.location.reload(true);"))
+(define (reset) (js-eval "window.location.reload(true);"))
 (define q 0)
 
 (define (e x)
@@ -30,19 +30,24 @@ Up/Down for history, q stores last value
   (js-eval (string-append "document.getElementById('replInput').value = '" str "';")))
 
 (define (repl-run)
-  (let ((input-str (string-append "(" (element-content repl-input-elem) ")")))
-    (if (not (string=? input-str "()"))
-        (begin
-          (set! *history-index* -1)
-          (set! *history* (cons (element-content repl-input-elem) *history*))
-          (print input-str)
-          (let ((exp-result (eval (read (open-input-string input-str)))))
-            (cond ((string? exp-result) (print exp-result))
-                  ((number? exp-result) (print (number->string exp-result)) (set! q exp-result))
-                  ((symbol? exp-result) (print (symbol->string exp-result))))
-            (print "")
-            (set-input "")
-            (js-eval "document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight;"))))))
+  (let ((raw-input (element-content repl-input-elem)))
+    (let ((input-str (string-append "("
+                                    (if (number? (string->number raw-input))
+                                        (string-append "a q " raw-input)
+                                        raw-input)
+                                    ")")))
+      (if (not (string=? input-str "()"))
+          (begin
+            (set! *history-index* -1)
+            (set! *history* (cons (element-content repl-input-elem) *history*))
+            (print input-str)
+            (let ((exp-result (eval (read (open-input-string input-str)))))
+              (cond ((string? exp-result) (print exp-result))
+                    ((number? exp-result) (print (number->string exp-result)) (set! q exp-result))
+                    ((symbol? exp-result) (print (symbol->string exp-result))))
+              (print "")
+              (set-input "")
+              (js-eval "document.getElementById('console').scrollTop = document.getElementById('console').scrollHeight;")))))))
 
 (add-handler! "#replRun" "click"
               (lambda (event)
