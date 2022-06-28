@@ -7,12 +7,13 @@
   (set-content! "#console"
                 (string-append (element-content (getelem "#console")) str "\n")))
 
-(print "Scm-Calc 0.9.1 up lst
+(print
+"scm-calc 1.0.1: print
 (a)dd (s)ub (d)iv (m)ult
-(e): sci.not (avg)
+(e) sci.not (avg) (p)rint
 (def x val) (reset)
+q: last val, (a) resets q
 Up/Down gets hist
-q: last val, (a) reset q
 ")
 
 (define (a . vals)
@@ -34,6 +35,11 @@ q: last val, (a) reset q
   (cond ((= (length vals) 0) 1)
         ((= (length vals) 1) (* q (car vals)))
         (#t (apply * vals))))
+
+(define (p . vals)
+  (cond ((= (length vals) 0) (p q))
+        (#t (for-each (lambda (v)
+                        (print (number->string v))) vals))))
 
 (define (avg . args)
   (/ (apply + args)
