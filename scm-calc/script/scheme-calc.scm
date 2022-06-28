@@ -7,11 +7,12 @@
   (set-content! "#console"
                 (string-append (element-content (getelem "#console")) str "\n")))
 
-(print "BiwaScm-Calc 0.9.0 single f.x
-(a)dd (s)ubtr (d)iv (m)ult (e): sci.not.
-(avg) (reset) Up/Down hist, q: last val
-single number x: (a q x), (a) resets q
-(def x val)
+(print "Scm-Calc 0.9.1 up lst
+(a)dd (s)ub (d)iv (m)ult
+(e): sci.not (avg)
+(def x val) (reset)
+Up/Down gets hist
+q: last val, (a) reset q
 ")
 
 (define (a . vals)
@@ -44,7 +45,7 @@ single number x: (a q x), (a) resets q
   (print (js-eval (string-append "(" (number->string q) ").toExponential()"))))
 
 (define (set-input str)
-  (js-eval (string-append "document.getElementById('replInput').value = '" str "';")))
+  (js-eval (string-append "document.getElementById('replInput').value = '" (regexp-replace-all "'" str "\\'") "';")))
 
 (define (repl-run)
   (let ((raw-input (regexp-replace-all "def " (element-content repl-input-elem) "define ")))
