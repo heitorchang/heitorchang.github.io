@@ -8,31 +8,35 @@
                 (string-append (element-content (getelem "#console")) str "\n")))
 
 (print
-"scm-calc 1.0.1: print
+"scm-calc 1.1.1: useful fn
 (a)dd (s)ub (d)iv (m)ult
 (e) sci.not (avg) (p)rint
 (def x val) (reset)
-q: last val, (a) resets q
+q: last val, (r) sets q:0
 Up/Down gets hist
 ")
 
+(define (r)
+  (set! q 0)
+  0)
+
 (define (a . vals)
-  (cond ((= (length vals) 0) 0)
+  (cond ((= (length vals) 0) (+ q q))
         ((= (length vals) 1) (+ q (car vals)))
         (#t (apply + vals))))
 
 (define (s . vals)
-  (cond ((= (length vals) 0) 0)
+  (cond ((= (length vals) 0) (- q))
         ((= (length vals) 1) (- q (car vals)))
         (#t (apply - vals))))
 
 (define (d . vals)
-  (cond ((= (length vals) 0) 1)
+  (cond ((= (length vals) 0) (/ 1 q))
         ((= (length vals) 1) (/ q (car vals)))
         (#t (apply / vals))))
 
 (define (m . vals)
-  (cond ((= (length vals) 0) 1)
+  (cond ((= (length vals) 0) (* q q))
         ((= (length vals) 1) (* q (car vals)))
         (#t (apply * vals))))
 
