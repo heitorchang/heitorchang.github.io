@@ -1,0 +1,107 @@
+<html>
+    <head>
+      <link rel="stylesheet" href="pyscript.css" />
+      <script defer src="pyscript.js"></script>
+      <style>
+      div {
+        margin: 0;
+        padding-left: 20px;
+        font-family: monospace;
+        white-space: pre;
+      }
+
+      .odd {
+        background-color: #cff;
+      }
+
+      #header {
+        background-color: #ff9;
+      }
+
+      #subheader {
+        background-color: #ffc;
+      }
+      </style>
+    </head>
+
+  <body>
+    <h1>Timezones</h1>
+    <p>Double-check with
+    <a href="https://timeanddate.com/worldclock/meeting.html" target="_blank">Time and Date (click here)</a>
+    </p>
+    <div id="out">
+    <div id="header"></div><div id="subheader"></div><div id="out9"></div><div id="out10" class="odd"></div><div id="out11"></div><div id="out12" class="odd"></div><div id="out13"></div><div id="out14" class="odd"></div><div id="out15"></div><div id="out16" class="odd"></div><div id="out17"></div><div id="out18" class="odd"></div><div id="out19"></div><div id="out20" class="odd"></div><div id="out21"></div><div id="out22" class="odd"></div><div id="out23"></div></div>
+    <py-script output="out">
+from datetime import datetime, timedelta
+
+# locations and GMT offset
+places = {
+    "SP    ": -3,
+    "EDT/NY": -4,
+    "EST   ": -5,
+    "CHI   ": -5,
+    "CR    ": -6,
+    "GMT   ": 0,
+}
+
+def offset(t, dt):
+    return t + timedelta(hours=dt)
+
+def fmt(t):
+    return t.strftime("%H:%M")
+
+def fmtline(hr):
+    line = ""
+    for place in places:
+        line += fmt(offset(datetime(2022, 1, 1, hr, 0), places[place])) + "  "
+    return line
+
+header = Element("header")
+subheader = Element("subheader")
+out9 = Element("out9")
+out10 = Element("out10")
+out11 = Element("out11")
+out12 = Element("out12")
+out13 = Element("out13")
+out14 = Element("out14")
+out15 = Element("out15")
+out16 = Element("out16")
+out17 = Element("out17")
+out18 = Element("out18")
+out19 = Element("out19")
+out20 = Element("out20")
+out21 = Element("out21")
+out22 = Element("out22")
+out23 = Element("out23")
+
+t = datetime.now()
+
+headertext = ""
+for place in places:
+    headertext += place + " "
+header.write(headertext)
+
+subheadertext = ""
+for place in places:
+    subheadertext += str(places[place]) + "     "
+subheader.write(subheadertext)
+
+out9.write(fmtline(9))
+out10.write(fmtline(10))
+out11.write(fmtline(11))
+out12.write(fmtline(12))
+out13.write(fmtline(13))
+out14.write(fmtline(14))
+out15.write(fmtline(15))
+out16.write(fmtline(16))
+out17.write(fmtline(17))
+out18.write(fmtline(18))
+out19.write(fmtline(19))
+out20.write(fmtline(20))
+out21.write(fmtline(21))
+out22.write(fmtline(22))
+out23.write(fmtline(23))
+
+    </py-script>
+  </body>
+</html>
