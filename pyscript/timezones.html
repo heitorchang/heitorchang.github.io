@@ -10,7 +10,7 @@
         white-space: pre;
       }
 
-      .odd {
+      .even {
         background-color: #cff;
       }
 
@@ -29,19 +29,19 @@
     <p>Double-check with
     <a href="https://timeanddate.com/worldclock/meeting.html" target="_blank">Time and Date (click here)</a>
     </p>
+    <p>
+    Daylight Saving Time ends Nov. 6, 2022
     <div id="out">
-    <div id="header"></div><div id="subheader"></div><div id="out9"></div><div id="out10" class="odd"></div><div id="out11"></div><div id="out12" class="odd"></div><div id="out13"></div><div id="out14" class="odd"></div><div id="out15"></div><div id="out16" class="odd"></div><div id="out17"></div><div id="out18" class="odd"></div><div id="out19"></div><div id="out20" class="odd"></div><div id="out21"></div><div id="out22" class="odd"></div><div id="out23"></div></div>
+    <div id="header"></div><div id="subheader"></div><div id="out7"></div><div id="subheader"></div><div id="out8" class="even"></div><div id="subheader"></div><div id="out9"></div><div id="out10" class="even"></div><div id="out11"></div><div id="out12" class="even"></div><div id="out13"></div><div id="out14" class="even"></div><div id="out15"></div><div id="out16" class="even"></div><div id="out17"></div><div id="out18" class="even"></div><div id="out19"></div><div id="out20" class="even"></div><div id="out21"></div><div id="out22" class="even"></div><div id="out23"></div></div>
     <py-script output="out">
 from datetime import datetime, timedelta
 
 # locations and GMT offset
 places = {
-    "SP    ": -3,
-    "EDT/NY": -4,
-    "EST   ": -5,
-    "CHI   ": -5,
-    "CR    ": -6,
-    "GMT   ": 0,
+    "SP     ": -3,
+    "EDT/NY ": -4,
+    "CDT/CHI": -5,
+    "GMT    ": 0,
 }
 
 def offset(t, dt):
@@ -53,11 +53,13 @@ def fmt(t):
 def fmtline(hr):
     line = ""
     for place in places:
-        line += fmt(offset(datetime(2022, 1, 1, hr, 0), places[place])) + "  "
+        line += fmt(offset(datetime(2022, 1, 1, hr, 0), places[place])) + "   "
     return line
 
 header = Element("header")
 subheader = Element("subheader")
+out7 = Element("out7")
+out8 = Element("out8")
 out9 = Element("out9")
 out10 = Element("out10")
 out11 = Element("out11")
@@ -83,9 +85,11 @@ header.write(headertext)
 
 subheadertext = ""
 for place in places:
-    subheadertext += str(places[place]) + "     "
+    subheadertext += str(places[place]) + "      "
 subheader.write(subheadertext)
 
+out7.write(fmtline(7))
+out8.write(fmtline(8))
 out9.write(fmtline(9))
 out10.write(fmtline(10))
 out11.write(fmtline(11))
