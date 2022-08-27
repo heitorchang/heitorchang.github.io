@@ -29,7 +29,7 @@
 
     <div class="code-wrapper">
       Definitions
-      <pre onkeyup="reEvalAll()"><code class="language-klipse-scheme">
+      <pre"><code class="language-klipse-scheme">
       </code></pre>
     </div>
 
@@ -60,21 +60,12 @@
 
       },
       selector_eval_scheme: '.language-klipse-scheme, .language-eval-scheme',
+      re_evaluate_all_snippets_on_change: true,
     };
 
     function clearEval(editorIndex) {
       klipse_editors[editorIndex].setValue("");
       klipse_editors[editorIndex].focus();
-    }
-
-    function forceReEval(editorIndex) {
-      klipse_editors[editorIndex].setValue(klipse_editors[editorIndex].getValue());
-    }
-
-    function reEvalAll() {
-      forceReEval(1);
-      forceReEval(2);
-      forceReEval(3);
     }
     </script>
     <script src="js/klipse_plugin.min.js"></script>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Klipse-scheme</title>
+    <link rel="stylesheet" type="text/css" href="css/codemirror.css">
+    <style>
+    h1 {
+      font-family: sans-serif;
+      font-size: 1.6rem;
+    }
+
+    h2 {
+      font-family: sans-serif;
+      font-size: 1.45rem;
+      font-style: italic;
+      border-bottom: 2px dotted #bbb;
+      margin-left: 1rem;
+    }
+
+    h3 {
+      font-family: sans-serif;
+      font-weight: normal;
+      font-size: 1.3rem;
+      margin-left: 2rem;
+    }
+
+    a {
+      text-decoration: none;
+      color: #38f;
+    }
+
+    .content-wrapper {
+      max-width: 72rem;
+      margin: auto;
+    }
+
+    .code-wrapper {
+      font-family: sans-serif;
+      font-size: 1.2rem;
+      padding: 1rem;
+      margin: 0.5rem;
+      background-color: #f0ffff;
+      border: 1px solid #009;
+    }
+
+    .explanation {
+      font-family: sans-serif;
+      font-size: 1.1rem;
+    }
+
+    .definitions-wrapper {
+      display: flex;
+    }
+
+    .eval-wrapper {
+      flex: 1 1 0;
+    }
+
+    .example {
+      display: flex;
+      box-shadow: 2px 4px 5px 3px rgba(0,0,0,0.12);
+      margin: 0 1rem 3rem 1rem;
+      background-color: #fffff0;
+    }
+
+    .example-description {
+      flex: 1 1 0;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 1.2rem;
+    }
+
+    .examples-wrapper {
+      flex: 2 1 0;
+    }
+
+    .example-klipse {
+      padding: 0.5rem 1.5rem;
+    }
+
+    .keyword {
+      margin-bottom: 1rem;
+    }
+
+    </style>
+  </head>
+  <body>
+    <div class="content-wrapper">
+      <h1>
+        <a href="https://www.biwascheme.org/" target="_blank">BiwaScheme</a>
+        Reference
+        (using
+        <a href="https://github.com/viebel/klipse" target="_blank">Klipse</a>
+        plugin)
+      </h1>
+
+      <div class="explanation">
+        <p>
+          The top half of each code block is editable.
+        </p>
+        <p>
+          In the bottom half, a code block will display the return value of the last expression in the top half.
+        </p>
+        <p>
+          All code blocks share the same environment, so updating a function or variable will affect all other blocks.
+        </p>
+        <p>
+          Duplicate identifiers bound with <code>(define)</code> will only affect its own code block and subsequent ones.
+        </p>
+      </div>
+
+      <div class="code-wrapper">
+        <strong>Global definitions used in the examples</strong>
+        <pre><code class="language-klipse-scheme">
+(define x 12)
+(define y 3)
+        </code></pre>
+      </div>
+
+      <h2>Basic Arithmetic</h2>
+
+      <div class="example">
+        <div class="example-description">
+          <div class="keyword">+ - * /</div>
+          <div class="explanation">
+            These examples use number literals and the values defined in the "Global definitions" code block.
+          </div>
+        </div>
+        <div class="examples-wrapper">
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(+ 1 2)
+            </code></pre>
+          </div>
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(+ x y)
+            </code></pre>
+          </div>
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(- x y)
+            </code></pre>
+          </div>
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(* x y)
+            </code></pre>
+          </div>
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(/ x y)
+            </code></pre>
+          </div>
+        </div>
+      </div>
+
+      <h2>Basic types</h2>
+
+      <h3>List</h3>
+
+      <div class="example">
+        <div class="example-description">
+          <div class="keyword">length</div>
+          <div class="explanation">
+            Returns the number of items in a list.
+          </div>
+        </div>
+        <div class="examples-wrapper">
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(length '(1 2 3))
+            </code></pre>
+          </div>
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(length '())
+            </code></pre>
+          </div>
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(length 'nil) ; unlike Common Lisp, there is no "nil" in Scheme
+            </code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="example-description">
+          append
+        </div>
+        <div class="examples-wrapper">
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(append '(1 2 3) '(4 5 6))
+            </code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="example-description">
+          reverse
+        </div>
+        <div class="examples-wrapper">
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(reverse '(1 2 3))
+            </code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="example-description">
+          member
+        </div>
+        <div class="examples-wrapper">
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(member 2 '(1 2 3))
+            </code></pre>
+          </div>
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(member 15 '(1 2 3))
+            </code></pre>
+          </div>
+          <div class="example-klipse">
+            <pre><code class="language-klipse-scheme">
+(member 'louie '(huey louie dewey))
+            </code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- dummy editor because paren matching makes last editor blink -->
+      <div style="visibility: hidden;">
+        <pre><code class="language-klipse-scheme" id="evalDummy">()</code></pre>
+      </div>
+    </div>
+
+    <script>
+    window.klipse_settings = {
+      codemirror_options_in: {
+
+      },
+      selector_eval_scheme: '.language-klipse-scheme, .language-eval-scheme',
+      re_evaluate_all_snippets_on_change: true,
+    };
+
+    function clearEval(editorIndex) {
+      klipse_editors[editorIndex].setValue("");
+      klipse_editors[editorIndex].focus();
+    }
+
+    function forceReEval(editorIndex) {
+      klipse_editors[editorIndex].setValue(klipse_editors[editorIndex].getValue());
+    }
+
+    function reEvalAll(skipIndex) {
+      for (let i = 1; i < Object.keys(klipse_editors).length; i++) {
+        if (i !== skipIndex) {
+          forceReEval(i);
+        }
+      }
+    }
+    </script>
+    <script src="js/klipse_plugin.min.js"></script>
+  </body>
+</html>
