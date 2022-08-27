@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Klipse-scheme</title>
+    <link rel="stylesheet" type="text/css" href="css/codemirror.css">
+    <style>
+    .code-wrapper {
+      font-family: sans-serif;
+      padding: 1rem 1rem 0 1rem;
+    }
+
+    .definitions-wrapper {
+      display: flex;
+    }
+
+    .eval-wrapper {
+      flex: 1 1 0;
+    }
+    </style>
+  </head>
+  <body>
+    <i>Instructions: Start a local web server, then load this page.</i><br>
+    All three code textareas are shared by the interpreter. Keep <code>(define)</code>s in the top one because changing them will trigger re-evaluation of the <span style="font-family: sans-serif;">Eval</span> textareas.
+    <p>
+      To-do: button to save definitions
+    </p>
+
+    <div class="code-wrapper">
+      Definitions
+      <pre onkeyup="reEvalAll()"><code class="language-klipse-scheme">
+      </code></pre>
+    </div>
+
+    <div class="definitions-wrapper">
+      <div class="code-wrapper eval-wrapper">
+        <p>Eval 1</p>
+        <pre><code class="language-klipse-scheme" id="eval1">
+        </code></pre>
+        <button onclick="clearEval(1)">Clear</button>
+      </div>
+
+      <div class="code-wrapper eval-wrapper">
+        <p>Eval 2</p>
+        <pre><code class="language-klipse-scheme" id="eval2">
+        </code></pre>
+        <button onclick="clearEval(2)">Clear</button>
+      </div>
+    </div>
+
+    <!-- dummy editor because paren matching makes last editor blink -->
+    <div class="code-wrapper" style="visibility: hidden;">
+      <pre><code class="language-klipse-scheme" id="evalDummy">()
+      </code></pre>
+    </div>
+    <script>
+    window.klipse_settings = {
+      codemirror_options_in: {
+
+      },
+      selector_eval_scheme: '.language-klipse-scheme, .language-eval-scheme',
+    };
+
+    function clearEval(editorIndex) {
+      klipse_editors[editorIndex].setValue("");
+      klipse_editors[editorIndex].focus();
+    }
+
+    function forceReEval(editorIndex) {
+      klipse_editors[editorIndex].setValue(klipse_editors[editorIndex].getValue());
+    }
+
+    function reEvalAll() {
+      forceReEval(1);
+      forceReEval(2);
+      forceReEval(3);
+    }
+    </script>
+    <script src="js/klipse_plugin.min.js"></script>
+  </body>
+</html>
