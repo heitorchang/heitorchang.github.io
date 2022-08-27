@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Klipse-scheme</title>
+    <title>BiwaScheme Reference with Klipse Plugin</title>
     <link rel="stylesheet" type="text/css" href="css/codemirror.css">
     <style>
     h1 {
@@ -107,7 +107,7 @@
           All code blocks share the same environment, so updating a function or variable will affect all other blocks.
         </p>
         <p>
-          Duplicate identifiers bound with <code>(define)</code> will only affect its own code block and subsequent ones.
+          Duplicate identifiers bound with <code>(define)</code> will override previous definitions and have effect on its own code block plus subsequent ones.
         </p>
       </div>
 
