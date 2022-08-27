@@ -23,14 +23,12 @@
   <body>
     <i>Instructions: Start a local web server, then load this page.</i><br>
     All three code textareas are shared by the interpreter. Keep <code>(define)</code>s in the top one because changing them will trigger re-evaluation of the <span style="font-family: sans-serif;">Eval</span> textareas.
-    <p>
-      To-do: button to save definitions
-    </p>
 
     <div class="code-wrapper">
       Definitions
       <pre"><code class="language-klipse-scheme">
       </code></pre>
+      <button onclick="saveDefs()">Save definitions</button> <input id="filename">.scm
     </div>
 
     <div class="definitions-wrapper">
@@ -66,6 +64,24 @@
     function clearEval(editorIndex) {
       klipse_editors[editorIndex].setValue("");
       klipse_editors[editorIndex].focus();
+    }
+
+    function saveDefs() {
+      var text = klipse_editors[0].getValue();
+      text = text.replace(/\n/g, "\r\n"); // To retain the Line breaks.
+      var blob = new Blob([text], { type: "text/x-script.scheme"});
+      var anchor = document.createElement("a");
+      var filename = document.getElementById('filename').value;
+      if (filename.trim() == "") {
+        filename = "untitled";
+      }
+      anchor.download = filename + ".scm";
+      anchor.href = window.URL.createObjectURL(blob);
+      anchor.target ="_blank";
+      anchor.style.display = "none"; // just to be safe!
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
     }
     </script>
     <script src="js/klipse_plugin.min.js"></script>
