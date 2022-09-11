@@ -30,7 +30,20 @@ document.getElementById("decryptBtn").onclick = function() {
   handleDecrypt();
 }
 
+document.getElementById("copyPlain").onclick = function() {
+  document.getElementById("plaintext").select();
+  document.execCommand("copy");
+
+  document.getElementById("plaintext").value = "";
+  document.getElementById("ciphertext").value = "";
+  document.getElementById("key").value = "";
+}
+
 document.getElementById("copyResult").onclick = function() {
   document.getElementById("ciphertext").select();
   document.execCommand("copy");
+
+  document.getElementById("plaintext").value = "";
+  document.getElementById("ciphertext").value = "";
+  document.getElementById("key").value = "";
 }
