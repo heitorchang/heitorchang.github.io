@@ -1,0 +1,10 @@
+(define (g my-list accum)
+  (cond ((null? my-list) accum)
+        (else (g (cdr my-list) (cons (car my-list) accum)))))
+
+;; (g '(a b c) '()) => (c b a)
+;; Either the input or result must be reversed
+
+(define (g-new my-list accum)
+  (cond ((null? my-list) (reverse accum))
+        (else (g-new (cdr my-list) (cons (car my-list) accum)))))

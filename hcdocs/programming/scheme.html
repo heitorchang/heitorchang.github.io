@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          margin-bottom: 1rem;
+        }
+        </style>
+    </head>
+    <body>
+    <p>
+      <a href="/">Top level</a>
+      &bullet;
+      <a href="../index.html">Up one level</a>
+      &bullet;
+      <a href="index.html">Directory listing</a>
+      &bullet;
+      <a href="javascript:history.back()">Back</a>
+    </p>
+<h1>R5RS Scheme</h1>
+
+<h2>The difference between nested and tail-recursive iteration</h2>
+
+<p>
+The key difference is in the order that the conses are run.
+</p>
+
+<p>
+  The nested version delays the calls until the end. The first cons that happens is the most deeply nested one (cons 'last-element '()). Since conses attach to the front of the list, the last one stays at the end, then the second-to-last cons runs, and so on.
+</p>
+
+<iframe width="800" height="400" src="scheme-files/iteration-nested.txt"></iframe>
+
+<p>
+  In the tail-recursive version, each repeated call to <code>g</code> immediately calls cons to build the <code>accum</code> list. Since we can easily only access the <code>car</code> of the input list, the first element goes to the end of <code>accum</code> and we end up with a reversed list.
+</p>
+
+<iframe width="800" height="400" src="scheme-files/iteration-tail-recursive.txt"></iframe>
+<hr>
+<a href="javascript:history.back()">Back</a>
+    </body>
+</html>
