@@ -1,5 +1,0 @@
-(define (f my-list)
-  (cond ((null? my-list) '())
-        (else (cons (car my-list) (f (cdr my-list))))))
-
-;; (f '(a b c)) => (a b c)
