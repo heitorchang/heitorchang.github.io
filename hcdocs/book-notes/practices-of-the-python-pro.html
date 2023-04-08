@@ -38,6 +38,11 @@
           padding: 0.2rem;
         }
 
+        .hc-monospace {
+          font-family: monospace;
+          font-size: 115%;
+        }
+
         </style>
     </head>
     <body>
@@ -269,7 +274,7 @@ def print_choices(self):
 
 <h4>3.3 Try it out (p. 48)</h4>
 
-<iframe width="800" height="400" src="practices-py-pro/greeter.py.txt"></iframe>
+<iframe width="800" height="400" src="practices-py-pro/greeter.py"></iframe>
 
 <p>
   However, <code>day</code> and <code>part_of_day</code> can be extracted out of the <code>Greeter</code> class because they are independent of whatever store they happened to be called from.
@@ -335,7 +340,7 @@ def print_choices(self):
   <em>Generators</em> are constructs that produce a single value at a time, pausing until the next value is requested. In this way, it avoids storing all values it produces in memory all at once.
 </p>
 
-<iframe width="800" height="400" src="practices-py-pro/range.py.txt"></iframe>
+<iframe width="800" height="400" src="practices-py-pro/range.py"></iframe>
 
 <h4>4.4.1 timeit (p. 72)</h4>
 
@@ -414,6 +419,88 @@ print(f"Took an average of {result} ms")
 </p>
 
 <h4>5.2.5 Integration testing (p. 83)</h4>
+
+<p>
+  <em>Integration testing</em> focuses on making sure a number of units all work in tandem to produce the right behavior.
+</p>
+
+<p>
+  End-to-end workflow tests are usually framed from the point of view of a user, while integration tests focus more on the behavior of the code. They're at different levels of abstraction.
+</p>
+
+<h4>5.2.6 The testing pyramid (p. 84)</h4>
+
+<p>
+  <img src="practices-py-pro/testing_pyramid.png" alt="pyramid">
+</p>
+
+<h4>5.2.7 Regression testing (p. 85)</h4>
+
+<p>
+  A <em>regression</em> is a change in behavior you tested caused by a change in the code. It's a shift to an undesirable or unexpected state and is usually a bad thing.
+</p>
+
+<p>
+  <em>Regression testing</em> is the practice of running your existing suite of tests after each code change.
+</p>
+
+<p>
+  Test suites (collection of tests) may be run in a <em>continuous integration</em> (CI) environment.
+</p>
+
+<h4>5.3 Statements of fact (p. 86)</h4>
+
+<p>
+  <em>Assertions</em> are statements of fact. For example, if the sky is clear, you can see the sun every morning.
+</p>
+
+<pre>
+assert 1.0 == calculate_mean([100, 200, 3500])
+# raises an AssertionError
+</pre>
+
+<h4>5.4 Unit testing with unittest (p. 86)</h4>
+
+<p>
+  <code>unittest</code> is Python's built-in testing framework. It can be used to group many tests for a class, or many tests for a single method. It may also be used for integration testing.
+</p>
+
+<p>
+  Running <code>python -m unittest</code> will cause the test runner to:
+  <ol>
+    <li>Look in the current directory and subdirectories for modules named <code>test_*</code> or <code>*_test</code></li>
+    <li>Look in these modules for classes that inherit from <code>unittest.TestCase</code></li>
+    <li>Look in these classes for methods that start with <code>test_</code></li>
+  </ol>
+</p>
+
+<p>
+  There's no right way to organize the tests. Some people put tests as close to the relevant code as possible, while others use a separate <span class="hc-monospace">tests/</span> directory.
+</p>
+
+<h4>5.4.3 Writing your first test with unittest (p. 87)</h4>
+
+<p>
+  The following class will be used for practicing how to write tests:
+</p>
+
+<iframe width="800" height="400" src="practices-py-pro/product.py"></iframe>
+
+<p>
+  This class represents a product for purchase in an e-commerce system. Below is a unittest for it:
+</p>
+
+<iframe width="800" height="400" src="practices-py-pro/test_product.py"></iframe>
+
+<p>
+  The test is run in the console with <code>python -m unittest</code>
+</p>
+
+<h4>5.4.4 Writing your first integration test with unittest (p. 90)</h4>
+
+<iframe width="800" height="400" src="practices-py-pro/cart.py"></iframe>
+
+<iframe width="800" height="400" src="practices-py-pro/test_cart.py"></iframe>
 
 <br>
 <hr>
