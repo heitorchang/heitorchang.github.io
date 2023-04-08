@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.5rem;
+        }
+
+        pre {
+          display: block;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #eee;
+          border-radius: 0.8rem;
+        }
+
+        code {
+          background-color: #e3f3ff;
+          color: #031;
+          font-size: 115%;
+          padding: 0.2rem;
+        }
+
+        </style>
+    </head>
+    <body>
+      <p>
+        <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
+        <a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
+      </p>
+
+
+    <body>
+    <h3><a href="../../index.html">home</a>/<a href="../../programming/index.html">programming</a>/<a href="index.html">book-notes</a></h3>
+    
+<h1>Practices of the Python Pro, &copy; 2020</h1>
+
+<h4>1.4.1 Considerations in software design (p. 9)</h4>
+
+<p>
+  Users assess these features:
+  <ul>
+    <li>Speed</li>
+    <li>Integrity (data is not corrupted)</li>
+    <li>Resources are used efficiently</li>
+    <li>Security is strong</li>
+  </ul>
+</p>
+
+<p>
+  A developer should focus on:
+  <ul>
+    <lI>Loose coupling: components are not intricately dependent on one another</lI>
+    <li>Intuitability: other developers can discover the nature of the software and how it works by reading it</li>
+    <li>Flexibility: the software can be easily adapted</li>
+    <lI>Extensibility: new aspects of the software may be added without inadvertently affecting other parts</lI>
+  </ul>
+</p>
+
+<h4>1.4.2 Organically grown software (p. 10)</h4>
+
+<p>
+  <em>Refactoring</em> code is the process of updating it so it's better designed and reflects the latest best practices.
+</p>
+
+<p>
+  The steps in an e-commerce site may be separated into several services:
+  <ul>
+    <li>Trigger order
+      <ul>
+        <li>inventory service</li>
+        <li>pricing service</li>
+        <li>shipping service</li>
+      </ul>
+    </li>
+
+    <li>Purchase
+      <ul>
+        <li>payment service</li>
+      </ul>
+    </li>
+
+    <li>Send to fulfillment
+      <ul>
+        <li>fulfillment service</li>
+      </ul>
+    </li>
+  </ul>
+</p>
+
+<h4>1.5 When to invest in design (p. 11)</h4>
+
+<p>
+  A <em>framework</em> is a large collection of libraries that act as a guide to some goal. It should provide building blocks that allow for flexibility and extensibility.
+</p>
+
+<p>
+  Examples:
+  <ul>
+    <li>requests</li>
+    <li>Django</li>
+    <li>Pandas</li>
+  </ul>
+</p>
+
+<h4>1.7.1 Presence of mind (p. 13)</h4>
+
+<p>
+  The <em>REPL</em> (read-eval-print loop) is valuable for exploratory work.
+</p>
+
+<h4>2 Separation of concerns (p. 19)</h4>
+
+<p>
+  Clear code should be separated into small, manageable pieces by <em>concern</em>.
+</p>
+
+<p>
+  A <em>concern</em> is a distinct behavior or piece of knowledge the software deals with.
+</p>
+
+<h4>2.1 Namespacing (p. 20)</h4>
+
+<p>
+  A <em>variable</em> is a name that refers to a value, and they belong to <em>namespaces</em>. When loading the Python interpreter, the initial namespace is the <em>built-in</em> namespace.
+</p>
+
+<p>
+  Creating a Python module automatically creates an additional namespace for that module. For example, a file named <code>sales_tax.py</code> creates the <code>sales_tax</code> namespace.
+</p>
+
+<h4>2.2.2 Classes (p. 32)</h4>
+
+<p>
+  A <em>class</em> is a template of closely related behaviors and data. <em>Instances</em> of classes are objects that have the behavior and data defined in the class.
+</p>
+
+<p>
+  The <em>state</em> (<em>attributes</em>) of the object is the data, and its behaviors are called <em>methods</em>. They are special functions that receive the object instance as an implicit argument (by convention, named <code>self</code>). Together, the attributes and methods are <em>members</em> of a class.
+</p>
+
+<p>
+  A class' <em>constructor</em> is a special method that creates an instance. In Python, <code>__init__</code> is used.
+</p>
+
+<h4>(p. 35)</h4>
+
+<p>
+  Instead of passing data around as arguments to functions, one can store these values in attributes:
+</p>
+
+<pre>
+def __init__(self):
+    self.computer_choice = None
+    self.human_choice = None
+
+def get_computer_choice(self):
+    self.computer_choice = random.choice(OPTIONS)
+
+def print_choices(self):
+    print("Your choice and the computer's are:", self.human_choice, self.computer_choice)
+</pre>
+
+<p>
+  When a class' methods and attributes are closely related, it's said to have high <em>cohesion</em>.
+</p>
+
+<p>
+  Loose coupling between components (little interdependence) is preferred because making changes to one should not affect the other at all (or very little).
+</p>
+
+<h4>(p. 38)</h4>
+
+<p>
+  <em>Packages</em> add further structure by grouping together related modules. In Python, a package is nothing more than a directory that contains modules.
+</p>
+
+<p>
+  An <code>__init__.py</code> file should be placed in a directory for it to be considered a package. Although there's <em>namespace package</em> behavior that works without <code>__init__.py</code>, many tools won't work without it.
+</p>
+
+<h4>3.1 What is abstraction? (p. 42)</h4>
+
+<p>
+  <em>Abstraction</em> is the process of taking something concrete and stripping it of specifics.
+</p>
+
+<h4>3.1.2 Abstraction is like an onion (p. 43)</h4>
+
+<p>
+  Writing and reading code in large systems is like peeling an onion.
+</p>
+
+<ul>
+  <li>E-commerce system
+    <ul>
+      <li>Credit card processing
+        <ul>
+          <li>HTTP calls
+            <ul>
+              <li>Database operations</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4>3.1.4 Decomposition enables abstraction (p. 46)</h4>
+
+<p>
+  An e-commerce system may be broken down into:
+</p>
+
+<ul>
+  <li>Catalog</li>
+  <li>Shopping cart
+    <ul>
+      <li>Calculate tax</li>
+      <li>Calculate shipping</li>
+      <li>Apply discount</li>
+    </ul>
+  </li>
+  <li>Payment processing</li>
+</ul>
+
+<h4>3.2 Encapsulation (p. 47)</h4>
+
+<p>
+  <em>Encapsulation</em> groups together related functions and data into a larger construct. This construct acts as a barrier or capsule to the outside world.
+</p>
+
+<p>
+  Most often, encapsulation in Python is done with a class. However, modules are also a form of encapsulation.
+</p>
+
+<p>
+  The largest encapsulation available in Python is a package.
+</p>
+
+<h4>3.2.2 Expectations of privacy in Python (p. 48)</h4>
+
+<p>
+  In a stricter language, classes can have public and private methods. Public methods and attributes act as the class' <em>interface</em>, which is how other classes interact with it.
+</p>
+
+<p>
+  Python does not implement public and private access. Instead, by convention, names starting with an underscore (_) are to be taken as private.
+</p>
+
+<h4>3.3 Try it out (p. 48)</h4>
+
+<iframe width="800" height="400" src="practices-py-pro/greeter.py.txt"></iframe>
+
+<p>
+  However, <code>day</code> and <code>part_of_day</code> can be extracted out of the <code>Greeter</code> class because they are independent of whatever store they happened to be called from.
+</p>
+
+<p>
+  Once these two functions are made independent, they may easily be used by other modules as well.
+</p>
+
+<h4>3.5 Typing, inheritance, and polymorphism (p. 54)</h4>
+
+<p>
+  <em>Polymorphism</em> is a language feature where objects of different types provide specialized behavior via a consistent method name.
+</p>
+
+<p>
+  In the beginning, systems were often modeled as cascades of inherited classes. A major downside of this approach is that code became rigid and hard to update. Making one change could lead to a massive ripple of changes all the way up or down the tree.
+</p>
+
+<p>
+  Recently, the preference has shifted to composing behaviors into an object.
+</p>
+
+<h4>(p. 55)</h4>
+
+<p>
+  Instead of building an inheritance tree of Mammal &gt; Quadruped &gt; Canine &gt; Dog, it is possible to assign <em>traits</em> to the Dog class. For example, it is a Quadruped, but not a Biped.
+</p>
+
+<p>
+  Composition is done through a language feature called an <em>interface</em>. They are formal definitions of methods and data that a class must implement.
+</p>
+
+<p>
+  Python lacks interfaces, but allows <em>multiple inheritance</em>. In this context, an "interface" would often be called a <em>mixin</em>. For example, a Dog may inherit a <code>RollOverMixin</code>.
+</p>
+
+<h4>3.6.1 Square pegs in round holes (p. 56)</h4>
+
+<p>
+  If the interface to a third-party package causes friction, an <em>adapter</em> may be written as an abstraction around that interface
+</p>
+
+<h4>4 Designing for high performance (p. 58)</h4>
+
+<p>
+  Software that performs at an acceptable level (uses resources efficiently and responds within a desirable time frame) is said to be <em>performant</em>.
+</p>
+
+<p>
+  Software has <em>time complexity</em> and <em>space complexity</em>.
+</p>
+
+<h4>4.1.1 Complexity is a little ... complex (p. 59)</h4>
+
+<p>
+  Big O notation signifies the worst-case performance of a given piece of code.
+</p>
+
+<h4>4.2.3 Space complexity of operations on data types (p. 65)</h4>
+
+<p>
+  <em>Generators</em> are constructs that produce a single value at a time, pausing until the next value is requested. In this way, it avoids storing all values it produces in memory all at once.
+</p>
+
+<iframe width="800" height="400" src="practices-py-pro/range.py.txt"></iframe>
+
+<h4>4.4.1 timeit (p. 72)</h4>
+
+<pre>
+from timeit import timeit
+
+setup = 'from datetime import datetime'
+statement = 'datetime.now()'
+result = timeit(setup=setup, stmt=statement)
+print(f"Took an average of {result} ms")
+</pre>
+
+<h4>4.4.2 CPU profiling (p. 73)</h4>
+
+<p>
+  Use the <code>cProfile</code> or <code>profile</code> module:
+</p>
+
+<p>
+  <code>python -m cProfile --sort cumtime cpu_profiling.py</code>
+</p>
+
+<h4>5.1.2 The anatomy of a functional test (p. 78)</h4>
+
+<p>
+  Testing that some code produces the right output for a given input is <em>functional testing</em> because it makes sure that the code <em>functions</em> correctly.
+</p>
+
+<ul>
+  <li>Prepare the inputs to the code</li>
+  <li>Identify the expected output</li>
+  <li>Obtain the actual output</li>
+  <li>Compare the actual and expected outputs to see if they match</li>
+</ul>
+
+<p>
+  Examples:
+  <ul>
+    <li>Given the list of integers <code>[1, 2, 3, 4]</code>, the expected output of <code>calculate_mean</code> is <code>2.5</code>. Verify that the actual output matches this expectation.</li>
+    <li>Given I visit the page for product <code>53-DE-232</code> and click on <em>Add to cart</em>, I expect to see it in my cart.</li>
+  </ul>
+</p>
+
+<h4>5.2.1 Manual testing (p. 80)</h4>
+
+<p>
+  <em>Manual testing</em> is the practice of running your application, giving it some inputs, and checking whether it does what you expect. You might miss something if you rely too much on manual testing.
+</p>
+
+<h4>5.2.3 Acceptance testing (p.80)</h4>
+
+<p>
+  <em>Acceptance testing</em> verifies the high-level requirements of a system. Software that passes these tests is <em>acceptable</em>.
+</p>
+
+<p>
+  <em>End-to-end testing</em> makes sure a set of actions can be carried out (from one end to the other) with the appropriate data flowing through where needed.
+</p>
+
+<p>
+  Cucumber.io is a library that enables you to describe end-to-end tests in natural language.
+</p>
+
+<p>
+  BDD (Behavior-Driven Development) allows you to collaborate with others on end-to-end testing.
+</p>
+
+<h4>5.2.4 Unit testing (p. 82)</h4>
+
+<p>
+  <em>Unit tests</em> make sure all the little bits of your software are working. A <em>unit</em> of code is the smallest piece that can be isolated for testing. However, classes may be treated as units, even though they contain pieces that could have been isolated.
+</p>
+
+<p>
+  Consider all kinds of use cases when writing tests, including empty and invalid input, to ensure the code handles all of them gracefully.
+</p>
+
+<h4>5.2.5 Integration testing (p. 83)</h4>
+
+<br>
+<hr>
+<a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+<a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
+<a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
+    </body>
+</html>
+

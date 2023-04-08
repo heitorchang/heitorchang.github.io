@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.5rem;
+        }
+
+        pre {
+          display: block;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #eee;
+          border-radius: 0.8rem;
+        }
+
+        code {
+          background-color: #e3f3ff;
+          color: #031;
+          font-size: 115%;
+          padding: 0.2rem;
+        }
+
+        </style>
+    </head>
+    <body>
+      <p>
+        <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
+        <a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
+      </p>
+
+
+    <body>
+    <h3><a href="../../index.html">home</a>/<a href="../../programming/index.html">programming</a>/<a href="index.html">emacs</a></h3>
+    
+<h1>Paredit</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Keybinding</th>
+      <th>Command</th>
+      <th>custom?</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><code>C-right</code></td>
+      <td><code>forward-word</code></td>
+      <td>* &nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-left</code></td>
+      <td><code>backward-word</code></td>
+      <td>* &nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-f</code></td>
+      <td><code>forward-sexp</code></td>
+      <td>* &nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-b</code></td>
+      <td><code>backward-sexp</code></td>
+      <td>* &nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-M-k</code></td>
+      <td><code>kill-sexp</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-M-left</code></td>
+      <td><code>paredit-backward-slurp-sexp</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-M-right</code></td>
+      <td><code>paredit-backward-barf-sexp</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-left</code></td>
+      <td><code>paredit-forward-barf-sexp</code></td>
+      <td>* &nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-right</code></td>
+      <td><code>paredit-forward-slurp-sexp</code></td>
+      <td>* &nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-)</code></td>
+      <td><code>paredit-close-round-and-newline</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-(</code></td>
+      <td><code>paredit-wrap-round</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-s</code></td>
+      <td><code>paredit-splice-sexp</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-r</code></td>
+      <td><code>paredit-raise-sexp</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-up</code></td>
+      <td><code>paredit-splice-sexp-killing-backward</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-down</code></td>
+      <td><code>paredit-splice-sexp-killing-forward</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-S</code></td>
+      <td><code>paredit-split-sexp</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-J</code></td>
+      <td><code>paredit-join-sexps</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-M-u</code></td>
+      <td><code>paredit-backward-up</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-M-d</code></td>
+      <td><code>paredit-forward-down</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-M-p</code></td>
+      <td><code>paredit-backward-down</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-M-n</code></td>
+      <td><code>paredit-forward-up</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-M-a</code></td>
+      <td><code>beginning-of-defun</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-M-e</code></td>
+      <td><code>end-of-defun</code></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>M-e</code></td>
+      <td><code>jump-to-last-sexp</code></td>
+      <td>* &nbsp;</td>
+    </tr>
+    <tr>
+      <td><code>C-return</code></td>
+      <td><code>my-newline-without-breaking</code></td>
+      <td>* &nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<hr>
+<a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+<a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
+<a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
+    </body>
+</html>
+

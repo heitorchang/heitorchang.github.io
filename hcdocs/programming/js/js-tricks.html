@@ -49,13 +49,28 @@
 
 
     <body>
-    <h3><a href="../../../index.html">home</a>/<a href="../../../programming/index.html">programming</a>/<a href="../../csharp/index.html">csharp</a>/<a href="index.html">library</a></h3>
+    <h3><a href="../../index.html">home</a>/<a href="../../programming/index.html">programming</a>/<a href="index.html">js</a></h3>
     
-<h1>Library names</h1>
+<h1>JS Tricks</h1>
+
+<p>
+  Seen on Bytes newsletter
+</p>
+
+<p>
+  Real devs know that centering a div is easy, but what makes even the most senior developers cry - that random overflowing element that makes the whole page scroll horizontally.
+</p>
+
+<p>
+  How could you find that element? with the POWER OF JAVASCRIPT. Just open up the browser's console and run the following snippet.
+</p>
 
 <pre>
-* CoreFX
-* BCL (Base Class Library)
+  document.querySelectorAll("*").forEach(el => {
+    if(el.offsetWidth > document.documentElement.offsetWidth) {
+      console.log(el);
+    }
+  })
 </pre>
 
 <br>

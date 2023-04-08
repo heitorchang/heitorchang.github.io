@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Site opener</title>
+  </head>
+  <body style="font-family: monospace;">
+    <h3>Press Enter after typing the number to open the ticket.</h3>
+
+  COACH-<input type="text" id="coach" autofocus>
+
+  <br><br><br>
+
+     EV-<input type="text" id="ev">
+
+  <br><br><br>
+
+    POP-<input type="text" id="pop">
+
+  <br><br><br>
+
+    INF-<input type="text" id="inf">
+
+  <REMOVEME_script>
+
+    function doEv() {
+    window.open("https://execvision.myjetbrains.com/youtrack/issue/EV-" + document.getElementById("ev").value);
+    }
+
+    function doPop() {
+    window.open("https://execvision.myjetbrains.com/youtrack/issue/POP-" + document.getElementById("pop").value);
+    }
+
+    function doInf() {
+    window.open("https://execvision.myjetbrains.com/youtrack/issue/INF-" + document.getElementById("inf").value);
+    }
+
+    function doCoach() {
+    window.open("https://mediafly.atlassian.net/browse/COACH-" + document.getElementById("coach").value);
+    }
+
+    document.getElementById("ev").addEventListener("keyup", event => {
+    if (event.key !== "Enter") return;
+    doEv();
+    clearAll();
+    });
+
+    document.getElementById("pop").addEventListener("keyup", event => {
+    if (event.key !== "Enter") return;
+    doPop();
+    clearAll();
+    });
+
+    document.getElementById("inf").addEventListener("keyup", event => {
+    if (event.key !== "Enter") return;
+    doInf();
+    clearAll();
+    });
+
+    document.getElementById("coach").addEventListener("keyup", event => {
+    if (event.key !== "Enter") return;
+    doCoach();
+    clearAll();
+    });
+
+    function clearAll() {
+    document.getElementById("coach").value = "";
+    document.getElementById("ev").value = "";
+    document.getElementById("pop").value = "";
+    document.getElementById("inf").value = "";
+    }
+  </REMOVEME_script>
+  </body>
+</html>
