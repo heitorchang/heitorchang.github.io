@@ -274,7 +274,7 @@ def print_choices(self):
 
 <h4>3.3 Try it out (p. 48)</h4>
 
-<iframe width="800" height="400" src="practices-py-pro/greeter.py"></iframe>
+<iframe width="800" height="400" src="practices-py-pro/greeter.py.txt"></iframe>
 
 <p>
   However, <code>day</code> and <code>part_of_day</code> can be extracted out of the <code>Greeter</code> class because they are independent of whatever store they happened to be called from.
@@ -501,6 +501,47 @@ assert 1.0 == calculate_mean([100, 200, 3500])
 <iframe width="800" height="400" src="practices-py-pro/cart.py.txt"></iframe>
 
 <iframe width="800" height="400" src="practices-py-pro/test_cart.py.txt"></iframe>
+
+<h4>5.4.5 Test doubles (p. 92)</h4>
+
+<p>
+  Code often interacts with other systems, such as databases and APIs. Since the code can do destructive operations, tests should not affect the real thing.
+</p>
+
+<p>
+  <em>Test doubles</em> replace the real thing:
+  <ul>
+    <li><em>Faking</em>: using a system that behaves like the real one, but avoids destructive or expensive actions</li>
+    <li><em>Stubbing</em>: using a predetermined value as a response instead of requesting a real one</li>
+    <li><em>Mocking</em>: using a system with the same interface as the real one, but that also records interactions for later inspection and assertions</li>
+  </ul>
+</p>
+
+<p>
+  Consider this code that requests tax information:
+</p>
+
+<iframe width="800" height="400" src="practices-py-pro/add_sales_tax.py.txt"></iframe>
+
+<p>
+  A unit test with mocking could look like:
+</p>
+
+<iframe width="800" height="400" src="practices-py-pro/test_tax.py.txt"></iframe>
+
+<h4>5.5.1 Test organization with pytest (p. 97)</h4>
+
+<p>
+  pytest also discovers tests automatically. However, test classes must be named <code>Test*</code> and don't need to inherit from a base class.
+</p>
+
+<p>
+  Instead of <code>assertEqual(expected, actual)</code>, pytest uses <code>assert expected == actual</code>
+</p>
+
+<p>
+  Run pytest in the console with <code>pytest</code>
+</p>
 
 <br>
 <hr>
