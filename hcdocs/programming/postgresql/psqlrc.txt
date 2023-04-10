@@ -1,0 +1,8 @@
+\set PROMPT1 '%/@%M%# '
+
+\set AUTOCOMMIT off
+\echo AUTOCOMMIT = :AUTOCOMMIT
+
+\set HISTFILE ~/.psql_history- :DBNAME
+\set HISTCONTROL ignorespace
+\pset null '<null>'

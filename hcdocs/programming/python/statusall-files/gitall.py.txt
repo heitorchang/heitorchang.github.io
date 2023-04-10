@@ -1,0 +1,10 @@
+GIT_REPOS = [
+    # 'interview-topics',
+    'reading-list',
+    'good-practice',
+    'learn-code',
+    'hcdocs',
+    'pychallenges',
+    ]
+
+HOME_DIR = 'C:/Users/oktara/code/'

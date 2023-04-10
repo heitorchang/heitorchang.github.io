@@ -53,13 +53,28 @@
       </p>
 
 
-    <h3><a href="./index.html">home</a>/<a href="index.html"></a></h3>
+    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">scheme</a></h3>
     
-<a class="index" href="home.html">&#x1F4D8; home.html</a><br>
-<a class="index" href="programming/index.html">&#x1F4C1; programming</a><br>
-<a class="index" href="sample.txt" target="_blank">&#x1F4C3; sample.txt</a><br>
-<a class="index" href="template.html">&#x1F4D8; template.html</a><br>
-<a class="index" href="tools/index.html">&#x1F4C1; tools</a><br>
+<h1>R5RS Scheme</h1>
+
+<h2>The difference between nested and tail-recursive iteration</h2>
+
+<p>
+The key difference is in the order that the conses are run.
+</p>
+
+<p>
+  The nested version delays the calls until the end. The first cons that happens is the most deeply nested one (cons 'last-element '()). Since conses attach to the front of the list, the last one stays at the end, then the second-to-last cons runs, and so on.
+</p>
+
+<iframe width="800" height="400" src="scheme-files/iteration-nested.txt"></iframe>
+
+<p>
+  In the tail-recursive version, each repeated call to <code>g</code> immediately calls cons to build the <code>accum</code> list. Since we can easily only access the <code>car</code> of the input list, the first element goes to the end of <code>accum</code> and we end up with a reversed list.
+</p>
+
+<iframe width="800" height="400" src="scheme-files/iteration-tail-recursive.txt"></iframe>
+
 <br>
 <hr>
 <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;

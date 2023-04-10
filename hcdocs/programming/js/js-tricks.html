@@ -53,13 +53,30 @@
       </p>
 
 
-    <h3><a href="./index.html">home</a>/<a href="index.html"></a></h3>
+    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">js</a></h3>
     
-<a class="index" href="home.html">&#x1F4D8; home.html</a><br>
-<a class="index" href="programming/index.html">&#x1F4C1; programming</a><br>
-<a class="index" href="sample.txt" target="_blank">&#x1F4C3; sample.txt</a><br>
-<a class="index" href="template.html">&#x1F4D8; template.html</a><br>
-<a class="index" href="tools/index.html">&#x1F4C1; tools</a><br>
+<h1>JS Tricks</h1>
+
+<p>
+  Seen on Bytes newsletter
+</p>
+
+<p>
+  Real devs know that centering a div is easy, but what makes even the most senior developers cry - that random overflowing element that makes the whole page scroll horizontally.
+</p>
+
+<p>
+  How could you find that element? with the POWER OF JAVASCRIPT. Just open up the browser's console and run the following snippet.
+</p>
+
+<pre>
+  document.querySelectorAll("*").forEach(el => {
+    if(el.offsetWidth > document.documentElement.offsetWidth) {
+      console.log(el);
+    }
+  })
+</pre>
+
 <br>
 <hr>
 <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;

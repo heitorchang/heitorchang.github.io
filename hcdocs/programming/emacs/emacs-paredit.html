@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.5rem;
+        }
+
+        pre {
+          display: block;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #eee;
+          border-radius: 0.8rem;
+        }
+
+        code {
+          background-color: #e3f3ff;
+          color: #031;
+          font-size: 115%;
+          padding: 0.2rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+          font-size: 115%;
+        }
+
+        </style>
+    </head>
+    <body>
+      <p>
+        <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
+        <a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
+      </p>
+
+
+    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">emacs</a></h3>
+    
+<h1>Paredit</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Keybinding</th>
+      <th>Command</th>
+      <th>custom?</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td class="hc-monospace">C-right</td>
+      <td class="hc-monospace">forward-word</td>
+      <td class="hc-monospace">&bull; &nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-left</td>
+      <td class="hc-monospace">backward-word</td>
+      <td class="hc-monospace">&bull; &nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-f</td>
+      <td class="hc-monospace">forward-sexp</td>
+      <td class="hc-monospace">&bull; &nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-b</td>
+      <td class="hc-monospace">backward-sexp</td>
+      <td class="hc-monospace">&bull; &nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-M-k</td>
+      <td class="hc-monospace">kill-sexp</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-M-left</td>
+      <td class="hc-monospace">paredit-backward-slurp-sexp</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-M-right</td>
+      <td class="hc-monospace">paredit-backward-barf-sexp</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-left</td>
+      <td class="hc-monospace">paredit-forward-barf-sexp</td>
+      <td class="hc-monospace">&bull; &nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-right</td>
+      <td class="hc-monospace">paredit-forward-slurp-sexp</td>
+      <td class="hc-monospace">&bull; &nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-)</td>
+      <td class="hc-monospace">paredit-close-round-and-newline</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-(</td>
+      <td class="hc-monospace">paredit-wrap-round</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-s</td>
+      <td class="hc-monospace">paredit-splice-sexp</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-r</td>
+      <td class="hc-monospace">paredit-raise-sexp</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-up</td>
+      <td class="hc-monospace">paredit-splice-sexp-killing-backward</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-down</td>
+      <td class="hc-monospace">paredit-splice-sexp-killing-forward</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-S</td>
+      <td class="hc-monospace">paredit-split-sexp</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-J</td>
+      <td class="hc-monospace">paredit-join-sexps</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-M-u</td>
+      <td class="hc-monospace">paredit-backward-up</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-M-d</td>
+      <td class="hc-monospace">paredit-forward-down</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-M-p</td>
+      <td class="hc-monospace">paredit-backward-down</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-M-n</td>
+      <td class="hc-monospace">paredit-forward-up</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-M-a</td>
+      <td class="hc-monospace">beginning-of-defun</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-M-e</td>
+      <td class="hc-monospace">end-of-defun</td>
+      <td class="hc-monospace">&nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">M-e</td>
+      <td class="hc-monospace">jump-to-last-sexp</td>
+      <td class="hc-monospace">&bull; &nbsp;</td>
+    </tr>
+    <tr>
+      <td class="hc-monospace">C-return</td>
+      <td class="hc-monospace">my-newline-without-breaking</td>
+      <td class="hc-monospace">&bull; &nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<hr>
+<a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+<a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
+<a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
+    </body>
+</html>
+
