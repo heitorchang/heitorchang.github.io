@@ -1,1 +1,0 @@
-python -m better_exceptions %1
