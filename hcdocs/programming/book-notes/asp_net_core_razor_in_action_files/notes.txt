@@ -1,0 +1,901 @@
+8 a page controller is a class that derives from PageModel
+
+15 a provider is a component that handles communication between C# code and the data store
+
+21 New webapp
+
+dotnet new webapp -o WebApplication1
+
+// looks like sln (solution) file is not necessary
+
+24 New page
+
+dotnet new page -n Welcome -o Pages --namespace WebApplication1.Pages
+
+NOTE: -na does not work
+
+-n name
+-o output location
+--namespace for the generated C# files
+
+24 hot reload
+
+in the directory containing WebApplication1.csproj, run
+
+dotnet watch run
+
+25
+@{
+  ViewData["Title"] = "Welcome";
+}
+
+28 a Solution file acts as a container for managing related projects (such as a business logic layer and a data access layer)
+
+the .csproj file contains information about the project for the build system.
+
+bin, obj: used in the build process
+
+WEB gitignore:
+
+https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
+
+Properties: contains launchSettings.json, settings which are used when you run the application
+
+wwwroot: is configured to be run directly. should contain stylesheets, JS files, images, and other static files (not needed to be processed)
+
+Pages: the home of your Razor page files.
+
+31 the top-level (.cshtml) file is called the "content" or "view" file. In this book, it is called the "Razor page"
+
+the .cshtml.cs file is a C# file containing a class that derives from PageModel.
+
+appsettings.json has a development and a production version.
+
+32 WebApplicationBuilder properties:
+
+Environment: information about the web-hosting environment the app runs in
+
+Services: Service container (covered in Ch. 7)
+
+Configuration: enables composition of the configuration providers (covered in Ch. 14)
+
+Logging: configuration via ILoggingBuilder
+
+Host: configure application-host-specific services, such as third-party DI (Dependency Injection) containers
+
+WebHost: web server configuration
+
+33 bootstrapping: the initial configuration of the application
+
+33 the default web server is Kestrel
+
+34 builder.Services.AddRazorPages() includes the view engine, model binding, request validation, tag helpers, memory cache, and ViewData.
+
+34 the configured application is an instance of the WebApplication type. It merges:
+
+IApplicationBuilder (configures request or middleware pipeline)
+IEndpointRouteBuilder (configures mapping incoming requests to specific pages)
+IHost (provides the means to start and stop the application)
+
+34 an IWebHostEnvironment is accessible via the app.Environment property.
+
+35 HTTP (HyperText Transfer Protocol) is used to transfer information between systems in the client-server model. A request is the input, and the response is the output.
+
+37 request methods: GET, POST, PUT, DELETE
+
+37 headers are name-value pairs that provide additional information to the server.
+
+38 the information of an HTTP transaction is encapsulated in the HttpContext class.
+
+Properties of HttpContext:
+Request
+  Body
+  ContentLength
+  ContentType
+  Cookies
+  Form
+  Headers
+  IsHttps
+  Method
+  Path
+  Query
+Response
+  ContentLength
+  ContentType
+  Cookies
+  HasStarted
+  Headers
+  StatusCode
+  WriteAsync
+  Redirect
+Connection
+Session
+User (see ch. 9 and 10)
+
+39 the decision-making process (where to direct the request, logging, compression, what to return) is the "request pipeline". The individual components that perform these functions are known as middleware.
+
+40 a middleware component can short-circuit the data flow (for example, the static files middleware can return a file if it's determined to be static).
+
+skipped custom middleware p. 41-48
+
+50 layouts are a kind of master template for multiple pages.
+partial files are snippets of UI that can be plugged into a host page or layout.
+
+51 PageModel is a feature of Razor Pages that acts as both an MVC controller and a view model (a container for data specific to a particular view or page)
+
+tag helpers are components that enable server-side code to generate HTML
+
+an IActionResult is a return type of a handler method
+
+51 "Template View" is a common design pattern in web development frameworks. it uses markers or placeholders for server-side content.
+
+51 Razor syntax uses @ as a transition marker
+
+52 @page and @model WebApplication1... are directives
+@{ ... } is a C# code block
+<p>It is @day ... is an inline C# expression
+
+the using directive brings namespaces into scope (allows its types to be referenced without their fully qualified names)
+
+example:
+@using static System.IO.Path
+@ {
+  var extension = GetExtension("myfile.ext");
+}
+
+53 _ViewImports.cshtml centralizes directives for all cshtml files.
+
+53 WARNING: putting too much application logic in Razor pages and mixing it with HTML (in .cshtml files) makes it very difficult to test
+
+an algorithm may be placed in its own class
+
+54 a functions block looks like:
+
+@functions{
+  ...
+}
+
+functions blocks should be avoided in Razor pages for the same reason business logic should be avoided (mixing logic with HTML complicates testing)
+
+a reasonable use of a functions block is to write small routines that manage presentation logic and only apply to the page in which they are placed.
+
+55 expressions such as @partOfDay are "implicit expressions". an explicit expression uses parentheses:
+
+@(DateTime.Now.Hour > 12 ? "PM" : "AM")
+
+55 Control blocks in Razor
+
+@if(DateTime.Now.Hour <= 12)
+{
+  <p>It is morning.</p>
+}
+else if (...)
+{
+  <p>Afternoon</p>
+}
+else
+{
+  <p>Evening</p>
+}
+
+56
+
+@switch (DateTime.Now.Hour)
+{
+  case int _ when DateTime.Now.Hour <= 12:
+    <p>Morning</p>
+    break;
+  case int _ when ...
+    ...
+    break;
+  default:
+    <p>Evening</p>
+    break;
+}
+
+56 foreach: listing vacation destinations
+
+@functions{
+  public class City
+  {
+    public string Name { get; set; }
+    public string Country { get; set; }
+  }
+  List<City> cities = new List<City>{
+    new City { Name = "Paris", Country = "France" },
+    new City { Name = "Rome", Country = "Italy" },
+    new City { Name = "Madrid", Country = "Spain" }
+  };
+}
+
+<ul>
+  @foreach (var city in cities)
+  {
+    <li>@city.Name is in @city.Country</li>
+  }
+</ul>
+
+57 @:something and <text>something</text> is used to render HTML inside a code block.
+
+58 by default, Razor encodes unsafe characters such as <, >, and & to HTML equivalents (&lt;, &gt;, etc.)
+
+@{
+  var output = "<p>a paragraph</p>";
+}
+@output will show up as <p>a paragraph</p> in the browser.
+
+58 use
+@Html.Raw("<p>a paragraph</p>") but you must be sure the contents are sanitized.
+
+59 to prevent encoding non-ASCII characters, add to WebEncoderOptions in Program.cs:
+
+builder.Services.Configure<WebEncoderOptions>(options =>
+{
+  options.TextEncoderSettings = new
+  TextEncoderSettings(UnicodeRanges.BasicLatin, UnicodeRanges.Latin1Supplement);
+});
+
+or instead of individual ranges, use
+UnicodeRanges.All
+
+skipped: templated Razor delegates p. 59-61
+
+62 Razor comments
+@* ... *@
+
+63 layout files contain a method called RenderBody, @RenderBody()
+
+64 specifying the layout page
+
+@{
+  Layout = "_Layout";
+
+  // OR
+
+  Layout = "/Pages/Shared/_Layout.cshtml";
+}
+
+65 Setting the layout in every page suffers from the same problem as not having a layout page: updating it in multiple locations becomes a chore.
+
+the file _ViewStart.cshtml (found in /Pages/) executes its code before any page that it affects (all Razor pages in the same folder and subfolders).
+
+order of execution: ViewStart -> Content -> Layout
+
+settings may be overridden by pages further down this order
+
+layouts may be nested
+
+WARNING: the ViewStart file cannot be relied on to set the parent layout file in a child layout. The ViewStart file has no effect over layouts within its folder and subfolders.
+
+66 the @section directive will include a section (that contains optional content) that depends on a particular destination.
+
+@section ThingsToDoWidget{
+  <p>Visit Eiffel Tower</p>
+}
+
+You render the content of a section within the layout page by calling "RenderSectionAsync" at the location where you want the content to appear.
+
+There are three versions:
+taking the section's name as a string
+taking a Boolean (true or false) that indicates whether all content pages are required to define the section
+taking both a string and a Boolean
+
+@await RenderSectionAsync("ThingsToDoWidget", required: false)
+
+67 determine if a content page has defined a specific section
+<div class="card">
+@if (IsSectionDefined("ThingsToDoWidget"))
+{
+  @await RenderSectionAsync("ThingsToDoWidget")
+}
+else
+{
+  <p>Things to do default content</p>
+}
+</div>
+
+IgnoreSection("admin");
+
+IgnoreSection returns void so it doesn't start with @ and must be terminated with a semicolon.
+
+68 a partial view (.cshtml) contains a chunk of HTML and some optional Razor syntax. it doesn't have a @page directive.
+
+They are used to:
+* break up a complex UI into more manageable pieces
+* avoid repetition
+* generate HTML for async page updates in AJAX scenarios
+
+with VS Code, add a new file with the .cshtml suffix or generate a new ViewStart or ViewImports file and remove the default content:
+
+dotnet new viewstart
+dotnet new viewimports
+
+conventionally (but not mandatory) partials' filenames should start with a leading underscore, such as _myPartial.cshtml.
+
+partials are looked for in the same folder containing the current page, Pages/Shared, and Views/Shared.
+
+_NavigationPartial should be placed in the Pages/Shared folder.
+
+69 a partial tag helper will render the contents of a partial view in the calling page:
+
+<partial name="_NavigationPartial" />
+
+70 a @model directive at the top of the partial file allows for displaying dynamic content.
+
+@model Dictionary<string, string>
+
+data for the partial is represented by a property of the host page named "Nav", and is passed to the partial tag helper's "model" attribute:
+
+<partial name="_NavigationPartial" model="Model.Nav" />
+
+70 Tag helpers are components that automate the generation of HTML. most attributes are custom and begin with "asp-"
+
+71 tag helpers are optional, but are enabled by default in the _ViewImports.cshtml file in /Pages/
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+Note: this book doesn't cover creation of custom tag helpers.
+
+71 tag helpers may be removed.
+
+the ! prefix to a tag name opts out of individual tags (add to both start and end tags)
+
+<!a href="http://www.microsoft.com">Microsoft</!a>
+
+72 to opt specific tags into processing, register a custom prefix
+
+@tagHelperPrefix x:
+<x:a asp-page="/Index">Home</x:a>
+
+this minimizes visual confusion; for example, for designers
+
+72 view components are similar to partial views, but should be preferred over partials when there is server-side logic or its own source of data (e.g. database-driven menus, shopping carts, or tag clouds). Note: covered in Ch. 14)
+
+73 the two primary roles of a PageModel class are the controller and view model.
+
+The role of a controller is to take requests, use that information to perform commands on the model, and then return the result of that processing.
+
+as part of the request processing, the controller has to prepare the data passed to the view in a form the view can work with. this form is the "view model".
+
+73 ViewData is also a way to pass data to view pages.
+
+The PageModel class is generated automatically when a Razor page is added to the application. It is named after the page, plus Model, e.g. WelcomeModel.
+
+Public PageModel properties are exposed to the Razor page through the inclusion of a @model directive that references the PageModel type.
+
+73 The recommended approach to pass data to pages is using a strongly typed view model.
+
+ViewData is a weakly typed option shown before to pass the page Title (p. 25)
+
+ViewData is a dictionary-based feature (key-value pairs).
+
+Definition:
+@{
+  ViewData["Title"] = "Welcome";
+}
+
+Access:
+<title>@ViewData["Title"]</title>
+
+The values are "object" types (anything goes)
+
+74 example of datetime rendering:
+@(((DateTime)ViewData["SaleEnds"]).ToString("h tt, MMMM dd, yyyy"))
+
+74 for assignment to take effect in the Razor page, it must include a @model directive referencing the appropriate Model type:
+
+@model WelcomeModel
+
+Model assignments may be overridden by the Razor page
+
+75 ViewBag is a property that wraps ViewData that enables you to treat it as a dynamic object.
+
+NOTE: using it is not recommended
+
+@ViewBag.SaleEnds
+
+it is available only in Razor files.
+
+75 ViewData should be used sparingly because it relies on magic strings (key names) and is weakly typed (public PageModel properties should be used)
+
+75 a view model is simple: a class that encapsulates the data required for a particular view or page. It is like a static database view. it contains a subset of data
+
+76 Example: OrderSummaryView that shows ProductId, Name, Price, CustomerId, and CustomerAddress
+
+76 An example view model class
+
+public class OrderSummaryViewModel
+{
+  public int Customer { get; set; }
+  public string CustomerName { get; set; }
+  public string CustomerAddress { get; set; }
+  public int ProductId
+  public string ProductName { get; set; }
+  public decimal ProductPrice { get; set; }
+}
+
+views for view models include a @model directive:
+
+@model OrderSummaryViewModel
+
+a PageModel is a view model in the MVC sense.
+
+77 a PageModel may contain public properties that are dynamic data:
+
+public class WelcomeModel : PageModel
+{
+  public DateTime SaleEnds { get; set; } = new DateTime(DateTime.Now.Year, 6, 30);
+  public void OnGet()
+  {
+  }
+}
+
+Razor page:
+
+@page
+@model WebApplication1.Pages.WelcomeModel
+@{
+}
+<p>Sale ends at @Model.SaleEnds.ToString("h tt, MMMM dd, yyyy")</p>
+
+IntelliSense kicks into life with this approach, as opposed to using ViewData
+
+78 Request processing in a PageModel is performed via handler methods (analogous to controller actions)
+
+On[method name] with Async (optionally)
+that is: OnGet, OnGetAsync, OnPost, OnPostAsync
+
+79 in C#, a dollar sign before a string means ith should be interpolated
+
+public class WelcomeModel : PageModel
+{
+  public string Message { get; set; }
+
+  public void OnGet(int id)
+  {
+    Message = $"OnGet executed with id = {id}";
+  }
+}
+
+79 the asp-route-* attribute is used in an <a> tag to pass data in the URL
+
+<a asp-page="/Welcome" asp-route-id="5">Get welcome</a>
+
+80 There can only be one kind of OnGet (cannot have both OnGet and OnGetAsync)
+
+query parameters are bound to model parameters if their names match
+
+81 It is possible to have named handler methods, such as OnPostSearch and OnPostRegister
+
+81 the asp-page-handler attribute must be used to determine which handler to use
+
+<form method="post" asp-page-handler="Search">...</form>
+<form method="post" asp-page-handler="Register">...</form>
+
+82 Handler methods return void, the type "Task", or action results of the interface type "IActionResult".
+
+Action results may be returning a file, an empty response, a specific HTTP status code, or a redirection.
+
+return types of void or Task implicitly return a PageResult, an action that renders a RazorPage. in general, it is not necessary to explicitly return a PageResult.
+
+83 Common ActionResults and associated helper methods:
+
+PageResult: Page (a Razor page)
+FileContentResult: File
+NotFoundResult: NotFound
+PartialResult: Partial
+RedirectToPageResult: RedirectToPage, RedirectToPagePermanent (Note: avoid permanent redirects)
+StatusCodeResult: StatusCode
+
+84 If multiple result types need to be returned, IActionResult should be specified as the return type for the handler method:
+
+public IActionResult OnGet(int id)
+{
+  var data = db.Find(id);
+  if (data == null)
+  {
+    return NotFound();
+  }
+  else
+  {
+    return Page();
+  }
+}
+
+87 commonly found URL to file mapping may be:
+
+https://mysite.com/city/london -> c:\website\city\london.cshtml
+
+this is limiting because the URL may be city/paris, and we don't want a whole new page for that.
+
+87 a "city break" is a UK term for vacation packages in cities worldwide.
+
+(the book begins a new project called CityBreaks, see p. 21 notes)
+
+88 Routing is a middleware (EndpointRouting and Endpoint). They are added with UseRouting and MapRazorPages
+
+89 static file middleware whould be placed before the UseRouting middleware.
+
+middleware that needs to know about the selected endpoint goes between UseRouting and UseEndpoints (for example, Authorization middleware).
+
+89 a route template is a string representation of a route pattern. A RouteEndpoint is a type of endpoint that can be used in URL matching and generation.
+
+90 Note: alternative root for Razor pages (non-default)
+
+to be located, a Razor page must have a @page directive at the top and not start with an underscore (_)
+
+Index.cshtml generates the /index route template and /
+
+(be careful not to create Pages\Privacy\Index.cshtml and Pages\Privacy.cshtml, that is ambiguous)
+
+91 after @page, a string may be added to customize the route template:
+
+@page "route-template"
+
+parameters and separators are allowed in route templates.
+
+@page "/privacy-policy" overrides the default route template. literals behave like regular URLs
+
+92 a parameter may not be called Action, Area, Controller, Handler, or Page
+
+adding a city name parameter looks like:
+
+@page "{cityName}"
+
+that corresponds to URLs city/{cityName}
+
+values are added to a RouteValueDictionary object, which is added to a RouteData object.
+
+The values are retrieved with RouteData.Values.
+
+@page "{cityName}"
+@model CityBreaks.Pages.CityModel
+
+<h2>@RouteData.Values["cityName"] Details</h2>
+
+94 Parameters can be made optional by adding a question mark after the name {cityName?} but these must come last.
+
+a default value is defined as {cityName=Paris}
+
+if a route parameter name matches a query string value, the incoming value is assigned to a handler method parameter. (avoid using the RouteData dictionary)
+
+94 [example on binding cityName in the route to the model]
+
+95 multiple route parameters
+@page "{cityName}/{rating?}"
+
+96 a catchall parameter collects an arbitrary number of parameters separated by slashes.
+
+{*cityName} -> path separators are URL-encoded: /City%2FLondon%2f2022...
+{**cityName} -> the encoding is decoded, or round-tripped: /City/London/2022...
+
+96 all URL data is a string. Route constraints enable you to specify the data type and range of acceptable values
+
+97
+"{cityName}/{arrivalYear:int}-{arrivalMonth:range(1-12)}-{arrivalDay:int}"
+"{cityName}/{arrivalDate:datetime}"
+
+97-98 a list of common constraints (alpha, bool, int, range, maxlength, etc.)
+
+98 multiple constraints may be added one-by-one, separating them with colons
+
+99 route constraints are classes that implement the IRouteConstraint interface. a custom constraint such as CityRouteConstraint should be placed in a folder called RouteConstraints.
+
+99-100 [example of custom route constraint for CityRoute]
+
+WARNING: this approach is synchronous. there is an async solution called IEndPointSelectorPolicy that is not covered in this book.
+
+100 [example of registering the custom constraint]
+@page "{cityName:city}"
+
+100 via configuration, additional routes may be created for a page, but this approach is not scalable
+
+101 a UI language is called "culture"
+
+102 a PageRouteModelConvention can be created to apply to multiple pages.
+
+103 [example of PageRouteModelConvention to add a custom route convention]
+
+105 the anchor tag <a> custom attributes are (prefixed with asp-): page, page-handler, route-*, all-route-data, host, protocol, area
+
+105 when multiple route templates exist, the last template will be used to generate the href value.
+
+106 adding @page "{handler?}" allows customization of the handler behavior
+
+route-* attributes cater to parameter values, such as
+<a asp-page="/City" asp-route-cityName="Rome">Rome</a>
+
+all-route-data takes a Dictionary<string, string> as a value, and wraps them. it is used to avoid adding multiple route-* attributes
+
+var d = new Dictionary<string, string> { { "name": "Madrid" }, { "rating": "5" } };
+<a asp-page="/City" asp-all-route-data="d">Click me</a>
+
+107 Areas originate from the MVC framework, and should be avoided. It is used to separate large applications into smaller subapplications.
+
+skipped: p. 107-114
+
+115 the form is the primary interaction mechanism in a web app.
+
+116 to aid in CRUD systems, Razor pages include:
+
+* form control tag helpers
+* model binding
+* a validation framework
+
+116 Data annotation allow you to add additional information (metadata) to types in .NET, such as business requirements related to presence, type, and range.
+
+116 SETUP: the CityBreaks app is configured to use lowercase options for URLs and implements parameter transformers
+
+117 in a GET request, keys in the key-value pairs appended to the URL are generated from the "name" attribute of the form control
+
+with POST, the content of the form is included in the body of the request.
+
+GET should be used if the ability to bookmark the URL is needed.
+
+117 to prevent the user from refreshing the page containing the form, the PRG pattern is useful (Post-Redirect-Get)
+
+118 Note: Razor Pages is stateless
+
+data generated on the server needs to be generated each time you display a form
+
+119 it is possible to access the Request object directly, but not recommended. It is better to use model binding.
+
+119 key-value pairs are assigned to the Request.Form collection, such as
+Request.Form["password"]
+
+121 it is possible to assign the same name to multiple form controls (for example, for a series of checkboxes).
+
+StringValues can represent zero (null), one, or more strings, and supports an implicit conversion to string[]
+
+foreach(var city in Request.Form["city"])
+{
+  ...
+}
+
+122 when using GET, Request.Form becomes Request.Query
+
+123 @if (Request.HasFormContentType)
+{ ... }
+
+124 Model binding is the process that takes user input from a request (the source) and attempts to bind it to C# code (the target)
+
+Sources may be:
+* forms
+* route data
+* query strings
+* request body (including JSON)
+
+124 using model binding with handler parameters
+
+public class CreateModel : PageModel
+{
+  public string Message { get; set }
+  public void OnPost(string cityName)
+  {
+    Message = $"You submitted {cityName}";
+  }
+}
+
+125 using model binding with public properties
+
+when the binding source is form data, this is the recommended way to work with the model binder
+
+public class CreateModel : PageModel
+{
+  [BindProperty]
+  public string CityName { get; set; }
+}
+
+126 by default, BindProperty opts properties in to model binding for POST requests. for GET requests, it must be specified:
+
+[BindProperty(SupportsGet=true)]
+
+126 an invalid C# identifier must be defined with Name:
+[BindProperty(Name="e-mail")]
+public string Email { get; set; }
+
+126 WARNING: using [BindProperties] in model binding will result in all public properties being available to the client, and vulnerable to an "overposting" (also called "mass assignment") attack.
+
+127 binding complex objects
+
+132 binding simple collections
+
+140 validating input
+
+skipped: p. 127-186
+
+187 DI (Dependency Injection) enables loose coupling, resulting in easier to maintain and easier to test code
+
+187 services are globally registered within a container upon startup and provided by the container when needed by consumers.
+
+188 builder.Services is the service container.
+
+188 a key principle in software design is the "single-responsibility principle" (SRP). This is the S in SOLID. any component, module, or service should have only one reason to change: its single responsibility needs to change
+
+Note: the other initials of SOLID are:
+S: Single-responsibility
+O: Open-closed (open for extension, closed for modification)
+L: Liskov substitution (functions that use pointers/references to base classes must be able to use objects of derived classes)
+I: Interface segregation (clients should not be forced to depend upon interfaces that they do not use)
+D: Dependency Inversion (depend upon abstractions, not concretions)
+
+189 each piece of logic should only have one representation in the system.
+
+moving code to its own component might be needed
+
+190 SimpleCityService that generates a collection of City objects and makes it available to any part of the application that needs it
+
+// SimpleCityService.cs
+
+using CityBreaks.Models;
+
+namespace CityBreaks.Services
+{
+  public class SimpleCityService
+  {
+    public Task<List<City>> GetAllAsync()
+    {
+      return Task.FromResult(Cities);
+    }
+
+    private readonly List<City> Cities = new()
+    {
+      new City { Id = 1, Name = "Amsterdam", Country = new Country { ... } },
+      ...
+    }
+  }
+}
+
+191 update Create.cshtml.cs
+
+public async Task OnGetAsync()
+{
+  Cities = await GetCityOptions();
+}
+
+public async Task OnPostAsync() { ... }
+
+private async Task<SelectList> GetCityOptions()
+{
+  var service = new SimpleCityService();
+  var cities = await service.GetAllAsync();
+  return new SelectList(cities, nameof(City.Id), nameof(...) ...);
+}
+
+192 now, CreateModel _depends_ on the SimpleCityService.
+SimpleCityService is a dependency of the CreateModel class
+
+192 "new is glue" means that using the "new" keyword might be creating a tight coupling between a consumer (a high-level module) and its dependencies (low-level modules)
+
+in this example, SimpleCityService is glued to the CreateModel class.
+
+this example violates the explicit dependencies principle (methods and classes should explicitly require collaborating objects through method parameters or constructor parameters)
+
+193 To achieve loose coupling, one solution is to rely on abstractions, known as the dependency inversion principle (DIP). it is also called "inversion of control" (IoC)
+
+abstractions are abstract classes and interfaces. in general, interfaces are used unless you have some common behavior you want all implementations to share
+
+193 high-level modules should not depend on low-level modules. both should depend on abstractions. abstractions should not depend on details. details should depend on abstractions.
+
+high-level modules tend to be consumers of services
+low-level modules tend to be the services themselves
+
+CreateModel (high-level)
+ |
+ v
+
+ICityService (abstraction)
+
+ ^
+ |
+SimpleCityService (low-level)
+
+the interface should not return implementation-specific types, such as DbDataReader, but general-purpose types like a List<T>.
+
+194 ICityService.cs (interface)
+
+using CityBreaks.Models;
+
+namespace CityBreaks.Services
+{
+  public interface ICityService
+  {
+    Task<List<City>> GetAllAsync();
+  }
+}
+
+195 change SimpleCityService to implement the interface:
+public class SimpleCityService : ICityService
+
+195 Dependency Injection
+
+To inject the dependency into the consuming module:
+
+1. typically, it's done via its constructor as a parameter
+2. assign it to a private field for use within the consuming class
+
+public class CreateModel : PageModel
+{
+  private readonly ICityService _cityService;
+  public CreateModel(ICityService cityService)
+  {
+    _cityService = cityService;
+  }
+}
+
+196 service registration
+
+skipped: p. 196-208
+
+209 EF Core (Entity Framework Core) is an ORM (Object-Relational Mapping) tool
+
+210 the basic CRUD operations with EF Core are done via its _context_, an object that derives from DbContext
+
+210 migrations keep your database schema in sync with the model
+
+210 scaffolding is a feature that combines your model and db knowledge to generate CRUD pages
+
+211 EF Core manages communication between your business objects and the data store.
+
+LINQ (Language-Integrated Query) helps you create query specifications within your application code and provide those to EF Core. EF Core translates LINQ to SQL
+
+213 relationships in an EF Core model are represented by "navigational properties". For example, a Country may have many Cities. the following code will be inferred to have a one-to-many relationship between the Country and City entities
+
+public class City
+{
+  public int Id { get; set; }
+  public string Name { get; set; }
+  public Country Country { get; set; }
+}
+
+213-214 as a best practice, you should always instantiate collection navigation properties in their declaration, to avoid having to test for null when accessing them in code.
+
+[example with a foreign key property]
+
+public class City
+{
+  public int Id { get; set; }
+  public string Name { get; set; }
+  public int CountryId { get; set; }
+  public Country Country { get; set; }
+}
+
+public class Country
+{
+  public int Id { get; set; }
+  ...
+  public List<City> Cities { get; set; } = new List<City>();
+}
+
+skipped: p. 214
+
+215 EF Core is not included by default.
+
+run in the terminal:
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+
+skipped: p. 215-340
+
+224 LINQ query syntax vs. method syntax (author prefers method syntax, which chains calls to a IEnumerable type)
+
+342 Serilog
+
+345-346 UseExceptionHandler
+
+346 Set Layout = null; in the custom error page to avoid an infinite recursion
+
+@page
+@model ErrorModel
+@{
+  Layout = null;
+  ViewData["Title"] = "Error";
+}
+
+skipped: 346-362
+
+363
+dotnet add package Serilog.AspNetCore
+
+
+
+END OF FILE

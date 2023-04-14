@@ -1,0 +1,25 @@
+#!/usr/bin/bash
+
+# Save a copy as good-practice/myrazor
+
+dotnet new webapp -o $1
+
+cd $1
+
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.SQLite
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Serilog.AspNetCore
+
+# Add Serilog
+sed -i 's/var builder = WebApplication.CreateBuilder(args);/using Serilog;\nusing Serilog.Events;\n\nLog.Logger = new LoggerConfiguration()\n    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)\n    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)\n    .WriteTo.Console()\n    .WriteTo.File(path: "Logs\\\\log.log", rollingInterval: RollingInterval.Day)\n    .CreateLogger();\n\nLog.Information("Starting up.");\n\nvar builder = WebApplication.CreateBuilder(args);\nbuilder.Host.UseSerilog();/' Program.cs
+
+# Set Error Page's Layout to null
+sed -i 's/    ViewData\["Title"\] = "Error";/    Layout = null;\n    ViewData\["Title"\] = "Error";/' Pages/Error.cshtml
+
+echo
+echo Run:
+echo cd $1
+echo dotnet watch
