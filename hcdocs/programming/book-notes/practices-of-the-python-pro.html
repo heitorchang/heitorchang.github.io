@@ -12,6 +12,11 @@
         a {
           text-decoration: none;
           display: inline-block;
+          color: #52f;
+        }
+
+        a:visited {
+          color: #82a;
         }
 
         a.index {
@@ -573,13 +578,13 @@ assert 1.0 == calculate_mean([100, 200, 3500])
   Don't refactor code to make testing easier or coverage stronger. Do it to make testing easier and code more coherent.
 </p>
 
-<h3>Project: Bark (bookmarks manager)</h3>
+<h3 id="ch6">Project: Bark (bookmarks manager)</h3>
 
 <p>
   Files for this project are in <a href="practices-py-pro/bark/index.html">the bark directory (click here).</a>
 </p>
 
-<h4 id="ch6">6.3.2 The business logic layer (p. 115)</h4>
+<h4>6.3.2 The business logic layer (p. 115)</h4>
 
 <p>
   Using the <em>command pattern</em>, the logic of each action is encapsulated and triggered via an <code>execute</code> method, thus decoupling the actions from the presentation layer.

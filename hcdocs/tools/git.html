@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #52f;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.5rem;
+        }
+
+        pre {
+          display: block;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #eee;
+          border-radius: 0.8rem;
+        }
+
+        code {
+          background-color: #e3f3ff;
+          color: #031;
+          font-size: 115%;
+          padding: 0.2rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+          font-size: 115%;
+        }
+
+        </style>
+    </head>
+    <body>
+      <p>
+        <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
+        <a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
+      </p>
+
+
+    <h3><a href="../index.html">home</a>/<a href="index.html">tools</a></h3>
+    
+<h1>Git</h1>
+
+<!--
+
+     <h3>Template</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td></td>
+    <td class="hc-monospace">git </td>
+  </tr>
+</table>
+
+-->
+
+<h3>Adding files</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td>Add all files</td>
+    <td class="hc-monospace">git add -A</td>
+  </tr>
+</table>
+
+
+<h3>Before committing</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td>Check what has changed</td>
+    <td class="hc-monospace">git status<br>git diff</td>
+  </tr>
+</table>
+
+<h3>After committing</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td>Check what has been staged</td>
+    <td class="hc-monospace">git diff --staged</td>
+  </tr>
+</table>
+
+<h3>Committing</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td>Bypass checks</td>
+    <td class="hc-monospace">git commit --no-verify -m "commit message"</td>
+  </tr>
+</table>
+
+<h3>Pushing for the first time</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td>Set upstream branch<br>(links the local branch to the remote branch,<br>so future commands' arguments are no longer required.)</td>
+    <td class="hc-monospace">git push -u origin main</td>
+  </tr>
+</table>
+
+<h3>Viewing changes</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td>in all commits (patch)</td>
+    <td class="hc-monospace">git log -p</td>
+  </tr>
+  <tr>
+    <td>in a single file</td>
+    <td class="hc-monospace">git log -p -- filename</td>
+  </tr>
+  <tr>
+    <td>in a conflict resolution</td>
+    <td class="hc-monospace">git log -p -c -- filename</td>
+  </tr>
+  <tr>
+    <td>in the last commit</td>
+    <td class="hc-monospace">git log -p -1</td>
+  </tr>
+  <tr>
+    <td>in a specific commit<br>(pass the first few characters of the hash)</td>
+    <td class="hc-monospace">git show 2ef3abc</td>
+  </tr>
+  <tr>
+    <td>show in one line whether a file<br>was added or modified</td>
+    <td class="hc-monospace">git log --raw</td>
+  </tr>
+  <tr>
+    <td>show filenames only</td>
+    <td class="hc-monospace">git log --name-only</td>
+  </tr>
+  <tr>
+    <td>show a graph</td>
+    <td class="hc-monospace">git log --all --decorate --oneline --graph</td>
+  </tr>
+  <tr>
+    <td>View history of a portion of a file</td>
+    <td class="hc-monospace">git log -L 1,99:file.txt</td>
+  </tr>
+</table>
+
+<h3>Branches</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td>Pull is fetch and merge</td>
+    <td class="hc-monospace">git pull</td>
+  </tr>
+  <tr>
+    <td>New branch</td>
+    <td class="hc-monospace">git checkout -b new_feature</td>
+  </tr>
+  <tr>
+    <td>List branches</td>
+    <td class="hc-monospace">git branch -a</td>
+  </tr>
+  <tr>
+    <td>Compare branches</td>
+    <td class="hc-monospace">git diff branch_a..branch_b</td>
+  </tr>
+  <tr>
+    <td>Compare file status between branches</td>
+    <td class="hc-monospace">git diff --name-status branch_a..branch_b</td>
+  </tr>
+  <tr>
+    <td>Compare file between branches</td>
+    <td class="hc-monospace">git diff branch_a..branch_b -- my_file.txt</td>
+  </tr>
+  <tr>
+    <td>Compare current branch with main</td>
+    <td class="hc-monospace">git diff main</td>
+  </tr>
+  <tr>
+    <td>Prevent copying the whole repo after branching</td>
+    <td class="hc-monospace">git fetch origin main</td>
+  </tr>
+  <tr>
+    <td>Delete local branch</td>
+    <td class="hc-monospace">git branch --delete my_branch</td>
+  </tr>
+  <tr>
+    <td>Force deletion of local branch</td>
+    <td class="hc-monospace">git branch -D my_branch</td>
+  </tr>
+  <tr>
+    <td>Delete remote branch</td>
+    <td class="hc-monospace">git push origin --delete my_branch</td>
+  </tr>
+  <tr>
+    <td>Rename local branch</td>
+    <td class="hc-monospace">git branch -m new_name</td>
+  </tr>
+  <tr>
+    <td>Reset main to be the same as remote</td>
+    <td class="hc-monospace">git reset --hard origin/main</td>
+  </tr>
+  <tr>
+    <td>Make a local copy of a remote branch</td>
+    <td class="hc-monospace">git fetch --all<br>git checkout branch_name</td>
+  </tr>
+  <tr>
+    <td>To copy a file from another branch<br>(merge single file)</td>
+    <td class="hc-monospace">git checkout other_branch my_file.txt</td>
+  </tr>
+  <tr>
+    <td>Clean up local view of branches that<br>have been deleted remotely</td>
+    <td class="hc-monospace">git fetch -p</td>
+  </tr>
+  <tr>
+    <td>Remove references to deleted remote branches</td>
+    <td class="hc-monospace">git remote update origin --prune</td>
+  </tr>
+  <tr>
+    <td>Check if dev branch has been merged into main<br>(should print nothing)</td>
+    <td class="hc-monospace">git log main..dev</td>
+  </tr>
+
+</table>
+
+<p>
+  You cannot rename a remote branch. Push the new branch, then delete the old one.
+</p>
+
+<h3>Commits</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td>Show commit log and hashes (short)</td>
+    <td class="hc-monospace">git log --oneline</td>
+  </tr>
+  <tr>
+    <td>Show commits with timestamps</td>
+    <td class="hc-monospace">git log --pretty=format:"%h%x09%as%x09%s"</td>
+  </tr>
+  <tr>
+    <td>Go back to a previous commit</td>
+    <td class="hc-monospace">git checkout f5c0d32</td>
+  </tr>
+  <tr>
+    <td>To go to the latest commit</td>
+    <td class="hc-monospace">git checkout -</td>
+  </tr>
+  <tr>
+    <td>Revert non-committed changes</td>
+    <td class="hc-monospace">git restore my_files</td>
+  </tr>
+  <tr>
+    <td>Revert all files</td>
+    <td class="hc-monospace">git restore .</td>
+  </tr>
+  <tr>
+    <td>Unstage a file</td>
+    <td class="hc-monospace">git restore --staged my_file</td>
+  </tr>
+  <tr>
+    <td>Revert latest commit</td>
+    <td class="hc-monospace">git revert [hash of commit to undo]</td>
+  </tr>
+  <tr>
+    <td>Reset to a given commit<br>Do not use if others have pulled your code</td>
+    <td class="hc-monospace">git reset --hard [hash of previous commit]<br>git push -f origin [branch_name]</td>
+  </tr>
+  <tr>
+    <td>Restore many files that were<br>deleted and staged but not committed</td>
+    <td class="hc-monospace">git reset HEAD .<br>git checkout .</td>
+  </tr>
+</table>
+
+<h3>Stashing</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td>Stash with a name</td>
+    <td class="hc-monospace">git stash push -m "name of stash"</td>
+  </tr>
+  <tr>
+    <td>Show stashes</td>
+    <td class="hc-monospace">git stash list</td>
+  </tr>
+  <tr>
+    <td>Apply</td>
+    <td class="hc-monospace">git stash apply 3</td>
+  </tr>
+  <tr>
+    <td>Pop</td>
+    <td class="hc-monospace">git stash pop 3</td>
+  </tr>
+</table>
+
+<h3>Authentication</h3>
+
+<table style="border-spacing: 1.2rem;">
+  <tr>
+    <td>Save credentials in a cache for 8 hours</td>
+    <td class="hc-monospace">git config --global credential.helper 'cache --timeout=28800'</td>
+  </tr>
+  <tr>
+    <td>Clear credentials</td>
+    <td class="hc-monospace">git credential-cache exit</td>
+  </tr>
+</table>
+
+<br>
+<hr>
+<a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+<a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
+<a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
+    </body>
+</html>
+
