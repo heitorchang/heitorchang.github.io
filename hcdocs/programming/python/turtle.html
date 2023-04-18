@@ -62,16 +62,81 @@
       </p>
 
 
-    <h3><a href="../../../index.html">home</a>/<a href="../../index.html">programming</a>/<a href="../index.html">book-notes</a>/<a href="index.html">csharp11_dotnet_mark_price</a></h3>
+    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">python</a></h3>
     
-<h1>C# Console Apps</h1>
+<h1>Python Turtle</h1>
 
 <p>
-  To create a new CLI app, make sure you are in the right folder and run:
+  Tested in Windows 11
+</p>
+
+<h3>
+  Initializing
+</h3>
+
+<p>
+  In a REPL, type:
 </p>
 
 <pre>
-dotnet new console
+import turtle
+turtle.getscreen()
+t = turtle.Turtle()
+</pre>
+
+<h3>
+  Resetting
+</h3>
+
+<pre>
+t.reset()
+</pre>
+
+<h3>
+  Moving
+</h3>
+
+<pre>
+t.up() # raise pen (nothing gets drawn while moving)
+t.down() # lower pen (turtle movement draws a line)
+
+t.home() # return to (0, 0)
+t.goto(x, y)
+</pre>
+
+<h3>
+  Drawing
+</h3>
+
+<pre>
+t.color(color_name)
+t.color(r, g, b)
+t.color(pen_color, fill_color)
+t.color((r1, g1, b1), (r2, g2, b2))
+
+t.dot(n)
+t.circle(r)
+
+t.forward(n)
+t.fd(n)
+
+t.backward(n)
+t.back(n)
+t.bk(n)
+
+t.left(deg)
+t.lt(deg)
+
+t.right(deg)
+t.rt(deg)
+</pre>
+
+<h3>
+  Writing strings
+</h3>
+
+<pre>
+t.write(s, move=False, align='left, font=('Arial', size, 'normal'))
 </pre>
 
 <br>

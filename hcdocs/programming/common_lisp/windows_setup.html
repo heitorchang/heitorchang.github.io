@@ -62,16 +62,22 @@
       </p>
 
 
-    <h3><a href="../../../index.html">home</a>/<a href="../../index.html">programming</a>/<a href="../index.html">book-notes</a>/<a href="index.html">csharp11_dotnet_mark_price</a></h3>
+    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">common_lisp</a></h3>
     
-<h1>C# Console Apps</h1>
+<h1>Common Lisp setup for Windows</h1>
 
 <p>
-  To create a new CLI app, make sure you are in the right folder and run:
+  Out of the free mainstream implementations, only SBCL worked.
+</p>
+
+<h3>SBCL setup</h3>
+
+<p>
+  Save in <code>c:/Users/USERNAME/.sbclrc</code>
 </p>
 
 <pre>
-dotnet new console
+(declaim (optimize (debug 3) (safety 3) (space 0) (speed 0)))
 </pre>
 
 <br>

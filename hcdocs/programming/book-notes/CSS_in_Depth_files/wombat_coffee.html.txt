@@ -1,0 +1,22 @@
+<!doctype html>
+<head>
+  <link href="wombat_styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <header class="page-header">
+    <h1 id="page-title" class="title">Wombat Coffee Roasters</h1>
+    <nav>
+      <ul id="main-nav" class="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/coffees">Coffees</a></li>
+        <li><a href="/brewers">Brewers</a></li>
+        <li><a href="/specials" class="featured">Specials</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <p>
+      Check out our <a href="/specials" class="featured">specials</a>
+    </p>
+  </main>
+</body>

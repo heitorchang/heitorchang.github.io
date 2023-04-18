@@ -1,0 +1,55 @@
+:root {
+    font-size: 0.75em;
+}
+
+@media (min-width: 800px) {
+    :root {
+        font-size: 0.875em;
+    }
+}
+
+@media (min-width: 1200px) {
+    :root {
+        font-size: 1em;
+    }
+}
+
+h1 {
+    color: #2f4f4f;
+    margin-bottom: 10px;
+}
+
+.nav {
+    margin-top: 10px;
+    list-style: none;
+    padding-left: 0;
+}
+
+.nav li {
+    display: inline-block;
+}
+
+.nav a {
+    color: white;
+    background-color: #13a4a4;
+    padding: 5px;
+    border-radius: 2px;
+    text-decoration: none;
+}
+
+.nav .featured {
+    background-color: orange;
+}
+
+.panel {
+    padding: 1em;
+    border-radius: 0.5em;
+    border: 1px solid #999;
+}
+
+.panel > h2 {
+    margin-top: 0;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
