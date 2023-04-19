@@ -55,11 +55,11 @@
         </style>
     </head>
     <body>
-      <p>
+      <div style="position: fixed; top: 0; padding-bottom: 0.5em; background-color: #fff;">
         <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
         <a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
         <a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
-      </p>
+      </div>
 
 
     <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">book-notes</a></h3>
@@ -530,6 +530,100 @@ rootElement.style.setProperty('--main-bg', '#cde');
 </pre>
 
 <h2 id="ch3">3 Mastering the box model</h2>
+
+<p>
+  The target webpage should look like this:
+</p>
+
+<img src="CSS_in_Depth_files/franklin_running_target.png" alt="franklin">
+
+<iframe width="800" height="400" src="CSS_in_Depth_files/franklin_running_club.html.txt"></iframe>
+
+<p>
+  The default behavior of the box model is that the width and height values you define apply to the content. Then, the border and margins are added to the width and height.
+</p>
+
+<p>
+  For example, you might define a width of 300 px, a padding of 10 px and a 1 px border. The total rendered width is 322 px (padding and border apply to the left and right).
+</p>
+
+<p>
+  Avoid <em>magic numbers</em> such as 26% because they are unreliable. It may not work on different viewports.
+</p>
+
+<p>
+  Using <code>calc()</code> is an improvement, but there is still a better way.
+</p>
+
+<h3>3.1.2 Adjusting the box model</h3>
+
+<p>
+  The <code>box-sizing</code> property has a default value of <code>content-box</code>.
+</p>
+
+<p>
+  Setting <code>box-sizing</code> to <code>border-box</code> will change the rendering behavior so that the width and height values set will be the combined size of the contend, padding, and border.
+</p>
+
+<h3>3.1.3 Using universal border-box sizing</h3>
+
+<p>
+  To use the same box-sizing everywhere, use the following:
+</p>
+
+<pre>
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+</pre>
+
+<p>
+  If this setup conflicts with third-party CSS rulesets, use:
+</p>
+
+<pre>
+:root {
+  box-sizing: border-box;
+}
+
+*,
+::before,
+::after {
+  box-sizing: inherit;
+}
+
+.third-party-component {
+  box-sizing: content-box;
+}
+</pre>
+
+<h3>3.1.4 Adding a gutter between columns</h3>
+
+<p>
+  <code>calc()</code> is a good way to remove some space of an object and allow that free space to be used in another way. Also, units may be mixed.
+</p>
+
+<pre>
+  ...
+  width: calc(30% - 1.5em);
+  margin-left: 1.5em;
+</pre>
+
+<h3>3.2 Difficulties with element height</h3>
+
+<p>
+  Typically, it's best to avoid setting explicit heights on elements. Normal document flow is designed to work with a constrained width, but an unlimited height.
+</p>
+
+<p>
+  Inline elements flow along with the text of the page, from left to right, while block-level elements fall on individual lines, with a line break above and below.
+</p>
+
+<h3>3.2.1 Controlling overflow behavior</h3>
+
+<strong>PAUSE p. 64</strong>
 
 <br>
 <hr>

@@ -1,0 +1,25 @@
+body {
+    background-color: #eee;
+    font-family: sans-serif;
+}
+
+header {
+    color: #fff;
+    background-color: #0072b0;
+    border-radius: 0.5em;
+}
+
+main {
+    display: block;
+}
+
+.main {
+    background-color: #fff;
+    border-radius: 0.5em;
+}
+
+.sidebar {
+    padding: 1.5em;
+    background-color: #fff;
+    border-radius: 0.5em;
+}
