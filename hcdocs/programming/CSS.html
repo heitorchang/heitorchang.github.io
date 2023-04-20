@@ -65,10 +65,54 @@
       <div id="top">&nbsp;</div>
 
 
-    <h3><a href="../../../index.html">home</a>/<a href="../../index.html">programming</a>/<a href="../index.html">scheme</a>/<a href="index.html">scheme-files</a></h3>
+    <h3><a href="../index.html">home</a>/<a href="index.html">programming</a></h3>
     
-<a class="index" href="iteration-nested.txt" target="_blank">&#x1F4C3; iteration-nested.txt</a><br>
-<a class="index" href="iteration-tail-recursive.txt" target="_blank">&#x1F4C3; iteration-tail-recursive.txt</a><br>
+<h1>CSS Notes</h1>
+
+<p>
+  A problem I was having while designing this site (hcdocs) was the border of <code>pre</code> blocks. The simple way creates a border that moves with the viewport size.
+</p>
+
+<p>
+  Two solutions were found with the use of ChatGPT:
+</p>
+
+<p>
+  First, setting <code>display: inline-block;</code> makes the border follow the length of the longest line inside the <code>pre</code>.
+</p>
+
+<pre>
+pre {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  background-color: #eee;
+  border-radius: 0.8rem;
+  overflow: visible;
+  min-width: calc(100% - 2rem);
+}
+</pre>
+
+<p>
+  A cleaner solution is to use a horizontal scrollbar with <code>overflow: auto;</code>. (The surrounding text won't scroll when you want to read the block's content).
+</p>
+
+<pre>
+pre {
+  display: block;
+  box-sizing: border-box;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  background-color: #eee;
+  border-radius: 0.8rem;
+  overflow: auto;
+  min-width: calc(100% - 2rem);
+}
+</pre>
+
 <br>
 <hr>
 <div style="padding-left: 0.5em; background-color: #fff;">
