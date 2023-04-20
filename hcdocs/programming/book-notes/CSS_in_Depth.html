@@ -29,7 +29,7 @@
         }
 
         li {
-          margin-bottom: 0.5rem;
+          margin: 0.25rem 0;
         }
 
         pre {
@@ -58,9 +58,9 @@
     <body>
       <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
         <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
-        <a href="#top">&#x1F53C; Top</a>&nbsp;&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
         <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
-        <a href="../index.html">&#x1F51D; Parent</a>&nbsp;&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; Parent dir</a>&nbsp;&nbsp;&nbsp;
       </div>
       <div id="top">&nbsp;</div>
 
@@ -73,6 +73,7 @@
   <li><a href="#ch1">Ch. 1 Reviewing the fundamentals</a></li>
   <li><a href="#ch2">Ch. 2 Working with relative units</a></li>
   <li><a href="#ch3">Ch. 3 Mastering the box model</a></li>
+  <li><a href="#ch4">Ch. 4 Making sense of floats</a></li>
 </ul>
 
 <h2 id="ch1">1 Cascade, specificity, and inheritance</h2>
@@ -118,11 +119,11 @@ h1 {
 <h4>Terminology</h4>
 
 <p>
-  <em>Declaration</em>: a <em>property</em> and a <em>value</em>
+  <em>Declaration:</em> a <em>property</em> and a <em>value</em>
 </p>
 
 <p>
-  <strong>Example</strong>: <code>color: black;</code>
+  <strong>Example:</strong> <code>color: black;</code>
 </p>
 
 <p>
@@ -253,7 +254,7 @@ body {
 </p>
 
 <p>
-  <strong>Note</strong>: Not all properties are inherited. Primarily, text properties are inherited.
+  <strong>Note:</strong> Not all properties are inherited. Primarily, text properties are inherited.
 </p>
 
 <p>
@@ -299,11 +300,11 @@ a:link {
 </p>
 
 <p>
-  <strong>Note</strong>: setting <code>width: auto;</code> resets the width because <code>auto</code> is its default (initial) value. However, <code>auto</code> isn't the default value for all properties, nor is it valid for some properties.
+  <strong>Note:</strong> setting <code>width: auto;</code> resets the width because <code>auto</code> is its default (initial) value. However, <code>auto</code> isn't the default value for all properties, nor is it valid for some properties.
 </p>
 
 <p>
-  <strong>Warning</strong>: shorthand properties (such as <code>font</code>, <code>border</code>, and <code>background</code>) will silently set omitted values to their initial values. This behavior can override styles you specified elsewhere.
+  <strong>Warning:</strong> shorthand properties (such as <code>font</code>, <code>border</code>, and <code>background</code>) will silently set omitted values to their initial values. This behavior can override styles you specified elsewhere.
 </p>
 
 <h3>1.4.2 Understanding the order of shorthand values</h3>
@@ -371,7 +372,7 @@ a:link {
 </p>
 
 <p>
-  <strong>Tip</strong>: When in doubt, use rems for font size, pixels for borders, and ems for everything else.
+  <strong>Tip:</strong> When in doubt, use rems for font size, pixels for borders, and ems for everything else.
 </p>
 
 <h3>Setting a sane default font size</h3>
@@ -626,15 +627,197 @@ rootElement.style.setProperty('--main-bg', '#cde');
 
 <h3>3.2.1 Controlling overflow behavior</h3>
 
-<strong>PAUSE p. 64</strong>
+<p>The <code>overflow</code> property supports four values:</p>
+
+<ul>
+  <li><code>visible</code> (default): everything is visible, even when it overflows the container's edges</li>
+  <li><code>hidden</code>: content that overflows the padding edge is clipped</li>
+  <li><code>scroll</code>: scrollbars are added, even when there's no overflow, in which case, they will be disabled (grayed)</li>
+  <li><code>auto</code>: scrollbars are added only if the content overflows</li>
+</ul>
+
+<p>
+  When control is needed horizontally or vertically, set the <code>overflow-x</code> and <code>overflow-y</code> properties.
+</p>
+
+<h3>3.2.2 Applying alternatives to percentage-based heights</h3>
+
+<p>
+  The height of containers is typically determined by the height of its children, leading to a circular definition (percentages refers to the size of an element's containing block).
+</p>
+
+<p>
+  Instead of writing the ineffective <code>height: 100%;</code> rule, a height of <code>100vh</code> can be used.
+</p>
+
+<h4>Columns of equal height</h4>
+
+<p>
+  There are two ways of accomplishing this: a table layout and a flexbox.
+</p>
+
+<h4> CSS table layouts</h4>
+
+<p>
+  First, make the container a <code>display: table;</code> and each column <code>display: table-cell;</code>
+</p>
+
+<p>
+  <strong>Note:</strong> margins do not work with tables. A <code>border-spacing</code> must be defined, plus a wrapper with negative margins to cancel out the outer border-spacing. Note that the x, y order is reversed in border-spacing.
+</p>
+
+<pre>
+.wrapper {
+  margin: 0 -1.5em;
+}
+
+.container {
+  display: table;
+  width: 100%;
+  border-spacing: 1.5em 0;
+}
+
+.main {
+  display: table-cell;
+  width: 70%;
+}
+
+.sidebar {
+  display: table-cell;
+  width: 30%;
+}
+</pre>
+
+<p>
+  Negative margins pull the edges out.
+</p>
+
+<h4>Flexbox</h4>
+
+<p>
+  By default, flexbox produces elements of equal height.
+</p>
+
+<pre>
+.container {
+  display: flex;
+}
+
+.main {
+  width: 70%;
+}
+
+.sidebar {
+  width: 30%;
+  padding: 1.5em;
+  margin-left: 1.5em;
+}
+</pre>
+
+<h3>3.2.3 Using min-height and max-height</h3>
+
+<p>
+  Instead of explicitly defining a height, specify the minimum and maximum bounds.
+</p>
+
+<h3>3.2.4 Vertically centering content</h3>
+
+<p>
+  <code>vertical-align</code> only affects inline and table-cell elements. Within a cell, <code>vertical-align</code> controls the alignment of the contents within the cell.
+</p>
+
+<p>
+  Adding top and bottom padding is one way of vertically centering content.
+</p>
+
+<p>
+  For a container of a specific height, use <code>display: table-cell;</code> and <code>vertical-align: middle;</code>
+</p>
+
+<p>
+  For a single line of text, you can set a large line-height.
+</p>
+
+<h3>3.3 Negative margins</h3>
+
+<p>
+  For negative left and top margins, the entire element is pulled leftward or upward.
+</p>
+
+<p>
+  For negative right or bottom margins, the succeeding elements are pulled leftward or upward.
+</p>
+
+<p>
+  <strong>Warning:</strong> Elements that overlap because of negative margins may become unclickable.
+</p>
+
+<h3>3.4 Collapsed margins</h3>
+
+<p>
+  Adjoining margins will overlap, combining to form a single margin. The size of the collapsed margin is equal to the largest of the joined margins. More than two margins may collapse.
+</p>
+
+<p>
+  Only top and bottom margins collapse. Horizontal ones do not.
+</p>
+
+<p>
+  Margins of flexbox items don't collapse.
+</p>
+
+<p>
+  Padding may also be used instead of margins.
+</p>
+
+<p>
+  Applying <code>overflow: auto;</code> (or anything other than <code>visible</code>) prevents margins inside the container from collapsing with those outside the container.
+</p>
+
+<p>
+  <code>table-cell</code> elements don't have a margin.
+</p>
+
+<h3>3.5 Spacing elements within a container</h3>
+
+<p>
+  The adjacent sibling combinator (<code>+</code>) will target only elements that immediately follow other elements as siblings.
+</p>
+
+<pre>
+.button-link {
+  display: block;
+  padding: 0.5em;
+}
+
+.button-link + .button-link {
+  margin-top: 1.5em;
+}
+</pre>
+
+<p>
+  A more general solution is <code>* + *</code>, that targets any element that follows any other element.
+</p>
+
+<pre>
+body * + * {
+  margin-top: 1.5em;
+}
+</pre>
+
+<p>
+  Some elements might have to override this global setting with <code>margin-top: 0;</code>
+</p>
+
+<h2 id="ch4">4 Making sense of floats</h2>
 
 <br>
 <hr>
 <div style="padding-left: 0.5em; background-color: #fff;">
   <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
-  <a href="#top">&#x1F53C; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
   <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
-  <a href="../index.html">&#x1F51D; Parent</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Parent dir</a>&nbsp;&nbsp;&nbsp;
 </div>
 <br><br><br>
     </body>
