@@ -79,6 +79,10 @@
   <li><a href="#ch2">Ch. 2 Working with relative units</a></li>
   <li><a href="#ch3">Ch. 3 Mastering the box model</a></li>
   <li><a href="#ch4">Ch. 4 Making sense of floats</a></li>
+  <li><a href="#ch5">Ch. 5 Flexbox</a></li>
+  <li><a href="#ch6">Ch. 6 Grid layout</a></li>
+  <li><a href="#ch7">Ch. 7 Positioning and stacking contexts</a></li>
+  <li><a href="#ch8">Ch. 8 Responsive design</a></li>
 </ul>
 
 <h2 id="ch1">1 Cascade, specificity, and inheritance</h2>
@@ -815,6 +819,169 @@ body * + * {
 </p>
 
 <h2 id="ch4">4 Making sense of floats</h2>
+
+<h3>4.1 The purpose of floats</h3>
+
+<p>
+  A <em>float</em> pulls an element (often an image) to one side of its container, allowing the document flow to wrap around it.
+</p>
+
+<p>
+  Floating multiple elements in the same direction causes them to stack alongside one another.
+</p>
+
+<p>
+  The <em>double container pattern</em> places content inside two nested containers, then sets margins on the inner container to position it within the outer one.
+</p>
+
+<p>
+  <code>&lt;body&gt;</code> can serve as the outer container.
+</p>
+
+<p>
+  Using <code>clear</code> to a <code>float</code> causes the container to expand to the bottom of the floats.
+</p>
+
+<p>
+  <em>Pseudo-elements</em> begin with a double colon (<code>::</code>). The most common pseudo-elements are <code>::before</code> and <code>::after</code>
+</p>
+
+<p>
+  A <em>clearfix</em> is an approach to solve the problem of containing floats.
+</p>
+
+<pre>
+.clearfix::after {
+  display: block;
+  content: " ";
+  clear: both;
+}
+</pre>
+
+<p>
+  Another version of <em>clearfix</em> contains all margins.
+</p>
+
+<pre>
+.clearfix::before,
+.clearfix::after {
+  display: table;
+  content: " ";
+}
+
+.clearfix::after {
+  clear: both;
+}
+</pre>
+
+<p>
+  A <em>block formatting context</em> (BFC) is a region of the page where elements are laid out, and isolates its contents from the outside context. Contents inside a BFC will not overlap or interact with elements on the outside.
+</p>
+
+<p>
+  Applying any of the following triggers a BFC:
+</p>
+
+<ul>
+  <li><code>float: left</code> or <code>right</code> (anything but <code>none</code>)</li>
+  <li><code>overflow: hidden, auto,</code> or <code>scroll</code> (anything but <code>visible</code>)</li>
+  <li><code>display:</code> (any of the following <em>block containers</em>):
+    <ul>
+      <li><code>inline-block</code></li>
+      <li><code>table-cell</code></li>
+      <li><code>table-caption</code></li>
+      <li><code>flex</code></li>
+      <li><code>inline-flex</code></li>
+      <li><code>grid</code></li>
+      <li><code>inline-grid</code></li>
+    </ul>
+  </li>
+  <li><code>position: absolute</code> or <code>fixed</code></li>
+</ul>
+
+<p>
+  A block formatting context should have <code>overflow</code> set to <code>hidden</code> or <code>auto</code>. Often, <code>auto</code> is the simplest approach.
+</p>
+
+<p>
+  A <em>CSS framework</em> is a library of prebuilt CSS code that provides styles for common patterns.
+</p>
+
+<p>
+  <code>[class*="column-"] { ... }</code> is an <em>attribute selector</em> targeting elements based on their <code>class</code> attribute. It is used in the custom column grid CSS code in section 4.5.2, Building a grid system.
+</p>
+
+<h2 id="ch5">5 Flexbox</h2>
+
+<h3>5.1 Flexbox principles</h3>
+
+<p>
+  Applying <code>display: flex;</code> to an element turns it into a <em>flex container</em>, and its direct children turn into <em>flex items</em>.
+</p>
+
+<p>
+  By default, flex items align side by side, left to right, all in one row.
+</p>
+
+<p>
+  While the flex container fills all available width (like a block element), the flex items do not necessarily fill all the way to the end.
+</p>
+
+<p>
+  Flex items are all the same height.
+</p>
+
+<p>
+  <code>display: inline-flex;</code> behaves like an inline-block element.
+</p>
+
+<p>
+  Flex items are placed along a line called the <em>main axis</em>. Perpendicular to it is the <em>cross axis</em>. Its endpoints are called <em>main-start, main-end, cross-start, cross-end</em>.
+</p>
+
+<h3>5.2 Flex item sizes</h3>
+
+<p>
+  The <code>flex</code> property controls the size of the flex items along the main axis.
+</p>
+
+<p>
+  <code>flex</code> is shorthand for three different sizing properties:
+</p>
+
+<ul>
+  <li><code>flex-grow</code>: determines how space will be consumed by the flex items. Must be a non-negative integer. If an item has a flex-grow of 0, it won't grow past its flex basis. Higher values have more "weight". (default: <code>1</code>)</li>
+  <li><code>flex-shrink</code>: determines whether a flez item should shrink to prevent overflow. If flex-shrink is 0, it will not shrink. (default: <code>1</code>)</li>
+  <li><code>flex-basis</code>: an initial "main size" for each flex item (default: <code>0%</code> or <code>auto</code>)</li>
+</ul>
+
+<p>
+  <strong>Tip:</strong> prefer using the <code>flex</code> shorthand instead of defining the three individual properties. The default values are generally useful.
+</p>
+
+<p>
+  <strong>Example:</strong> The "Holy Grail" layout has two sidebars with fixed width, and a center column that is "fluid" (grows to fill the available space)
+</p>
+
+<pre>
+[ flex: 0 0 200px ] [ flex: 1    ] [ flex: 0 0 200px ]
+</pre>
+
+<p>
+  <strong>Skipped:</strong> 5.3 (p. 130) to end of chapter
+</p>
+
+<h2 id="ch6">6 Grid layout</h2>
+
+<p>
+  <strong>Skipped</strong>
+</p>
+
+<h2 id="ch7">7 Positioning and stacking contexts</h2>
+
+<p>
+  The <code>position</code> property is often used for building dropdown menus, modal dialogs, and other commonly used effects.
+</p>
 
 </div>
 <br>
