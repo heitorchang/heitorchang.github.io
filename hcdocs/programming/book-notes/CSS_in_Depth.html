@@ -82,7 +82,6 @@
   <li><a href="#ch5">Ch. 5 Flexbox</a></li>
   <li><a href="#ch6">Ch. 6 Grid layout</a></li>
   <li><a href="#ch7">Ch. 7 Positioning and stacking contexts</a></li>
-  <li><a href="#ch8">Ch. 8 Responsive design</a></li>
 </ul>
 
 <h2 id="ch1">1 Cascade, specificity, and inheritance</h2>
@@ -974,7 +973,139 @@ body * + * {
 <h2 id="ch6">6 Grid layout</h2>
 
 <p>
-  <strong>Skipped</strong>
+  The CSS grid lets you define a two-dimensional layout of columns and rows and then place elements within this grid.
+</p>
+
+<h3>6.1.1 Building a basic grid</h3>
+
+<p>
+  The objective of this section is to create this kind of grid:
+</p>
+
+<pre>
+[ a   ] [ b   ] [ c   ]
+[ d   ] [ e   ] [ f   ]
+</pre>
+
+<iframe style="width: 100%; height: 50vh;" src="CSS_in_Depth_files/grid_6_items_6_1.html.txt"></iframe>
+
+<p>
+  The HTML above is rendered as:
+</p>
+
+<iframe style="width: 100%; height: 14em;" src="CSS_in_Depth_files/raw/grid_6_items_6_1.html"></iframe>
+
+<p>
+  An element with <code>display: grid;</code> becomes a <em>grid container</em>. Its child elements become <em>grid items</em>.
+</p>
+
+<p>
+  The container behaves like a block display element, taking up all 100% of the available width. It is also possible to use the value <code>inline-grid</code>.
+</p>
+
+<p>
+  The <code>fr</code> unit stands for <em>fraction unit</em>. It behaves like the factor in <code>flex-grow</code>.
+</p>
+
+<p>
+  The declaration <code>grid-template-columns: 1fr 1fr 1fr;</code> creates three columns with an equal size. Other units may be used, such as <code>px, em, 50%</code>.
+</p>
+
+<p>
+  <code>grid-gap</code> defines the amount of space to add to the gutter between each grid cell. Using two values specifies the vertical and horizontal spacing (for example, <code>grid-gap: 0.5em 1em</code>).
+</p>
+
+<h3>6.2 Anatomy of a grid</h3>
+
+<p>
+  The most important elements of a grid are:
+</p>
+
+<ul>
+  <li><em>Grid line:</em> makes up the structure of the grid. It may be vertical or horizontal and lie on either side of a row or a column. The grid gap lies atop the grid lines.</li>
+  <li><em>Grid track:</em> the space between two adjacent grid lines. Horizontal tracks are rows and vertical tracks are columns.</li>
+  <li><em>Grid cell:</em> a single space on the grid, where a horizontal grid track and vertical grid track overlap.</li>
+  <li><em>Grid area:</em> a rectangular area on the grid made up by one or more grid cells. Such an area is between two vertical grid lines and two horizontal grid lines.</li>
+</ul>
+
+<p>
+  <img src="CSS_in_Depth_files/parts_of_a_grid.png" alt="parts of a grid">
+</p>
+
+<p>
+  Declaring <code>grid-template-columns: 1fr 1fr 1fr;</code> defines three vertical grid tracks of equal width. At the same time, four grid lines are defined (the two edges and two between each grid track).
+</p>
+
+<p>
+  The <code>repeat(n, value)</code> function serves to copy the <em>value</em> <em>n</em> times. For example, <code>repeat(4, auto)</code> is the same as <code>auto auto auto auto</code>.
+</p>
+
+<h3>6.2.1 Numbering grid lines</h3>
+
+<p>
+  The browser assigns numbers to each grid line as follows:
+</p>
+
+<p>
+  <img src="CSS_in_Depth_files/fig_6_7_grid_lines.png" alt="grid lines">
+</p>
+
+<p>
+  These numbers are used to indicate where each item should be placed by setting the <code>grid-column</code> and <code>grid-row</code> properties.
+</p>
+
+<p>
+  For example, if you want a grid item to span from grid line 1 to 3, apply <code>grid-column: 1 / 3;</code> to the element.
+</p>
+
+<p>
+  <code>grid-column</code> and <code>grid-row</code> are shorthand for <code>grid-column-start</code> and <code>grid-column-end</code>. The forward slash is needed in the shorthand version. The spaces before and after the slash are optional.
+</p>
+
+<p>
+  The keyword <code>span</code> defines how many grid tracks to span (for example, <code>grid-row: span 1;</code>).
+</p>
+
+<p>
+  Generally speaking, flexbox is one-dimensional, and grid is two-dimensional.
+</p>
+
+<p>
+  Flexbox works from the content out, whereas a grid works from the layout in.
+</p>
+
+<h3>6.3 Alternate syntaxes for laying out grid items</h3>
+
+<p>
+  It is possible to have named grid lines and named grid areas.
+</p>
+
+<h3>6.3.1 Naming grid lines</h3>
+
+<p>
+  When declaring grid tracks, place a name in brackets to name a grid line between any two tracks:
+</p>
+
+<pre>
+grid-template-columns: [start] 2fr [center] 1fr [end];
+
+grid-column: start / center;
+</pre>
+
+<p>
+  A grid line may have multiple names: <code>[left-end right-start] 1fr</code>
+</p>
+
+<p>
+  By naming lines with the suffixes <code>-start</code> and <code>-end</code>, an area in between them will be implicitly defined (for example, <code>grid-column: left</code> spans from <code>left-start</code> to <code>left-end</code>).
+</p>
+
+<p>
+  Names may be repeated. To refer to them, write: <code>row 3</code>.
+</p>
+
+<p>
+  <strong>Skipped: 6.3.2 (p. 160) to end of chapter.</strong>
 </p>
 
 <h2 id="ch7">7 Positioning and stacking contexts</h2>
@@ -982,6 +1113,30 @@ body * + * {
 <p>
   The <code>position</code> property is often used for building dropdown menus, modal dialogs, and other commonly used effects.
 </p>
+
+<h3>Use variables to keep track of z-indexes (p. 196)</h3>
+
+<p>
+  It's easy for a stylesheet to devolve into a z-index war. It's better to use custom properties (variables) to keep them organized:
+</p>
+
+<pre>
+--z-loading-indicator: 100;
+--z-nav-menu:          200;
+--z-dropdown-menu:     300
+--z-modal-backdrop:    400;
+--z-modal-body:        410;
+</pre>
+
+<p>
+  Use increments of 10 or 100 to leave room for new values without being forced to rewrite other values.
+</p>
+
+
+
+<pre>
+END OF FILE
+</pre>
 
 </div>
 <br>
