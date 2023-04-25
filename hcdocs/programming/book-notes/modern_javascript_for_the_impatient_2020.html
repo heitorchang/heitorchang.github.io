@@ -417,7 +417,104 @@ let second = pair[1]
   It is possible to swap the values of variables with <code>[x, y] = [y, x]</code>
 </p>
 
+<p>
+  For objects, use property names instead of array positions:
+</p>
 
+<pre>
+let harry = { name: 'Harry', age: 42}
+let { name: <strong>harrysName</strong>, age: <strong>harrysAge</strong> } = harry
+</pre>
+
+<p>
+  The code above declares <code>harrysName</code> and <code>harrysAge</code> and initializes them with the values of <code>name</code> and <code>age</code> in <code>harry</code>. The left-hand side is not an object literal. It is a pattern to show how the variables are matched with the right-hand side.
+</p>
+
+<p>
+  When the desired property has the same name as the variable, you can omit the name and colon:
+</p>
+
+<pre>
+let { name, age } = harry
+
+// is the same as
+let { name: name, age: age } = harry
+
+// or
+let name = harry.name
+let age = harry.age
+</pre>
+
+<p>
+  <strong>Warning:</strong> if object destructuring is used to set existing variables, the assignment expression must be enclosed in parentheses. Otherwise, the opening brace will be parsed as the start of a block statement:
+</p>
+
+<pre>
+({ name, age } = sally)
+</pre>
+
+<h3>1.17 Advanced Destructuring</h3>
+
+<p>
+  In object destructuring, it is possible to use nested patterns and computed names:
+</p>
+
+<pre>
+let { birthday: { year: patsBirthYear } } = pat
+let { [field.toLowerCase()]: harrysAge } = harry
+</pre>
+
+<h3>1.17.2 Rest Declarations</h3>
+
+<p>
+  When destructuring an array, you can capture any remaining elements into an array (called a <em>rest element</em>) by adding a <code>...</code> prefix to the variable name:
+</p>
+
+<pre>
+numbers = [1, 7, 2, 9]
+let [first, second, ...others] = numbers
+
+// others becomes [2, 9]
+</pre>
+
+<p>
+  If there are no elements to capture, the variable becomes an empty array.
+</p>
+
+<p>
+  For objects, the capturing object will contain all properties that were not explicitly defined.
+</p>
+
+<pre>
+let { name, ...allButName } = harry
+</pre>
+
+<h3>1.17.3 Defaults</h3>
+
+<p>
+  For each variable, a default may be provided if the desired value is not present in the right-hand object or array:
+</p>
+
+<pre>
+let [first, second = 0] = [42]
+let { nickname = 'None' } = harry
+
+// previously set values may be used
+let { name, nickname = name } = harry
+</pre>
+
+<p>
+  Default values are useful in configurations, where only a few of the available properties will be changed:
+</p>
+
+<pre>
+let config = { separator: '; ' }
+const { separator = ',', leftDelimiter = '[', rightDelimiter = ']' } = config
+</pre>
+
+<p>
+  A circular structure (for example, two people who are mutually friends) cannot be converted with <code>JSON.stringify</code>
+</p>
 
 <h2 id="ch2">2 Control Structures</h2>
 

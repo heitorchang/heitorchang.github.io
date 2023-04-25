@@ -73,6 +73,8 @@
     
 <h1>JS Tricks</h1>
 
+<h3>Finding the overflowing horizontal element</h3>
+
 <p>
   Seen on Bytes newsletter
 </p>
@@ -91,6 +93,49 @@
       console.log(el);
     }
   })
+</pre>
+
+<h3>Limiting animation to 60 fps</h3>
+
+<p>
+  <a href="https://chriscourses.com/blog/standardize-your-javascript-games-framerate-for-different-monitors" target="_blank">https://chriscourses.com/blog/standardize-your-javascript-games-framerate-for-different-monitors</a>
+</p>
+
+<pre>
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+let msPrev = window.performance.now()
+
+const fps = 60
+const msPerFrame = 1000 / fps
+
+// DEBUG: track total number of frames drawn
+let frames = 0
+
+function animate() {
+  window.requestAnimationFrame(animate)
+
+  const msNow = window.performance.now()
+  const msPassed = msNow - msPrev
+
+  if (msPassed < msPerFrame) return
+
+  // insert drawing code here
+
+  const excessTime = msPassed % msPerFrame
+  msPrev = msNow - excessTime
+
+  // DEBUG
+  frames++
+}
+
+// DEBUG: show how many frames were drawn per second
+setInterval(() => {
+  console.log(frames)
+}, 1000)
+
+animate()
 </pre>
 
 </div>
