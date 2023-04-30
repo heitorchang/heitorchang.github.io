@@ -1,0 +1,51 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>JavaScript Fundamentals</title>
+  <link rel=stylesheet href="lib/ejs-sandbox.css">
+  <script src="lib/ejs-sandbox.js"></script>
+</head>
+
+<article>
+
+  <h1>JavaScript Fundamentals</h1>
+
+<pre data-language="javascript">
+function isClose(a, b) {
+  // check if the numbers a and b are less than 0.1 apart
+  return a - b < 0.1
+}
+
+// verify the function's code
+// normally you won't modify these, but you may add your own tests
+testEquals(isClose(2, 2), true, "same value")
+testEquals(isClose(3.02, 3.06), true, "close values, 3.02 and 3.06")
+testEquals(isClose(7.5, 7), false, "distant values, 7.5 and 7")
+testEquals(isClose(7, 7.5), false, "distant values flipped, 7 and 7.5")
+
+testResults();
+</pre>
+
+<p>
+<strong>JavaScript Fundamentals</strong> is a place where you can practice writing code to solve the given tasks.
+</p>
+
+<p>
+Try clicking on the code block above, then typing Ctrl + Enter or clicking on the green Play button to execute and verify the code.
+</p>
+
+<p>Can you figure out why the last test doesn't pass? Try changing the code in the function and re-run the code to make all tests pass.
+</p>
+
+<p>If you are still stuck, <button onclick="revealSolution()">click here to show the solution</button></p>
+
+<p id="solution" style="display: none;">Replace <code>a - b</code> with <code>Math.abs(a - b)</code>. We are interested in the magnitude of the difference between a and b that is independent of the sign (+ or -).
+</p>
+
+<script>
+function revealSolution() {
+  document.getElementById("solution").style.display = "block"
+  console.log("revealed solution")
+}
+</script>
+</article>
