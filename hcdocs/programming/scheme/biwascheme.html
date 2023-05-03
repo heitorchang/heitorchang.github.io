@@ -86,7 +86,7 @@
 <ul>
   <li><code>(dom-element "#selector")</code> is equivalent to <code>document.getElementById("...")</code>.
     <ul>
-      <li>Using BiwaScheme's documented functions, it is: <code>(js-invoke (getelem "#selector") "get" 0)</code> (surely there's a better way?)</li>
+      <li>Using BiwaScheme's documented functions, it is: <code>(js-ref (getelem "#selector") 0)</code></li>
     </ul>
   </li>
   <li><code>(getelem "#selector")</code> is <code>($ "#selector")</code>.</li>
