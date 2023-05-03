@@ -1,0 +1,28 @@
+<body>
+  Canvas<br>
+  <canvas id="canvas" width="600" height="400"></canvas>
+
+  BiwaScheme console:
+  <pre id="bs-console"></pre>
+
+  <script src="biwascheme-0.8.0-min.js"></script>
+
+  <script type="text/biwascheme">
+  (define *canvas* (dom-element "#canvas"))
+  (define *ctx* (js-invoke *canvas* "getContext" "2d"))
+
+  (define (fill)
+    (js-set! *ctx* "fillStyle" "#99f"))
+
+  (define (sq x y side)
+    (js-invoke *ctx* "fillRect" x y side side))
+
+  (define (clr)
+    (js-invoke *ctx* "clearRect" 0 0 600 400))
+
+  (fill)
+  (for-each (lambda (x) (sleep 0.0033) (clr) (sq x x 30)) (iota 351 0 1))
+
+  (js-invoke *ctx* "stroke")
+  </script>
+</body>
