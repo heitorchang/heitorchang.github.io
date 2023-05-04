@@ -4,7 +4,7 @@
   REPL ( <input id="replInput" style="border: none; border-bottom: 1px dotted black"> )
   <br><br>
   <textarea id="replOutput" rows="5" cols="72"></textarea>
-  <script src="biwascheme-0.8.0-min.js"></script>
+  <script src="biwascheme-0.7.5-min.js"></script>
 
   <script type="text/biwascheme">
   (define (add-one x)

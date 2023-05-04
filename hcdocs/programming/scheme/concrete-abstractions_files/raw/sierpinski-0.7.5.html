@@ -71,33 +71,42 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">scheme</a></h3>
+    <h3><a href="../../../../index.html">home</a>/<a href="../../../index.html">programming</a>/<a href="../../index.html">scheme</a>/<a href="../index.html">concrete-abstractions_files</a>/<a href="index.html">raw</a></h3>
     
-<h1>Concrete Abstractions</h1>
+<body>
+  <canvas id="canvas" width="300" height="300">
+  </canvas>
 
-<h2>Nonstandard extensions</h2>
+  <script src="../../biwascheme_files/biwascheme-0.7.5-min.js"></script>
 
-<h3>Drawing</h3>
+  <script type="text/biwascheme">
+  (load "drawing.scm.txt")
 
-Skipped: (they are used very little)
+  (define canvas (dom-element "#canvas"))
+  (define context (js-invoke canvas "getContext" "2d"))
 
-<ul>
-  <li><code>invert</code></li>
-  <li><code>quarter-turn-right</code></li>
-  <li><code>stack</code></li>
-</ul>
+  (define (midpoint a b)
+    (/ (+ a b) 2))
 
-<h4>Geometric functions (in BiwaScheme)</h4>
+  (define (sierpinski x0 y0 x1 y1 x2 y2 level)
+    (if (= level 0)
+      (triangle context x0 y0 x1 y1 x2 y2)
+      (let ((mp1x (midpoint x0 x1))
+        (mp1y (midpoint y0 y1))
+        (mp2x (midpoint x1 x2))
+        (mp2y (midpoint y1 y2))
+        (mp3x (midpoint x0 x2))
+        (mp3y (midpoint y0 y2))
+        (next-level (- level 1)))
 
-<p>
-  <strong>Setup</strong>
-</p>
+        (sierpinski x0 y0 mp1x mp1y mp3x mp3y next-level)
+        (sierpinski x1 y1 mp1x mp1y mp2x mp2y next-level)
+        (sierpinski x2 y2 mp3x mp3y mp2x mp2y next-level))))
 
-<iframe style="width: 100%; height: 50vh;" src="concrete-abstractions_files/canvas.html.txt"></iframe>
+  (sierpinski 100 0 200 220 0 220 6)
+  </script>
 
-<p>
-  <strong>Plan:</strong> each drawing command generates an image string with <code>canvas.toDataURL("image/png")</code>. Since the only combining function is <code>overlay</code>, it does nothing (all new geometric figures are drawn in the same canvas).
-</p>
+</body>
 
 </div>
 <br>

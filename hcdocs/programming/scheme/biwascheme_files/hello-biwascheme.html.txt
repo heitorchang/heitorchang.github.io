@@ -6,7 +6,7 @@
   </head>
   <body>
     <div id="bs-console"></div>
-    <script src="biwascheme-0.8.0-min.js"></script>
+    <script src="biwascheme-0.7.5-min.js"></script>
     <script type="text/biwascheme">
     (print "Hello, world!")
     (console-log "Ok.")

@@ -1,20 +1,10 @@
-<body>
-  <canvas id="canvas" width="300" height="300">
-  </canvas>
-
-  <script src="biwascheme-0.7.5-min.js"></script>
-
-  <script type="text/biwascheme">
-  (define canvas (dom-element "#canvas"))
-  (define context (js-invoke canvas "getContext" "2d"))
-
-  (define (line x0 y0 x1 y1)
+  (define (line context x0 y0 x1 y1)
     (js-invoke context "beginPath")
     (js-invoke context "moveTo" x0 y0)
     (js-invoke context "lineTo" x1 y1)
     (js-invoke context "stroke"))
 
-  (define (triangle x0 y0 x1 y1 x2 y2)
+  (define (triangle context x0 y0 x1 y1 x2 y2)
     (js-invoke context "beginPath")
     (js-invoke context "moveTo" x0 y0)
     (js-invoke context "lineTo" x1 y1)
@@ -22,7 +12,7 @@
     (js-invoke context "lineTo" x0 y0)
     (js-invoke context "stroke"))
 
-  (define (filled-triangle x0 y0 x1 y1 x2 y2)
+  (define (filled-triangle context x0 y0 x1 y1 x2 y2)
     (js-invoke context "beginPath")
     (js-invoke context "moveTo" x0 y0)
     (js-invoke context "lineTo" x1 y1)
@@ -31,5 +21,3 @@
 
   (define (overlay image1 image2)
     '())
-  </script>
-</body>

@@ -5,7 +5,7 @@
   BiwaScheme console:
   <pre id="bs-console"></pre>
 
-  <script src="biwascheme-0.8.0-min.js"></script>
+  <script src="biwascheme-0.7.5-min.js"></script>
 
   <script type="text/biwascheme">
   (define *canvas* (dom-element "#canvas"))
