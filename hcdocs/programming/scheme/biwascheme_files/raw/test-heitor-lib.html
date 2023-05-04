@@ -71,15 +71,30 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">scheme</a></h3>
+    <h3><a href="../../../../index.html">home</a>/<a href="../../../index.html">programming</a>/<a href="../../index.html">scheme</a>/<a href="../index.html">biwascheme_files</a>/<a href="index.html">raw</a></h3>
     
-<a class="index" href="biwascheme-reference.html">&#x1F4D8; biwascheme-reference.html</a><br>
-<a class="index" href="biwascheme.html">&#x1F4D8; biwascheme.html</a><br>
-<a class="index" href="biwascheme_files/index.html">&#x1F4C1; biwascheme_files</a><br>
-<a class="index" href="concrete-abstractions.html">&#x1F4D8; concrete-abstractions.html</a><br>
-<a class="index" href="concrete-abstractions_files/index.html">&#x1F4C1; concrete-abstractions_files</a><br>
-<a class="index" href="scheme-files/index.html">&#x1F4C1; scheme-files</a><br>
-<a class="index" href="scheme.html">&#x1F4D8; scheme.html</a><br>
+<body>
+  Enter a number: <input id="numberIn"> <button id="compute">Compute</button>
+  <br>
+  The square is: <input id="numberOut">
+  <br>
+  <button id="debug">Debug (log to console)</button>
+  <script src="../biwascheme-0.8.0-custom-min.js"></script>
+  <script type="text/biwascheme">
+  (load "../heitor-lib.scm")
+
+  (define (sq x) (* x x))
+
+  (onclick "#compute"
+    (element-set-value! "#numberOut"
+      (sq (input-number "#numberIn"))))
+
+  (onclick "#debug"
+    (console-log "debug message")
+    (console-log event))
+  </script>
+</body>
+
 </div>
 <br>
 <hr>

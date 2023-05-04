@@ -79,7 +79,37 @@
   <a href="https://www.biwascheme.org/" target="_blank">Official site</a>
 </p>
 
+<h3>Reference</h3>
+
+<a href="biwascheme-reference.html">Click here</a>
+
+<h3>Usage</h3>
+
+<p>
+  <strong>Note:</strong> loading a source (with the <code>load</code> function) with Windows line endings will cause an error. Save source files in Unix mode. (Emacs: C-x RET f utf-8-unix)
+</p>
+
+<p>
+  For improved productivity, install npm and <code>live-server</code>. Then, run it in the directory where the HTML and Scheme files are located. In Windows, I have installed it in <code>C:/Users/USERNAME/node_modules/live-server/</code>.
+</p>
+
+<pre>
+# using Git Bash
+~/node_modules/live-server/live-server.js
+</pre>
+
 <h3>Notes</h3>
+
+<h4>General usage</h4>
+
+<ul>
+  <li>The empty list, printed as <code>()</code>, is the null pointer value.</li>
+  <li>null? checks a value for <code>()</code></li>
+  <li>It must be written as <code>'()</code></li>
+  <li>eq? checks if two things are the same object.</li>
+  <li>quote doesn't create a new data structure each time it's called, so structures created with quote should not be modified.</li>
+  <li>On the other hand, <code>list</code> does create new data structures.</li>
+</ul>
 
 <h4>Undocumented functions</h4>
 
@@ -92,15 +122,10 @@
   <li><code>(getelem "#selector")</code> is <code>($ "#selector")</code>.</li>
 </ul>
 
-<h4>General usage</h4>
+<h4>Custom functions</h4>
 
 <ul>
-  <li>The empty list, printed as <code>()</code>, is the null pointer value.</li>
-  <li>null? checks a value for <code>()</code></li>
-  <li>It must be written as <code>'()</code></li>
-  <li>eq? checks if two things are the same object.</li>
-  <li>quote doesn't create a new data structure each time it's called, so structures created with quote should not be modified.</li>
-  <li>On the other hand, <code>list</code> does create new data structures.</li>
+  <li><code>(element-set-value! selector value)</code> sets the value of the selected element.</li>
 </ul>
 
 <h3>REPL</h3>
@@ -122,6 +147,30 @@
 <h3>Example: Hockey</h3>
 
 <iframe style="width: 100%; height: 50vh;" src="biwascheme_files/example_hockey.scm.txt"></iframe>
+
+<h3>SICP Shims</h3>
+
+<pre>
+(define nil '())
+(define true #t)
+(define false #f)
+(define (random n)
+  (random-integer n))
+
+; https://github.com/biwascheme/biwascheme/issues/110#issuecomment-335869546
+(define (date2runtime date)
+  ; HACK
+  ; wraps around occasionally!
+  (+
+     (* (date-hour date) 60 60 1000)
+     (* (date-minute date) 60 1000)
+     (* (date-second date) 1000)
+     (date-millisecond date)
+  )
+)
+
+(define (runtime) (date2runtime (current-date)))
+</pre>
 
 </div>
 <br>
