@@ -77,6 +77,8 @@
   REPL Input: Type Shift + Enter to eval, Ctrl + Up/Down for history
   <br><textarea id="replInput" rows="8" cols="72" autofocus></textarea>
   <br><br>
+  Error msg: <input id="error" size="64">
+  <br><br>
   Console: <code>(clog msg)</code> adds msg
   <br><textarea id="replOutput" rows="8" cols="72"></textarea>
   <br><br>
@@ -89,7 +91,13 @@
   </script>
 
   <script>
-  const biwascheme = new BiwaScheme.Interpreter()
+  const errorMsg = document.getElementById("error")
+  const onError = (e) => {
+    errorMsg.value = e.message
+    throw(e)
+  }
+
+  const biwascheme = new BiwaScheme.Interpreter(onError)
   const input = document.getElementById("replInput")
   const output = document.getElementById("replOutput")
 
@@ -125,6 +133,7 @@
       output.value += result + "\n"
       output.scrollTop = output.scrollHeight
       input.value = ""
+      errorMsg.value = ""
     })
   }
   </script>
