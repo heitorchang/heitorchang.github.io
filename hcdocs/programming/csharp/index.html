@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,51 +24,66 @@
         }
 
         h2, h3, h4 {
-          margin-top: 2.5rem;
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
         }
 
         pre {
-          display: block;
+          box-sizing: border-box;
           margin: 1rem;
           padding: 1rem;
           border: 1px solid #ccc;
           background-color: #eee;
           border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
         }
 
         code {
-          background-color: #e3f3ff;
-          color: #031;
-          font-size: 115%;
           padding: 0.2rem;
+          color: #923;
+          font-size: 1rem;
         }
 
         .hc-monospace {
           font-family: monospace;
-          font-size: 115%;
         }
 
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
         </style>
     </head>
     <body>
-      <p>
-        <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
-        <a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
-        <a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
-      </p>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
 
 
     <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">csharp</a></h3>
     
-<a class="index" href="console_apps.html">&#x1F4D8; console_apps.html</a><br>
-<a class="index" href="library/index.html">&#x1F4C1; library</a><br>
-<a class="index" href="notes.html">&#x1F4D8; notes.html</a><br>
-<a class="index" href="workspace_and_directory_structure.png">&#x1F4F0; workspace_and_directory_structure.png</a><br>
+<a class="index" href="csharp11_dotnet_mark_price/index.html">&#x1F4C1; csharp11_dotnet_mark_price</a><br>
+</div>
 <br>
 <hr>
-<a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
-<a href="index.html">&#x1F4C2; Directory list</a>&nbsp;&nbsp;&nbsp;
-<a href="../index.html">&#x1F51D; Up one level</a>&nbsp;&nbsp;&nbsp;
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
     </body>
 </html>
 

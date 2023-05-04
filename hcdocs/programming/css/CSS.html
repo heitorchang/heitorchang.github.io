@@ -71,20 +71,54 @@
       <div class="content">
 
 
-    <h3><a href="../index.html">home</a>/<a href="index.html">programming</a></h3>
+    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">css</a></h3>
     
-<a class="index" href="asp_net/index.html">&#x1F4C1; asp_net</a><br>
-<a class="index" href="bash/index.html">&#x1F4C1; bash</a><br>
-<a class="index" href="clojure-files/index.html">&#x1F4C1; clojure-files</a><br>
-<a class="index" href="common_lisp/index.html">&#x1F4C1; common_lisp</a><br>
-<a class="index" href="csharp/index.html">&#x1F4C1; csharp</a><br>
-<a class="index" href="css/index.html">&#x1F4C1; css</a><br>
-<a class="index" href="emacs/index.html">&#x1F4C1; emacs</a><br>
-<a class="index" href="interview_prep/index.html">&#x1F4C1; interview_prep</a><br>
-<a class="index" href="js/index.html">&#x1F4C1; js</a><br>
-<a class="index" href="postgresql/index.html">&#x1F4C1; postgresql</a><br>
-<a class="index" href="python/index.html">&#x1F4C1; python</a><br>
-<a class="index" href="scheme/index.html">&#x1F4C1; scheme</a><br>
+<h1>CSS Notes</h1>
+
+<p>
+  A problem I was having while designing this site (hcdocs) was the border of <code>pre</code> blocks. The simple way creates a border that moves with the viewport size.
+</p>
+
+<p>
+  Two solutions were found with the use of ChatGPT:
+</p>
+
+<p>
+  First, setting <code>display: inline-block;</code> makes the border follow the length of the longest line inside the <code>pre</code>.
+</p>
+
+<pre>
+pre {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  background-color: #eee;
+  border-radius: 0.8rem;
+  overflow: visible;
+  min-width: calc(100% - 2rem);
+}
+</pre>
+
+<p>
+  A cleaner solution is to use a horizontal scrollbar with <code>overflow: auto;</code>. (The surrounding text won't scroll when you want to read the block's content).
+</p>
+
+<pre>
+pre {
+  display: block;
+  box-sizing: border-box;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  background-color: #eee;
+  border-radius: 0.8rem;
+  overflow: auto;
+  min-width: calc(100% - 2rem);
+}
+</pre>
+
 </div>
 <br>
 <hr>

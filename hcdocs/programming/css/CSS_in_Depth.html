@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #52f;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #eee;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0.2rem;
+          color: #923;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">css</a></h3>
+    
+<h1>CSS in Depth, Keith Grant</h1>
+
+<ul>
+  <li><a href="#ch1">Ch. 1 Reviewing the fundamentals</a></li>
+  <li><a href="#ch2">Ch. 2 Working with relative units</a></li>
+  <li><a href="#ch3">Ch. 3 Mastering the box model</a></li>
+  <li><a href="#ch4">Ch. 4 Making sense of floats</a></li>
+  <li><a href="#ch5">Ch. 5 Flexbox</a></li>
+  <li><a href="#ch6">Ch. 6 Grid layout</a></li>
+  <li><a href="#ch7">Ch. 7 Positioning and stacking contexts</a></li>
+</ul>
+
+<h2 id="ch1">1 Cascade, specificity, and inheritance</h2>
+
+<p>
+  Listing 1.1 (Wombat Coffee Roasters)
+</p>
+
+<iframe width="800" height="400" src="CSS_in_Depth_files/wombat_coffee.html.txt"></iframe>
+
+<p>
+  When two or more rules target the same element, they conflict. For example:
+</p>
+
+<pre>
+h1 {
+  font-family:serif;
+}
+
+#page-title {
+  font-family: sans-serif;
+}
+
+.title {
+  font-family: monospace;
+}
+</pre>
+
+<p>
+  The <em>cascade</em> is the name of the set of rules that determines how conflicts are resolved. The cascade considers:
+</p>
+
+<ol>
+  <li>Stylesheet origin (where the styles come from)</li>
+  <li>Selector specificity (which selectors take precedence)</li>
+  <li>Source order (order in which styles are declared in the stylesheet)</li>
+</ol>
+
+<p>
+  <img src="CSS_in_Depth_files/fig_1_3_cascade.png" alt="cascade">
+</p>
+
+<h4>Terminology</h4>
+
+<p>
+  <em>Declaration:</em> a <em>property</em> and a <em>value</em>
+</p>
+
+<p>
+  <strong>Example:</strong> <code>color: black;</code>
+</p>
+
+<p>
+  Do not confuse declarations with <em>attributes</em>, which is HTML syntax. For example, in <code>&lt;a href="/"&gt;</code>, the attribute is <code>href</code>.
+</p>
+
+<p>
+  A group of declarations inside curly braces is a <em>declaration block</em>. It is preceded by a <em>selector</em>, such as <code>body</code> shown below:
+</p>
+
+<pre>
+body {
+  color: black;
+  font-family: sans-serif;
+}
+</pre>
+
+<p>
+  Together, a selector and declaration block is called a <em>ruleset</em>.
+</p>
+
+<p>
+  Language constructs beginning with an "at" symbol (@) are called <em>at-rules</em>. For example, <code>@import</code> rules and <code>@media</code> queries.
+</p>
+
+<h3>1.1.1 Understanding stylesheet origin</h3>
+
+<p>
+  The browser's default styles are <em>user agent styles</em>. Custom styles are called <em>author styles</em>. A <em>user stylesheet</em> may also be defined, and fall in between the user agent and author styles. However, they are fairly rare.
+</p>
+
+<p>
+  A declaration can be marked <code>!important</code> (added to the end of the declaration, before the semicolon).
+</p>
+
+<p>
+  Important declarations are treated with a higher priority, even higher than inline styles (except !important inline styles).
+</p>
+
+<h3>1.1.2 Understanding specificity</h3>
+
+<p>
+  Inline styles (defined with the HTML <code>style</code> attribute), are applied only to that element (effectively "scoped" to that element). They have no selectors and override any declarations from stylesheets, except those marked <code>!important</code>.
+</p>
+
+<p>
+  Important inline styles cannot be overridden by anything.
+</p>
+
+<h4>Selector specificity</h4>
+
+<p>
+  The rules of selector specificity are:
+</p>
+
+<ul>
+  <li>If a selector has more IDs, it wins</li>
+  <li>If it is a tie, the selector with most classes wins</li>
+  <li>If it is a tie, the selector with most tag names wins</li>
+</ul>
+
+<p>
+  Pseudo-class selectors such as <code>:hover</code> and attribute selectors such as <code>[type="input"]</code> have the same specificity as a class selector.
+</p>
+
+<p>
+  Since IDs take precedence over classes, it becomes harder to override later. You would have to use another ID.
+</p>
+
+<h4>A notation for specificity</h4>
+
+<p>
+  A number form such as "1,2,2" indicates a specificity of one ID, two classes, and two tags.
+</p>
+
+<p>
+  If including inline styles, the leftmost digit as 1 represents an inline style, while 0 means it's not.
+</p>
+
+<p>
+  Instead of trying to raise the specificity of a selector, also consider reducing the specificity of neighboring selectors.
+</p>
+
+<p>
+  Generally, it's best to keep specificity as low as you can, so that there are more options to override them later.
+</p>
+
+<h3>1.1.3 Understanding source order</h3>
+
+<p>
+  If everything up to here are the same, then the declaration that appears later in the stylesheet (or in later stylesheets included in the page) takes precedence.
+</p>
+
+<h4>Link styles and source order</h4>
+
+<p>
+  Styles for links should appear in this order:
+</p>
+
+<ul>
+  <li><code>a:link</code></li>
+  <li><code>a:visited</code></li>
+  <li><code>a:hover</code></li>
+  <li><code>a:active</code></li>
+</ul>
+
+<h4>Cascaded values</h4>
+
+<p>
+  The declaration that "wins" the cascade is called a <em>cascaded value</em>.
+</p>
+
+<h3>Two rules of thumb</h3>
+
+<ol>
+  <li><em>Don't use IDs in your selector</em>. It becomes hard to override it later.</li>
+  <li><em>Don't use</em> <code>!important</code>. This is even harder to override later.</li>
+</ol>
+
+<h3>1.2 Inheritance</h3>
+
+<p>
+  An element can receive styles from <em>inheritance</em>. Although it is often conflated with the cascade, they are not the same thing.
+</p>
+
+<p>
+  When an element has no cascaded value for a given property, it may inherit one from an ancestor element. For example, the value of <code>font-family</code> may be inherited from the <code>&lt;body&gt;</code> element.
+</p>
+
+<p>
+  <strong>Note:</strong> Not all properties are inherited. Primarily, text properties are inherited.
+</p>
+
+<p>
+  DevTools show which values are cascaded and inherited.
+</p>
+
+<h3>1.3 Special values</h3>
+
+<p>
+  <code>inherit</code> and <code>initial</code> are special values that help you manipulate the cascade.
+</p>
+
+<h3>1.3.1 The inherit keyword</h3>
+
+<p>
+  <code>inherit</code> overrides a cascaded value, using the parent's value instead. For example, if you wish a footer's links to be gray instead of its typical value, set:
+</p>
+
+<pre>
+a:link {
+  color: blue;
+}
+
+.footer {
+  color: #666;
+  background-color: #ccc;
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+</pre>
+
+<p>
+  <code>inherit</code> also forces inheritance of a property not normally inherited, such as border and padding.
+</p>
+
+<h3>1.3.2 The initial keyword</h3>
+
+<p>
+  Using <code>initial</code> as the value will reset it to its default value.
+</p>
+
+<p>
+  <strong>Note:</strong> setting <code>width: auto;</code> resets the width because <code>auto</code> is its default (initial) value. However, <code>auto</code> isn't the default value for all properties, nor is it valid for some properties.
+</p>
+
+<p>
+  <strong>Warning:</strong> shorthand properties (such as <code>font</code>, <code>border</code>, and <code>background</code>) will silently set omitted values to their initial values. This behavior can override styles you specified elsewhere.
+</p>
+
+<h3>1.4.2 Understanding the order of shorthand values</h3>
+
+<p>
+  The border, margin, and padding properties accept up to four values, starting from the top and going clockwise. If only two values are given, they are the vertical, then horizontal values.
+</p>
+
+<p>
+  On the other hand, two-value properties like background-position, box-shadow, and text-shadow have this order reversed. The mnemonic is that these more accurately represent Cartesian coordinates, (x, y), that correspond to horizontal, then vertical, values.
+</p>
+
+<h2 id="ch2">2 Working with relative units</h2>
+
+<p>
+  Pixels are <em>absolute</em> units. em and rem are <em>relative</em> units. In general, 96 pixels are around 1 physical inch. A pixel is not necessarily the physical monitor's pixel, such as in high-resolution displays.
+</p>
+
+<p>
+  CSS brings a <em>late-binding</em> of styles to a web page. Styles aren't pulled together until after the authoring of both HTML and CSS is complete.
+</p>
+
+<p>
+  <em>Responsive</em> styles "respond" differently based on the size of the browser window.
+</p>
+
+<p>
+  Relative units allow you to create more general solutions (that work under different circumstances).
+</p>
+
+<h3>2.2 Ems and rems</h3>
+
+<p>
+  1 em is the font size of the current element.
+</p>
+
+<p>
+  Values declared using relative units are evaluated by the browser to an absolute value, called the <em>computed value</em>.
+</p>
+
+<p>
+  <code>font-size</code> ems are derived from the <em>inherited</em> font size.
+</p>
+
+<p>
+  For most browsers, the default font size is 16 px. The keyword <code>medium</code> calculates to 16 px.
+</p>
+
+<p>
+  Calculation of ems is cumulative. So nested lists might result in shrinking font sizes. Rems (root ems) may be used to avoid this repeated calculation.
+</p>
+
+<h3>2.2.2 Using rems for font-size</h3>
+
+<p>
+  In the DOM (Document Object Model), the root node is the ancestor of all other elements in the document. It has a special pseudo-class selector, <code>:root</code> that you can use to target it. Using <code>:root</code> will have the specificity of a class rather than of a tag (<code>html</code>).
+</p>
+
+<p>
+  <em>rem</em> is short for root em. They are relative to the root element.
+</p>
+
+<p>
+  Always specify font sizes with relative units or percentages, because the user can then simply zoom in and out.
+</p>
+
+<p>
+  <strong>Tip:</strong> When in doubt, use rems for font size, pixels for borders, and ems for everything else.
+</p>
+
+<h3>Setting a sane default font size</h3>
+
+<p>
+  Set a value at the root:
+</p>
+
+<pre>
+:root {
+  font-size: 0.875em;
+}
+</pre>
+
+<p>
+  A &gt; in the selector is a <em>direct descendant combinator</em>. <code>.panel &gt; h2</code> targets an <code>h2</code> element that is a child element of a <code>.panel</code> element.
+</p>
+
+<h3>2.3.2 Making the panel responsive</h3>
+
+<p>
+  <code>@media</code> rules specify styles that will be applied only to certain screen sizes or media types.
+</p>
+
+<pre>
+:root {
+    font-size: 0.75em;
+}
+
+@media (min-width: 800px) {
+    :root {
+        font-size: 0.875em;
+    }
+}
+
+@media (min-width: 1200px) {
+    :root {
+        font-size: 1em;
+    }
+}
+</pre>
+
+<p>
+  Each ruleset will override the rulesets above it if the size of the screen is at least that many pixels wide.
+</p>
+
+<h3>2.3.3 Resizing a single component</h3>
+
+<p>
+  By using rem for the main ruleset and em for a variation, the component's size can be easily changed:
+</p>
+
+<pre>
+.panel {
+  font-size: 1rem;
+  padding: 1em;
+}
+
+.panel > h2 {
+  font-size: 0.8em;
+}
+
+.panel.large {
+  font-size: 1.2rem;
+}
+</pre>
+
+<p>
+  A normal panel would only have <code>class="panel"</code> while the larger one will be <code>class="panel large"</code>
+</p>
+
+<h3>2.4 Viewport-relative units</h3>
+
+<p>
+  The <em>viewport</em> is the framed area in the browser window where the web page is visible.
+</p>
+
+<p>
+  <em>vh</em> is 1/100th of the viewport height, and <em>vw</em> is 1/100th of the viewport width.
+</p>
+
+<p>
+  <em>vmin</em> is 1/100th of the smaller dimension (width or height). <em>vmax</em>is the larger dimension.
+</p>
+
+<h3>2.4.2 Using calc() for font size</h3>
+
+<p>
+  Arithmetic operators (+, -, *, /) must be surrounded by whitespace.
+</p>
+
+<p>
+  A combination of em and vw can be used for a reasonable auto-scaling font size. It is a good alternative to using media queries.
+</p>
+
+<pre>
+:root {
+  font-size: calc(0.5em + 1vw);
+}
+</pre>
+
+<p>
+  Using <code>vw</code> alone results in a range that is too large between mobile devices and a large widescreen monitor.
+</p>
+
+<h3>2.6 Custom properties (aka CSS variables)</h3>
+
+<p>
+  A custom property is defined like this:
+</p>
+
+<pre>
+:root {
+  --main-font: Helvetica, Arial, sans-serif;
+}
+</pre>
+
+<p>
+  Custom property names must start with two dashes, <code>--</code>. They must also be declared inside a declaration block. When a descendant element uses a variable, it resolves to this value.
+</p>
+
+<p>
+  The <code>var()</code> function is used to refer to previously defined custom properties. It accepts a second argument as a fallback value:
+</p>
+
+<pre>
+p {
+  color: var(--primary-color, blue);
+}
+</pre>
+
+<p>
+  An alternative way to define a fallback (for old browsers that don't have <code>var</code>) is:
+</p>
+
+<pre>
+color: black;
+color: var(--main-color);
+</pre>
+
+<p>
+  Custom properties shadow those of the element's ancestors. So a variable in :root can be overridden by a dark container.
+</p>
+
+<h3>2.6.2 Changing custom properties with JavaScript</h3>
+
+<pre>
+var rootElement = document.documentElement;
+var styles = getComputedStyle(rootElement);
+var mainColor = styles.getPropertyValue('--main-bg');
+</pre>
+
+<p>
+  To set a new value:
+</p>
+
+<pre>
+rootElement.style.setProperty('--main-bg', '#cde');
+</pre>
+
+<h2 id="ch3">3 Mastering the box model</h2>
+
+<p>
+  The target webpage should look like this:
+</p>
+
+<img src="CSS_in_Depth_files/franklin_running_target.png" alt="franklin">
+
+<iframe width="800" height="400" src="CSS_in_Depth_files/franklin_running_club.html.txt"></iframe>
+
+<p>
+  The default behavior of the box model is that the width and height values you define apply to the content. Then, the border and margins are added to the width and height.
+</p>
+
+<p>
+  For example, you might define a width of 300 px, a padding of 10 px and a 1 px border. The total rendered width is 322 px (padding and border apply to the left and right).
+</p>
+
+<p>
+  Avoid <em>magic numbers</em> such as 26% because they are unreliable. It may not work on different viewports.
+</p>
+
+<p>
+  Using <code>calc()</code> is an improvement, but there is still a better way.
+</p>
+
+<h3>3.1.2 Adjusting the box model</h3>
+
+<p>
+  The <code>box-sizing</code> property has a default value of <code>content-box</code>.
+</p>
+
+<p>
+  Setting <code>box-sizing</code> to <code>border-box</code> will change the rendering behavior so that the width and height values set will be the combined size of the contend, padding, and border.
+</p>
+
+<h3>3.1.3 Using universal border-box sizing</h3>
+
+<p>
+  To use the same box-sizing everywhere, use the following:
+</p>
+
+<pre>
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+</pre>
+
+<p>
+  If this setup conflicts with third-party CSS rulesets, use:
+</p>
+
+<pre>
+:root {
+  box-sizing: border-box;
+}
+
+*,
+::before,
+::after {
+  box-sizing: inherit;
+}
+
+.third-party-component {
+  box-sizing: content-box;
+}
+</pre>
+
+<h3>3.1.4 Adding a gutter between columns</h3>
+
+<p>
+  <code>calc()</code> is a good way to remove some space of an object and allow that free space to be used in another way. Also, units may be mixed.
+</p>
+
+<pre>
+  ...
+  width: calc(30% - 1.5em);
+  margin-left: 1.5em;
+</pre>
+
+<h3>3.2 Difficulties with element height</h3>
+
+<p>
+  Typically, it's best to avoid setting explicit heights on elements. Normal document flow is designed to work with a constrained width, but an unlimited height.
+</p>
+
+<p>
+  Inline elements flow along with the text of the page, from left to right, while block-level elements fall on individual lines, with a line break above and below.
+</p>
+
+<h3>3.2.1 Controlling overflow behavior</h3>
+
+<p>The <code>overflow</code> property supports four values:</p>
+
+<ul>
+  <li><code>visible</code> (default): everything is visible, even when it overflows the container's edges</li>
+  <li><code>hidden</code>: content that overflows the padding edge is clipped</li>
+  <li><code>scroll</code>: scrollbars are added, even when there's no overflow, in which case, they will be disabled (grayed)</li>
+  <li><code>auto</code>: scrollbars are added only if the content overflows</li>
+</ul>
+
+<p>
+  When control is needed horizontally or vertically, set the <code>overflow-x</code> and <code>overflow-y</code> properties.
+</p>
+
+<h3>3.2.2 Applying alternatives to percentage-based heights</h3>
+
+<p>
+  The height of containers is typically determined by the height of its children, leading to a circular definition (percentages refers to the size of an element's containing block).
+</p>
+
+<p>
+  Instead of writing the ineffective <code>height: 100%;</code> rule, a height of <code>100vh</code> can be used.
+</p>
+
+<h4>Columns of equal height</h4>
+
+<p>
+  There are two ways of accomplishing this: a table layout and a flexbox.
+</p>
+
+<h4> CSS table layouts</h4>
+
+<p>
+  First, make the container a <code>display: table;</code> and each column <code>display: table-cell;</code>
+</p>
+
+<p>
+  <strong>Note:</strong> margins do not work with tables. A <code>border-spacing</code> must be defined, plus a wrapper with negative margins to cancel out the outer border-spacing. Note that the x, y order is reversed in border-spacing.
+</p>
+
+<pre>
+.wrapper {
+  margin: 0 -1.5em;
+}
+
+.container {
+  display: table;
+  width: 100%;
+  border-spacing: 1.5em 0;
+}
+
+.main {
+  display: table-cell;
+  width: 70%;
+}
+
+.sidebar {
+  display: table-cell;
+  width: 30%;
+}
+</pre>
+
+<p>
+  Negative margins pull the edges out.
+</p>
+
+<h4>Flexbox</h4>
+
+<p>
+  By default, flexbox produces elements of equal height.
+</p>
+
+<pre>
+.container {
+  display: flex;
+}
+
+.main {
+  width: 70%;
+}
+
+.sidebar {
+  width: 30%;
+  padding: 1.5em;
+  margin-left: 1.5em;
+}
+</pre>
+
+<h3>3.2.3 Using min-height and max-height</h3>
+
+<p>
+  Instead of explicitly defining a height, specify the minimum and maximum bounds.
+</p>
+
+<h3>3.2.4 Vertically centering content</h3>
+
+<p>
+  <code>vertical-align</code> only affects inline and table-cell elements. Within a cell, <code>vertical-align</code> controls the alignment of the contents within the cell.
+</p>
+
+<p>
+  Adding top and bottom padding is one way of vertically centering content.
+</p>
+
+<p>
+  For a container of a specific height, use <code>display: table-cell;</code> and <code>vertical-align: middle;</code>
+</p>
+
+<p>
+  For a single line of text, you can set a large line-height.
+</p>
+
+<h3>3.3 Negative margins</h3>
+
+<p>
+  For negative left and top margins, the entire element is pulled leftward or upward.
+</p>
+
+<p>
+  For negative right or bottom margins, the succeeding elements are pulled leftward or upward.
+</p>
+
+<p>
+  <strong>Warning:</strong> Elements that overlap because of negative margins may become unclickable.
+</p>
+
+<h3>3.4 Collapsed margins</h3>
+
+<p>
+  Adjoining margins will overlap, combining to form a single margin. The size of the collapsed margin is equal to the largest of the joined margins. More than two margins may collapse.
+</p>
+
+<p>
+  Only top and bottom margins collapse. Horizontal ones do not.
+</p>
+
+<p>
+  Margins of flexbox items don't collapse.
+</p>
+
+<p>
+  Padding may also be used instead of margins.
+</p>
+
+<p>
+  Applying <code>overflow: auto;</code> (or anything other than <code>visible</code>) prevents margins inside the container from collapsing with those outside the container.
+</p>
+
+<p>
+  <code>table-cell</code> elements don't have a margin.
+</p>
+
+<h3>3.5 Spacing elements within a container</h3>
+
+<p>
+  The adjacent sibling combinator (<code>+</code>) will target only elements that immediately follow other elements as siblings.
+</p>
+
+<pre>
+.button-link {
+  display: block;
+  padding: 0.5em;
+}
+
+.button-link + .button-link {
+  margin-top: 1.5em;
+}
+</pre>
+
+<p>
+  A more general solution is <code>* + *</code>, that targets any element that follows any other element.
+</p>
+
+<pre>
+body * + * {
+  margin-top: 1.5em;
+}
+</pre>
+
+<p>
+  Some elements might have to override this global setting with <code>margin-top: 0;</code>
+</p>
+
+<h2 id="ch4">4 Making sense of floats</h2>
+
+<h3>4.1 The purpose of floats</h3>
+
+<p>
+  A <em>float</em> pulls an element (often an image) to one side of its container, allowing the document flow to wrap around it.
+</p>
+
+<p>
+  Floating multiple elements in the same direction causes them to stack alongside one another.
+</p>
+
+<p>
+  The <em>double container pattern</em> places content inside two nested containers, then sets margins on the inner container to position it within the outer one.
+</p>
+
+<p>
+  <code>&lt;body&gt;</code> can serve as the outer container.
+</p>
+
+<p>
+  Using <code>clear</code> to a <code>float</code> causes the container to expand to the bottom of the floats.
+</p>
+
+<p>
+  <em>Pseudo-elements</em> begin with a double colon (<code>::</code>). The most common pseudo-elements are <code>::before</code> and <code>::after</code>
+</p>
+
+<p>
+  A <em>clearfix</em> is an approach to solve the problem of containing floats.
+</p>
+
+<pre>
+.clearfix::after {
+  display: block;
+  content: " ";
+  clear: both;
+}
+</pre>
+
+<p>
+  Another version of <em>clearfix</em> contains all margins.
+</p>
+
+<pre>
+.clearfix::before,
+.clearfix::after {
+  display: table;
+  content: " ";
+}
+
+.clearfix::after {
+  clear: both;
+}
+</pre>
+
+<p>
+  A <em>block formatting context</em> (BFC) is a region of the page where elements are laid out, and isolates its contents from the outside context. Contents inside a BFC will not overlap or interact with elements on the outside.
+</p>
+
+<p>
+  Applying any of the following triggers a BFC:
+</p>
+
+<ul>
+  <li><code>float: left</code> or <code>right</code> (anything but <code>none</code>)</li>
+  <li><code>overflow: hidden, auto,</code> or <code>scroll</code> (anything but <code>visible</code>)</li>
+  <li><code>display:</code> (any of the following <em>block containers</em>):
+    <ul>
+      <li><code>inline-block</code></li>
+      <li><code>table-cell</code></li>
+      <li><code>table-caption</code></li>
+      <li><code>flex</code></li>
+      <li><code>inline-flex</code></li>
+      <li><code>grid</code></li>
+      <li><code>inline-grid</code></li>
+    </ul>
+  </li>
+  <li><code>position: absolute</code> or <code>fixed</code></li>
+</ul>
+
+<p>
+  A block formatting context should have <code>overflow</code> set to <code>hidden</code> or <code>auto</code>. Often, <code>auto</code> is the simplest approach.
+</p>
+
+<p>
+  A <em>CSS framework</em> is a library of prebuilt CSS code that provides styles for common patterns.
+</p>
+
+<p>
+  <code>[class*="column-"] { ... }</code> is an <em>attribute selector</em> targeting elements based on their <code>class</code> attribute. It is used in the custom column grid CSS code in section 4.5.2, Building a grid system.
+</p>
+
+<h2 id="ch5">5 Flexbox</h2>
+
+<h3>5.1 Flexbox principles</h3>
+
+<p>
+  Applying <code>display: flex;</code> to an element turns it into a <em>flex container</em>, and its direct children turn into <em>flex items</em>.
+</p>
+
+<p>
+  By default, flex items align side by side, left to right, all in one row.
+</p>
+
+<p>
+  While the flex container fills all available width (like a block element), the flex items do not necessarily fill all the way to the end.
+</p>
+
+<p>
+  Flex items are all the same height.
+</p>
+
+<p>
+  <code>display: inline-flex;</code> behaves like an inline-block element.
+</p>
+
+<p>
+  Flex items are placed along a line called the <em>main axis</em>. Perpendicular to it is the <em>cross axis</em>. Its endpoints are called <em>main-start, main-end, cross-start, cross-end</em>.
+</p>
+
+<h3>5.2 Flex item sizes</h3>
+
+<p>
+  The <code>flex</code> property controls the size of the flex items along the main axis.
+</p>
+
+<p>
+  <code>flex</code> is shorthand for three different sizing properties:
+</p>
+
+<ul>
+  <li><code>flex-grow</code>: determines how space will be consumed by the flex items. Must be a non-negative integer. If an item has a flex-grow of 0, it won't grow past its flex basis. Higher values have more "weight". (default: <code>1</code>)</li>
+  <li><code>flex-shrink</code>: determines whether a flez item should shrink to prevent overflow. If flex-shrink is 0, it will not shrink. (default: <code>1</code>)</li>
+  <li><code>flex-basis</code>: an initial "main size" for each flex item (default: <code>0%</code> or <code>auto</code>)</li>
+</ul>
+
+<p>
+  <strong>Tip:</strong> prefer using the <code>flex</code> shorthand instead of defining the three individual properties. The default values are generally useful.
+</p>
+
+<p>
+  <strong>Example:</strong> The "Holy Grail" layout has two sidebars with fixed width, and a center column that is "fluid" (grows to fill the available space)
+</p>
+
+<pre>
+[ flex: 0 0 200px ] [ flex: 1    ] [ flex: 0 0 200px ]
+</pre>
+
+<p>
+  <strong>Skipped:</strong> 5.3 (p. 130) to end of chapter
+</p>
+
+<h2 id="ch6">6 Grid layout</h2>
+
+<p>
+  The CSS grid lets you define a two-dimensional layout of columns and rows and then place elements within this grid.
+</p>
+
+<h3>6.1.1 Building a basic grid</h3>
+
+<p>
+  The objective of this section is to create this kind of grid:
+</p>
+
+<pre>
+[ a   ] [ b   ] [ c   ]
+[ d   ] [ e   ] [ f   ]
+</pre>
+
+<iframe style="width: 100%; height: 50vh;" src="CSS_in_Depth_files/grid_6_items_6_1.html.txt"></iframe>
+
+<p>
+  The HTML above is rendered as:
+</p>
+
+<iframe style="width: 100%; height: 14em;" src="CSS_in_Depth_files/raw/grid_6_items_6_1.html"></iframe>
+
+<p>
+  An element with <code>display: grid;</code> becomes a <em>grid container</em>. Its child elements become <em>grid items</em>.
+</p>
+
+<p>
+  The container behaves like a block display element, taking up all 100% of the available width. It is also possible to use the value <code>inline-grid</code>.
+</p>
+
+<p>
+  The <code>fr</code> unit stands for <em>fraction unit</em>. It behaves like the factor in <code>flex-grow</code>.
+</p>
+
+<p>
+  The declaration <code>grid-template-columns: 1fr 1fr 1fr;</code> creates three columns with an equal size. Other units may be used, such as <code>px, em, 50%</code>.
+</p>
+
+<p>
+  <code>grid-gap</code> defines the amount of space to add to the gutter between each grid cell. Using two values specifies the vertical and horizontal spacing (for example, <code>grid-gap: 0.5em 1em</code>).
+</p>
+
+<h3>6.2 Anatomy of a grid</h3>
+
+<p>
+  The most important elements of a grid are:
+</p>
+
+<ul>
+  <li><em>Grid line:</em> makes up the structure of the grid. It may be vertical or horizontal and lie on either side of a row or a column. The grid gap lies atop the grid lines.</li>
+  <li><em>Grid track:</em> the space between two adjacent grid lines. Horizontal tracks are rows and vertical tracks are columns.</li>
+  <li><em>Grid cell:</em> a single space on the grid, where a horizontal grid track and vertical grid track overlap.</li>
+  <li><em>Grid area:</em> a rectangular area on the grid made up by one or more grid cells. Such an area is between two vertical grid lines and two horizontal grid lines.</li>
+</ul>
+
+<p>
+  <img src="CSS_in_Depth_files/parts_of_a_grid.png" alt="parts of a grid">
+</p>
+
+<p>
+  Declaring <code>grid-template-columns: 1fr 1fr 1fr;</code> defines three vertical grid tracks of equal width. At the same time, four grid lines are defined (the two edges and two between each grid track).
+</p>
+
+<p>
+  The <code>repeat(n, value)</code> function serves to copy the <em>value</em> <em>n</em> times. For example, <code>repeat(4, auto)</code> is the same as <code>auto auto auto auto</code>.
+</p>
+
+<h3>6.2.1 Numbering grid lines</h3>
+
+<p>
+  The browser assigns numbers to each grid line as follows:
+</p>
+
+<p>
+  <img src="CSS_in_Depth_files/fig_6_7_grid_lines.png" alt="grid lines">
+</p>
+
+<p>
+  These numbers are used to indicate where each item should be placed by setting the <code>grid-column</code> and <code>grid-row</code> properties.
+</p>
+
+<p>
+  For example, if you want a grid item to span from grid line 1 to 3, apply <code>grid-column: 1 / 3;</code> to the element.
+</p>
+
+<p>
+  <code>grid-column</code> and <code>grid-row</code> are shorthand for <code>grid-column-start</code> and <code>grid-column-end</code>. The forward slash is needed in the shorthand version. The spaces before and after the slash are optional.
+</p>
+
+<p>
+  The keyword <code>span</code> defines how many grid tracks to span (for example, <code>grid-row: span 1;</code>).
+</p>
+
+<p>
+  Generally speaking, flexbox is one-dimensional, and grid is two-dimensional.
+</p>
+
+<p>
+  Flexbox works from the content out, whereas a grid works from the layout in.
+</p>
+
+<h3>6.3 Alternate syntaxes for laying out grid items</h3>
+
+<p>
+  It is possible to have named grid lines and named grid areas.
+</p>
+
+<h3>6.3.1 Naming grid lines</h3>
+
+<p>
+  When declaring grid tracks, place a name in brackets to name a grid line between any two tracks:
+</p>
+
+<pre>
+grid-template-columns: [start] 2fr [center] 1fr [end];
+
+grid-column: start / center;
+</pre>
+
+<p>
+  A grid line may have multiple names: <code>[left-end right-start] 1fr</code>
+</p>
+
+<p>
+  By naming lines with the suffixes <code>-start</code> and <code>-end</code>, an area in between them will be implicitly defined (for example, <code>grid-column: left</code> spans from <code>left-start</code> to <code>left-end</code>).
+</p>
+
+<p>
+  Names may be repeated. To refer to them, write: <code>row 3</code>.
+</p>
+
+<p>
+  <strong>Skipped: 6.3.2 (p. 160) to end of chapter.</strong>
+</p>
+
+<h2 id="ch7">7 Positioning and stacking contexts</h2>
+
+<p>
+  The <code>position</code> property is often used for building dropdown menus, modal dialogs, and other commonly used effects.
+</p>
+
+<h3>Use variables to keep track of z-indexes (p. 196)</h3>
+
+<p>
+  It's easy for a stylesheet to devolve into a z-index war. It's better to use custom properties (variables) to keep them organized:
+</p>
+
+<pre>
+--z-loading-indicator: 100;
+--z-nav-menu:          200;
+--z-dropdown-menu:     300
+--z-modal-backdrop:    400;
+--z-modal-body:        410;
+</pre>
+
+<p>
+  Use increments of 10 or 100 to leave room for new values without being forced to rewrite other values.
+</p>
+
+
+
+<pre>
+END OF FILE
+</pre>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

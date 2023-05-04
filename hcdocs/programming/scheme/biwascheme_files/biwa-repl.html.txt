@@ -1,0 +1,32 @@
+<body>
+  BiwaScheme print area:
+  <pre id="bs-console"></pre>
+  REPL ( <input id="replInput" style="border: none; border-bottom: 1px dotted black"> )
+  <br><br>
+  <textarea id="replOutput" rows="5" cols="72"></textarea>
+  <script src="biwascheme-0.8.0-min.js"></script>
+
+  <script type="text/biwascheme">
+  (define (add-one x)
+    (+ 1 x))
+  </script>
+
+  <script>
+  const biwascheme = new BiwaScheme.Interpreter()
+  const input = document.getElementById("replInput")
+  const output = document.getElementById("replOutput")
+
+  input.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") eval()
+  })
+
+  function eval() {
+    biwascheme.evaluate("(" + input.value + ")", function (result) {
+      output.value += result + "\n"
+      output.scrollTop = output.scrollHeight
+      input.value = ""
+    })
+  }
+  </script>
+
+</body>

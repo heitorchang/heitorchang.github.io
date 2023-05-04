@@ -1,0 +1,13 @@
+<body>
+  <button id="confirmButton">Click me to confirm</button>
+  <script src="biwascheme-0.8.0-min.js"></script>
+  <script type="text/biwascheme">
+    (define (my-confirm msg)
+      (let ((action (confirm msg)))
+        (console-log action)))
+
+  (add-handler! "#confirmButton" "click"
+    (lambda (event)
+      (my-confirm "BiwaScheme is cool (response is logged in browser console)")))
+  </script>
+</body>
