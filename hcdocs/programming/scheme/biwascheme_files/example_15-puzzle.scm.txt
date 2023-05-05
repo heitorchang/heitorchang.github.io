@@ -1,0 +1,103 @@
+;; https://web.archive.org/web/20160308070053/http://www.phy.pmf.unizg.hr/~nikola/puzzle/
+
+(define (on-ready proc)
+  ($ (js-closure proc)))
+
+(define is-solved? #t)
+(define mouse-handler #f)
+(define moves 0)
+
+(define (id->pos id)
+  (list (string->number (substring id 2 3))
+        (string->number (substring id 3 4))))
+
+(define (pos->id pos)
+  (format "#b~a~a" (car pos) (cadr pos)))
+
+(define (in-bounds? pos)
+  (and (>= (car pos)  1) (<= (car pos)  4)
+       (>= (cadr pos) 1) (<= (cadr pos) 4)))
+
+(define (get-neighbours-pos pos)
+  (filter in-bounds?
+    (append (map (lambda (x) (list (+ x (car pos)) (cadr pos))) (list 1 -1))
+            (map (lambda (x) (list (car pos) (+ x (cadr pos)))) (list 1 -1)))))
+
+
+(define (get-parent-id el)
+  (string-append "#"
+                 (element-read-attribute (js-invoke el "parent") "id")))
+
+(define (get-empty-pos)
+  (define id (get-parent-id ($ "#empty")))
+  (id->pos id))
+
+(define (can-move? btn)
+  (define id (get-parent-id ($ btn)))
+  (define pos (id->pos id))
+  (define empty (get-empty-pos))
+  (and (member empty (get-neighbours-pos pos))
+       empty))
+
+(define (swap el1 el2)
+  (define el1-parent-id (get-parent-id ($ el1)))
+  (js-invoke ($ el1) "prependTo" (get-parent-id ($ el2)))
+  (js-invoke ($ el2) "prependTo" el1-parent-id))
+
+(define (random-swap n)
+  (if (not (zero? n))
+      (begin
+         (swap ($ (string-append (pos->id (random-pick
+                                   (filter in-bounds? (get-neighbours-pos (get-empty-pos)))))
+                                 " button"))
+               "#empty")
+         (timer (lambda () (random-swap (- n 1))) 0.02))))
+
+(define (random-pick xs)
+  (list-ref xs (random-integer (length xs))))
+
+(define (set-moves-num n)
+  (set-content! "#moves" (number->string n)))
+
+(define (move btn)
+  (if (can-move? btn)
+      (begin
+        (swap btn "#empty")
+        (set! moves (+ moves 1))
+        (set-moves-num moves)
+        (if (solved?)
+            (begin
+              (remove-mouse-handler)
+              (js-invoke ($ "#congrat") "modal"))))))
+
+(define (solved?)
+  (set! is-solved? #t)
+  (js-invoke ($ "#board tr button")
+             "each"
+             (js-closure (lambda (ix el)
+                            (if (not (string=? (js-invoke ($ el) "text")
+                                               (number->string (+ ix 1))))
+                                (set! is-solved? #f)))))
+  (set! is-solved? (and is-solved? (equal? (get-empty-pos) (list 4 4))))
+  is-solved?)
+
+(define (remove-mouse-handler)
+  (if mouse-handler
+      (begin
+        (remove-handler! "#board tr button" "click" mouse-handler)
+        (set! mouse-handler #f))))
+
+(define (start swap-num)
+  (js-invoke ($ "#play") "tooltip" "hide")
+  (set! moves 0)
+  (set-moves-num moves)
+  (remove-mouse-handler)
+  (random-swap swap-num)
+  (set! mouse-handler (add-handler! "#board tr button"
+                                    "click"
+                                    (lambda (ev)
+                                       (move (js-ref ev "target"))))))
+(on-ready
+  (lambda ()
+    (js-invoke ($ "#play") "tooltip" "show")
+    (add-handler! "#play" "click" (lambda (ev) (start 200)))))
