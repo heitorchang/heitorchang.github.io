@@ -74,15 +74,15 @@
     <h3><a href="../../../../index.html">home</a>/<a href="../../../index.html">programming</a>/<a href="../../index.html">scheme</a>/<a href="../index.html">biwascheme_files</a>/<a href="index.html">raw</a></h3>
     
 <body>
-  REPL Input: Type Shift + Enter to eval, Ctrl + Up/Down for history
+  <strong>Input:</strong> Shift + Enter to eval, Ctrl + Up/Down or Alt + p/n for history
   <br><textarea id="replInput" rows="8" cols="72" autofocus></textarea>
   <br><br>
   Error msg: <input id="error" size="64">
   <br><br>
-  Console: <code>(clog msg)</code> adds msg
+  <strong>Console:</strong> <code>(clog msg)</code> adds msg
   <br><textarea id="replOutput" rows="8" cols="72"></textarea>
   <br><br>
-  BiwaScheme print area:
+  Print/display area:
   <pre id="bs-console"></pre>
   <script src="../biwascheme-0.8.0-min.js"></script>
 
@@ -108,12 +108,12 @@
     if (event.keyCode === 13 && event.shiftKey) {
       event.preventDefault()
       eval()
-    } else if (event.keyCode === 38 && event.ctrlKey) {
+    } else if (event.keyCode === 38 && event.ctrlKey || event.key === 'p' && event.altKey) {
       event.preventDefault()
       inputHistoryIndex = Math.min(inputHistory.length - 1, inputHistoryIndex + 1)
       input.value = inputHistory[inputHistoryIndex] || ""
       input.value = input.value.trim()
-    } else if (event.keyCode === 40 && event.ctrlKey) {
+    } else if (event.keyCode === 40 && event.ctrlKey || event.key === 'n' && event.altKey) {
       event.preventDefault()
       inputHistoryIndex = Math.max(-1, inputHistoryIndex - 1)
       if (inputHistoryIndex === -1) {
@@ -130,6 +130,7 @@
     inputHistory.unshift(input.value)
     inputHistoryIndex = -1
     biwascheme.evaluate(input.value, function (result) {
+      replOutput.value += ">>> " + input.value + "\n"
       output.value += result + "\n"
       output.scrollTop = output.scrollHeight
       input.value = ""
