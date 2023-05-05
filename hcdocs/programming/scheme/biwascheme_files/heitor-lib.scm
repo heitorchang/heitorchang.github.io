@@ -10,4 +10,7 @@
   (lambda (id . body)
     `(add-handler! ,id "click"
                    (lambda (event)
-                     ,@body))))
+                     (let* ((elem (getelem ,id))
+                            (target (js-ref event "target"))
+                            (target-attr (lambda (attr-name) (element-read-attribute target attr-name))))
+                       ,@body)))))

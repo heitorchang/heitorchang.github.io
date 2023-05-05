@@ -39,6 +39,8 @@
 (global-set-key (kbd "<C-f7>") 'quick-access-7)
 
 (setq default-directory "C:/Users/oktara/code/")
+(prefer-coding-system 'utf-8-unix)
+(setq coding-system-for-write 'utf-8-unix)
 
 ;; window size and position
 (setq initial-frame-alist '((top . 52) (left . 1395) (width . 80) (height . 88)))

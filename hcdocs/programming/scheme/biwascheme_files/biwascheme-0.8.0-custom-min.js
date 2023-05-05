@@ -11812,6 +11812,7 @@ var BiwaScheme = (function () {
         e[1].startsWith("data-") ? $$1(e[0]).attr(e[1]) : $$1(e[0]).prop(e[1])
       );
     });
+  alias_libfunc("console-log", "clog");
   var element_write_attribute = function (e) {
     return (
       assert_string(e[1]),

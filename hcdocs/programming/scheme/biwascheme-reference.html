@@ -466,6 +466,8 @@
   (element-new &#39;(div &quot;foo&quot;))        =&gt; &lt;div&gt;foo&lt;/div&gt;
   (element-new &#39;(&quot;div#main&quot; &quot;foo&quot;)) =&gt; &lt;div id=&#39;main&#39;&gt;foo&lt;/div&gt;
   (element-new &#39;(&quot;div.red&quot; &quot;foo&quot;))  =&gt; &lt;div class=&#39;red&#39;&gt;foo&lt;/div&gt;
+  (element-new &#39;(&quot;div.red main&quot; &quot;foo&quot;))  =&gt; &lt;div class=&#39;red main&#39;&gt;foo&lt;/div&gt;
+  (element-new &#39;(&quot;div#top.red main&quot; &quot;foo&quot;))  =&gt; &lt;div id=&#39;top&#39; class=&#39;red main&#39;&gt;foo&lt;/div&gt;
   (element-new &#39;(div align &quot;right&quot; &quot;foo&quot;))  =&gt; &lt;div align=&#39;right&#39;&gt;foo&lt;/div&gt;
   (element-new &#39;(div (span &quot;foo&quot;))  =&gt; &lt;div&gt;&lt;span&gt;foo&lt;/span&gt;&lt;/div&gt;
   </code></pre>
