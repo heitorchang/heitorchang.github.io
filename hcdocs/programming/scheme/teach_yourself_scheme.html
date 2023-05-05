@@ -73,14 +73,65 @@
 
     <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">scheme</a></h3>
     
-<a class="index" href="biwascheme-reference.html">&#x1F4D8; biwascheme-reference.html</a><br>
-<a class="index" href="biwascheme.html">&#x1F4D8; biwascheme.html</a><br>
-<a class="index" href="biwascheme_files/index.html">&#x1F4C1; biwascheme_files</a><br>
-<a class="index" href="concrete-abstractions.html">&#x1F4D8; concrete-abstractions.html</a><br>
-<a class="index" href="concrete-abstractions_files/index.html">&#x1F4C1; concrete-abstractions_files</a><br>
-<a class="index" href="scheme-files/index.html">&#x1F4C1; scheme-files</a><br>
-<a class="index" href="scheme.html">&#x1F4D8; scheme.html</a><br>
-<a class="index" href="teach_yourself_scheme.html">&#x1F4D8; teach_yourself_scheme.html</a><br>
+<h1>Teach Yourself Scheme in Fixnum Days</h1>
+
+<h2 id="ch1">1 Enter Scheme</h2>
+
+<pre>
+(begin
+  (display "Hello World")
+  (newline))
+</pre>
+
+<h2 id="ch2">2 Data Types</h2>
+
+<h3>2.1 Simple data types</h3>
+
+<ul>
+  <li>Booleans: <code>#t #f (boolean? x) (not #t)</code></li>
+  <li>Numbers: <code>42 2+3i 22/7 3.1415 = &lt; &gt;</code></li>
+  <li>Characters: <code>#\a #\newline #\space #\tab (char? x) (char-downcase #\A) (char-upcase #\a)</code></li>
+  <li>Symbols: <code>(quote xyz) (symbol? 'xyz)</code></li>
+</ul>
+
+<p>
+  <code>(define xyz 9)</code>
+</p>
+
+<p>
+  <code>(set! xyz #\c)</code>
+</p>
+
+<h3>2.2 Compound data types</h3>
+
+<h4>2.2.1 Strings</h4>
+
+<p>
+  Strings are sequences of characters. Don't confuse them with symbols, which are data that have a sequence of characters as their name.
+</p>
+
+<p>
+  <code>(string #\h #\e #\l #\l #\o)</code>
+</p>
+
+<p>
+  <code>(string-ref s 0)</code>
+</p>
+
+<p>
+  <code>(string-append "A " "Man " "A " "Plan")</code>
+</p>
+
+<h4>2.2.2 Vectors</h4>
+
+<p>
+  Vectors are sequences but their elements can be anything (even vectors, so that multidimensional vectors can be made).
+</p>
+
+<p>
+  <code>(vector 1 2 3)</code>
+</p>
+
 </div>
 <br>
 <hr>
