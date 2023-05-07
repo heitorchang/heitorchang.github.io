@@ -74,14 +74,23 @@
     <h3><a href="../../../../index.html">home</a>/<a href="../../../index.html">programming</a>/<a href="../../index.html">scheme</a>/<a href="../index.html">biwascheme_files</a>/<a href="index.html">raw</a></h3>
     
 <body>
+  <style>
+  .noError {
+    background-color: #fff;
+  }
+  .errorFlash {
+    background-color: #fcc;
+    transition: 0.3s linear;
+  }
+  </style>
   <link rel="stylesheet" href="codemirror-5.65.13.css">
         <strong>Input:</strong> <strong>Shift + Enter</strong> to eval, <strong>Ctrl + Up/Down</strong> or <strong>Alt + p/n</strong> to scroll history
   <br><textarea id="replInput" rows="4" cols="72" autofocus></textarea>
-  <br><br>
-  <strong>Error</strong> <input id="error" size="64" style="color: #900; border: none;">
+  <br>
+  <input id="error" style="width: 800px; border: none;">
   <br><br>
   <strong>Output</strong>
-  <br><textarea id="replOutput" cols="72" style="height: 35%"></textarea>
+  <br><textarea id="replOutput" style="width: 800px; height: 56%"></textarea>
   <script src="../biwascheme-0.8.0-min.js"></script>
   <script src="codemirror-5.65.13.js"></script>
   <script src="matchbrackets.js"></script>
@@ -91,6 +100,7 @@
   const errorMsg = document.getElementById("error")
   const onError = (e) => {
     errorMsg.value = e.message
+    errorMsg.className = 'errorFlash'
     throw(e)
   }
 
@@ -130,6 +140,13 @@
     }
   }
 
+  // remove lines with ;;;
+  const cleanReplOutput = (s) => {
+    const lines = s.split(/\r?\n/)
+    const cleaned = lines.filter(line => !line.startsWith(";;; "))
+    return cleaned.join("\n")
+  }
+
   var input = CodeMirror.fromTextArea(replInput, {
     mode: 'scheme',
     matchBrackets: true,
@@ -145,10 +162,10 @@
     }
   })
 
-  input.setSize("80%", "45%")
+  input.setSize("80%", "30%")
 
   function eval() {
-    const inputValue = input.getValue()
+    const inputValue = cleanReplOutput(input.getValue().trim())
     inputHistory.unshift(inputValue)
     inputHistoryIndex = -1
     biwascheme.evaluate(inputValue, function (result) {
@@ -157,6 +174,7 @@
       output.scrollTop = output.scrollHeight
       input.setValue("")
       errorMsg.value = ""
+      errorMsg.className = "noError"
     })
   }
 
