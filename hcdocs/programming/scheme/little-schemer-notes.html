@@ -180,7 +180,7 @@
                 (member? a (cdr lat)))))))
 </pre>
 
-<h3>The First Commandment (for lists) (p. 2</h3>
+<h3>The First Commandment (for lists) (p. 23)</h3>
 
 <p>
   Always ask <code>null?</code> as the first question in expressing any function.</p>
@@ -234,7 +234,90 @@
   <code>(cons (car lat) (rember a (cdr lat)))</code> says to recur using the function <code>rember</code>, with the argument <code>lat</code> replaced by <code>(cdr lat)</code>. After a value is obtained for the <code>rember</code> call, we must <code>cons</code> the value of <code>(car lat)</code> onto it.
 </p>
 
-<strong>STOP: p. 43</strong>
+<p>
+  <code>firsts</code> (takes a list of lists as the only argument and returns the first elements of each sublist).
+</p>
+
+<pre>
+(define firsts
+  (lambda (l)
+    (cond
+      ((null? l) '())
+      (else (cons (car (car l))
+                  (firsts (cdr l)))))))
+</pre>
+
+<h3>The Third Commandment (p. 45)</h3>
+
+<p>
+  When building a list, describe the first typical element, then <code>cons</code> it onto the natural recursion.
+</p>
+
+<p>
+  <strong>Example from <code>firsts</code>:</strong> <code>(else (cons (car (car lst)) (firsts (cdr lst))))</code>
+</p>
+
+<p>
+  In building up <code>(a c e)</code>, the following are equivalent:
+</p>
+
+<style>
+ol.build-cons > li {
+  margin-top: 1rem;
+}
+</style>
+
+<ol class="build-cons" type="I">
+  <li>
+    <ol>
+      <li>cons e onto ()</li>
+      <li>cons c onto the value of 1</li>
+      <li>cons a onto the value of 2</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>cons a onto the value of 2</li>
+      <li>cons c onto the value of 3</li>
+      <li>cons e onto ()</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>cons a onto</li>
+      <li>&nbsp;&nbsp;the cons of c onto</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;the cons of e onto</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;()</li>
+    </ol>
+  </li>
+</ol>
+
+<h3>The Fourth Commandment () (p. 57)</h3>
+
+<p>
+  Always change at least one argument while recurring. It must be changed to be closer to termination. The changing argument must be tested in the termination condition:
+</p>
+
+<ul>
+  <li>When using <code>cdr</code>, test termination with <code>null?</code></li>
+</ul>
+
+<h2>4. Numbers Games</h2>
+
+<p>
+  A <em>tup</em> is a tuple (a list of numbers). An empty list is also an empty tup.
+</p>
+
+<p>
+  The natural terminal condition for numbers is <code>zero?</code> and the natural recursion on a number is <code>(sub1 n)</code>.
+</p>
+
+<h3>The First Commandment (for numbers) (p. 64)</h3>
+
+<p>
+  When recurring on a number, <code>n</code>, ask two questions about it:
+  <code>(zero? n)</code> and <code>else</code>.
+</p>
 
 </div>
 <br>

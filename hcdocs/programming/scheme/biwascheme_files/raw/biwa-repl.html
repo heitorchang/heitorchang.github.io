@@ -107,21 +107,17 @@
   const biwascheme = new BiwaScheme.Interpreter(onError)
 
   biwascheme.evaluate(`
-(define atom?
-  (lambda (x)
-    (and (not (pair? x)) (not (null? x)))))
-
-(define (add1 x) (+ x 1))
-(define (sub1 x) (- x 1))
-
 (define display console-log)
 (define print console-log)
+
+(load "little-schemer.scm")
   `)
 
   const replInput = document.getElementById("replInput")
   const output = document.getElementById("replOutput")
-  let inputHistory = []
-  let inputHistoryIndex = 0
+  let inputHistoryFromStorage = window.localStorage.getItem("biwaReplHistory") || "[]"
+  let inputHistory = JSON.parse(inputHistoryFromStorage)
+  let inputHistoryIndex = -1
 
   const setCursorAtEnd = () => {
     input.focus()
@@ -179,6 +175,7 @@
     const inputValue = cleanReplOutput(input.getValue().trim())
     inputHistory.unshift(inputValue)
     inputHistoryIndex = -1
+    window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 12)))
     biwascheme.evaluate(inputValue, function (result) {
       replOutput.value += inputValue + "\n"
       output.value += ";;; " + BiwaScheme.to_write(result) + "\n\n"
