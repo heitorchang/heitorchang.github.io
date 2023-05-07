@@ -90,7 +90,7 @@
   <input id="error" style="width: 800px; border: none;">
   <br><br>
   <strong>Output</strong>
-  <br><textarea id="replOutput" style="width: 800px; height: 56%"></textarea>
+  <br><textarea id="replOutput" style="width: 800px; height: 35vh"></textarea>
   <script src="../biwascheme-0.8.0-min.js"></script>
   <script src="codemirror-5.65.13.js"></script>
   <script src="matchbrackets.js"></script>
@@ -162,7 +162,7 @@
     }
   })
 
-  input.setSize("80%", "30%")
+  input.setSize(800, "30vh")
 
   function eval() {
     const inputValue = cleanReplOutput(input.getValue().trim())
