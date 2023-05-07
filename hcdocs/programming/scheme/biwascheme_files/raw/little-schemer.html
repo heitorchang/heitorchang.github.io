@@ -84,7 +84,10 @@
   }
   </style>
   <link rel="stylesheet" href="codemirror-5.65.13.css">
-        <strong>Input:</strong> <strong>Shift + Enter</strong> to eval, <strong>Ctrl + Up/Down</strong> or <strong>Alt + p/n</strong> to scroll history
+
+  <h3>The Little Schemer - edit source directly</h3>
+
+  <strong>Input:</strong> <strong>Shift + Enter</strong> to eval, <strong>Ctrl + Up/Down</strong> or <strong>Alt + p/n</strong> to scroll history
   <br><textarea id="replInput" rows="4" cols="72" autofocus></textarea>
   <br>
   <input id="error" style="width: 800px; border: none;">
@@ -107,6 +110,10 @@
   const biwascheme = new BiwaScheme.Interpreter(onError)
 
   biwascheme.evaluate(`
+(define display console-log)
+(define print console-log)
+
+;; text-specific definitions
 (define atom?
   (lambda (x)
     (and (not (pair? x)) (not (null? x)))))
@@ -114,8 +121,9 @@
 (define (add1 x) (+ x 1))
 (define (sub1 x) (- x 1))
 
-(define display console-log)
-(define print console-log)
+;;
+(cons 'a '((b) c d))
+
   `)
 
   const replInput = document.getElementById("replInput")
