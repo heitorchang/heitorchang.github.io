@@ -89,7 +89,7 @@
   <br>
   <input id="error" style="width: 800px; border: none;">
   <br><br>
-  <strong>Output</strong>
+  <strong>Output</strong> <button onclick="clearOutput()">Clear</button>
   <br><textarea id="replOutput" style="width: 800px; height: 35vh"></textarea>
   <script src="../biwascheme-0.8.0-min.js"></script>
   <script src="codemirror-5.65.13.js"></script>
@@ -145,6 +145,10 @@
     const lines = s.split(/\r?\n/)
     const cleaned = lines.filter(line => !line.startsWith(";;; "))
     return cleaned.join("\n")
+  }
+
+  const clearOutput = () => {
+    output.value = ""
   }
 
   var input = CodeMirror.fromTextArea(replInput, {
