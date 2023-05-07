@@ -84,14 +84,15 @@
   }
   </style>
   <link rel="stylesheet" href="codemirror-5.65.13.css">
-  <h3>Note: autoloading little-schemer.scm (must use HTTP server)</h3>
-  <strong>Input:</strong> <strong>Shift + Enter</strong> to eval, <strong>Ctrl + Up/Down</strong> or <strong>Alt + p/n</strong> to scroll history
+  <strong>Input:</strong> <strong>Shift + Enter</strong> to eval, <strong>Ctrl + Up/Down</strong> or <strong>Alt + p/n</strong> to scroll history. (autoloading little-schemer)
   <br><textarea id="replInput" rows="4" cols="72" autofocus></textarea>
   <br>
   <input id="error" style="width: 800px; border: none;">
   <br><br>
   <strong>Output</strong> <button onclick="clearOutput()">Clear</button>
-  <br><textarea id="replOutput" style="width: 800px; height: 35vh; font-size: 1.2rem;"></textarea>
+  <br><textarea id="replOutput" style="width: 800px; height: 18vh; font-size: 1.1rem;"></textarea>
+  <br>
+  <div style="width: 800px; height: 22vh; overflow: auto; background-color: #dfd; font-family: monospace;" id="bs-console"></div>
   <script src="../biwascheme-0.8.0-min.js"></script>
   <script src="codemirror-5.65.13.js"></script>
   <script src="matchbrackets.js"></script>
@@ -108,14 +109,12 @@
   const biwascheme = new BiwaScheme.Interpreter(onError)
 
   biwascheme.evaluate(`
-(define display console-log)
-(define print console-log)
-
 (load "little-schemer.scm")
   `)
 
   const replInput = document.getElementById("replInput")
   const output = document.getElementById("replOutput")
+  const bsConsole = document.getElementById("bs-console")
   let inputHistoryFromStorage = window.localStorage.getItem("biwaReplHistory") || "[]"
   let inputHistory = JSON.parse(inputHistoryFromStorage)
   let inputHistoryIndex = -1
@@ -144,10 +143,10 @@
     }
   }
 
-  // remove lines with ;;;
+  // remove lines with ;>>
   const cleanReplOutput = (s) => {
     const lines = s.split(/\r?\n/)
-    const cleaned = lines.filter(line => !line.startsWith(";;; "))
+    const cleaned = lines.filter(line => !line.startsWith(";>> "))
     return cleaned.join("\n")
   }
 
@@ -170,7 +169,7 @@
     }
   })
 
-  input.setSize(800, "30vh")
+  input.setSize(800, "22vh")
 
   function eval() {
     const inputValue = cleanReplOutput(input.getValue().trim())
@@ -179,8 +178,9 @@
     window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 12)))
     biwascheme.evaluate(inputValue, function (result) {
       replOutput.value += inputValue + "\n"
-      output.value += ";;; " + BiwaScheme.to_write(result) + "\n\n"
+      output.value += ";>> " + BiwaScheme.to_write(result) + "\n\n"
       output.scrollTop = output.scrollHeight
+      bsConsole.scrollTop = bsConsole.scrollHeight
       input.setValue("")
       errorMsg.value = ""
       errorMsg.className = "noError"

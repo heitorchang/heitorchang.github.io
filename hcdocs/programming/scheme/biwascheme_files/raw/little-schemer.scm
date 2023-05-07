@@ -96,4 +96,12 @@
     (cond ((null? tup) 0)
           (else (+ (car tup) (addtup (cdr tup)))))))
 
-(define mult 1)
+(define mult
+  (lambda (n m)
+    (cond ((zero? m) 0)
+          (else (+ n (mult n (sub1 m)))))))
+
+(define tup+
+  (lambda (tup1 tup2)
+    (cond ((and (null? tup1) (null? tup2)) '())
+          (else (cons (+ (car tup1) (car tup2)) (tup+ (cdr tup1) (cdr tup2)))))))

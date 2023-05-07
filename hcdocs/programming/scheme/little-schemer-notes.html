@@ -169,6 +169,10 @@
   <code>(or ...)</code> asks two questions, one at a time. If the first one is true, it stops and answers true (in practice, it repeats the value of the first argument). Otherwise it asks the second question and answers with whatever the second question answers.
 </p>
 
+<p>
+  Don't forget the <code>else</code> branch of the <code>cond</code>!
+</p>
+
 <h3>member? (p. 22)</h3>
 
 <pre>
@@ -292,7 +296,7 @@ ol.build-cons > li {
   </li>
 </ol>
 
-<h3>The Fourth Commandment () (p. 57)</h3>
+<h3>The Fourth Commandment (p. 57)</h3>
 
 <p>
   Always change at least one argument while recurring. It must be changed to be closer to termination. The changing argument must be tested in the termination condition:
@@ -300,6 +304,10 @@ ol.build-cons > li {
 
 <ul>
   <li>When using <code>cdr</code>, test termination with <code>null?</code></li>
+</ul>
+
+<ul>
+  <li>When using <code>sub1</code>, test termination with <code>zero?</code></li>
 </ul>
 
 <h2>4. Numbers Games</h2>
@@ -317,6 +325,20 @@ ol.build-cons > li {
 <p>
   When recurring on a number, <code>n</code>, ask two questions about it:
   <code>(zero? n)</code> and <code>else</code>.
+</p>
+
+<h3>The Fifth Commandment (p. 67)</h3>
+
+<p>
+  When building a value with +, always use <code>0</code> for the value of the terminating line, for adding <code>0</code> does not change the value of an addition.
+</p>
+
+<p>
+  When building with <code>*</code> (multiplication), always use <code>1</code>, for multiplying by 1 does not change the value of a multiplication.
+</p>
+
+<p>
+  When building a value with <code>cons</code>, always consider <code>'()</code> for the value of the terminating line.
 </p>
 
 </div>
