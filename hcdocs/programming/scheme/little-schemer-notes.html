@@ -73,15 +73,88 @@
 
     <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">scheme</a></h3>
     
-<a class="index" href="biwascheme-reference.html">&#x1F4D8; biwascheme-reference.html</a><br>
-<a class="index" href="biwascheme.html">&#x1F4D8; biwascheme.html</a><br>
-<a class="index" href="biwascheme_files/index.html">&#x1F4C1; biwascheme_files</a><br>
-<a class="index" href="concrete-abstractions.html">&#x1F4D8; concrete-abstractions.html</a><br>
-<a class="index" href="concrete-abstractions_files/index.html">&#x1F4C1; concrete-abstractions_files</a><br>
-<a class="index" href="little-schemer-notes.html">&#x1F4D8; little-schemer-notes.html</a><br>
-<a class="index" href="scheme-files/index.html">&#x1F4C1; scheme-files</a><br>
-<a class="index" href="scheme.html">&#x1F4D8; scheme.html</a><br>
-<a class="index" href="teach_yourself_scheme.html">&#x1F4D8; teach_yourself_scheme.html</a><br>
+<h1>The Little Schemer (4th ed.)</h1>
+
+<h3>The Law of car (p. 5)</h3>
+
+<p>
+  The primitive <code>car</code> is defined only for non-empty lists.
+</p>
+
+<h3>The Law of cdr (p. 7)</h3>
+
+<p>
+  The primitive <code>cdr</code> is defined only for non-empty lists. The <code>cdr</code> of any non-empty list is always another list.
+</p>
+
+<h3>cons</h3>
+
+<p>
+  <code>cons</code> takes two arguments:
+</p>
+
+<ul>
+  <li>first: any S-expression</li>
+  <li>second: any list</li>
+</ul>
+
+<h3>The Law of cons (p. 9)</h3>
+
+<p>
+  The primitive <code>cons</code> takes two arguments. The second argument must be a list. The result is a list.
+</p>
+
+<h3>The Law of null? (p. 10)</h3>
+
+<p>
+  The primitive <code>null?</code> is defined only for lists.
+</p>
+
+<p>
+  In practice, (null? a) is false for everything, except the empty list.
+</p>
+
+<h3>atom?</h3>
+
+<p>
+  <code>atom?</code> is defined in this book as:
+</p>
+
+<pre>
+(define atom?
+  (lambda (x)
+    (and (not (pair? x)) (not (null? x)))))
+</pre>
+
+<p>
+  <code>(atom? (quote ()))</code> must return <code>#f</code>
+</p>
+
+<p>
+  <code>atom?</code> takes one argument, which can be any S-expression.
+</p>
+
+<h3>The Law of eq? (p. 12)</h3>
+
+<p>
+  <code>(eq? a b)</code> asks if <code>a</code> and <code>b</code> are the same non-numeric atom.
+</p>
+
+<h3>lat?</h3>
+
+<p>
+  <code>lat?</code> asks if there are no S-expressions in the argument (a list). An empty list is a "lat", and so are lists made up only of atoms.
+</p>
+
+<pre>
+(define lat?
+  (lambda (l)
+    (cond
+      ((null? l) #t)
+      ((atom? (car l)) (lat? (cdr l)))
+      (else #f))))
+</pre>
+
 </div>
 <br>
 <hr>
