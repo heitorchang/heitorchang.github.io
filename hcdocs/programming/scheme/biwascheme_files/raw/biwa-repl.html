@@ -123,10 +123,16 @@
   let inputHistory = []
   let inputHistoryIndex = 0
 
+  const setCursorAtEnd = () => {
+    input.focus()
+    input.setCursor(input.lineCount(), 0)
+  }
+
   const histUp = () => {
     inputHistoryIndex = Math.min(inputHistory.length - 1, inputHistoryIndex + 1)
     input.setValue(inputHistory[inputHistoryIndex] || "")
     input.setValue(input.getValue().trim())
+    setCursorAtEnd()
   }
 
   const histDown = () => {
@@ -137,6 +143,7 @@
     } else {
       input.setValue(inputHistory[inputHistoryIndex])
       input.setValue(input.getValue().trim())
+      setCursorAtEnd()
     }
   }
 

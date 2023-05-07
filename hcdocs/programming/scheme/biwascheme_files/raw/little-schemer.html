@@ -85,7 +85,7 @@
   </style>
   <link rel="stylesheet" href="codemirror-5.65.13.css">
 
-  <h3>The Little Schemer - edit source directly</h3>
+  <h3>The Little Schemer - run live-server in scheme directory</h3>
 
   <strong>Input:</strong> <strong>Shift + Enter</strong> to eval, <strong>Ctrl + Up/Down</strong> or <strong>Alt + p/n</strong> to scroll history
   <br><textarea id="replInput" rows="4" cols="72" autofocus></textarea>
@@ -121,9 +121,7 @@
 (define (add1 x) (+ x 1))
 (define (sub1 x) (- x 1))
 
-;;
-(cons 'a '((b) c d))
-
+(load "little-schemer.scm")
   `)
 
   const replInput = document.getElementById("replInput")
@@ -131,10 +129,16 @@
   let inputHistory = []
   let inputHistoryIndex = 0
 
+  const setCursorAtEnd = () => {
+    input.focus()
+    input.setCursor(input.lineCount(), 0)
+  }
+
   const histUp = () => {
     inputHistoryIndex = Math.min(inputHistory.length - 1, inputHistoryIndex + 1)
     input.setValue(inputHistory[inputHistoryIndex] || "")
     input.setValue(input.getValue().trim())
+    setCursorAtEnd()
   }
 
   const histDown = () => {
@@ -145,6 +149,7 @@
     } else {
       input.setValue(inputHistory[inputHistoryIndex])
       input.setValue(input.getValue().trim())
+      setCursorAtEnd()
     }
   }
 
