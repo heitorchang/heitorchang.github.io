@@ -14,3 +14,14 @@
                             (target (js-ref event "target"))
                             (target-attr (lambda (attr-name) (element-read-attribute target attr-name))))
                        ,@body)))))
+
+
+;; the little schemer
+
+(define atom?
+  (lambda (x)
+    (and (not (pair? x)) (not (null? x)))))
+
+(define (add1 x) (+ x 1))
+
+(define (sub1 x) (- x 1))

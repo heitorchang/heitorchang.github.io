@@ -77,7 +77,7 @@
   <strong>Input:</strong> Shift + Enter to eval, Ctrl + Up/Down or Alt + p/n for history
   <br><textarea id="replInput" rows="8" cols="72" autofocus></textarea>
   <br><br>
-  Error msg: <input id="error" size="64">
+  Error msg: <input id="error" size="64" style="color: #900; border: none;">
   <br><br>
   <strong>Console:</strong> <code>(clog msg)</code> adds msg
   <br><textarea id="replOutput" rows="8" cols="72"></textarea>
@@ -85,10 +85,6 @@
   Print/display area:
   <pre id="bs-console"></pre>
   <script src="../biwascheme-0.8.0-min.js"></script>
-
-  <script type="text/biwascheme">
-  (define clog console-log)
-  </script>
 
   <script>
   const errorMsg = document.getElementById("error")
@@ -98,6 +94,18 @@
   }
 
   const biwascheme = new BiwaScheme.Interpreter(onError)
+
+  biwascheme.evaluate(`
+(define atom?
+  (lambda (x)
+    (and (not (pair? x)) (not (null? x)))))
+
+(define (add1 x) (+ x 1))
+(define (sub1 x) (- x 1))
+
+(define clog console-log)
+  `)
+
   const input = document.getElementById("replInput")
   const output = document.getElementById("replOutput")
 
@@ -135,7 +143,7 @@
       output.scrollTop = output.scrollHeight
       input.value = ""
       errorMsg.value = ""
-    })
+  })
   }
   </script>
 
