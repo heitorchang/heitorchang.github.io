@@ -71,53 +71,89 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">css</a></h3>
+    <h3><a href="../../index.html">home</a>/<a href="../index.html">programming</a>/<a href="index.html">scheme</a></h3>
     
-<h1>CSS Notes</h1>
+<h1>The Halting Problem, in Scheme</h1>
 
 <p>
-  A problem I was having while designing this site (hcdocs) was the border of <code>pre</code> blocks. The simple way creates a border that moves with the viewport size.
+  Source: The Little Schemer, p. 157
+</p>
+
+<h3>will-stop?</h3>
+
+<p>
+  Could we write a function that tells us whether a given function returns with a value for every argument?
 </p>
 
 <p>
-  Two solutions were found with the use of ChatGPT:
-</p>
-
-<p>
-  First, setting <code>display: inline-block;</code> makes the border follow the length of the longest line inside the <code>pre</code>.
-</p>
-
-<pre>
-pre {
-  display: inline-block;
-  box-sizing: border-box;
-  margin: 1rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  background-color: #eee;
-  border-radius: 0.8rem;
-  overflow: visible;
-  min-width: calc(100% - 2rem);
-}
-</pre>
-
-<p>
-  A cleaner solution is to use a horizontal scrollbar with <code>overflow: auto;</code>. (The surrounding text won't scroll when you want to read the block's content).
+  To keep it simple, let's focus on a function that checks whether some function stops for just the empty list.
 </p>
 
 <pre>
-pre {
-  display: block;
-  box-sizing: border-box;
-  margin: 1rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  background-color: #eee;
-  border-radius: 0.8rem;
-  overflow: auto;
-  min-width: calc(100% - 2rem);
-}
+(define will-stop?
+  (lambda (f)
+    ; ...))
 </pre>
+
+<p>
+  Consider <code>(will-stop? eternity)</code>. <code>eternity</code> never ends, so it doesn't return a value.
+</p>
+
+<p>
+  So, <code>(will-stop? eternity)</code> has to be <code>#f</code>.
+</p>
+
+<p>
+  Now, suppose we have:
+</p>
+
+<pre>
+(define last-try
+  (lambda (x)
+    (and (will-stop? last-try)
+         (eternity x))))
+</pre>
+
+<p>
+  To test <code>last-try</code> on <code>()</code>, we must determine the value of:
+</p>
+
+<pre>
+(and (will-stop? last-try)
+  (eternity (quote ())))
+</pre>
+
+<p>
+  The value of the above depends on the value of <code>(will-stop? last-try)</code>.
+</p>
+
+<p>
+  We assumed <code>will-stop?</code> finishes with either <code>#t</code> or <code>#f</code>.
+</p>
+
+<p>
+  Let's say <code>(will-stop? last-try)</code> is <code>#f</code>. Then the code above is <code>(and #f (eternity (quote ())))</code>. Since <code>and</code> short-circuits, its value is <code>#f</code>.
+</p>
+
+<p>
+  So <code>(last-try (quote ()))</code> stopped. However, we just said that <code>(will-stop? last-try)</code> is <code>#f</code>.
+</p>
+
+<p>
+  Now, consider the other case, where <code>(will-stop? last-try)</code> is <code>#t</code>.
+</p>
+
+<p>
+  Then, <code>(last-try (quote ()))</code> is <code>(and #t (eternity (quote ())))</code>. Its value is <code>(eternity (quote ()))</code>, which doesn't stop.
+</p>
+
+<p>
+  But we just said that <code>(will-stop? last-try)</code> was <code>#t</code>!
+</p>
+
+<p>
+  In both cases there is a contradiction. The function <code>will-stop?</code> cannot be defined.
+</p>
 
 </div>
 <br>
