@@ -177,8 +177,8 @@
     inputHistoryIndex = -1
     window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 12)))
     biwascheme.evaluate(inputValue, function (result) {
-      output.value += '\n' + inputValue
-      output.value += "\n;>> " + BiwaScheme.to_write(result)
+      output.value += inputValue
+      output.value += "\n;>> " + BiwaScheme.to_write(result) + "\n"
       output.scrollTop = output.scrollHeight
       bsConsole.scrollTop = bsConsole.scrollHeight
       input.setValue("")
