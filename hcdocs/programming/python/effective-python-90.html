@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #eee;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #07a;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">python</a></h3>
+    
+<h1>Effective Python: 90 Specific Ways to write better Python</h1>
+
+<ol>
+  <li>(PYTHONIC THINKING) Know which version of Python you're using</li>
+  <li>Follow the PEP 8 Style guide</li>
+  <li>Know the differences between bytes and str</li>
+  <li>Prefer interpolated f-strings over C-style format strings and str.format</li>
+  <li>Write helper functions instead of complex expressions</li>
+  <li>Prefer multiple assignment unpacking over indexing</li>
+  <li>Prefer enumerate over range</li>
+  <li>Use zip to process iterators in parallel</li>
+  <li>Avoid else blocks after for and while loops</li>
+  <li>Prevent repetition with assignment expressions (use the walrus operator)</li>
+  <li>(LISTS AND DICTIONARIES) Know how to slice sequences</li>
+  <li>Avoid striding and slicing in a single expression</li>
+  <li>Prefer catch-all unpacking over slicing</li>
+  <li>Sort by complex criteria using the key parameter</li>
+  <li>Be cautious when relying on dict insertion ordering</li>
+  <li>Prefer <code>get</code> over <code>in</code> and KeyError to handle missing dictionary keys</li>
+  <li>Prefer defaultdict over setdefault to handle missing items in internal state</li>
+  <li>Know how to construct key-dependent default values with __missing__</li>
+  <li>(FUNCTIONS) Never unpack more than three variables when functions return multiple values</li>
+  <li>Prefer raising exceptions to returning None</li>
+  <li>Know how closures interact with variable scope</li>
+  <li>Reduce visual noise with variable positional arguments</li>
+  <li>Provide optional behavior with keyword arguments</li>
+  <li>Use None and docstrings to specify dynamic default arguments</li>
+  <li>Enforce clarity with keyword-only and positional-only arguments</li>
+  <li>Define function decorators with functools.wraps</li>
+  <li>(COMPREHENSIONS AND GENERATORS) Use comprehensions instead of map and filter</li>
+  <li>Avoid more than two control subexpressions in comprehensions</li>
+  <li>Avoid repeated work in comprehensions by using assignment expressions</li>
+  <li>Consider generators instead of returning lists</li>
+  <li>Be defensive when iterating over arguments</li>
+  <li>Consider generator expressions for large list comprehensions</li>
+  <li>Compose multiple generators with yield from</li>
+  <li>Avoid injecting data into generators with send</li>
+  <li>Avoid causing state transitions in generators with throw</li>
+  <li>Consider itertools for working with iterators and generators</li>
+  <li>(CLASSES AND INTERFACES) Compose classes instead of nesting many levels of built-in types</li>
+  <li>Accept functions instead of classes for simple interfaces</li>
+  <li>Use @classmethod polymorphism to construct objects generically</li>
+  <li>Initialize parent classes with super</li>
+  <li>Consider composing functionality with mix-in classes</li>
+  <li>Prefer public attributes over private ones</li>
+  <li>Inherit from collections.abc for custom container types</li>
+  <li>(METACLASSES AND ATTRIBUTES) Use plain attributes instead of getter and setter methods</li>
+  <li>Consider @property instead of refactoring attributes</li>
+  <li>Use descriptors for reusable @property methods</li>
+  <li>Use __getattr__, __getattribute__, and __setattr__ for lazy attributes</li>
+  <li>Validate subclasses with __init_subclass__</li>
+  <li>Register class existence with __init_subclass__</li>
+  <li>Annotate class attributes with __set_name__</li>
+  <li>Prefer class decorators over metaclasses for composable class extensions</li>
+  <li>(CONCURRENCY AND PARALLELISM) Use subprocess to manage child processes</li>
+  <li>Use threads for blocking I/O, avoid for parallelism</li>
+  <li>Use <code>Lock</code> to prevent data races in threads</li>
+  <li>Use <code>Queue</code> to coordinate work between threads</li>
+  <li>Know how to recognize when concurrency is necessary</li>
+  <li>Avoid creating new Thread instances for on-demand fan-out</li>
+  <li>Understand how using Queue for concurrency requires refactoring</li>
+  <li>Conside ThreadPoolExecutor when threads are necessary for concurrency</li>
+  <li>Achieve highly concurrent I/O with coroutines</li>
+  <li>Know how to port threaded I/O to asyncio</li>
+  <li>Mix threads and coroutines to ease the transition to asyncio</li>
+  <li>Avoid blocking the asyncio event loop to maximize responsiveness</li>
+  <li>Consider concurrent.futures for true parallelism</li>
+  <li>(ROBUSTNESS AND PERFORMANCE) Take advantage of each block in try/except/else/finally</li>
+  <li>Consider contextlib and with statements for reusable try/finally behavior</li>
+  <li>Use datetime instead of time for local clocks</li>
+  <li>Make pickle reliable with copyreg</li>
+  <li>Use decimal when precision is paramount</li>
+  <li>Profile before optimizing</li>
+  <li>Prefer deque for producer-consumer queues</li>
+  <li>Consider searching sorted sequences with bisect</li>
+  <li>Know how to use heapq for priority queues</li>
+  <li>Consider memoryview and bytearray for zero-copy interactions with bytes</li>
+  <li>(TESTING AND DEBUGGING) Use repr strings for debugging output</li>
+  <li>Verify related behaviors in TestCase subclasses</li>
+  <li>Isolate tests from each other with setUp, tearDown, setUpModule, and tearDownModule</li>
+  <li>Use mocks to test code with complex dependencies</li>
+  <li>Encapsulate dependencies to facilitate mocking and testing</li>
+  <li>Consider interactive debugging with pdb</li>
+  <li>Use tracemalloc to understand memory usage and leaks</li>
+  <li>(COLLABORATION) Know where to find community-built modules</li>
+  <li>Use virtual environments for isolated and reproducible dependencies</li>
+  <li>Write docstrings for every function, class, and module</li>
+  <li>Use packages to organize modules and provide stable APIs</li>
+  <li>Consider module-scoped code to configure deployment environments</li>
+  <li>Define a root Exception to insulate callers from APIs</li>
+  <li>Know how to break circular dependencies</li>
+  <li>Consider <code>warnings</code> to refactor and migrate usage</li>
+  <li>Consider static analysis via <code>typing</code> to obviate bugs</li>
+</ol>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

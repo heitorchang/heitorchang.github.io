@@ -1,0 +1,1225 @@
+# Fourth reading
+
+30 Example: deck of cards
+
+from collections import namedtuple
+Card_tuple_subclass = namedtuple('Card_display_name', 'rank suit')
+
+def __getitem__(self, position):
+    """allows evaluation of deck[0], deck[-1], etc."""
+    return self._cards[position]
+
+31 random.choice picks an element from an array, range, or the deck, which implements __getitem__
+
+33 len in CPython actually reads ob_size of a C struct. It's much faster, so it's the reason len is a function, not a method
+
+35 __abs__, __add__, __mul__, __repr__
+
+36 __repr__ should return the code needed to recreate the represented object, such as Vector(1, 2)
+
+__str__ should produce a suitable string for the end user. If __str__ is undefined, __repr__ is called
+
+38 https://www.python.org/dev/peps/pep-0357/
+__index__ allows any object to be used for slicing (in particular, NumPy uses different sized integers, that should be allowed inside slices)
+
+45 list, tuple, and collections.deque can store items of different types. They store references to the objects they contain
+
+str, bytes, bytearray, memoryview, and array.array can store items of only one type
+
+mutable: list, deque, bytearray, array.array, memoryview
+immutable: tuple, str, bytes
+
+46 listcomp = list comprehension
+genexp = generator expression
+
+47 line breaks are ignored inside (), [], and {}. \ is not needed at the end of lines inside these brackets
+
+49 Cartesian product
+
+colors = ['red', 'blue']
+sizes = ['S', 'M', 'L']
+tshirts = [(size, color) for size in sizes for color in colors]
+# [('S', 'red'), ('S', 'blue'), ('M', 'red')...]
+
+50 genexps save memory and should be used unless a list is really needed
+
+symbols = '@#$'
+t = tuple(ord(symbol) for symbol in symbols)  # (64, 35, 36)
+
+54 unpacking a tuple as arguments of a function
+
+t = (20, 8)
+quotient, remainder = divmod(*t)
+
+55 use * to capture a variable amount of arguments. The starred variable may be anywhere. Unpacking structures may also be nested, such as (a, b, (c, d))
+
+a, b, *c = range(5)  # c is [2, 3, 4]
+
+a, *b, c = range(5)  # b is [1, 2, 3]
+
+57 namedtuples have the _asdict() instance method that returns an OrderedDict
+
+61 slices may be named, such as column ranges in a text spreadsheet
+UNIT_PRICE = slice(40, 52)
+
+62 in NumPy, the slice syntax a[m:n, k:l] returns a 2-D slice
+
+62 Slices may be used in assignments to splice and remove elements
+
+64 Use [['_'] * 3 for i in range(3)] instead of [['_'] *  3] * 3 because the latter will repeat the same list reference three times
+
+69 avoid putting mutable items in tuples
+
+69 sorted() has two optional parameters: reverse=True and key=str.lower, len, etc
+
+70 key is also used in min(), max(), itertools.groupby(), heapq.nlargest()
+
+72 bisect.bisect(lst, x) is an alias for bisect_right() and returns an index where x should be inserted in lst, such as lst.insert(idx, x). bisect_left() only differs from bisect() when x is already in lst
+
+73 use bisect to separate values into buckets
+
+import bisect
+
+def grade(score, breakpoints=[60, 70, 80, 90], grades="FDCBA"):
+    i = bisect.bisect(breakpoints, score)
+    return grades[i]
+
+74 bisect.insort(seq, item) inserts item into seq, maintaining it in ascending order
+
+75 array.array is optimized for containing only numbers of the same type
+
+array has the methods fromlist(), fromfile(), tolist(), and tofile()
+
+78 memoryview() is a class that allows byte-by-byte manipulation of data structures without making a copy
+
+82 deque
+
+83 deque.rotate(n) : if n > 0, items are shifted to the right, otherwise to the left if n < 0. Items are moved in-place
+
+85 queue.Queue is used for communication between threads. deque is used as a collection
+
+multiprocessing is used for communication between processes
+
+heapq provides functions to operate on lists; call heapify(lst)
+
+91 trick to sort a mixed list of strings and ints: sorted(lst, key=int)
+
+94 use isinstance(3, int) to check the type of an object
+
+95 ways of creating dicts:
+
+a = dict(one=1, two=2)
+b = {'one': 1, 'two': 2}
+dict comprehensions { key: value for... }
+
+97 d.get(key, [default])
+d.setdefault(key, [default])
+d.keys()
+d.values()
+d.update(m)
+
+101 dd = defaultdict(list)  # call with a default factory (without arguments)
+But dd.get(k) will not call the factory
+
+105 collections.OrderedDict
+collections.ChainMap
+collections.Counter
+collections.UserDict
+
+106 Subclassing UserDict is preferable to dict because certain overwritten dict methods do not get called. The actual data is stored in self.data
+
+108 from types import MappingProxyType
+MappingProxyType(d) creates a mappingproxy object for reading items of a dict
+
+113 Set comprehensions {chr(i).upper() for i in range(48, 128)}
+
+115 for a set s:
+s.discard(e)  # does not raise an error if e does not exist
+s.remove(e)   # raises KeyError if e does not exist
+
+122 if __eq__ is implemented, __hash__ should be too. If a == b, then hash(a) == hash(b) must also be true. If __eq__ depends on mutable state, __hash__ should raise a TypeError ("unhashable type")
+
+131 bytes is immutable, bytearray is mutable
+
+132 seq[0] == seq[:1] is only true for str. For other sequence types, seq[:1] will return the same sequence type, while seq[0] is of an item type
+
+132 \t, \n, and \r are escape sequences for tab, newline, and carriage return
+
+134 Using struct with memoryview
+
+142 Use the chardet package to detect a text file's encoding
+
+145 always pass encoding="???" when reading and writing text files
+
+151 from unicodedata import normalize
+# 'NFC', 'NFD', 'NFKC', 'NFKD' (Normalization Forms)
+
+NFC generates the smallest string possible. It is recommended to use NFC
+
+'K' stands for Compatibility. Information may be lost; for example, 4^2 (superscripted 2) may be replaced by 42
+
+154 S.casefold() is used for caseless comparisons
+
+156 the custom function shave_marks() removes diacritics
+
+159 locale-specific sorting with key=locale.strxfrm. However, the locale must be installed in the underlying OS. Most successful in GNU/Linux
+
+161 Alternative for Unicode text sorting: the PyUCA package
+
+175 Functions are first-class objects (for example, round() is of <class 'builtin_function_or_method'>. User functions are <class 'function'>)
+
+177 A higher-order function is one that accepts functions as arguments or returns a function
+
+179 all(iterable) checks whether all values are True (or truthy), any(iterable) checks if at least one is truthy
+
+180 a lambda expression's body is limited to pure expressions (assignments, while, try are not allowed)
+
+181 The 7 callable objects are:
+- builtin functions
+- builtin methods
+- user-defined functions
+- user-defined methods
+- classes (__new__, then __init__ are called)
+- instances (if __call__ is defined)
+- generator functions (functions or methods that have the yield keyword)
+
+182 callable() checks if an object is callable
+
+182 When creating an instance that accepts a list, it's a good idea to make a local copy: self._items = list(items)
+
+185 * and ** in function parameters
+
+187 required keyword parameters may be placed after a single * in the parameter list: def f(a, *, b): ...
+
+190 how to use 'signature' in the 'inspect' module
+
+192 function annotations such as def clip(text:ster, maxLen:'int > 0'=80) -> str: serve merely as metadata. There are no checks or guarantees
+
+195 the 'operator' module includes many arithmetic operators that are more readable than an equivalent lambda expression
+
+from functools import reduce
+from operator import mul
+
+def fact(n):
+    return reduce(mul, range(1, n+1))
+
+195 operator.itemgetter(i, j, ..., k) work like lst[i], returning the value of the ith item (or a tuple if there are many indices)
+
+It can be used as the key(s) in sorting with respect to one or more columns
+
+a = [0, 10, 20]
+ig = itemgetter(0, 2)
+ig(a)  # (0, 20)
+
+sorted(b, key=itemgetter(1))
+
+196 attrgetter extract attributes (fields) from objects
+
+197 iadd, iand, etc. are inplace operator like += and &=
+
+197 methodcaller(f, g, ...) calls the methods f, g, etc. on the given object argument
+
+198 functools.partial creates a new function with some of the arguments of the original function fixed (frozen in place)
+
+def f(a, b):
+    return a + b
+
+addTo9 = partial(f, 9)
+
+addTo9(1)  # 10
+
+If a function is called often with the same argument, such as unicode.normalize('NFC', s), it may be worthwhile to use partial
+
+200 partialmethod works on methods
+
+206 the classic Strategy pattern defines a family of algorithms, encapsulates them and makes them interchangeable. The algorithm can vary independent of the clients who use them
+
+207 example: different discounts for different clients and orders. A concrete strategy is chosen by the client of the context class
+
+213 a new promotion object is not needed, because a promotion function may be called directly
+
+213 Strategy objects are often good Flyweights (a shared object)
+
+214 add available discount functions to a list (takes advantage of functions being first-class citizens) and return max(promo(order) for promo in promos) (use a genexp instead of unnecessarily creating a listcomp)
+
+However, if a promo is added, the promos list needs to be updated
+
+215 use inspect to find functions named '_promo' to dynamically compute the best promo
+
+216 the Command pattern decouples a Caller object from the Receiver, which implements the operation
+
+217 a class that implements __call__ can iteratively call other functions stored as an instance variable
+
+222 nonlocal is often needed for writing custom decorators
+
+223 a decorator is a callable that accepts another function as an argument (the decorated function). It returns a function. Classes may also be decorated
+
+@decorate
+def target():
+    print("running target")
+
+is the same as
+
+def target():
+    print("running target")
+target = decorate(target)
+
+224 decorators are run when a module is loaded (import time), and not at run time
+
+227 using a decorator to add (promo) functions to a registry
+
+229 variables that are assigned in a function are considered local
+
+230 a variable can be declared global in a function
+
+232 a closure is a function with an extended scope, enclosing non-global variables not defined in its body
+
+234 variables not associated in the local scope are "free variables"
+
+234 closures can be inspected with fn.__code__.co_varnames, .co_freevars, and fn.__closure__
+
+235 the only scenario where a function uses external, non-global variables is when it is nested in another function
+
+236 because variable assignments can only be done with local variables, the nonlocal declaration is needed in creating closures
+
+237 'clock' decorator example
+
+239 @functools.wraps copies relevant attributes from the decorated function to the decorator
+
+240 @functools.lru_cache() implements memoization. It stands for Least Recently Used (a limited cache where items not recently used are discarded)
+
+241 @functools.lru_cache() is written with parentheses. It has default arguments maxsize=128 and typed=False. If maxsize=None, the cache is unlimited. The cache size should be a power of 2. Parameters of the decorated function must be hashable
+
+244 there is no function or method overloading in Python
+
+244 @singledispatch is used to define a generic function. A different implementation is picked based on the type of the first argument. Each implementation should look like:
+
+@singledispatch
+def htmlize(obj):
+    ...
+
+@htmlize.register(numbers.Integral)
+def _(n):
+    ...
+
+245 if possible, register functions with ABCs instead of concrete types like int or list
+
+246 @singledispatch offers modular extension: code is not limited to a single class (like Java) or a single function (with if/elif/else blocks)
+
+246 stacking decorators like this:
+
+@d1
+@d2
+def f():
+    ...
+
+is the same as d1(d2(f))
+
+247 to create parametrized decorators, a decorator factory must be created. This decorator factory should accept the desired parameters, create a decorator that decorates the target function, and finally return it
+
+258 variables are labels, not boxes (if you put the same list in two boxes, changing one will in fact affect both)
+
+258 a variable is assigned to an object, and not the other way around
+
+260 several variables assigned to the same object are aliases
+
+262 'is' and 'is not' check identity, while == checks the values
+
+262 to check for None, use 'x is None' or 'x is not None'
+
+264 lst2 = list(lst1) and lst1[:] creates shallow copies (only references are copied)
+
+267 copy.deepcopy() creates deep copies. copy.copy creates shallow copies
+
+269 in Python function calls, the parameters turn into aliases of the arguments (call by sharing). Arguments are passed using "call by object reference" (technically call by value, where the value is always an object reference)
+
+immutable arguments are not changed, while mutable ones can be altered in place. However, they cannot be reassigned
+
+Mnemonic: if the argument can be mutated, its identity will remain and the mutation will occur. Otherwise, a new object is created.
+
+270 don't use mutable values as function keyword defaults
+
+273 usually, if a function or class alters mutable parameters, a copy should be created, such as list(items), so that the client's original data remains unchanged
+
+274 del only removes names, not objects
+
+274 implementing __del__ is rarely needed
+
+275 weakref.finalize registers a callback that is called when an object is destroyed
+
+276 weak references (weakref.ref) do not prevent the garbage collector from destroying an object
+
+277 it is better to use weakref collections, such as WeakKeyDictionary, WeakValueDictionary, WeakSet, and finalize
+
+279 lists and dicts cannot be targets of weakrefs, but user-defined subclasses such as class MyList(list) can be targets
+
+280 calling copy() or constructors of immutable types return the same object
+
+282 Assigning a new value to an existing variable does not change the previously associated object. It is merely "rebinding"
+
+291 call a type constructor in a class' __init__ to capture errors when instantiating it
+
+293 for a @classmethod, cls is used as the first parameter (instead of self for regular methods)
+
+293 classmethods are typically used as alternative constructors
+
+293 a @staticmethod does not accept a special first parameter. It is like a regular function that happens to be inside a class definition
+
+296 str.format() can be used with datetime objects
+
+from datetime import datetime
+"It is now {:%I:%M %p}".format(datetime.now())
+
+296 custom __format__(self, fmt_spec='')
+
+299 using two underscores at the beginning of a attribute name makes it private. @property marks a getter method of a property. The method name should be named after the private attribute
+
+def __init__(self, x):
+    self.__x = float(x)
+
+@property
+def x(self):
+    return self.__x
+
+299, 301 a hashable instance should be immutable because the hash value of any instance should not change
+
+300 a custom __hash__ function can be the XOR (^) of the hashes of its components
+
+305 adding two underscores (__myAttr) to a name "mangles" the name. It will become _MyClass__myAttr and prevents accidental access, but does not forbid access (like 'private' in Java)
+
+306 by convention, a single leading underscore has the same "protective" effect without mangling the name
+
+307 __slots__ saves memory, but are not inherited. __slots__ attributes must be defined in each class individually
+
+307 a tuple can be used in defining __slots__
+
+class Vector2d:
+    __slots__ = ('__x', '__y')
+
+309 if weak references are needed with custom classes that use __slots__, __weakref__ must be included in __slots__
+
+309, 332 in general, __slots__ is only worthwhile if you have millions of instances. it should not be used merely to prevent instance attribute creation
+
+310 class attributes can be used as default values for instance attributes
+
+311 subclassing to override a class attribute is more commonplace than altering the target class' class attribute directly
+
+class ShortVector2d(Vector2d):
+    typecode = 'f'  # 'd' in original Vector2d
+
+312 in __repr__, use class_name = type(self).__name__ so it gives the proper result in subclasses
+
+315 Python's approach to attributes is the opposite of Java's: in Java, a public attribute cannot later be implemented as getters and setters without breaking existing code
+
+In Python, public attributes can later be further controlled with properties (which work as getters and setters)
+
+319 in implementing Vector, composition is used, not inheritance
+
+320 reprlib can generate __repr__ outputs of limited length
+
+322 calling __repr__ should never raise an Exception or Error because it is used in debugging
+
+322 a protocol is an informal interface, defined in documentation but not enforced in code
+
+322 the Python sequence protocol implies only __len__ and __getitem__
+
+323 to support iteration, only __getitem__ is required
+
+327 to make a custom object sliceable, check for the type of index in
+
+def __getitem__(self, index):
+    if isinstance(index, slice):
+        ...
+
+329 __getattr__ is called if an attribute is not found via dot notation (myobj.x)
+
+330 implementing __setattr__ can prevent unwanted attribute assignments. usually, if __getattr__ is implemented, __setattr__ should be too
+
+334 when using functools.reduce() for calculating hashes, the optional third parameter (initializer) should be 0, to avoid a TypeError with empty sequences (use 0 for +, |, and ^, and 1 for * and &)
+
+336 zip is lazy so it is perfect for checking pairs (or larger tuples) of iterables
+
+if we assign z = zip(a, b, c), zip(*z) will reverse the operation
+
+337 use itertools.zip_longest(iter1, ..., fillvalue="_") if iterables are of different lengths
+
+344 itertools.chain(*iterables) concatenates its arguments
+
+352 An abstract class represents an interface (C++, Stroustrup)
+
+353 Generally speaking, creating custom ABCs (Abstract Base Classes) is only done by framework creators
+
+353 a class' interface is its public and inherited attributes (data and methods), including dunder methods such as __getitem__
+
+354 protocols are independent of inheritance; a class can implement many protocols
+
+355 the ABC Sequence contains __getitem__, __contains__, __iter__, __reversed__, index, and count. It inherits methods from the superclasses Container (__contains__), Iterable (__iter__), and Sized (__len__)
+
+356 the sequence protocol has two methods: __getitem__ and __len__
+
+359 monkey-patching is altering a module or class at run time
+
+361 "goose typing" (a term invented by Alex Martelli) is that isinstance(obj, abc_cls) is now OK (the metaclass of abc_cls is abc.ABCMeta)
+
+362 isinstance(x, numbers.Number) checks whether x is a number
+
+362 the class method register() allows an end-user to declare that a certain class should be a virtual subclass of an ABC
+
+363 check for a sequence with isinstance(a, collections.abc.Sequence)
+
+363 issubclass() is more acceptable when checking if a class subclasses ABCs
+
+365 by subclassing collections.MutableSequence we must implement __setitem__, __delitem__, and insert
+
+367, 371 most ABCs are in collections.abc. The abc module has abc.ABC, which is needed to create new ABCs
+
+367 a mixin method is a concrete implementation of an ABC method or of a mixin class
+
+369 callable() checks if an object can be invoked, but there is no hashable(). Use isinstance(obj, collections.Hashable) instead
+
+369 numbers.Number is the highest type of the numerical tower, then Complex, Real, Rational, and Integral
+
+369 Decimal does not belong to any of numbers' classes
+
+370 implementation of a Tombola ABC to represent picking and removing numbers randomly
+
+371 @abc.abstractmethod marks an abstract method. Its body is empty except for a docstring (don't write anything, not even a pass or ...)
+
+372 an ABC may have concrete methods. They should only count on the interface defined by the ABC
+
+372 an abstract method may have an implementation, even if subclasses override them. To use them, use super()
+
+373 LookupError is a superclass of IndexError and KeyError
+
+375 @abstractmethod should be the innermost decorator (closest to def)
+
+376 randomizer = random.SystemRandom() offers "random bytes suitable for cryptographic applications"
+
+378, 384 @MyABC.register or MyABC.register(MySubclass) makes a virtual subclass of MyABC. The virtual subclass will return True for issubclass and isinstance, but will not inherit anything from MyABC. No checks are made, and unimplemented methods will raise Exceptions at run time
+
+381 __subclasses__() returns a list of direct subclasses and _abc_registry is a data attribute associated with a WeakSet with weakrefs to virtual subclasses registered with the ABC
+
+385 __subclasshook__() may cause a custom class to be recognized as a subclass of an ABC. For example, a class defining __len__ will be a subclass of abc.Sized
+
+391 Strong vs. Weak typing: strong typing does not implicitly convert between types
+
+Static vs. Dynamic typing: static typing checks types during compile time. Dynamic typing does so at run time
+
+397 subclassing builtins is error-prone. Subclass UserDict, UserList, and UserString instead
+
+399 diamond inheritance problem
+
+400 a superclass' method may be called directly, passing the instance as the argument explicitly
+
+401 The Method Resolution Order (__mro__) defines the specific order when traversing the inheritance graph
+
+401 super() is safer and more flexible if there are future changes
+
+407 Inheritance may be used to create a subtype (is-a) or to avoid duplicating implementations
+
+Interfaces should explicitly be coded as ABCs
+
+Classes designed to offer methods for unrelated subclasses should be mixin classes. Mixins should never be instantiated and their names should end in "Mixin". Concrete classes should inherit from more than one mixin
+
+408 An ABC can be a mixin, but not necessarily the other way around
+
+ABC concrete methods should only depend on its own (and superclasses') methods
+
+Concrete classes should have only at most one other concrete superclass. The others should be ABCs or mixins
+
+409 an aggregate class combines ABCs and mixins in an useful manner
+
+Composition is typically more flexible than inheritance
+
+412 Django's class-based views
+
+413 Django's dispatch is a variation of the Template Method pattern
+
+421 when overloading operators, it's best to always return a new object
+
+422 x != +x if the precision of a Decimal is changed before +x is evaluated
+
+423 +ctr will discard the Counter's non-positive values
+
+426 __radd__ is the "reversed" or "right" add operator, called on the object to the right of the operator
+
+427 frequently, __radd__ may be as simple as return self + other
+
+429 it's better to capture TypeErrors and return NotImplemented. The interpreter can then try to call the reversed operator
+
+430 example of goose typing: check that a number isinstance of numbers.Real
+
+435 if in doubt when implementing an operation or comparison, return NotImplemented
+
+437 when __eq__ is implemented, __ne__ returns the negation of __eq__ if it's not defined
+
+441 example of __iadd__ for AddableBingoCage
+
+442 in general, if an infix operator is designed to accept only operands of the same type as self, it is useless to implement __r_operator__ because by definition, it is only called with an operand of a different type
+
+443 operator overloading is not allowed on builtins, and only existing operators may be overloaded (except is, and, or, not)
+
+443 a = a + b always creates a new object, while += typically modifies the object in-place
+
+445 @functools.total_ordering automatically fills in missing ordering methods
+
+446 operator overloading makes mathematical formulas more readable, such as (1+rate) ** periods, instead of BigDecimal.ONE.add(rate).pow(periods) in Java
+
+450 every generator is an iterator. An iterator retrieves items from a collection, while generators can create them on demand
+
+451 Every Python collection is iterable
+
+Iterators are used in for loops, constructing and extending collection types, consuming files line by line, list, dict, and set comprehensions, tuple unpacking, and function parameter unpacking
+
+453 sequences are iterable
+
+iter(obj) checks if the object's __iter__ is implemented. If not, it checks for __getitem__. An iterator will be created that will try accessing the items, starting from 0
+
+Otherwise, a TypeError is raised
+
+454 try calling iter(x) and handle a TypeError if it is raised, instead of isinstance(x, abc.Iterable)
+
+455 an iterable is any object from which iter() can obtain an iterator. Objects that implement __iter__ (that returns an iterator) is an iterable
+
+Sequences are always iterable, as well as objects that implement __getitem__, counting from 0
+
+456 the default interface of an iterator is:
+
+__next__ returns the next item, or raises StopIteration if there are none left
+
+__iter__ returns self, for use in places like for loops that expect iterables
+
+456 collections.abc.Iterator is a subclass of Iterable
+
+457 the best way of checking if x is an iterator is: isinstance(x, abc.Iterator)
+
+458 an exhausted iterator must be recreated again. iter(it) returns self
+
+458 an iterator is any object that implements __next__, without arguments, that returns the next item of a series or raises StopIteration when done. Iterators implementing __iter__ are also iterable
+
+460 __iter__ in iterables instantiate a new iterator
+
+461 iterators are iterable, but iterables are not iterators. Do not make an iterable an iterator also
+
+461 it should be possible to obtain multiple, independent iterators from the same iterable instance, which is not possible if the instance is both an iterable and an iterator
+
+461 a Pythonic implementation of an iterable uses a generator function to replace a custom iterator. (example of a Sentence class)
+
+def __iter__(self):
+    for word in self.words:
+        yield word
+
+462 a generator function is a factory of generators. It has a yield statement in its body. Execution is suspended at the point after the next yield statement
+
+464 a generator creates values; it does not return them. A return statement in a generator function raises StopIteration
+
+466 re.finditer returns a generator that can be used to make the Sentence class lazy (return one word at a time)
+
+467 a genexp is a lazy listcomp
+
+470 if a genexp is passed as the only argument of a function or constructor, the surrounding pair of parentheses are not needed
+
+471 ArithmeticProgression generates numbers starting from begin, stepping up to end (or forever if end=None)
+
+471 if f = 3.2 is a float, and i = 2 is an int, type(f)(i) coerces i to a float
+
+472 if the main purpose of a class is to implement __iter__, it can be reduced to a generator function
+
+473 itertools.count is a generator that returns numbers given a starting point and step
+
+itertools.takewhile returns a generator given a predicate and another generator. Results are returned until the predicate is False
+
+takewhile(lambda n: n < 5, count(1))  # <1, 2, 3, 4>
+
+475 compress(it, selector) selectively picks items of it
+compress('Aardvark', (1,0,1,1,0,1))  # ['A', 'r', 'd', 'a']
+
+dropwhile(predicate, it) discards elements until predicate is False. takewhile returns elements until predicate is False
+
+filter(pred, it) returns elements satisfying predicate. filterfalse is the opposite
+
+islice(it, stop) or islice(it, start, stop, step=1) is similar to regular slices but can be used with any iterable and is lazy
+
+476 accumulate(it, [func]) produces accumulated sums, or applies func (if given) to the first pair of items and then each item in the iterable
+
+enumerate(it, start=0) creates tuple pairs (idx, item), (idx+1, next_item), and so on
+
+map(func, it, [it2, ..., itn]) applies func to each item of it. If several iterables are given, func must accept that number of arguments
+
+starmap(func, it) applies func(*iit) to items iit produced by it
+
+478 chain(it1, ..., itN) concatenates the given iterables
+
+chain.from_iterable(it) produces all items from each iterable created by it. it should produce a series of iterables, such as a list of iterables
+
+product(it1, ..., itN, repeat=1) is the Cartesian product, with iterables repeated the given number of times. This is like creating sequences from nested for loops
+
+zip(it1, ..., itN) produces tuples from the N iterables in parallel. Stops when the shortest iterable runs out
+
+zip_longest(it1, ..., itN, fillvalue=None) fills gaps with fillvalue
+
+480 combinations(it, out_len)
+combinations_with_replacement(it, out_len)
+cycle(it) repeatedly generates elements of it
+permutations(it, out_len=None) by default, out_len=len(list(it))
+repeat(object, [times]) if times is not given, the object is repeated endlessly
+
+483 groupby(it, key=None) creates tuples (key, group) where group is a generator that produces items matching the key
+
+reversed(seq) works on sequences or classes implementing __reversed__
+
+tee(it, n=2) returns a tuple of n independent generators
+g1, g2 = tee('ABC')
+
+485 a simple usage of 'yield from' replaces nesting a for loop:
+
+def myChain(*iterables):
+    for i in iterables:
+        yield from i  # replaces for item in i: yield item
+
+486 all(it), any(it), max(), min(), sum(), reduce(func, it, [initial])
+
+488 iter(func, sentinel) creates an iterator that repeatedly
+
+491 the value passed to the .send() method will be the value of the corresponding yield expression in the generator. Bidirectional data transfer is possible
+
+- generators produce data for iteration
+- coroutines are data consumers
+- coroutines are not related to iteration
+
+496 in one point of view, generators are iterators because they implement __next__ and __iter__. But iterators are not generators
+
+However, enumerate creates its tuples, so it's not an iterator in the original Design Patterns sense
+
+499 'with' defines a temporary context and undoes it under the control of a context manager. It is commonly used to open files and close them automatically
+
+500 'else' after a 'for' will be executed if the loop reaches its end (that is, it wasn't interrupted by a 'break')
+
+'else' after 'while' executes similarly, if the loop wasn't ended by a 'break'
+
+'else' after 'try' executes if no exception was raised
+
+these 'else's are also ignored if an exception, 'return', 'break', or 'continue' exits the command's block
+
+502 context managers exist to control 'with' blocks, just as iterators control 'for' loops
+
+'with' simplifies the try/finally pattern
+
+the context manager protocol is made up of __enter__ and __exit__
+
+503 the context manager object is the result of evaluating the expression after with, but the value associated to the target variable is the result of the call to __enter__ in the context manager
+
+For example, open() returns a TextIOWrapper and its __enter__ method returns self
+
+On completion, __exit__ is called on the context manager, not the object returned by __enter__
+
+'as x' is optional
+
+505 contextlib.redirect_stdout temporarily replaces sys.stdout
+
+__exit__(self, exc_type, exc_value, traceback) is the signature for __exit__. exc refers to an exception that may be raised. They are the same as the arguments given by sys.exc_info() in a finally block
+
+506 some examples of context managers are:
+
+- sqlite3 transactions
+- threading locks and conditions
+- Decimal localcontexts
+- unittest.mock.patch
+
+507 contextlib.closing creates context managers out of objects implementing close()
+
+@contextlib.contextmanager creates a context manager out of a simple generator function
+
+ContextDecorator is a base class that defines context managers from a class that can also be used as a function decorator, executing it in a managed context
+
+ExitStack calls the stacked __exit__ methods of multiple context managers
+
+508 @contextmanager is used with a generator, where the code before yield is executed as __enter__, the value yielded becomes the target variable (as target) and the code after the yield runs as __exit__
+
+509-510 error handling should be done with the yield inside a try block
+
+try:
+    yield "JABBERWOCKY"
+except ZeroDivisionError:
+    msg = "Do not divide by zero"
+finally:
+    sys.stdout.write = original_write
+    if msg:
+        print(msg)
+
+510 you must explicitly reraise an exception in the decorated function if you don't want @contextmanager to suppress it
+
+515 normally, a caller sends values to a coroutine with co.send(datum). Usually, yield appears on the right side of an assignment (datum = yield)
+
+coroutines enable cooperative multitasking. each coroutine yields control to a central scheduler so other coroutines may be activated
+
+with respect to coroutines, yield is used for flow control
+
+516 using .send(), the data sent becomes the value of the yield in the generator function
+
+.throw() and .close() allow raising an exception in the generator and terminating it
+
+a generator may return a value with the 'return' statement
+
+'yield from' simplifies nested generators
+
+a simple coroutine must be started (also called priming) by calling next(coro) or coro.send(None), otherwise we get a TypeError (can't send non-None value to a just-started generator)
+
+518 inspect.getgeneratorstate() returns a coroutine's one of 4 states:
+GEN_CREATED, GEN_RUNNING, GEN_SUSPENDED, or GEN_CLOSED
+
+520 execution stops exactly at the yield expression. Remember that in assignment statements, the right side is evaluated first
+
+---.
+b = \ yield a  # this side is evaluated first
+     `--------
+
+'a' is returned to the caller, and b will only be assigned after .send() is called
+
+521 Example: averager()
+
+522 custom @coroutine decorator that prepares a coroutine (calls next())
+
+524 an unhandled exception in a coroutine terminates it (returns StopIteration)
+
+525 coro.throw(SomeException) makes the yield raise the given Exception. It may be handled inside the coroutine
+
+coro.close() raises GeneratorExit and halts the coroutine
+
+527 if some cleanup is necessary independently of how the coroutine stops, try/finally blocks are needed
+
+530 when a generator calls 'yield from subgen()', subgen takes control and returns values to whoever called gen. It is like calling subgen directly. While subgen runs, gen is blocked
+
+yield from 'AB' can replace for c in 'AB': yield c
+
+531 the true power of yield from is to open a bidirectional channel between the outermost caller and the innermost subgenerator, without much code in between
+
+532 in 'yield from' contexts, a delegating generator is the generator containing the 'yield from <iterable>' expression
+
+the 'subgenerator' is the generator obtained from <iterable>
+
+the 'caller' is the client code that calls the delegating generator
+
+533 the averager_count() coroutine is the subgenerator. The delegating generator is:
+
+def grouper(results, key):
+    while True:
+        results[key] = yield from averager_count()
+
+the client is:
+
+results = {}
+for key, values in data.items():
+    group = grouper(results, key)
+    next(group)
+    for value in values:
+        group.send(value)
+    group.send(None)
+
+537 any value produced by the subgenerator is passed directly to the client code
+
+any value sent with .send() is passed to the subgenerator. if None is sent, the subgenerator's __next__() is called. If StopIteration is raised, the delegating generator resumes execution. Other exceptions are propagated to the delegating generator
+
+return expr raises StopIteration(expr) on the generator's exit
+
+Exceptions (except GeneratorExit) thrown in the delegating generator using .throw() are passed to the subgenerator's .throw()
+
+If GeneratorExit or .close() is called in the delegating generator, it is also called in the subgenerator
+
+543 In a DES (Discrete Event Simulation), the clock ticks jump from simulated events
+
+544 SimPy package is designed for running simulations
+
+Taxi simulation: Each taxi makes a fixed number of trips and then goes home
+
+549 queue.PriorityQueue is used for storing events
+
+560 futures are objects that represent the asynchronous execution of an operation
+
+563 call sys.stdout.flush() to display accumulated text
+
+565 the main resources of concurrent.futures are ThreadPoolExecutor and ProcessPoolExecutor. They implement an interface allowing you to submit callables to be executed in separate threads or processes
+
+from concurrent import futures
+
+workers = min(MAX_WORKERS, len(country_list))
+with futures.ThreadPoolExecutor(workers) as executor:
+    res = executor.map(download_one, country_list)
+    return len(list(res))
+
+567 there are two Future classes: concurrent.futures.Future and asyncio.Future. They have the same purpose: to represent a delayed process that may or may not have been concluded
+
+Future is similar to Promise in JavaScript
+
+Futures encapsulate pending operations so they may be placed in queues and their results and inspect their results when available
+
+We don't need to create Futures. Passing a callable to Executor.submit() will create one automatically
+
+Both Future objects have a .done() method that is non-blocking and returns a Boolean telling whether the associated callable executed or not
+
+a callable passed to .add_done_callback() will be called with the Future as the only argument when it has been executed
+
+.result() returns the result of the callable, reraises an Exception. In concurrent.futures.Future, f.result() blocks. An optional 'timeout' value can be passed, which will raise TimeoutError if the delayed process still hasn't returned
+
+Though .result() exists in asyncio.Future, it is preferable to use yield from
+
+568 Executor.map() returns an iterator where __next__ calls .result() of each Future
+
+as_completed() accepts an iterable of futures and returns an iterator that yields each as it completes
+
+569 if future.result() is inside as_completed(), it will not block because as_completed() only yields completed futures
+
+570 none of the given scripts so far download in parallel (only one thread is active)
+
+CPython's internal data structures are not thread-safe, so the GIL (Global Interpreter Lock) allows only a single thread at a time to execute bytecode
+
+It is not the language's limitation. Jython does not have this limitation
+
+all standard library functions that block I/O free the GIL. Despite the existence of the GIL, Python threads are perfectly usable in I/O-bound applications
+
+571 ProcessPoolExecutor allows parallel processing and is ideal for CPU-intensive tasks
+
+573 PyPy is good for CPU-intensive tasks
+
+576 Executor.map returns the Futures' results in the same order as they were called. If the first Future takes 10 seconds to finish, and the others only one second, the results will be blocked
+
+To have results shown as they arrive, a combination of Executor.submit() and futures.as_completed() is needed
+
+582 'raise' by itself reraises the current Exception
+
+584 flags download example with futures.as_completed
+
+770 (Appendix) enum.Enum is a generic enumeration
+
+with futures.ThreadPoolExecutor(max_workers=concur_req) as executor:
+
+in executor.submit(download_one, cc, base_url, verbose), the first argument is the callable to be executed. The remaining arguments are passed to the callable
+
+586 a useful idiom with futures.as_completed() is to create a dict to map each future to other data that may be useful when the future completes
+
+587 threading provides more basic constructs such as Thread, Lock, and Semaphore. They can be used with thread-safe queues from the queue module
+
+If ProcessPoolExecutor is insufficient for I/O-bound applications, there is the multiprocessing module
+
+594 concurrency is about dealing with many things at the same time (structure)
+
+parallelism is about doing many things at the same time (execution)
+
+595 asyncio implements concurrency with coroutine driven by an event loop.
+
+596 spinning bar example with threading
+
+597 calling time.sleep() blocks the main thread, but the GIL is freed
+
+spinner = threading.Thread(target=spin, args=('Thinking...', signal))
+
+spinner.join() waits until the thread terminates
+
+599 decorate coroutines with @asyncio.coroutine
+
+time.sleep() should become asyncio.sleep()
+
+async is now a reserved keyword, so asyncio.async became asyncio.ensure_future. It schedules Tasks
+
+a Task is stopped with .cancel()
+
+in main, loop = asyncio.get_event_loop()
+result = loop.run_until_complete(supervisor())
+loop.close()
+
+supervisor() calls asyncio.ensure_future(). It is the heart of the given example
+
+601 an asyncio.Task is like a green thread (scheduled by the runtime library, not natively)
+
+602 a coroutine is driven by 'yield from'
+
+Task.cancel() raises CancelledError
+
+the 'supervisor' coroutine must be driven by loop.run_until_complete
+
+coroutines are synchronized by definition. yield or yield from returns control back to the scheduler
+
+603 in asyncio, BaseEventLoop.create_task() receives a coroutine, schedules it for execution, and returns a Task instance (a subclass of Future)
+
+asyncio.Future has the done(), add_done_callback(), and result() methods, among others. However, yield from is more often used instead of these methods
+
+if result() is called on an unfinished asyncio.Future, we get an InvalidStateError. yield from is the typical way to get the result of a asyncio.Future
+
+604 callback or post-processing is done after the yield from my_future expression
+
+result = yield from my_future
+
+my_future may be a regular function that returns a Future or Task
+
+asyncio.ensure_future(coro_or_future, *, loop=None) accepts either coroutines or futures as the first argument. If loop is None, asyncio.get_event_loop() is used
+
+BaseEventLoop.create_task(coro) schedules the coroutine for execution and returns an asyncio.Task. It may return an instance compatible with Task if called from a subclass of BaseEventLoop
+
+605 for quick testing, use:
+
+import asyncio
+
+def run_sync(coro_or_future):
+    loop = asyncio.get_event_loop()
+    return loop.run_until_complete(coro_or_future)
+
+a = run_sync(some_coro())
+
+605 flags download with asyncio
+
+607 asyncio.wait() is non-blocking. It's a coroutine that ends when all coroutines passed to it end. It accepts timeout and return_when to make it stop early
+
+wait_coro = asyncio.wait(to_do)
+res, _ = loop.run_until_complete(wait_coro)
+loop.close()
+
+608 run_until_complete() returns a tuple of the set of completed Futures and the incomplete ones
+
+608 trick: the general logic of a coroutine can be better understood if we pretend yield froms are not there
+
+609 yield from foo does not block because the current coroutine (the delegating generator) is suspended
+
+coroutine chains are driven by an API call to asyncio, such as loop.run_until_complete()
+
+the innermost coroutine at the end of the chain always delegate with yield from a method of asyncio or coroutines of libraries that implement higher-level protocols
+
+611 the memory overhead per thread is in the order of megabytes, so it's infeasible to create one per connection
+
+callbacks are the traditional method of implementing asynchronous calls. Instead of waiting for a response, we register a function to be called when something happens. In this manner, every call is non-blocking
+
+such a framework depends on interrupts, polling, background processes, etc
+
+from the event loop's point of view, calling a callback or .send() is practically the same
+
+615 asyncio.Semaphore is a synchronization device that limits the number of concurrent requests
+
+616 a Semaphore contains an internal counter which decrements on .acquire() and increments on .release(). If the counter is zero, acquire() blocks until another coroutine releases
+
+with (yield from semaphore):
+
+617 main calls download_many (a regular function), which instantiates the downloader_coro
+
+618 we cannot map futures to country codes because internally, asyncio replaces supplied futures with others so that in the end the same results are provided. A custom FetchError encapsulates a network Exception and saves the country code for error reporting
+
+619 internally, asyncio's event loop has an executor of a pool of threads, and you can send callables to be executed in it with run_in_executor
+
+620 loop = asyncio.get_event_loop()
+loop.run_in_executor(None, save_flag, image, cc.lower() + '.gif')
+
+passing None means using the default pool of threads
+
+622 callback nesting or chaining can be replaced by a coroutine with multiple yield froms
+
+623 the price to pay for using a coroutine is the more complicated setup: loop.create_task(three_stages(request1))
+
+624 get flag image and country name from a JSON file
+
+626 use yield from with coroutines and asyncio.Future instances
+
+630 asyncio.start_server()
+loop.run_until_complete(server.wait_closed())
+
+632 asyncio.streams has a ready-to-use server. We only need to implement a handler function
+
+there is also a lower-level transports module
+
+633 loop.create_server()
+
+host = loop.run_until_complete(init(loop, address, port))
+
+636 the 'home' function shown is not asynchronous. It is very much like a view in Django
+
+637 implementing an asynchronous page display or even infinite scrolling is left as an exercise
+
+644 properties can be used to replace a public attribute (data or method) with access methods (getters and setters)
+
+there is a rich API to control attribute access and to implement dynamic attributes
+
+__getattr__ and __setattr__ are called to evaluate dot notation expressions (obj.attr)
+
+649 __getattr__ is called only if there was no attribute found (in the instance, class, or superclasses)
+
+650 FrozenJSON allows attribute access through dot notation (instead of obj[attr])
+
+653 __new__ is the real constructor. It passes the new instance to __init__. __new__ is rarely implemented
+
+654 the shelve and pickle modules
+
+656 def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
+
+is a hack to create an instance with attributes based on named arguments
+
+658 multiprocessing.Namespace and argparse.Namespace similarly creates instances with arbitrary attributes
+
+659 properties are class attributes designed to manage instance attributes
+
+661 an empty class doesn't need pass, but it's good to add a docstring
+
+662 @property example with Event
+
+663 if Record implemented __getitem__ instead of __getattr__, there wouldn't be a risk of overwriting attributes
+
+664 'factory' to instantiate an object of the right class
+
+666 property with validation
+
+@property  # getter
+def weight(self):
+    return self.__weight
+
+@weight.setter
+def weight(self, value):
+    if value > 0:
+        self.__weight = value
+    else:
+        raise ValueError("weight must be positive")
+
+669 properties override instance attributes
+
+670 a property is a class attribute, but is returned instead of an instance attribute. If the property is replaced, the instance attribute will be returned
+
+672 a property's docstring should be stored in the getter
+
+673 factory for creating 'quantity' properties
+
+674 instance.__dict__[storage_name] is used to avoid an infinite loop
+
+676 @my_property.deleter is used to encapsulate the method responsible for deleting the attribute managed by the property
+
+678 obj.__class__ is the same as type(obj)
+__dict__ holds the writeable attributes
+__slots__ may be defined in a class to limit the attributes its instances can have
+
+dir(), getattr(), setattr(), hasattr(), vars()
+
+__delattr__, __dir__, __getattr__, __getattribute__, __setattr__
+
+__getattribute__ is called before __getattr__. __getattr__ is called when an attribute is not found
+
+684 in Python, a function call and instantiation both look the same. A factory may be better than a constructor
+
+687 Descriptors are a way of reusing the same logic when accessing several attributes
+
+a descriptor is a class that implements a protocol made up of __get__, __set__, and __delete__. Most descriptors do not implement all three
+
+688 the properties factory uses a functional programming approach, while descriptors is object-oriented
+
+a descriptor is used in a different class by declaring instances of the descriptor as class attributes
+
+in the LineItem class, there are two 'weight's, one is an instance attribute and the other is a class attribute
+
+689 descriptor class: a class implementing the descriptor protocol (Quantity)
+
+managed class: the class where the descriptor instances are declared as class attributes (LineItem). Its instances are managed instances
+
+descriptor instance: an instance of the descriptor class, declared as a class attribute of the managed class
+
+storage attribute: an attribute of the managed instance that holds the value of a managed attribute of an instance
+
+managed attribute: a public attribute in the managed class that will be handled by a descriptor instance, with values stored in a storage attribute. A descriptor instance and a storage attribute provide the infrastructure for a managed attribute
+
+692 descriptors are based on a protocol. There is no need to make it a subclass
+
+when implementing __set__(self, instance, value), self is the descriptor instance and instance is the managed instance
+
+693 values are stored with: instance.__dict__[self.storage_name] = value
+
+694 to avoid having to repeat the attribute name with weight = Quantity('weight'), we generate a prefix _Quantity# with an incrementing counter
+
+A pound sign is used because it makes an identifier name invalid, so we avoid users overwriting our auto-generated names
+
+695 in this case, the managed attribute and storage attribute have different names
+
+696 in __get__(self, instance, owner), owner is a reference to the managed class. It is useful if the descriptor reads class attributes
+
+697 in __get__, if instance is None: return self
+
+699 an advantage of a descriptor class is that it may be subclassed. Reusing a property factory will usually require copying code. It is also more readable than relying on closures
+
+700 refactor Quantity as the descriptor classes
+
+AutoStorage <- Validated (abstract) <- Quantity and NonBlank
+
+701 this setup is an example of the Template Method pattern
+
+703 an overriding descriptor's __set__ overrules (intercepts) the normal behavior of setting an attribute in the managed instance
+
+704 an overriding descriptor implementing both __get__ and __set__ is also called a data descriptor or enforced descriptors
+
+without __set__, a descriptor is non-overriding (also called non-data or shadowable)
+
+705 properties are overriding descriptors
+
+706 if only __set__ is implemented, reading the descriptor will return the descriptor object itself. If an instance attribute is placed directly in __dict__, reading that attribute will return the value in the __dict__
+
+707 writing an instance attribute with the same name as a non-overriding descriptor will shadow the descriptor
+
+methods are implemented as non-overriding descriptors
+
+709 class attributes may be overwritten by a class attribution (monkey-patching)
+
+although the reading of a class attribute can be controlled by a __get__ associated with the managed class, the writing of a class attribute cannot be handled by a descriptor's __set__
+
+709 a function in a class becomes a bound method because user-defined functions have a __get__ method. They work as descriptors when associated with a class
+
+710 obj.func returns a bound method, while Managed.func returns a function
+
+712 using a property is simpler tha creating a descriptor for read-only attributes
+
+if you really must use a descriptor for a read-only attribute, __set__ must be implemented. It should raise AttributeError with a suitable message only
+
+validation descriptors can work with only __set__. Values should be written directly in the instance's __dict__
+
+caching can be done with __get__ only. After performing a expensive computation, set the result as an instance attribute (overwriting the non-overriding descriptor)
+
+non-special methods can be shadowed by instance attributes
+
+714 the docstring of a descriptor class is used to document all descriptor instances in the managed class. It is a disadvantage of descriptors that does not apply to properties
+
+__delete__ intercepts deletion of managed attributes
+
+718 an example of metaprogramming is creatting a new class with a function (without using 'class')
+
+metaclasses allow the creation of new categories of classes with special characteristics, such as ABCs (Abstract Base Classes)
+
+719 record_factory is inspired by namedtuple, and creates simple classes on demand
+
+721 type(cls_name, (object,), cls_attrs) creates a new type
+
+722-723 create matching storage_names in LineItem
+
+724 @model.entity decorator modifies the LineItem class
+
+725 a drawback of decorators is that they apply only to the classes directly associated with them. Subclasses may or may not inherit the decorator's effects
+
+726 in 'import time', the bodies of all classes are executed
+
+726 evaltime.py exercise on evaluation order
+
+730 a metaclass is written like a class
+
+731 str and LineItem are instances of type. They are all subclasses of object
+
+object is an instance of type and type is a subclass of object
+
+type is an instance of type (of itself). These relationships are all 'magical'
+
+ABCMeta and Enum are metaclasses
+
+ABCMeta is an instance and subclass of type. Being a subclass of type, ABCMeta inherits the ability to create classes
+
+735 in metaclasses' __init__, substitute self with cls
+
+737 class EntityMeta(type):
+
+class Entity(metaclass=EntityMeta):
+    """Business entity with validated fields"""
+
+739 __prepare__ is called before __new__ and it creates the mapping used to fill in the class body's attributes
+
+@classmethod
+def __prepare__(cls, name, bases):
+    return collections.OrderedDict()
+
+741 cls.__bases__, __qualname__, __subclasses__(), mro()
