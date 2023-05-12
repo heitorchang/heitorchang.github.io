@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="resume_maven.css">
+        <title>Heitor Chang</title>
+    </head>
+    <body>
+      <h1>Heitor Chang</h1>
+
+      <div id="contact">
+        heitorpontual@gmail.com &bull; https://heitorchang.github.io/
+      </div>
+
+      <div id="professional">
+        <h2>Professional Experience</h2>
+      </div>
+
+      <div id="education">
+        <h2>Education</h2>
+      </div>
+
+      <div id="languages">
+        <ul>
+          <li>Fluent in <strong>English</strong> and <strong>Portuguese</strong>. Basic knowledge of <strong>Mandarin</strong>, <strong>Italian</strong>, <strong>French</strong>, <strong>Spanish</strong>, and <strong>Greek</strong>.</li>
+          <li>Advanced knowledge of <strong>Python</strong>, <strong>JavaScript</strong>, and <strong>HTML</strong>.</li>
+          <li>Intermediate knowledge of <strong>PostgreSQL</strong> and <strong>CSS</strong>.</li>
+          <li>Basic knowledge of <strong>Scheme</strong>, <strong>Java</strong>, and <strong>Kotlin</strong>.</li>
+        </ul>
+      </div>
+
+<script src="biwascheme-0.8.0-custom.min.js"></script>
+<script type="text/biwascheme">
+(define professional-section (getelem "#professional"))
+(define professional-items
+  '(("Mediafly, Inc., Chicago, IL (Remote)"
+     ("Senior Software Engineer, Data and Client Squad"
+      "Aug. 2022 &ndash; Feb. 2023"
+      ("Developed Kotlin code to expand the back-end customer integration with Salesforce's API to enable the creation of custom objects holding metadata."
+       "Improved the Python video call processing pipeline to filter out unwanted blocks of silence."
+       "Corrected multiple occurrences of temporary files not being cleared in the Python pipeline code.")))
+
+    ("Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP"
+     ("Senior Full-Stack Developer"
+      "June 2020 &ndash; Aug. 2022"
+      ("Built and administered the public-facing website with Django, including custom user management and authentication with a JWT extension."
+       "Architected a PostgreSQL database in Google Cloud Platform to store meteorological observation and forecast time series at client-supplied locations and government-operated stations."
+       "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and Bitbucket's Continuous Deployment pipeline."
+       "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."
+       "Created a hydroelectric energy forecasting dashboard containing Google Maps and Apache ECharts widgets in Vue.js and the Vuetify Material Design front-end framework.")))
+
+    ("Pontual Export &amp; Import Ltd., São Paulo, SP"
+     ("Full-Stack Developer"
+      "Jan. 2014 &ndash; June 2020"
+      ("Used MA (Moving Average) indicators in a Django and Python project to predict the demand for 600 products and calculate appropriate amounts for restocking."
+       "Prepared sales forecasts and summarized business-critical statistics in a Django app."
+       "Created a REST API with the Slim micro framework in PHP to be consumed by a React app that rendered the company's website."
+       "Visualized historical sales with NumPy and Pandas, reporting totals and outliers for each product."
+       "Created a Single-Page App with AngularJS and Firebase to organize product reservations by clients and their assigned salesperson in real-time.")))))
+
+(define (create-role item)
+  (let ((dom-elem (element-new `(div ("div.prof-role" ,(car item)) ("div.prof-dates" ,(cadr item))))))
+    dom-elem))
+
+(define (create-tasks tasks)
+  (element-new `(ul ,@(map (lambda (task) `(li ,task)) (caddr tasks)))))
+
+(define (create-professional-item item)
+  "Given a Scheme expression for professional experience, create a DOM element out of it."
+  (let ((dom-elem (element-new '(div "")))
+        (title (element-new `("h3.professional" ,(car item))))
+        (role (create-role (cadr item)))
+        (tasks (create-tasks (cadr item))))
+    (element-append-child! dom-elem title)
+    (element-append-child! dom-elem role)
+    (element-append-child! dom-elem tasks)))
+
+(define education-section (getelem "#education"))
+(define education-items
+  '(("Stanford University, Stanford, CA"
+     (("B.S. in Mathematical and Computational Sciences"
+       "GPA 3.7/4.0"
+       "Sept. 2001 &ndash; June 2005")
+      ("M.S. in Materials Science and Engineering"
+       "GPA 3.6/4.0"
+       "Sept. 2005 &ndash; June 2007")))))
+
+(define (create-degrees degrees)
+  (cond ((null? degrees) (element-new '("div.degree" "")))
+        (else
+         (let ((degree (car degrees)))
+           (let ((major-elem (element-new '("div.major" "")))
+                 (major (car degree))
+                 (gpa (cadr degree))
+                 (dates (caddr degree)))
+             (element-append-child! major-elem (element-new `("div.major-name" ,major)))
+             (element-append-child! major-elem (element-new `("div.major-gpa" ,gpa)))
+             (element-append-child! major-elem (element-new `("div.major-dates" ,dates)))
+             (element-append-child! (create-degrees (cdr degrees)) major-elem))))))
+
+(define (create-education-item item)
+  "Given a Scheme expression for education, create a DOM element out of it."
+  (let ((dom-elem (element-new '(div "")))
+        (title (element-new `("h3.education" ,(car item))))
+        (degrees (create-degrees (cadr item))))
+    (element-append-child! dom-elem title)
+    (element-append-child! dom-elem degrees)
+    dom-elem))
+
+(define (add-education-items items)
+  (when (not (null? items))
+    (element-append-child! education-section (create-education-item (car items)))
+    (add-education-items (cdr items))))
+(add-education-items education-items)
+
+(define (add-professional-items items)
+  (when (not (null? items))
+    (element-append-child! professional-section (create-professional-item (car items)))
+    (add-professional-items (cdr items))))
+
+(add-professional-items professional-items)
+</script>
+    </body>
+</html>

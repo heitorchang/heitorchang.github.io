@@ -1,0 +1,112 @@
+@font-face {
+    font-family: 'Source';
+    src: url('fonts/SourceSans3.ttf') format('truetype');
+    font-style: normal;
+}
+
+:root {
+    --underline: 1px solid #ccc;
+}
+
+*, ::before, ::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Source';
+    max-width: 50rem;
+    margin: auto;
+}
+
+#contact {
+    text-align: center;
+    margin-top: -0.8rem;
+    margin-bottom: -1rem;
+}
+
+h1, h2, h3 {
+    margin: 0.7rem 0;
+}
+
+h1 {
+    font-size: 1.4rem;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin-bottom: -0.3rem;
+    margin-top: 1.2rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+    padding-bottom: 0.2rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.2rem;
+    border-bottom: var(--underline);
+}
+
+ul {
+    margin: 0.2rem 0;
+    padding-left: 1.5rem;
+}
+
+ul li {
+    padding: 0;
+}
+
+div.degree {
+
+}
+
+div.major {
+
+}
+
+div.major-name {
+    display: inline-block;
+    width: 55%;
+    align-items: stretch;
+    white-space: nowrap;
+    background-color: #fff;
+}
+
+div.major-gpa {
+    display: inline-block;
+    width: 20%;
+    align-items: stretch;
+    text-align: right;
+    white-space: nowrap;
+    padding-left: 1rem;
+    background-color: #fff;
+}
+
+div.major-dates {
+    display: inline-block;
+    width: 25%;
+    text-align: right;
+    font-style: italic;
+    white-space: nowrap;
+    padding-left: 1rem;
+    background-color: #fff;
+}
+
+div.prof-role {
+    display: inline-block;
+    font-style: italic;
+    width: 75%;
+}
+
+div.prof-dates {
+    display: inline-block;
+    width: 25%;
+    text-align: right;
+    font-style: italic;
+    white-space: nowrap;
+    padding-left: 1rem;
+    background-color: #fff;
+}
