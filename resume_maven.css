@@ -16,6 +16,7 @@ body {
     font-family: 'Source';
     max-width: 50rem;
     margin: auto;
+    padding: 2.5rem;
 }
 
 #contact {
