@@ -93,6 +93,7 @@ div.major-dates {
     font-style: italic;
     white-space: nowrap;
     padding-left: 1rem;
+    padding-right: 0.5rem;
     background-color: #fff;
 }
 
@@ -109,5 +110,6 @@ div.prof-dates {
     font-style: italic;
     white-space: nowrap;
     padding-left: 1rem;
+    padding-right: 0.5rem;
     background-color: #fff;
 }
