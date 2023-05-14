@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="resume_maven.css">
+        <link rel="stylesheet" href="resume_maven_web.css">
         <title>Heitor Chang</title>
     </head>
     <body>
@@ -22,8 +22,10 @@
       </div>
 
       <div id="languages">
+        <h2 class="skills">Skills</h2>
         <ul>
-          <li>Fluent in <strong>English</strong> and <strong>Portuguese</strong>. Basic knowledge of <strong>Mandarin</strong>, <strong>Italian</strong>, <strong>French</strong>, <strong>Spanish</strong>, and <strong>Greek</strong>.</li>
+          <li>Fluent in <strong>English</strong> and <strong>Portuguese</strong>.</li>
+          <li>Rudimentary knowledge of <strong>Mandarin</strong>, <strong>Italian</strong>, <strong>French</strong>, <strong>Spanish</strong>, and <strong>Greek</strong>.</li>
           <li>Advanced knowledge of <strong>Python</strong>, <strong>JavaScript</strong>, and <strong>HTML</strong>.</li>
           <li>Intermediate knowledge of <strong>PostgreSQL</strong> and <strong>CSS</strong>.</li>
           <li>Basic knowledge of <strong>Scheme</strong>, <strong>Java</strong>, and <strong>Kotlin</strong>.</li>
@@ -78,26 +80,14 @@
 
 (define education-section (getelem "#education"))
 (define education-items
-  '(("Stanford University, Stanford, CA"
-     (("B.S. in Mathematical and Computational Sciences"
-       "GPA 3.7/4.0"
-       "Sept. 2001 &ndash; June 2005")
-      ("M.S. in Materials Science and Engineering"
-       "GPA 3.6/4.0"
-       "Sept. 2005 &ndash; June 2007")))))
+  '(("New York University, New York, NY"
+     ("M.S. in Financial Mathematics, 2009"))
+    ("Stanford University, Stanford, CA"
+     ("M.S. in Materials Science and Engineering, 2007"
+      "B.S. in Mathematical and Computational Sciences, 2005"))))
 
 (define (create-degrees degrees)
-  (cond ((null? degrees) (element-new '("div.degree" "")))
-        (else
-         (let ((degree (car degrees)))
-           (let ((major-elem (element-new '("div.major" "")))
-                 (major (car degree))
-                 (gpa (cadr degree))
-                 (dates (caddr degree)))
-             (element-append-child! major-elem (element-new `("div.major-name" ,major)))
-             (element-append-child! major-elem (element-new `("div.major-gpa" ,gpa)))
-             (element-append-child! major-elem (element-new `("div.major-dates" ,dates)))
-             (element-append-child! (create-degrees (cdr degrees)) major-elem))))))
+  (element-new `(div ,@(map (lambda (major) `("div.major" ,major)) degrees))))
 
 (define (create-education-item item)
   "Given a Scheme expression for education, create a DOM element out of it."

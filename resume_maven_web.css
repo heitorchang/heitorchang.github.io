@@ -1,0 +1,133 @@
+@font-face {
+    font-family: 'Assistant';
+    src: url('fonts/Assistant.ttf') format('truetype');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Source';
+    src: url('fonts/SourceSans3.ttf') format('truetype');
+    font-style: normal;
+}
+
+:root {
+    --underline: 1px solid #d0dfdf;
+}
+
+*, ::before, ::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Assistant';
+    max-width: 50rem;
+    margin: auto;
+    padding: 2.5rem;
+}
+
+#contact {
+    text-align: center;
+    margin-top: -0.8rem;
+}
+
+h1 {
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: #093536;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0b4a48;
+    text-transform: uppercase;
+    margin-bottom: -0.6rem;
+    margin-top: 1.2rem;
+    margin-left: -0.8rem;
+}
+
+h2.skills {
+    margin-bottom: 0.6rem;
+}
+
+h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #0c5e5a;
+    text-transform: uppercase;
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.2rem;
+    border-bottom: var(--underline);
+}
+
+ul {
+    margin: 0.2rem 0;
+    padding-left: 1.5rem;
+}
+
+ul li {
+    padding: 0;
+    margin-bottom: 0.5rem;
+}
+
+div.degree {
+
+}
+
+div.major {
+    font-style: italic;
+}
+
+div.major-name {
+    display: inline-block;
+    width: 55%;
+    align-items: stretch;
+    white-space: nowrap;
+    background-color: #fff;
+}
+
+div.major-gpa {
+    display: inline-block;
+    width: 20%;
+    align-items: stretch;
+    text-align: right;
+    white-space: nowrap;
+    padding-left: 1rem;
+    background-color: #fff;
+}
+
+div.major-dates {
+    display: inline-block;
+    width: 25%;
+    text-align: right;
+    font-style: italic;
+    white-space: nowrap;
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+    background-color: #fff;
+}
+
+div.prof-role {
+    display: inline-block;
+    font-style: italic;
+    width: 75%;
+    margin-bottom: 0.4rem;
+}
+
+div.prof-dates {
+    display: inline-block;
+    width: 25%;
+    text-align: right;
+    font-style: italic;
+    white-space: nowrap;
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+    background-color: #fff;
+}
+
+#education {
+    page-break-before: always;
+}
