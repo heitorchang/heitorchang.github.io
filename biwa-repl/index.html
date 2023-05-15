@@ -1,0 +1,111 @@
+<body>
+  <style>
+  .noError {
+    background-color: #fff;
+  }
+  .errorFlash {
+    background-color: #fcc;
+    transition: 0.3s linear;
+  }
+  </style>
+  <link rel="stylesheet" href="lib/codemirror-5.65.13.css">
+  <strong>Input:</strong> <strong>Shift + Enter</strong> to eval, <strong>Ctrl + Up/Down</strong> or <strong>Alt + p/n</strong> to scroll history. (calling load requires HTTP server)
+  <br><textarea id="replInput" rows="4" cols="72" autofocus></textarea>
+  <br>
+  <input id="error" style="width: 800px; border: none;">
+  <br><br>
+  <strong>Output</strong> <button onclick="clearOutput()">Clear</button>
+  <br><textarea id="replOutput" style="width: 800px; height: 18vh; font-size: 1rem;"></textarea>
+  <br>
+  <div style="width: 800px; height: 22vh; overflow: auto; background-color: #dfd; font-family: monospace;" id="bs-console"></div>
+  <script src="lib/biwascheme-0.8.0-custom.min.js"></script>
+  <script src="lib/codemirror-5.65.13.js"></script>
+  <script src="lib/matchbrackets.js"></script>
+  <script src="lib/scheme.js"></script>
+
+  <script>
+  const errorMsg = document.getElementById("error")
+  const onError = (e) => {
+    errorMsg.value = e.message
+    errorMsg.className = 'errorFlash'
+    throw(e)
+  }
+
+  const biwascheme = new BiwaScheme.Interpreter(onError)
+
+  const replInput = document.getElementById("replInput")
+  const output = document.getElementById("replOutput")
+  const bsConsole = document.getElementById("bs-console")
+  let inputHistoryFromStorage = window.localStorage.getItem("biwaReplHistory") || "[]"
+  let inputHistory = JSON.parse(inputHistoryFromStorage)
+  let inputHistoryIndex = -1
+
+  const setCursorAtEnd = () => {
+    input.focus()
+    input.setCursor(input.lineCount(), 0)
+  }
+
+  const histUp = () => {
+    inputHistoryIndex = Math.min(inputHistory.length - 1, inputHistoryIndex + 1)
+    input.setValue(inputHistory[inputHistoryIndex] || "")
+    input.setValue(input.getValue().trim())
+    setCursorAtEnd()
+  }
+
+  const histDown = () => {
+    inputHistoryIndex = Math.max(-1, inputHistoryIndex - 1)
+    if (inputHistoryIndex === -1) {
+      input.setValue("")
+      inputHistoryIndex = -1
+    } else {
+      input.setValue(inputHistory[inputHistoryIndex])
+      input.setValue(input.getValue().trim())
+      setCursorAtEnd()
+    }
+  }
+
+  // remove lines with ;>>
+  const cleanReplOutput = (s) => {
+    const lines = s.split(/\r?\n/)
+    const cleaned = lines.filter(line => !line.startsWith(";>> "))
+    return cleaned.join("\n")
+  }
+
+  const clearOutput = () => {
+    output.value = ""
+  }
+
+  var input = CodeMirror.fromTextArea(replInput, {
+    mode: 'scheme',
+    matchBrackets: true,
+    lineNumbers: true,
+    extraKeys: {
+      "Shift-Enter": () => {
+        eval()
+      },
+      "Alt-P": histUp,
+      "Ctrl-Up": histUp,
+      "Alt-N": histDown,
+      "Ctrl-Down": histDown,
+    }
+  })
+
+  input.setSize(800, "22vh")
+
+  function eval() {
+    const inputValue = cleanReplOutput(input.getValue().trim())
+    inputHistory.unshift(inputValue)
+    inputHistoryIndex = -1
+    window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 12)))
+    biwascheme.evaluate(inputValue, function (result) {
+      output.value += inputValue
+      output.value += "\n;>> " + BiwaScheme.to_write(result) + "\n"
+      output.scrollTop = output.scrollHeight
+      bsConsole.scrollTop = bsConsole.scrollHeight
+      input.setValue("")
+      errorMsg.value = ""
+      errorMsg.className = "noError"
+    })
+  }
+  </script>
+</body>
