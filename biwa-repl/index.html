@@ -292,7 +292,7 @@
       const inputValue = cleanReplOutput(input.getValue().trim())
       inputHistory.unshift(inputValue)
       inputHistoryIndex = -1
-      window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 12)))
+      window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 32)))
       biwascheme.evaluate(inputValue, function (result) {
         output.value += inputValue
         output.value += "\n;=> " + BiwaScheme.to_write(result) + "\n\n"
