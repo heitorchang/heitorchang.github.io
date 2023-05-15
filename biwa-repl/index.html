@@ -123,6 +123,8 @@
 
     <div id="container">
       <div id="input-area">
+        <button onclick="clearAll()">Clear all</button>
+        <button onclick="clearInput()">Clear input</button>
         <textarea id="replInput" rows="4" cols="72" autofocus></textarea>
         <div id="error"></div>
       </div>
@@ -157,6 +159,11 @@
       <h3>Display area (right panel)</h3>
       <p>
         Call the functions <code>display</code> and <code>newline</code> to add content here.
+      </p>
+
+      <h4>Note:</h4>
+      <p>
+        The <em>Clear ...</em> buttons only affect the display. The Scheme interpreter's values are not cleared.
       </p>
 
       <div style="text-align: center;">
@@ -218,12 +225,23 @@
       return cleaned.join("\n")
     }
 
+    const clearInput = () => {
+      input.setValue("")
+      input.focus()
+    }
+
     const clearOutput = () => {
       output.value = ""
     }
 
     const clearDisplay = () => {
       bsConsole.innerText = ""
+    }
+
+    const clearAll = () => {
+      clearDisplay()
+      clearOutput()
+      clearInput()
     }
 
     const openHelp = () => {
@@ -235,7 +253,7 @@
     }
 
     const fibExample = () => {
-      input.setValue(`(define (fibonacci n)
+      const sampleCode = `(define (fibonacci n)
   (cond
    ((= n 0) 1)
    ((= n 1) 1)
@@ -244,11 +262,15 @@
 
 (for-each
  (lambda (i) (display (fibonacci i)) (newline))
- (iota 10))`)
+ (iota 10))`
+      clearOutput()
+      clearDisplay()
+      input.setValue(sampleCode)
       eval()
+      input.setValue(sampleCode)
     }
 
-        var input = CodeMirror.fromTextArea(replInput, {
+    var input = CodeMirror.fromTextArea(replInput, {
       mode: 'scheme',
       matchBrackets: true,
       lineNumbers: true,
@@ -264,7 +286,7 @@
     })
 
     // hardcoded style
-    input.setSize("34vw", "calc(100vh - 4.3rem)")
+    input.setSize("34vw", "calc(100vh - 5.7rem)")
 
     function eval() {
       const inputValue = cleanReplOutput(input.getValue().trim())
