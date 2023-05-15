@@ -34,25 +34,21 @@
 
 <script src="biwascheme-0.8.0-custom.min.js"></script>
 <script type="text/biwascheme">
-(console-log "resume-scm v.1.2.0")
-
 (define professional-section (getelem "#professional"))
-(define education-section (getelem "#education"))
-
 (define professional-items
   '(("Mediafly, Inc., Chicago, IL (Remote)"
      ("Senior Software Engineer, Data and Client Squad"
       "Aug. 2022 &ndash; Feb. 2023"
       ("Developed Kotlin code to expand the back-end customer integration with Salesforce's API to enable the creation of custom objects holding metadata."
-      "Improved the Python video call processing pipeline to filter out unwanted blocks of silence."
-      "Corrected multiple occurrences of temporary files not being cleared in the Python pipeline code.")))
+       "Improved the Python video call processing pipeline to filter out unwanted blocks of silence."
+       "Corrected multiple occurrences of temporary files not being cleared in the Python pipeline code.")))
 
     ("Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP"
      ("Senior Full-Stack Developer"
-     "June 2020 &ndash; Aug. 2022"
+      "June 2020 &ndash; Aug. 2022"
       ("Built and administered the public-facing website with Django, including custom user management and authentication with a JWT extension."
-      "Architected a PostgreSQL database in Google Cloud Platform to store meteorological observation and forecast time series at client-supplied locations and government-operated stations."
-      "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and Bitbucket's Continuous Deployment pipeline."
+       "Architected a PostgreSQL database in Google Cloud Platform to store meteorological observation and forecast time series at client-supplied locations and government-operated stations."
+       "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and Bitbucket's Continuous Deployment pipeline."
        "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."
        "Created a hydroelectric energy forecasting dashboard containing Google Maps and Apache ECharts widgets in Vue.js and the Vuetify Material Design front-end framework.")))
 
@@ -65,53 +61,55 @@
        "Visualized historical sales with NumPy and Pandas, reporting totals and outliers for each product."
        "Created a Single-Page App with AngularJS and Firebase to organize product reservations by clients and their assigned salesperson in real-time.")))))
 
+(define (create-role item)
+  (let ((dom-elem (element-new `(div ("div.prof-role" ,(car item)) ("div.prof-dates" ,(cadr item))))))
+    dom-elem))
+
+(define (create-tasks tasks)
+  (element-new `(ul ,@(map (lambda (task) `(li ,task)) (caddr tasks)))))
+
+(define (create-professional-item item)
+  "Given a Scheme expression for professional experience, create a DOM element out of it."
+  (let ((dom-elem (element-new '(div "")))
+        (title (element-new `("h3.professional" ,(car item))))
+        (role (create-role (cadr item)))
+        (tasks (create-tasks (cadr item))))
+    (element-append-child! dom-elem title)
+    (element-append-child! dom-elem role)
+    (element-append-child! dom-elem tasks)))
+
+(define education-section (getelem "#education"))
 (define education-items
   '(("New York University, New York, NY"
      ("M.S. in Financial Mathematics, 2009"))
     ("Stanford University, Stanford, CA"
      ("M.S. in Materials Science and Engineering, 2007"
-     "B.S. in Mathematical and Computational Sciences, 2005"))))
+      "B.S. in Mathematical and Computational Sciences, 2005"))))
 
-;;; Professional Experience section
-(define (role-markup item)
-  `(div
-    ("div.prof-role" ,(car item)) ("div.prof-dates" ,(cadr item))))
-
-(define (tasks-markup tasks)
-  `(ul ,@(map (lambda (task) `(li ,task)) (caddr tasks))))
-
-(define (create-professional-item item)
-  (element-new
-   `(div
-     ("h3.professional" ,(car item))
-     ,(role-markup (cadr item))
-     ,(tasks-markup (cadr item)))))
-
-;;; Education section
-(define (degrees-markup degrees)
-  `(div ,@(map (lambda (major) `("div.major" ,major)) degrees)))
+(define (create-degrees degrees)
+  (element-new `(div ,@(map (lambda (major) `("div.major" ,major)) degrees))))
 
 (define (create-education-item item)
-  (element-new
-   `(div
-     ("h3.education" ,(car item))
-     ,(degrees-markup (cadr item)))))
+  "Given a Scheme expression for education, create a DOM element out of it."
+  (let ((dom-elem (element-new '(div "")))
+        (title (element-new `("h3.education" ,(car item))))
+        (degrees (create-degrees (cadr item))))
+    (element-append-child! dom-elem title)
+    (element-append-child! dom-elem degrees)
+    dom-elem))
 
-;;; Mutate top-level sections
-(define (add-items-to-section section create-fn items)
-  (console-log
-   (string-append
-    "Add items to section: "
-    (js-ref (js-ref section "0") "id")))
+(define (add-education-items items)
   (when (not (null? items))
-    (element-append-child! section (create-fn (car items)))
-    (add-items-to-section section create-fn (cdr items))))
+    (element-append-child! education-section (create-education-item (car items)))
+    (add-education-items (cdr items))))
+(add-education-items education-items)
 
-(add-items-to-section
- professional-section create-professional-item professional-items)
+(define (add-professional-items items)
+  (when (not (null? items))
+    (element-append-child! professional-section (create-professional-item (car items)))
+    (add-professional-items (cdr items))))
 
-(add-items-to-section
- education-section create-education-item education-items)
+(add-professional-items professional-items)
 </script>
     </body>
 </html>
