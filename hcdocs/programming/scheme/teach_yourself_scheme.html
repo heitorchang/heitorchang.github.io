@@ -36,7 +36,7 @@
           margin: 1rem;
           padding: 1rem;
           border: 1px solid #ccc;
-          background-color: #eee;
+          background-color: #ffefd5;
           border-radius: 0.8rem;
           overflow: auto;
           min-width: calc(100% - 2rem);
@@ -130,6 +130,43 @@
 
 <p>
   <code>(vector 1 2 3)</code>
+</p>
+
+<p>
+  <code>(define v (make-vector 5))</code>
+</p>
+
+<p>
+  <code>vector-ref</code> and <code>vector-set!</code> access and modify vectors.
+</p>
+
+<pre>
+(define v (make-vector 5))
+(vector-set! v 2 220)
+(vector-ref v 2)
+</pre>
+
+<h4>2.2.3 Dotted pairs and lists</h4>
+
+<p>
+  A <em>dotted pair</em> is a compound value made by combining any two arbitrary values into an ordered couple.
+</p>
+
+<pre>
+(define pair (cons 1 #t))
+(car pair)
+(cdr pair)
+
+(set-car! pair 101)
+(set-cdr! pair #f)
+</pre>
+
+<p>
+  To make lists, it is possible to cons multiple values onto the empty list, <code>()</code>. Note that it not self-evaluating, and should be quoted when using it as a value, <code>'()</code>.
+</p>
+
+<p>
+  The <code>'()</code> or <code>(quote ())</code> represents both the "empty list" and a "mutable list". It is an error to set a value of an immutable (constant) list such as <code>'(1 2 3)</code> though most implementations don't actually signal an error.
 </p>
 
 </div>

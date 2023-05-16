@@ -1,0 +1,133 @@
+# models.py
+
+from django.db import models
+
+
+class Categoria(models.Model):
+    nome = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        ordering = ['nome']
+
+
+class Subcategoria(models.Model):
+    nome = models.CharField(max_length=100, unique=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.categoria.nome} - {self.nome}"
+
+    class Meta:
+        ordering = ['nome']
+
+
+class Produto(models.Model):
+    codigo = models.CharField(max_length=64, unique=True)
+    nome = models.CharField(max_length=200)
+    categoria = models.ManyToManyField(Categoria, blank=True, related_name='categoria_produtos')
+    subcategoria = models.ManyToManyField(Subcategoria, blank=True, related_name='subcategoria_produtos')
+
+    def __str__(self):
+        return f"{self.codigo} {self.nome}"
+
+    class Meta:
+        ordering = ['codigo']
+
+# admin.py
+
+from django.contrib import admin
+from django import forms
+from django.contrib.admin.widgets import FilteredSelectMultiple
+from .models import Produto, Categoria, Subcategoria
+
+
+@admin.register(Produto)
+class ProdutoAdmin(admin.ModelAdmin):
+    # enable side-by-side multi-select
+    # filter_horizontal = ['categoria', 'subcategoria']
+    pass
+
+
+class CategoriaAdminForm(forms.ModelForm):
+    produtos = forms.ModelMultipleChoiceField(
+        queryset = Produto.objects.all(),
+        required = False,
+        widget=FilteredSelectMultiple(
+            verbose_name='Produtos',
+            is_stacked=False
+        )
+    )
+
+    class Meta:
+        model = Categoria
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.instance and self.instance.pk:
+            self.fields['produtos'].initial = self.instance.categoria_produtos.all()
+
+    def save(self, commit=True):
+        categoria = super(CategoriaAdminForm, self).save(commit=False)
+
+        if commit:
+            categoria.save()
+
+        if categoria.pk:
+            categoria.categoria_produtos.set(self.cleaned_data['produtos'])
+            self.save_m2m()
+
+        return categoria
+
+
+@admin.register(Categoria)
+class CategoriaAdmin(admin.ModelAdmin):
+    def get_form(self, request, obj=None, change=None, **kwargs):
+        if obj:
+            return CategoriaAdminForm
+        return super().get_form(request, obj=None, change=None, **kwargs)
+
+
+class SubcategoriaAdminForm(forms.ModelForm):
+    produtos = forms.ModelMultipleChoiceField(
+        queryset = Produto.objects.all(),
+        required = False,
+        widget=FilteredSelectMultiple(
+            verbose_name='Produtos',
+            is_stacked=False
+        )
+    )
+
+    class Meta:
+        model = Subcategoria
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.instance and self.instance.pk:
+            self.fields['produtos'].initial = self.instance.subcategoria_produtos.all()
+
+    def save(self, commit=True):
+        subcategoria = super().save(commit=False)
+
+        if commit:
+            subcategoria.save()
+
+        if subcategoria.pk:
+            subcategoria.subcategoria_produtos.set(self.cleaned_data['produtos'])
+            self.save_m2m()
+
+        return subcategoria
+
+
+@admin.register(Subcategoria)
+class SubcategoriaAdmin(admin.ModelAdmin):
+    def get_form(self, request, obj=None, change=None, **kwargs):
+        if obj:
+            return SubcategoriaAdminForm
+        return super().get_form(request, obj=None, change=None, **kwargs)

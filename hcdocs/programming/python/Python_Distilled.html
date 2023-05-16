@@ -36,7 +36,7 @@
           margin: 1rem;
           padding: 1rem;
           border: 1px solid #ccc;
-          background-color: #eee;
+          background-color: #ffefd5;
           border-radius: 0.8rem;
           overflow: auto;
           min-width: calc(100% - 2rem);
@@ -79,6 +79,7 @@
 
 <ol>
   <li><a href="#ch1">Python Basics</a></li>
+  <li><a href="#ch2">Operators, Expressions, and Data Manipulation</a></li>
 </ol>
 
 
@@ -90,7 +91,7 @@
 </p>
 
 <p>
-  In the REPL, the <code>_</code> variable holds the result of the last operation. This feature only works interactively (in the REPL).
+  In the REPL, the <code>_</code> variable holds the result of the last operation. This feature only works interactively.
 </p>
 
 <p>
@@ -268,6 +269,78 @@ tutorial-project/
 python3 -m venv myproject_env
 # activate the virtualenv (depends on the operating system)
 python -m pip install somepackage
+</pre>
+
+
+<h2 id="ch2">2 Operators, Expressions, and Data Manipulation</h2>
+
+<p>
+  An <em>expression</em> represents a computation that evaluates to a concrete value.
+</p>
+
+<p>
+  The left-hand side of an assignment represents a location where a reference to an object is stored. It may be:
+</p>
+
+<ul>
+  <li>An identifier such as <code>value</code></li>
+  <li>An attribute of an object</li>
+  <li>An index within a container</li>
+</ul>
+
+<p>
+  The <em>assignment expression</em> operator <code>:=</code> can be used to perform the combined action of expression evaluation and assignment. It is generally used in <code>if</code> and <code>while</code> statements:
+</p>
+
+<pre>
+while (line := file.readline()):
+    print(line)
+</pre>
+
+<p>
+  Comparisons to <code>None</code> should be done with <code>is</code> and <code>is not</code> (PEP 8).
+</p>
+
+<p>
+  Use <code>None</code> as the default keyword argument for optional arguments. In the function, check <code>if y is None</code>.
+</p>
+
+<pre>
+def f(x, items=None):
+    if items is None:
+        items = []
+    items.append(x)
+    return items
+</pre>
+
+<h3>2.8 Conditional expressions</h3>
+
+<p>
+  A common pattern is assigning a value conditionally:
+</p>
+
+<pre>
+if a &lt;= b:
+    minvalue = a
+else:
+    minvalue = b
+</pre>
+
+<p>
+  This may be written as:
+</p>
+
+<pre>
+minvalue = a if a &lt;= b else b
+</pre>
+
+<p>
+  One way to copy nested lists is to make a copy of each sublist:
+</p>
+
+<pre>
+a = [3, 4, 5]
+c = [list(a) for _ in range(4)]
 </pre>
 
 </div>

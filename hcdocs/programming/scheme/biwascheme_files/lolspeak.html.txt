@@ -1,0 +1,53 @@
+<body>
+  <style>
+  div {
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    margin: 1.5rem;
+  }
+
+  .normal-speak {
+    color: blue;
+    background-color: white;
+    text-transform: capitalize;
+  }
+
+  .lol-speak {
+    font-family: monospace;
+    color: #9f9;
+    background-color: black;
+    text-transform: uppercase;
+  }
+  </style>
+  <h1>LOLSPEAK</h1>
+
+  <div id="cards">
+  </div>
+  <script src="biwascheme-0.8.0-custom.min.js"></script>
+  <script type="text/biwascheme">
+
+(define words
+  '(("hello" . "o hai")
+    ("may i have?" . "i can haz?")
+    ("goodbye" . "kthxbai")
+    ("really?" . "o rly?")
+    ("truly" . "ya wai")
+    ("no way" . "no wai")))
+
+(define cards-container (getelem "#cards"))
+
+(define (cardify words)
+  (map (lambda (word)
+         (element-new
+          `("div.card"
+            ("div.normal-speak" ,(car word))
+            ("div.lol-speak" ,(cdr word))))) words))
+
+(for-each (lambda (word-card) (element-append-child! cards-container word-card)) (cardify words))
+</script>
+</body>

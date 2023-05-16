@@ -71,32 +71,76 @@
       <div class="content">
 
 
-    <h3><a href="../index.html">home</a> / <a href="index.html">tools</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">scheme</a></h3>
     
-<h1>Jira</h1>
-
-<h3>Sprint board</h3>
+<h1>Examples of BiwaScheme built-ins</h1>
 
 <p>
-  For a ticket to appear on the sprint board:
-  <ul>
-    <li>Click on "Backlog" on the left sidebar</li>
-    <li>Make sure the issue to send to Sprint has a component and "Fix version" equal to "Sprint N" (N is the sprint number)</li>
-    <li>Right-click on an issue in the bottom half (Backlog), to send to Sprint N</li>
-  </ul>
+  See <a href="biwascheme-reference.html">compact reference here</a>.
 </p>
 
-<h3>Search with a Query</h3>
+<h2>List of functions</h2>
+<ul>
+  <li><a href="#basic">Basic types</a></li>
+  <li><a href="#numeric">Numeric types</a></li>
+  <li><a href="#control">Control structure</a></li>
+  <li><a href="#macro">Macro</a></li>
+  <li><a href="#advanced">Advanced types</a></li>
+  <li><a href="#utilities">Utilities</a></li>
+  <li><a href="#syntax">Syntax</a></li>
+  <li><a href="#js-interface">JavaScript language interface</a></li>
+  <li><a href="#browser">Browser functions</a></li>
+  <li><a href="#nodejs">Node.js</a></li>
+  <li><a href="#js-api">BiwaScheme JavaScript API</a></li>
+</ul>
 
-<p>
-  Click on "Filters" on the top toolbar, then "Advanced issue search"
-  <br><br>
-  Write a query such as project = "MY_PROJECT" and fixVersion = "Sprint 3"
-  <br><br>
-  Use "View all filters" to see examples of other queries.
-  <br><br>
-  There is "ORDER BY property ASC/DESC"
-</p>
+<h2 id="basic">Basic types</h2>
+
+<h3>List</h3>
+
+<pre>
+(define my-list (list 1 2 4 8 16 32 64))
+
+(length my-list)
+;=> 7
+
+(append my-list (list 199))
+;=> (1 2 4 8 16 32 64 199)
+
+(append my-list (list 199) (list 321))
+;=> (1 2 4 8 16 32 64 199 321)
+
+(reverse my-list)
+;=> (64 32 16 8 4 2 1)
+
+(list-tail my-list 1)
+;=> (2 4 8 16 32 64)
+
+(list-tail my-list 2)
+;=> (4 8 16 32 64)
+
+(list-tail my-list 3)
+;=> (8 16 32 64)
+
+(list-ref my-list 2)
+;=> 4
+
+(map (lambda (x) (+ x 1)) my-list)
+;=> (2 3 5 9 17 33 65)
+
+(for-each
+ (lambda (x)
+   (display x)
+   (newline))
+ my-list)
+;=> #<undef>
+
+(find (lambda (x) (= x 0)) my-list)
+;=> #f
+
+(find (lambda (x) (= x 16)) my-list)
+;=> 16
+</pre>
 
 </div>
 <br>

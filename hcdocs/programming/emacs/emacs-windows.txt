@@ -1,4 +1,4 @@
-;; 1 Apr 2023
+;; 14 Apr 2023
 ;; Windows location: C:/Users/oktara/AppData/Roaming/.emacs
 ;; search "personal" to find directory locations that need to be changed for the other operating system
 
@@ -10,6 +10,7 @@
 (defun quick-access-5 () (interactive) (find-file "/home/personal/mf-general/notes/done.txt"))
 (defun quick-access-7 () (interactive) (find-file "/home/personal/code/reading-list/common-lisp-gentle-intro/notes.txt"))
 
+(global-set-key (kbd "<M-f4>") 'save-buffers-kill-terminal)
 (global-set-key (kbd "C-c f") 'fundamental-mode)
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 (global-set-key (kbd "C-c C-l") 'find-file-literally)
@@ -18,6 +19,7 @@
 (global-set-key (kbd "<C-f1>") 'quick-access-C-f1)
 
 (global-set-key (kbd "<f2>") 'run-scheme)
+;; (global-set-key (kbd "<f2>") 'slime)
 (global-set-key (kbd "<f3>") 'isearch-forward)
 (define-key isearch-mode-map (kbd "<f3>") 'isearch-repeat-forward)
 (global-set-key (kbd "<f4>") 'quick-access-4)
@@ -267,6 +269,8 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (kill-line)
   (yank))
 
+(setq inferior-lisp-program "sbcl")
+
 ;; Python
 ;; Inferior Python and testing
 (setq python-shell-interpreter "C:/Users/oktara/bin/python_better_exc.bat")
@@ -275,7 +279,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 ;; (setenv "PYTHONSTARTUP" "/home/personal/code/shared/python/mystartup.py")
 (setenv "PYTHONUNBUFFERED" "x")
 (setenv "PYTHONIOENCODING" "utf8")
-(setenv "BETTER_EXCEPTIONS" "1")
+;; (setenv "BETTER_EXCEPTIONS" "1")
 
 ;; .mysecrets contains:
 ;;
@@ -394,8 +398,11 @@ they line up with the line containing the corresponding opening bracket."
     (call-interactively 'isend-send)
     (end-of-line)))
 
-;; (setq scheme-program-name "/usr/local/bin/mit-scheme --load /home/personal/code/shared/scheme/personal.scm")
+;; R5RS Scheme
 (setq scheme-program-name "C:/Progra~1/Racket/Racket.exe -I r5rs -i -f C:/Users/oktara/code/good-practice/scheme-my-fns.scm")
+
+;; Racket
+;; (setq scheme-program-name "C:/Progra~1/Racket/Racket.exe -i")
 
 (defun my-scheme-send-buffer ()
   (interactive)
@@ -403,6 +410,11 @@ they line up with the line containing the corresponding opening bracket."
   (call-interactively 'scheme-send-region)
   (end-of-buffer)
   (deactivate-mark))
+
+(defun my-scheme-move-end-and-send ()
+  (interactive)
+  (call-interactively 'move-end-of-line)
+  (call-interactively 'scheme-send-last-sexp))
 
 ;; newline without breaking current line
 (defun my-newline-without-breaking ()
@@ -431,7 +443,7 @@ they line up with the line containing the corresponding opening bracket."
             (define-key paredit-mode-map (kbd "<M-right>") 'paredit-forward-slurp-sexp)
             (define-key paredit-mode-map (kbd "<C-return>") 'my-newline-without-breaking)
             (local-set-key [M-return] 'my-scheme-send-buffer)
-            (local-set-key [S-return] 'scheme-send-last-sexp)))
+            (local-set-key [S-return] 'my-scheme-move-end-and-send)))
 
 (add-hook 'shell-mode-hook
           (lambda ()
