@@ -1,0 +1,62 @@
+<body>
+  <style>
+  html, body {
+    margin: 0;
+  }
+
+  :root {
+    --sidebar-width: 8rem;
+  }
+
+  ul {
+    margin: 0 ;
+  }
+
+  h3 {
+    color: blue                         ;
+  }
+
+  #sidebar {
+    width: var(--sidebar-width);
+    position: fixed;
+    background-color: #ffa;
+  }
+
+  #content {
+    margin-left: calc(var(--sidebar-width) + 2rem);
+  }
+
+  .sidebar-li {
+    color: green;
+  }
+
+</style>
+
+  <div id="sidebar"></div>
+  <div id="content"></div>
+
+<script src="biwascheme-0.8.0-custom-min.js"></script>
+  <script type="text/biwascheme">
+(define content (getelem "#content"))
+(define content-items
+  '("Books" "Games" "Multimedia" "Photos" "Wishlist" "Credits"))
+
+(define (tag-items tag-name items)
+  (map (lambda (item) (list tag-name item)) items))
+
+(define sidebar-items
+  '("Home" "About" "Sitemap"))
+
+(element-append-child!
+ (getelem "#sidebar")
+ (element-new
+  `(ul
+    ,@(tag-items "li.sidebar-li" sidebar-items))))
+
+(element-append-child!
+ (getelem "#content")
+ (element-new
+  `(div
+    ,@(tag-items 'h3 content-items))))
+</script>
+</body>
