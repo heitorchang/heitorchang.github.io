@@ -471,10 +471,21 @@
   (element-new &#39;(div align &quot;right&quot; &quot;foo&quot;))  =&gt; &lt;div align=&#39;right&#39;&gt;foo&lt;/div&gt;
   (element-new &#39;(div (span &quot;foo&quot;))  =&gt; &lt;div&gt;&lt;span&gt;foo&lt;/span&gt;&lt;/div&gt;
   </code></pre>
+
+  <p>
+    <strong>Note:</strong> Retrieving elements appears to work only after they are added to the DOM.
+  </p>
+
   <ul>
     <li><p><code>(getelem selector)</code> = <code>($ selector)</code></p>
       <ul>
         <li>Same as <code>jQuery(selector)</code> except returns <code>#f</code> when no element is found</li>
+      </ul>
+    </li>
+    <li><p><code>(dom-element "#selector")</code> is equivalent to:</p>
+      <ul>
+        <li><code>document.getElementById("...")</code></li>
+        <li><code>(js-ref (getelem "#selector") 0)</code></li>
       </ul>
     </li>
     <li><p><code>(set-style! selector prop value)</code></p>
