@@ -1,0 +1,34 @@
+;;; CSV Parser
+
+(define separator-char #\,)
+(define quote-char #\")
+
+(define in-quotes #f)
+
+(define (parse-line line)
+  (parse-line-iter line '() '()))
+
+(define (parse-line-iter line current-element elements)
+  (cond ((string=? "" line)
+         (reverse (cons (apply string (reverse current-element)) elements))) ; end of line
+        ((char=? quote-char (string-ref line 0))
+         (cond ((and (> (string-length line) 1) (char=? (string-ref line 1) quote-char)) ; double quotes
+                (parse-line-iter
+                 (substring line 2 (string-length line))
+                 (cons quote-char current-element)
+                 elements))
+               (else (set! in-quotes (not in-quotes)) ; quoted element
+                     (parse-line-iter
+                      (substring line 1 (string-length line))
+                      current-element
+                      elements))))
+        ((and (not in-quotes) (char=? separator-char (string-ref line 0))) ; hit separator
+         (parse-line-iter
+          (substring line 1 (string-length line))
+          '()
+          (cons (apply string (reverse current-element)) elements)))
+        (else ; build current-element
+         (parse-line-iter
+          (substring line 1 (string-length line))
+          (cons (string-ref line 0) current-element)
+          elements))))

@@ -1,0 +1,24 @@
+;;; https://stackoverflow.com/questions/71168616/how-do-you-split-a-list-in-scheme-into-n-evenly-sized-chunks
+
+(define (take xs n)
+  ;; produce initial n elements of xs
+  (if (zero? n)
+      '()
+      (cons (car xs) (take (cdr xs) (- n 1)))))
+
+(define (drop xs n)
+  ;; produce rest of xs after n elements
+  (if (zero? n)
+      xs
+      (drop (cdr xs) (- n 1))))
+
+(define (chunk xs n)
+  ;; produce xs divided into n chunks
+  (chunk-at xs n (quotient (length xs) n)))
+
+(define (chunk-at xs n len)
+  ;; produce xs divided into n chunks of length len
+  (cond
+   ((= n 1) (list xs))
+   (else (cons (take xs len)
+               (chunk-at (drop xs len) (- n 1) len)) )))
