@@ -29,7 +29,7 @@
         (first-char (string-ref csv 0)))
     (cond ((string=? "" csv) #f)
           ((member first-char common-values) first-char)
-          (else (detect-separator (substring csv 1 (length csv)))))))
+          (else (detect-separator (substring csv 1 (string-length csv)))))))
 
 (define (parse-line line separator-char)
   (define (parse-line-iter line current-element elements)
@@ -69,11 +69,4 @@
    `(div ,@(map (lambda (line) `(div ,@(map (lambda (cell) `(div ,cell)) line)))
                 list-of-lists))))
 
-;; (parse-csv "1,2,3")
-;; (console-log csv-comma-value)
-;; (parse-csv "1,2,3")
-(define csv-comma-value (http-request "csvs/csv_comma.csv"))
-(parse-csv csv-comma-value)
-;; (element-append-child! content (htmlize-list-of-lists (parse-csv (http-request "csvs/csv_comma.csv"))))
-;; (element-append-child! content (htmlize-list-of-lists (parse-csv (http-request "csvs/csv_semicolon.csv"))))
-;; (element-append-child! content (htmlize-list-of-lists (parse-csv (http-request "csvs/csv_tab.csv"))))
+(element-append-child! content (htmlize-list-of-lists (parse-csv my-csv)))

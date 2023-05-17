@@ -82,8 +82,8 @@
 
   <script src="../biwascheme-0.8.0.js"></script>
   <script type="text/biwascheme">
-    (console-log "hello")
-    (load "parse-csv.scm")
+  (define my-csv (http-request "csvs/csv_comma.csv"))
+  (load "parse-csv.scm")
   </script>
 </body>
 
