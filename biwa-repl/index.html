@@ -279,7 +279,7 @@
       autoCloseBrackets: true,
       extraKeys: {
         "Shift-Enter": () => {
-          eval()
+          biwaEval()
         },
         "Alt-P": histUp,
         "Ctrl-Up": histUp,
@@ -291,7 +291,7 @@
     // hardcoded style
     input.setSize("34vw", "calc(100vh - 6.7rem)")
 
-    function eval() {
+    function biwaEval() {
       const inputValue = cleanReplOutput(input.getValue().trim())
       inputHistory.unshift(inputValue)
       inputHistoryIndex = -1
