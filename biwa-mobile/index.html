@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/codemirror-5.65.13.css">
+    <title>BiwaScheme REPL</title>
+    <style>
+    html {
+      height: 100%;
+    }
+
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    *, ::before, ::after {
+      box-sizing: border-box;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    button {
+      font-size: 0.8rem;
+      padding: 0.1rem;
+    }
+
+    #replOutput {
+      width: 100%;
+      height: calc(50vh - 1.7rem);
+      font-size: 0.9rem;
+      border: 0;
+      background-color: #efefef;
+    }
+
+    .noError {
+      background-color: #fff;
+    }
+
+    .errorFlash {
+      background-color: #fcc;
+      transition: 0.3s linear;
+    }
+
+    #error {
+      width: 100%;
+      border-radius: 0.4rem;
+      padding: 0.4rem;
+      font-family: monospace;
+    }
+
+    #container {
+      margin: 0;
+      height: 100%;
+    }
+
+    #input-area {
+      height: 50vh;
+    }
+
+    #output-area {
+      height: 50vh;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="input-area">
+        <button onclick="clearInput()">Clr</button>
+        &nbsp;&nbsp;&nbsp;
+        <button onclick="addText('(')">&nbsp;(&nbsp;</button>
+        <button onclick="addText(')')">&nbsp;)&nbsp;</button>
+        <button onclick="addText('+')">&nbsp;+&nbsp;</button>
+        <button onclick="addText('-')">&nbsp;-&nbsp;</button>
+        <button onclick="addText('*')">&nbsp;*&nbsp;</button>
+        <button onclick="addText('/')">&nbsp;/&nbsp;</button>
+        <button onclick="addText('\'')">&nbsp;'&nbsp;</button>
+        &nbsp;&nbsp;&nbsp;
+        <button onclick="biwaEval()">eval</button>
+        <textarea id="replInput" rows="4" cols="72" autofocus></textarea>
+        <div id="error"></div>
+      </div>
+      <div id="output-area">
+        <button onclick="clearOutput()">Clr output</button>
+        <br><textarea id="replOutput"></textarea>
+      </div>
+    </div> <!-- #container -->
+
+    <div style="position: fixed; bottom: 0.5rem; right: 0;">
+      <a href="/">(home)</a>
+    </div>
+
+    <script src="lib/biwascheme-0.8.0-custom.min.js"></script>
+    <script src="lib/codemirror-5.65.13.js"></script>
+    <script src="lib/matchbrackets.js"></script>
+    <script src="lib/closebrackets.js"></script>
+    <script src="lib/scheme.js"></script>
+    <script>
+    const errorMsg = document.getElementById("error")
+    const helpDiv = document.getElementById("help")
+
+    const onError = (e) => {
+      errorMsg.innerText = e.message
+      errorMsg.className = 'errorFlash'
+      throw(e)
+    }
+
+    const biwascheme = new BiwaScheme.Interpreter(onError)
+
+    const replInput = document.getElementById("replInput")
+    const output = document.getElementById("replOutput")
+    let inputHistoryFromStorage = window.localStorage.getItem("biwaReplHistory") || "[]"
+    let inputHistory = JSON.parse(inputHistoryFromStorage)
+    let inputHistoryIndex = -1
+
+    const setCursorAtEnd = () => {
+      input.focus()
+      input.setCursor(input.lineCount(), 0)
+    }
+
+    const histUp = () => {
+      inputHistoryIndex = Math.min(inputHistory.length - 1, inputHistoryIndex + 1)
+      input.setValue(inputHistory[inputHistoryIndex] || "")
+      input.setValue(input.getValue().trim())
+      setCursorAtEnd()
+    }
+
+    const histDown = () => {
+      inputHistoryIndex = Math.max(-1, inputHistoryIndex - 1)
+      if (inputHistoryIndex === -1) {
+        input.setValue("")
+        inputHistoryIndex = -1
+      } else {
+        input.setValue(inputHistory[inputHistoryIndex])
+        input.setValue(input.getValue().trim())
+        setCursorAtEnd()
+      }
+    }
+
+    // remove lines with ;=>
+    const cleanReplOutput = (s) => {
+      const lines = s.split(/\r?\n/)
+      const cleaned = lines.filter(line => !line.startsWith(";=> "))
+      return cleaned.join("\n")
+    }
+
+    const clearInput = () => {
+      input.setValue("")
+      input.focus()
+    }
+
+    const clearOutput = () => {
+      output.value = ""
+    }
+
+    const openHelp = () => {
+      helpDiv.style.display = "block"
+    }
+
+    const closeHelp = () => {
+      helpDiv.style.display = "none"
+    }
+
+    const fibExample = () => {
+      const sampleCode = `(define (fibonacci n)
+  (cond
+   ((= n 0) 0)
+   ((= n 1) 1)
+   (else
+    (+ (fibonacci (- n 1)) (fibonacci (- n 2))))))
+
+(for-each
+ (lambda (i) (display (fibonacci i)) (newline))
+ (iota 10))`
+      clearOutput()
+      clearDisplay()
+      input.setValue(sampleCode)
+      biwaEval()
+      input.setValue(sampleCode)
+    }
+
+    var input = CodeMirror.fromTextArea(replInput, {
+      mode: 'scheme',
+      matchBrackets: true,
+      lineNumbers: true,
+      lineWrapping: true,
+      autoCloseBrackets: true,
+      extraKeys: {
+        "Shift-Enter": () => {
+          setCursorAtEnd()
+          biwaEval()
+        },
+        "Alt-P": histUp,
+        "Ctrl-Up": histUp,
+        "Alt-N": histDown,
+        "Ctrl-Down": histDown,
+      }
+    })
+
+    // hardcoded style
+    input.setSize("100%", "40vh")
+
+    function addText(text) {
+      const doc = input.getDoc()
+      const cursor = doc.getCursor()
+      doc.replaceRange(text, cursor)
+    }
+
+    function biwaEval() {
+      const inputValue = cleanReplOutput(input.getValue().trim())
+      inputHistory.unshift(inputValue)
+      inputHistoryIndex = -1
+      window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 32)))
+      biwascheme.evaluate(inputValue, function (result) {
+        output.value += inputValue
+        output.value += "\n;=> " + BiwaScheme.to_write(result) + "\n\n"
+        output.scrollTop = output.scrollHeight
+        input.setValue("")
+        errorMsg.innerText = ""
+        errorMsg.className = "noError"
+      })
+    }
+    </script>
+  </body>
+</html>
