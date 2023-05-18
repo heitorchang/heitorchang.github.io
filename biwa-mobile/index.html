@@ -68,6 +68,10 @@
     #output-area {
       height: 50vh;
     }
+
+    .action-button {
+      padding: 0.5rem;
+    }
     </style>
   </head>
   <body>
@@ -77,7 +81,10 @@
         &nbsp;&nbsp;&nbsp;
         <a href="https://biwascheme.org" target="_blank">BiwaScheme homepage</a>
         <textarea id="replInput" rows="4" cols="72" autofocus></textarea>
-        <button onclick="biwaEval()" style="padding: 0.5rem;">Eval code</button>
+        <button onclick="biwaEval()" class="action-button">Eval code</button>
+        &nbsp;&nbsp;&nbsp;
+        <button onclick="histUp()" class="action-button">Hist up</button>
+        <button onclick="histDown()" class="action-button">Hist down</button>
         <div id="error"></div>
       </div>
       <div id="output-area">
