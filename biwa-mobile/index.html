@@ -31,7 +31,6 @@
 
     #replOutput {
       position: fixed;
-      z-index: -1;
       bottom: 0;
       left: 0;
       width: 100%;
@@ -76,7 +75,7 @@
       <div id="input-area">
         <button onclick="clearInput()">Clear input</button>
         <textarea id="replInput" rows="4" cols="72" autofocus></textarea>
-        <button onclick="biwaEval()">eval</button>
+        <button onclick="biwaEval()" style="padding: 0.5rem;">Eval code</button>
         <div id="error"></div>
       </div>
       <div id="output-area">
