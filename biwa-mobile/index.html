@@ -30,6 +30,9 @@
     }
 
     #replOutput {
+      position: fixed;
+      bottom: 0;
+      left: 0;
       width: 100%;
       height: calc(50vh - 1.7rem);
       font-size: 0.9rem;
@@ -70,27 +73,18 @@
   <body>
     <div id="container">
       <div id="input-area">
-        <button onclick="clearInput()">Clr</button>
-        &nbsp;&nbsp;&nbsp;
-        <button onclick="addText('(')">&nbsp;(&nbsp;</button>
-        <button onclick="addText(')')">&nbsp;)&nbsp;</button>
-        <button onclick="addText('+')">&nbsp;+&nbsp;</button>
-        <button onclick="addText('-')">&nbsp;-&nbsp;</button>
-        <button onclick="addText('*')">&nbsp;*&nbsp;</button>
-        <button onclick="addText('/')">&nbsp;/&nbsp;</button>
-        <button onclick="addText('\'')">&nbsp;'&nbsp;</button>
-        &nbsp;&nbsp;&nbsp;
-        <button onclick="biwaEval()">eval</button>
+        <button onclick="clearInput()">Clear input</button>
         <textarea id="replInput" rows="4" cols="72" autofocus></textarea>
+        <button onclick="biwaEval()">eval</button>
         <div id="error"></div>
       </div>
       <div id="output-area">
-        <button onclick="clearOutput()">Clr output</button>
+        <button onclick="clearOutput()">Clear output</button>
         <br><textarea id="replOutput"></textarea>
       </div>
     </div> <!-- #container -->
 
-    <div style="position: fixed; bottom: 0.5rem; right: 0;">
+    <div style="position: fixed; bottom: 0.5rem; right: 1rem;">
       <a href="/">(home)</a>
     </div>
 
