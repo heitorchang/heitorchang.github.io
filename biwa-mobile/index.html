@@ -78,8 +78,8 @@
     <div id="container">
       <div id="input-area">
         <button onclick="clearInput()">Clear input</button>
-        &nbsp;&nbsp;&nbsp;
-        <a href="https://biwascheme.org" target="_blank">BiwaScheme homepage</a>
+        REPL v.1.0.0 &bull;
+        <a href="https://biwascheme.org" target="_blank">BiwaScheme Home</a>
         <textarea id="replInput" rows="4" cols="72" autofocus></textarea>
         <button onclick="biwaEval()" class="action-button">Eval code</button>
         &nbsp;&nbsp;&nbsp;
@@ -168,25 +168,7 @@
       helpDiv.style.display = "none"
     }
 
-    const fibExample = () => {
-      const sampleCode = `(define (fibonacci n)
-  (cond
-   ((= n 0) 0)
-   ((= n 1) 1)
-   (else
-    (+ (fibonacci (- n 1)) (fibonacci (- n 2))))))
-
-(for-each
- (lambda (i) (display (fibonacci i)) (newline))
- (iota 10))`
-      clearOutput()
-      clearDisplay()
-      input.setValue(sampleCode)
-      biwaEval()
-      input.setValue(sampleCode)
-    }
-
-    var input = CodeMirror.fromTextArea(replInput, {
+    const input = CodeMirror.fromTextArea(replInput, {
       mode: 'scheme',
       matchBrackets: true,
       lineNumbers: true,
@@ -198,9 +180,7 @@
           biwaEval()
         },
         "Alt-P": histUp,
-        "Ctrl-Up": histUp,
         "Alt-N": histDown,
-        "Ctrl-Down": histDown,
       }
     })
 
@@ -227,6 +207,10 @@
         errorMsg.className = "noError"
       })
     }
+
+    // initialize
+    biwascheme.evaluate('(define atom? (lambda (x) (and (not (pair? x)) (not (null? x)))))', function (result) { console.log("Loaded (atom?)")})
+
     </script>
   </body>
 </html>
