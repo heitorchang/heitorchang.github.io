@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="repl.css">
+    <title>BiwaScheme REPL</title>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.min.js"></script>
+
+    <!-- set display to 'none' to hide REPL, 'block' to show -->
+    <div id="repl" style="display: block;">
+      <div id="input-area"><button onclick="hideRepl()">Hide (eval showRepl() in console to show)</button><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
+      <div id="output-area"><button onclick="clearOutput()">Clear output</button><br><textarea id="replOutput"></textarea></div>
+    </div>
+    <script src="repl.js"></script>
+    <script type="text/biwascheme">
+    ;; (load "scm/my-script.scm")
+    </script>
+  </body>
+</html>
