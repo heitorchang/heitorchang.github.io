@@ -255,6 +255,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (add-hook 'change-major-mode-after-body-hook 'remap-faces-default-attributes))
 
 (electric-indent-mode t)
+(electric-pair-mode t)
 (add-hook 'python-mode-hook
           (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
@@ -399,10 +400,13 @@ they line up with the line containing the corresponding opening bracket."
     (end-of-line)))
 
 ;; R5RS Scheme
-(setq scheme-program-name "C:/Progra~1/Racket/Racket.exe -I r5rs -i -f C:/Users/oktara/code/good-practice/scheme-my-fns.scm")
+;; (setq scheme-program-name "C:/Progra~1/Racket/Racket.exe -I r5rs -i -f C:/Users/oktara/code/good-practice/scheme-my-fns.scm")
 
 ;; Racket
 ;; (setq scheme-program-name "C:/Progra~1/Racket/Racket.exe -i")
+
+;; Chez Scheme, locate Windows folder name with 'dir chez* /x'
+(setq scheme-program-name "c:/Progra~1/ChezSc~1.8/bin/ta6nt/scheme.exe")
 
 (defun my-scheme-send-buffer ()
   (interactive)

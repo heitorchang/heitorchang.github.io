@@ -85,6 +85,14 @@
 
 <h3>Usage</h3>
 
+<h4>Calling JavaScript</h4>
+
+<p>
+  <strong>Date (now) in ISO 8601 format:</strong> <code>(js-eval "(new Date()).toISOString()")</code>
+</p>
+
+<h4>Source files</h4>
+
 <p>
   <strong>Note:</strong> loading a source (with the <code>load</code> function) with Windows line endings will cause an error. Save source files in Unix mode. (Emacs: C-x RET f utf-8-unix)
 </p>
@@ -103,7 +111,11 @@
 <h4>Warnings</h4>
 
 <ul>
-  <li>After running <code>(http-request "...")</code>, stack trace in errors stop appearing. <strong>Solution:</strong> in top-level HTML file, evaluate <code>(define my-text (http-request "path.txt"))</code> then <code>(load "script.scm")</code></li>
+  <li>After running <code>(http-request "...")</code>, stack trace in errors stop appearing.
+    <ul>
+      <li><strong>Partial solution:</strong> in top-level HTML file, evaluate <code>(define my-text (http-request "path.txt"))</code> then refer to <code>my-text</code> inside <code>script.scm</code> and evaluate <code>(load "script.scm")</code></li>
+    </ul>
+  </li>
 </ul>
 
 <h4>General usage</h4>

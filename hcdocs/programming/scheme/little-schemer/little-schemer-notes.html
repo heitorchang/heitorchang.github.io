@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #07a;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">scheme</a> / <a href="index.html">little-schemer</a></h3>
+    
+<h1>The Little Schemer (4th ed.)</h1>
+
+<h3>The Law of car (p. 5)</h3>
+
+<p>
+  The primitive <code>car</code> is defined only for non-empty lists.
+</p>
+
+<h3>The Law of cdr (p. 7)</h3>
+
+<p>
+  The primitive <code>cdr</code> is defined only for non-empty lists. The <code>cdr</code> of any non-empty list is always another list.
+</p>
+
+<h3>cons</h3>
+
+<p>
+  <code>cons</code> takes two arguments:
+</p>
+
+<ul>
+  <li>first: any S-expression</li>
+  <li>second: any list</li>
+</ul>
+
+<h3>The Law of cons (p. 9)</h3>
+
+<p>
+  The primitive <code>cons</code> takes two arguments. The second argument must be a list. The result is a list.
+</p>
+
+<h3>The Law of null? (p. 10)</h3>
+
+<p>
+  The primitive <code>null?</code> is defined only for lists.
+</p>
+
+<p>
+  In practice, (null? a) is false for everything, except the empty list.
+</p>
+
+<h3>atom?</h3>
+
+<p>
+  <code>atom?</code> is defined in this book as:
+</p>
+
+<pre>
+(define atom?
+  (lambda (x)
+    (and (not (pair? x)) (not (null? x)))))
+</pre>
+
+<p>
+  <code>(atom? (quote ()))</code> must return <code>#f</code>
+</p>
+
+<p>
+  <code>atom?</code> takes one argument, which can be any S-expression.
+</p>
+
+<h3>The Law of eq? (p. 12)</h3>
+
+<p>
+  <code>(eq? a b)</code> asks if <code>a</code> and <code>b</code> are the same non-numeric atom.
+</p>
+
+<h3>lat? (p. 16)</h3>
+
+<p>
+  <code>lat?</code> asks if there are no S-expressions in the argument (a list). An empty list is a "lat", and so are lists made up only of atoms.
+</p>
+
+<pre>
+(define lat?
+  (lambda (l)
+    (cond
+      ((null? l) #t)
+      ((atom? (car l)) (lat? (cdr l)))
+      (else #f))))
+</pre>
+
+<p>
+  <code>lat?</code> looks at each S-expression in a list, in turn, and asks if the S-expression at the front is an atom, until it runs out of S-expressions. If the end is reached without encountering a list, the result is <code>#t</code>. Otherwise, it is <code>#f</code>.
+</p>
+
+<p>
+  <code>else</code> is always true.
+</p>
+
+<h3>or (p. 21)</h3>
+
+<p>
+  <code>(or ...)</code> asks two questions, one at a time. If the first one is true, it stops and answers true (in practice, it repeats the value of the first argument). Otherwise it asks the second question and answers with whatever the second question answers.
+</p>
+
+<p>
+  Don't forget the <code>else</code> branch of the <code>cond</code>!
+</p>
+
+<h3>member? (p. 22)</h3>
+
+<pre>
+(define member?
+  (lambda (a lat)
+    (cond
+      ((null? lat) #f)
+      (else (or (eq? (car lat) a)
+                (member? a (cdr lat)))))))
+</pre>
+
+<h3>The First Commandment (for lists) (p. 23)</h3>
+
+<p>
+  Always ask <code>null?</code> as the first question in expressing any function.</p>
+
+<h3>Running member? (p. 27)</h3>
+
+<p>
+  Recur with <code>a</code> and <code>(cdr lat)</code>
+  where <code>a</code> is <code>meat</code> and <code>(cdr lat)</code> is <code>(potatoes and meat gravy)</code>
+</p>
+
+<h3>rember (p. 33)</h3>
+
+<p>
+  <code>rember</code> is <em>remove a member.</em> Note that only the first occurrence is removed.
+</p>
+
+<pre>
+(define rember-preliminary
+  (lambda (a lat)
+    (cond
+      ((null? lat) '())
+      (else
+        (cond
+          ((eq? (car lat) a) (cdr lat))
+          (else (cons (car lat)
+                  (rember-preliminary a (cdr lat)))))))))
+</pre>
+
+<h3>The Second Commandment (p. 37)</h3>
+
+<p>
+  Use <code>cons</code> to build lists.
+</p>
+
+<p>
+  Simplifying <code>rember</code>:
+</p>
+
+<pre>
+(define rember
+  (lambda (a lat)
+    (cond
+     ((null? lat) '())
+     ((eq? (car lat) a) (cdr lat))
+     (else (cons (car lat)
+                 (rember a (cdr lat)))))))
+</pre>
+
+<p>
+  <code>(cons (car lat) (rember a (cdr lat)))</code> says to recur using the function <code>rember</code>, with the argument <code>lat</code> replaced by <code>(cdr lat)</code>. After a value is obtained for the <code>rember</code> call, we must <code>cons</code> the value of <code>(car lat)</code> onto it.
+</p>
+
+<p>
+  <code>firsts</code> (takes a list of lists as the only argument and returns the first elements of each sublist).
+</p>
+
+<pre>
+(define firsts
+  (lambda (l)
+    (cond
+      ((null? l) '())
+      (else (cons (car (car l))
+                  (firsts (cdr l)))))))
+</pre>
+
+<h3>The Third Commandment (p. 45)</h3>
+
+<p>
+  When building a list, describe the first typical element, then <code>cons</code> it onto the natural recursion.
+</p>
+
+<p>
+  <strong>Example from <code>firsts</code>:</strong> <code>(else (cons (car (car lst)) (firsts (cdr lst))))</code>
+</p>
+
+<p>
+  In building up <code>(a c e)</code>, the following are equivalent:
+</p>
+
+<style>
+ol.build-cons > li {
+  margin-top: 1rem;
+}
+</style>
+
+<ol class="build-cons" type="I">
+  <li>
+    <ol>
+      <li>cons e onto ()</li>
+      <li>cons c onto the value of 1</li>
+      <li>cons a onto the value of 2</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>cons a onto the value of 2</li>
+      <li>cons c onto the value of 3</li>
+      <li>cons e onto ()</li>
+    </ol>
+  </li>
+  <li>
+    <ol>
+      <li>cons a onto</li>
+      <li>&nbsp;&nbsp;the cons of c onto</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;the cons of e onto</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;()</li>
+    </ol>
+  </li>
+</ol>
+
+<h3>The Fourth Commandment (p. 57)</h3>
+
+<p>
+  Always change at least one argument while recurring. It must be changed to be closer to termination. The changing argument must be tested in the termination condition:
+</p>
+
+<ul>
+  <li>When using <code>cdr</code>, test termination with <code>null?</code></li>
+</ul>
+
+<ul>
+  <li>When using <code>sub1</code>, test termination with <code>zero?</code></li>
+</ul>
+
+<h2>4. Numbers Games</h2>
+
+<p>
+  A <em>tup</em> is a tuple (a list of numbers). An empty list is also an empty tup.
+</p>
+
+<p>
+  The natural terminal condition for numbers is <code>zero?</code> and the natural recursion on a number is <code>(sub1 n)</code>.
+</p>
+
+<h3>The First Commandment (for numbers) (p. 64)</h3>
+
+<p>
+  When recurring on a number, <code>n</code>, ask two questions about it:
+  <code>(zero? n)</code> and <code>else</code>.
+</p>
+
+<h3>The Fifth Commandment (p. 67)</h3>
+
+<p>
+  When building a value with +, always use <code>0</code> for the value of the terminating line, for adding <code>0</code> does not change the value of an addition.
+</p>
+
+<p>
+  When building with <code>*</code> (multiplication), always use <code>1</code>, for multiplying by 1 does not change the value of a multiplication.
+</p>
+
+<p>
+  When building a value with <code>cons</code>, always consider <code>'()</code> for the value of the terminating line.
+</p>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+
