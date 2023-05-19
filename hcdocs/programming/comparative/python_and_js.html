@@ -88,8 +88,20 @@
 <!-- Dynamically produced with BiwaScheme -->
 
 <style>
+table.comparison {
+  border-collapse: collapse;
+}
+
+table.comparison thead td {
+  font-weight: bold;
+}
+
 table.comparison td {
-  padding-right: 1.5rem;
+  padding: 0.2rem 1.5rem 0.2rem 0.4rem;
+}
+
+table.comparison tr:nth-child(even) {
+  background-color: #f3f8ff;
 }
 </style>
 
@@ -123,15 +135,87 @@ table.comparison td {
 
 (append-div-contents
  "lists-div"
- '(("Initialization" "alist = [1, 4, 9, 16, 25]" "arr = [1, 4, 9, 16, 25]")
-   ("Indexing" "alist[2]" "arr[2]")
-   ("Concatenation" "alist + alist2" "[...arr, ...arr2]")
-   ("Membership" "16 in alist" "alist.includes(16)")))
+ '(("Initialization"
+    "alist = [1, 4, 9, 16, 25]"
+    "arr = [1, 4, 9, 16, 25]")
+
+   ("Indexing"
+    "alist[2]"
+    "arr[2]")
+
+   ("Concatenation"
+    "alist + alist2"
+    "[...arr, ...arr2]")
+
+   ("Repetition"
+    "alist * 3"
+    "[].concat(...Array(3).fill(arr))")
+
+   ("Membership"
+    "16 in alist"
+    "alist.includes(16)")
+
+   ("Length"
+    "len(alist)"
+    "arr.length")
+
+   ("Slicing"
+    "alist[1:3]"
+    "arr.slice(1, 3)")
+
+   ("Append"
+    "py"
+    "js")
+
+   ("Insert"
+    "py"
+    "js")
+
+   ("Pop"
+    "py"
+    "js")
+
+   ("Sort"
+    "alist.sort() / sorted(alist)"
+    "js")
+
+   ("Reverse"
+    "alist.reverse() / reversed(alist)"
+    "js")
+
+   ("Reverse (alternative)"
+    "alist[::-1]"
+    "")
+
+   ("Delete"
+    "py"
+    "js")
+
+   ("Find"
+    "py"
+    "js")
+
+   ("Count"
+    "py"
+    "js")
+
+   ("Remove"
+    "py"
+    "js")))
 
 (append-div-contents
  "strings-div"
- '(("Initialization" "astr = \"A man, a plan\"" "astr = \"A man, a plan\"")
-   ("Find" "find" "find")))
+ '(("Initialization"
+    "astr = \"A man, a plan\""
+    "astr = \"A man, a plan\"")
+
+   ("Find"
+    "find-py"
+    "find-js")
+
+   ("Reverse"
+    "py"
+    "js")))
 </script>
 
 </div>
