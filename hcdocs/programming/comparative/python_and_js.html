@@ -71,21 +71,69 @@
       <div class="content">
 
 
-    <h3><a href="../index.html">home</a> / <a href="index.html">programming</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">comparative</a></h3>
     
-<a class="index" href="asp_net/index.html">&#x1F4C1; asp_net</a><br>
-<a class="index" href="bash/index.html">&#x1F4C1; bash</a><br>
-<a class="index" href="clojure-files/index.html">&#x1F4C1; clojure-files</a><br>
-<a class="index" href="common_lisp/index.html">&#x1F4C1; common_lisp</a><br>
-<a class="index" href="comparative/index.html">&#x1F4C1; comparative</a><br>
-<a class="index" href="csharp/index.html">&#x1F4C1; csharp</a><br>
-<a class="index" href="css/index.html">&#x1F4C1; css</a><br>
-<a class="index" href="emacs/index.html">&#x1F4C1; emacs</a><br>
-<a class="index" href="interview_prep/index.html">&#x1F4C1; interview_prep</a><br>
-<a class="index" href="js/index.html">&#x1F4C1; js</a><br>
-<a class="index" href="postgresql/index.html">&#x1F4C1; postgresql</a><br>
-<a class="index" href="python/index.html">&#x1F4C1; python</a><br>
-<a class="index" href="scheme/index.html">&#x1F4C1; scheme</a><br>
+<h1>Comparison of Python and JavaScript</h1>
+
+<h3>
+  Table of Contents
+</h3>
+
+<ul>
+  <li><a href="#lists">Lists/Arrays</a></li>
+  <li><a href="#strings">Strings</a></li>
+</ul>
+
+<!-- Content -->
+<!-- Dynamically produced with BiwaScheme -->
+
+<style>
+table.comparison td {
+  padding-right: 1.5rem;
+}
+</style>
+
+<h3 id="lists">Lists/Arrays</h3>
+<div id="lists-div"></div>
+
+<h3 id="strings">Strings</h3>
+<div id="strings-div"></div>
+
+<script src="biwascheme-0.8.0-custom.min.js"></script>
+<script type="text/biwascheme">
+(console-log "Comparative Py and JS")
+
+;;; 3-column format: Description, Python, and JavaScript
+(define (append-div-contents id contents)
+  (let ((table-elem (getelem (string-append "#" id))))
+    (element-append-child!
+     table-elem
+     (element-new
+      `("table.comparison"
+        (thead
+         (tr
+          (td "Description") (td "Python") (td "JavaScript")))
+        (tbody
+         ,@(map
+            (lambda (row) `(tr
+                            (td ,(car row))
+                            (td (code ,(cadr row)))
+                            (td (code ,(caddr row)))))
+            contents)))))))
+
+(append-div-contents
+ "lists-div"
+ '(("Initialization" "alist = [1, 4, 9, 16, 25]" "arr = [1, 4, 9, 16, 25]")
+   ("Indexing" "alist[2]" "arr[2]")
+   ("Concatenation" "alist + alist2" "[...arr, ...arr2]")
+   ("Membership" "16 in alist" "alist.includes(16)")))
+
+(append-div-contents
+ "strings-div"
+ '(("Initialization" "astr = \"A man, a plan\"" "astr = \"A man, a plan\"")
+   ("Find" "find" "find")))
+</script>
+
 </div>
 <br>
 <hr>
