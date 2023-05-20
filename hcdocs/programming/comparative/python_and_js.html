@@ -113,13 +113,11 @@ table.comparison tr:nth-child(even) {
 
 <script src="biwascheme-0.8.0-custom.min.js"></script>
 <script type="text/biwascheme">
-(console-log "Comparative Py and JS")
-
 ;;; 3-column format: Description, Python, and JavaScript
 (define (append-div-contents id contents)
-  (let ((table-elem (getelem (string-append "#" id))))
+  (let ((div-elem (getelem (string-append "#" id))))
     (element-append-child!
-     table-elem
+     div-elem
      (element-new
       `("table.comparison"
         (thead
