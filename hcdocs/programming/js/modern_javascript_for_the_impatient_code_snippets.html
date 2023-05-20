@@ -76,26 +76,33 @@
 <h1>Code from Modern JavaScript for the Impatient</h1>
 
 <style>
-table.description-code {
-  border-collapse: collapse;
+div.snippet {
+
 }
 
-table.description-code thead td {
+div.snippet h4 {
   font-weight: bold;
-}
-
-table.description-code td {
-  padding: 0.2rem 1.5rem 0.2rem 0.4rem;
-  vertical-align: top;
-}
-
-table.description-code tr:nth-child(even) {
-  background-color: #f3f8ff;
+  border-bottom: 1px solid #999;
+  margin: 1.5rem 0 0 0;
 }
 
 code.js-snippet {
   display: inline-block;
   white-space: pre-wrap;
+}
+
+div.js-expr {
+  background-color: #f3faff;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+div.js-value {
+  background-color: #ffffef;
+  padding: 0.5rem 0 0.5rem 2rem;
+  border-radius: 0 0 1rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
 }
 </style>
 
@@ -126,14 +133,13 @@ code.js-snippet {
       (element-append-child!
        div-elem
        (element-new
-        `("table.description-code"
-          (thead
-           (tr (td "Description") (td "JavaScript") (td "Value")))
+        `("div.snippet"
           ,@(map (lambda (row)
-                   `(tr
-                     (td ,(list-ref row 0))
-                     (td ("code.js-snippet" ,(list-ref row 1)))
-                     (td ("code.js-snippet" ,(list-ref row 2)))))
+                   `(div (h4 ,(list-ref row 0))
+                         ("div.js-expr" ("code.js-snippet" ,(list-ref row 1)))
+                         ,(if (> (string-length (list-ref row 2)) 0)
+                            `("div.js-value" ("code.js-snippet" ,(list-ref row 2)))
+                            "")))
                  contents)))))))
 ;;;;
 ;;;; Table data
@@ -159,7 +165,10 @@ code.js-snippet {
  '(("Accurate integer representation limits" "Number.MIN_SAFE_INTEGER &lt;= n &lt;= Number.MAX_SAFE_INTEGER" "")
    ("Convert a string to float" "const x = parseFloat('1.23')" "1.23")
    ("Convert a string to integer" "const y = parseInt('3')" "3")
-   ("Convert a number to string" "n.toString()" "'3'")))
+   ("Convert a number to string"
+    "const n = 3
+n.toString()"
+    "'3'")))
 
 (add-table-to-div
  "#ch1-arithmetic-operators" ; 1.7
