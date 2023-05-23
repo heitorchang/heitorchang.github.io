@@ -123,6 +123,20 @@ div.js-value {
 <h3>1.11 Template Literals</h3>
 <div id="ch1-template-literals"></div>
 
+<h3>1.12 Objects</h3>
+<div id="ch1-objects"></div>
+<script>const harry = { name: 'Harry Smith', age: 42 }</script>
+
+<h3>1.14 Arrays</h3>
+<div id="ch1-arrays"></div>
+<script>const numbers = [1, 2, 3, 'many']</script>
+
+<!-- Skipped sections -->
+
+<h3>6.1 Converting between strings and code point sequences</h3>
+<div id="ch6-converting-between-strings-and-code-point-sequences"></div>
+<script>let str = String.fromCodePoint(0x48, 0x69, 0x20, 0x1F310, 0x21)</script>
+
 <!-- Begin BiwaScheme HTML generation -->
 <script src="biwascheme-0.8.0-custom.min.js"></script>
 <script type="text/biwascheme">
@@ -185,8 +199,101 @@ let greeting = `Hello, ${destination.toUpperCase()}!`"
    ("Nested template literals"
     "let firstname = 'Tina'
 let lastname = 'Branford'
-greeting = `Hello, ${firstname.length > 0 ? `${firstname[0]}. ` : ''} ${lastname}`"
-    "'Hello, T. Branford'")))
+let greeting = `Hello, ${firstname.length > 0 ? `${firstname[0]}. ` : ''} ${lastname}`"
+    "'Hello, T. Branford'")
+
+   ("Newlines are converted to Unix line endings, \\n"
+    "let greeting = `Hello
+${destination}
+`"
+    "Hello\\nworld\\n")))
+
+(add-table-to-div
+ "#ch1-objects" ; 1.12
+ '(("Accessing an object property"
+    "const harry = { name: 'Harry Smith', age: 42 }
+let harrysAge = harry.age"
+    "")
+
+   ("Remove a property"
+    "delete harry.age"
+    "")
+
+   ("Accessing a nonexistent property yields undefined"
+    "let boss = harry.supervisor"
+    "undefined")
+
+   ("Computed property name"
+    "let field = 'Age'
+let harrysAge = harry[field.toLowerCase()]"
+    "42")
+
+   ("Shortcut for declaring a property"
+    "let age = 42
+let harry = { name: 'Harry Smith' age: age }
+// can be written as:
+let harry = { name: 'Harry Smith', age }"
+    "")
+
+   ("Computed property name in object literal"
+    "let harry = { name: 'Harry Smith', [field.toLowerCase()]: 42 }"
+    "")))
+
+(add-table-to-div
+ "#ch1-arrays" ; 1.14
+ '(("An array is an object whose property names are '0', '1', '2', etc."
+    "const numbers = [1, 2, 3, 'many']"
+    "")
+
+   ("The length of an array is stored in the property 'length'"
+    "numbers.length"
+    "4")
+
+   ("Check if an object is an array"
+    "Array.isArray(numbers)"
+    "true")
+
+   ("Convert to a comma-separated string"
+    "numbers.toString()"
+    "'1,2,3,many'")
+
+   ("A multidimensional array is an array of arrays"
+    "const matrix = [[1, 3], [2, 4]]
+matrix[1][0]"
+    "2")))
+
+;;; skipped sections
+
+(add-table-to-div
+ "#ch6-converting-between-strings-and-code-point-sequences" ; 6.1
+ '(("String definition from code points"
+    "let str = String.fromCodePoint(0x48, 0x69, 0x20, 0x1F310, 0x21)"
+    "'Hi 🌐!'")
+
+   ("String definition from code points in an array"
+    "let codePoints = [0x48, 0x69, 0x20, 0x1F310, 0x21]
+let str2 = String.fromCodePoint(...codePoints)"
+    "'Hi 🌐!'")
+
+   ("Convert a string to an array of code points"
+    "let chars = [...str]"
+    "['H', 'i', ' ', '🌐', '!']")
+
+   ("Process the code points of a string"
+    "for (let i = 0; i < str.length; i++) {
+  let cp = str.codePointAt(i)
+  if (cp > 0xFFFF) i++
+  console.log(String.fromCodePoint(cp))
+}"
+    "H
+i
+
+🌐
+!")
+
+   ("Length of a string with code points above 0xFFFF"
+    "[...str].length"
+    "5")))
 </script>
 
 </div>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #07a;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">js</a></h3>
+    
+<h1>JavaScript language notes</h1>
+
+<style>
+div.snippet {
+
+}
+
+div.snippet h4 {
+  font-weight: bold;
+  border-bottom: 1px solid #999;
+  margin: 1.5rem 0 0 0;
+}
+
+code.js-snippet {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+div.js-expr {
+  background-color: #f3faff;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+div.js-value {
+  background-color: #ffffef;
+  padding: 0.5rem 0 0.5rem 2rem;
+  border-radius: 0 0 1rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+</style>
+
+<h3>Type conversion</h3>
+
+<p>
+  Use <code>Number("3")</code> to convert a value to a number. Alternatively, use <code>parseInt()</code> and <code>parseFloat()</code>.
+</p>
+
+<h3>Variable declarations</h3>
+
+<p>
+  Bindings declared with <code>let</code> and <code>const</code> are local to the <em>block</em> that they are declared in. Old-style <code>var</code> bindings are visible throughout the whole function they appear in (or global scope).
+</p>
+
+<h3>Array operations</h3>
+
+<p>
+  The following definition has been executed in this page (access the console to manipulate it):
+</p>
+
+<pre>
+let aList = [1, 4, 9, 16, 25]
+</pre>
+
+<script>
+let aList = [1, 4, 9, 16, 25]
+</script>
+
+<div id="array-operations-table"></div>
+
+<h3>Membership in arrays and strings</h3>
+
+<p>
+  The method <code>includes()</code> checks if an element is in an array or if a string is in another string.
+</p>
+
+<p>
+  <strong>Mnemonic:</strong> The word <strong>in</strong> is in <code>includes</code>.
+</p>
+
+<pre>
+arr.includes(3)
+s.includes("and")
+</pre>
+
+<!-- Begin BiwaScheme HTML generation -->
+<script src="biwascheme-0.8.0-custom.min.js"></script>
+<script type="text/biwascheme">
+(define add-table-to-div
+  (lambda (div-id contents)
+    (let ((div-elem (getelem div-id)))
+      (element-append-child!
+       div-elem
+       (element-new
+        `("div.snippet"
+          ,@(map (lambda (row)
+                   `(div (h4 ,(list-ref row 0))
+                         ("div.js-expr" ("code.js-snippet" ,(list-ref row 1)))
+                         ,(if (> (string-length (list-ref row 2)) 0)
+                              `("div.js-value" ("code.js-snippet" ,(list-ref row 2)))
+                              "")))
+                 contents)))))))
+  ;;;;
+  ;;;; Table data
+(add-table-to-div
+ "#array-operations-table"
+ '(("Indexing"
+    "aList[2]"
+    "9")
+
+   ("Concatenation"
+    "const aList2 = [100, 200, 300];
+[...aList, ...aList2]"
+    "[1, 4, 9, 16, 25, 100, 200, 300]")
+
+   ("Repetition"
+    "[].concat(...Array(3).fill(aList))"
+    "[1, 4, 9, 16, 25, 1, 4, 9, 16, 25, 1, 4, 9, 16, 25]")
+
+   ("Membership"
+    "aList.includes(16)"
+    "true")
+
+   ("Length"
+    "aList.length"
+    "5")
+
+   ("Slicing"
+    "aList.slice(1, 3)"
+    "[4, 9]")
+
+   ))
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

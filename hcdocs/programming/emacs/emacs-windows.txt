@@ -137,6 +137,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(web-mode-markup-indent-offset 2)
  '(web-mode-script-padding 0)
  '(web-mode-style-padding 0)
+ '(js2-strict-missing-semi-warning nil)
  '(yas/prompt-functions
    '(yas/ido-prompt yas/x-prompt yas/completing-prompt yas/no-prompt)))
 
@@ -475,6 +476,10 @@ they line up with the line containing the corresponding opening bracket."
             (local-set-key (kbd "C-c l") (lambda () (interactive) (insert "// debug\n  console.log(")))))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(add-hook 'rjsx-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
 
 (add-hook 'js-mode-hook
           (lambda ()

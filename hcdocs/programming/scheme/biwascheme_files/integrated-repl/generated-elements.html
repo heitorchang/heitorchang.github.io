@@ -73,13 +73,67 @@
 
     <h3><a href="../../../../index.html">home</a> / <a href="../../../index.html">programming</a> / <a href="../../index.html">scheme</a> / <a href="../index.html">biwascheme_files</a> / <a href="index.html">integrated-repl</a></h3>
     
-<a class="index" href="create-h3s.html">&#x1F4D8; create-h3s.html</a><br>
-<a class="index" href="csvs/index.html">&#x1F4C1; csvs</a><br>
-<a class="index" href="generated-elements.html">&#x1F4D8; generated-elements.html</a><br>
-<a class="index" href="lib/index.html">&#x1F4C1; lib</a><br>
-<a class="index" href="parse-csv.html">&#x1F4D8; parse-csv.html</a><br>
-<a class="index" href="repl.html">&#x1F4D8; repl.html</a><br>
-<a class="index" href="scm/index.html">&#x1F4C1; scm</a><br>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="lib/repl.css">
+    <title>BiwaScheme REPL</title>
+  </head>
+  <body>
+    <style>
+      table td {
+        border: 1px solid #ccc;
+      }
+    </style>
+    <div id="content">
+    </div>
+    <script src="lib/biwascheme-0.8.0-custom.min.js"></script>
+
+    <!-- set display to 'none' to hide REPL, 'block' to show -->
+    <div id="repl" style="display: block;">
+      <div id="input-area"><button onclick="hideRepl()">Hide (eval showRepl() in console to show)</button><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
+      <div id="output-area"><button onclick="clearOutput()">Clear output</button><br><textarea id="replOutput"></textarea></div>
+    </div>
+    <script src="lib/repl.js"></script>
+    <script type="text/biwascheme">
+(define content (getelem "#content"))
+
+;;; one element
+(element-append-child!
+ content
+ (element-new '(h3 "An H3 tag")))
+
+;;; unordered list
+(define list-items '("chocolate" "cream" "bananas"))
+
+(element-append-child!
+ content
+ (element-new
+  `(ul
+    ,@(map (lambda (item) `(li ,item)) list-items))))
+
+;;; table
+(define table-rows
+  '(("name" "age" "role")
+    ("Tina" "18" "Mage")
+    ("Joe" "22" "Cook")
+    ("Lucy" "13" "Artist")))
+
+(element-append-child!
+ content
+ (element-new
+  `(table
+    ,@(map
+       (lambda (row)
+         `(tr
+          ,@(map (lambda (col) `(td ,col)) row)))
+       table-rows))))
+</script>
+  </body>
+</html>
+
 </div>
 <br>
 <hr>
