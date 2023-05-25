@@ -104,78 +104,83 @@ div.js-value {
   font-size: 1rem;
   font-weight: bold;
 }
+
+h2.subsection {
+  display: inline-block;
+  border-bottom: 2px solid #08c;
+  margin: 3rem 0 0 0;
+}
 </style>
 
-<h2 id="ch1">1 Values and Variables</h3>
+<div id="toc">
+  <h3>Table of contents</h3>
+  <ol>
+    <li><a href="#ch1-2">Values and variables</a></li>
+    <li><a href="#ch2-2">Control structures</a></li>
+    <li><a href="#ch3-1">Functions</a></li>
+    <li><a href="#ch4-1">Object-oriented programming</a></li>
+    <li><a href="#ch5-1">Numbers and dates</a></li>
+    <li><a href="#ch6-1">Strings and regular expressions</a></li>
+    <li><a href="#ch7-1">Arrays and collections</a></li>
+    <li><a href="#ch8-1">Internationalization</a></li>
+    <li><a href="#ch9-1">Asynchronous programming</a></li>
+    <li><a href="#ch10-1">Modules</a></li>
+    <li><a href="#ch11-1">Metaprogramming</a></li>
+    <li><a href="#ch12-1">Iterators and generators</a></li>
+</div>
 
-<h3>1.2 Types and the typeof Operator</h3>
-<div id="ch1-types-and-the-typeof-operator"></div>
+<div id="content"></div>
 
-<h3>1.4 Variable Declarations</h3>
-<div id="ch1-variable-declarations"></div>
-
-<h3>1.6 Numbers</h3>
-<div id="ch1-numbers"></div>
-
-<h3>1.7 Arithmetic Operators</h3>
-<div id="ch1-arithmetic-operators"></div>
-
-<h3>1.11 Template Literals</h3>
-<div id="ch1-template-literals"></div>
-
-<h3>1.12 Objects</h3>
-<div id="ch1-objects"></div>
-<script>const harry = { name: 'Harry Smith', age: 42 }</script>
-
-<h3>1.14 Arrays</h3>
-<div id="ch1-arrays"></div>
-<script>const numbers = [1, 2, 3, 'many']</script>
-
-<!-- Skipped sections -->
-
-<h3>6.1 Converting between strings and code point sequences</h3>
-<div id="ch6-converting-between-strings-and-code-point-sequences"></div>
-<script>let str = String.fromCodePoint(0x48, 0x69, 0x20, 0x1F310, 0x21)</script>
+<!-- pre-computed values -->
+<script>
+const harry = { name: 'Harry Smith', age: 42 }
+const numbers = [1, 2, 3, 'many']
+let hiStr = String.fromCodePoint(0x48, 0x69, 0x20, 0x1F310, 0x21)
+</script>
 
 <!-- Begin BiwaScheme HTML generation -->
 <script src="biwascheme-0.8.0-custom.min.js"></script>
 <script type="text/biwascheme">
-
-(define add-table-to-div
-  (lambda (div-id contents)
-    (let ((div-elem (getelem div-id)))
+(define add-code-div
+  (lambda (div-id div-title contents)
+    (let ((content (getelem "#content")))
       (element-append-child!
-       div-elem
+       content
        (element-new
-        `("div.snippet"
-          ,@(map (lambda (row)
-                   `(div (h4 ,(list-ref row 0))
-                         ("div.js-expr" ("code.js-snippet" ,(list-ref row 1)))
-                         ,(if (> (string-length (list-ref row 2)) 0)
-                            `("div.js-value" ("code.js-snippet" ,(list-ref row 2)))
-                            "")))
-                 contents)))))))
-;;;;
-;;;; Table data
-(add-table-to-div
-  "#ch1-types-and-the-typeof-operator" ; 1.2
-  '(("Number" "3" "")
-    ("Boolean" "true    false" "")
-    ("Special not-a-value" "null    undefined" "")
-    ("String" "'a string'" "")
-    ("Symbol" "Symbol('sym')" "")
-    ("Object" "{ name: 'John', age: 26 }" "")
-    ("Find the type of a value" "typeof 42" "'number'")
-    ("Type of null is accidentally <em>object</em>" "typeof null" "'object'")))
+        `(,(string-append "div#" div-id)
+          ("h2.subsection" ,(string-append div-id " " div-title))
+          ("div.snippet"
+           ,@(map (lambda (row)
+                    `(div (h4 ,(list-ref row 0))
+                          ("div.js-expr" ("code.js-snippet" ,(list-ref row 1)))
+                          ,(if (> (string-length (list-ref row 2)) 0)
+                               `("div.js-value" ("code.js-snippet" ,(list-ref row 2)))
+                               "")))
+                  contents))))))))
 
-(add-table-to-div
- "#ch1-variable-declarations" ; 1.4
-  '(("Avoid var" "<strike>var name = 'Bob'</strike>" "")
-    ("If the value will change over the course of the program, use <em>let</em>" "let counter = 0" "")
-    ("If the value will never change, use <em>const</em>" "const PI = 3.1415" "")))
+(add-code-div
+ "ch1-2"
+ "Types and the typeof operator"
+ '(("Number" "3" "")
+   ("Boolean" "true    false" "")
+   ("Special not-a-value" "null    undefined" "")
+   ("String" "'a string'" "")
+   ("Symbol" "Symbol('sym')" "")
+   ("Object" "{ name: 'John', age: 26 }" "")
+   ("Find the type of a value" "typeof 42" "'number'")
+   ("Type of null is accidentally <em>object</em>" "typeof null" "'object'")))
 
-(add-table-to-div
- "#ch1-numbers" ; 1.6
+
+(add-code-div
+ "ch1-4"
+ "Variable declarations"
+ '(("Avoid var" "<strike>var name = 'Bob'</strike>" "")
+   ("If the value will change over the course of the program, use <em>let</em>" "let counter = 0" "")
+   ("If the value will never change, use <em>const</em>" "const PI = 3.1415" "")))
+
+(add-code-div
+ "ch1-6"
+ "Numbers"
  '(("Accurate integer representation limits" "Number.MIN_SAFE_INTEGER &lt;= n &lt;= Number.MAX_SAFE_INTEGER" "")
    ("Convert a string to float" "const x = parseFloat('1.23')" "1.23")
    ("Convert a string to integer" "const y = parseInt('3')" "3")
@@ -184,13 +189,15 @@ div.js-value {
 n.toString()"
     "'3'")))
 
-(add-table-to-div
- "#ch1-arithmetic-operators" ; 1.7
+(add-code-div
+ "ch1-7"
+ "Arithmetic operators"
  '(("Remainder" "3 % 2" "1")
    ("Exponentiation" "2 ** 16" "65536")))
 
-(add-table-to-div
- "#ch1-template-literals" ; 1.11
+(add-code-div
+ "ch1-11"
+ "Template literals"
  '(("Template literal (multi-line string with interpolation)"
     "let destination = 'world'
 let greeting = `Hello, ${destination.toUpperCase()}!`"
@@ -208,8 +215,9 @@ ${destination}
 `"
     "Hello\\nworld\\n")))
 
-(add-table-to-div
- "#ch1-objects" ; 1.12
+(add-code-div
+ "ch1-12"
+ "Objects"
  '(("Accessing an object property"
     "const harry = { name: 'Harry Smith', age: 42 }
 let harrysAge = harry.age"
@@ -239,8 +247,9 @@ let harry = { name: 'Harry Smith', age }"
     "let harry = { name: 'Harry Smith', [field.toLowerCase()]: 42 }"
     "")))
 
-(add-table-to-div
- "#ch1-arrays" ; 1.14
+(add-code-div
+ "ch1-14"
+ "Arrays"
  '(("An array is an object whose property names are '0', '1', '2', etc."
     "const numbers = [1, 2, 3, 'many']"
     "")
@@ -262,12 +271,122 @@ let harry = { name: 'Harry Smith', age }"
 matrix[1][0]"
     "2")))
 
-;;; skipped sections
+(add-code-div
+ "ch1-15"
+ "JSON"
+ '(("JSON is a lightweight text format for exchanging object data"
+    "{ \"name\": \"Harry Smith\", \"age\": 42, \"lucky numbers\": [17, 29], \"lucky\": false }"
+    "")
+   ("Convert an object to JSON string"
+    "JSON.stringify({a: 1})"
+    "'{\"a\":1}'")
+   ("Parse a JSON string"
+    "JSON.parse('{\"a\":1}')"
+    "{a: 1}")))
 
-(add-table-to-div
- "#ch6-converting-between-strings-and-code-point-sequences" ; 6.1
+(add-code-div
+ "ch1-16"
+ "Destructuring"
+ '(("A destructuring assignment matches a pattern to obtain values"
+    "const pair = [1, 2]
+let [first, second] = pair"
+    "")
+
+   ("Swap two variables' values"
+    "[x, y] = [y, x]"
+    "")
+
+   ("Destructuring for objects (the left-hand side is a pattern, not an object literal)"
+    "let harry = { name: 'Harry', age: 42 }
+let { name: harrysName, age: harrysAge } = harry"
+    "")
+
+   ("Destructuring with objects when the property has the same name as the variable"
+    "let { name, age } = harry
+
+// is equivalent to
+let { name: name, age: age } = harry
+
+// or
+let name = harry.name
+let age = harry.age"
+    "")))
+
+(add-code-div
+ "ch1-17"
+ "Advanced destructuring"
+ '(("Nested objects can be destructured"
+    "let { birthday: { year: patsBirthYear }} = pat"
+    "")
+   ("Rest declarations when destructuring an array"
+    "let [first, second, ...others] = numbers"
+    "")
+   ("Default values"
+    "let [first, second = 0] = [42]"
+    "")))
+
+(add-code-div
+ "ch2-2"
+ "Semicolon insertion"
+ '(("Never start a statement with ( or [. It will be considered a continuation of the previous line." ""  "")
+   ("Don't put a line break after <code>return</code>" "" "")))
+
+(add-code-div
+ "ch2-3"
+ "Branches"
+ '(("If-else-if-else example"
+    "if (sales > 2 * target) {
+  performance = 'Excellent'
+  bonus = 1000
+} else if (sales > target) {
+  performance = 'Good'
+  bonus = 100
+} else {
+  performance = 'Below target'
+  bonus = 0
+}"
+    "")
+
+   ("Conditional operator"
+    "let myMax = x > y ? x : y"
+    "")))
+
+(add-code-div
+ "ch2-7"
+ "Boolean operators"
+ '(("Nullish coalescing operator (if the left-hand side is null or undefined, return the right-hand side)"
+    "a ?? b"
+    "")
+   ("Optional chaining (x?.propertyName yields the property's value if x is not undefined or null, and undefined otherwise)"
+    "let recipient = person?.name
+let recipientLength = person?.name?.length"
+    "")))
+
+(add-code-div
+ "ch2-8"
+ "The switch statement"
+ '(("Example"
+    "let description = ''
+switch (someExpression) {
+  case 0:
+    description = 'zero'
+    break
+  case false:
+    description = 'false'
+    // Warning: execution falls through to the next alternative
+  case true:
+    description = 'true'
+    break
+  default:
+    description = 'none of the above'
+}"
+    "")))
+
+(add-code-div
+ "ch6-1"
+ "Converting between strings and code point sequences"
  '(("String definition from code points"
-    "let str = String.fromCodePoint(0x48, 0x69, 0x20, 0x1F310, 0x21)"
+    "let hiStr = String.fromCodePoint(0x48, 0x69, 0x20, 0x1F310, 0x21)"
     "'Hi 🌐!'")
 
    ("String definition from code points in an array"
@@ -276,12 +395,12 @@ let str2 = String.fromCodePoint(...codePoints)"
     "'Hi 🌐!'")
 
    ("Convert a string to an array of code points"
-    "let chars = [...str]"
+    "let chars = [...hiStr]"
     "['H', 'i', ' ', '🌐', '!']")
 
    ("Process the code points of a string"
-    "for (let i = 0; i < str.length; i++) {
-  let cp = str.codePointAt(i)
+    "for (let i = 0; i < hiStr.length; i++) {
+  let cp = hiStr.codePointAt(i)
   if (cp > 0xFFFF) i++
   console.log(String.fromCodePoint(cp))
 }"
@@ -292,7 +411,7 @@ i
 !")
 
    ("Length of a string with code points above 0xFFFF"
-    "[...str].length"
+    "[...hiStr].length"
     "5")))
 </script>
 

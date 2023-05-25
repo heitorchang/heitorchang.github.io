@@ -9,11 +9,11 @@
   }
 
   ul {
-    margin: 0 ;
+    margin: 0;
   }
 
   h3 {
-    color: blue                         ;
+    color: blue;
   }
 
   #sidebar {
