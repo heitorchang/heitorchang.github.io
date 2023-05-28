@@ -71,12 +71,68 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">asp_net</a></h3>
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">js</a> / <a href="index.html">js_files</a></h3>
     
-<a class="index" href="asp_net_core_razor_in_action.html">&#x1F4D8; asp_net_core_razor_in_action.html</a><br>
-<a class="index" href="asp_net_core_razor_in_action_files/index.html">&#x1F4C1; asp_net_core_razor_in_action_files</a><br>
-<a class="index" href="asp_net_razor_pages.html">&#x1F4D8; asp_net_razor_pages.html</a><br>
-<a class="index" href="asp_net_razor_pages_files/index.html">&#x1F4C1; asp_net_razor_pages_files</a><br>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Heitor Chang</title>
+    <style>
+    body {
+      background-color: black;
+      color: #180;
+    }
+    a {
+      color: #3a4;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    @keyframes blink {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    </style>
+  </head>
+  <body>
+    <pre>
+$ whoami
+heitorchang
+
+$ ls -l
+lrwxrwxrwx   1 heitorchang  heitorchang     12 Mar 15 22:30 <a href="https://heitorchang.github.io">github_pages</a>
+-rw-r--r--   1 heitorchang  heitorchang    916 May  2 12:47 index.html
+
+$ <span id="line"></span><span onclick="myprompt()" style="animation: blink 1s steps(1, end) infinite;">|</span>
+    </pre>
+    <script>
+    const line = document.getElementById("line");
+    document.body.addEventListener('keyup', (e) => {
+      if (e.keyCode >= 32 && e.keyCode <= 127) {
+	line.textContent += String.fromCodePoint(e.keyCode).toLowerCase()
+      } else if (e.keyCode === 13 && line.textContent.length > 0) {
+	alert(line.textContent + " coming right up!")
+	line.textContent = ""
+      }
+    });
+
+    function myprompt() {
+      const ans = prompt("At your service!")
+      if (ans !== null) {
+	alert(ans + " coming right up!")
+      }
+    }
+    </script>
+  </body>
+</html>
+
 </div>
 <br>
 <hr>
