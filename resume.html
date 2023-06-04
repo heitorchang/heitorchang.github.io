@@ -21,14 +21,29 @@
         <h2>Education</h2>
       </div>
 
+      <div id="personalProjects">
+        <h2 class="skills">Personal Projects</h2>
+        <ul>
+          <li>
+            <em>Alexie Beans</em> &ndash; A Django app implementing double-entry accounting rules, used for managing personal finances and budgeting.
+          </li>
+          <li>
+            <em>Polylexis</em> &ndash; A Django app containing Greek vocabulary quizzes and a built-in dictionary.
+          </li>
+          <li>
+            <em>Cooking Diary</em> &ndash; A vanilla JavaScript app that records which dishes were consumed daily, including the ingredients making up each dish.
+          </li>
+        </ul>
+      </div>
+
       <div id="languages">
         <h2 class="skills">Skills</h2>
         <ul>
           <li>Fluent in <strong>English</strong> and <strong>Portuguese</strong>.</li>
           <li>Rudimentary knowledge of <strong>Mandarin</strong>, <strong>Italian</strong>, <strong>French</strong>, <strong>Spanish</strong>, and <strong>Greek</strong>.</li>
-          <li>Advanced knowledge of <strong>Python</strong>, <strong>JavaScript</strong>, and <strong>HTML</strong>.</li>
-          <li>Intermediate knowledge of <strong>PostgreSQL</strong> and <strong>CSS</strong>.</li>
-          <li>Basic knowledge of <strong>Scheme</strong>, <strong>Java</strong>, and <strong>Kotlin</strong>.</li>
+          <li>Advanced knowledge of <strong>JavaScript</strong>, <strong>Python</strong>, and <strong>HTML</strong>.</li>
+          <li>Intermediate knowledge of <strong>PostgreSQL</strong>, <strong>Django</strong>, <strong>React</strong>, <strong>Vue</strong>, and <strong>CSS</strong>.</li>
+          <li>Basic knowledge of <strong>Scheme</strong> and <strong>Java</strong>.</li>
         </ul>
       </div>
 
@@ -43,12 +58,19 @@
 (define education-section (getelem "#education"))
 
 (define professional-items
-  '(("Mediafly, Inc., Chicago, IL (Remote)"
+  '(("Fresh Consulting, Seattle, WA (Remote)"
+     ("Senior Software Developer"
+      "Mar. 2023 &ndash; May 2023"
+      ("Developed a SSG (Static Site Generator) in Python that mimics an operating system's directory explorer and adds a uniform layout to the source pages with embedded code and multimedia."
+       "Designed a framework for unit testing JavaScript implementations of algorithms that process native data structures and JSON."
+       "Formulated a DSL (Domain-Specific Language) based on Scheme's functional programming concepts to directly manipulate front-end elements.")))
+
+    ("Mediafly, Inc., Chicago, IL (Remote)"
      ("Senior Software Engineer, Data and Client Squad"
       "Aug. 2022 &ndash; Feb. 2023"
-      ("Developed Kotlin code to expand the back-end customer integration with Salesforce's API to enable the creation of custom objects holding metadata."
-       "Improved the Python video call processing pipeline to filter out unwanted blocks of silence."
-       "Corrected multiple occurrences of temporary files not being cleared in the Python pipeline code.")))
+      ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new custom objects holding metadata."
+       "Improved the Python video call processing pipeline, filtering out unwanted blocks of silence."
+       "Corrected multiple occurrences of temporary files not being cleared and other data inconsistencies in the Python pipeline code.")))
 
     ("Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP"
      ("Senior Full-Stack Developer"
