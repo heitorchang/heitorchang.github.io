@@ -56,7 +56,8 @@ Decrypt: C - K = P
       </div>
 
       <div>
-        Emergency phones. Hint: 1st grade teacher.
+        Emergency phones. Hint: 1st grade teacher. <button onclick="copyPhones()">Copy to ciphertext above</button>
+
 <pre>
 zI;he !¢v_§ £)u§y p_£{' d1Hº6 Mh$y¢ txf{x $}"w\ sRKrp ~xiO§ £*|!t qf}·q )[LGO p|"qj £yfx£ ª£"}u
 </pre>
@@ -64,5 +65,10 @@ zI;he !¢v_§ £)u§y p_£{' d1Hº6 Mh$y¢ txf{x $}"w\ sRKrp ~xiO§ £*|!t qf}·
 
 			<script src="vijenere.min.js"></script>
       <script src="app.js"></script>
+      <script>
+        function copyPhones() {
+          document.getElementById("ciphertext").value = `zI;he !¢v_§ £)u§y p_£{' d1Hº6 Mh$y¢ txf{x $}"w\\ sRKrp ~xiO§ £*|!t qf}·q )[LGO p|"qj £yfx£ ª£"}u`;
+        }
+      </script>
   </body>
 </html>
