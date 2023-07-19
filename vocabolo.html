@@ -1,0 +1,148 @@
+<body>
+  <style>
+  @font-face {
+    font-family: 'KleeOne';
+    src: url('KleeOne-Regular.ttf') format('truetype');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Playfair';
+    src: url('PlayfairDisplay.ttf') format('truetype');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Dekko';
+    src: url('Dekko-Regular.ttf') format('truetype');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Acme';
+    src: url('Acme-Regular.ttf') format('truetype');
+    font-style: normal;
+  }
+
+  </style>
+  <div>
+    <!--
+    dot under letter:
+    z&#x0323;
+    -->
+
+    Voc: <input id="vocabolo" value="strizzare"><br>
+    VocX: <input id="vocX" value="380"><br>
+
+    Pron: <input id="pronuncia" value="strizzàre"><br>
+
+    Defin 1: <input id="definizione1" value=""><br>
+    Defin 2: <input id="definizione2" value="Stringere forte qualcosa in modo da farne uscire"><br>
+    Defin 3: <input id="definizione3" value="da farne uscire il liquido in essa contenuto."><br>
+    Defin 4: <input id="definizione4" value=""><br>
+    Defin 5: <input id="definizione5" value=""><br>
+
+    <br>
+    Es 1. <input id="esempio1" value="Strizzare un limone">
+    Es 2. <input id="esempio2" value="">
+    <br><br>
+    <button onclick="draw()" autofocus>Draw</button>
+    <button onclick="saveCanvas()">Save</button>
+  </div>
+
+  <div>
+    <canvas id="canvas" width="1080" height="1080">
+    </canvas>
+  </div>
+
+  <script>
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  function randomLightColor() {
+    return Math.floor(Math.min(255, 222 + Math.random() * (255 - 222)));
+  }
+
+  function randomLetter() {
+    return String.fromCharCode(65 + Math.random() * 26);
+  }
+
+  let bgLetterX = 0;
+  let bgLetterY = 0;
+
+  function drawRotatedLetter(letter) {
+    ctx.save();
+    ctx.translate(500, 500);
+    ctx.rotate(Math.random() * 6.28);
+    ctx.textAlign = "center";
+    ctx.font = `bold ${222 + Math.floor(Math.random() * 200)}px Playfair`;
+    ctx.fillStyle = `rgb(${randomLightColor()}, ${randomLightColor()}, ${randomLightColor()})`;
+    ctx.fillText(letter, -500 + Math.random() * 1000, -500 + Math.random() * 1000);
+    ctx.restore();
+  }
+
+  function generateBackgroundLetters() {
+    for (let i = 0; i < 16; i++) {
+      drawRotatedLetter(randomLetter());
+    }
+  }
+
+  function writeText(alt, fontSize, fontName, color, text, x, y) {
+    ctx.save();
+    ctx.font = `${alt} ${fontSize}px ${fontName}`;
+    ctx.fillStyle = color;
+    ctx.fillText(text, x, y);
+    ctx.restore();
+  }
+
+  function draw() {
+    ctx.fillStyle = "#ffc";
+    ctx.fillRect(0, 0, 1080, 1080);
+    generateBackgroundLetters();
+
+    writeText("", 62, "Acme", "#482", "Che cavolo vuol dire questo vocabolo?", 100, 90);
+
+    writeText("", 90, "Playfair", "#333", document.getElementById("vocabolo").value, parseInt(document.getElementById("vocX").value), 220);
+
+    // dotted line
+    ctx.save();
+    ctx.fillStyle = "#33a";
+
+    for (let x = 20; x < 1080; x += 60) {
+      ctx.fillRect(x, 280, 20, 20);
+    }
+    ctx.restore();
+
+    // pronuncia
+    writeText("italic", 52, "Playfair", "#838", "(" + document.getElementById("pronuncia").value + ")", parseInt(document.getElementById("vocX").value), 380);
+
+    // definition
+    writeText("", 50, "Dekko", "#622", document.getElementById("definizione1").value, 50, 460);
+    writeText("", 50, "Dekko", "#622", document.getElementById("definizione2").value, 50, 540);
+    writeText("", 50, "Dekko", "#622", document.getElementById("definizione3").value, 50, 620);
+    writeText("", 50, "Dekko", "#622", document.getElementById("definizione4").value, 50, 700);
+    writeText("", 50, "Dekko", "#622", document.getElementById("definizione5").value, 50, 780);
+
+    // esempio
+    writeText("", 36, "Playfair", "#333", "Esempio:", 80, 860);
+
+    writeText("", 40, "KleeOne", "#229", document.getElementById("esempio1").value, 80, 920);
+    writeText("", 40, "KleeOne", "#229", document.getElementById("esempio2").value, 80, 972);
+
+    // fonte
+    writeText("", 32, "Acme", "#222", "Definizione dallo Zingarelli 2020 - Zanichelli editore", 400, 1055);
+  }
+
+  function saveCanvas() {
+    const filename = "output_vocabolo_" + Date.now() + ".png";
+    const downloadLink = document.createElement('a');
+    downloadLink.setAttribute('download', filename);
+    canvas.toBlob(function(blob) {
+      const url = URL.createObjectURL(blob);
+      downloadLink.setAttribute('href', url);
+      downloadLink.click();
+    });
+  }
+  </script>
+
+</body>
