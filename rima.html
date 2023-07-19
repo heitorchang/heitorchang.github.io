@@ -1,0 +1,139 @@
+<body>
+  <style>
+  @font-face {
+    font-family: 'KleeOne';
+    src: url('KleeOne-Regular.ttf') format('truetype');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Playfair';
+    src: url('PlayfairDisplay.ttf') format('truetype');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Dekko';
+    src: url('Dekko-Regular.ttf') format('truetype');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Acme';
+    src: url('Acme-Regular.ttf') format('truetype');
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Caveat';
+    src: url('Caveat-VariableFont_wght.ttf') format('truetype');
+    font-style: normal;
+  }
+
+  </style>
+  <div>
+    <!--
+         dot under letter:
+         z&#x0323;
+    -->
+
+    Rima 1: <input id="rima1" value=""><br>
+    Rima 2: <input id="rima2" value=""><br>
+    Rima 3: <input id="rima3" value=""><br>
+    Rima 4: <input id="rima4" value=""><br>
+    <br><br>
+    <button onclick="draw()" autofocus>Draw</button>
+    <br><br><br>
+    <button onclick="saveCanvas()">Save</button>
+  </div>
+
+  <div>
+    <canvas id="canvas" width="1080" height="1080">
+    </canvas>
+  </div>
+
+  <script>
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  function randomLightColor() {
+    return Math.floor(Math.min(255, 236 + Math.random() * (255 - 236)));
+  }
+
+  function randomLetter() {
+    return String.fromCharCode(65 + Math.random() * 26);
+  }
+
+  let bgLetterX = 0;
+  let bgLetterY = 0;
+
+  function drawRotatedLetter(letter) {
+    ctx.save();
+    ctx.translate(500, 500);
+    ctx.rotate(Math.random() * 6.28);
+    ctx.textAlign = "center";
+    ctx.font = `bold ${222 + Math.floor(Math.random() * 200)}px Playfair`;
+    ctx.fillStyle = `rgb(${randomLightColor()}, ${randomLightColor()}, ${randomLightColor()})`;
+    ctx.fillText(letter, -500 + Math.random() * 1000, -500 + Math.random() * 1000);
+    ctx.restore();
+  }
+
+  function drawEllipse() {
+    ctx.save();
+    ctx.translate(500, 500);
+    ctx.rotate(Math.random() * 6.28);
+    ctx.strokeStyle = "#fff";
+    ctx.fillStyle = `rgb(${randomLightColor()}, ${randomLightColor()}, ${randomLightColor()})`;
+    ctx.beginPath();
+    ctx.ellipse(
+  -500 + Math.random() * 1000,
+  -500 + Math.random() * 1000,
+      30 + Math.random() * 90,
+      30 + Math.random() * 90,
+      0, 0, 3.14159265 * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function generateBackgroundLetters() {
+    for (let i = 0; i < 19; i++) {
+      drawEllipse();
+    }
+  }
+
+  function writeText(alt, fontSize, fontName, color, text, x, y) {
+    ctx.save();
+    ctx.font = `${alt} ${fontSize}px ${fontName}`;
+    ctx.fillStyle = color;
+    ctx.fillText(text, x, y);
+    ctx.restore();
+  }
+
+  function draw() {
+    ctx.fillStyle = "#9fdef9";
+    ctx.fillRect(0, 0, 1080, 1080);
+    generateBackgroundLetters();
+
+    writeText("", 62, "Acme", "#482", "Qualche rima che cerca stima", 190, 290);
+
+    // quatrain
+    writeText("", 72, "Caveat", "#736", document.getElementById("rima1").value, 72, 520);
+    writeText("", 72, "Caveat", "#736", document.getElementById("rima2").value, 122, 620);
+    writeText("", 72, "Caveat", "#736", document.getElementById("rima3").value, 122, 720);
+    writeText("", 72, "Caveat", "#736", document.getElementById("rima4").value, 72, 820);
+  }
+
+  function saveCanvas() {
+    const filename = "output_vocabolo_" + Date.now() + ".png";
+    const downloadLink = document.createElement('a');
+    downloadLink.setAttribute('download', filename);
+    canvas.toBlob(function(blob) {
+      const url = URL.createObjectURL(blob);
+      downloadLink.setAttribute('href', url);
+      downloadLink.click();
+    });
+  }
+  </script>
+
+</body>
