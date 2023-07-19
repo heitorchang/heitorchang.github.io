@@ -60,7 +60,7 @@
   const ctx = canvas.getContext("2d");
 
   function randomLightColor() {
-    return Math.floor(Math.min(255, 222 + Math.random() * (255 - 222)));
+    return Math.floor(Math.min(255, 236 + Math.random() * (255 - 236)));
   }
 
   function randomLetter() {
@@ -96,7 +96,7 @@
   }
 
   function draw() {
-    ctx.fillStyle = "#ffc";
+    ctx.fillStyle = "#ffffd9";
     ctx.fillRect(0, 0, 1080, 1080);
     generateBackgroundLetters();
 
@@ -126,8 +126,8 @@
     // esempio
     writeText("", 36, "Playfair", "#333", "Esempio:", 80, 860);
 
-    writeText("", 40, "KleeOne", "#229", document.getElementById("esempio1").value, 80, 920);
-    writeText("", 40, "KleeOne", "#229", document.getElementById("esempio2").value, 80, 972);
+    writeText("bold", 40, "KleeOne", "#229", document.getElementById("esempio1").value, 80, 920);
+    writeText("bold", 40, "KleeOne", "#229", document.getElementById("esempio2").value, 80, 972);
 
     // fonte
     writeText("", 32, "Acme", "#222", "Definizione dallo Zingarelli 2020 - Zanichelli editore", 400, 1055);
