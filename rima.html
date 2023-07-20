@@ -47,6 +47,7 @@
     -->
 
     XOffset: <input id="qX" value="160"><br>
+    Font size: <input id="fontSize" value="48"><br>
 
     Rima 1: <input id="rima1" value=""><br>
     Rima 2: <input id="rima2" value=""><br>
@@ -132,10 +133,10 @@
     const qFont = "Bad";
     const xOffset = parseInt(document.getElementById("qX").value);
 
-    writeText("bold", 72, qFont, "#736", document.getElementById("rima1").value, xOffset, 520);
-    writeText("bold", 72, qFont, "#736", document.getElementById("rima2").value, 70 + xOffset, 640);
-    writeText("bold", 72, qFont, "#736", document.getElementById("rima3").value, 70 + xOffset, 760);
-    writeText("bold", 72, qFont, "#736", document.getElementById("rima4").value, xOffset, 880);
+    writeText("bold", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima1").value, xOffset, 520);
+    writeText("bold", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima2").value, 70 + xOffset, 640);
+    writeText("bold", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima3").value, 70 + xOffset, 760);
+    writeText("bold", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima4").value, xOffset, 880);
   }
 
   function saveCanvas() {
