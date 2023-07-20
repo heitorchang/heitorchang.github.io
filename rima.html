@@ -46,7 +46,10 @@
          z&#x0323;
     -->
 
-    XOffset: <input id="qX" value="160"><br>
+    Title: <input id="tit" value="Qualche rima"><br>
+    TitleXOffset: <input id="titX" value="170"><br>
+
+    RimaXOffset: <input id="qX" value="160"><br>
     Font size: <input id="fontSize" value="48"><br>
 
     Rima 1: <input id="rima1" value=""><br>
@@ -127,7 +130,7 @@
     ctx.fillRect(0, 0, 1080, 1080);
     generateBackgroundLetters();
 
-    writeText("", 62, "Acme", "#482", "Qualche rima che cerca la stima", 170, 290);
+    writeText("", 62, "Acme", "#482", document.getElementById("tit").value, parseInt(document.getElementById("titX").value), 290);
 
     // quatrain
     const qFont = "Bad";
