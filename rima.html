@@ -25,8 +25,8 @@
   }
 
   @font-face {
-    font-family: 'Caveat';
-    src: url('Caveat-VariableFont_wght.ttf') format('truetype');
+    font-family: 'Bad';
+    src: url('BadScript-Regular.ttf') format('truetype');
     font-style: normal;
   }
 
@@ -36,6 +36,8 @@
          dot under letter:
          z&#x0323;
     -->
+
+    XOffset: <input id="qX" value="160"><br>
 
     Rima 1: <input id="rima1" value=""><br>
     Rima 2: <input id="rima2" value=""><br>
@@ -115,13 +117,16 @@
     ctx.fillRect(0, 0, 1080, 1080);
     generateBackgroundLetters();
 
-    writeText("", 62, "Acme", "#482", "Qualche rima che cerca stima", 190, 290);
+    writeText("", 62, "Acme", "#482", "Qualche rima che cerca la stima", 170, 290);
 
     // quatrain
-    writeText("", 72, "Caveat", "#736", document.getElementById("rima1").value, 72, 520);
-    writeText("", 72, "Caveat", "#736", document.getElementById("rima2").value, 122, 620);
-    writeText("", 72, "Caveat", "#736", document.getElementById("rima3").value, 122, 720);
-    writeText("", 72, "Caveat", "#736", document.getElementById("rima4").value, 72, 820);
+    const qFont = "Bad";
+    const xOffset = parseInt(document.getElementById("qX").value);
+
+    writeText("bold", 72, qFont, "#736", document.getElementById("rima1").value, xOffset, 520);
+    writeText("bold", 72, qFont, "#736", document.getElementById("rima2").value, 70 + xOffset, 620);
+    writeText("bold", 72, qFont, "#736", document.getElementById("rima3").value, 70 + xOffset, 720);
+    writeText("bold", 72, qFont, "#736", document.getElementById("rima4").value, xOffset, 820);
   }
 
   function saveCanvas() {
