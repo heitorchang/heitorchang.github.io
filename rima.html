@@ -115,7 +115,7 @@
   }
 
   function generateBackgroundLetters() {
-    for (let i = 0; i < 19; i++) {
+    for (let i = 0; i < 23; i++) {
       drawEllipse();
     }
   }
@@ -140,8 +140,8 @@
     const xOffset = parseInt(document.getElementById("qX").value);
 
     writeText("", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima1").value, xOffset, 520);
-    writeText("", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima2").value, 70 + xOffset, 640);
-    writeText("", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima3").value, 70 + xOffset, 760);
+    writeText("", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima2").value, xOffset, 640);
+    writeText("", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima3").value, xOffset, 760);
     writeText("", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima4").value, xOffset, 880);
   }
 
