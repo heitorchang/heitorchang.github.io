@@ -34,8 +34,8 @@
   }
 
   @font-face {
-    font-family: 'Bad';
-    src: url('BadScript-Regular.ttf') format('truetype');
+    font-family: 'Rima';
+    src: url('PassionOne-Regular.ttf') format('truetype');
     font-style: normal;
   }
 
@@ -48,9 +48,12 @@
 
     Title: <input id="tit" value="Qualche rima"><br>
     TitleXOffset: <input id="titX" value="170"><br>
+    TitleSize: <input id="titleSize" value="110"><br>
+    <br>
 
-    RimaXOffset: <input id="qX" value="160"><br>
-    Font size: <input id="fontSize" value="48"><br>
+    RimaXOffset: <input id="qX" value="100"><br>
+    Font size: <input id="fontSize" value="72"><br>
+    <br>
 
     Rima 1: <input id="rima1" value=""><br>
     Rima 2: <input id="rima2" value=""><br>
@@ -130,16 +133,16 @@
     ctx.fillRect(0, 0, 1080, 1080);
     generateBackgroundLetters();
 
-    writeText("", 62, "Acme", "#482", document.getElementById("tit").value, parseInt(document.getElementById("titX").value), 290);
+    writeText("", parseInt(document.getElementById("titleSize").value), "Acme", "#482", document.getElementById("tit").value, parseInt(document.getElementById("titX").value), 290);
 
     // quatrain
-    const qFont = "Bad";
+    const qFont = "Rima";
     const xOffset = parseInt(document.getElementById("qX").value);
 
-    writeText("bold", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima1").value, xOffset, 520);
-    writeText("bold", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima2").value, 70 + xOffset, 640);
-    writeText("bold", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima3").value, 70 + xOffset, 760);
-    writeText("bold", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima4").value, xOffset, 880);
+    writeText("", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima1").value, xOffset, 520);
+    writeText("", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima2").value, 70 + xOffset, 640);
+    writeText("", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima3").value, 70 + xOffset, 760);
+    writeText("", parseInt(document.getElementById("fontSize").value), qFont, "#736", document.getElementById("rima4").value, xOffset, 880);
   }
 
   function saveCanvas() {
