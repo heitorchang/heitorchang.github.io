@@ -75,273 +75,442 @@
     
 <h1>Python Distilled, &copy; 2022</h1>
 
-<h2>Chapters</h2>
+<style>
+h2 {
+  margin-bottom: 0;
+}
 
-<ol>
-  <li><a href="#ch1">Python Basics</a></li>
-  <li><a href="#ch2">Operators, Expressions, and Data Manipulation</a></li>
-</ol>
+div.snippet {
 
+}
 
+div.snippet h4 {
+  font-weight: normal;
+  margin: 2rem 0 0.2rem 0;
+}
 
-<h2 id="ch1">1 Python Basics</h2>
+code.py-snippet {
+  display: inline-block;
+  white-space: pre-wrap;
+}
 
-<p>
-  When the interpreter starts (by running <code>python</code> or <code>python3</code>), a prompt for the REPL (Read-Eval-Print-Loop) appears.
-</p>
+div.py-expr {
+  background-color: #f3faff;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
 
-<p>
-  In the REPL, the <code>_</code> variable holds the result of the last operation. This feature only works interactively.
-</p>
+div.py-value {
+  background-color: #bef;
+  color: #226666;
+  padding: 0 0 0.5rem 1.6rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
 
-<p>
-  A <em>variable</em> is a name (also called identifier) that refers to a value. A value represents an object of some type.
-</p>
+h3.subsection {
+  display: inline-block;
+  border-bottom: 2px solid #08c;
+  margin: 3rem 0 0 0;
+}
+</style>
 
-<p>
-  A <em>type hint</em> may be attached to a name:
-</p>
+<div id="toc">
+  <h3>Table of contents</h3>
+  <ol>
+    <li><a href="#ch1">Python Basics</a></li>
+  </ol>
+</div>
 
-<p>
-  <code>x: int = 42</code>
-</p>
+<div id="content"></div>
 
-<p>
-  <strong>Warning:</strong> Type hints are merely for code readability, and can be used by third-party code-checking tools. It does not change the execution of code in any way, nor does it prevent you from assigning the variable to a different type later.
-</p>
+<!-- Begin BiwaScheme HTML generation -->
+<script src="../js/biwascheme-0.8.0-custom.min.js"></script>
+<script type="text/biwascheme">
+(define add-chapter-header
+  (lambda (ch-id ch-name)
+    (let ((content (getelem "#content")))
+      (element-append-child!
+       content
+       (element-new
+        `(,(string-append "h2#" ch-id) ,ch-name))))))
 
-<p>
-  An <em>expression</em> is a combination of primitives, names, and operators that produce a value.
-</p>
+(define add-code-div
+  (lambda (div-id div-title contents)
+    (let ((content (getelem "#content")))
+      (element-append-child!
+       content
+       (element-new
+        `(,(string-append "div#sec" div-id)
+          ("h3.subsection" ,(string-append div-id " " div-title))
+          ("div.snippet"
+           ,@(map (lambda (row)
+                    `(div (h4 ,(list-ref row 0))
+                          ("div.py-expr" ("code.py-snippet" ,(list-ref row 1)))
+                          ,(if (> (string-length (list-ref row 2)) 0)
+                               `("div.py-value" ("code.py-snippet" ,(list-ref row 2)))
+                               "")))
+                  contents))))))))
 
-<p>
-  An <em>f-string</em> allows expressions to be embedded inside it. For example: <code>f'{year:>4d} {total:0.2f}'</code>
-</p>
+(add-chapter-header
+ "ch1"
+ "1. Python Basics")
 
-<h3>1.14 Exceptions</h3>
+(add-code-div
+ "1.1"
+ "Running Python"
+ '(("In interactive mode, <code>_</code> holds the result of the last operation."
+    ""
+    "")))
 
-<p>
-  A <code>try-finally</code> block is appropriate whenever certain actions must be performed no matter what happens. For example, releasing a lock to avoid deadlock:
-</p>
+(add-code-div
+ "1.2"
+ "Python Programs"
+ '(("Python source files are UTF-8 encoded text files."
+    "# hello.py
+print(\"Hello, World!\")"
+    "")))
 
-<pre>
-import threading
-lock = threading.Lock()
-...
-lock.acquire()
+(add-code-div
+ "1.3"
+ "Primitives, Variables, and Expressions"
+ '(("The four main primitive types are integers, floats, strings, and bools."
+    "(42, 4.2, 'forty-two', True, False)"
+    "")
 
-try:
-    ...
-    # statements
-finally:
-    lock.release()
-</pre>
+   ("A variable is a name that refers to a value. A value represents an object of some type."
+    "x = 42"
+    "")
 
-<p>
-  Alternatively, if the resource can be used using the <code>with</code> statement, the cleanup will happen regardless of what happens inside the <code>with</code> block.
-</p>
+   ("A type hint (attached to a name) is only used by third-party code-checking tools. It is completely ignored (not enforced) by the actual interpreter (there will be no complaints about inconsistencies)."
+    "x: int = 42"
+    "")
 
-<pre>
-with lock:
-    ...
-    # statements
-    ...
-</pre>
+   ("An expression is a combination of values and operators that produces a value (maybe the same value)."
+    "2 + 3 * 4"
+    "14")))
 
-<h3>1.15 Program Termination</h3>
+(add-code-div
+ "1.4"
+ "Arithmetic Operators"
+ '(("Truncating division"
+    "7 // 3"
+    "2")
 
-<p>
-  To force exit, write: <code>raise SystemExit()</code>. A message can be passed to <code>SystemExit()</code>.
-</p>
+   ("Exponentiation (power)"
+    "2 ** 16"
+    "65536")
 
-<p>
-  To ensure cleanup actions, register them with the <code>atexit</code> module.
-</p>
+   ("Modulo (remainder)"
+    "9 % 2"
+    "1")
 
-<pre>
-import atexit
+   ("divmod returns the quotient and remainder."
+    "divmod(9, 2)"
+    "(4, 1)")
 
-connection = open_connection("abc.com")
+   ("round() returns \"banker's rounding\", that is, ?.5 rounds to the nearest even multiple."
+    "round(2.5)"
+    "2")
 
-def cleanup():
-    close_connection(connection)
+   ("Bitwise operators"
+    "<< >> & | ^ ~"
+    "")))
 
-atexit.register(cleanup)
-</pre>
-
-<h3>1.16 Objects and Classes</h3>
-
-<p>
-  All values used in a program are objects.
-</p>
-
-<p>
-  Example of a class:
-</p>
-
-<pre>
-class Stack:
-    def __init__(self):
-        self._items = []
-
-    def push(self, item):
-        self._items.append(item)
-
-    def pop(self):
-        return self._items.pop()
-
-    def __repr__(self):
-        return f'&lt;{type(self).__name__} at 0x{id(self):x}, size={len(self)}&gt;'
-
-    def __len__(self):
-        return len(self._items)
-</pre>
-
-<p>
-  Using the class:
-</p>
-
-<pre>
-s = Stack()
-s.push('Dave')
-s.push(42)
-x = s.pop()
-y = s.pop()
-</pre>
-
-<p>
-  Inheritance:
-</p>
-
-<pre>
-class MyStack(Stack):
-    def swap(self):
-        a = self.pop()
-        b = self.pop()
-        self.push(a)
-        self.push(b)
-</pre>
-
-<p>
-  Using <code>super</code>:
-</p>
-
-<pre>
-class NumericStack(Stack):
-    def push(self, item):
-        if not isinstance(item, (int, float)):
-            raise TypeError('Expected a number.')
-        super().push(item)
-</pre>
-
-<h3>1.20 Structuring an Application</h3>
-
-<p>
-  A typical project may be organized as:
-</p>
-
-<pre>
-tutorial-project/
-  tutorial/
-    __init__.py
-    readport.py
-    pcost.py
-    stack.py
-
-  tests/
-    test_stack.py
-    test_pcost.py
-
-  examples/
-    sample.py
-
-  doc/
-    tutorial.txt
-</pre>
-
-<h3>1.21 Managing Third-Party Packages</h3>
-
-<p>
-  Create a virtualenv:
-</p>
-
-<pre>
-python3 -m venv myproject_env
-# activate the virtualenv (depends on the operating system)
-python -m pip install somepackage
-</pre>
-
-
-<h2 id="ch2">2 Operators, Expressions, and Data Manipulation</h2>
-
-<p>
-  An <em>expression</em> represents a computation that evaluates to a concrete value.
-</p>
-
-<p>
-  The left-hand side of an assignment represents a location where a reference to an object is stored. It may be:
-</p>
-
-<ul>
-  <li>An identifier such as <code>value</code></li>
-  <li>An attribute of an object</li>
-  <li>An index within a container</li>
-</ul>
-
-<p>
-  The <em>assignment expression</em> operator <code>:=</code> can be used to perform the combined action of expression evaluation and assignment. It is generally used in <code>if</code> and <code>while</code> statements:
-</p>
-
-<pre>
-while (line := file.readline()):
-    print(line)
-</pre>
-
-<p>
-  Comparisons to <code>None</code> should be done with <code>is</code> and <code>is not</code> (PEP 8).
-</p>
-
-<p>
-  Use <code>None</code> as the default keyword argument for optional arguments. In the function, check <code>if y is None</code>.
-</p>
-
-<pre>
-def f(x, items=None):
-    if items is None:
-        items = []
-    items.append(x)
-    return items
-</pre>
-
-<h3>2.8 Conditional expressions</h3>
-
-<p>
-  A common pattern is assigning a value conditionally:
-</p>
-
-<pre>
-if a &lt;= b:
-    minvalue = a
+(add-code-div
+ "1.5"
+ "Conditionals and Control Flow"
+ '(("if, elif, and else is used for conditional execution."
+    "if size < 4:
+    print(\"small\")
+elif 5 <= size <= 7:
+    print(\"medium\")
 else:
-    minvalue = b
-</pre>
+    pass # do nothing"
+    "")
 
-<p>
-  This may be written as:
-</p>
+   ("A conditional expression may be used in assignments"
+    "maxval = a if a > b else b"
+    "")
 
-<pre>
-minvalue = a if a &lt;= b else b
-</pre>
+   ("An assignment may be combined in other code with the <code>:=</code> operator (coloquially called the \"walrus operator\")."
+    "x = 0
+while (x := x + 1) < 10:
+    print(x)"
+    "")
 
-<p>
-  One way to copy nested lists is to make a copy of each sublist:
-</p>
+   ("<code>break</code> exits a loop, and <code>continue</code> skips the remainder of the loop body and goes on with the next iteration. Note that parentheses are needed to perform the correct comparison check."
+    ""
+    "")))
 
-<pre>
-a = [3, 4, 5]
-c = [list(a) for _ in range(4)]
-</pre>
+(add-code-div
+ "1.6"
+ "Text Strings"
+ '(("Immediately adjacent string literals are concatenated."
+    "print(
+\"Hello!\"
+\" \"
+\"Goodbye.\"
+)"
+    "Hello! Goodbye.")
+
+   ("An f-string is a string prefaced by an <code>f</code>. In f-strings, escaped expressions are evaluated. Any valid expression may be used."
+    "value = 3.141592
+print(f'The approximate value is {value:0.2f}')"
+    "The approximate value is 3.14")
+
+   ("Some common string methods are: (evaluate <code>dir(str)</code> for the full list)."
+    "s.startswith, s.endswith, s.replace, s.upper, s.lower"
+    "")
+
+   ("The following methods have an <code>\"r...\"</code> variant that starts from the end of the string:"
+    "s.find, s.rfind, s.index, s.rindex, s.split, s.rsplit, s.strip, s.rstrip"
+    "")
+
+   ("Convert between strings and numbers with <code>str(), repr(), format(), int(), float()</code>. String concatenation with <code>+</code> only works for strings."
+    "\"January \" + str(1) + \"st\""
+    "'January 1st'")
+
+   ("When debugging, use <code>repr(s)</code> to produce output because it often shows you more information about the value."
+    ""
+    "")))
+
+(add-code-div
+ "1.7"
+ "File Input and Output"
+ '(("Open a file and read its contents line by line. The <code>with</code> block is a context manager that automatically closes the file when execution leaves the block."
+    "with open('data.txt', encoding='utf-8') as file:
+    for line in file:
+        print(line, end='') # omit the extra newline"
+    "")
+
+   ("Read a file in its entirety as a string:"
+    "with open('data.txt') as file:
+    contents = file.read()"
+    "")
+
+   ("Use the <code>read()</code> method to read in chunks of <code>n</code> characters:"
+    "with open('data.txt', encoding='utf-8') as file:
+    while chunk := file.read(3):
+        print(chunk, end=';')"
+    "")
+
+   ("Pass the <code>file</code> argument to <code>print</code> in order to write a string to a file."
+    "with open('out.txt', 'w') as out:
+    print('data', file=outfile)"
+    "")
+
+   ("Alternatively, use the <code>write</code> method of a file object."
+    "out.write(name + ' says hi')"
+    "")
+
+   ("Read a string interactively:"
+    "name = input(\"What's your name?\")"
+    "")))
+
+(add-code-div
+ "1.8"
+ "Lists"
+ '(("A list literal consists of comma-separated values enclosed by square brackets:"
+    "names = ['Amy', 'Bob', 'Carl']"
+    "")
+
+   ("Empty list literals"
+    "[]
+list() # not commonly used"
+    "")
+
+   ("Add a single item to the end of a list:"
+    "names.append('Dave')"
+    "")
+
+   ("Insert an item at a specific position:"
+    "names.insert(1, 'Ann')"
+    "")
+
+   ("Iterate over the items:"
+    "for name in names:
+    print(name)"
+    "")
+
+   ("Use slices to retrieve a part of the list or to replace values. The second index is not included"
+    "names[0:2] = ['Judy', 'Kim', 'Laura', 'Maria']"
+    "['Judy', 'Kim', 'Laura', 'Maria', 'Carl']")
+
+   ("Concatenate lists"
+    "[1, 2] + [3, 4, 5]"
+    "[1, 2, 3, 4, 5]")
+
+   ("Separate a string into its constituent characters"
+    "list('banana')"
+    "['b', 'a', 'n', 'a', 'n', 'a']")
+
+   ("A list comprehension is an expression that builds a list according to its specification:"
+    "[x * x for x in range(6)]"
+    "[0, 1, 4, 9, 16, 25]")))
+
+(add-code-div
+ "1.9"
+ "Tuples"
+ '(("A tuple is an immutable object that encloses values in parentheses. Elements cannot be changed, nor removed or added to the tuple. However, a tuple may hold references to mutable objects and these mutable objects may be altered."
+    "('Tim', 34)"
+    "")
+
+   ("A 0-tuple (empty tuple) literal"
+    "a = ()"
+    "")
+
+   ("A 1-tuple (single-element tuple) literal has a trailing comma"
+    "b = ('apple',)"
+    "")
+
+   ("Retrieving values in a tuple is commonly done by \"unpacking\" them."
+    "name, address, item, quantity = customer_order"
+    "")))
+
+(add-code-div
+ "1.10"
+ "Sets"
+ '(("A set is an unordered collection of unique objects. They are used to find distinct values or to manage membership relationships. A set literal is enclosed in curly braces. Also, a set may be constructed from a list:"
+    "names = {'Joe', 'Kim'}
+names = set(['Anna', 'Beth'])
+empty_set = set()"
+    "")
+
+   ("A set cannot contain lists (or other unhashable types)"
+    "set([[1, 2], [3]])"
+    "TypeError: unhashable type: 'list'")
+
+   ("A set comprehension is written with curly braces:"
+    "names = {s[0] for s in students}"
+    "")
+
+   ("Common set operations:"
+    "a | b  # union
+a & b  # intersection
+a - b  # difference
+a ^ b  # symmetric difference
+a <= b  # a is a subset of b
+a < b  # a is a proper subset of b (a cannot be the same as b)"
+    "")
+
+   ("Add a single item"
+    "a.add(99)"
+    "")
+
+   ("Add multiple items"
+    "a.update({20, 30, 40})
+a.update([20, 30, 40])"
+    "")
+
+   ("Delete an item"
+    "a.remove(30)  # raises KeyError if absent
+a.discard(30)  # does nothing if absent"
+    "")))
+
+(add-code-div
+ "1.11"
+ "Dictionaries"
+ '(("A dictionary is a mapping between keys and values. A dict literal is key-value pairs enclosed by curly braces. Note that <code>{}</code> is an empty dict, and an empty set is <code>set()</code>.<br><br>Like set elements, keys must be hashable. Key insertion order is preserved as long as insertions and deletions have not occurred."
+    "d = {'name': 'Ken', 'age': 23}"
+    "")
+
+   ("To access members of a dict, use the indexing operator:"
+    "d['name']"
+    "'Ken'")
+
+   ("To add key-value pairs:"
+    "d['height'] = 182"
+    "")
+
+   ("Check key membership"
+    "'weight' in d"
+    "False")
+
+   ("Use a default value if the key does not exist:"
+    "p = d.get('pet', 'cat')"
+    "")
+
+   ("Remove a key-value pair:"
+    "del d['weight']"
+    "")
+
+   ("Keys may be tuples:"
+    "d[('Japan', '2009-01-15')] = 344"
+    "")
+
+   ("Example of a dict comprehension:"
+    "names = ['amy', 'jim', 'paul']
+initials = {name: name[0].upper() for name in names}"
+    "{'amy': 'A', 'jim': 'J', 'paul': 'P'}")
+
+   ("The Counter object tallies objects"
+    "from collections import Counter
+ctr = Counter(\"banana\")"
+    "Counter({'a': 3, 'n': 2, 'b': 1})")
+
+   ("<code>dict()</code> may be used with a list of key-value tuples:"
+    "dict([('A', 21), ('B', 33), ('C', 19)])"
+    "{'A': 21, 'B': 33, 'C': 19}")
+
+   ("Converting a dict to a list returns the keys"
+    "list({'A': 21, 'B': 33, 'C': 19})
+['A', 'B', 'C']"
+    "")
+
+   ("Alternatively, use the following methods (note: they return views):"
+    "d.keys()
+d.values()
+d.items()"
+    "")))
+
+(add-code-div
+ "1.12"
+ "Iteration and Looping"
+ '(("The <code>for</code> loop iterates over a collection of items (such as a string, list, range, or tuple). More complex objects may also be iterated over, such as files (reads them line by line)."
+    "for n in [1, 2, 3]:
+    print(f'The square of {n} is {n * n}.')"
+    "")
+
+   ("The <code>range(i, j, step)</code> function creates an object that represents a sequence of integers from i up to, but not including j, with the increment of step (by default, 1)."
+    "list(range(5))"
+    "[0, 1, 2, 3, 4]")))
+
+(add-code-div
+ "1.13"
+ "Functions"
+ '(("Create a function:"
+    "def add_one(x):
+    \"\"\"Add one to the argument.
+    (This is a multi-line docstring, described in PEP 257.
+    Keep triple double quotes in the same line if the docstring is a single line.)
+    \"\"\"
+    return x + 1"
+    "")
+
+   ("Return multiple values by placing them in a tuple:"
+    "def initial_and_length(name):
+    return (name[0], len(name))
+
+initial_and_length('Adam')"
+    "('A', 4)")
+
+   ("Use an assignment in the parameter list to define a default value (<strong>Warning:</strong> do not put mutable values as default values!)"
+    "def connect(host, port, timeout=500):
+    pass"
+    "")
+
+   ("When calling a function, the parameter may be named. If all are named, the order no longer matters:"
+    "connect(host='www.python.org', timeout=100, port=8000)"
+    "")))
+
+(add-code-div
+ "1.14"
+ "Exceptions"
+ '(
+
+))
+</script>
 
 </div>
 <br>

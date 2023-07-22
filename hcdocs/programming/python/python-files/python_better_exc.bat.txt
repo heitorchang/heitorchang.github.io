@@ -1,1 +1,1 @@
-python -m better_exceptions %1
+C:/Users/heitor/AppData/Local/Microsoft/WindowsApps/PythonSoftwareFoundation.Python.3.xx_yyyyy/python.exe -m better_exceptions %1

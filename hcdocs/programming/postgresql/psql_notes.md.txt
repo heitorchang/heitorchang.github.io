@@ -1,0 +1,147 @@
+# psql
+
+In Windows, set up the PAGER environment variable (can be the local user's) to:
+
+`C:\Users\heitor\AppData\Local\Programs\Git\usr\bin\less.exe -S -c`
+
+`-S` prevents word wrap
+`-c` forces display to begin on the top of the window
+
+Connecting (default port is 5432, I am using 5433 to leave the default port available for SQL proxies)
+
+`psql -h 127.0.0.1 -p 5433 -U postgres -d database`
+
+Help
+
+`\?` and `\h`
+
+Exiting psql
+
+`\q`
+
+In Windows, `~/.psqlrc` is
+
+`c:/Users/USERNAME/AppData/Roaming/postgresql/psqlrc.conf`
+
+
+## psql REPL
+
+Save password instead of typing it interactively
+
+`export PGPASSWORD=secret`
+
+Create a new database and user
+
+`create database artofpsql;`
+`create user dimitri with encrypted password 'mysecret';`
+`grant all privileges on database artofpsql to dimitri;`
+
+For local testing purposes, it's much easier to make a new user a superuser:
+
+`alter user localuser with superuser;`
+
+Run a file
+
+`psql -f filename.sql`
+
+
+## psqlrc
+
+```
+\set PROMPT1 '%~%x%# '
+\x auto
+\set ON_ERROR_STOP on
+\set ON_ERROR_ROLLBACK interactive
+
+\pset null <null>
+```
+
+
+## in psql
+
+**Always use semicolons at the end of SQL commands.**
+
+Table names might have to be enclosed in double quotes.
+
+`create database dbname;`
+
+Connect to a database
+
+`\c dbname`
+
+Current directory
+
+`\! pwd`
+
+Change directory
+
+`\cd dirname`
+
+Import file
+
+`\i filename`
+
+List tables, views, sequences
+
+`\d`
+
+`\d "Tablename"`
+
+See column names
+
+select column_name from information_schema.columns
+where table_schema = 'public'
+and table_name = 'mytable'
+order by column_name;
+
+
+## Users
+
+peer authentication refers to the operating system's current user
+
+To alter a login's password:
+
+enter the `psql` command-line tool
+
+`alter user tina with encrypted password 'mobliz';`
+
+
+## CRUD
+
+insert into users (name, age) values
+('tina', 23),
+('joe', 33);
+
+select * from users where name like '%tina%';
+
+*Hint*: before executing an UPDATE or DELETE, write a SELECT statement first to ensure the returned rows are exactly the rows to be changed.
+
+update users set age = 25 where name = 'tina';
+
+delete from users where name = 'joe';
+
+
+## Greatest-n-per-group
+
+Example: There may be multiple model simulations during a single day (multiple rows). The "updated" column is the time when the simulation was run. We wish to find the newest simulation run for a given model and 'created' date:
+
+            select * from (
+	    select row_number() over (partition by hsfe.model_id order by model_id desc, created desc, updated desc) as part_row,
+	    hsfe.model_id, m.display_name as modelo, m.vies, m.parent_folder, created as ultima,
+            jsonb_array_length(hsfe.variables->'stations'->0->'data'->'ena') as comprimento
+            from hydric_stations_fcst_ena hsfe
+	    join model m using(model_id)
+            where created >= %s::date - interval '8 days'
+            and created <= %s::date
+            and m.custom_forecast is true
+            group by hsfe.model_id, m.display_name, m.vies, m.parent_folder, created, updated, m.sort_order, comprimento
+            order by m.sort_order, ultima desc) as cte
+	    where part_row = 1;
+
+## Adding column with default value
+
+alter table MY_TABLE add column NEW_COLUMN TYPE default MY_DEFAULT;
+
+## Generate SQL to re-create a table
+
+pg_dump -p 5433 -U localuser -t 'public.TABLENAME' --schema-only DBNAME
