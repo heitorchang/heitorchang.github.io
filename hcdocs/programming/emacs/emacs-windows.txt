@@ -580,3 +580,13 @@ they line up with the line containing the corresponding opening bracket."
       (setq pt bkpt bkpt (progn (thing-at-point--beginning-of-sexp) (point))))))
 
 (global-set-key (kbd "M-a") 'jump-to-first-sexp)
+
+;; symbol highlighting
+
+(defun unhighlight-all ()
+  (interactive)
+  (unhighlight-regexp t))
+
+;; M-x hi-lock-mode if needed
+(global-set-key (kbd "C-c e") 'highlight-symbol-at-point)
+(global-set-key (kbd "C-c w") 'unhighlight-all)

@@ -44,6 +44,10 @@ Run a file
 
 `psql -f filename.sql`
 
+Using the createdb tool:
+
+`createdb -p 5433 -U postgres DB_NAME`
+
 
 ## psqlrc
 
@@ -138,10 +142,17 @@ Example: There may be multiple model simulations during a single day (multiple r
             order by m.sort_order, ultima desc) as cte
 	    where part_row = 1;
 
+
 ## Adding column with default value
 
 alter table MY_TABLE add column NEW_COLUMN TYPE default MY_DEFAULT;
 
+
 ## Generate SQL to re-create a table
 
 pg_dump -p 5433 -U localuser -t 'public.TABLENAME' --schema-only DBNAME
+
+
+## Check active connections
+
+select usename, backend_start, query from pg_stat_activity;
