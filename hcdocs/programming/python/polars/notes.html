@@ -71,42 +71,37 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">foreign-languages</a> / <a href="index.html">italiano</a></h3>
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">polars</a></h3>
     
-<h1>Parliamo Italiano! Punti grammaticali</h1>
+<h1>Polars notes</h1>
+
+<h3>Interactive config</h3>
+
+<p>
+  Evaluate <code>pl.Config.set_ascii_tables(True)</code> to use ASCII table characters.
+</p>
+
+<p>
+  To automate this change, save a startup Python file and load it in Emacs with the line:
+</p>
 
 <pre>
-1
-
-Il sostantivo singolare (un, una)
-L'articolo indeterminativo (un, uno, una, un')
-I pronomi soggetto (io, tu, lui, lei)
-Il verbo essere
-C'è, ci sono
-Il negativo semplice (non è)
-L'articolo determinativo singolare (li, la, l')
-Il verbo avere e le espressioni idiomatiche con avere
-Le preposizioni semplici (in, a, di, per, da, con, su, tra)
-Il presente indicativo dei verbi della prima coniugazione
-
-2
-
-55 I verbi della seconda coniugazione
-56 I verbi della terza coniugazione
-59 L'ora
-66 Il sostantivo plurale (libro, libri)
-68 L'articolo determinativo plurale (i libri)
-74 L'aggettivo
-77 Gli aggettivi possessivi
-82 I verbi irregolari: andare, venire, uscire, dare, stare
-84 Il verbo piacere
-
-3
-
-98 Le parole interrogative
-
-
+(setenv "PYTHONSTARTUP" "/home/tok/code/python/mystartup.py")
 </pre>
+
+<h3>Removing whitespace from header names</h3>
+
+<p>
+  Suppose the CSV file has spaces between the commas and column names. They may be removed with:
+</p>
+
+<pre>
+df = df.rename({c: c.strip() for c in df.columns})
+</pre>
+
+<p>
+  However, any string values in the data are not trimmed. It is a bad idea to work with such CSV files.
+</p>
 
 </div>
 <br>

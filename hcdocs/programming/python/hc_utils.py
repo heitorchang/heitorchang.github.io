@@ -1,15 +1,13 @@
 import json
 
 
-def _dict_traverse(d, level, max_level, show_values):
+def _dict_traverse(d, level, max_level, show_values, show_levels):
     if level > max_level:
         return ""
     accum = ""
     keys = d.keys()
     for k in keys:
         key_str = f'{"  " * level}"{k}"'
-        spaces = 36 - len(key_str)
-        level_comment = "// " + str(level)
         if isinstance(d[k], str):
             d_val = f'"{d[k]}"'
         elif isinstance(d[k], dict):
@@ -22,17 +20,18 @@ def _dict_traverse(d, level, max_level, show_values):
             d_val = d_val[:32] + '...'
         if not show_values and d_val != '[':
             d_val = ""
-        accum += f'{key_str}: {d_val} ({level})\n'
+        level_str = f'({level})' if show_levels else ''
+        accum += f'{key_str}: {d_val} {level_str}\n'
         if isinstance(d[k], dict):
-            accum += _dict_traverse(d[k], level + 1, max_level, show_values)
+            accum += _dict_traverse(d[k], level + 1, max_level, show_values, show_levels)
         elif isinstance(d[k], list):
-            accum += _list_traverse(d[k], level + 1, max_level, show_values)
+            accum += _list_traverse(d[k], level + 1, max_level, show_values, show_levels)
         if isinstance(d[k], list):
             accum += f'\n{"  " * level}]\n'
     return accum
 
 
-def _list_traverse(a, level, max_level, show_values):
+def _list_traverse(a, level, max_level, show_values, show_levels):
     if level > max_level:
         return ""
     accum = ""
@@ -59,17 +58,17 @@ def _list_traverse(a, level, max_level, show_values):
                     accum += e_str
                 accum += f'{e_val}, '
         if isinstance(e, dict):
-            accum += _dict_traverse(e, level + 1, max_level, show_values)
+            accum += _dict_traverse(e, level + 1, max_level, show_values, show_levels)
         elif isinstance(e, list):
-            accum += _list_traverse(e, level + 1, max_level, show_values)
+            accum += _list_traverse(e, level + 1, max_level, show_values, show_levels)
         if isinstance(e, dict):
             accum += e_str + '\n' + e_str + '},\n'
     return accum
 
 
-def jsonkeys(s, max_level=0, show_values=True):
+def jsonkeys(s, max_level=0, show_values=True, show_levels=False):
     if max_level == 0:
         max_level = 99
     j = json.loads(s)
     print("\n")
-    print(_dict_traverse(j, 0, max_level, show_values))
+    print(_dict_traverse(j, 0, max_level, show_values, show_levels))
