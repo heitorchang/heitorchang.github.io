@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+kotlinc $1 -include-runtime -d $1.jar
+
+if [ $? == 0 ]
+then
+    echo "Running JAR..."
+    java -jar $1.jar
+fi

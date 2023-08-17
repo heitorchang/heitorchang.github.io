@@ -1,0 +1,3 @@
+If val is read-only and refers to a mutable object (such as a list), can the mutable object change?
+
+Yes, such as adding an element to a mutable list (p. 32)

@@ -265,7 +265,11 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (add-hook 'elpy-mode-hook
           (lambda ()
             (highlight-indentation-mode -1)
-            (define-key elpy-mode-map (kbd "<C-return>") 'my-python-send-buffer)            (define-key elpy-mode-map (kbd "<C-up>") 'backward-paragraph)
+            ;; disable autocomplete dropdowns
+            (setq company-idle-delay nil)
+            (setq company-minimum-prefix-length 99)
+            (define-key elpy-mode-map (kbd "<C-return>") 'my-python-send-buffer)
+            (define-key elpy-mode-map (kbd "<C-up>") 'backward-paragraph)
             (define-key elpy-mode-map (kbd "<C-down>") 'forward-paragraph)
             (define-key elpy-mode-map (kbd "<M-up>") 'elpy-nav-backward-block)
             (define-key elpy-mode-map (kbd "<M-down>") 'elpy-nav-forward-block)))
@@ -442,9 +446,9 @@ they line up with the line containing the corresponding opening bracket."
           (lambda ()
             (define-key isend-mode-map (kbd "<C-return>") 'isend-send-buffer)))  ;; override default
 
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (local-set-key [S-return] (lambda () (interactive) (call-interactively 'eval-print-last-sexp) (insert "\n")))))
+;; (add-hook 'emacs-lisp-mode-hook
+;;           (lambda ()
+;;             (local-set-key [S-return] (lambda () (interactive) (call-interactively 'eval-print-last-sexp) (insert "\n")))))
 
 (add-hook 'scheme-mode-hook
           (lambda ()
@@ -457,8 +461,8 @@ they line up with the line containing the corresponding opening bracket."
             (define-key paredit-mode-map (kbd "<M-left>") 'paredit-forward-barf-sexp)
             (define-key paredit-mode-map (kbd "<M-right>") 'paredit-forward-slurp-sexp)
             (define-key paredit-mode-map (kbd "<C-return>") 'my-newline-without-breaking)
-            (local-set-key [M-return] 'my-scheme-send-buffer)
-            (local-set-key [S-return] 'my-scheme-move-end-and-send)))
+            (local-set-key [M-return] 'my-scheme-send-buffer)))
+;;            (local-set-key [S-return] 'my-scheme-move-end-and-send)))
 
 (add-hook 'shell-mode-hook
           (lambda ()
@@ -471,7 +475,7 @@ they line up with the line containing the corresponding opening bracket."
             (local-set-key (kbd "C-c u") 'uncomment-region)
             (local-set-key (kbd "RET") 'newline-and-indent)
             (local-set-key (kbd "C-c l") (lambda () (interactive) (insert "# debug\nprint(")))
-            (local-set-key [S-return] 'my-python-send-statement)
+;;             (local-set-key [S-return] 'my-python-send-statement)
             (local-set-key [M-return] (lambda () (interactive) (progn (call-interactively 'python-shell-send-region) (deactivate-mark))))
             (local-set-key [C-return] 'my-python-send-buffer)))
 
@@ -485,6 +489,10 @@ they line up with the line containing the corresponding opening bracket."
 
             (local-set-key (kbd "C-c l") (lambda () (interactive) (insert "// debug\n  console.log(")))))
 
+(add-hook 'kotlin-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)))
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (add-hook 'rjsx-mode-hook
@@ -494,7 +502,7 @@ they line up with the line containing the corresponding opening bracket."
 (add-hook 'js-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c c") 'js-send-buffer)
-            (local-set-key [S-return] 'my-js-send-line)
+;;             (local-set-key [S-return] 'my-js-send-line)
             (local-set-key [C-return] 'my-js-send-block)))
 
 (add-hook 'html-mode-hook
@@ -600,3 +608,10 @@ they line up with the line containing the corresponding opening bracket."
 ;; M-x hi-lock-mode if needed
 (global-set-key (kbd "C-c r") 'highlight-symbol-at-point)
 (global-set-key (kbd "C-c q") 'unhighlight-all)
+
+(defun my-next-line ()
+  (interactive)
+  (end-of-line)
+  (newline-and-indent))
+
+(global-set-key [S-return] 'my-next-line)

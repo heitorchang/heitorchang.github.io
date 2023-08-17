@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #07a;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">kotlin</a></h3>
+    
+<h1>Kotlin in Action, 2nd Ed. v10</h1>
+
+<p>
+  See also: questions.txt
+</p>
+
+<h3>Contents</h3>
+
+<ol>
+  <li><a href="#ch1">Kotlin: what and why</a></li>
+  <li><a href="#ch2">Kotlin basics</a></li>
+  <li><a href="#ch3">Defining and calling functions</a></li>
+</ol>
+
+
+<h2>Running Kotlin code from a single script file</h2>
+
+<p>
+  The <code>main()</code> function is automatically called.
+</p>
+
+<p>
+  The interactive REPL in Emacs does not run properly (newlines in definitions break the parsing).
+</p>
+
+<p>
+  The commands to run are:
+</p>
+
+<pre>
+kotlinc FILENAME.kt -include-runtime -d ANY_FILENAME.jar
+java -jar ANY_FILENAME.jar
+</pre>
+
+<p>
+  A simple convenience script (with any name like <code>runkt</code>) may be used:
+</p>
+
+<pre>
+#!/usr/bin/bash
+
+kotlinc $1 -include-runtime -d $1.jar
+
+if [ $? == 0 ]
+then
+    echo "Running JAR..."
+    java -jar $1.jar
+fi
+</pre>
+
+<h2 id="ch1">1 Kotlin: what and why</h2>
+
+<p>
+  <code>val</code> is used to declare read-only properties
+</p>
+
+<p>
+  Kotlin embraces both object-oriented and functional programming styles.
+</p>
+
+<h2 id="ch2">2 Kotlin basics</h2>
+
+<h3>2.1 Basic elements: functions and variables</h3>
+
+<p>
+  Hello, world!
+</p>
+
+<pre>
+fun main() {
+    println("Hello, world!")
+}
+</pre>
+
+<p>
+  Function parameter types are mandatory.
+</p>
+
+<pre>
+fun myMax(a: Int, b: Int): Int {
+    return if (a > b) a else b
+}
+</pre>
+
+<p>
+  <code>if</code> is an expression with a result value (similar to the ternary operator).
+</p>
+
+<p>
+  Declaring <code>main()</code> to accept command line parameters:
+</p>
+
+<pre>
+fun main(args: Array&lt;String&gt;) {
+    println("Received ${args.size} arguments.")
+    when (args.size) {
+        0 -> println("No arguments received.")
+        else -> {
+            println("The first one is ${args[0]}")
+        }
+    }
+}
+</pre>
+
+<p>
+  Most control structures in Kotlin are expressions, except loops (for, while, do/while). For example:
+</p>
+
+<pre>
+val x = if (myBoolean) 3 else 5
+val direction = when (inputString) {
+    "u" -> UP
+    "d" -> DOWN
+}
+val number = try {
+    inputString.toInt()
+
+} catch (nfe: NumberFormatException) {
+    -1
+
+}
+</pre>
+
+<p>
+  However, assignments are always statements.
+</p>
+
+<h3>2.1.3 Making function definitions more concise by using expression bodies</h3>
+
+<p>
+  <code>fun max(a: Int, b: Int): Int = if (a > b) a else b</code>
+</p>
+
+<p>
+  With curly braces, the function has a <em>block body</em>. If it returns an expression directly, it has an <em>expression body</em>.
+</p>
+
+<p>
+  If the return type can be inferred from an expression body function, it may be omitted. However, block body functions that return a value must have the return type specified.
+</p>
+
+<p>
+  In general, it's a better idea to specify the return type of all functions.
+</p>
+
+<h3>2.1.5 Marking a variable as read-only or reassignable</h3>
+
+<p>
+  <code>val</code> (value) declares a read-only reference.
+</p>
+
+<p>
+  <code>var</code> (variable) declares a reassignable reference.
+</p>
+
+<p>
+  Whenever possible, declare vals.
+</p>
+
+<p>
+  If the compiler can determine that only one assignment will be made to a val, it's acceptable to have many possible assignments in the code:
+</p>
+
+<pre>
+fun canPerform(): Boolean {
+    return true
+}
+
+fun main() {
+    val result: String
+    if (canPerform()) {
+        result = "Success"
+    } else {
+        result = "Can't perform operation"
+    }
+}
+</pre>
+
+<h3>2.1.6 Easier string formatting: string templates</h3>
+
+<p>
+  String literals can display variable values by prefixing the name with a <code>$</code>. Complex expressions need to go inside braces: <code>${...}</code>
+</p>
+
+<pre>
+println("Hello, ${if (name.isBlank()) "stranger" else name}!")
+</pre>
+
+<p>
+  Single quotes are used for a single character.
+</p>
+
+<h3>2.2 Encapsulating behavior and data: classes and properties</h3>
+
+<p>
+  In Kotlin, the default visibility is <code>public</code>.
+</p>
+
+<p>
+  A property in a class is declared with val and var.
+</p>
+
+<pre>
+class Person(
+    val name: String,
+    var age: Int,
+    var isStudent: Boolean
+)
+</pre>
+
+<p>
+  A val property is read-only. It generates a field and a (trivial) getter for use in Java.
+</p>
+
+<p>
+  A var property is writable. It generates a field, a getter, and a setter for use in Java.
+</p>
+
+<p>
+  In Kotlin, assignments can be done directly without the use of getters and setters: <code>person.age = 42</code>
+</p>
+
+<p>
+  Kotlin doesn't have a <code>new</code> keyword.
+</p>
+
+<h3>2.2.2 Computing properties instead of storing their values</h3>
+
+<pre>
+class Rectangle(val height: Int, val width: Int) {
+    val isSquare: Boolean
+        get() {
+            return width == height
+        }
+        // OR:
+        // val isSquare get() = height == width
+}
+</pre>
+
+<p>
+  Properties with a custom getter behave the same as a method (same performance and implementation). They only differ in readability.
+</p>
+
+<h3>2.2.3 Kotlin source code layout: directories and packages</h3>
+
+<p>
+  Every Kotlin file can have a <code>package</code> statement at the beginning.
+</p>
+
+<p>
+  Kotlin doesn't make a distinction between importing classes or functions.
+</p>
+
+<pre>
+package geometry.example
+
+import geometry.shapes.Rectangle
+import geometry.shapes.createUnitSquare
+
+fun main() {
+    ...
+}
+</pre>
+
+<p>
+  The <em>star import</em> (also called wildcard import) makes everything in the package visible&mdash;not only classes, but also top-level functions and properties.
+</p>
+
+<p>
+  Though Kotlin doesn't enforce the directory structure to match the package declarations, it's a good idea to follow the Java convention.
+</p>
+
+<h3>2.3.1 Declaring enum classes and enum constants</h3>
+
+<pre>
+enum class Color {
+    RED, YELLOW, BLUE, WHITE, BLACK
+}
+</pre>
+
+<p>
+  Enum constants use the same constructor and property declaration syntax as regular classes. In the following example, the semicolon separating the enum constant list from the method definitions is mandatory (it is the only case in Kotlin syntax where a semicolon is required).
+</p>
+
+<pre>
+enum class Color(
+    val r: Int,
+    val g: Int,
+    val b: Int
+) {
+    RED(255, 0, 0),
+    GREEN(0, 255, 0);
+    val computed = (r * 256) + 128 * b
+    fun printColor() = println("$this is $computed")
+}
+</pre>
+
+<h3>2.3.2 Using "when" to deal with enum classes</h3>
+
+<p>
+  Like if, when is an expression that returns a value.
+</p>
+
+<pre>
+fun getMnemonic(color: Color) =
+    when (color) {
+        Color.RED -> "Roy"
+        Color.GREEN -> "Gary"
+    }
+</pre>
+
+<p>
+  Multiple values may be combined in the same branch. They must be separated with commas.
+</p>
+
+<pre>
+when (color) {
+    Color.RED, Color.ORANGE, Color.YELLOW -> "warm"
+    Color.GREEN -> "neutral"
+    Color.BLUE, Color.VIOLET -> "cold"
+}
+</pre>
+
+<p>
+  A when expression can capture its subject in a variable:
+</p>
+
+<pre>
+when (val color = measureColor()) {
+    RED, ORANGE -> "warm (red = ${color.r})"
+    GREEN -> "neutral (green = ${color.g})"
+}
+</pre>
+
+<p>
+  The paths of a when expression must be exhaustive (all possible paths must return a value).
+</p>
+
+<p>
+  The <code>else</code> keyword defines a "default" value if no branches match.
+</p>
+
+<h3>2.3.4 Using "when" with arbitrary objects</h3>
+
+<pre>
+fun mix(c1: Color, c2: Color) =
+    when (setOf(c1, c2)) {
+        setOf(RED, YELLOW) -> ORANGE
+        setOf(YELLOW, BLUE) -> GREEN
+        else -> throw Exception("Unknown mixture")
+    }
+</pre>
+
+<h3>2.3.5 Using "when" without an argument</h3>
+
+<p>
+  In some cases, you don't want to construct a temporary argument (like the Set above) every time a when is used. The when expression can be used without an argument. Each branch condition has to be a Boolean expression.
+</p>
+
+<pre>
+when {
+    (c1 == RED && c2 == YELLOW) ||
+    (c1 == YELLOW && c2 == RED) ->
+        ORANGE
+
+    else -> throw Exception("Cannot mix colors")
+}
+</pre>
+
+<h3>2.3.6 Smart casts: combining type checks and casts</h3>
+
+<h4>Marker interfaces</h4>
+
+<p>
+  Arithmetic expressions such as the sum of numbers may be encoded as a tree-like structure, where each node is either a Sum or a Num (number).
+</p>
+
+<p>
+  The example below shows an interface called <code>Expr</code> and two classes, <code>Sum</code> and <code>Num</code> that implement Expr.
+</p>
+
+<pre>
+interface Expr
+
+class Num(val value: Int) : Expr
+class Sum(val left: Expr, val right: Expr) : Expr
+
+// Example: Sum(Sum(Num(1), Num(2)), Num(4))
+</pre>
+
+<p>
+  When computing a Sum, after checking the type of the Expr, you don't need to cast it afterward. That is called <em>smart casting</em>.
+</p>
+
+<pre>
+fun eval(e: Expr): Int =
+    when (e) {
+        is Num -> e.value
+        is Sum -> eval(e.left) + eval(e.right)
+        else -> throw IllegalArgumentException("Expression must be a Sum or Num")
+}
+</pre>
+
+<h3>2.3.8 Blocks as branches of if and when</h3>
+
+<p>
+  When a block is used in a branch, the last expression of the block is the result. (This behavior applies to all blocks except functions. Functions require the use of <code>return</code> statements). It may be useful to add println statements in a block:
+</p>
+
+<pre>
+when (e) {
+    is Num -> {
+        println("in Num branch, num: ${e.value}")
+    }
+}
+</pre>
+
+<h3>2.4.1 Repeating code while a condition is true</h3>
+
+<pre>
+while (condition) {
+    /* ... */
+    if (shouldExit) break
+}
+</pre>
+
+<pre>
+do {
+    if (shouldSkip) continue
+    /* ... */
+} while (condition)
+</pre>
+
+<p>
+  When nesting loops, a label can be used, to be referenced by <code>break</code> or <code>continue</code>.
+</p>
+
+<pre>
+outer@ while (outerCondition) {
+    while (innerCondition) {
+        if (shouldExitInner) break
+        if (shouldExit) break@outer
+        if (shouldSkip) continue@outer
+    }
+}
+</pre>
+
+<h3>2.4.2 Iterating over numbers: ranges and progressions</h3>
+
+<p>
+  The classical <code>int i = 0; i < 10; i++</code> loop construct does not exist.
+</p>
+
+<p>
+  Instead, <em>ranges</em> are used. They are closed (inclusive), so the second value is part of the range (unlike Python, where the second value is omitted). If all the values in a range are iterated over, it is called a <em>progression</em>.
+</p>
+
+<pre>
+val oneToTen = 1..10
+</pre>
+
+<h4>FizzBuzz</h4>
+
+<pre>
+fun fizzBuzz(i: Int) = when {
+    i % 15 == 0 -> "FizzBuzz"
+    i % 5 == 0 -> "Buzz"
+    i % 3 == 0 -> "Fizz"
+    else -> "$i"
+}
+
+fun main() {
+    for (i in 1..100) {
+        println(fizzBuzz(i))
+    }
+}
+</pre>
+
+<p>
+  The construct <code>for (i in 10 downTo 0 step 2) { ... }</code> also includes the end point (0). To exclue the end point, use <code>..&lt;</code>, such as <code>for (x in 0..&lt;size)</code>.
+</p>
+
+<p>
+  There doesn't seem to be a straightforward way to exclude the end point when usring <code>downTo</code>.
+</p>
+
+<h3>2.4.3 Iterating over lists and maps</h3>
+
+<pre>
+fun main() {
+    val collection = listOf("red", "green", "blue")
+    for (color in collection) {
+        print("$color ")
+    }
+}
+</pre>
+
+<pre>
+fun main() {
+    val binaryReps = mutableMapOf&lt;Char, String&gt;()
+    for (char in 'A'..'Z') {
+        val binary = char.code.toString(radix = 2)
+        binaryReps[char] = binary
+    }
+    for ((letter, binary) in binaryReps) {
+        println("$letter = $binary")
+    }
+}
+</pre>
+
+<p>
+  To keep track of the index of the current item, use <code>withIndex</code>:
+</p>
+
+<pre>
+for ((index, element) in list.withIndex()) {
+    println("$index: $element")
+}
+</pre>
+
+<h3>2.4.4 Using "in" to check collection and range membership</h3>
+
+<p>
+  <code>in</code> and <code>!in</code> check if a value is or isn't in a collection or range.
+</p>
+
+<pre>
+fun isLetter(c: Char) = c in 'a'..'z' || c in 'A'..'Z'
+fun isNotDigit(c: Char) = c !in '0'..'9'
+</pre>
+
+<p>
+  Ranges can be constructed from any class that implements the <code>kotlin.Comparable</code> interface, such as strings:
+</p>
+
+<pre>
+println("Kotlin" in "Java".."Scala")
+</pre>
+
+<p>
+  <code>in</code> also checks collection membership:
+</p>
+
+<pre>
+"Kotlin" in setOf("Java", "Scala")
+</pre>
+
+<h3>2.5 Throwing and catching exceptions</h3>
+
+<p>
+  To indicate errors or invalid values, use <code>throw</code>
+</p>
+
+<pre>
+if (percentage !in 0..100) {
+    throw IllegalArgumentException("Percentages must be between 0 and 100: $percentage")
+}
+</pre>
+
+<p>
+  The throw construct is an expression, and can be used as a part of other expressions. In the following example, the variable isn't initialized if the exception is thrown:
+</p>
+
+<pre>
+val percentage =
+    if (number in 0..100)
+        number
+    else
+        throw IllegalArgumentException(
+            "Percentages must be between 0 and 100: $percentage"
+        )
+</pre>
+
+<p>
+  Kotlin doesn't distinguish between checked and unchecked exceptions.
+</p>
+
+<p>
+  <code>try</code> is an expression (like if and when). However, unlike if, the statement body must be enclosed in curly braces. The value of the try expression is the value of the last expression in the block.
+</p>
+
+<pre>
+import java.io.BufferedReader
+import java.io.StringReader
+
+fun readNumber(reader: BufferedReader): Int? {
+    val number = try {
+        Integer.parseInt(reader.readLine())
+    } catch (e: NumberFormatException) {
+        null
+    }
+    return number
+}
+
+fun main() {
+    val reader = BufferedReader(StringReader("not a number"))
+    val x = readNumber(reader)
+    println(x)
+}
+</pre>
+
+<p>
+  try-catch may also contain <code>return</code>s to exit the function, rather than a value.
+</p>
+
+<h2 id="ch3">3 Defining and calling functions</h2>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+
