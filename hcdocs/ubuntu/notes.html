@@ -71,14 +71,34 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">cooking</a> / <a href="index.html">recipes</a></h3>
+    <h3><a href="../index.html">home</a> / <a href="index.html">ubuntu</a></h3>
     
-<a class="index" href="chicken-biryani.html">&#x1F4D8; chicken-biryani.html</a><br>
-<a class="index" href="chicken-cacciatore.html">&#x1F4D8; chicken-cacciatore.html</a><br>
-<a class="index" href="coq-au-vin.html">&#x1F4D8; coq-au-vin.html</a><br>
-<a class="index" href="miso-shiru.html">&#x1F4D8; miso-shiru.html</a><br>
-<a class="index" href="panna-cotta.html">&#x1F4D8; panna-cotta.html</a><br>
-<a class="index" href="template.html">&#x1F4D8; template.html</a><br>
+<h1>Ubuntu notes</h1>
+
+<p>
+  <strong>Note</strong>: Currently using 23.04
+</p>
+
+<h3>Creating a .desktop file</h3>
+
+<pre>
+[Desktop Entry]
+Name=Emacs29
+Exec=/home/heitor/bin/emacs-29.1
+StartupNotify=false
+Terminal=false
+Type=Application
+Icon=emacs
+</pre>
+
+<h3>Adding a custom shortcut to the dock</h3>
+
+<ol>
+  <li>Create a .desktop file (see above for Emacs 29) in <code>~/.local/share/applications/</code></li>
+  <li>Click on <em>Activities</em> on the top bar. Search for the name given in the .desktop file.</li>
+  <li>Right-click and choose "Add to Favorites"</li>
+</ol>
+
 </div>
 <br>
 <hr>
