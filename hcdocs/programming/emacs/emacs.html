@@ -75,6 +75,24 @@
     
 <h1>GNU Emacs</h1>
 
+<h3>Verifying source code file signature</h3>
+
+<p>
+  Download https://ftp.gnu.org/gnu/gnu-keyring.gpg and run:
+</p>
+
+<pre>
+gpg --import gnu-keyring.gpg
+</pre>
+
+<p>
+  Use the signature from https://ftp.gnu.org/gnu/ (in theory, a mirror could put whatever signature file it wishes).
+</p>
+
+<p>
+  Then run <code>gpg --verify emacs-xx.x.tar.xz.sig</code>
+</p>
+
 <p>
 Windows .emacs
 </p>

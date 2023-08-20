@@ -1,4 +1,4 @@
-\set PROMPT1 '%/@%M%# '
+\set PROMPT1 '%/%# '
 
 \set AUTOCOMMIT off
 \echo AUTOCOMMIT = :AUTOCOMMIT

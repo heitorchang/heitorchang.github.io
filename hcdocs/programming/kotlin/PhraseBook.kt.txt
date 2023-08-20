@@ -1,0 +1,69 @@
+data class Phrase(
+    val en: String,
+    val map: Map<String, String>
+)
+
+data class Section(
+    val name: String,
+    val phrases: List<Phrase>
+)
+
+data class Book(
+    val sections: List<Section>
+)
+
+fun main() {
+    val languages = listOf("cs", "nl")
+    val book = Book(
+        listOf(
+            Section("Essential",
+                    listOf(
+                        Phrase("Hello",
+                               mapOf(
+                                   "cs" to "Ahoj",
+                                   "nl" to "NL-Hello"
+                               )
+                        ),
+                        Phrase("Please",
+                               mapOf(
+                                   "cs" to "PROSIM",
+                                   "nl" to "ALST"
+                               )
+                        ),
+                    )
+            ),
+            Section("Pronunciation",
+                    listOf(
+                        Phrase("a",
+                               mapOf(
+                                   "cs" to "like Portuguese á"
+                               )
+                        ),
+                        Phrase("ch",
+                               mapOf(
+                                   "cs" to "like German CH",
+                               )
+                        ),
+                        Phrase("w",
+                               mapOf(
+                                   "nl" to "like V"
+                               )
+                        )
+                    )
+            ),
+        )
+    )
+
+    for (language in languages) {
+        println("Language $language")
+        for (section in book.sections) {
+            println("Section ${section.name}")
+            for (phrase in section.phrases) {
+                if (phrase.map.containsKey(language)) {
+                    println(phrase.en)
+                    println(phrase.map[language])
+                }
+            }
+        }
+    }
+}

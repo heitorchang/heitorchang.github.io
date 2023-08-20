@@ -51,13 +51,17 @@ Using the createdb tool:
 
 ## psqlrc
 
-```
-\set PROMPT1 '%~%x%# '
-\x auto
-\set ON_ERROR_STOP on
-\set ON_ERROR_ROLLBACK interactive
+The prompt `%/@%M%# ' shows the hostname. When using a proxy, it will be 127.0.0.1 (not informative).
 
-\pset null <null>
+```
+\set PROMPT1 '%/%# '
+
+\set AUTOCOMMIT off
+\echo AUTOCOMMIT = :AUTOCOMMIT
+
+\set HISTFILE ~/.psql_history- :DBNAME
+\set HISTCONTROL ignorespace
+\pset null '<null>'
 ```
 
 

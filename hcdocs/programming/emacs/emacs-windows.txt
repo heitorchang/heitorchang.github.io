@@ -268,8 +268,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
             ;; disable autocomplete dropdowns
             (setq company-idle-delay nil)
             (setq company-minimum-prefix-length 99)
-            (define-key elpy-mode-map (kbd "<C-return>") 'my-python-send-buffer)
-            (define-key elpy-mode-map (kbd "<C-up>") 'backward-paragraph)
+            (define-key elpy-mode-map (kbd "<C-return>") 'my-python-send-buffer)            (define-key elpy-mode-map (kbd "<C-up>") 'backward-paragraph)
             (define-key elpy-mode-map (kbd "<C-down>") 'forward-paragraph)
             (define-key elpy-mode-map (kbd "<M-up>") 'elpy-nav-backward-block)
             (define-key elpy-mode-map (kbd "<M-down>") 'elpy-nav-forward-block)))
@@ -479,15 +478,16 @@ they line up with the line containing the corresponding opening bracket."
             (local-set-key [M-return] (lambda () (interactive) (progn (call-interactively 'python-shell-send-region) (deactivate-mark))))
             (local-set-key [C-return] 'my-python-send-buffer)))
 
+(defun my-indent-and-newline-and-indent ()
+  (interactive)
+  (indent-for-tab-command)
+  (newline-and-indent))
+
 (add-hook 'web-mode-hook
           (lambda ()
             ;;; indent spaces
             (setq indent-tabs-mode nil)
-
-            ;;; indent tabs
-        ;; (setq indent-tabs-mode t) (setq tab-width 2) (web-mode-use-tabs)
-
-            (local-set-key (kbd "C-c l") (lambda () (interactive) (insert "// debug\n  console.log(")))))
+            (local-set-key (kbd "RET") 'my-indent-and-newline-and-indent)))
 
 (add-hook 'kotlin-mode-hook
           (lambda ()
@@ -606,8 +606,8 @@ they line up with the line containing the corresponding opening bracket."
   (unhighlight-regexp t))
 
 ;; M-x hi-lock-mode if needed
-(global-set-key (kbd "C-c r") 'highlight-symbol-at-point)
-(global-set-key (kbd "C-c q") 'unhighlight-all)
+(global-set-key (kbd "C-c d") 'highlight-symbol-at-point)
+(global-set-key (kbd "C-c s") 'unhighlight-all)
 
 (defun my-next-line ()
   (interactive)
