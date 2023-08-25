@@ -141,6 +141,7 @@ myfind() {
 }
 
 # intercept git commands
+# if copying partially, remember to add the 'else command git "$@"' branch
 git() {
     if [ "$1" == "commit" ] ; then
         echo Git commit intercepted, adding to /home/heitor/gitcommitlog.txt
