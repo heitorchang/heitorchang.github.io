@@ -71,29 +71,40 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">python</a></h3>
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">pandas</a></h3>
     
-<a class="index" href="beeware/index.html">&#x1F4C1; beeware</a><br>
-<a class="index" href="better_exc_windows_emacs_setup.html">&#x1F4D8; better_exc_windows_emacs_setup.html</a><br>
-<a class="index" href="django/index.html">&#x1F4C1; django</a><br>
-<a class="index" href="effective-python-90.html">&#x1F4D8; effective-python-90.html</a><br>
-<a class="index" href="Fluent_Python_2.html">&#x1F4D8; Fluent_Python_2.html</a><br>
-<a class="index" href="hc_utils.py">&#x1F4F0; hc_utils.py</a><br>
-<a class="index" href="outdated/index.html">&#x1F4C1; outdated</a><br>
-<a class="index" href="pairtest.html">&#x1F4D8; pairtest.html</a><br>
-<a class="index" href="pairtest.txt" target="_blank">&#x1F4C3; pairtest.txt</a><br>
-<a class="index" href="pandas/index.html">&#x1F4C1; pandas</a><br>
-<a class="index" href="polars/index.html">&#x1F4C1; polars</a><br>
-<a class="index" href="practices-of-the-python-pro.html">&#x1F4D8; practices-of-the-python-pro.html</a><br>
-<a class="index" href="practices-py-pro/index.html">&#x1F4C1; practices-py-pro</a><br>
-<a class="index" href="pycharm-notes.html">&#x1F4D8; pycharm-notes.html</a><br>
-<a class="index" href="python-files/index.html">&#x1F4C1; python-files</a><br>
-<a class="index" href="python-fluente-1.html">&#x1F4D8; python-fluente-1.html</a><br>
-<a class="index" href="Python_Distilled.html">&#x1F4D8; Python_Distilled.html</a><br>
-<a class="index" href="statusall-files/index.html">&#x1F4C1; statusall-files</a><br>
-<a class="index" href="statusall.html">&#x1F4D8; statusall.html</a><br>
-<a class="index" href="study-plan-2023/index.html">&#x1F4C1; study-plan-2023</a><br>
-<a class="index" href="turtle.html">&#x1F4D8; turtle.html</a><br>
+<h3>Given a common set of times, merge multiple series with incomplete time data.</h3>
+
+<pre>
+>>> import pandas as pd
+>>> from functools import reduce
+>>> from datetime import datetime
+>>> full_time_datetimeindex = pd.date_range('2003-01-01', '2005-01-01', freq='MS')
+>>> df_full_time = full_time_datetimeindex.to_frame()
+>>> series1 = pd.Series([1, 3, 5], index=[datetime(2003, 1, 1), datetime(2003, 2, 1), datetime(2004, 10, 1)], name='s1')
+>>> series2 = pd.Series([20, 22, 25], index=[datetime(2004, 2, 1), datetime(2004, 5, 1), datetime(2004, 9, 1)], name='s2')
+
+>>> data_series = [df_full_time, series1, series2]
+>>> df_all = reduce(lambda left, right: pd.merge(left, right, left_index=True, right_index=True, how='outer'), data_series)
+>>> df_all
+                    0   s1    s2
+2003-01-01 2003-01-01  1.0   NaN
+2003-02-01 2003-02-01  3.0   NaN
+2003-03-01 2003-03-01  NaN   NaN
+2003-04-01 2003-04-01  NaN   NaN
+2003-05-01 2003-05-01  NaN   NaN
+2003-06-01 2003-06-01  NaN   NaN
+2003-07-01 2003-07-01  NaN   NaN
+2003-08-01 2003-08-01  NaN   NaN
+2003-09-01 2003-09-01  NaN   NaN
+2003-10-01 2003-10-01  NaN   NaN
+2003-11-01 2003-11-01  NaN   NaN
+2003-12-01 2003-12-01  NaN   NaN
+2004-01-01 2004-01-01  NaN   NaN
+2004-02-01 2004-02-01  NaN  20.0
+...
+</pre>
+
 </div>
 <br>
 <hr>
