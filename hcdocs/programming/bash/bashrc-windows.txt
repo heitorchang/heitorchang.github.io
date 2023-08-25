@@ -136,6 +136,10 @@ searchtodo() {
     grep -Iinor --color=never --exclude-dir=".git" --exclude-dir="env2" --exclude-dir="venv2" --exclude-dir="node_modules" "//todo\|#todo" *
 }
 
+myfind() {
+    find . -name "$1"
+}
+
 # intercept git commands
 git() {
     if [ "$1" == "commit" ] ; then
@@ -227,8 +231,5 @@ export TF_CPP_MIN_LOG_LEVEL=3
 
 alias python='winpty python'
 
-######
-######
-# KEEP THIS AT THE BOTTOM OF THE FILE
-# NOTE: DO NOT PUT ANY SECRETS HERE! IMPORT THEM WITH source ~/.mybashsecrets.sh
+# Authentication tokens
 source ~/.mybashsecrets.sh
