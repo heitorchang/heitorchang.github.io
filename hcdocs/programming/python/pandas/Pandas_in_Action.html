@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #07a;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">pandas</a></h3>
+    
+<h1>Pandas in Action, &copy; 2021</h1>
+
+<h3>Contents</h3>
+
+<ul>
+  <li><a href="#part1">Part 1 Core pandas</a></li>
+  <li><a href="#ch1">1 Introducing pandas</a></li>
+  <li><a href="#ch2">2 The Series object</a></li>
+  <li><a href="#ch3">3 Series methods</a></li>
+  <li><a href="#ch4">4 The DataFrame object</a></li>
+  <li><a href="#ch5">5 Filtering a DataFrame</a></li>
+  <li><a href="#part2">Part 2 Applied pandas</a></li>
+  <li><a href="#ch6">6 Working with text data</a></li>
+</ul>
+
+
+<h2 id="part1">Part 1 Core pandas</h2>
+
+<p>
+  The two primary data structures are:
+  <ul>
+    <li>Series (one-dimensional). Can be thought of as a single column of data with an index made up of any type of object.</li>
+    <li>DataFrame (two-dimensional)</li>
+  </ul>
+</p>
+
+<p>
+  This part covers the fundamentals of pandas.
+</p>
+
+
+<h2 id="ch1">1 Introducing pandas</h2>
+
+<p>
+  pandas is a library for data analysis. A library is a collection of code for solving problems in a specific field.
+</p>
+
+<p>
+  Example of importing and sorting a CSV data set:
+</p>
+
+<pre>
+populations = pd.read_csv("pop.csv")
+populations.sort_values(by="Population", ascending=False)
+</pre>
+
+<p>
+  When loading data without setting an index, a numeric index starting from 0 is automatically generated.
+</p>
+
+<pre>
+pd.read_csv("movies.csv", index_col="Title")
+</pre>
+
+<p>
+  <code>df.head(n)</code> and <code>df.tail(n)</code> extracts <code>n</code> rows from the start or end of <code>df</code>. If <code>n</code> is omitted, 5 rows are returned.
+</p>
+
+<ul>
+  <li><code>len(df)</code> returns the number of rows.</li>
+  <li><code>df.shape</code> returns a tuple of (rows, columns).</li>
+  <li><code>df.size</code> returns the number of cells.</li>
+  <li><code>df.dtypes</code> returns the data types of each column.</li>
+</ul>
+
+<p>
+  To extract a row by its numeric order, use <code>df.iloc[499]</code>. (The index starts at 0, so this code returns the 500th row.
+</p>
+
+<p>
+  To extract a row by its index label (following the example above, the index is "Title"), use <code>df.loc["Sister Act"]</code>.
+</p>
+
+<p>
+  <em>Note</em>: Index labels may be duplicated (in the Movies data set, "101 Dalmatians" appears twice, being the original and the remake).
+</p>
+
+<p>
+  If possible, avoid duplicates in the index.
+</p>
+
+<h3>Sorting a DataFrame</h3>
+
+<pre>
+movies.sort_values(by="Year", ascending=False).head()
+
+movies.sort_values(by=["Year", "Studio"], ascending=[False, True]).head()
+</pre>
+
+<p>
+  To see the movies in alphabetical order, we can sort the index:
+</p>
+
+<pre>
+movies.sort_index().head()
+</pre>
+
+<p>
+  <strong>Example:</strong> Find out which studio had the greatest number of highest-grossing films. To solve this problem, we need to count the number of times each studio appears:
+</p>
+
+<pre>
+movies["Studio"] # returns the Title and Studio
+
+movies["Studio"].value_counts().head(10) # top 10 studios
+</pre>
+
+<h4>1.3.4 Filtering a column by one or more criteria</h4>
+
+<pre>
+movies[movies["Studio"] == "Universal"]
+
+# or save the condition in a variable
+released_by_universal = movies["Studio"] == "Universal"
+movies[released_by_universal].head()
+
+# define another condition and check movies that satisfy both
+released_in_2015 = movies["Year"] == 2015
+movies[released_by_universal & released_in_2015]
+
+# use an 'or' conditional
+movies[released_by_universal | released_in_2015]
+</pre>
+
+<p>
+  Find movies released before 1965:
+</p>
+
+<pre>
+movies[movies["Year"] < 1965]
+</pre>
+
+<p>
+  Specify a range (both endpoints are included):
+</p>
+
+<pre>
+movies[movies["Year"].between(1961, 1975)]
+</pre>
+
+<p>
+  Check if the title contains a string:
+</p>
+
+<pre>
+has_dark_in_title = movies.index.str.lower().str.contains("dark")
+movies[has_dark_in_title]
+</pre>
+
+<h4>1.3.5 Grouping data</h4>
+
+<p>
+  Which studio had the highest total grosses across all films? A problem to be addressed is to convert the string values of Gross into a number (remove the dollar sign and commas). <strong>Note</strong>: the book passes <code>regex=False</code>, but it is already False by default.
+</p>
+
+<pre>
+movies["Gross"] = (movies["Gross"]
+    .str.replace("$", "")
+    .str.replace(",", "")
+    .astype(float)
+) # parentheses are needed to make the expression multi-line
+</pre>
+
+<p>
+  The average gross is <code>movies["Gross"].mean()</code>
+</p>
+
+<p>
+  The process of bucketing the movies by studio is <em>grouping</em>.
+</p>
+
+<pre>
+studios = movies.groupby("Studio")
+</pre>
+
+<p>
+  The number of movies per studio is:
+</p>
+
+<pre>
+studios["Gross"].count().sort_values(ascending=False).head()
+</pre>
+
+<p>
+  Add the values of the Gross column and sort them:
+</p>
+
+<pre>
+studios["Gross"].sum().sort_values(ascending=False).head()
+</pre>
+
+<h2 id="ch2">2 The Series object</h2>
+
+<p>
+  A <code>Series</code> is a one-dimensional labeled array for homogeneous data (all values are of the same data type).
+</p>
+
+<p>
+  Each value in a Series has a <em>label</em> (an identifier we can use to locate the value).
+</p>
+
+<p>
+  In addition, each value is assigned an <em>order</em> (a position in line). The order starts from 0.
+</p>
+
+<p>
+  To access a value, either the label or its position may be used. A Series is like a combination of a Python list and dictionary. (A label acts like a dict key, while its order is an integer value that starts from 0).
+</p>
+
+<h4>2.1.2 Populating the Series with values</h4>
+
+<p>
+  The Series constructor accepts an iterable object whose values will populate the Series.
+</p>
+
+<pre>
+ice_cream_flavors = [
+    "Chocolate",
+    "Strawberry",
+    "Rum Raisin",
+]
+
+days_of_week = ("Mon", "Wed", "Fri", "Sat")
+</pre>
+
+<p>
+  The term <em>index</em> describes both the collection of identifiers and an individual identifier.
+</p>
+
+<p>
+  An index label assigned to a Series value may be any immutable data type (such as strings, tuples, and datetimes).
+</p>
+
+<p>
+  The first two parameters of <code>Series()</code> is data and index. The following are equivalent:
+</p>
+
+<pre>
+pd.Series(ice_cream_flavors, days_of_week)
+pd.Series(data=ice_cream_flavors, index=days_of_week)
+</pre>
+
+<p>
+  Indices may contain duplicates; however, it's best to ensure they are unique for better performance.
+</p>
+
+<p>
+  The dtype for strings is <code>object</code>.
+</p>
+
+<p>
+  Tuples may be used as values. The dtype will be <code>object</code>.
+</p>
+
+<h3>2.1.4 Creating a Series with missing values</h3>
+
+<p>
+  When pandas sees a missing value during an import, the value <code>np.nan</code> is used. <code>None</code> is converted to <code>np.nan</code>.
+</p>
+
+<p>
+  Two <code>nan</code> values are not equal to each other. Use <code>np.isnan(x)</code> to check for <code>nan</code>.
+</p>
+
+<p>
+  pandas converts numeric values from integers to floats if there's a <code>nan</code> value.
+</p>
+
+<h3>2.2 Creating a Series from Python objects</h3>
+
+<p>
+  A Series may be constructed from:
+  <ul>
+    <li>Lists and tuples: a numeric index is automatically created</li>
+    <li>Dictionaries: keys become index labels.</li>
+    <li>Sets: convert to a list first or use <code>sorted(set)</code></li>
+    <li>NumPy <code>ndarray</code>: pass directly, such as <code>pd.Series(np.random.randint(1, 100, 5))</code></li>
+  </ul>
+</p>
+
+<h3>2.3 Series attributes</h3>
+
+<p>
+  Some useful attributes of Series and related values are:
+  <ul>
+    <li><code>s.values</code></li>
+    <li><code>type(s.values)</code></li>
+    <li><code>s.index</code></li>
+    <li><code>s.dtype</code></li>
+    <li><code>s.size</code></li>
+    <li><code>s.shape</code></li>
+    <li><code>s.is_unique</code> (checks if all values are unique)</li>
+    <li><code>s.index.is_unique</code></li>
+    <li><code>s.is_monotonic</code></li>
+  </ul>
+</p>
+
+<h3>2.5 Mathematical operations</h3>
+
+<h4>2.5.1 Statistical operations</h4>
+
+<pre>
+numbers = pd.Series([1, 2, 3, np.nan, 4, 5])
+numbers.count() # counts the number of non-null values
+numbers.sum() # skipna=False forces the inclusion of missing values
+numbers.product()
+numbers.mean()
+numbers.median()
+numbers.std()
+numbers.max()
+numbers.min()
+numbers.cumsum()
+numbers.pct_change() # uses forward-fill to replace missing values with the last valid value
+</pre>
+
+<p>
+  The <code>pad</code> and <code>ffill</code> are the same forward-fill strategy for the <code>fill_method</code> parameter.
+</p>
+
+<p>
+  <code>bfill</code> is <em>backfill</em>. With this option, pandas replaces missing values with the next valid observation.
+</p>
+
+<p>
+  <code>numbers.describe()</code> returns many statistics at once.
+</p>
+
+<p>
+  <code>numbers.sample(n)</code> selects <code>n</code> values from the Series, in a random order.
+</p>
+
+<p>
+  <code>numbers.unique()</code> returns a NumPy ndarray of unique values.
+</p>
+
+<p>
+  <code>numbers.nunique()</code> returns the number of unique values.
+</p>
+
+<h4>2.5.2 Arithmetic operations</h4>
+
+<p>
+  Any operation with a nan results in a nan.
+</p>
+
+<p>
+  Adding a Series and a scalar results in the scalar being added to every element.
+</p>
+
+<pre>
+s + 3
+# is the same as
+s.add(3)
+</pre>
+
+<p>
+  The other common operations are <code>sub, mul, div, floordiv, mod</code>
+</p>
+
+<h4>2.5.3 Broadcasting</h4>
+
+<p>
+  <em>Broadcasting</em> is the derivation of one array of values from another, like a radio broacast transmitting the same signal to listeners.
+</p>
+
+<p>
+  Pandas uses shared index labels to align values across different data structures.
+</p>
+
+<h3>2.6 Passing the Series to Python's built-in functions</h3>
+
+<p>
+  <code>list(s)</code> and <code>dict(s)</code> return built-in Python objects.
+</p>
+
+<p>
+  Like in Python, the <code>in</code> keyword checks if a value is present in the index. To check the values, use <code>"Los Angeles" in cities.values</code>. (In this example, the index is numeric).
+</p>
+
+<h2 id="ch3">3 Series methods</h2>
+
+<p>
+  To convert a one-column DataFrame to a Series, use the <code>.squeeze()</code> method. <code>read_csv()</code> defaults to creating a DataFrame, so it should be squeezed for the examples in this chapter.
+</p>
+
+<p>
+  The index column of a CSV can be passed as an argument:
+</p>
+
+<pre>
+pokemon = pd.read_csv("pokemon.csv", index_col="Pokemon").squeeze()
+</pre>
+
+<p>
+  The resulting series is named after the value column (in the source file, "Type").
+</p>
+
+<p>
+  To convert a column of datetimes, use the <code>parse_dates</code> parameter:
+</p>
+
+<pre>
+google = pd.read_csv("google_stocks.csv", parse_dates=["Date"], index_col="Date").squeeze()
+</pre>
+
+<p>
+  The <code>usecols</code> parameter defines which columns to read.
+</p>
+
+<pre>
+battles = pd.read_csv("revolutionary_war.csv", index_col="Start Date", parse_dates=["Start Date"], usecols=["State", "Start Date"]).squeeze()
+</pre>
+
+<h3>3.2 Sorting a Series</h3>
+
+<p>
+  <code>google.sort_values()</code> returns a new Series with the values in ascending order (increasing in size).
+</p>
+
+<p>
+  Capital letters will appear before lowercase ones.
+</p>
+
+<p>
+  To sort from largest to smallest, pass <code>ascending=False</code> to sort_values.
+</p>
+
+<p>
+  <code>na_position</code> may be <code>"last"</code> (default) or <code>"first"</code>.
+</p>
+
+<p>
+  The <code>dropna</code> method returns a Series with missing values removed (the index is not targeted).
+</p>
+
+<pre>
+battles.dropna().sort_values()
+</pre>
+
+<h4>3.2.2 Sorting by index with the sort_index method</h4>
+
+<p>
+  Like sorting by value, <code>sort_index</code> also accepts an <code>ascending</code> parameter.
+</p>
+
+<pre>
+pokemon.sort_index(ascending=False)
+</pre>
+
+<p>
+  A missing date is represented by a <code>NaT</code> value. It maintains data integrity with the index's datetime type. Its actual type is <code>class 'pandas._libs.tslibs.nattype.NaTType'</code>.
+</p>
+
+<p>
+  <code>nsmallest(n), nlargest(n)</code> return the n smallest and n largest values. <strong>Note</strong>: these methods do not work on Series of strings.
+</p>
+
+<pre>
+google.nlargest()
+</pre>
+
+<h3>3.3 Overwriting a Series with the inplace parameter</h3>
+
+<p>
+  Many pandas methods accept an <code>inplace</code> parameter, that when passed with <code>True</code>, will modify the object with the given method. Otherwise, the Series is not affected.
+</p>
+
+<pre>
+battles.sort_values(inplace=True)
+</pre>
+
+<p>
+  In-place operations do not conserve memory. Pandas always creates a duplicate, then assigns (or not) the existing variable. If possible, avoid making in-place operations.
+</p>
+
+<p>
+  A better alternative is to assign the altered value to a new variable, such as <code>sorted_battles</code>.
+</p>
+
+<h3>3.4 Counting values with the value_counts method</h3>
+
+<p>
+  <code>s.value_counts()</code> groups the values into buckets and counts the number of elements in each bucket.
+</p>
+
+<pre>
+pokemon.value_counts()
+</pre>
+
+<p>
+  The number of values shown by <code>value_counts</code> is the same as the number of <code>nunique()</code>.
+</p>
+
+<p>
+  To get the frequencies of each value (percentage of the total), pass <code>normalize=True</code>.
+</p>
+
+<p>
+  To round values, use the <code>round(decimals)</code> method:
+</p>
+
+<pre>
+(pokemon.value_counts(normalize=True) * 100).round(2)
+</pre>
+
+<p>
+  When dealing with continuous values (such as the Google stock price data), it is more useful to define buckets to divide the data into.
+</p>
+
+<pre>
+buckets = [0, 200, 400, 600, 800, 1000, 1200, 1400] # or list(range(0, 1401, 200))
+google.value_counts(bins=buckets)
+</pre>
+
+<p>
+  Pass <code>sort=False</code> to sort by the buckets. By default, the sorting is by counts, in descending order.
+</pre>
+
+<p>
+  By default, the left endpoint is not included and the right endpoint is.
+</p>
+
+<p>
+  Passing <code>bins=n</code> will automatically generate <code>n</code> bins to divide the values into.
+</p>
+
+<p>
+  To count nan values with value_counts, pass <code>dropna=False</code>.
+</p>
+
+<p>
+  An index can also be used as the input to <code>value_counts</code>:
+</p>
+
+<pre>
+battles.index.value_counts()
+</pre>
+
+<h3>3.5 Invoking a function on every Series value with apply</h3>
+
+<p>
+  Functions in Python are first-class objects. They can be stored in lists, assigned to variables, passed to other functions, and be returned by other functions.
+</p>
+
+<pre>
+google.apply(round)
+
+def round_to_one_decimal(n):
+    return round(n, 1)
+
+google.apply(round_to_one_decimal)
+</pre>
+
+<p>
+  A Series index can be converted to a series in order to run the methods described above:
+</p>
+
+<pre>
+battles.index.to_series().dropna().apply(get_wkdy).value_counts()
+</pre>
+
+<h3 id="ch4">4 The DataFrame object</h3>
+
+<p>
+  A DataFrame is a two-dimensional table with rows and columns. Similar to a Series, each row of a DataFrame is assigned an index label and index position.
+</p>
+
+<p>
+  In addition, each column is assigned a label and position.
+</p>
+
+<p>
+  Two points of reference is needed to retrieve a value from the dataset&mdash;a row and a column.
+</p>
+
+<h4>4.1.1 Creating a DataFrame from a dictionary</h4>
+
+<p>
+  A suitable input for a DataFrame is a Python dict whose values are lists. The keys become column names and values become column values.
+</p>
+
+<pre>
+city_data = {
+    "City": ["New York", "Paris", "Barcelona", "Rome"],
+    "Country": ["USA", "FRA", "ESP", "ITA"],
+    "Population": [8600000, 2141000, 5515000, 2873000],
+}
+
+cities = pd.DataFrame(city_data)
+</pre>
+
+<p>
+  Column headers are like a second index. Similar to a Series' index, each column has both an index label and a numeric index position.
+</p>
+
+<p>
+  To swap the column headers with index labels, use the <code>transpose()</code> method or access the <code>T</code> attribute.
+</p>
+
+<p>
+  cities.transpose()
+  # or
+  cities.T
+</p>
+
+<h4>Creating a DataFrame from a NumPy ndarray</h4>
+
+<p>
+  The DataFrame constructor accepts a NumPy ndarray:
+</p>
+
+<pre>
+np.random.seed(232)
+random_data = np.random.randint(1, 101, [8, 20]) # 101 is excluded
+# generates 8 rows and 20 columns
+</pre>
+
+<p>
+  Labels may be set manually when constructing the DataFrame:
+</p>
+
+<pre>
+row_labels = ["Morning", "Afternoon", "Evening"]
+column_labels = ["Mon", "Tue", "Wed", "Thu", "Fri"]
+values = np.random.randint(25, 36, [3, 5])
+temperatures = pd.DataFrame(values, index=row_labels, columns=column_labels)
+</pre>
+
+<h3>4.2 Similarities between Series and DataFrames</h3>
+
+<p>
+  As before, <code>read_csv()</code> is used to load CSV data. Also, the <code>parse_dates</code> parameter is used to convert strings to datetimes.
+</p>
+
+<pre>
+nba = pd.read_csv("nba.csv", parse_dates=["Birthday"])
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

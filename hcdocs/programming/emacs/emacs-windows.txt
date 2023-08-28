@@ -45,7 +45,7 @@
 (setq coding-system-for-write 'utf-8-unix)
 
 ;; window size and position
-(setq initial-frame-alist '((top . 0) (left . 1407) (width . 80) (height . 88)))
+(setq initial-frame-alist '((top . 72) (left . 1402) (width . 80) (height . 87)))
 
 (setq inhibit-startup-message t)
 (setq backup-inhibited t)
