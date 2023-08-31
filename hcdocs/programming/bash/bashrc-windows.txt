@@ -6,6 +6,9 @@ case $- in
       *) return;;
 esac
 
+# Authentication tokens
+source ~/.mybashsecrets.sh
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -232,5 +235,5 @@ export TF_CPP_MIN_LOG_LEVEL=3
 
 alias python='winpty python'
 
-# Authentication tokens
-source ~/.mybashsecrets.sh
+# see python/mycommits
+alias mycom='mycommits | more'
