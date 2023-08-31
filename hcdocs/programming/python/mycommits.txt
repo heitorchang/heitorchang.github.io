@@ -1,0 +1,12 @@
+#!/home/heitor/bin/python3
+
+# Run
+# mycommits | more
+
+current_date = ""
+with open("/home/heitor/gitcommitlog.txt") as f:
+    for line in f:
+        if line[:6] != current_date:
+            print()
+            current_date = line[:6]
+        print(line, end="")

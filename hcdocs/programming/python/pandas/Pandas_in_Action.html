@@ -139,7 +139,7 @@ pd.read_csv("movies.csv", index_col="Title")
 </ul>
 
 <p>
-  To extract a row by its numeric order, use <code>df.iloc[499]</code>. (The index starts at 0, so this code returns the 500th row.
+  To extract a row by its numeric order, use <code>df.iloc[499]</code>. (The index starts at 0, so this expression returns the 500th row.
 </p>
 
 <p>
@@ -708,7 +708,407 @@ temperatures = pd.DataFrame(values, index=row_labels, columns=column_labels)
 </p>
 
 <pre>
-nba = pd.read_csv("nba.csv", parse_dates=["Birthday"])
+nba = pd.read_csv("nba.csv", parse_dates=["Birthday"], date_format="%m/%d/%y")
+</pre>
+
+<p>
+  A DataFrame is like a collection of Series that share a common index. Each column of a DataFrame may have its own dtype; check <code>df.dtypes</code>.
+</p>
+
+<p>
+  To count the number of columns storing each data type:
+</p>
+
+<pre>
+nba.dtypes.value_counts()
+</pre>
+
+<p>
+  <code>nba.index</code> holds the row labels.
+</p>
+
+<p>
+  <code>nba.columns</code> holds the column labels.
+</p>
+
+<p>
+  Other useful DataFrame attributes are:
+</p>
+
+<ul>
+  <li><code>df.ndim</code> is the number of dimensions. For DataFrames, it's 2.</li>
+  <li><code>df.shape</code> is a tuple (rows, columns).</li>
+  <li><code>df.size</code> is the total number of values (including nans).</li>
+  <li><code>df.count()</code> returns a Series of the counts of present values.</li>
+</ul>
+
+<p>
+  The max and min methods return a Series with the max or min value for each column.
+</p>
+
+<p>
+  To find out the n players with the largest salary, evaluate <code>nba.nlargest(3, "Salary")</code>.
+</p>
+
+<p>
+  It is equivalent to <code>nba.nlargest(n=4, columns=["Salary"])</code>.
+</p>
+
+<p>
+  To sum only numeric columns:
+</p>
+
+<pre>
+nba.sum(numeric_only=True)
+</pre>
+
+<p>
+  Additional statistical measurements are: <code>mean, median, mode, std</code>. Similar to Series, there is also a <code>describe()</code> method.
+</p>
+
+<h4>4.3.1 Sorting by a single column</h4>
+
+<pre>
+nba.sort_values("Name")
+# or
+nba.sort_values(by="Name")
+</pre>
+
+<p>
+  To sort in descending order, pass <code>ascending=False</code>.
+</p>
+
+<h4>4.3.2 Sorting by multiple columns</h4>
+
+<pre>
+nba.sort_values(["Team", "Name"])
+</pre>
+
+<p>
+  To control the order of each column, pass a list of ascending values:
+</p>
+
+<pre>
+nba.sort_values(by=["Team", "Salary"], ascending=[True, False])
+</pre>
+
+<h3>4.4 Sorting by index</h3>
+
+<p>
+  After performing a sort and reassigning a DataFrame, it still has its numeric index, but in a different order (as a result of the sort). It is possible to restore it to its original order:
+</p>
+
+<pre>
+nba.sort_index()
+</pre>
+
+<h4>4.4.2 Sorting by column index</h4>
+
+<p>
+  To sort the columns in order, pass <code>axis=1</code> or <code>axis="columns"</code>.
+</p>
+
+<pre>
+nba.sort_index(axis=1)
+</pre>
+
+<h3>4.5 Setting a new index</h3>
+
+<p>
+  <code>set_index()</code> returns a new DataFrame with a new column set as the index.
+</p>
+
+<pre>
+nba.set_index("Name")
+# or
+nba.set_index(keys="Name")
+</pre>
+
+<h3>4.6 Selecting columns and rows from a DataFrame</h3>
+
+A DataFrame is a collection of Series objects with a common index.
+
+<h4>4.6.1 Selecting a single column from a DataFrame</h4>
+
+<p>
+  Each column is available as an attribute, such as <code>nba.Salary</code> or <code>nba["Salary"]</code> (useful if there's a space in the column name)</p>. For consistency, it's better to always use the square bracket syntax.
+</p>
+
+<h4>4.6.2 Selecting multiple columns from a DataFrame</h4>
+
+<p>
+  To extract multiple columns, declare a pair of square brackets and place a list of the desired columns in a list:
+</p>
+
+<pre>
+nba[["Salary", "Birthday"]]
+</pre>
+
+<p>
+  To select columns based on their data types, use <code>select_dtypes</code>. It accepts the parameters <code>include</code> and <code>exclude</code>. They cannot overlap.
+</p>
+
+<pre>
+nba.select_dtypes(include="object")
+nba.select_dtypes(exclude=["object", "int"])
+</pre>
+
+<h3>4.7 Selecting rows from a DataFrame</h3>
+
+<p>
+  Rows may be extracted by index label or position.
+</p>
+
+<h4>4.7.1 Extracting rows by index label</h4>
+
+<p>
+  The <code>loc</code> attribute extracts a row by label.
+</p>
+
+<p>
+  Attributes such as <code>loc</code> are called <em>accessors</em> because they access a piece of data. The result is a Series with the row's values.
+</p>
+
+<pre>
+# must reassign the index first
+nba = nba.set_index("Name").sort_index()
+nba.loc["LeBron James"]
+</pre>
+
+<p>
+  We can pass a list of labels between the square brackets to extract multiple rows.
+</p>
+
+<pre>
+nba.loc[["Kawhi Leonard", "Paul George"]]
+</pre>
+
+<p>
+  <code>loc</code> accepts a starting value and ending value, separated by a colon, which is similar to Python's list slicing syntax (it's recommended to sort the index first). Endpoints are included, if they exist:
+</p>
+
+<pre>
+nba.loc["Otto Porter":"Patrick Beverley"]
+nba.loc["O":"Q"]
+nba.loc["Zach Collins":]
+nba.loc[:"B"]
+</pre>
+
+<h4>4.7.2 Extracting rows by index position</h4>
+
+<p>
+  <code>iloc</code> is an accessor that extracts rows by index position, which is useful if the position of the rows has any significance. In this case, the slice syntax excludes the right endpoint. Negative numbers may be used in the slice syntax, like in regular Python syntax.
+</p>
+
+<pre>
+nba.iloc[300]
+nba.iloc[[100, 200, 300]]
+nba.iloc[0:10:2]
+</pre>
+
+<h4>4.7.3 Extracting values from specific columns</h4>
+
+<p>
+  Both loc and iloc accept a second argument representing the column(s) to extract:
+</p>
+
+<pre>
+nba.loc["Giannis Antetokounmpo", "Team"]
+nba.loc["James Harden", ["Position", "Birthday"]]
+nba.loc[
+    ["Russell Westbrook", "Anthony Davis"],
+    ["Team", "Salary"]
+]
+</pre>
+
+<p>
+  When using a slice for the column names, the start and end points must be in the order in which they appear in the DataFrame.
+</p>
+
+<h4>at and iat</h4>
+
+<p>
+  When we know that we want to extract a single value, <code>at</code> and <code>iat</code> are faster because they use optimized searching algorithms:
+</p>
+
+<pre>
+nba.at["Austin Rivers", "Birthday"]
+nba.iat[263, 1]
+</pre>
+
+<h3>4.8 Extracting values from Series</h3>
+
+<p>
+  loc, iloc, at, and iat are available on Series objects as well.
+</p>
+
+<pre>
+nba["Salary"].loc["Amir Coffey"]
+</pre>
+
+<h3>4.9 Renaming columns or rows</h3>
+
+<p>
+  The rename method of a DataFrame allows you to reassign column names. It is not an in-place operation. The result must be reassigned to the original variable:
+</p>
+
+<pre>
+nba.rename(columns={"Salary": "Pay"})
+nba.rename(index={"Aaron Gordon": "Mr. Gordon"})
+</pre>
+
+<h3>4.10 Resetting an index</h3>
+
+<p>
+  Using set_index discards the current index. In order to preserve the index, we must first evaluate <code>reset_index</code> and then use set_index with the new index:
+</p>
+
+<pre>
+# after running nba.set_index("Team")
+nba.reset_index().head()
+nba.set_index("Team")
+</pre>
+
+<p>
+  One advantage of not using the <code>inplace</code> parameter is that many method calls can be chained:
+</p>
+
+<pre>
+nba = nba.reset_index().set_index("Team")
+</pre>
+
+<h2 id="ch5">5 Filtering a DataFrame</h2>
+
+<p>
+  <em>Filtering</em> is the process of extracting a subset of rows using condition(s) and criteria.
+</p>
+
+<h3>5.1 Optimizing a data set for memory use</h3>
+
+<p>
+  The "best" data type for a column of a data set is the one that consumes the least memory or provides the most utility.
+</p>
+
+<p>
+  The <code>info()</code> method displays a list of the columns, their data types, count of missing values and memory consumption.
+</p>
+
+<pre>
+employees = pd.read_csv("employees.csv", parse_dates=["Start Date"])
+employees.info()
+</pre>
+
+<h4>5.1.1 Converting data types with the astype method</h4>
+
+<p>
+  The <code>astype</code> method converts a Series' values to a different data type. It accepts either the data type or a string with its name.
+</p>
+
+<pre>
+employees["Mgmt"].astype(bool)
+</pre>
+
+<p>
+  Updating a DataFrame column works similarly to setting a key-value pair in a dict. A new column can also be created with this syntax.
+</p>
+
+<pre>
+employees["Mgmt"] = employees["Mgmt"].astype(bool)
+</pre>
+
+<p>
+  <strong>Note:</strong> The last row's empty Mgmt value became True.
+</p>
+
+<p>
+  nan values cannot be converted to integer. To solve this problem, invoke the <code>fillna()</code> method before <code>astype()</code>. It's a good idea to always use <code>fillna</code> before changing a column's type.
+</p>
+
+<p>
+  Pandas includes a special data type called a <em>category</em>. It works well for a column consisting of a small number of unique values, such as gender, weekdays, and income groups.
+</p>
+
+<p>
+  The <code>nunique()</code> method outputs the number of unique values in each column. It ignores nan values by default.
+</p>
+
+<pre>
+employees["Gender"].astype("category")
+</pre>
+
+<h3>5.2 Filtering by a single condition</h3>
+
+<p>
+  To compare every Series entry with a constant value, write:
+</p>
+
+<pre>
+Series == value
+# for example:
+employees["First Name"] == "Maria"
+</pre>
+
+<p>
+  The result is a Series of Booleans. To extract only the rows with a True value, write:
+</p>
+
+<pre>
+employees[employees["First Name"] == "Maria"]
+</pre>
+
+<p>
+  To avoid writing the DataFrame's name twice, the Boolean Series may be assigned to a temporary variable that is passed to the outer brackets:
+</p>
+
+<pre>
+marias = employees["First Name"] == "Maria"
+employees[marias]
+</pre>
+
+<p>
+  Remember to use two equal signs <code>==</code> and for "not equal", the operator <code>!=</code>. If a single equal sign is written by accident, all First Names will be assigned to "Maria".
+</p>
+
+<p>
+  A nan value is considered to be unequal to a string (such as "Finance").
+</p>
+
+<p>
+  Like regular Python, it is not necessary to write <code>== True</code> if a column is already made of Booleans.
+</p>
+
+<p>
+  Mathematical conditions may use &lt; and &gt; signs:
+</p>
+
+<pre>
+employees[employees["Salary"] &gt; 149_000]
+</pre>
+
+<h3>5.3 Filtering by multiple conditions</h3>
+
+<p>
+  Create independent Boolean Series and apply the logical criteria between them.
+</p>
+
+<h4>5.3.1 The AND condition</h4>
+
+<p>
+  Consider finding all female employees in "Business Dev":
+</p>
+
+<pre>
+is_female = employees["Gender"] == "Female"
+in_business_dev = employees["Team"] == "Business Dev"
+
+employees[is_female &amp; in_business_dev].head()
+</pre>
+
+<p>
+  <strong>Note:</strong> using <code>and</code> instead of <code>&amp;</code> will not work.
+</p>
+
+<h4>5.3.2 The OR condition</h4>
 
 </div>
 <br>
