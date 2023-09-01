@@ -634,7 +634,7 @@ google.apply(round_to_one_decimal)
 battles.index.to_series().dropna().apply(get_wkdy).value_counts()
 </pre>
 
-<h3 id="ch4">4 The DataFrame object</h3>
+<h2 id="ch4">4 The DataFrame object</h2>
 
 <p>
   A DataFrame is a two-dimensional table with rows and columns. Similar to a Series, each row of a DataFrame is assigned an index label and index position.
@@ -1109,6 +1109,163 @@ employees[is_female &amp; in_business_dev].head()
 </p>
 
 <h4>5.3.2 The OR condition</h4>
+
+<p>
+  When combining conditions with OR, use the pipe symbol <code>|</code>. At least one condition has to be true.
+</p>
+
+<pre>
+earning_below_40k = employees["Salary"] < 40_000
+started_after_2015 = employees["Start Date"] > "2015-01-01"
+employees[earning_below_40k | started_after_2015]
+</pre>
+
+<h4>5.3.3 Inversion with ~</h4>
+
+<p>
+  The tilde symbol <code>~</code> inverts the Boolean values in a Series. Enclose a condition in parentheses, and write the tilde outside them.
+</p>
+
+<pre>
+~my_series
+employees[~(employees["Salary"] >= 100_000)].head()
+</pre>
+
+<p>
+  Comparisons (==, !=, <, <=, >, >=) may be done with methods:
+</p>
+
+<pre>
+employees["Team"].eq("Marketing")
+employees["Team"].ne("Marketing")
+employees["Salary"].lt(100_000)
+employees["Salary"].le(100_000)
+employees["Salary"].gt(100_000)
+employees["Salary"].ge(100_000)
+</pre>
+
+<h3>5.4 Filtering by condition</h3>
+
+<h4>5.4.1 The isin method</h4>
+
+<p>
+  The <code>isin</code> method accepts an iterable of elements (list, tuple, Series, etc.) and returns a Boolean Series:
+</p>
+
+<pre>
+all_star_teams = ["Sales", "Legal", "Marketing"]
+in_all_star_teams = employees["Team"].isin(all_star_teams)
+employees[in_all_star_teams].head()
+</pre>
+
+<h4>5.4.2 The between method</h4>
+
+<p>
+  The between method accepts a lower and upper bound. The lower bound is inclusive, and the upper bound is exclusive. The parameters are called <code>left, right</code>. Datetimes and strings may be passed as arguments.
+</p>
+
+<pre>
+between_80k_and_90k = employees["Salary"].between(80_000, 90_000)
+employees[between_80k_and_90k].head()
+</pre>
+
+<h4>5.4.3 The isnull and notnull methods</h4>
+
+<p>
+  Missing text and numeric values are NaNs while missing datetime values are NaTs.
+</p>
+
+<pre>
+employees["Team"].isnull().head()
+employees["Team"].notnull().head()
+</pre>
+
+<h4>5.4.4 Dealing with null values</h4>
+
+<p>
+  The <code>dropna</code> method removes rows that hold any NaN values. If <code>how="all"</code> is passed, only rows that are missing all values are removed. The default value is "any".
+</p>
+
+<pre>
+employees.dropna()
+employees.dropna(how="all")
+</pre>
+
+<p>
+  The <code>subset</code> parameter can be used to target rows with a missing value in a specific column (or columns).
+</p>
+
+<pre>
+employees.dropna(subset=["Gender"])
+employees.dropna(subset=["Gender", "First Name"])
+</pre>
+
+<p>
+  The <code>thresh</code> parameter specifies a minimum threshold of non-null values that a row must have to be kept.
+</p>
+
+<pre>
+employees.dropna(thresh=4).head()
+</pre>
+
+<h3>5.5 Dealing with duplicates</h3>
+
+<h4>5.5.1 The duplicated method</h4>
+
+<p>
+  The <code>duplicated</code> method returns a Boolean Series that identifies values that were previously encountered. The first value is not marked True. Only the remaining duplicates are.
+</p>
+
+<p>
+  <strong>Note:</strong> NaNs are considered to be a unique value.
+</p>
+
+<pre>
+employees.["Team"].duplicated().head()
+</pre>
+
+<p>
+  By passing <code>keep="last"</code>, the last occurrence is marked as the nonduplicate.
+</p>
+
+<p>
+  Suppose we want to extract one employee from each team. One way to do so is to pull out the first row for each unique team. By inverting the Series of duplicates, we get a Series in which True is the first time a Team is encountered:
+</p>
+
+<pre>
+first_one_in_team = ~employees["Team"].duplicated()
+employees[first_one_in_team]
+</pre>
+
+<h4>5.5.2 The drop_duplicates method</h4>
+
+<p>
+  By default, <code>drop_duplicates</code> removes rows where all their values have been encountered before.
+</p>
+
+<p>
+  To target certain columns, pass <code>subset=["Column Name"]</code>. The argument <code>keep="last"</code> may also be passed.
+</p>
+
+<pre>
+employees.drop_duplicates(subset=["Team"])
+</pre>
+
+<p>
+  If <code>keep=False</code> is passed, all rows with duplicate values are excluded. In other words, only rows with values that occur exactly once are kept.
+</p>
+
+<h2 id="part2">Part 2 Applied pandas</h2>
+
+<p>
+  The chapters in this part cover how to tackle common problems in data analysis.
+</p>
+
+<h2 id="ch6">6 Working with text data</h2>
+
+<p>
+  The process of cleaning data is called <em>wrangling</em> or <em>munging</em>.
+</p>
 
 </div>
 <br>
