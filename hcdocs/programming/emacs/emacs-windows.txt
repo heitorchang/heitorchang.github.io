@@ -114,7 +114,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(iswitchb-mode t)
  '(js-indent-level 2)
  '(package-selected-packages
-   '(paredit smartparens scala-mode rjsx-mode ## vlf js2-mode slime use-package isend-mode web-mode vue-html-mode ssass-mode pyvenv mmm-mode edit-indirect auto-complete))
+   '(paredit smartparens flycheck scala-mode rjsx-mode ## vlf js2-mode slime use-package isend-mode web-mode vue-html-mode ssass-mode pyvenv mmm-mode edit-indirect auto-complete))
  '(py-closing-list-dedents-bos t)
  '(py-indent-list-style 'line-up-with-first-element)
  '(py-install-directory "C:/Users/Tok/Desktop/code/")
@@ -261,9 +261,18 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
           (lambda () (set (make-local-variable 'electric-indent-mode) nil)))  ; disable electric indent for python
 
 ;; elpy
+(setenv "PYTHONIOENCODING" "utf-8")
+(add-to-list 'process-coding-system-alist '("elpy" . (utf-8 . utf-8)))
+(add-to-list 'process-coding-system-alist '("python" . (utf-8 . utf-8)))
+
 (elpy-enable)
+
+(when (load "flycheck" t t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules)))
+
 (add-hook 'elpy-mode-hook
           (lambda ()
+	    (flycheck-mode t)
             (highlight-indentation-mode -1)
             ;; disable autocomplete dropdowns
             (setq company-idle-delay nil)
