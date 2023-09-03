@@ -35,8 +35,9 @@
 
 <script src="biwascheme-0.8.0-custom.min.js"></script>
 <script type="text/biwascheme">
-(console-log "resume-scm v.1.2.3")
+(console-log "resume-scm v.1.3.0")
 ;; changelog
+;; 1.3.0 Add company ID in order to define page breaks
 ;; 1.2.3 leave scm alone for now
 ;; 1.2.2 allow multiple roles per company
 
@@ -92,6 +93,16 @@
       "B.S. in Mathematical and Computational Sciences, 2005"))))
 
 ;;; Professional Experience section
+(define (create-professional-item item)
+  (element-new
+   `(div
+     (,(string-append "h3#" (cadar item) ".professional") ,(caar item)) ; company name
+     ,@(roles-markup (cdr item)))))
+
+(define (roles-markup roles-list)
+  (map (lambda (role)
+         (role-markup role)) roles-list))
+
 (define (role-markup item)
   `(div
     ("div.prof-role" ,(car item))
@@ -101,25 +112,15 @@
 (define (tasks-markup tasks)
   `(ul ,@(map (lambda (task) `(li ,task)) tasks)))
 
-(define (roles-markup roles-list)
-  (map (lambda (role)
-         (role-markup role)) roles-list))
-
-(define (create-professional-item item)
-  (element-new
-   `(div
-     (,(string-append "h3#" (cadar item) ".professional") ,(caar item)) ; company name
-     ,@(roles-markup (cdr item)))))
-
 ;;; Education section
-(define (degrees-markup degrees)
-  `(div ,@(map (lambda (major) `("div.major" ,major)) degrees)))
-
 (define (create-education-item item)
   (element-new
    `(div
      ("h3.education" ,(car item))
      ,(degrees-markup (cadr item)))))
+
+(define (degrees-markup degrees)
+  `(div ,@(map (lambda (major) `("div.major" ,major)) degrees)))
 
 ;;; Mutate top-level sections
 (define (add-items-to-section section create-fn items)
