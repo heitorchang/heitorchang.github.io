@@ -25,11 +25,11 @@
         <h2 class="skills">Skills</h2>
         <ul>
           <li>Fluent in <strong>English</strong> and <strong>Portuguese</strong>.</li>
-          <li>Intermediate knowledge of <strong>Italian</strong>.
-          <li>Elementary knowledge of <strong>Mandarin</strong>, <strong>Japanese</strong>, <strong>French</strong>, <strong>Spanish</strong>, and <strong>Modern Greek</strong>.</li>
+          <li>Intermediate knowledge of <strong>Italian</strong> and <strong>French</strong>.
+            <li>Elementary knowledge of <strong>Mandarin</strong>, <strong>Japanese</strong>, <strong>Spanish</strong>, and <strong>Modern Greek</strong>.</li>
           <li>Advanced knowledge of <strong>Python</strong>, <strong>JavaScript</strong>, and <strong>HTML</strong>.</li>
-          <li>Intermediate knowledge of <strong>Django</strong>, <strong>PostgreSQL</strong>, <strong>React</strong>, <strong>Vue</strong>, and <strong>CSS</strong>.</li>
-          <li>Basic knowledge of <strong>C</strong>, <strong>Scheme</strong>, and <strong>Java</strong>.</li>
+          <li>Intermediate knowledge of <strong>Django</strong>, <strong>PostgreSQL</strong>, <strong>React</strong>, <strong>Vue</strong>, <strong>Scheme</strong>, and <strong>CSS</strong>.</li>
+          <li>Basic knowledge of <strong>C</strong> and <strong>Java</strong>.</li>
         </ul>
       </div>
 
@@ -44,7 +44,14 @@
 (define education-section (getelem "#education"))
 
 (define professional-items
-  '(("Mediafly, Inc., Chicago, IL (Remote)"
+  '(("Freelance Software Engineer, São Paulo, SP"
+     ("Senior Full-Stack Developer"
+      "Mar. 2023 &ndash; present"
+      ("Created REST APIs in Python with FastAPI and PostgreSQL to fetch data for a given scenario and time frame, and deployed them to Google Cloud."
+       "Developed a static site generator in Python to mirror a local directory and add a practical navigation interface for the content."
+       "Formulated a domain-specific language for an application's front-end based on Scheme's functional programming concepts to manipulate DOM elements directly.")))
+
+    ("Mediafly, Inc., Chicago, IL (Remote)"
      ("Senior Software Engineer, Data and Client Squad"
       "Aug. 2022 &ndash; Feb. 2023"
       ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new custom objects holding metadata."
@@ -68,15 +75,6 @@
        "Created a REST API with the Slim micro framework in PHP to be consumed by a React app that rendered the company's website."
        "Visualized historical sales with NumPy and Pandas, reporting totals and outliers for each product."
        "Created a Single-Page App with AngularJS and Firebase to organize product reservations by clients and their assigned salesperson in real-time.")))))
-
-;; Fresh
-;; ("Fresh Consulting, Seattle, WA (Remote)"
-;;      ("Senior Software Developer"
-;;       "Mar. 2023 &ndash; May 2023"
-;;       ("Developed a SSG (Static Site Generator) in Python that mimics an operating system's directory explorer and adds a uniform layout to the source pages with embedded code and multimedia."
-;;        "Designed a framework for unit testing JavaScript implementations of algorithms that process native data structures and JSON."
-;;        "Formulated a DSL (Domain-Specific Language) based on Scheme's functional programming concepts to directly manipulate front-end elements.")))
-
 
 (define education-items
   '(("New York University, New York, NY"
