@@ -91,11 +91,56 @@
 
 <h3 id="chapters">Chapters</h3>
 
-<ol>
-  <li><a href="#ch1">The Python Data Model</a></li>
-</ol>
+<h4>Part I: Data Structures</h4>
 
-<h2 id="ch1">The Python Data Model</h2>
+<ul>
+  <li><a href="#ch1">1. The Python Data Model</a></li>
+  <li><a href="#ch2">2. An Array of Sequences</a></li>
+  <li><a href="#ch3">3. Dictionaries and Sets</a></li>
+  <li><a href="#ch4">4. Unicode Text Versus Bytes</a></li>
+  <li><a href="#ch5">5. Data Class Builders</a></li>
+  <li><a href="#ch6">6. Object References, Mutability, and Recycling</a></li>
+</ul>
+
+<h4>Part II: Functions as Objects</h4>
+
+<ul>
+  <li><a href="#ch7">7. Functions as First-Class Objects</a></li>
+  <li><a href="#ch8">8. Type Hints in Functions</a></li>
+  <li><a href="#ch9">9. Decorators and Closures</a></li>
+  <li><a href="#ch10">10. Design Patterns with First-Class Functions</a></li>
+</ul>
+
+<h4>Part III: Classes and Protocols</h4>
+
+<ul>
+  <li><a href="#ch11">11. A Pythonic Object</a></li>
+  <li><a href="#ch12">12. Special Methods for Sequences</a></li>
+  <li><a href="#ch13">13. Interfaces, Protocols, and ABCs (Abstract Base Classes)</a></li>
+  <li><a href="#ch14">14. Inheritance: For Better or for Worse</a></li>
+  <li><a href="#ch15">15. More About Type Hints</a></li>
+  <li><a href="#ch16">16. Operator Overloading</a></li>
+</ul>
+
+<h4>Part IV: Control Flow</h4>
+
+<ul>
+  <li><a href="#ch17">17. Iterators, Generators, and Classic Coroutines</a></li>
+  <li><a href="#ch18">18. with, match, and else Blocks</a></li>
+  <li><a href="#ch19">19. Concurrency Models in Python</a></li>
+  <li><a href="#ch20">20. Concurrent Executors</a></li>
+  <li><a href="#ch21">21. Asynchronous Programming</a></li>
+</ul>
+
+<h4>Part V: Metaprogramming</h4>
+
+<ul>
+  <li><a href="#ch22">22. Dynamic Attributes and Properties</a></li>
+  <li><a href="#ch23">23. Attribute Descriptors</a></li>
+  <li><a href="#ch24">24. Class Metaprogramming</a></li>
+</ul>
+
+<h2 id="ch1">1. The Python Data Model</h2>
 
 <p>
   The <em>Python Data Model</em> can be thought of as a framework that formalizes the interfaces of the building blocks of the language. For example, sequences, functions, iterators, coroutines, classes, and context managers.
@@ -116,7 +161,157 @@
   <li>Managed contexts (<code>with</code> and <code>async</code>)</li>
 </ul>
 
-STOP Pythonic card deck
+<h4>A Pythonic card deck</h4>
+
+<p>
+  This example of a playing-card deck implements two special methods, <code>__getitem__</code> and <code>__len__</code>.
+</p>
+
+<pre>
+import collections
+
+Card = collections.namedtuple('Card', ['rank', 'suit'])
+
+class FrenchDeck:
+    ranks = [str(n) for n in range(2, 11)] + list('JQKA')
+    suits = 'clubs diamonds hearts spades'.split()
+
+    def __init__(self):
+        self._cards = [Card(rank, suit) for suit in self.suits
+                                        for rank in self.ranks]
+
+    def __len__(self):
+        return len(self._cards)
+
+    def __getitem__(self, position):
+        return self._cards[position]
+</pre>
+
+<p>
+  <code>namedtuple</code> works like a database record. It's used to build classes of objects that are just bundles of attributes with no methods.
+</p>
+
+<p>
+  The special methods allow the FrenchDeck to respond to len() and indexing:
+</p>
+
+<pre>
+len(deck) # 52
+deck[-1] # Card(rank='A', suit='spades'])
+deck[:3] # returns the first three clubs cards
+
+from random import choice
+choice(deck) # Card(rank='3', suit='hearts')
+</pre>
+
+<h4>Emulating numeric types</h4>
+
+<p>
+  This example implements a 2-D vector (that may be extended to any number of dimensions) with the special methods:
+</p>
+
+<ul>
+  <li><code>__repr__</code>: string representation</li>
+  <li><code>__abs__</code>: absolute value</li>
+  <li><code>__add__</code>: element-wise addition</li>
+  <li><code>__mul__</code>: scalar multiplication</li>
+</ul>
+
+<pre>
+import math
+
+class Vector:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        # !r returns the standard representation of the attributes, not a string
+        return f'Vector({self.x!r}, {self.y!r})'
+
+    def __abs__(self):
+        return math.hypot(self.x, self.y)
+
+    def __bool__(self):
+        # if abs(self) is 0, return False
+        return bool(abs(self))
+
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __mul__(self, scalar):
+        return Vector(self.x * scalar, self.y * scalar)
+</pre>
+
+<p>
+  It's preferable to implement <code>__repr__</code> over <code>__str__</code>.
+</p>
+
+<h4>Collection API</h4>
+
+<p>
+  The interfaces of the essential collection types are:
+</p>
+
+<ul>
+  <li>Iterable</li>
+  <li>Sized</li>
+  <li>Container</li>
+  <li>Reversible</li>
+  <li>Collection</li>
+  <li>Sequence</li>
+  <li>Mapping</li>
+  <li>Set</li>
+</ul>
+
+<p>
+  Since Python 3.7, the <code>dict</code> type is ordered, in the sense that key insertion order is preserved. It is not possible to rearrange the keys however you like.
+</p>
+
+<h4>Special method categories</h4>
+
+<ul>
+  <li>String/bytes representation</li>
+  <li>Conversion to number</li>
+  <li>Emulating collections</li>
+  <li>Iteration</li>
+  <li>Callable or coroutine execution</li>
+  <li>Context management</li>
+  <li>Instance creation and destruction</li>
+  <li>Attribute management</li>
+  <li>Attribute descriptors</li>
+  <li>Abstract base classes</li>
+  <li>Class metaprogramming</li>
+</ul>
+
+<h4>Special method categories for operators</h4>
+
+<ul>
+  <li>Unary numeric: <code>- + abs</code></li>
+  <li>Rich comparison: <code>&lt; &lt;= == != &gt; &gt;=</code></li>
+  <li>Arithmetic: <code>+ - * / // % @ ** divmod round pow</code></li>
+  <li>Reversed arithmetic (arithmetic operators with swapped operands)</li>
+  <li>Augmented assignment arithmetic: <code>+= -= *= /= //= %= @= **=</code></li>
+  <li>Bitwise: <code>& | ^ &lt;&lt; &gt;&gt; ~</code></li>
+  <li>Reversed bitwise (bitwise operators with swapped operands)</li>
+  <li>Augmented assignment bitwise: <code>&= |= ^= &lt;&lt;= &gt;&gt;=</code></li>
+</ul>
+
+<p>
+  The reversed operator special method is called on the second operand when the corresponding special method on the first operand cannot be used.
+</p>
+
+<h4>Why len is not a method</h4>
+
+<p>
+  The length of an object is read directly from a field in a C struct. No method is called.
+</p>
+
+<p>
+  It gets special treatment as part of the Python Data Model, like <code>abs</code>. Both abs and len can be thought of as unary operators.
+</p>
+
+<h2 id="ch2">2. An Array of Sequences</h2>
 
 </div>
 <br>

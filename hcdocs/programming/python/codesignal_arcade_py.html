@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #07a;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">python</a></h3>
+    
+<h1 id="top">CodeSignal Arcade: Python</h1>
+
+<div style="position: fixed; bottom: 0; left: 5px; background-color: white;"><a href="#top">Back to top</a><br></div>
+
+<a href="#01-collections-truthness.txt">Meet Python</a><br>
+<a href="#11-string-definition.txt">Strings</a><br>
+<a href="#21-list-multiplication.txt">Lists</a><br>
+<a href="#26-repeat-char.py">Lambdas</a><br>
+<a href="#30-create-spiral-matrix.py">Comprehensions</a><br>
+<a href="#35-chess-teams.py">Functional</a><br>
+<a href="#40-dictionary-keys.txt">Collections</a><br>
+<a href="#48-cyclic-name.py">Itertools</a><br>
+<a href="#55-twins-score.py">Drilling Lists</a><br>
+<a href="#65-calc-bonuses.py">Yields</a><br>
+<a href="#73-try-functions.py">Higher-order</a><br>
+<a href="#78-count-visitors.py">Classes</a><br>
+<a href="#86-xml-tags.py">Parsing</a><br>
+<h3 id="01-collections-truthness.txt">01-collections-truthness.txt</h3>
+<pre>What will be the value of res after the following snippet is executed?
+
+xs = [()]
+res = [False] * 2
+if xs:
+    res[0] = True
+if xs[0]:
+    res[1] = True
+
+
+Answer: [True, False]
+</pre>
+<h3 id="02-efficient-comparison.txt">02-efficient-comparison.txt</h3>
+<pre>You would like to write a function f(x, y, L, R) that returns True
+if x ** y lies within the interval (L, R] and False otherwise.
+
+You're considering several different ways to write the conditional
+statement inside this function:
+
+1. if L < x ** y <= R:
+2. if x ** y > L and x ** y <= R:
+3. if x ** y in range (L+1, R+1):
+
+Which option would be the most efficient?
+
+Option 1
+</pre>
+<h3 id="03-special-conditional.txt">03-special-conditional.txt</h3>
+<pre>Given two boolean variables a and b, one of the following works
+differently than the others. Which one is it?
+
+(Bad question, the solution is actually invalid syntax)
+
+a == (not b)
+not (a == b)
+a == not b
+not a == b
+
+
+Answer: a == not b # NOTE: this is invalid syntax.
+</pre>
+<h3 id="04-language-differences.txt">04-language-differences.txt</h3>
+<pre>Summary: integer division in Java and Python work differently.
+
+15 // -4 is not the same as Java's 15 / -4
+</pre>
+<h3 id="05-count-bits.py">05-count-bits.py</h3>
+<pre>"""
+Given an integer n, return the number of bits in its binary
+representation.
+"""
+
+def solution(n):
+    return n.bit_length()
+</pre>
+<h3 id="06-modulus.py">06-modulus.py</h3>
+<pre>"""
+Write a modulus function that only accepts integers as the input.
+"""
+
+def solution(n):
+    if isinstance(n, int):
+        return n % 2
+    return -1
+</pre>
+<h3 id="07-simple-sort.py">07-simple-sort.py</h3>
+<pre>"""
+The task is to write the line of code that swaps adjacent elements
+that are out of order.
+"""
+
+def solution(arr):
+    n = len(arr)
+
+    for i in range(n):
+        j = 0
+        stop = n - i
+        while j < stop - 1:
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+            j += 1
+    return arr
+</pre>
+<h3 id="08-base-conversion.py">08-base-conversion.py</h3>
+<pre>"""
+Implement a function that converts an integer n that is in base x
+to base 16.
+"""
+
+def solution(n, x):
+    return hex(int(n, x))[2:]
+</pre>
+<h3 id="09-mex-function.py">09-mex-function.py</h3>
+<pre>"""
+Mex is "minimum excludant" for a given set s. It is the minimum
+non-negative number that is not present in s.
+
+This simplified version returns the mex if it's smaller than
+upperBound, otherwise it returns upperBound.
+"""
+
+def solution(s, upperBound):
+    found = -1
+    for i in range(upperBound):
+        if not i in s:
+            found = i
+            break
+    else:
+        return upperBound
+
+    return found
+</pre>
+<h3 id="10-list-beautifier.py">10-list-beautifier.py</h3>
+<pre>"""
+A list is beautiful if its first element is equal to its last
+element, or if it's empty. The task is to chop off the ends until
+the list is beautiful.
+
+NOTE: solution is to fill in the left side of the assignment.
+Destructuring is the easiest way to accomplish the task.
+"""
+
+def solution(a):
+    res = a[:]
+    while res and res[0] != res[-1]:
+        _, *res, _ = res
+    return res
+</pre>
+<h3 id="11-string-definition.txt">11-string-definition.txt</h3>
+<pre>It's ok to define strings with '', "", '''...''', and """..."""
+
+''...'' and ""..."" are not valid.
+</pre>
+<h3 id="12-fix-message.py">12-fix-message.py</h3>
+<pre>"""
+Implement a function that changes the very first letter to
+uppercase, and makes everything else lowercase.
+"""
+
+def solution(msg):
+    return msg.capitalize()
+</pre>
+<h3 id="13-cat-walk.py">13-cat-walk.py</h3>
+<pre>"""
+Replace all multiple space characters in the string with single
+ones. Also, remove leading and trailing whitespace.
+"""
+
+def solution(line):
+    return " ".join(line.strip().split())
+</pre>
+<h3 id="14-convert-tabs.py">14-convert-tabs.py</h3>
+<pre>"""
+Convert tab characters to x space characters.
+"""
+
+def solution(code, x):
+    return code.replace("\t", " "*x)
+</pre>
+<h3 id="15-feedback-review.py">15-feedback-review.py</h3>
+<pre>"""
+Wrap a line of text so that each line is at most "size"
+characters long.
+"""
+
+import textwrap
+
+def solution(feedback, size):
+    return textwrap.wrap(feedback, size)
+</pre>
+<h3 id="16-is-word-palindrome.py">16-is-word-palindrome.py</h3>
+<pre>def solution(word):
+    return word == word[::-1]
+</pre>
+<h3 id="17-permutation-cipher.py">17-permutation-cipher.py</h3>
+<pre>"""
+Replace letters from a-z with the letters in key.
+"""
+
+def solution(password, key):
+    table = str.maketrans(string.ascii_lowercase, key)
+    return password.translate(table)
+</pre>
+<h3 id="18-competitive-eating.py">18-competitive-eating.py</h3>
+<pre>"""
+Display the time with the given precision, centered in a field
+with the given width.
+"""
+
+def solution(t, width, precision):
+    return f"{t:.{precision}f}".center(width)
+</pre>
+<h3 id="19-new-style-formatting.py">19-new-style-formatting.py</h3>
+<pre>"""
+Convert old style "%s, %d, %f" formatting types to {}, and %% to %.
+"""
+
+import re
+
+def solution(s):
+    s = s.replace("%%", "{%}")
+    var_pat = re.compile(r'%[sdf]')
+    s = var_pat.sub("{}", s)
+    s = s.replace("{%}", "%")
+    return s
+</pre>
+<h3 id="20-get-commit.py">20-get-commit.py</h3>
+<pre>"""
+Remove the special characters 0, ?, +, and ! from the beginning
+of the commit message.
+"""
+
+import re
+
+def solution(commit):
+    return re.sub('[0?+!]', '', commit)
+</pre>
+<h3 id="21-list-multiplication.txt">21-list-multiplication.txt</h3>
+<pre>The code
+
+c = a * b
+
+can mean both:
+
+c is the list a repeated b times.
+c is the list b repeated a times.
+</pre>
+<h3 id="22-lists-concatenation.py">22-lists-concatenation.py</h3>
+<pre>def solution(lst1, lst2):
+    res = lst1
+    res.extend(lst2) # original code had a bug: res.append adds the
+entire list as a new element
+    return res
+</pre>
+<h3 id="23-two-teams.py">23-two-teams.py</h3>
+<pre>"""
+Calculate the difference between the sum of the even-numbered positions
+(starting from 0) and the sum of the odd-numbered positions.
+"""
+
+def solution(lst):
+    return sum(lst[::2]) - sum(lst[1::2])
+</pre>
+<h3 id="24-remove-tasks.py">24-remove-tasks.py</h3>
+<pre>"""
+Remove all kth items from the list.
+"""
+
+def solution(k, todo):
+    del todo[k-1::k]
+    return todo
+</pre>
+<h3 id="25-print-list.py">25-print-list.py</h3>
+<pre>def solution(lst):
+    return f"This is your list: {lst}"
+</pre>
+<h3 id="26-repeat-char.py">26-repeat-char.py</h3>
+<pre>"""
+Given a character ch, return a string of ch repeated n times.
+"""
+
+solution = lambda ch, n: ch * n
+</pre>
+<h3 id="27-get-points.py">27-get-points.py</h3>
+<pre>"""
+Calculate the number of points (for an exam) received for the given
+list of answers.
+
+A correct answer gets i points (1-based) and a wrong answer loses p
+points (penalty).
+"""
+
+def solution(answers, p):
+    questionPoints = lambda i, ans: i+1 if ans else -p
+
+    res = 0
+    for i, ans in enumerate(answers):
+        res += questionPoints(i, ans)
+    return res
+</pre>
+<h3 id="28-sort-students.py">28-sort-students.py</h3>
+<pre>"""
+Sort the students lexicographically by their surnames.
+"""
+
+def solution(students):
+    students.sort(key=lambda s: s.split()[-1])
+    return students
+</pre>
+<h3 id="29-is-test-solvable.py">29-is-test-solvable.py</h3>
+<pre>"""
+Compute the sum of the digits in questionId.
+"""
+
+def solution(ids, k):
+    digitSum = lambda n: sum(map(int, str(n)))
+
+    sm = 0
+    for questionId in ids:
+        sm += digitSum(questionId)
+    return sm % k == 0
+</pre>
+<h3 id="30-create-spiral-matrix.py">30-create-spiral-matrix.py</h3>
+<pre>"""
+A spiral matrix is a square matrix of size n x n. It starts on the
+bottom-right corner and increases in the counterclockwise direction.
+
+Example:
+
+5 4 3
+6 9 2
+7 8 1
+"""
+
+def solution(n):
+    dirs = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+    curDir = 0
+    curPos = (n - 1, n - 1)
+
+    # Fill in the following line
+    res = [[0 for _ in range(n)] for _ in range(n)]
+
+    for i in range(1, n * n + 1):
+        res[curPos[0]][curPos[1]] = i
+        nextPos = curPos[0] + dirs[curDir][0], curPos[1] + dirs[curDir][1]
+        if not (0 <= nextPos[0] < n and
+                0 <= nextPos[1] < n and
+                res[nextPos[0]][nextPos[1]] == 0):
+            curDir = (curDir + 1) % 4
+            nextPos = curPos[0] + dirs[curDir][0], curPos[1] + dirs[curDir][1]
+        curPos = nextPos
+
+    return res
+</pre>
+<h3 id="31-construct-shell.py">31-construct-shell.py</h3>
+<pre>"""
+Return a 2-d list of size 2 * n - 1 where each element is a list,
+and the size increases, then decreases.
+
+Example:
+Shell(3) =
+[[0],
+ [0, 0],
+ [0, 0, 0],
+ [0, 0],
+ [0]]
+"""
+
+def solution(n):
+    return [[0] * n for n in list(range(1, n)) + list(range(n, 0, -1))]
+</pre>
+<h3 id="32-word-power.py">32-word-power.py</h3>
+<pre>"""
+The power of a letter is the 1-based index of the plaintext alphabet.
+
+The power of a word is the sum of the powers of its characters.
+
+Return a word's power.
+"""
+
+def solution(word):
+    num = {chr(n + 96): n for n in range(1, 27)}
+    return sum([num[ch] for ch in word])
+</pre>
+<h3 id="33-cool-pairs.py">33-cool-pairs.py</h3>
+<pre>"""
+A pair of numbers is cool if their product is divisible by their sum.
+Return the number of different sums of elements in cool pairs.
+"""
+
+def solution(a, b):
+    uniqueSums = {i + j for i in a for j in b if (i * j) % (i + j) == 0}
+    return len(uniqueSums)
+</pre>
+<h3 id="34-multiplication-table.py">34-multiplication-table.py</h3>
+<pre>"""
+Construct a n x n multiplication table.
+"""
+
+def solution(n):
+    return [list(range(r, r*n+1, r)) for r in range(1, n+1)]
+</pre>
+<h3 id="35-chess-teams.py">35-chess-teams.py</h3>
+<pre>"""
+Given two teams, create a list of lists where elements are the ith member
+of the first team and the ith member of the second team.
+"""
+
+def solution(smarties, cleveries):
+    return list(map(list, zip(smarties, cleveries)))
+</pre>
+<h3 id="36-fix-result.py">36-fix-result.py</h3>
+<pre>"""
+Drop the last digit of each element in result.
+"""
+
+def solution(result):
+    def fix(x):
+        return x // 10
+
+    return list(map(fix, result)) # task was to fill in "map"
+</pre>
+<h3 id="37-college-courses.py">37-college-courses.py</h3>
+<pre>"""
+John thinks the number x is bad luck, so he won't take courses whose title
+is x letters long.
+
+Remove the courses as described.
+"""
+
+def solution(x, courses):
+    def shouldConsider(course):
+        return len(course) != x
+
+    return list(filter(shouldConsider, courses))
+</pre>
+<h3 id="38-create-histogram.py">38-create-histogram.py</h3>
+<pre>"""
+Create a horizontal histogram with bars formed by repeating the ch character
+the right amount of times.
+"""
+
+def solution(ch, assignments):
+    return [ch * i for i in assignments]
+</pre>
+<h3 id="39-least-common-denominator.py">39-least-common-denominator.py</h3>
+<pre>from math import gcd
+
+def solution(denominators):
+    return functools.reduce(lambda x, y: x * y // gcd(x, y), denominators)
+</pre>
+<h3 id="40-dictionary-keys.txt">40-dictionary-keys.txt</h3>
+<pre>Out of the following, which can be used as dictionary keys?
+
+1. set
+2. frozenset
+3. tuple of mutable objects
+4. tuple of immutable objects
+5. list of mutable objects
+6. list of immutable objects
+
+Answer:
+2, 4
+</pre>
+<h3 id="41-unique-characters.py">41-unique-characters.py</h3>
+<pre>"""
+Return an array of all unique characters that appear in it, sorted by their
+ASCII codes.
+"""
+
+def solution(document):
+    return sorted(set(document), key=ord)
+</pre>
+<h3 id="42-correct-scholarships.py">42-correct-scholarships.py</h3>
+<pre>"""
+You are given lists of unique student IDs bestStudents, scholarships, and
+allStudents.
+
+The scholarships are correctly distributed if all the best students are in it,
+but no outsider students are receiving scholarships.
+"""
+
+def solution(bestStudents, scholarships, allStudents):
+    return set(bestStudents) <= set(scholarships) < set(allStudents)
+
+# a <= b is a.issubset(b). Is every element of a in b?
+
+# a < b does not have a corresponding method. It checks if a is a proper
+subset of b. A proper subset is the same as a subset, but the sets can't
+be identical.
+</pre>
+<h3 id="43-startup-name.py">43-startup-name.py</h3>
+<pre>"""
+A popular character appears in at least two company names, and mainstream
+if it appears in all three.
+
+Return the list of characters that are popular but not mainstream.
+"""
+
+def solution(companies):
+    cmp1 = set(companies[0])
+    cmp2 = set(companies[1])
+    cmp3 = set(companies[2])
+    res = (cmp1 & cmp2 | cmp2 & cmp3 | cmp1 & cmp3) - (cmp1 & cmp2 & cmp3)
+    return list(sorted(list(res)))
+</pre>
+<h3 id="44-words-recognition.py">44-words-recognition.py</h3>
+<pre>"""
+Return an array of two strings, return an array of two strings sorted
+lexicographically, where the first string contains characters present only
+in word1, and the second, in word2.
+"""
+
+def solution(word1, word2):
+    def getIdentifier(w1, w2):
+        return "".join(sorted(set(w1) - set(w2)))
+    return [getIdentifier(word1, word2), getIdentifier(word2, word1)]
+</pre>
+<h3 id="45-transpose-dictionary.py">45-transpose-dictionary.py</h3>
+<pre>"""
+Given a dictionary of scripts and extensions, return a list of lists with
+elements [extension. script], sorted by extension.
+"""
+
+def solution(scriptByExtension):
+    return sorted([[scriptByExtension[k], k] for k in scriptByExtension], key=lambda el: el[0])
+</pre>
+<h3 id="46-doodled-password.py">46-doodled-password.py</h3>
+<pre>"""
+Given a list of numbers that you think is a password, and are written in a
+circle, find all possible combinations the password could be.
+"""
+
+from collections import deque
+
+def solution(digits):
+    n = len(digits)
+    res = [deque(digits) for _ in range(n)]
+    deque(map(lambda d: res[d].rotate(-d), range(n)), 0) # implement this line
+    return [list(d) for d in res]
+
+# Comment: creating a zero-length deque is weird, why not use a loop?
+</pre>
+<h3 id="47-frequency-analysis.py">47-frequency-analysis.py</h3>
+<pre>"""
+Return the most frequent character in the text. Inputs have a unique most
+frequent character.
+"""
+
+from collections import Counter
+
+def solution(encryptedText):
+    return Counter(encryptedText).most_common()[0][0]
+</pre>
+<h3 id="48-cyclic-name.py">48-cyclic-name.py</h3>
+<pre>"""
+Cycle the given name up to n characters.
+"""
+
+from itertools import cycle
+
+def solution(name, n):
+    gen = cycle(name)
+    res = [next(gen) for _ in range(n)]
+
+    return ''.join(res)
+</pre>
+<h3 id="49-memory-pills.py">49-memory-pills.py</h3>
+<pre>"""
+Given a list of pills, return a list of three names that go right after the
+very first medicine name of even length.
+"""
+
+from itertools import dropwhile
+
+def solution(pills):
+    gen = dropwhile(lambda p: len(p) % 2 == 1, pills + [""] * 3)
+    next(gen)
+    return [next(gen) for _ in range(3)]
+</pre>
+<h3 id="50-float-range.py">50-float-range.py</h3>
+<pre>"""
+Create a function like range() but with float values.
+"""
+
+from itertools import takewhile, count
+
+def solution(start, stop, step):
+    gen = takewhile(lambda n: n < stop, count(start, step))
+    return list(gen)
+</pre>
+<h3 id="51-rock-paper-scissors.py">51-rock-paper-scissors.py</h3>
+<pre>"""
+Given a list of players, return a list of all the games played between them,
+sorted lexicographically.
+"""
+
+from itertools import permutations
+
+def solution(players):
+    return list(permutations(sorted(players), 2))
+
+# NOTE: sorting the players will return the right solution, without having
+to sort the result by column.
+</pre>
+<h3 id="52-kth-permutation.py">52-kth-permutation.py</h3>
+<pre>"""
+Return the kth permutation (1-based) from the permutations of the
+given numbers.
+"""
+
+from itertools import permutations
+
+def solution(numbers, k):
+    return list(permutations(numbers))[k-1]
+</pre>
+<h3 id="53-crazyball.py">53-crazyball.py</h3>
+<pre>"""
+Given a list of players and the number of players, k, return a list of all
+possible lineups, sorted lexicographically.
+"""
+
+from itertools import combinations
+
+def solution(players, k):
+    return list(combinations(sorted(players), k))
+</pre>
+<h3 id="54-cracking-password.py">54-cracking-password.py</h3>
+<pre>"""
+Given the digits that comprise the password, the password length k, and
+divisor d, return a sorted list of strings that should be tried as passwords.
+"""
+
+from itertools import product
+
+def solution(digits, k, d):
+    def createNumber(digs):
+        return "".join(map(str, digs))
+
+    return [''.join(map(str, p)) for p in product(sorted(digits), repeat=k)
+if int(''.join(map(str, p))) % d == 0]
+</pre>
+<h3 id="55-twins-score.py">55-twins-score.py</h3>
+<pre>"""
+Given two lists with scores, combine them into a single list that contain the
+sums of the individual scores.
+"""
+
+def solution(b, m):
+    return [b + m for b, m in zip(b, m)]
+</pre>
+<h3 id="56-pressure-gauges.py">56-pressure-gauges.py</h3>
+<pre>"""
+Given morning and evening pressure readings, return two lists, one containing
+the minimum, and the other containing the maximum readings.
+"""
+
+def solution(morning, evening):
+    return [[min(a, b) for a, b in zip(morning, evening)], [max(a, b) for a, b in zip(morning, evening)]]
+</pre>
+<h3 id="57-correct-lineup.py">57-correct-lineup.py</h3>
+<pre>"""
+Given a list of athletes, return the list after swapping each pair of adjacent
+athletes.
+
+Example:
+[1, 2, 3, 4, 5, 6]
+should be
+[2, 1, 4, 3, 6, 5]
+"""
+
+def solution(athletes):
+    return [item for pair in zip(athletes[1::2], athletes[::2]) for item in pair]
+
+# NOTE: this operation is the same for flattening a list of lists
+# (found in Stack Overflow)
+</pre>
+<h3 id="58-group-dating.py">58-group-dating.py</h3>
+<pre>"""
+Two lists of the nature values of male and female cats are given. If the
+corresponding cats have the same value, they become connected and walk away.
+
+Return the two lists, having removed the pairs with the same value.
+"""
+
+def solution(male, female):
+    return [[], []] if male == female else list(zip(*[[m, f] for m, f in zip(male, female) if m != f]))
+</pre>
+<h3 id="59-fix-tree.py">59-fix-tree.py</h3>
+<pre>"""
+You are given a list of strings that form a tree. However, it has become
+corrupted and the * characters need to be centered.
+"""
+
+def solution(tree):
+    return [("*" * s.count("*")).center(len(s)) for s in tree]
+
+# Alternative solution: strip, then center
+</pre>
+<h3 id="60-pref-sum.py">60-pref-sum.py</h3>
+<pre>"""
+Calculate all the prefix sums for the given array.
+
+b[0] = a[0]
+b[1] = a[0] + a[1]
+b[2] = a[0] + a[1] + a[2]
+...
+"""
+
+def solution(a):
+    # This naive approach is too inefficient.
+    return [sum(a[:end]) for end in range(1, len(a) + 1)]
+
+# Alternative solution
+
+from itertools import accumulate
+
+def solution(a):
+    return list(accumulate(a))
+</pre>
+<h3 id="61-math-practice.py">61-math-practice.py</h3>
+<pre>"""
+Implement a function that computes
+
+(((...(a[0] + a[1]) * a[2] + a[3]) * a[4] + ...))
+
+NOTE: makes little sense
+"""
+
+from functools import reduce
+
+def solution(numbers):
+    return reduce(lambda x, y: x * numbers[y] if y % 2 == 0 else x + numbers[y], range(len(numbers)), 1)
+</pre>
+<h3 id="62-check-participants.py">62-check-participants.py</h3>
+<pre>"""
+You're organizing games for your coworkers, and the requirement for the ith
+0-based game is that there are at least i people registered for it (game 0
+does not need any participants).
+
+Return the list of games for which too few people signed up for.
+"""
+
+def solution(participants):
+    return [i for i, e in enumerate(participants) if e < i]
+</pre>
+<h3 id="63-fibonacci-list.py">63-fibonacci-list.py</h3>
+<pre>"""
+Return a list whose elements are lists containing i zeros, where i is the nth
+element of the Fibonacci sequence (0, 1, 1, 2, 3, 5, 8, ...).
+"""
+
+def solution(n):
+    return [[0] * x for x in functools.reduce(lambda x, y: x + [x[-1] + x[-2]], range(n-2), [0, 1])]
+</pre>
+<h3 id="64-primes-sum.py">64-primes-sum.py</h3>
+<pre>"""
+Return the sum of all prime numbers in the range [a, b].
+"""
+
+def solution(a, b):
+    return sum(filter(lambda x: all(x % i for i in range(2, int(x**0.5) + 1)), range(max(2, a), b+1)))
+</pre>
+<h3 id="65-calc-bonuses.py">65-calc-bonuses.py</h3>
+<pre>"""
+Return the sum of the first n bonuses for the given values of bonuses and n.
+However, if fewer than n bonuses were collected, the score is 0.
+"""
+
+def solution(bonuses, n):
+    it = (b for b in bonuses)
+    res = 0
+
+    try:
+        for _ in range(n):
+            res += next(it)
+    except StopIteration:
+        res = 0
+
+    return res
+
+# Alternative solution: it = iter(bonuses)
+</pre>
+<h3 id="66-calc-final-score.py">66-calc-final-score.py</h3>
+<pre>"""
+Given a list of scores and the number n that represents how many levels had
+to have been passed to avoid the penalty (score is divided by 5), return the
+sum of the squares of the maximum n scores.
+"""
+
+def solution(scores, n):
+    gen = (s * s for s in sorted(scores, reverse=True))
+    res = 0
+
+    try:
+        for _ in range(n):
+            res += next(gen)
+    except StopIteration:
+        res //= 5
+
+    return res
+</pre>
+<h3 id="67-fibonacci-generator.py">67-fibonacci-generator.py</h3>
+<pre>"""
+Return the first n numbers of the Fibonacci sequence, using the given generator.
+"""
+
+def solution(n):
+    def fib():
+        last = (0, 1)
+        while True:
+            yield last[0]
+            last = last[0] + last[1], last[0]
+            # new value is placed first
+
+    gen = fib()
+    return [next(gen) for _ in range(n)]
+</pre>
+<h3 id="68-calkin-wilf-sequence.py">68-calkin-wilf-sequence.py</h3>
+<pre>"""
+The Calkin-Wilf tree consists of vertices that correspond one-to-one to the
+positive rational numbers.
+
+A fraction a/b has as its children a/(a + b) and (a + b)/b.
+
+Given a rational number, return its 0-based index in the Calkin-Wilf sequence.
+"""
+
+def solution(number):
+    def fractions():
+        n, d = 1, 1
+        while True:
+            yield [n, d]
+            n, d = d, 2 * (n // d) * d + d - n
+            # No idea how this was computed, copied someone else's solution.
+            # The formula is in Wikipedia.
+
+    gen = fractions()
+    res = 0
+    while next(gen) != number:
+        res += 1
+    return res
+</pre>
+<h3 id="69-check-password.py">69-check-password.py</h3>
+<pre>"""
+Return the index of the correct password attempt.
+"""
+
+def solution(attempts, password):
+    def check():
+        while True:
+            yield password == attempt
+
+    checker = check()
+    for i, attempt in enumerate(attempts):
+        next(checker)
+        if checker.send(attempt):
+            return i + 1
+
+    return -1
+</pre>
+<h3 id="70-greetings-generator.py">70-greetings-generator.py</h3>
+<pre>"""
+Given a list of names, return an array of greetings such as "Hello, Joe!"
+"""
+
+class Greeter(object):
+    def __init__(self, names):
+        self.cnt = 0
+        self.names = names
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.cnt < len(self.names):
+            self.cnt += 1
+            return 'Hello, {}!'.format(self.names[self.cnt - 1])
+        else:
+            raise StopIteration
+
+
+def solution(team):
+    return list(Greeter(team))
+</pre>
+<h3 id="71-range-float.py">71-range-float.py</h3>
+<pre>"""
+Implement a range function that allows floating point numbers.
+"""
+
+class FRange(object):
+    def __init__(self, start, stop=None, step=None):
+        if stop is None:
+            self.i = 0
+            self.stop = start
+            self.step = 1
+        elif step is None:
+            self.i = start
+            self.stop = stop
+            self.step = 1
+        else:
+            self.i = start
+            self.stop = stop
+            self.step = step
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if (self.i - self.stop) * self.step < 0:
+            self.i += self.step
+            return self.i - self.step
+        else:
+            raise StopIteration
+
+
+def solution(args):
+    return list(FRange(*args))
+</pre>
+<h3 id="72-super-prize.py">72-super-prize.py</h3>
+<pre>"""
+A supermarket is giving prizes for the nth (1-based) customer if the total of
+their purchase is divisible by d. Return the 1-based indices of all customers
+who won the prize.
+"""
+
+class Prizes(object):
+    def __init__(self, purchases, n, d):
+        self.purchases = purchases
+        self.n = n
+        self.d = d
+
+    def __iter__(self):
+        for i in range(self.n - 1, len(self.purchases), self.n):
+            if self.purchases[i] % self.d == 0:
+                yield i + 1
+
+def solution(purchases, n, d):
+    return list(Prizes(purchases, n, d))
+</pre>
+<h3 id="73-try-functions.py">73-try-functions.py</h3>
+<pre>"""
+Given the variable x and a list of functions, return a list of values f(x) for
+each f in functions.
+"""
+
+def solution(x, functions):
+    return [eval(fname)(x) for fname in functions]
+</pre>
+<h3 id="74-two-lines.py">74-two-lines.py</h3>
+<pre>"""
+Consider two straight lines y = mx + b.
+
+Consider all integer coordinates a from [l, r].
+
+For each vertical x = a, find where this vertical intersects line1 and line2.
+
+Whichever line is higher earns a point.
+
+Choose the line that has the higher score.
+"""
+
+from functools import partial
+
+def line_y(m, b, x):
+    return m * x + b
+
+def solution(line1, line2, l, r):
+    # Task is to fill in these partials
+    line1_y = partial(line_y, *line1)
+    line2_y = partial(line_y, *line2)
+    balance = 0
+    for x in range(l, r + 1):
+        y1 = line1_y(x)
+        y2 = line2_y(x)
+        if y1 > y2:
+            balance += 1
+        elif y1 < y2:
+            balance -= 1
+    if balance > 0:
+        return "first"
+    if balance < 0:
+        return "second"
+    return "any"
+</pre>
+<h3 id="75-simple-composition.py">75-simple-composition.py</h3>
+<pre>"""
+Given f and g, combine them to obtain f(g(x))
+"""
+
+def compose(f, g):
+    return lambda x: f(g(x))
+
+def solution(f, g, x):
+    return compose(eval(f), eval(g))(x)
+</pre>
+<h3 id="76-functions-composition.py">76-functions-composition.py</h3>
+<pre>"""
+Compose an arbitrary number of functions.
+"""
+
+def compose(functions):
+    return functools.reduce(lambda f, g: lambda x: f(g(x)), functions, lambda x: x)
+
+def solution(functions, x):
+    return compose(map(eval, functions))(x)
+</pre>
+<h3 id="77-merging-vines.py">77-merging-vines.py</h3>
+<pre>"""
+Vines entangle together as time passes, forming a single vine.
+
+Given the number of grapes hung on the "vines" list, return the number of
+grapes in each vine after n years, assumming that each year the 2 * i - 1th
+and the 2 * ith vines merge into a single vine for each integer i in
+range [1, len(vines) / 2].
+"""
+
+def solution(vines, n):
+    def nTimes(n):
+        # Task: implement this decorator
+        def deco(f):
+            def wrapper(vines):
+                for i in range(n):
+                    vines = f(vines)
+                return vines
+            return wrapper
+        return deco
+
+    @nTimes(n)
+    def sumOnce(vines):
+        res = [vines[i] + vines[i+1] for i in range(0, len(vines) - 1, 2)]
+        if len(vines) % 2 == 1:
+            res.append(vines[-1])
+        return res
+
+    return sumOnce(vines)
+</pre>
+<h3 id="78-count-visitors.py">78-count-visitors.py</h3>
+<pre>"""
+Given the amount of time visitors used your application and k (amount of time
+spent by beta users), return the total number of users that used your app for
+at least k minutes, including beta users.
+"""
+
+class Counter(object):
+    def __init__(self, beta):
+        # Task: implement this initialization
+        self.value = beta
+
+    def inc(self):
+        self.value += 1
+
+    def get(self):
+        return self.value
+
+
+def solution(beta, k, visitors):
+    counter = Counter(beta)
+    for visitor in visitors:
+        if visitor >= k:
+            counter.inc()
+    return counter.get()
+</pre>
+<h3 id="79-sign.py">79-sign.py</h3>
+<pre>"""
+Implement a "sign(x)" function that returns 1 for positive x, -1 for negative,
+and 0 for zero.
+"""
+
+class Functions(object):
+    @staticmethod
+    def solution(x):
+        if x > 0:
+            return 1
+        elif x < 0:
+            return -1
+        else:
+            return 0
+
+def solution(x):
+    return Functions.solution(x)
+</pre>
+<h3 id="80-primary-school.py">80-primary-school.py</h3>
+<pre>"""
+Implement a function that calculates the area of a rectangle (height x width).
+"""
+
+class Rectangle(object):
+    def __init__(self, height, width):
+        self.height = height
+        self.width = width
+
+    def __str__(self):
+        return '{} x {} = {}'.format(self.height, self.width, self.area)
+
+    # Task: fill in this blank
+    @property
+    def area(self):
+        return self.height * self.width
+
+
+def solution(height, width):
+    return str(Rectangle(height, width))
+</pre>
+<h3 id="81-user-attribute.py">81-user-attribute.py</h3>
+<pre>"""
+Given the attribute requested, return its value if it's defined, and the
+string "x attribute is not defined" otherwise.
+"""
+
+class User:
+    def __init__(self, username, _id, xp, name):
+        self.username = username
+        self._id = _id
+        self.xp = xp
+        self.name = name
+
+    def __getattr__(self, attribute):
+        return f"{attribute} attribute is not defined"
+
+def solution(attribute):
+    user = User("anny", "123", "1500", "annya")
+    return getattr(user, attribute)
+</pre>
+<h3 id="82-sort-codesignal-users.py">82-sort-codesignal-users.py</h3>
+<pre>"""
+Sort the leaderboard by the players' XP in descending order, and in case of a
+tie, by their ids.
+"""
+
+def solution(users):
+    res = [CodeSignalUser(*user) for user in users]
+    res.sort(reverse=True)
+    return list(map(str, res))
+
+class CodeSignalUser:
+    def __init__(self, name, uid, xp):
+        self.name = name
+        self.uid = int(uid)
+        self.xp = int(xp)
+
+    def __lt__(self, other):
+        if self.xp == other.xp:
+            return self.uid < other.uid
+        return self.xp < other.xp
+</pre>
+<h3 id="83-is-cool-team.py">83-is-cool-team.py</h3>
+<pre>"""
+A team is cool if and only if the first letter of one player's name is the
+same as the last letter in the name of the player before them. The letter
+matching does not have to wrap.
+
+Check if a team is cool.
+"""
+
+# NOTE: this task is equivalent to a complicated problem called "last letter
+first letter"
+
+class Team(object):
+    def __init__(self, names):
+        self.names = names
+
+    def __bool__(self):
+
+        # Turn this problem into the Eulerian Path Checker rather than the NP-Complete Hamiltonian Path problem
+        #
+        #   How? Use the letters of the alphabet as the nodes instead of the names. The names will become the edges.
+        #     Now we just check if we can connect all the edges without using any twice!
+        #     We just turned it into the Eulerian path problem. This will become very important.
+        #
+        #   Generally, a graph will have an Eulerian path IF it has a maximum of 2 nodes that have an odd degree (Number of edges/teammates coming in and out)
+        #     Why? We can use a odd-degree node as a starting or ending point.
+        #     That forces us to use those two vertices/letters as the corresponding point in the team announcement.
+        #   The rest of the nodes MUST have an equal number of in-degree and out-degree (We must somehow connect them all)
+        #
+        #   The check will be something like this:
+        #     - Have two directories:
+        #       - One for the names coming in (FROM)
+        #       - The other for names going out (TO)
+        #     - Go through every letter of the alphabet
+        #     - Find all names that can go to current letter/vertice, save it to FROM
+        #       - Ex: K -> Mark
+        #     - Find all names that the letter can go to, save it to TO
+        #       - Ex: M -> Mark
+        #
+        #     - Go through every letters again, count the number of nodes with unequal in-out degrees.
+        #       - If there is 1 less in-degree (One less teammate to come from)
+        #         - THIS IS OUR GUARANTEED STARTING NAME!
+        #         - If we have more than one starting name, then it is impossible, return False.
+        #
+        #       - If there is 1 more in-degree (One more teammate to come from)
+        #         - THIS IS OUR GUARANTEED ENDING NAME!
+        #         - If we have more than one ending name, then it is impossible, return False.
+        #
+        #   We are almost done!
+        #
+        #   Doing this check can already pass most of the tests, the last thing we need to check is if the entire graph is connected.
+        #     We can do this with a simple BFS:
+        #       - Start from any teammate
+        #       - Find all unvisited teammate who can lead to current teammate or vice-versa
+        #           Ex: Mark <- [ Kurt ] -> Terk
+        #       - Repeat until we can't find any more teammates
+        #       - Then check if the entire team is visited.
+
+
+        self.names = [i.lower() for i in self.names]
+
+        letters = "abcdefghijklmnopqrstuvwxyz"
+        FROM  = {i: [] for i in letters}
+        TO    = {i: [] for i in letters}
+
+        for i in letters:
+            for j in self.names:
+                if i == j[-1]:
+                    FROM[i].append(j) # Find names that lead to current letter
+                if i == j[0]:
+                    TO[i].append(j) # Find names that letter can lead to
+
+
+        # Debugging and visualizing the graph
+        for i in letters:
+            print("____________________")
+            print("Node: %s" % i)
+            print("From: ", FROM[i])
+            print("To: ", TO[i])
+
+        start = False
+        end   = False
+        for i in letters:
+            if len(FROM[i]) + 1 == len(TO[i]):
+                # Found the start!
+                if start:
+                    return False # Whoops, too many starts!
+                start = True
+            elif len(FROM[i]) == len(TO[i]) + 1:
+                # Found the end!
+                if end:
+                    return False # Whoops, too many ends!
+                end = True
+            elif len(FROM[i]) != len(TO[i]):
+                return False
+
+        # Check if graph is connected
+        visited = {0}
+        queue = [0]
+
+        while queue:
+
+            name = queue.pop(0)
+            for ind, teammate in enumerate(self.names):
+                if ind in visited:
+                    continue
+                if self.names[name][0] == teammate[-1]:
+                    visited.add(ind)
+                    queue.append(ind)
+                elif self.names[name][-1] == teammate[0]:
+                    visited.add(ind)
+                    queue.append(ind)
+
+        return len(visited) == len(self.names) # Is everyone found?
+
+
+
+
+def solution(team):
+    return bool(Team(team))
+</pre>
+<h3 id="84-create-die.py">84-create-die.py</h3>
+<pre>"""
+Use the random module to create a die interface for a game. The function must
+accept the random seed and the number of sides of the die.
+"""
+
+import random
+
+def solution(seed, n):
+    class Die:
+        def __new__(cls, seed, n):
+            random.seed(seed)
+            return int(random.random() * n) + 1
+
+    class Game:
+        die = Die(seed, n)
+
+    return Game.die
+</pre>
+<h3 id="85-to-human-age.py">85-to-human-age.py</h3>
+<pre>"""
+Convert each animal's age to the equivalent human age.
+"""
+
+class Mammal(object):
+    # Task: implement this class
+    def __init__(self, age):
+        self.age = age
+
+    def toHuman(self):
+        return self.age
+
+    def __str__(self):
+        return f"{self.toHuman()} y.o. in human age"
+
+
+class Cat(Mammal):
+    def toHuman(self):
+        if self.age == 0:
+            return 0
+        elif self.age < 3:
+            return 25 // (3 - self.age)
+        else:
+            return 25 + 4 * (self.age - 2)
+
+class Dog(Mammal):
+    def toHuman(self):
+        if self.age == 0:
+            return 0
+        elif self.age == 1:
+            return 15
+        elif self.age == 2:
+            return 24
+        else:
+            return 24 + (self.age - 2) * 4
+
+class Human(Mammal):
+    pass
+
+
+def solution(members):
+    species = {
+        'cat': Cat,
+        'dog': Dog,
+        'human': Human
+    }
+    res = []
+    for spec, age in members:
+        res.append(str(species[spec](int(age))))
+    return res
+</pre>
+<h3 id="86-xml-tags.py">86-xml-tags.py</h3>
+<pre>"""
+XML ElementTree
+"""
+
+# skipped as it's too domain-specific
+</pre>
+<h3 id="87-build-command.py">87-build-command.py</h3>
+<pre>"""
+Given a JSON, replace the values for each key with empty values, except for
+dictionaries.
+"""
+</pre>
+<h3 id="88-website-calendar.py">88-website-calendar.py</h3>
+<pre>"""
+Given a month and year, generate a calendar in HTML format.
+"""
+</pre>
+<h3 id="89-malicious-program.py">89-malicious-program.py</h3>
+<pre>"""
+Given a timestamp and a list "changes", apply the deltas to the timestamp and
+return the altered timestamp.
+"""
+</pre>
+<h3 id="90-url-similarity.py">90-url-similarity.py</h3>
+<pre>"""
+Compare two URLs and return their similarity score.
+"""
+</pre>
+<h3 id="91-page-complexity.py">91-page-complexity.py</h3>
+<pre>"""
+Given an HTML document, return all distinct tags located in the deepest level.
+"""
+</pre>
+<h3 id="92-weird-encoding.py">92-weird-encoding.py</h3>
+<pre>"""
+Return the encoded version of the message, given the encoding key (a variation
+of Base64).
+"""
+</pre>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+
