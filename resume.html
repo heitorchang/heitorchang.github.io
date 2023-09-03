@@ -43,22 +43,30 @@
 (define professional-section (getelem "#professional"))
 (define education-section (getelem "#education"))
 
+;; Professional item format
+;; (("Company name" "company-h3-id")
+;;  ("Role title"
+;;   "Dates"
+;;   ("List of responsibilities"
+;;    "List continued")))
+;;
+;; Add a page break in the associated CSS file.
 (define professional-items
-  '(("Freelance Software Engineer, São Paulo, SP"
+  '((("Freelance Software Engineer, São Paulo, SP" "freelance")
      ("Senior Full-Stack Developer"
       "Mar. 2023 &ndash; present"
       ("Created REST APIs in Python with FastAPI and PostgreSQL to fetch data for a given scenario and time frame, and deployed them to Google Cloud."
        "Developed a static site generator in Python to mirror a local directory and add a practical navigation interface for the content."
        "Formulated a domain-specific language for an application's front-end based on Scheme's functional programming concepts to manipulate DOM elements directly.")))
 
-    ("Mediafly, Inc., Chicago, IL (Remote)"
+    (("Mediafly, Inc., Chicago, IL (Remote)" "mediafly")
      ("Senior Software Engineer, Data and Client Squad"
       "Aug. 2022 &ndash; Feb. 2023"
       ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new custom objects holding metadata."
        "Improved the Python video call processing pipeline, filtering out unwanted blocks of silence."
        "Corrected multiple occurrences of temporary files not being cleared and other data inconsistencies in the Python pipeline code.")))
 
-    ("Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP"
+    (("Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP" "tempook")
      ("Senior Full-Stack Developer"
       "June 2020 &ndash; Aug. 2022"
       ("Built and administered the public-facing website with Django, including custom user management and authentication with a JWT extension."
@@ -67,7 +75,7 @@
        "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."
        "Created a hydroelectric energy forecasting dashboard containing Google Maps and Apache ECharts widgets in Vue.js and the Vuetify Material Design front-end framework.")))
 
-    ("Pontual Export &amp; Import Ltd., São Paulo, SP"
+    (("Pontual Export &amp; Import Ltd., São Paulo, SP" "pontual")
      ("Full-Stack Developer"
       "Jan. 2014 &ndash; June 2020"
       ("Used MA (Moving Average) indicators in a Django and Python project to predict the demand for 600 products and calculate appropriate amounts for restocking."
@@ -100,7 +108,7 @@
 (define (create-professional-item item)
   (element-new
    `(div
-     ("h3.professional" ,(car item)) ; company name
+     (,(string-append "h3#" (cadar item) ".professional") ,(caar item)) ; company name
      ,@(roles-markup (cdr item)))))
 
 ;;; Education section
