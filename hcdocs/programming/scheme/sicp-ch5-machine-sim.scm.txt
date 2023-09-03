@@ -343,9 +343,33 @@
      (goto (reg continue))
      fib-done)))
 
+;; Define two-register fib machine
+(define fib-2-regs-mach
+  (make-machine
+   '(a b t n)
+   (list (list '< <) (list '- -) (list '+ +))
+   '(controller
+     fib-loop
+     (test (op <) (reg n) (const 2))
+     (branch (label answer))
+     (assign t (reg b))
+     (assign b (op +) (reg a) (reg b))
+     (assign a (reg t))
+     (assign n (op -) (reg n) (const 1))
+     (goto (label fib-loop))
+     answer)))
+
 ;; Setup and run (values around 25 and above take a while)
 (define (run-fib-machine-with n)
   (set-register-contents! fib-mach 'val 0)
   (set-register-contents! fib-mach 'n n)
   (start fib-mach)
   (get-register-contents fib-mach 'val))
+
+(define (run-fib-2-machine-with n)
+  (set-register-contents! fib-2-regs-mach 'a 0)
+  (set-register-contents! fib-2-regs-mach 'b 1)
+  (set-register-contents! fib-2-regs-mach 't 0)
+  (set-register-contents! fib-2-regs-mach 'n n)
+  (start fib-2-regs-mach)
+  (get-register-contents fib-2-regs-mach 'a))
