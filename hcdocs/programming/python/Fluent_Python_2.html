@@ -313,6 +313,759 @@ class Vector:
 
 <h2 id="ch2">2. An Array of Sequences</h2>
 
+<p>
+  Sequences such as strings, lists, bytes, arrays, XML elements, and database results all share a set of common operations, such as iteration, slicing, sorting, and concatenation.
+</p>
+
+<h4>Container sequences</h4>
+
+<p>
+  Can hold items of different types, including nested containers. Examples: list, tuple, collections.deque. They hold references to the objects they contain.
+</p>
+
+<h4>Flat sequences</h4>
+
+<p>
+  Can hold items of one simple type. Examples: str, bytes, array.array. They store the value of their contents in their own memory space. They are limited to holding primitive machine values like bytes, integers, and floats.
+</p>
+
+<p>
+  Every Python object in memory has a header with metadata. A <code>float</code> is the simplest Python object. It has a value field and two metadata fields:
+</p>
+
+<ul>
+  <li>ob_refcnt: the object's reference count</li>
+  <li>ob_type: a pointer to the object's type</li>
+  <li>ob_fval: a C double holding the value of the float</li>
+</ul>
+
+<p>
+  Another way to group sequences types is by mutability:
+</p>
+
+<h4>Mutable sequences</h4>
+
+<p>
+  list, bytearray, array.array, collections.deque.
+</p>
+
+<h4>Immutable sequences</h4>
+
+<p>
+  str, tuple, bytes.
+</p>
+
+<p>
+  The most fundamental sequence type is the <code>list</code>.
+</p>
+
+<h4>List comprehensions (listcomps) and generator expressions (genexps)</h4>
+
+<p>
+  A listcomp is explicit: its goal is to build a new list.
+</p>
+
+<pre>
+chars = "abcxyz"
+codes = [ord(ch) for ch in chars]
+</pre>
+
+<p>
+  <em>Tip:</em> line breaks are ignored inside <code>[], {}, ()</code>, so multiline lists, listcomps, tuples, dicts, etc. may be created. Also, a trailing comma is ignored.
+</p>
+
+<p>
+  <strong>Note:</strong> While comprehensions have a local scope to hold its variables, using the walrus operator <code>:=</code> will create variables that remain accessible outside its comprehension or expression. The scope of these variables is the enclosing function, unless there is a global or nonlocal declaration.
+</p>
+
+<p>
+  Avoid functional constructs with map and filter. Listcomps can do everything they do.
+</p>
+
+<h4>Cartesian products</h4>
+
+<p>
+  The items that make up the Cartesian product of multiple iterables are tuples made from items of every input iterable. For example, a list of possible T-shirts, given their sizes and colors.
+</p>
+
+<pre>
+colors = ['black', 'orange', 'white']
+sizes = ['S', 'M', 'L', 'XL']
+tshirts = [(color, size) for color in colors for size in sizes]
+</pre>
+
+<h4>Generator expressions</h4>
+
+<p>
+  A genexp may be used to initialize tuples, arrays, and other types of sequences. Genexps save memory because they yield items one by one instead of building an entire list. Whenever you don't need to hold the entire result in memory, use a genexp.
+</p>
+
+<p>
+  Genexps use the same syntax as listcomps, but are enclosed by parentheses, not square brackets.
+</p>
+
+<pre>
+chars = "abcxyz"
+tuple(ord(ch) for ch in chars)
+
+import array
+array.array('I', (ord(ch) for ch in chars))
+
+for tshirt in (f'{c} {s}' for c in colors for s in sizes):
+    print(tshirt)
+</pre>
+
+<h3>Tuples</h3>
+
+<p>
+  Tuples are not just immutable lists. They may also be used as <strong>records with no field names</strong>.
+</p>
+
+<p>
+  When using tuples as records, the position of their contents is important. Sorting the tuple will destroy this information.
+</p>
+
+<p>
+  Using tuples as immutable lists may be clearer than regular lists because you know its length never changes, and a tuple is more performant than a list.
+</p>
+
+<p>
+  <strong>Note:</strong> The immutability of a tupe applies only to the references contained in it. These references cannot be deleted or replaced. But if these references point to mutable objects, those may be changed.
+</p>
+
+<p>
+  To assert that the value of a tuple is fixed, evaluate <code>hash(t)</code>. A list will cause the function to raise a TypeError.
+</p>
+
+<h4>Unpacking sequences and iterables</h4>
+
+<pre>
+coords = (33.92, 118.4)
+lat, lon = coords
+
+# swap a and b
+b, a = a, b
+
+# prefix an argument with * when calling a function
+t = (20, 8)
+divmod(*t)
+</pre>
+
+<h4>Using * to grab excess items</h4>
+
+<pre>
+a, b, *rest = range(5)
+a, *body, c = range(5)
+
+def f(a, b, c, *rest):
+    return a, b, c, rest
+
+*range(4), 4 # defines a tuple
+</pre>
+
+<p>
+  Unpacking may be nested:
+</p>
+
+<pre>
+metro_areas = [
+    ('Tokyo', 'JPN', 35.993, (35.68, 139.59)),
+    ('New York', 'USA', 20.104, (40.82, -74.02)),
+]
+
+for name, country, _, (lat, lon) in metro_areas:
+    print(f'{name}, {country}, ({lat},{lon})')
+</pre>
+
+<p>
+  It's possible to use a list as the target of an unpacking assignment. For example, a database query with <code>LIMIT 1</code>:
+</p>
+
+<pre>
+[record] = query_that_returns_a_single_row()
+
+[[field]] = query_that_returns_a_single_row_and_single_field()
+</pre>
+
+<p>
+  A tuple would also work, but remember that single-item tuples must have a trailing comma:
+</p>
+
+<pre>
+(record,) = query_that_returns_a_single_row()
+
+((field,),) = query_that_returns_a_single_row_and_single_field()
+</pre>
+
+<h3>Pattern matching with sequences</h3>
+
+<p>
+  The pattern matching statement uses <code>match/case</code>, where the subject value follows <code>match</code> and the patterns follow <code>case</code>.
+</p>
+
+<p>
+  For example, imagine designing a robot that accepts commands as sequences of words and numeric values. After splitting the command into a list, the message will look like <code>['BEEP', 440, 3]</code>.
+</p>
+
+<pre>
+def handle_command(self, message):
+    match message:
+        case ['BEEP', frequency, times]:
+            self.beep(frequency, times)
+        case ['LED', id, red, green, blue]:
+            self.leds[id].set_color(red, green, blue)
+        case ['LED', id, intensity]:
+            self.leds[id].set_brightness(intensity)
+        case _:
+            raise InvalidCommand(message)
+</pre>
+
+<p>
+  <code>case _</code> is a catch-all case. It's better to handle situations where there is no match instead of ending the <code>match</code> silently.
+</p>
+
+<p>
+  Pattern matching <em>destructures</em>&mdash;it is a more advanced form of unpacking.
+</p>
+
+<p>
+  A <code>case</code> clause can have a condition (<code>if</code> condition). The condition is evaluated only if the pattern matches.
+</p>
+
+<pre>
+case [name, _, (lat, lon)] if lon <= 0:
+</pre>
+
+<p>
+  In a sequence pattern, tuples and lists are interchangeable: parentheses and square brackets mean the same thing.
+</p>
+
+<p>
+  Sequence patterns match: list, tuple, memoryview, range, array.array, collections.deque.
+</p>
+
+<p>
+  They do not match: str, bytes, bytearray. These are considered to be "atomic", and to handle their contents, convert them first. For example:
+</p>
+
+<pre>
+match tuple(phone):
+    case['1', *rest]:
+        print('USA')
+    case['2', *rest]:
+        print('Africa')
+</pre>
+
+<p>
+  Iterables that are not sequences also can't be destructured.
+</p>
+
+<p>
+  Any part of a pattern can be bound to a variable with the <code>as</code> keyword:
+</p>
+
+<pre>
+case [name, _, (lat, lon) as coords]:
+</pre>
+
+<p>
+  The _ variable is special. It is never bound, and can appear more than once in a pattern. <code>_*</code> will match any number of items. <code>*extra</code> will bind the items to <code>extra</code>.
+</p>
+
+<p>
+  Type information can make patterns more specific (note that it's the same syntax as a constructor call):
+</p>
+
+<pre>
+case [str(name), _, (float(lat), float(lon))]:
+</pre>
+
+<p>
+  Pattern matching is an example of <em>declarative programming</em>&mdash;describing "what" you want to match, not "how" to match it.
+</p>
+
+<h3>Slicing</h3>
+
+<p>
+  The advantages of excluding the last item of a slice include:
+</p>
+
+<ul>
+  <li>The length of the slice is <code>stop - start</code>, or just <code>stop</code> if only the endpoint is passed.</li>
+  <li>Splitting a sequence in two parts at index <code>n</code> is: <code>a_list[:x]</code> and <code>a_list[x:]</code>.</li>
+</ul>
+
+<h4>Slice objects</h4>
+
+<p>
+  <code>a_list[a:b:c]</code> produces a slice object: <code>slice(a, b, c)</code>. They may be given names and assigned to variables.
+</p>
+
+<pre>
+DESCRIPTION = slice(6, 40)
+PRICE = slice(42, 52)
+
+print(item[DESCRIPTION], item[PRICE])
+</pre>
+
+<p>
+  The <code>[]</code> operator can take multiple indexes or slices separated by commas, such as NumPy's <code>a[m:n, w:v]</code>.
+</p>
+
+<p>
+  Except for memoryview, the built-in sequence types are one-dimensional, so they only support one index or slice.
+</p>
+
+<p>
+  The ellipsis <code>...</code> is a valid token. It's used in NumPy, and may be used in user-defined types and extensions.
+</p>
+
+<p>
+  Mutable sequences may be grafted, excised, and modified using slice notation.
+</p>
+
+<h3>Using + and * with sequences</h3>
+
+<p>
+  Both + and * always create a new object, and don't change their operands.
+</p>
+
+<h4>Building lists of lists</h4>
+
+<p>
+  To initialize nested lists, use a list comprehension. Using * on different levels may result in the same reference being repeated in the outer level.
+</p>
+
+<pre>
+# works
+board = [['_'] * 3 for i in range(3)]
+
+# bad, rows are repeated
+weird_board = [['_'] * 3] * 3
+</pre>
+
+<p>
+  list.sort() sorts a list in place (without making a copy). It returns <code>None</code> (a convention of methods that change an object in place). A drawback of this convention is that methods cannot be cascaded (chained).
+</p>
+
+<p>
+  On the other hand, <code>sorted(a_list)</code> creates a new list and returns it. Both sort and sorted take these optional arguments: reverse (a Boolean) and key (a one-argument function that is applied to each item to produce its sorting key).
+</p>
+
+<h3>When a list is not the answer</h3>
+
+<p>
+  If membership needs to be checked often, it's better to use a set than a list.
+</p>
+
+<p>
+  If there's a need to add and remove items from both ends of a sequence, use collections.deque.
+</p>
+
+<p>
+  If you are dealing with large amounts of numbers, use array.array or NumPy.
+</p>
+
+<p>
+  memoryview is a built-in class that lets you handle slices of arrays without copying bytes (a shared-memory sequence type).
+</p>
+
+<h2 id="ch3">3. Dictionaries and Sets</h2>
+
+<p>
+  In addition to dicts, sets and frozensets are also based on hash tables.
+</p>
+
+<h4>dict comprehensions (dictcomps)</h4>
+
+<p>
+  A dictcomp builds a dict instance by taking <code>key: value</code> pairs from any iterable:
+</p>
+
+<pre>
+dial_codes = [
+    (880, 'Bangladesh'),
+    (55, 'Brazil'),
+    (1, 'USA'),
+]
+
+country_dial = {country: code for code, country in dial_codes}
+{code: country.upper() for country, code in sorted(country_dial.items())}
+</pre>
+
+<h4>Unpacking mappings</h4>
+
+<p>
+  <code>**</code> may be applied to more than one argument in a function call, as long as the keys are all strings and there are no duplicates.
+</p>
+
+<p>
+  <code>**</code> may also be used in a dict literal. In this case, if there are duplicates, the last value is used:
+</p>
+
+<pre>
+{'a': 0, **{'x': 1}, 'y': 2, **{'z': 3, 'x': 4}}
+</pre>
+
+<h4>Merging mappings with |</h4>
+
+<p>
+  | behaves like the set union operator. The two dicts are merged.
+</p>
+
+<pre>
+dict1 | dict2
+dict1 |= dict2 # updates dict1 in place
+</pre>
+
+<h3>Pattern matching with mappings</h3>
+
+<p>
+  Patterns for mappings look like dict literals, but can match instances of any subclass of collections.abc.Mapping. Previously, we have seen sequence mappings. Mappings of any kind may be used together.
+</p>
+
+<pre>
+def get_creators(record: dict) -> list:
+    match record:
+        case {'type': 'book', 'authors': [*names]}:
+            return names
+        case {'type': 'book', 'author': name}:
+            return [name]
+        case {'type': 'movie', 'director': name}:
+            return [name]
+        case _:
+            raise ValueError(f'Invalid record: {record!r}')
+</pre>
+
+<p>
+  In contrast with sequence patterns, mapping patterns succeed on partial matches. For example, books with titles will match, even though 'title' is not in any pattern.
+</p>
+
+<p>
+  To capture extra key-value pairs, use <code>**extra</code> as the last variable in the pattern.
+</p>
+
+<pre>
+match food:
+    case {'category': 'ice cream', **details}:
+        print(f'Ice cream details: {details}')
+</pre>
+
+<h3>Standard API of Mapping types</h3>
+
+<p>
+  To implement a custom mapping, it's easier to extend <code>collections.UserDict</code> or wrap a dict by composition, instead of subclassing Mapping ABCs.
+</p>
+
+<p>
+  An object is hashable if it has a hash code which never changes during its lifetime and can be compared to other objects. Hashable objects which compare equal must have the same hash code.
+</p>
+
+<p>
+  A frozenset is always hashable. Tuples are hashable only if all its items are hashable.
+</p>
+
+<p>
+  If a user-defined type implements a custom __eq__() that takes into account its internal state, it will be hashable only if its __hash__() always returns the same hash code. In practice, this requires that __eq__() and __hash__() only take into account instance attributes that never change during the life of the object.
+</p>
+
+<h4>Inserting or updating mutable values</h4>
+
+<p>
+  <code>d.get(key, default)</code> is an alternative to <code>d[key]</code> when getting the default value is more convenient than handling a KeyError.
+</p>
+
+<h4>setdefault</h4>
+
+<pre>
+my_dict.setdefault(key, []).append(new_value)
+
+# is the same as
+if key not in my_dict:
+    my_dict[key] = []
+my_dict[key].append(new_value)
+</pre>
+
+<h4>defaultdict: Another take on missing keys</h4>
+
+<p>
+  When instantiating a defaultdict, provide a callable to produce a default value whenever __getitem__ is passed a nonexistent key.
+</p>
+
+<pre>
+dd = defaultdict(list)
+dd['new_key'] # calls list(), inserts it using the key 'new_key'
+              # and returns a reference to that list
+</pre>
+
+<p>
+  <strong>Note:</strong> <code>a_defaultdict.get(k)</code> will not create a default value. Only <code>a_defaultdict[k]</code> will.
+</p>
+
+<p>
+  The __missing__ method is called when __getitem__ fails to find a key.
+</p>
+
+<p>
+  Since Python 3.6, key insertion order is preserved. The most common reason to use <code>OrderedDict</code> is for backward compatibility. Algorithmically, OrderedDict is better when there are frequently reordering operations.
+</p>
+
+<h4>collections.ChainMap</h4>
+
+<p>
+  A ChainMap holds a list of mappings that can be searched as one. The lookup is performed on each input mapping in the order it appears in the constructor call.
+</p>
+
+<p>
+  The ChainMap does not copy the input mappings; it holds references to them. Updates to the ChainMap only affect the first input mapping.
+</p>
+
+<h4>collections.Counter</h4>
+
+<p>
+  A Counter holds an integer count for each key. Updating it with a new value will add to its count:
+</p>
+
+<pre>
+from collections import Counter
+ct = Counter('banana') # Counter({'a': 3, 'n': 2, 'b': 1})
+ct.update('zzyzx') # Counter({'a': 3, 'z': 3, 'n': 2, 'b': 1, 'y': 1, 'x': 1})
+</pre>
+
+<p>
+  <strong>Note:</strong> <code>a_counter.most_common(n)</code> will only show <code>n</code> counts, even when there are ties.
+</p>
+
+<h4>shelve.Shelf</h4>
+
+<p>
+  The shelve module persists a mapping of string keys to Python objects serialized in the pickle format. However, pickle has several drawbacks.
+</p>
+
+<h4>Subclassing UserDict instead of dict</h4>
+
+<p>
+  A UserDict has an internal dict instance called <code>data</code>. Using <code>data</code> avoids undesired recursion in special methods like __setitem__.
+</p>
+
+<h4>Immutable mappings</h4>
+
+<p>
+  The types module provides <code>MappingProxyType</code>, which returns a read-only but dynamic proxy for the original mapping.
+</p>
+
+<h3>Dictionary views</h3>
+
+<p>
+  The dict instance methods .keys(), .values(), and .items() return instances of classes called dict_keys, dict_values, and dict_items. They are read-only projections of the internal data structures.
+</p>
+
+<h3>Sets</h3>
+
+<p>
+  A set is a collection of unique objects. Objects must be hashable to be included. A set cannot contain another set, but it can have a frozenset.
+</p>
+
+<p>
+  To remove duplicates but keep the order of the first occurrence of each item, use a dict:
+</p>
+
+<pre>
+list(dict.fromkeys(a_list).keys())
+</pre>
+
+<p>
+  Set operations:
+</p>
+
+<ul>
+  <li>a | b (union)</li>
+  <li>a & b (intersection)</li>
+  <li>a - b (difference)</li>
+  <li>a ^ b (symmetric difference)</li>
+</ul>
+
+<p>
+  Set literals are written as: <code>{1, 2}</code>. Since <code>{}</code> is an empty dict, an empty set is written <code>set()</code>.
+</p>
+
+<h4>Set comprehensions (setcomps)</h4>
+
+<p>
+  Setcomps are similar to dictcomps. Only the elements are defined.
+</p>
+
+<pre>
+cities = [('Rome', 'Italy'), ('Chicago', 'USA'), ('Venice', 'Italy')]
+countries = {country for _, country in cities}
+# {'USA', 'Italy'}
+</pre>
+
+<p>
+  It is possible to create the union of multiple iterables:
+</p>
+
+<pre>
+a_set = {*a, *b, *c}
+</pre>
+
+<p>
+  JSON syntax is identical to Python's dicts and lists, except for True, False, and None. It's possible to alias them in order to copy and paste JSON directly:
+</p>
+
+<pre>
+true, false, null = True, False, None
+</pre>
+
+<h2 id="ch4">4. Unicode Text Versus Bytes</h2>
+
+<p>
+  The identity of a character is its <em>code point</em>, a number from 0 to 1,114,111 (in base 10). This is U+0000 to U+10FFFF.
+</p>
+
+<p>
+  The actual bytes used to represent a character depend on the <em>encoding</em> used. UTF-8 is the most widely used encoding; it is represented as 'utf-8', 'utf8', 'utf_8', and 'u8'.
+</p>
+
+<pre>
+s = 'café'
+cafe_bytes = s.encode('utf8')
+cafe_bytes.decode('utf8')
+</pre>
+
+<p>
+  <code>bytes</code> is an immutable type, while <code>bytearray</code> is a mutable one. In both, each element is an integer from 0 to 255. str methods may be used, except those that do formatting and those that depend on Unicode data (such as casefold and isnumeric).
+</p>
+
+<p>
+  <code>bytes</code> can produce a binary sequence from a string containing pairs of hex digits (optionally separated by spaces).
+</p>
+
+<pre>
+bytes.fromhex('31 4b ce a9')
+</pre>
+
+<p>
+  bytes and bytearray may also be created with:
+</p>
+
+<ul>
+  <li>An iterable providing items with values from 0 to 255</li>
+  <li>An object that implements the buffer protocol to copy bytes</li>
+</ul>
+
+<p>
+  UTF-8 is the default source encoding for Python 3.
+</p>
+
+<p>
+  UTF-8 encoding with BOM (Byte-Order Mark) is called UTF-8-SIG, encoded as <code>b'\xef\xbb\xbf'</code>. It may be an issue when dealing with Windows files. In general, avoid BOMs.
+</p>
+
+<h3>Handling text files</h3>
+
+<p>
+  The best practice for handling text I/O is the "Unicode Sandwich":
+</p>
+
+<pre>
+bytes -> str  Decode bytes on input
+  100% str    Process text only (business logic)
+str -> bytes  Encode text on output
+</pre>
+
+<p>
+  <strong>Warning:</strong> Code that has to run on multiple platforms should never depend on the default encoding. Always pass <code>encoding="utf-8"</code>.
+</p>
+
+<p>
+  There are four main ways to write Unicode literals in a str:
+</p>
+
+<ul>
+  <li><code>\x61</code> two-digit Unicode escape</li>
+  <li><code>\u450f</code> four-digit Unicode escape</li>
+  <li><code>\U0001f600</code> eight-digit Unicode escape</li>
+  <li><code>\N{INFINITY}</code> official name (verbose, but recommended if mistyping a hex code could happen)</li>
+</li>
+
+<p>
+  <em>Text normalization</em> is converting text to a uniform representation for comparisons (and sorting).
+</p>
+
+<p>
+  While two Unicode strings may look the same superficially, they may have been constructed differently: an accented letter é may be a single character, or the character 'e' with <code>\N{combining acute accent}</code>
+</p>
+
+<p>
+  <code>unicodedata.normalize()</code> may be used to convert strings to a common representation. It accepts these four strings as the first argument:
+</p>
+
+<ul>
+  <li><code>'NFC'</code> composes the code points to produce the shortest equivalent string. <strong>This is the recommended normalization form.</strong></li>
+  <li><code>'NFD'</code> decomposes composed characters into base characters and separate combining characters</li>
+  <li><code>'NFKC'</code>, <code>'NFKD'</code> K stands for "compatibility". These are stronger forms of normalization, affecting "compatibility characters" such as the MICRO SIGN that was added for compatibility with Latin-1, though it exists as part of the Greek alphabet (μ).</li>
+</ul>
+
+<p>
+  The compatibility normalizations may lose or distort information, but when used as an intermediate representation for searching and indexing, may still be useful. They should not be used for permanent storage of text.
+</p>
+
+<h4>Case folding</h4>
+
+<p>
+  Case folding is converting all text to lowercase, possibly with additional transformations. Note that there are around 300 code points where casefold() and lower() return different results.
+</p>
+
+<h4>Extreme "normalization": taking out diacritics</h4>
+
+<p>
+  Out of laziness, people can type words without accents. They may also be removed from languages over time. To remove all diacritics, use:
+</p>
+
+<pre>
+import unicodedata
+import string
+
+def shave_marks(txt):
+    """Remove all diacritic marks."""
+    norm_txt = unicodedata.normalize('NFD', txt)
+    shaved = ''.join(c for c in norm_txt if not unicodedata.combining(c))
+    return unicodedata.normalize('NFC', shaved)
+</pre>
+
+<p>
+  To limit the shaving to Latin letters only:
+</p>
+
+<pre>
+def shave_marks_latin(txt):
+    """Remove all diacritic marks from Latin base characters."""
+    norm_txt = unicodedata.normalize('NFD', txt)
+    latin_base = False
+    preserve = []
+    for c in norm_txt:
+        if unicodedata.combining(c) and latin_base:
+            continue
+        preserve.append(c)
+        if not unicodedata.combining(c):
+            latin_base = c in string.ascii_letters
+    shaved = ''.join(preserve)
+    return unicodedata.normalize('NFC', shaved)
+</pre>
+
+<h3>Sorting Unicode text</h3>
+
+<p>
+  Standard Python depends on the operating system having the right locale installed to correctly sort text (such as accented letters).
+</p>
+
+<p>
+  A better solution is using the third-party library <code>PyICU</code>, which takes the text's language into account.
+</p>
+
+<h4>Finding characters by name</h4>
+
 </div>
 <br>
 <hr>

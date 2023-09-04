@@ -274,6 +274,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
           (lambda ()
 	    (flycheck-mode t)
             (highlight-indentation-mode -1)
+            (setq flycheck-highlighting-style nil)
             ;; disable autocomplete dropdowns
             (setq company-idle-delay nil)
             (setq company-minimum-prefix-length 99)
