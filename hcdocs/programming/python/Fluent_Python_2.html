@@ -986,7 +986,7 @@ str -> bytes  Encode text on output
   <li><code>\x61</code> two-digit Unicode escape</li>
   <li><code>\u450f</code> four-digit Unicode escape</li>
   <li><code>\U0001f600</code> eight-digit Unicode escape</li>
-  <li><code>\N{INFINITY}</code> official name (verbose, but recommended if mistyping a hex code could happen)</li>
+  <li><code>\N{infinity}</code> official name (verbose, but recommended if mistyping a hex code could happen)</li>
 </ul>
 
 <p>
@@ -1065,6 +1065,502 @@ def shave_marks_latin(txt):
 </p>
 
 <h4>Finding characters by name</h4>
+
+<pre>
+from unicodedata import name
+
+name('é') # 'LATIN SMALL LETTER E WITH ACUTE'
+</pre>
+
+<p>
+  <code>unicodedata.numeric(char)</code> shows the numeric value if it has one. Otherwise, it raises ValueError.
+</p>
+
+<h4>str versus bytes in regular expressions</h4>
+
+<p>
+  In a regular expression built with bytes, patterns such as \d and \w only match ASCII characters. With str, Unicode digits and letters beyond ASCII are matched.
+</p>
+
+<h4>str versus bytes in os functions</h4>
+
+<p>
+  It is possible to pass bytes arguments to <code>os</code> functions and get back bytes values.
+</p>
+
+<h2 id="ch5">5. Data Class Builders</h2>
+
+<p>
+  A <em>data class</em> is a simple class that is just a collection of fields, without methods or extra functionality. Here are three available class builders:
+</p>
+
+<ul>
+  <li>collections.namedtuple</li>
+  <li>typing.NamedTuple (requires type hints on the fields</li>
+  <li>@dataclasses.dataclass</li>
+</ul>
+
+<p>
+  There is also typing.TypedDict; however, it does not build concrete classes that can be instantiated. It's just syntax to write type hints for function parameters and variables that accept mapping values used as records, with keys as field names.
+</p>
+
+<h3>Overview of data class builders</h3>
+
+<p>
+  Consider a simple class to represent a geographic coordinate pair:
+</p>
+
+<pre>
+class Coordinate:
+    def __init__(self, lat, lon):
+        self.lat = lat
+        self.lon = lon
+</pre>
+
+<p>
+  The default behavior of such custom classes is that __eq__ compares object IDs. So two Coordinates with the same lats and lons will not be equal to each other.
+</p>
+
+<p>
+  None of the class builders described here depend on inheritance to do their work. namedtuples are subclasses of tuple. @dataclass is a class decorator that does not affect the class hierarchy.
+</p>
+
+<p>
+  Here is the same Coordinate data class using collections.namedtuple:
+</p>
+
+<pre>
+from collections import namedtuple
+Coordinate = namedtuple('Coordinate', 'lat lon')
+
+# __eq__ is meaningful:
+moscow = Coordinate(55.756, 37.617)
+moscow == Coordinate(55.756, 37.617) # True
+</pre>
+
+<p>
+  typing.NamedTuple requires a type annotation to each field:
+</p>
+
+<pre>
+from typing import NamedTuple
+Coordinate = NamedTuple('Coordinate', lat=float, lon=float)
+
+# or
+Coordinate = NamedTuple('Coordinate', [('lat', float), ('lon', float)])
+</pre>
+
+<p>
+  <strong>Warning:</strong> it is possible to assign values of different types at runtime (such as the interactive REPL (Read-Eval-Print Loop).
+</p>
+
+<p>
+  typing.NamedTuple can also be used in a <code>class</code> statement, with type annotations written next to the fields (although NamedTuple appears to be a superclass, it is not; it acts as a metaclass):
+</p>
+
+<pre>
+from typing import NamedTuple
+
+class Coordinate(NamedTuple):
+    lat: float
+    lon: float
+
+    def __str__(self):
+        return f'{self.lat}, {self.lon}'
+</pre>
+
+<p>
+  The <code>dataclass</code> decorator allows for similar syntax to declare fields. Passing <code>frozen=True</code> prevents assignments to instance fields:
+</p>
+
+<pre>
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Coordinate:
+    lat: float
+    lon: float
+
+    def __str__(self):
+        return f'{self.lat}, {self.lon}'
+</pre>
+
+<p>
+  Some methods of dataclasses are:
+</p>
+
+<ul>
+  <li>dataclasses.asdict(x)</li>
+  <li>[f.name for f in dataclasses.fields(x)]</li>
+  <li>[f.default for f in dataclasses.fields(x)]</li>
+  <li>dataclasses.replace(x, ...)</li>
+  <li>inspect.get_annotations(MyClass)</li>
+</ul>
+
+<p>
+  To create a new class at runtime, the dataclasses module provides <code>make_dataclass()</code>
+</p>
+
+<p>
+  A namedtuple's <code>_asdict()</code> method may be useful to serialize the data (for example, in JSON format).
+</p>
+
+<pre>
+c = Coordinate(1.23, -30.45)
+c._asdict() # {'lat': 1.23, 'lon': -30.45}
+</pre>
+
+<p>
+  To convert such a dict to a namedtuple Coordinate, use <code>**a_dict</code>:
+</p>
+
+<pre>
+d2 = {'lat': -9.12, 'lon': 10.45}
+c2 = Coordinate(**d2)
+</pre>
+
+<p>
+  namedtuple accepts a <code>defaults</code> keyword-only argument providing an iterable of n default values for each of the n rightmost fields of the class:
+</p>
+
+<pre>
+Student = namedtuple('Student', 'name grade fav_color fav_food', defaults=['white', 'fruit'])
+st = Student('Tina', 3)
+# Student(name='Tina', grade=3, fav_color='white', fav_food='fruit')
+</pre>
+
+<p>
+  For typing.NamedTuple, the default is written after the type:
+</p>
+
+<pre>
+from typing import NamedTuple
+
+class Coordinate(NamedTuple):
+    lat: float
+    lon: float
+    reference: str = 'WGS84'
+</pre>
+
+<h3>Type Hints</h3>
+
+<p>
+  Type hints (also called type annotations) are ways to declare the expected type of function arguments, return values, variables, and attributes.
+</p>
+
+<p>
+  Type hints are not enforced at all by the bytecode compiler and interpreter. Think of them as merely documentation that can be verified by IDEs (like PyCharm) and type checkers (like Mypy).
+</p>
+
+<h4>Variable annotation syntax</h4>
+
+<p>
+  The basic syntax of variable annotation is:
+</p>
+
+<pre>
+var_name: a_type = default_value # the default value is optional
+</pre>
+
+<p>
+  <code>a_type</code> may be:
+</p>
+
+<ul>
+  <li>str, MyClass</li>
+  <li>list[int], tuple[str, float]</li>
+  <li>typing.Optional: for example, Optional[str]. It may be str or None</li>
+</ul>
+
+<p>
+  At import time, the annotations are read into the __annotations__ dictionary used by NamedTuple and @dataclass.
+</p>
+
+<p>
+  NamedTuple's attributes are in reality <em>descriptors</em>. They work like property getters (so in practice, they work as read-only instance attributes).
+</p>
+
+<p>
+  Default valued fields must come at the end of the fields' declaration.
+</p>
+
+<p>
+  Do not put mutable values as a default value. They will be reused in future invocations. Dataclasses do not accept mutable values as defaults. A <code>default_factory</code> must be used.
+</p>
+
+<pre>
+from dataclasses import dataclass, field
+
+@dataclass
+class ClubMember:
+    name: str
+    guests: list = field(default_factory=list)
+
+# or using a parameterized generic type:
+
+@dataclass
+class ClubMember:
+    name: str
+    guests: list[str] = field(default_factory=list) # since Python 3.9
+</pre>
+
+<p>
+  The default_factory accepts a function, class, or other callable of zero arguments.
+</p>
+
+<p>
+  A __post_init__ method may be defined to do further processing when initializing an instance. For example, validation and computing derived values.
+</p>
+
+<p>
+  To code a class variable with a type hint, use <code>typing.ClassVar</code>.
+</p>
+
+<pre>
+all_usernames: ClassVar[set[str]] = set()
+</pre>
+
+<p>
+  To declare <em>init-only variables</em> (that are not instance fields), use <code>typing.InitVar</code>.
+</p>
+
+<pre>
+@dataclass
+class C:
+    i: int
+    database: InitVar[DatabaseType] = None
+</pre>
+
+<p>
+  The Dublin Core Schema is a set of terms that can be used to describe multimedia (audio, video, images, web pages, etc.).
+</p>
+
+<pre>
+from dataclasses import dataclass, field
+from typing import Optional
+from enum import Enum, auto
+from datetime import date
+
+class ResourceType(Enum):
+    BOOK = auto()
+    EBOOK = auto()
+    VIDEO = auto()
+
+@dataclass
+class Resource:
+    """Media resource description."""
+    identifier: str
+    title: str = '[untitled]'
+    creators: list[str] = field(default_factory=list)
+    date: Optional[date] = None
+    resource_type: ResourceType = ResourceType.BOOK
+    description: str = ''
+</pre>
+
+<p>
+  Generally speaking, in object-oriented design, a class should do something (have methods). So a dataclass should be avoided. However, they are useful as scaffolding and as intermediate representation that can be used in your business logic and to be serialized as JSON.
+</p>
+
+<h3>Pattern matching class instances</h3>
+
+<p>
+  Class patterns can match class instances by type and optionally by attributes.
+</p>
+
+<h4>Simple class patterns</h4>
+
+<p>
+  The syntax for class patterns looks like a constructor invocation.
+</p>
+
+<pre>
+match x:
+    case float():
+        handle(x)
+</pre>
+
+<p>
+  Be careful not to write <code>case float:</code>. This will match any subject, because <code>float</code> will be seen as a variable, which is then bound to the subject.
+</p>
+
+<p>
+  This simple pattern is a special case that applies only to these built-ins: <code>bytes, dict, float, frozenset, int, list, set, str, tuple</code>.
+</p>
+
+<p>
+  When writing <code>float(x)</code>, <code>x</code> is bound to the whole subject instance or the part of the subject that matches a subpattern.
+</p>
+
+<p>
+  If the class being used is not one of the nine above, the argument-like variables represent patterns to be matched against attributes of an instance of that class.
+</p>
+
+<h4>Keyword class patterns</h4>
+
+<p>
+  Consider the <code>City</code> class below and its instances:
+</p>
+
+<pre>
+import typing
+
+class City(typing.NamedTuple):
+    continent: str
+    name: str
+    country: str
+
+cities = [
+    City('Asia', 'Tokyo', 'JP'),
+    City('Asia', 'Delhi', 'IN'),
+    City('Americas', 'New York', 'US'),
+]
+</pre>
+
+<p>
+  The following function will return a list of Asian cities:
+</p>
+
+<pre>
+def match_asian_cities():
+    results = []
+    for city in cities:
+        match city:
+            case City(continent='Asia'):
+                results.append(city)
+    return results
+</pre>
+
+<p>
+  To collect the value of <code>country</code>, you could write:
+</p>
+
+<pre>
+...
+            case City(continent='Asia', country=cc): # cc could be country too
+                results.append(cc)
+</pre>
+
+<h4>Positional class patterns</h4>
+
+<p>
+  The following pattern would return Asian cities as well, because it looks for 'Asia' in the first attribute:
+</p>
+
+<pre>
+...
+            case City('Asia'):
+...
+
+# to collect the value of country, write:
+
+            case City('Asia', _, country):
+...
+</pre>
+
+<h2 id="ch6">6. Object References, Mutability, and Recycling</h2>
+
+<p>
+  A name is not the object. Variables are named labels attached to objects, not boxes.
+</p>
+
+<p>
+  Python variables are like Java reference variables.
+</p>
+
+<p>
+  If we define a list with <code>a = [1, 2, 3]</code>, the statement <code>b = a</code> will attach the label <code>b</code> to the list that already has the label <code>a</code>. Changing the list via <code>a</code> or <code>b</code> (such as with <code>append</code>) will affect the same list.
+</p>
+
+<p>
+  Python assignments are made right-to-left. The righthand side object is created or retrieved first, then, the variable is assigned to that object.
+</p>
+
+<p>
+  The <code>is</code> operator checks if two objects have the same id. <code>==</code> checks the objects' values.
+</p>
+
+<p>
+  Always write <code>x is None</code> to check if a variable is None. Also, use <code>is</code> when comparing an object to a singleton (the only instance of a class). The opposite is <code>x is not None</code>.
+</p>
+
+<p>
+  A sentinel object is implemented as a singleton:
+</p>
+
+<pre>
+END_OF_DATA = object()
+
+def traverse(...):
+    if node is END_OF_DATA:
+        return
+</pre>
+
+<h4>The relative immutability of tuples</h4>
+
+<p>
+  Tuples hold references to objects. These referenced objects may be mutable, and it is possible to alter them. Only the references themselves cannot be changed.
+</p>
+
+<h4>Copies are shallow by default</h4>
+
+<p>
+  The easiest way to copy a list is to use its own constructor. However, what happens is that the outermost container is duplicated, and the copy is filled with the same references of the original:
+</p>
+
+<pre>
+a = [1, 2, 3]
+another_list = list(a)
+</pre>
+
+<p>
+  If the list only contains immutable items, a shallow copy is OK. To make deep copies, use <code>my_copy = copy.deepcopy(original)</code>.
+</p>
+
+<h3>Function parameters as references</h3>
+
+<p>
+  The only mode of parameter passing in Python is <em>call by sharing</em>. This means that each formal parameter of the function gets a copy of each reference in the arguments. In other words, the parameters inside the function become aliases of the actual arguments.
+</p>
+
+<p>
+  A function may change any mutable object passed as a parameter, but it cannot change the identity of those objects.
+</p>
+
+<p>
+  Avoid using mutable objects as default values for parameters. Subsequent calls will refer to the initial list, which is usually not what you want. Instead, use None as the default value, and check for it upon initialization.
+</p>
+
+<p>
+  Be careful when receiving mutable arguments. The caller may not be expecting those arguments to be changed. It's better to make a copy of the argument if the contents will be manipulated.
+</p>
+
+<h3>del and garbage collection</h3>
+
+<p>
+  <code>del</code> is not a function, it's a statement. You write <code>del x</code>. It deletes references, not objects. If there are other references to that object, it will remain there.
+</p>
+
+<p>
+  Avoid implementing <code>__del__</code>. It's used by the interpreter and its proper use is tricky.
+</p>
+
+<p>
+  A weak reference to an object does not increase its reference count, and thus does not prevent the target object from being garbage collected. They are useful in caching applications, because you don't want to keep cached objects alive just because of the reference by the cache.
+</p>
+
+<p>
+  <code>weakref.finalize(obj, bye_function)</code> registers a callback function to be called when an object is destroyed. This function must not be a bound method of the object or otherwise hold a reference to it.
+</p>
+
+<p>
+  For tuple, str, bytes, and frozenset, making a copy actually returns a reference to the same object.
+</p>
+
+<p>
+  Augmented assignment with += or *= creates new objects if the lefthand variable is bound to an immutable object, but may modify a mutable object in place.
+</p>
+
+<h2 id="ch7">7. Functions as First-Class Objects</h2>
 
 </div>
 <br>
