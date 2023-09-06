@@ -115,11 +115,14 @@ alias nwemacs='emacs -nw -bg black -fg white'
 # Git
 source ~/.bash/git-prompt.sh
 alias gitwho='git log --all --format="%an %ar %s" | head -10'
-alias githist='git log --pretty=format:"%h%x09%as%x09%s"'
+alias githist='git log --pretty=format:"%h%x09%<(17)%ah%s"'
 alias gittree='git log --graph --pretty=oneline --abbrev-commit'
 alias gitbr='git branch -a'
 alias gitfile='git log --name-only'
 alias gitgraph='git log --all --decorate --oneline --graph'
+
+# YYYY-MM-DD format
+# alias githist='git log --pretty=format:"%h%x09%as%x09%s"'
 
 export GIT_PS1_SHOWCOLORHINTS=true
 

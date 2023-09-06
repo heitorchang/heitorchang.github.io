@@ -81,13 +81,13 @@
 
 <h3>The five parts of this book</h3>
 
-<ol>
-  <li>Data structures&mdash;Python Data Model, sequences, mappings, sets</li>
-  <li>Functions as objects&mdash;functions as first-class objects, callables</li>
-  <li>Classes and protocols&mdash;building your own collections, abstract base classes, protocols, operator overloading</li>
-  <li>Control flow&mdash;generators, context managers, coroutines, async</li>
-  <li>Metaprogramming&mdash;dynamically created attributes, descriptors</li>
-</ol>
+<ul>
+  <li>I. Data structures&mdash;Python Data Model, sequences, mappings, sets</li>
+  <li>II. Functions as objects&mdash;functions as first-class objects, callables</li>
+  <li>III. Classes and protocols&mdash;building your own collections, abstract base classes, protocols, operator overloading</li>
+  <li>IV. Control flow&mdash;generators, context managers, coroutines, async</li>
+  <li>V. Metaprogramming&mdash;dynamically created attributes, descriptors</li>
+</ul>
 
 <h3 id="chapters">Chapters</h3>
 
@@ -1561,6 +1561,882 @@ another_list = list(a)
 </p>
 
 <h2 id="ch7">7. Functions as First-Class Objects</h2>
+
+<p>
+  Functions in Python are first-class objects. A first-class object can be:
+</p>
+
+<ul>
+  <li>created at runtime</li>
+  <li>assigned to a variable or element in a data structure</li>
+  <li>passed as an argument to a function</li>
+  <li>returned as the result of a function</li>
+</ul>
+
+<p>
+  A variable may be assigned to a function:
+</p>
+
+<pre>
+def factorial(n):
+    return 1 if n < 2 else n * factorial(n - 1)
+
+fact = factorial
+list(map(factorial, range(11)))
+</pre>
+
+<p>
+  In the functional programming paradigm, the best known higher-order functions are map, filter, reduce, and apply.
+</p>
+
+<p>
+  Instead of apply(fn, args, kwargs), write <code>fn(*args, **kwargs)</code>.
+</p>
+
+<p>
+  Listcomps and genexps can do what map and filter do.
+</p>
+
+<p>
+  <code>reduce</code> is in the <code>functools</code> module. For example:
+</p>
+
+<pre>
+from functools import reduce
+from operator import add
+
+reduce(add, range(100))
+</pre>
+
+<p>
+  all(iterable) returns True if there are no falsy elements in the iterable. all([]) is True.
+</p>
+
+<p>
+  any(iterable) returns True if any element is truthy. any([]) returns False.
+</p>
+
+<h3>Anonymous functions</h3>
+
+<p>
+  <code>lambda</code> creates an anonymous function within an expression. The body of a lambda cannot contain statements such as while, try, assignments, etc. Although <code>:=</code> can be used, it may be hard to read.
+</p>
+
+<h3>The nine kinds of callable objects</h3>
+
+<p>
+  The <code>callable()</code> function determines whether an object is callable.
+</p>
+
+<ul>
+  <li>built-in functions</li>
+  <li>built-in methods</li>
+  <li>user-defined functions</li>
+  <li>user-defined methods</li>
+  <li>classes (constructors)</li>
+  <li>class instances that define __call__</li>
+  <li>generator functions (use the yield keyword)</li>
+  <li>native coroutine functions (defined with async def)</li>
+  <li>asynchronous generator functions (defined with async def and have the yield keyword)</li>
+</ul>
+
+<p>
+  Generators, native coroutines and asynchronous generator functions return objects that require further processing to be useful.
+</p>
+
+<p>
+  Implementing a __call__ instance method allows an object to behave like a function. A good use case is implementing decorators, which must be callable.
+</p>
+
+<p>
+  The functional approach to creating functions with internal state is to use closures.
+</p>
+
+<p>
+  To specify keyword-only parameters when defining a function, name them after the argument prefixed with *. Keyword-only arguments do not need to have a default value.:
+</p>
+
+<pre>
+def f(a, *, b):
+    return a, b
+
+f(1, b=2)
+</pre>
+
+<p>
+  To specify positional-only parameters, use / in the parameter list. All arguments to the left of / are positional-only. After /, you may specify other arguments, which work as usual:
+</p>
+
+<pre>
+def divmod(a, b, /):
+    return (a // b, a % b)
+
+def tag(name, /, *content, class_=None, **attrs):
+    ...
+</pre>
+</pre>
+
+<h3>Packages for functional programming</h3>
+
+<h4>The operator module</h4>
+
+<p>
+  The operator module provides function equivalents for dozens of operators, such as <code>mul</code>, that replaces trivial functions like <code>lambda a, b: a * b</code>.
+</p>
+
+<p>
+  itemgetter and attrgetter are factories that build functions to pick items from sequences or read attributes from objects. itemgetter(1) gets the item at index 1. attrgetter('name', 'coord.lat') retrieves name and the coord.lat nested attribute as a tuple.
+</p>
+
+<p>
+  Functions starting with 'i', like iadd and iand, correspond to the augmented assignment operators: +=, &=, etc.
+</p>
+
+<p>
+  methodcaller creates a function that calls a method by name on the object given as an argument:
+</p>
+
+<pre>
+s = 'Hello'
+upcase = methodcaller('upper')
+upcase(s)
+
+hyphenate = methodcaller('replace', ' ', '-')
+</pre>
+
+<p>
+  functools.partial freezes arguments of an existing function. functools.partialmethod works with methods.
+</p>
+
+<pre>
+triple = partial(mul, 3)
+</pre>
+
+<h2 id="ch8">8. Type Hints in Functions</h2>
+
+<p>
+  The main beneficiaries of type hints are professional software engineers using IDEs and CI (Continuous Integration).
+</p>
+
+<p>
+  Mypy is a type checker for annotated Python code.
+</p>
+
+<p>
+  The <code>Any</code> type is assumed when a type checker cannot determine the type of an object. <code>Any</code> is compatible with all other types.
+</p>
+
+<p>
+  Type checkers do not prevent inconsistencies at runtime, nor affect performance (so far).
+</p>
+
+<p>
+  An example of a typed function:
+</p>
+
+<pre>
+from typing import Optional
+
+def show_count(count: int, singular: str, plural: Optional[str] = None) -> str:
+    if count == 1:
+        return f'1 {singular}'
+    count_str = str(count) if count else 'no'
+    if plural is None:
+        plural = singular + 's'
+    return f'{count_str} {plural}'
+</pre>
+
+<p>
+  <em>blue</em> is a tool that formats your code according to its coding style.
+</p>
+
+<p>
+  <em>Duck typing</em> is the view adopted by standard Python. Objects have types, but variables and parameters are untyped. Duck typing is only enforced at runtime, when operations on objects are attempted.
+</p>
+
+<p>
+  <em>Nominal typing</em> is the view where objects, variables, and parameters have types. The type checker only cares about the source code, where variables and parameters are annotated with type hints.
+</p>
+
+<p>
+  A type checker might reject code that actually runs. For example, if a function expects a superclass Bird and in the body, the bird quacks, the type checker will say that Bird does not define quack. However, a Duck passed to this function will work correctly (it will quack).
+</p>
+
+<h3>Types usable in annotations</h3>
+
+<p>
+  Pretty much any Python type can be used in type hints. Here are the major ones:</p>
+
+<ul>
+  <li>typing.Any</li>
+  <li>Simple types and classes</li>
+  <li>typing.Optional, typing.Union</li>
+  <li>Generic collections, tuples, mappings</li>
+  <li>Abstract Base Classes</li>
+  <li>Generic iterables</li>
+  <li>Parameterized generics and TypeVar</li>
+  <li>typing.Protocols (the key to static duck typing)</li>
+  <li>typing.Callable</li>
+  <li>typing.NoReturn</li>
+</ul>
+
+<h4>The Any Type</h4>
+
+<p>
+  The Any type is also called the "dynamic type". <code>Any</code> is assumed to support every possible operation.
+</p>
+
+<p>
+  If <code>object</code> is used, while every type is a subtype of object, the type checker will reject code like <code>x * 2</code> because object does not support the __mul__ operation.
+</p>
+
+<h4>Subtype-of versus consistent-with</h4>
+
+<p>
+  Traditional object-oriented nominal type systems rely on the <em>is subtype-of</em> relationship. If you have T1 and a subclass T2, then T2 is subtype-of T1. Consider:
+</p>
+
+<pre>
+class T1:
+    ...
+
+class T2(T1):
+    ...
+
+def f1(p: T1) -> None:
+    ...
+
+o2 = T2()
+f1(o2) # works
+</pre>
+
+<p>
+  f1(o2) is an application of the Liskov Substitution Principle (LSP). If T2 substitutes an object of type T1 and the program still behaves correctly, then T2 is subtype-of T1. The term <em>behavioral subtyping</em> is also used to refer to the LSP.
+</p>
+
+<p>
+  The following is a violation of the LSP:
+</p>
+
+<pre>
+def f2(p: T2) -> None:
+    ...
+
+o1 = T1
+f2(o1) # type error
+</pre>
+
+<p>
+  T2 is more specific than T1, and may implement methods not found in T1.
+</p>
+
+<p>
+  Another relationship is <em>consistent-with</em>, which applies wherever subtype-of applies, with special provisions for type Any:
+</p>
+
+<ul>
+  <li>Given T1 and a subtype T2, T2 is consistent-with T1 (Liskov substitution).</li>
+  <li>Every type is consistent-with Any.</li>
+  <li>Any is consistent-with every type.</li>
+</ul>
+
+<h4>Simple types and classes</h4>
+
+<p>
+  Simple types and classes (including user-defined ones) may be used directly: str, int, float, Vector2d, Duck.
+</p>
+
+<p>
+  A subclass is consistent-with all its superclasses. int is consistent-with float, and float is consistent-with complex. Therefore, int is consistent-with complex.
+</p>
+
+<h4>Optional and Union Types</h4>
+
+<p>
+  Optional allows for a variable or parameter to be None. For example, <code>x: Optional[str] = None</code>. Optional[str] is a shortcut for Union[str, None].
+</p>
+
+<p>
+  New syntax in Python 3.10 allows you to write <code>str | None</code> instead of using Optional.
+</p>
+
+<h4>Generic collections</h4>
+
+<p>
+  Generic types can be declared with type parameters to specify the type of the items they can handle:
+</p>
+
+<pre>
+def tokenize(text: str) -> list[str]:
+    ...
+</pre>
+
+<p>
+  As of Python 3.10, there's no good way to annotate array.array, because the typecode may restrict the bounds of the values (for example, an integer from 0 to 255).
+</p>
+
+<h4>Tuple types</h4>
+
+<p>
+  Tuples may be annotated as:
+</p>
+
+<ul>
+  <li>records: tuple[str, float, str]</li>
+  <li>records with named fields: use typing.NamedTuple</li>
+  <li>immutable sequences: tuple[int, ...]. The ellipsis indicates that any number of elements >= 1 is acceptable.</li>
+</ul>
+
+<h4>Generic mappings</h4>
+
+<p>
+  Generic mapping types are annotated as MappingType[KeyType, ValueType], for example, dict[str, set[str]].
+</p>
+
+<h4>Abstract base classes</h4>
+
+<p>
+  In general, it's better to use an ABC instead of a specific class. For example, collections.abc.Mapping[str, int] instead of dict[str, int]. This way, a UserDict may also be used.
+</p>
+
+<p>
+  Postel's law (the Robustness Principle) says: "Be conservative in what you send, and be liberal in what you accept."
+</p>
+
+<p>
+  Generic versions of built-in collections are: typing.List, typing.Dict, typing.Set (needed in Python 3.8 or earlier).
+</p>
+
+<h4>Iterable</h4>
+
+<p>
+  It is recommended to use Sequence and Iterable for function parameter type hints. However, they are too vague as a return type:
+</p>
+
+<pre>
+def fsum(__seq: Iterable[float]) -> float:
+    ...
+</pre>
+
+<h4>TypeAlias</h4>
+
+<p>
+  TypeAlias is a special type to make assignments that create type aliases more visible and easier to type check:
+</p>
+
+<pre>
+from typing import TypeAlias
+
+FromTo: TypeAlias = tuple[str, str]
+</pre>
+
+<h4>Parameterized generics and TypeVar</h4>
+
+<p>
+  A parameterized generic is a generic type such as list[T], where T is a type variable.
+</p>
+
+<pre>
+from collections.abc import Sequence
+from random import shuffle
+from typing import TypeVar
+
+T = TypeVar('T')
+
+def sample(population: Sequence[T], size: int) -> list[T]
+    ... # shuffle and take 'size' items
+</pre>
+
+<p>
+  TypeVar is needed because the name of the T variable needs to be defined somewhere.
+</p>
+
+<h4>Restricted TypeVar</h4>
+
+<p>
+  TypeVar accepts extra positional arguments to restrict the type parameter:
+</p>
+
+<pre>
+NumberT = TypeVar('NumberT', float, Decimal, Fraction)
+</pre>
+
+<h4>Bounded TypeVar</h4>
+
+<p>
+  A bounded type variable will be set to the inferred type of the expression, as long as the inferred type is consistent-with the upper boundary declared in <code>bound=keyword</code>. The type parameter may be Hashable or any subtype of it.
+</p>
+
+<pre>
+from collections.abc import Hashable
+
+HashableT = TypeVar('HashableT', bound=Hashable)
+</pre>
+
+<h4>The AnyStr predefined type variable</h4>
+
+<p>
+  AnyStr is <code>TypeVar('AnyStr', bytes, str)</code>.
+</p>
+
+<h4>Static Protocols</h4>
+
+<p>
+  The Protocol type is used to define one or more methods, so that the type checker can verify that these methods are implemented where that protocol type is required.
+</p>
+
+<p>
+  Classes that implement a protocol don't need to inherit, register, or declare any relationship with the class that defines the protocol.
+</p>
+
+<p>
+  Protocols work as a form of static duck typing&mdash;we don't care what the nominal type of the variable is, as long as it implements a desired method.
+</p>
+
+<pre>
+from typing import Protocol, Any
+
+class SupportsLessThan(Protocol):
+    def __lt__(self, other: Any) -> bool: ... # ... really is the method's body
+</pre>
+
+<p>
+  Mypy has a special <code>reveal_type()</code> function that prints a debugging message when Mypy is run. It is not imported like a normal function.
+</p>
+
+<h4>Callable</h4>
+
+<p>
+  To annotate callback parameters or callable objects returned by higher-order functions, use collections.abc.Callable:
+</p>
+
+<pre>
+Callable[[ParamType1, ParamType2], ReturnType]
+</pre>
+
+<p>
+  If you need a type hint to match a function with a flexible signature, write:
+</p>
+
+<pre>
+Callable[..., ReturnType]
+</pre>
+
+<h4>Variance in Callable types</h4>
+
+<p>
+  Callable[[], int] is subtype-of Callable[[], float] because int is subtype-of float. It is said that Callable is covariant on the return type because the subtype-of relationship of int and float is in the same direction as the relationship of the Callable types that use them as return types.
+</p>
+
+<p>
+  In the parameterized Callable type, the relationship between int and float in the declared parameter types is reversed: Callable[[float], None] is subtype-of Callable[[int], None]. Callable is contravariant on the declared parameter types.
+</p>
+
+<h4>NoReturn</h4>
+
+<p>
+  NoReturn is a special type used only to annotate the return type of functions that never return. Usually, they exist to raise exceptions.
+</p>
+
+<h3>Annotating positional-only and variadic parameters</h3>
+
+<pre>
+from typing import Optional
+
+def tag(
+    __name: str, # a convention for positional-only parameters is to prefix __
+    /,
+    *content: str, # the type will be tuple[str, ...]
+    class_: Optional[str] = None,
+    **attrs: float, # dict[str, float]
+) -> str
+</pre>
+
+<h3>Limitations of type checkers</h3>
+
+<ul>
+  <li>False positives: reports of errors on correct code</li>
+  <li>False negatives: lack of reports on incorrect code</li>
+  <li>Loss of expressive power, especially on advanced features like descriptors and metaprogramming</li>
+  <li>Inability to catch errors in business logic (such as the length of a string)</li>
+</ul>
+
+<p>
+  In general, strong testing is superior to broadly typing your code.
+</p>
+
+<h2 id="ch9">9. Decorators and Closures</h2>
+
+<p>
+  Function decorators are meant to enhance their behavior. They use closures, which is what we get when a function captures variables defined outside its body.
+</p>
+
+<p>
+  A decorator is a callable that takes another function as an argument (the decorated function).
+</p>
+
+<p>
+  A decorator may perform some processing, then return it or replace it with another function or callable object.
+</p>
+
+<pre>
+@decorate
+def target():
+    print('Running target...')
+
+# is the same as
+def target():
+    print('Running target...')
+
+target = decorate(target)
+</pre>
+
+<p>
+  Here is a decorator that simply replaces a function with a different one:
+</p>
+
+<pre>
+def deco(func):
+    def inner():
+        print('Running inner...')
+    return inner
+
+@deco
+def target():
+    print('Running target...')
+
+# target() prints 'Running inner...'
+</pre>
+
+<p>
+  Decorators are just syntactic sugar. The alternative, of calling the decorator like a regular function, works just as well.
+</p>
+
+<p>
+  Decorators run right after the decorated function is defined. This is usually at <em>import time</em>.
+</p>
+
+<h3>Registration decorators</h3>
+
+<p>
+  In practice, decorators are usually defined in one module and applied to functions in other modules.
+</p>
+
+<p>
+  Most decorators define an inner function or change the decorated function, then return it.
+</p>
+
+<h3>Variable scope rules</h3>
+
+<p>
+  An assignment within a function will lead the interpreter to think that the variable is local to the function. So the following raises an error:
+</p>
+
+<pre>
+b = 2
+def f2(a):
+    print(a)
+    print(b)
+    b = 3
+f2(1)
+</pre>
+
+<p>
+  In order to treat <code>b</code> as a global variable, it must be declared global:
+</p>
+
+<pre>
+b = 6
+def f3(a):
+    global b
+    print(a)
+    print(b)
+    b = 9
+</pre>
+
+<p>
+  The three scopes where variables can come from are:
+</p>
+
+<ul>
+  <li>Module global scope: names assigned to values outside any class or function</li>
+  <li>Function local scope: names assigned to values as parameters or in the body of the function</li>
+  <li>Nonlocal scope: names in the local scope of an outer function, but not global</li>
+</ul>
+
+<h3>Closures</h3>
+
+<p>
+  A closure is a function (let's say, f) with an extended scope that encompasses variables referenced in the body of f that are not global variables or local variables of f. These variables come from the local scope of an outer function that encompasses f.
+</p>
+
+<p>
+  Here is a class-based implementation of an Averager (a callable that keeps track of values added and returns the current average):
+</p>
+
+<pre>
+class Averager():
+    def __init__(self):
+        self.series = []
+
+    def __call__(self, new_value):
+        self.series.append(new_value)
+        total = sum(self.series)
+        return total / len(self.series)
+</pre>
+
+<p>
+  A functional implementation may be:
+</p>
+
+<pre>
+def make_averager():
+    series = []
+
+    def averager(new_value)
+        series.append(new_value)
+        total = sum(series)
+        return total / len(series)
+
+    return averager
+</pre>
+
+<p>
+  Within averager, series is a <em>free variable</em>. It means that series is not bound in the local scope. The averager object has a __code__ attribute that shows the local and free variables in co_varnames and co_freevars. There is also a __closure__ attribute.
+</p>
+
+<h3>The nonlocal declaration</h3>
+
+<p>
+  In the preceding example, series was never reassigned, so there was no need to declare it nonlocal. If we were to use a simple variable, <code>count</code>, and tried reassigning it with <code>count += 1</code>, the interpreter would consider <code>count</code> a local variable and the code would not work. To solve this problem, <code>count</code> must be declared <code>nonlocal</code>.
+</p>
+
+<pre>
+def make_averager():
+    count = 0 # store the number of items
+    total = 0 # keep track of the running total
+
+    def averager(new_value):
+        nonlocal count, total
+        count += 1
+        total += new_value
+        return total / cound
+
+    return averager
+</pre>
+
+<h4>Variable lookup logic</h4>
+
+<p>
+  The rules for fetching a variable x from a function definition are:
+</p>
+
+<ul>
+  <li>If there's a global x declaration, x comes from the module global scope</li>
+  <li>If there is a nonlocal x declaration, x comes from the x local variable of the nearest surrounding function where x is defined</li>
+  <li>If x is a parameter or is assigned a value in the function body, x is the local variable</li>
+  <li>
+    If x is referenced but not assigned, nor a parameter:
+    <ul>
+      <li>x will be looked up in the local scopes of surrounding function bodies (nonlocal scopes)</li>
+      <li>if it is not found, then it will be searched in the module global scope</li>
+      <li>if it is still not found, it will be read from __builtins__.__dict__</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>Implementing a simple decorator</h3>
+
+<p>
+  <code>clock</code> is a decorator that clocks every invocation of the decorated function, displaying the elapsed time, the arguments passed, and the result of the call:
+</p>
+
+<pre>
+import time
+import functools
+
+def clock(func):
+    @functools.wraps(func)
+    def clocked(*args):
+        t0 = time.perf_counter()
+        result = func(*args)
+        elapsed = time.perf_counter() - t0
+        name = func.__name__
+        arg_str = ', '.join(repr(arg) for arg in args)
+        print(f'[{elapsed:0.8f}s] {name}({arg_str}) -> {result!r}')
+        return result
+    return clocked
+</pre>
+
+<p>
+  functools.wraps is a convenience function that copies attributes such as __name__ and __doc__ to the decorated function:
+</p>
+
+<h3>Decorators in the standard library</h3>
+
+<p>
+  There are three built-in functions that are designed to decorate methods: proprty, classmethod, and staticmethod.
+</p>
+
+<h4>Memoization with functools.cache</h4>
+
+<p>
+  The cache decorator implements memoization (an optimization technique that works by saving the results of previous invocations of an expensive function, avoiding repeat computations when encountering the same arguments.
+</p>
+
+<p>
+  If stacking decorators, the top decorator is applied on the one below it:
+</p>
+
+<pre>
+@functools.cache
+@clock
+def fibonacci(n):
+    if n < 2:
+        return n
+    return fibonacci(n - 2) + fibonacci(n - 1)
+</pre>
+
+<p>
+  @cache is applied on the function returned by @clock.
+</p>
+
+<p>
+  All the arguments taken by the cached function must be hashable.
+</p>
+
+<h4>Using lru_cache</h4>
+
+<p>
+  cache is just a wrapper around <code>lru_cache</code> (Least Recently Used). This means that older entries that have not been read for a while are discarded to make room for new ones.
+</p>
+
+<p>
+  It accepts two parameters: maxsize and typed. functools.cache uses maxsize=None, so entries are never discarded (this setting may consume a lot of memory). If typed=True, f(1) and f(1.0) would be stored separately. By default, typed=False.
+</p>
+
+<h4>Single dispatch generic functions</h4>
+
+<p>
+  Method overloading does not exist in Python, so we cannot create multiple signatures with the same function name. The functools.singledispatch decorator allows different modules to contribute to the overall solution, and lets you provide specialized functions even for third-party types.
+</p>
+
+<p>
+  Decorating a plain function with @singledispatch makes it the entry point for a <em>generic function</em>, a group of functions to perform the same operation in different ways, depending on the type of the first argument. If more arguments were used to select a specific function, it would be called <em>multiple dispatch</em>.
+</p>
+
+<pre>
+from functools import singledispatch
+from collections import abc
+import fractions
+import decimal
+import html
+import numbers
+
+@singledispatch
+def htmlize(obj: object) -> str:
+    content = html.escape(repr(obj))
+    return f'<pre>{content}</pre>'
+
+@htmlize.register
+def _(text: str) -> str:
+    content = html.escape(text).replace('\n', '<br>\n')
+    return f'<p>{content}</p>'
+
+@htmlize.register
+def _(n: numbers.Integral) -> str:
+    return f'<pre>{n} (0x{n:x})</pre>'
+
+@htmlize.register
+def _(seq: abc.Sequence) -> str:
+    inner = '&lt;/li&gt;\n&lt;li&gt;'.join(htmlize(item) for item in seq)
+    return '&lt;ul&gt;\n&lt;li&gt;' + inner + '&lt;li&gt;\n&lt;/ul&gt;'
+
+# register multiple types without type hints
+@htmlize.register(decimal.Decimal)
+@htmlize.register(float)
+def _(x) -> str:
+    frac = fractions.Fraction(x).limit_denominator()
+    return f'<pre>{x} ({frac.numerator}/{frac.denominator})</pre>'
+</pre>
+
+<p>
+  If possible, register the specialized functions to handle ABCs or typing.Protocol.
+</p>
+
+<h3>Parameterized decorators</h3>
+
+<p>
+  To make a decorator accept other arguments, make a decorator factory that takes those arguments and returns a decorator, which is then applied to the function to be decorated.
+</p>
+
+<pre>
+registry = set()
+
+def register(active=True):
+    def decorate(func):
+        print('running register'
+              f'(active={active})->decorate({func})')
+        if active:
+            registry.add(func)
+        else:
+            registry.discard(func)
+
+        return func
+    return decorate
+
+@register(active=False)
+def f1():
+    print('running f1()')
+
+@register()
+def f2():
+    print('running f2()')
+
+def f3():
+    print('running f3()')
+</pre>
+
+<p>
+  If register were used as a regular function, it would be: <code>register()(f)</code> or <code>register(active=False)(f)</code>.
+</p>
+
+<p>
+  Another way of coding decorators is to write classes that implement __call__.
+</p>
+
+<pre>
+import time
+
+DEFAULT_FMT = '[{elapsed:0.8f}s] {name}({args}) -> {result}'
+
+class clock:
+
+    def __init__(self, fmt=DEFAULT_FMT):
+        self.fmt = fmt
+
+    def __call__(self, func):
+        def clocked(*_args):
+            t0 = time.perf_counter()
+            _result = func(*_args)
+            elapsed = time.perf_counter() - t0
+            name = func.__name__
+            args = ', '.join(repr(arg) for arg in _args)
+            result = repr(_result)
+            print(self.fmt.format(**locals()))
+            return _result
+        return clocked
+</pre>
+
+<p>
+  <strong>Note:</strong> clock is written with a lowercase c to make it a drop-in replacement for the function-based decorator.
+</p>
+
+<p>
+  <strong>Side note:</strong> in dynamic scope, free variables are evaluated by looking into the environment where the function is invoked (for example, reassigning a free variable in an interactive session right before calling a function will cause the function to use this new value).
+</p>
+
+<h2 id="ch10">10. Design Patterns with First-Class Functions</h2>
 
 </div>
 <br>

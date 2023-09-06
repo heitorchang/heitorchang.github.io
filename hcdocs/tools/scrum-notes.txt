@@ -1,0 +1,176 @@
+1. A maneira como o mundo funciona está errada
+
+Planejar é util. seguir cegamente os planos é burrice. É muito tentador desenhar inumeros diagramas. Todo o trabalho que precisa ser feito em um projeto de grande porte ali, detalhado, para todos verem -- mas, quando deparam com a realidade, os planos desabam. Inclua no seu metodo de trabalho a possibilidade de mudanca, descoberta e inovacao.
+
+Inspecao e adaptacao: de tempos em tempos, pare o que está fazendo, revise o que ja fez, e verifique se deveria continuar fazendo o mesmo ou se existe uma maneira de faze-lo melhor
+
+Mude ou morra: Ficar preso ao modo antigo de fazer as coisas -- comando, controle, e previsibilidade rigida, so resultará em fracasso. Nesse meio-tempo, o concorrente que estiver disposto a inovar vai deixar voce pra trás
+
+Fracasse rapido para que possa corrigir o problema o quanto antes. A cultura corporativa costuma dar mais valor a formularios, procedimentos e reunioes do que à criacao de valor concreto, que possa ser verificado a curtos intervalos de tempo pelos usuarios. O trabalho que nao resulta em valor real é loucura. Trabalhar em um produto em ciclos curtos permite que se obtenha um feedback do usuario logo no comeco do desenvolvimento. Assim, voce pode eliminar imediatamente tudo aquilo que constitui um desperdicio obvio de esforco.
+
+
+2. A origem do Scrum
+
+Hesitacao significa morte.
+Observar
+Orientar
+Decidir
+Agir
+
+Saiba onde está, avalie suas alternativas, tome uma decisao e aja
+
+Olhe para fora para obter respostas. Sistemas adaptativos complexos seguem algumas regras simples, que sao captadas do ambiente.
+
+Equipes excelentes sao: multifuncionais, autonomas e capacitadas, com um proposito transcendente
+
+Nao adivinhe. Planeje, faça, verifique, aja. Planeje o que voce vai fazer. Faça. Verifique se o produto alcancou o resultado desejado. Aja em relacao a isso e mude a forma como está fazendo as coisas. Repita o processo em ciclos regulares e, dessa forma, alcance um aperfeicoamento continuo
+
+Shu Ha Ri: Primeiro, aprenda as regras e as formas. Quando tiver dominio delas, inove. por fim, em um estado elevado de mestria, descarte as formas e apenas seja -- com todo o conhecimento internalizado e as decisoes tomadas quase inconscientemente.
+
+
+3. Equipes
+
+Puxe a alavanca certa. mude o desempenho da equipe. isso tem muito mais impacto -- muito mais mesmo -- do que o desempenho individual
+
+Transcendencia: equipes excelentes tem um proposito maior do que o individual. por exemplo, enterrar o general MacArthur ou ganhar o campeonato da NBA
+
+Autonomia: Dê às equipes liberdade para tomar decisoes sobre como agir -- para que sejam respeitadas como referencia em suas respectivas areas. a capacidade de improvisar fará toda a diferenca, nao importa se o grupo está cobrindo uma revolucao no oriente medio ou vendendo algo
+
+Multifuncional: a equipe precisa ter todas as habilidades necessarias para completar um projeto, nao importa se a missao é produzir software para a salesforce ou capturar terroristas no iraque
+
+menor é melhor. equipes pequenas trabalham mais rapido do que as grandes. a regra basica é que o ideal sao sete integrantes, mais ou menos dois. eu diria que menos.
+
+a culpa é idiota. nao procure as pessoas ruins, procure sistemas ruins -- aqueles que incentivam comportamentos errados e recompensam desempenhos fracos.
+
+
+4. Tempo
+
+O tempo é finito. trate-o como tal. divida seu trabalho em partes que possam ser realizadas em um intervalo de tempo curto, regular, e definido. de preferencia entre uma e quatro semanas. se voce tiver sido contaminado pelo Scrum, chame esses periodos de sprints. é demonstrar ou falhar. ao fim de cada sprint, tenha algo pronto, algo que possa ser usado (que alguem possa pilotar, dirigir, o que for)
+
+jogue fora seus cartoes de visita. titulos sao marcadores especializados de status. seja conhecido pelo que faz, nao pelo seu cargo.
+
+Todo mundo sabe de tudo. a saturacao de comunicacao acelera o trabalho
+
+Uma reuniao por dia. Quando se trata de reunioes para verificar como vai o trabalho, uma vez por dia é o suficiente. junte sua equipe durante quinze minutos na reuniao diaria, analise o que pode ser feito para aumentar a velocidade e coloque em pratica.
+
+
+5. o desperdicio é um crime.
+
+realizar muita coisa ao mesmo tempo emburrece. dedicar-se a mais de uma atividade simultaneamente faz com que voce fique mais lento e tenha um desempenho pior nas tarefas. nao faça isso. se estiver pensando que isso nao se aplica a voce, está errado. isso serve pra todo mundo.
+
+fazer pela metade é igual a fazer nada. um carro fabricado pela metade engessa recursos que poderiam ser usados para gerar valor ou economizar dinheiro. qualquer coisa "em andamento" custa dinheiro e energia, mas nao dá nenhum retorno.
+
+faça direito de primeira. quando cometer um erro, corrija-o na mesma hora. pare tudo o que está fazendo e se dedique a isso. consertar o problema mais tarde pode demorar mais de vinte vezes o tempo que levaria para corrigi-lo no momento em que ele surgiu.
+
+trabalhar demais dá mais trabalho: ficar mais tempo no trabalho nao faz com que voce produza mais. na verdade, faz com que produza menos. trabalhar demais leva à fadiga e resulta em erros, o que faz com que voce tenha que consertar aquilo que acabou de terminar. em vez de trabalhar ate tarde ou nos fins de semana, trabalhe em um ritmo sustentavel apenas nos dias de semana. e tire ferias
+
+nao seja irracional: objetivos desafiadores sao motivantes, metas impossiveis sao apenas deprimentes
+
+nada de heroismo: se precisa de um heroi para concluir o trabalho, voce tem um problema. esforcos heroicos devem ser vistos como uma falha de planejamento.
+
+chega de politicas corporativas idiotas. qualquer politica que pareca ridicula provavelmente é ridicula. formularios idiotas, reunioes idiotas, aprovacoes idiotas, padroes idiotas sao isto mesmo: idiotas. se seu escritorio se parece com um cartum do Dilbert, mude isso
+
+Nada de imbecis: nao seja um imbecil e nao permita que esse comportamento ocorra. qualquer um que crie caos emocional, inspire medo ou receio, humilhe ou diminua os outros precisa ser impedido de fazer isso
+
+busque o fluxo: escolha a maneira mais suave e tranquila de fazer as coisas. o scrum possibilita o maximo de fluxo possivel
+
+
+6. planeje a realidade, nao a fantasia
+
+o mapa nao é o terreno: nao se apaixonce pelo seu plano. é quase certo que ele esteja errado
+
+planeje apenas o necessario: nao tente projetar tudo com anos de antecedencia. planeje apenas o suficiente para manter suas equipes ocupadas
+
+que raça de cachorro é esta tarefa? nao estime em termos absolutos, como horas. foi provado que os seres humanos sao pessimos nisso. calcule o tamanho das coisas de modo relativo -- por exemplo, esse problema corresponde a que raça de cachorro, ou a qual tamanho de blusa (P, M, G, GG, GGG)? ou, mais comumente, use a sequencia de fibonacci (1, 2, 3, 5, 8, 13, ...)
+
+pergunte ao oraculo: use uma tecnica de cegamento, como o metodo Delphi, para evitar vieses, como o efeito halo, o efeito de contagio ou um simples raciocinio ruim de grupo.
+
+planeje com o poquer. use o poquer do planejamento para estimar rapidamente alguma atividade que precisa ser realizada (tres ou mais pessoas escolhem cartas correspondendo aos tamanhos 1, 2, 3, 5, 8, 13 e põe suas cartas viradas pra baixo. tire a media das cartas)
+
+o trabalho é uma historia: pense primeiro em quem receberá o valor de algo, em seguida pense sobre o que esse algo é, depois por que essa pessoa precisa disso. os seres humanos pensam por meio de narrativas, entao dê uma narrativa a eles. Como X, eu quero Y, para que Z
+
+saiba sua velocidade: toda equipe deve saber quanto trabalho consegue realizar em cada sprint. e tambem deve saber quanto pode aumentar essa velocidade ao trabalhar de modo mais inteligente e ao remover barreiras que diminuem seu ritmo.
+
+velocidade x tempo = entrega. uma vez que souber a sua velocidade, saberá em quanto tempo chegará ao destino
+
+defina metas audaciosas: com o scrum, nao é tao dificil dobrar a producao ou cortar pela metade o tempo de entrega. se voce aplicá-lo da maneira certa, sua receita e o valor de sua empresa devem dobrar tambem.
+
+
+7. Felicidade
+
+O que importa é a viagem, nao o destino. A verdadeira felicidade é encontrada no processo, nao no resultado. muitas vezes so premiamos os resultados, mas devemos de fato recompensar as pessoas que se esforcam para obter excelencia
+
+a felicidade é a nova moda. a felicidade ajuda a tomar decisoes mais inteligentes. alem disso, quando se está feliz, a pessoa é mais criativa, nao quer largar o emprego e é mais propensa a realizar muito mais do que podia imaginar
+
+quantifique a felicidade. sentir-se bem não é o suficiente, voce precisa medir esse sentimento e compará-lo com o desempenho. outras metricas se concentram no que já aconteceu. a felicidade é uma metrica que mira no futuro.
+
+melhore a cada dia -- e meça isso. ao fim de cada sprint, a equipe deve escolher um pequeno aprimoramento, ou kaizen, que a tornará mais feliz. esse elemento deve se tornar o objetivo mais importante do sprint seguinte.
+
+o sigilo é venenoso. nada deve ser secreto. todo mundo deve saber de tudo, e isso inclui os salarios e as financas. o obscurantismo so serve aqueles que servem a si proprios
+
+torne o trabalho visivel: providencie um quadro que mostre todo o trabalho que precisa ser feito, o que está sendo feito e o que ja foi realizado. todo mundo deve vê-lo e atualizá-lo todo dia.
+
+felicidade é autonomia, dominio, e proposito. todo mundo quer controlar seu proprio destino, melhorar naquilo que faz e servir a um proposito maior.
+
+estoure a bolha da felicidade. nao fique feliz a ponto de acreditar em suas proprias mentiras. certifique-se de que a felicidade seja medida em relacao ao desempenho. se houver uma desconexao, prepare-se para agir. a complacencia é inimiga do sucesso.
+
+
+8. Prioridades
+
+faça uma lista. verifique duas vezes. crie uma lista de tudo o que poderia ser feito em um projeto. em seguida, ordene os itens de acordo com as prioridades. coloque os itens com maior valor e menor risco no comeco do backlog, e assim por diante
+
+o Product Owner: transforma a visao em um backlog. precisa compreender o negocio, o mercado e o cliente. tem conhecimento do setor e poder de tomar decisoes definitivas. está disponivel para responder a perguntas e é responsavel pela entrega de valor.
+
+um lider nao é um chefe. um Product Owner define o que precisa ser feito e por quê. cabe a propria equipe decidir como a equipe realiza o trabalho e quem faz o que
+
+Observar, Orientar, Decidir, Agir (OODA) Observe todo o quadro estrategico, mas aja de forma rapida e tatica
+
+Medo, incerteza e duvida. é melhor dar do que receber, invada o ciclo OODA de seus concorrentes e faça com que eles fiquem confusos em seu proprio processo decisorio.
+
+dinheiro e alteracoes gratis. crie funcionalidades novas apenas quando elas acrescentarem valor ao produto. esteja disposto a trocá-las por coisas que exigem a mesma quantidade de esforco. o que pensou que precisava no inicio nunca é de fato necessario.
+
+
+9. Mude o mundo
+
+o scrum acelera todos os empreendimentos humanos: nao importa o tipo de projeto ou problema. o scrum pode ser usado para melhorar o desempenho e os resultados em qualquer empreendimento.
+
+scrum para escolas: professores na holanda
+
+o scrum contra a pobreza: fornecer dados agricolas e de mercado a agricultores
+
+rasgue seus cartoes de visita: livre-se de todos os titulos, de todos os gerentes, de todas as estruturas. dê as pessoas a liberdade de fazer o que acham melhor e a responsabilidade pelas suas decisoes. voce se surpreenderá com os resultados.
+
+
+Implementando o Scrum: como comecar
+
+1. escolha um Product Owner. essa pessoa é quem tem a visao do que sua equipe fará, produzirá ou realizará. ela leva em consideracao os riscos e as recompensas, o que é possivel, o que pode ser feito e aquilo pelo que tem paixao
+
+2. selecione uma equipe. quem serao as pessoas que realizarao o trabalho? essa equipe precisa possuir todas as habilidades necessarias para pegar a visao do product owner e concretizá-la. as equipes devem ser pequenas, de 3 a 9 pessoas é a regra geral.
+
+3. escolha um Scrum Master. esse é o individuo que treinará o resto da equipe na estrutura do Scrum e ajudará os outros integrantes a eliminarem qualquer coisa que esteja diminuindo seu ritmo.
+
+4. crie e ordene, de acordo com as prioridades, um backlog do produto. essa é uma lista de tudo o que precisa ser construido ou realizado para que a visao se torne realidade. essa lista existe e evolui ao longo de toda a vida do produto; ela é o mapa do produto. a qualquer momento, ele é a visao unica e definitiva de "tudo o que a equipe poderia um dia vir a realizar, em ordem de prioridade". so existe um backlog do produto. isso significa que o Product Owner precisa tomar decisoes de como priorizar as tarefas ao longo de todo o projeto e deve consultar todos os stakeholders e a equipe para se certificar de que está representando tanto o que as pessoas querem quanto o que é possivel de ser feito
+
+5. refine e estime o backlog. é crucial que as pessoas que irao de fato completar os itens da lista estimem quanto esforco eles demandarao. a equipe deve olhar para cada item do backlog e ver se ele é realmente factivel. ha informacoes suficientes para realizar a tarefa? ela é pequena o bastante para ser estimada? existe uma definicao de feito, isto é, todo mundo concorda sobre quais sao os criterios que devem ser cumpridos para que algo seja considerado "Feito"? A tarefa cria valor visivel? deve ser possivel exibir, demonstrar e -- esperamos -- entregar para o cliente qualquer um dos itens. nao estime o backlog em horas, porque as pessoas sao pessimas nisso. estime as tarefas de acordo com um tamanho relativo: P, M, G. ou, use numeros fibonacci e estime o valor de cada item em pontos: 1, 2, 3, 5, 8, 13.
+
+6. planejamento do sprint. essa é a primeira reuniao do Scrum. a equipe, o Scrum Master, e o Product Owner se sentam para planejar o sprint. os sprints sempre tem uma duracao determinada, que deve ser menos do que um mes. hoje, a maioria das pessoas realiza sprints de uma ou duas semanas. a equipe olha para o topo do backlog e preve quantas tarefas conseguirá realizar no sprint em questao. se ja tiver realizado alguns ciclos, o grupo deve verificar o numero de pontos que realizou no sprint anterior. esse numero é conhecido como a velocidade da equipe. o Scrum Master e o grupo devem tentar aumentar esse numero a cada sprint. essa é outra oportunidade para que a equipe e o Product Owner se certifiquem de que todos entendem exatamente como esses itens contribuirao para completar a visao. alem disso, durante esse encontro, todos devem entrar em acordo em relacao a uma meta do sprint, o que todo mundo quer realizar nesse ciclo. um dos pilares do Scrum é que, uma vez que a equipe tenha se comprometido com o que acredita que pode realizar em um sprint, esse objetivo seja selado. ele nao pode ser mudado e nada pode ser acrescentado a ele. a equipe precisa trabalhar de forma autonoma durante o sprint para completar aquilo que previu que faria.
+
+7. torne o trabalho visivel. a maneira mais comum de fazer isso no Scrum é criar um Quadro Scrum com tres colunas: a fazer, fazendo, e feito. post-its representam os itens que devem ser realizados, e a equipe move essas notas pelo quadro Scrum conforme os itens vao sendo completados, um a um. outra maneira de tornar o trabalho visivel é criar um grafico de burndown. um eixo representa o numero de pontos que a equipe designou para o sprint (começa no total, por exemplo, 40, e vai até 0), e o outro representa o numero de dias. todo dia, o Scrum Master calcula o numero de pontos realizados e acrescenta essa informacao ao grafico. o ideal é que haja uma linha ingreme descendo em direcao a zer ponto restante no ultimo dia do sprint.
+
+8. reuniao diaria ou Scrum diario. essas sao as batidas do coracao do Scrum. todo dia, no mesmo horario, durante nao mais do que 15 minutos, a equipe e o Scrum Master se reunem e respondem a 3 perguntas:
+
+* o que voce fez ontem para ajudar a equipe a concluir o sprint?
+* o que voce fará hoje para ajudar a equipe a concluir o sprint?
+* há algum obstaculo que esteja impedindo voce ou a equipe de alcancar a meta do sprint?
+
+so isso. a reuniao se resume a isso. se ela levar mais do que 15 minutos, isso significa que voce a está realizando da forma errada. esse encontro ajuda a equipe inteira a saber exatamente em que ponto as coisas estao no sprint. todas as tarefas serao completadas a tempo? ha oportunidades para auxiliar outros integrantes do grupo a superar obstaculos? nao existe isso de delegar tarefas de cima pra baixo. a equipe é autonoma, sao os integrantes que fazem isso. ninguem faz um relatorio detalhado para a gerencia. o Scrum Master é responsavel por fazer com que os obstaculos ao progresso da equipe sejam eliminados.
+
+9. revisao do sprint ou demonstracao do sprint. essa é a reuniao em que a equipe mostra o que realizou durante o sprint. qualquer um pode participar, nao apenas o Product Owner, o Scrum Master e a equipe, mas tambem os stakeholders, o comando da empresa, os clientes, etc. essa é uma reuniao aberta em qu ea equipe demonstra o que conseguiu mover ate a coluna Feito durante o ciclo. a equipe so deve demonstrar o que atender a definicao de Feito. o que estiver totalmente terminado e puder ser entregue sem mais nenhum trabalho. pode nao ser um produto completo, mas deve ser uma funcionalidade completa de um produto.
+
+10. retrospectiva de sprint. depois que tiver mostrado o que conseguiu realizar durante o ultimo sprint, aquilo que está feito e tem a possibilidade de ser enviado para os clientes para que receba feedback, a equipe se reune e pensa no que deu certo, no que poderia ter sido melhor e no que pode ser melhorado no sprint seguinte. qual é o aprimoramento no processo que os integrantes da equipe, em grupo, podem implementar de modo imediato?
+
+para que seja eficaz, essa reuniao requer certa maturidade emocional e um clima de confianca. o essencial é se lembrar de que voces nao estao procurando alguem em quem por a culpa. estao examinando o processo. por que isso aconteceu dessa maneira? por que nao percebemos aquilo? como podemos trabalhar mais rapido? é crucial que o grupo se responsabilize pelo processo e pelos resultados, e busque solucoes em equipe. Ao mesmo tempo, as pessoas precisam ter estrutura emocional para abordar as questoes que as incomodam de modo a buscar uma solucao, e nao de maneira acusatoria. e o resto do grupo precisa ter maturidade para ouvir o feedback, leva-lo em consideracao, e procurar uma solucao, em vez de ficar na defensiva.
+
+ao fim da reuniao, a equipe e o scrum master devem combinar qual é o aprimoramento no processo que será implementado no sprint seguinte. esse aprimoramento que as vezes é chamado de kaizen, deve ser incluido no backlog do sprint seguinte, com testes de aceitacao. assim, o grupo pode verificar com facilidade se conseguiu implementar a melhoria e qual foi o efeito dela na velocidade.
+
+11. comece de imediato o sprint seguinte, levando em consideracao a experiencia da equipe em relacao aos obstaculos e os aprimoramentos no processo.
