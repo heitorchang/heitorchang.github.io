@@ -2275,7 +2275,7 @@ def clock(func):
 <h3>Decorators in the standard library</h3>
 
 <p>
-  There are three built-in functions that are designed to decorate methods: proprty, classmethod, and staticmethod.
+  There are three built-in functions that are designed to decorate methods: property, classmethod, and staticmethod.
 </p>
 
 <h4>Memoization with functools.cache</h4>
@@ -2437,6 +2437,271 @@ class clock:
 </p>
 
 <h2 id="ch10">10. Design Patterns with First-Class Functions</h2>
+
+<p>
+  A <em>design pattern</em> is a general recipe for solving a common design problem. Their use has been popularized by the Design Patterns book, written by Gamma, Helm, Johnson, and Vlissides (the Gang of Four).
+</p>
+
+<h3>Refactoring the Strategy pattern</h3>
+
+<p>
+  If you leverage functions as first-class objects, the Strategy pattern is simpler than the classic structure described in the Design Patterns book.
+</p>
+
+<p>
+  The Strategy pattern is defining a family of algorithms. Each is encapsulated and interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+</p>
+
+<p>
+  An example is computing discounts to orders according to the attributes of the customer or the items selected:
+</p>
+
+<ul>
+  <li>Customers with 1,000 or more fidelity points get a global 5% discount</li>
+  <li>Items with 20 or more units in a single order get a 10% discount</li>
+  <li>Orders with 10 or more distinct items get a 7% discount</li>
+</ul>
+
+<p>
+  Assume only one discount may be applied to an order.
+</p>
+
+<p>
+  There are three classes relevant to Strategy:
+</p>
+
+<ul>
+  <li>Context: provides a service by delegating some computation to the alternative algorithms. In this example, the context is a customer <code>Order</code></li>
+  <li>Strategy: the interface common to the components that implement the discount algorithms. Here, the Strategy is an abstract class called <code>Promotion</code></li>
+  <li>Concrete strategy: a concrete subclass of Strategy. Here, they are: FidelityPromo, BulkPromo, and LargeOrderPromo.
+  </li>
+</ul>
+
+<p>
+  In a function-oriented Strategy, the concrete strategies may be implemented as plain functions.
+</p>
+
+<p>
+  The built-in <code>globals()</code> returns a dictionary representing the global symbol table. A promotion may be found by checking all function names:
+</p>
+
+<pre>
+promos = [promo for name, promo in globals().items()
+                if name.endswith('_promo') and name != 'best_promo'
+         ]
+</pre>
+
+<p>
+  An alternative is using <code>inspect.getmembers(promotions, inspect.isfunction)</code> in the separate <code>promotions</code> module, that contains the promotion functions.
+</p>
+
+<h4>Decorator-enhanced Strategy pattern</h4>
+
+<p>
+  A better solution for keeping track of promotions is using a registration decorator that is applied to each promotion.
+</p>
+
+<h3>The Command pattern</h3>
+
+<p>
+  The goal of Command is to decouple an object that invokes an operation (the invoker) from the provider object that implements it (the receiver). For example, in a graphical application, each invoker is a menu item, and the receivers are the document being edited or the application itself.
+</p>
+
+<p>
+  A Command object goes in between the two, implementing an interface with a single method, execute, which calls a method in the receiver.
+</p>
+
+<p>
+  Since functions are first-class objects, instead of giving the invoker a Command instance, we can simply give it a function. For example:
+</p>
+
+<pre>
+class MacroCommand:
+    """A command that executes a list of commands."""
+    def __init__(self, commands):
+        self.commands = list(commands)
+
+    def __call__(self):
+        for command in self.commands:
+            command()
+</pre>
+
+<h2 id="ch11">11. A Pythonic Object</h2>
+
+<p>
+  Instead of relying on inheritance, Python classes can take advantage of <em>duck typing</em>&mdash;you just implement the methods needed for your objects to behave as expected.
+</p>
+
+<h3>Object representations</h3>
+
+<ul>
+  <li>repr() returns a string representing the object as the developer wants to see it. It's what the interpreter shows to represent an object.</li>
+  <li>str() returns a string representing the object as the user wants to see it. It's what print(obj) displays.</li>
+</ul>
+
+<p>
+  __repr__ and __str__ support repr() and str(). There are also __bytes__ and __format__ (used by f-strings, format(), and str.format()).
+</p>
+
+<h3>The Vector2d class</h3>
+
+<pre>
+from array import array
+import math
+
+class Vector2d:
+    # makes Vector2d work with positional patterns, in the order defined
+    # for example, case Vector2d(_, 0): 'vector is horizontal'
+    __match_args__ = ('x', 'y')
+
+    typecode = 'd'
+
+    def __init__(self, x, y):
+        self.__x = float(x)
+        self.__y = float(y)
+
+    # the @property decorator makes the method a getter method
+    @property
+    def x(self):
+        return self.__x
+
+    @property
+    def y(self):
+        return self.__y
+
+    def __iter__(self):
+        return (i for i in (self.x, self.y)) # allows unpacking, using *self
+
+    def __repr__(self):
+        class_name = type(self).__name__ # inherited class names are
+                                         # automatically computed
+        return '{}({!r}, {!r})'.format(class_name, *self)
+
+    def __str__(self):
+        return str(tuple(self))
+
+    def __bytes__(self):
+        return (bytes([ord(self.typecode)]) +
+                bytes(array(self.typecode, self)))
+
+    def __eq__(self, other):
+        return tuple(self) == tuple(other)
+
+    # make Vector2d instances hashable
+    # it is recommended to hash a tuple of the components
+    def __hash__(self):
+        return hash((self.x, self.y))
+
+    def __abs__(self):
+        return math.hypot(self.x, self.y)
+
+    def __bool__(self):
+        return bool(abs(self))
+
+    def angle(self):
+        return math.atan2(self.y, self.x)
+
+    # custom code for the formatting specifier
+    def __format__(self, fmt_spec=''):
+        if fmt_spec.endswith('p'): # polar coordinates
+            fmt_spec = fmt_spec[:-1]
+            coords = (abs(self), self.angle())
+            outer_fmt = '<{}, {}>'
+        else:
+            coords = self
+            outer_fmt = '({}, {})'
+        components = (format(c, fmt_spec) for c in coords)
+        return outer_fmt.format(*components)
+
+    # this method can be called directly on the class; use cls instead of self
+    @classmethod
+    def frombytes(cls, octets):
+        typecode = chr(octets[0])
+        memv = memoryview(octets[1:]).cast(typecode)
+        return cls(*memv)
+</pre>
+
+<h3>classmethod versus staticmethod</h3>
+
+<p>
+  classmethod defines a method that operates on the class and not on instances. It receives the class itself as the first argument.
+</p>
+
+<p>
+  The staticmethod decorator changes a method so that it receives no special first argument. It behaves just like a plain function (that happens to exist in a class body). In practice, staticmethod is not very useful, because the function can simply be defined outside the class.
+</p>
+
+<h3>Formatted displays</h3>
+
+<p>
+  f-strings, format(), and str.format() delegate to __format__(format_spec). The format_spec is a specifier that describe how to display the value, such as <code>0.4f</code>.
+</p>
+
+<p>
+  In the format string <code>{0.mass:5.3e}</code>, 0.mass is the "field_name" and 5.3e is the formatting specifier.
+</p>
+
+<p>
+  The notation of the formatting specifier is called the <em>Format Specification Mini-Language</em>. Each class gets to interpret the format_spec as it likes.
+</p>
+
+<p>
+  If a class has no __format__ defined, the method inherited from <code>object</code> returns str(obj).
+</p>
+
+<h3>Private and "protected" attributes in Python</h3>
+
+<p>
+  Prefixing an attribute name with two underscores, such as __mood in a Dog class, causes the name in the instance __dict__ to be prefixed with an underscore and the class name (becoming _Dog__mood). This process is called <em>name mangling</em>. It is done to prevent accidental overwriting of attributes by an end user.
+</p>
+
+<p>
+  Some programmers prefer to write a single underscore, which will not trigger the mangling. It's an accepted convention that you should not access such attributes from outside the class.
+</p>
+
+<p>
+  Another convention is writing constant names in ALL_CAPS.
+</p>
+
+<h3>Saving memory with __slots__</h3>
+
+<p>
+  If you define a class attribute named __slots__ holding a sequence of attribute names, Python uses an alternative storage model for the instance attributes. They are stored in a hidden array or references that use less memory than a dict.
+</p>
+
+<pre>
+class Pixel:
+    __slots__ = ('x', 'y')
+</pre>
+
+<p>
+  <strong>Warning:</strong> __slots__ is only partially inherited by a subclass. Subclasses must declare __slots__ again.
+</p>
+
+<p>
+  By declaring __slots__ = (), the instances of the subclass will have no __dict__ and will only accept the attributes named in the base class' __slots__. Declaring __slots__('color',) in a subclass of Pixel adds the extra attribute 'color'.
+</p>
+
+<p>
+  Implementing __weakref__ is necessary for an object to support weak references. It will exist by default in user-defined classes; however, if __slots__ is defined, and you need the instances to be targets of weak references, you need to include <code>'__weakref__'</code> among the attributes of __slots__.
+</p>
+
+<h3>Overriding class attributes</h3>
+
+<p>
+  Class attributes are used as default values for instance attributes. If a new instance attribute has the same name as a class attribute, the class attribute is untouched (the instance attribute shadows the class attribute). It is possible to change a class attribute directly: <code>MyClass.attr = 'new value'</code>.
+</p>
+
+<p>
+  A common technique is to subclass just to customize a class data attribute:
+</p>
+
+<pre>
+class ShortVector2d(Vector2d):
+    typecode = 'f'
+</pre>
+
+<h2 id="ch12">12. Special Methods for Sequences</h2>
 
 </div>
 <br>
