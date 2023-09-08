@@ -1,10 +1,4 @@
-Tomato honey chicken (5)
-
-Mac 'n' cheese (9)
-
-Beef teriyaki (12)
-
-Pasta bolognese (17)
+RECIPES TO ADD:
 
 Stroganoff (19)
 
@@ -14,10 +8,14 @@ Risotto (23)
 
 Mu-shu pork (24)
 
-Chocolate chip cookies (30)
-
-Oatmeal raisin cookies (33)
-
 Chicken pot pie (36)
 
 Oyako don (40)
+
+Tomato honey chicken (5)
+
+Hot chocolate (7)
+
+Chocolate chip cookies (30)
+
+Oatmeal raisin cookies (33)
