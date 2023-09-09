@@ -2768,7 +2768,7 @@ class Vector:
     __match_args__ = ('x', 'y', 'z', 't')
 
     def __getattr__(self, name):
-        """Allow accessing the first four components with v.x, v.y, v.z, v.t"""
+        """Allow getting the first four components with v.x, v.y, v.z, v.t"""
         cls = type(self)
         try:
             pos = cls.__match_args__.index(name)

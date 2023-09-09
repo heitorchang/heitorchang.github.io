@@ -227,3 +227,46 @@ class NumericStack(Stack):
             raise TypeError('item is not an int or float')
         super().push(item)
         
+Using import creates a new namespace and executes all the statements in the given .py file
+
+import readport as rp
+from readport import read_contents
+
+If a script is run as the main script, this block will execute (but not when imported):
+if __name__ == '__main__':
+    main() 
+
+A package is a hierarchical collection of modules. You should put a collection of files in a directory, and add an empty __init__.py file.
+
+tutorial/
+  __init__.py
+  readport.py
+  pcost.py
+  stack.py
+  
+A fully qualified module import is:
+from tutorial import readport
+
+while a package-relative import is:
+from . import readport
+
+When structuring an application, pick a unique package name for the top-level directory, so that it's isolated from all other code. For example:
+
+tutorial-project/
+  tutorial/
+    __init__.py
+    readport.py
+    stack.py
+  tests/
+    test_stack.py
+    test_pcost.py
+  examples/
+    sample.py
+  doc/
+    tutorial.txt
+    
+Create a virtual environment with:
+python3 -m venv myproject_venv
+
+2. Operators, Expressions, and Data Manipulation
+
