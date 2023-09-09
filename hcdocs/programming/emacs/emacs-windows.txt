@@ -278,7 +278,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (add-hook 'elpy-mode-hook
           (lambda ()
-	    (flycheck-mode t)
+            (flycheck-mode t)
             (highlight-indentation-mode -1)
             (setq flycheck-highlighting-style nil)
             ;; disable autocomplete dropdowns
@@ -498,6 +498,13 @@ they line up with the line containing the corresponding opening bracket."
   (indent-for-tab-command)
   (newline-and-indent))
 
+(defun my-untabify-buffer ()
+  (interactive)
+    (save-excursion
+      (mark-whole-buffer)
+      (call-interactively 'untabify)
+      (deactivate-mark)))
+
 (add-hook 'web-mode-hook
           (lambda ()
             ;;; indent spaces
@@ -509,6 +516,7 @@ they line up with the line containing the corresponding opening bracket."
             (auto-complete-mode 1)))
 
 ;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook my-untabify-buffer)
 
 (add-hook 'rjsx-mode-hook
           (lambda ()
@@ -536,7 +544,7 @@ they line up with the line containing the corresponding opening bracket."
 ;; text mode
 (add-hook 'text-mode-hook
           (lambda ()
-            (setq indent-tabs-mode t)
+            (setq indent-tabs-mode nil)
             (auto-complete-mode 1)))
 
 (define-key text-mode-map (kbd "TAB") 'self-insert-command)
