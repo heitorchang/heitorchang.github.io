@@ -1598,14 +1598,14 @@ list(map(factorial, range(11)))
 </p>
 
 <p>
-  <code>reduce</code> is in the <code>functools</code> module. For example:
+  <code>reduce</code> is in the <code>functools</code> module. It is good practice to include the initializer value as the third argument. It is returned if the sequence is empty and is used as the first argument in the reducing loop. Usually it's the identity value of the operation (0 for sums, 1 for products). For example:
 </p>
 
 <pre>
 from functools import reduce
 from operator import add
 
-reduce(add, range(100))
+reduce(add, range(100), 0)
 </pre>
 
 <p>
@@ -2702,6 +2702,186 @@ class ShortVector2d(Vector2d):
 </pre>
 
 <h2 id="ch12">12. Special Methods for Sequences</h2>
+
+<p>
+  The multidimensional Vector implementation below will use composition, not inheritance. The components will be stored in an array of floats. It will behave like an immutable flat sequence.
+</p>
+
+<pre>
+from array import array
+import reprlib
+import math
+import functools
+import operator
+import itertools
+
+class Vector:
+    typecode = 'd'
+
+    def __init__(self, components):
+        """Take the data as an iterable argument, like all built-in
+        sequence types do.
+        """
+        self._components = array(self.typecode, components)
+
+    def __iter__(self):
+        return iter(self._components)
+
+    def __repr__(self):
+        # limit output and show ... after the first five components
+        components = reprlib.repr(self._components)
+        components = components[components.find('['):-1]
+        return f'Vector({components})'
+
+    def __str__(self):
+        return str(tuple(self))
+
+    def __bytes__(self):
+        return (bytes([ord(self.typecode)]) +
+                bytes(self._components))
+
+    def __eq__(self, other):
+        return (len(self) == len(other) and
+                all(a == b for a, b in zip(self, other)))
+
+    def __hash__(self):
+        hashes = (hash(x) for x in self)
+        return functools.reduce(operator.xor, hashes, 0)
+
+    def __abs__(self):
+        return math.hypot(*self)
+
+    def __bool__(self):
+        return bool(abs(self))
+
+    def __len__(self):
+        return len(self._components)
+
+    def __getitem__(self, key):
+        if isinstance(key, slice):
+            cls = type(self)
+            return cls(self._components[key]) # invoke the class constructor
+                                              # to get back a Vector
+        index = operator.index(key) # allows ints only
+        return self._components[index]
+
+    __match_args__ = ('x', 'y', 'z', 't')
+
+    def __getattr__(self, name):
+        """Allow accessing the first four components with v.x, v.y, v.z, v.t"""
+        cls = type(self)
+        try:
+            pos = cls.__match_args__.index(name)
+        except ValueError:
+            pos = -1
+        if 0 <= pos < len(self._components):
+            return self._components[pos]
+        msg = f'{cls.__name__!r} object has no attribute {name!r}'
+        raise AttributeError(msg)
+
+    def __setattr__(self, name, value):
+        cls = type(self)
+        if len(name) == 1:
+            if name in cls.__match_args__:
+                error = 'Read-only attribute {attr_name!r}'
+            elif name.islower():
+                error = "Can't set attributes 'a' to 'z' in {cls_name!r}"
+            else:
+                error = ''
+            if error:
+                msg = error.format(cls_name=cls.__name__, attr_name=name)
+                raise AttributeError(mst)
+        super().__setattr__(name, value)
+
+    def angle(self, n):
+        """Compute one of the angular coordinates."""
+        r = math.hypot(*self[n:])
+        a = math.atan2(r, self[n-1])
+        if (n == len(self) - 1) and (self[-1] < 0):
+            return math.pi * 2 - a
+        else:
+            return a
+
+    def angles(self):
+        return (self.angle(n) for n in range(1, len(self)))
+
+    def __format__(self, fmt_spec=''):
+        if fmt_spec.endswith('h'): # hyperspherical coordinates
+            fmt_spec = fmt_spec[:-1]
+            coords = itertools.chain([abs(self)], self.angles())
+            outer_fmt = '<{}>'
+        else:
+            coords = self
+            outer_fmt = '({})'
+        components = (format(c, fmt_spec) for c in coords)
+        return outer_fmt.format(', '.join(components))
+
+    @classmethod
+    def frombytes(cls, octets):
+        typecode = chr(octets[0])
+        memv = memoryview(octets[1:]).cast(typecode)
+        return cls(memv)
+</pre>
+
+<h3>Protocols and duck typing</h3>
+
+<p>
+  A fully functional sequence type in Python does not need be a subclass of any special class. You just implement the methods that fulfill the sequence protocol (__len__ and __getitem__).
+</p>
+
+<p>
+  In the context of object-oriented programming, a protocol is an informal interface (defined in documentation but not in code).
+</p>
+
+<p>
+  Static protocol implementations (defined in classes) must provide all methods defined in the protocol class (a <code>typing</code> construct).
+</p>
+
+<h4>How slicing sorks</h4>
+
+<p>
+  The behavior of __getitem__ can be seen with the following class:
+</p>
+
+<pre>
+class MySeq:
+    def __getitem__(self, index):
+        return index
+
+s = MySeq()
+s[1] # 1
+s[1:4] # slice(1, 4, None)
+s[1:4:2] # slice(1, 4, 2)
+s[1:4:2, 7:9] # (slice(1, 4, 2), slice(7, 9, None))
+s[1:-1] # slice(1, -1, None)
+</pre>
+
+<p>
+  a_slice.indices(n) assumes a sequence of length n and calculates the start and stop indices. Out-of-bounds indices are clipped.
+</p>
+
+<p>
+  Generally, if __getattr__ is implemented, __setattr__ should be as well.
+</p>
+
+<p>
+  The super() function provides a way to access methods of superclasses dynamically.
+</p>
+
+<p>
+  zip() has an optional argument <code>strict=True</code> to raise an error if the sequences are of different length.
+</p>
+
+<p>
+  <code>enumerate(a_sequence, optional_start_index)</code> generates tuples (index, value) for the given sequence.
+</p>
+
+<p>
+  Format strings for built-in types use <code>'eEfFgGn%'</code> for floats, <code>'bcdoxXn'</code> for integers, and <code>'s'</code> for strings. They should be avoided in custom formatting specifiers.
+</p>
+
+<h2 id="ch13">13. Interfaces, Protocols, and ABCs (Abstract Base Classes)</h2>
+
 
 </div>
 <br>
