@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #07a;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">python</a></h3>
+    
+<h1>pg8000</h1>
+
+<p>
+  pg8000 is a pure-Python driver for PostgreSQL. Connections must be closed in native mode. Native mode is recommended over dbapi mode by its author in Hacker News.
+</p>
+
+<p>
+  Example:
+</p>
+
+<pre>
+import os
+from contextlib import closing
+from pg8000.native import Connection, identifier, literal
+
+
+def get_con():
+    host = os.environ['LOCAL_DB_HOST']
+    port = os.environ['LOCAL_DB_PORT']
+    user = os.environ['LOCAL_DB_USER']
+    password = os.environ['LOCAL_DB_PASS']
+    name = os.environ['LOCAL_DB_NAME']
+    return Connection(host=host, port=port, user=user, password=password, database=name) 
+
+
+def create_table_if_not_exists():
+    with closing(get_con()) as con:
+        con.run("""
+        CREATE TABLE IF NOT EXISTS student (
+        id bigserial primary key,
+        name text,
+        age integer
+        )
+        """)
+        
+
+def insert_student(name, age):
+    with closing(get_con()) as con:
+        sql = """
+        INSERT INTO student (name, age)
+        VALUES (:name, :age)
+        """
+        con.run(sql, name=name, age=age)
+        
+
+def map_column_names_to_values(col_names, values):
+    return {col_name: value for col_name, value in zip(col_names, values, strict=True)}
+            
+
+def select_literals(school_name):
+    with closing(get_con()) as con:
+        table_name = 'student'
+        # get a list of rows
+        rows = con.run(f"""
+        SELECT {literal(school_name)} AS school, name, age
+        FROM {identifier(table_name)}
+        """)
+        col_names = [c['name'] for c in con.columns]
+        return [map_column_names_to_values(col_names, row) for row in rows]
+</pre>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

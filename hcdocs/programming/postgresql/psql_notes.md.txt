@@ -134,17 +134,17 @@ delete from users where name = 'joe';
 Example: There may be multiple model simulations during a single day (multiple rows). The "updated" column is the time when the simulation was run. We wish to find the newest simulation run for a given model and 'created' date:
 
             select * from (
-	    select row_number() over (partition by hsfe.model_id order by model_id desc, created desc, updated desc) as part_row,
-	    hsfe.model_id, m.display_name as modelo, m.vies, m.parent_folder, created as ultima,
+            select row_number() over (partition by hsfe.model_id order by model_id desc, created desc, updated desc) as part_row,
+            hsfe.model_id, m.display_name as modelo, m.vies, m.parent_folder, created as ultima,
             jsonb_array_length(hsfe.variables->'stations'->0->'data'->'ena') as comprimento
             from hydric_stations_fcst_ena hsfe
-	    join model m using(model_id)
+            join model m using(model_id)
             where created >= %s::date - interval '8 days'
             and created <= %s::date
             and m.custom_forecast is true
             group by hsfe.model_id, m.display_name, m.vies, m.parent_folder, created, updated, m.sort_order, comprimento
             order by m.sort_order, ultima desc) as cte
-	    where part_row = 1;
+            where part_row = 1;
 
 
 ## Adding column with default value
@@ -160,3 +160,18 @@ pg_dump -p 5433 -U localuser -t 'public.TABLENAME' --schema-only DBNAME
 ## Check active connections
 
 select usename, backend_start, query from pg_stat_activity;
+
+## View all existing connections
+
+select pid, application_name, client_addr, backend_start, query_start, query 
+from pg_stat_activity where pid <> pg_backend_pid()
+and usename = 'heitor'
+order by backend_start desc
+
+## Terminate pids (replace PID with the right number):
+
+select pg_terminate_backend(pid) from pg_stat_activity where pid = PID
+
+or for multiple pids:
+
+select pg_terminate_backend(pid) from pg_stat_activity where pid in (PID1, PID2, PID3, ...)
