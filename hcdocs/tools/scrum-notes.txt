@@ -1,3 +1,42 @@
+Implementando o Scrum: como comecar
+
+1. escolha um Product Owner. essa pessoa é quem tem a visao do que sua equipe fará, produzirá ou realizará. ela leva em consideracao os riscos e as recompensas, o que é possivel, o que pode ser feito e aquilo pelo que tem paixao
+
+2. selecione uma equipe. quem serao as pessoas que realizarao o trabalho? essa equipe precisa possuir todas as habilidades necessarias para pegar a visao do product owner e concretizá-la. as equipes devem ser pequenas, de 3 a 9 pessoas é a regra geral.
+
+3. escolha um Scrum Master. esse é o individuo que treinará o resto da equipe na estrutura do Scrum e ajudará os outros integrantes a eliminarem qualquer coisa que esteja diminuindo seu ritmo.
+
+4. crie e ordene, de acordo com as prioridades, um backlog do produto. essa é uma lista de tudo o que precisa ser construido ou realizado para que a visao se torne realidade. essa lista existe e evolui ao longo de toda a vida do produto; ela é o mapa do produto. a qualquer momento, ele é a visao unica e definitiva de "tudo o que a equipe poderia um dia vir a realizar, em ordem de prioridade". so existe um backlog do produto. isso significa que o Product Owner precisa tomar decisoes de como priorizar as tarefas ao longo de todo o projeto e deve consultar todos os stakeholders e a equipe para se certificar de que está representando tanto o que as pessoas querem quanto o que é possivel de ser feito
+
+5. refine e estime o backlog. é crucial que as pessoas que irao de fato completar os itens da lista estimem quanto esforco eles demandarao. a equipe deve olhar para cada item do backlog e ver se ele é realmente factivel. ha informacoes suficientes para realizar a tarefa? ela é pequena o bastante para ser estimada? existe uma definicao de feito, isto é, todo mundo concorda sobre quais sao os criterios que devem ser cumpridos para que algo seja considerado "Feito"? A tarefa cria valor visivel? deve ser possivel exibir, demonstrar e -- esperamos -- entregar para o cliente qualquer um dos itens. nao estime o backlog em horas, porque as pessoas sao pessimas nisso. estime as tarefas de acordo com um tamanho relativo: P, M, G. ou, use numeros fibonacci e estime o valor de cada item em pontos: 1, 2, 3, 5, 8, 13.
+
+6. planejamento do sprint. essa é a primeira reuniao do Scrum. a equipe, o Scrum Master, e o Product Owner se sentam para planejar o sprint. os sprints sempre tem uma duracao determinada, que deve ser menos do que um mes. hoje, a maioria das pessoas realiza sprints de uma ou duas semanas. a equipe olha para o topo do backlog e preve quantas tarefas conseguirá realizar no sprint em questao. se ja tiver realizado alguns ciclos, o grupo deve verificar o numero de pontos que realizou no sprint anterior. esse numero é conhecido como a velocidade da equipe. o Scrum Master e o grupo devem tentar aumentar esse numero a cada sprint. essa é outra oportunidade para que a equipe e o Product Owner se certifiquem de que todos entendem exatamente como esses itens contribuirao para completar a visao. alem disso, durante esse encontro, todos devem entrar em acordo em relacao a uma meta do sprint, o que todo mundo quer realizar nesse ciclo. um dos pilares do Scrum é que, uma vez que a equipe tenha se comprometido com o que acredita que pode realizar em um sprint, esse objetivo seja selado. ele nao pode ser mudado e nada pode ser acrescentado a ele. a equipe precisa trabalhar de forma autonoma durante o sprint para completar aquilo que previu que faria.
+
+7. torne o trabalho visivel. a maneira mais comum de fazer isso no Scrum é criar um Quadro Scrum com tres colunas: a fazer, fazendo, e feito. post-its representam os itens que devem ser realizados, e a equipe move essas notas pelo quadro Scrum conforme os itens vao sendo completados, um a um. outra maneira de tornar o trabalho visivel é criar um grafico de burndown. um eixo representa o numero de pontos que a equipe designou para o sprint (começa no total, por exemplo, 40, e vai até 0), e o outro representa o numero de dias. todo dia, o Scrum Master calcula o numero de pontos realizados e acrescenta essa informacao ao grafico. o ideal é que haja uma linha ingreme descendo em direcao a zer ponto restante no ultimo dia do sprint.
+
+8. reuniao diaria ou Scrum diario. essas sao as batidas do coracao do Scrum. todo dia, no mesmo horario, durante nao mais do que 15 minutos, a equipe e o Scrum Master se reunem e respondem a 3 perguntas:
+
+* o que voce fez ontem para ajudar a equipe a concluir o sprint?
+* o que voce fará hoje para ajudar a equipe a concluir o sprint?
+* há algum obstaculo que esteja impedindo voce ou a equipe de alcancar a meta do sprint?
+
+so isso. a reuniao se resume a isso. se ela levar mais do que 15 minutos, isso significa que voce a está realizando da forma errada. esse encontro ajuda a equipe inteira a saber exatamente em que ponto as coisas estao no sprint. todas as tarefas serao completadas a tempo? ha oportunidades para auxiliar outros integrantes do grupo a superar obstaculos? nao existe isso de delegar tarefas de cima pra baixo. a equipe é autonoma, sao os integrantes que fazem isso. ninguem faz um relatorio detalhado para a gerencia. o Scrum Master é responsavel por fazer com que os obstaculos ao progresso da equipe sejam eliminados.
+
+9. revisao do sprint ou demonstracao do sprint. essa é a reuniao em que a equipe mostra o que realizou durante o sprint. qualquer um pode participar, nao apenas o Product Owner, o Scrum Master e a equipe, mas tambem os stakeholders, o comando da empresa, os clientes, etc. essa é uma reuniao aberta em qu ea equipe demonstra o que conseguiu mover ate a coluna Feito durante o ciclo. a equipe so deve demonstrar o que atender a definicao de Feito. o que estiver totalmente terminado e puder ser entregue sem mais nenhum trabalho. pode nao ser um produto completo, mas deve ser uma funcionalidade completa de um produto.
+
+10. retrospectiva de sprint. depois que tiver mostrado o que conseguiu realizar durante o ultimo sprint, aquilo que está feito e tem a possibilidade de ser enviado para os clientes para que receba feedback, a equipe se reune e pensa no que deu certo, no que poderia ter sido melhor e no que pode ser melhorado no sprint seguinte. qual é o aprimoramento no processo que os integrantes da equipe, em grupo, podem implementar de modo imediato?
+
+para que seja eficaz, essa reuniao requer certa maturidade emocional e um clima de confianca. o essencial é se lembrar de que voces nao estao procurando alguem em quem por a culpa. estao examinando o processo. por que isso aconteceu dessa maneira? por que nao percebemos aquilo? como podemos trabalhar mais rapido? é crucial que o grupo se responsabilize pelo processo e pelos resultados, e busque solucoes em equipe. Ao mesmo tempo, as pessoas precisam ter estrutura emocional para abordar as questoes que as incomodam de modo a buscar uma solucao, e nao de maneira acusatoria. e o resto do grupo precisa ter maturidade para ouvir o feedback, leva-lo em consideracao, e procurar uma solucao, em vez de ficar na defensiva.
+
+ao fim da reuniao, a equipe e o scrum master devem combinar qual é o aprimoramento no processo que será implementado no sprint seguinte. esse aprimoramento que as vezes é chamado de kaizen, deve ser incluido no backlog do sprint seguinte, com testes de aceitacao. assim, o grupo pode verificar com facilidade se conseguiu implementar a melhoria e qual foi o efeito dela na velocidade.
+
+11. comece de imediato o sprint seguinte, levando em consideracao a experiencia da equipe em relacao aos obstaculos e os aprimoramentos no processo.
+
+FIM DE "Implementando o Scrum"
+---
+
+Capitulos:
+
 1. A maneira como o mundo funciona está errada
 
 Planejar é util. seguir cegamente os planos é burrice. É muito tentador desenhar inumeros diagramas. Todo o trabalho que precisa ser feito em um projeto de grande porte ali, detalhado, para todos verem -- mas, quando deparam com a realidade, os planos desabam. Inclua no seu metodo de trabalho a possibilidade de mudanca, descoberta e inovacao.
@@ -139,38 +178,3 @@ scrum para escolas: professores na holanda
 o scrum contra a pobreza: fornecer dados agricolas e de mercado a agricultores
 
 rasgue seus cartoes de visita: livre-se de todos os titulos, de todos os gerentes, de todas as estruturas. dê as pessoas a liberdade de fazer o que acham melhor e a responsabilidade pelas suas decisoes. voce se surpreenderá com os resultados.
-
-
-Implementando o Scrum: como comecar
-
-1. escolha um Product Owner. essa pessoa é quem tem a visao do que sua equipe fará, produzirá ou realizará. ela leva em consideracao os riscos e as recompensas, o que é possivel, o que pode ser feito e aquilo pelo que tem paixao
-
-2. selecione uma equipe. quem serao as pessoas que realizarao o trabalho? essa equipe precisa possuir todas as habilidades necessarias para pegar a visao do product owner e concretizá-la. as equipes devem ser pequenas, de 3 a 9 pessoas é a regra geral.
-
-3. escolha um Scrum Master. esse é o individuo que treinará o resto da equipe na estrutura do Scrum e ajudará os outros integrantes a eliminarem qualquer coisa que esteja diminuindo seu ritmo.
-
-4. crie e ordene, de acordo com as prioridades, um backlog do produto. essa é uma lista de tudo o que precisa ser construido ou realizado para que a visao se torne realidade. essa lista existe e evolui ao longo de toda a vida do produto; ela é o mapa do produto. a qualquer momento, ele é a visao unica e definitiva de "tudo o que a equipe poderia um dia vir a realizar, em ordem de prioridade". so existe um backlog do produto. isso significa que o Product Owner precisa tomar decisoes de como priorizar as tarefas ao longo de todo o projeto e deve consultar todos os stakeholders e a equipe para se certificar de que está representando tanto o que as pessoas querem quanto o que é possivel de ser feito
-
-5. refine e estime o backlog. é crucial que as pessoas que irao de fato completar os itens da lista estimem quanto esforco eles demandarao. a equipe deve olhar para cada item do backlog e ver se ele é realmente factivel. ha informacoes suficientes para realizar a tarefa? ela é pequena o bastante para ser estimada? existe uma definicao de feito, isto é, todo mundo concorda sobre quais sao os criterios que devem ser cumpridos para que algo seja considerado "Feito"? A tarefa cria valor visivel? deve ser possivel exibir, demonstrar e -- esperamos -- entregar para o cliente qualquer um dos itens. nao estime o backlog em horas, porque as pessoas sao pessimas nisso. estime as tarefas de acordo com um tamanho relativo: P, M, G. ou, use numeros fibonacci e estime o valor de cada item em pontos: 1, 2, 3, 5, 8, 13.
-
-6. planejamento do sprint. essa é a primeira reuniao do Scrum. a equipe, o Scrum Master, e o Product Owner se sentam para planejar o sprint. os sprints sempre tem uma duracao determinada, que deve ser menos do que um mes. hoje, a maioria das pessoas realiza sprints de uma ou duas semanas. a equipe olha para o topo do backlog e preve quantas tarefas conseguirá realizar no sprint em questao. se ja tiver realizado alguns ciclos, o grupo deve verificar o numero de pontos que realizou no sprint anterior. esse numero é conhecido como a velocidade da equipe. o Scrum Master e o grupo devem tentar aumentar esse numero a cada sprint. essa é outra oportunidade para que a equipe e o Product Owner se certifiquem de que todos entendem exatamente como esses itens contribuirao para completar a visao. alem disso, durante esse encontro, todos devem entrar em acordo em relacao a uma meta do sprint, o que todo mundo quer realizar nesse ciclo. um dos pilares do Scrum é que, uma vez que a equipe tenha se comprometido com o que acredita que pode realizar em um sprint, esse objetivo seja selado. ele nao pode ser mudado e nada pode ser acrescentado a ele. a equipe precisa trabalhar de forma autonoma durante o sprint para completar aquilo que previu que faria.
-
-7. torne o trabalho visivel. a maneira mais comum de fazer isso no Scrum é criar um Quadro Scrum com tres colunas: a fazer, fazendo, e feito. post-its representam os itens que devem ser realizados, e a equipe move essas notas pelo quadro Scrum conforme os itens vao sendo completados, um a um. outra maneira de tornar o trabalho visivel é criar um grafico de burndown. um eixo representa o numero de pontos que a equipe designou para o sprint (começa no total, por exemplo, 40, e vai até 0), e o outro representa o numero de dias. todo dia, o Scrum Master calcula o numero de pontos realizados e acrescenta essa informacao ao grafico. o ideal é que haja uma linha ingreme descendo em direcao a zer ponto restante no ultimo dia do sprint.
-
-8. reuniao diaria ou Scrum diario. essas sao as batidas do coracao do Scrum. todo dia, no mesmo horario, durante nao mais do que 15 minutos, a equipe e o Scrum Master se reunem e respondem a 3 perguntas:
-
-* o que voce fez ontem para ajudar a equipe a concluir o sprint?
-* o que voce fará hoje para ajudar a equipe a concluir o sprint?
-* há algum obstaculo que esteja impedindo voce ou a equipe de alcancar a meta do sprint?
-
-so isso. a reuniao se resume a isso. se ela levar mais do que 15 minutos, isso significa que voce a está realizando da forma errada. esse encontro ajuda a equipe inteira a saber exatamente em que ponto as coisas estao no sprint. todas as tarefas serao completadas a tempo? ha oportunidades para auxiliar outros integrantes do grupo a superar obstaculos? nao existe isso de delegar tarefas de cima pra baixo. a equipe é autonoma, sao os integrantes que fazem isso. ninguem faz um relatorio detalhado para a gerencia. o Scrum Master é responsavel por fazer com que os obstaculos ao progresso da equipe sejam eliminados.
-
-9. revisao do sprint ou demonstracao do sprint. essa é a reuniao em que a equipe mostra o que realizou durante o sprint. qualquer um pode participar, nao apenas o Product Owner, o Scrum Master e a equipe, mas tambem os stakeholders, o comando da empresa, os clientes, etc. essa é uma reuniao aberta em qu ea equipe demonstra o que conseguiu mover ate a coluna Feito durante o ciclo. a equipe so deve demonstrar o que atender a definicao de Feito. o que estiver totalmente terminado e puder ser entregue sem mais nenhum trabalho. pode nao ser um produto completo, mas deve ser uma funcionalidade completa de um produto.
-
-10. retrospectiva de sprint. depois que tiver mostrado o que conseguiu realizar durante o ultimo sprint, aquilo que está feito e tem a possibilidade de ser enviado para os clientes para que receba feedback, a equipe se reune e pensa no que deu certo, no que poderia ter sido melhor e no que pode ser melhorado no sprint seguinte. qual é o aprimoramento no processo que os integrantes da equipe, em grupo, podem implementar de modo imediato?
-
-para que seja eficaz, essa reuniao requer certa maturidade emocional e um clima de confianca. o essencial é se lembrar de que voces nao estao procurando alguem em quem por a culpa. estao examinando o processo. por que isso aconteceu dessa maneira? por que nao percebemos aquilo? como podemos trabalhar mais rapido? é crucial que o grupo se responsabilize pelo processo e pelos resultados, e busque solucoes em equipe. Ao mesmo tempo, as pessoas precisam ter estrutura emocional para abordar as questoes que as incomodam de modo a buscar uma solucao, e nao de maneira acusatoria. e o resto do grupo precisa ter maturidade para ouvir o feedback, leva-lo em consideracao, e procurar uma solucao, em vez de ficar na defensiva.
-
-ao fim da reuniao, a equipe e o scrum master devem combinar qual é o aprimoramento no processo que será implementado no sprint seguinte. esse aprimoramento que as vezes é chamado de kaizen, deve ser incluido no backlog do sprint seguinte, com testes de aceitacao. assim, o grupo pode verificar com facilidade se conseguiu implementar a melhoria e qual foi o efeito dela na velocidade.
-
-11. comece de imediato o sprint seguinte, levando em consideracao a experiencia da equipe em relacao aos obstaculos e os aprimoramentos no processo.
