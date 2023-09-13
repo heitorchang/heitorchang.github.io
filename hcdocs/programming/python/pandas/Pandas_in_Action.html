@@ -86,6 +86,8 @@
   <li><a href="#ch5">5 Filtering a DataFrame</a></li>
   <li><a href="#part2">Part 2 Applied pandas</a></li>
   <li><a href="#ch6">6 Working with text data</a></li>
+  <li><a href="#ch7">7 MultiIndex DataFrames</a></li>
+  <li><a href="#ch8">8 Reshaping and pivoting</a></li>
 </ul>
 
 
@@ -1266,6 +1268,537 @@ employees.drop_duplicates(subset=["Team"])
 <p>
   The process of cleaning data is called <em>wrangling</em> or <em>munging</em>.
 </p>
+
+<h3>6.1 Letter casing and whitespace</h3>
+
+<pre>
+inspections = pd.read_csv("chicago_food_inspections.csv")
+</pre>
+
+<p>
+  The <code>values</code> attribute of a Series is the underlying NumPy ndarray storing the values.
+</p>
+
+<p>
+  A Series' <code>str</code> attribute exposes a StringMethods object, which contains many methods for working with strings.
+</p>
+
+<p>
+  strip, lstrip, and rstrip remove whitespace from a string.
+</p>
+
+<p>
+  We overwrite the Name column with the whitespace-stripped values:
+</p>
+
+<pre>
+inspections["Name"] = inspections["Name"].str.strip()
+</pre>
+
+<p>
+  To apply <code>strip</code> to all columns, use a loop:
+</p>
+
+<pre>
+for column in inspections.columns:
+    inspections[column] = inspections[column].str.strip()
+</pre>
+
+<p>
+  str.lower() lowercases all characters. str.upper() uppercases all characters. str.capitalize() capitalizes the first letter of each string. str.title() capitalizes each word's first letter.
+</p>
+
+<h3>6.2 String slicing</h3>
+
+<p>
+  DataFrame's <code>replace</code> method will replace all occurrences of one value with another. The first parameter, to_replace, sets the value to search for, and the second parameter, value, specifies what to replace each occurrence of it with. (it's simpler to call replace without the keywords, and it works like Python's str.replace)
+</p>
+
+<h3>6.3 String slicing</h3>
+
+<p>
+  str.slice(start_index, end_index) or str[start_index:end_index] works like standard Python's string slicing.
+</p>
+
+<h3>6.4 Boolean methods</h3>
+
+<p>
+  str.contains checks for a substring's inclusion in a Series value.
+</p>
+
+<pre>
+has_pizza = inspections["Name"].str.lower().str.contains("pizza").head()
+inspections[has_pizza]
+</pre>
+
+<p>
+  str.startswith() and str.endswith() checks the substring and where it occurs.
+</p>
+
+<h3>6.5 Splitting strings</h3>
+
+<pre>
+customers = pd.read_csv("customers.csv")
+</pre>
+
+<p>
+  str.split() converts a Series of strings into a Series of lists. The Python default separator is None. An optional second arguments specifies how many times the string should be split.
+</p>
+
+<p>
+  str.get(0) pulls out the first element of each list. A negative argument may be passed, starting from the end.
+</p>
+
+<p>
+  If str.split is passed <code>expand=True</code>, it will return a new DataFrame instead of a Series of lists.
+</p>
+
+<p>
+  <strong>Warning:</strong> If some rows contain more values than the rest, the rows with fewer elements will have None in the respective columns. Passing a limit to how many splits are performed may work in some cases.
+</p>
+
+<p>
+  To assign column names to the resulting DataFrame:
+</p>
+
+<pre>
+customers[["First Name", "Last Name"]] = customers["Name"].str.split(" ", 1, expand=True)
+</pre>
+
+<p>
+  To drop a column:
+</p>
+
+<pre>
+customers = customers.drop(labels="Name", axis="columns")
+
+# or
+customers = customers.drop("Name", axis=1)
+
+# to drop multiple columns
+customers = customers.drop(["Name", "Address"], axis=1)
+
+# using del
+del customers["Address"]
+</pre>
+
+<h3>6.7 A note on regular expressions</h3>
+
+<p>
+  To use regexes in str methods, pass <code>regex=True</code>.
+</p>
+
+<h2 id="ch7">7 MultiIndex DataFrames</h2>
+
+<p>
+  One way of looking at the meaning of dimensionality (the fact that Series is one-dimensional and that DataFrames are two-dimensional) is the number of reference points needed to extract a value from that data structure.
+</p>
+
+<p>
+  One reference point is needed for a Series, and two are needed for a DataFrame.
+</p>
+
+<p>
+  With a MultiIndex, any number of dimensions is supported.
+</p>
+
+<p>
+  Consider a table with a stock's symbol, a date, and price. To find a price, we need both the symbol and the date. A MultiIndex storing the symbol and date columns would suit this data set well.
+</p>
+
+<p>
+  MultiIndexes are also ideal for hierarchical data, where one column's values are a subcategory of another column's values. For example, Fruit &gt; Apple, Banana and Vegetable &gt; Broccoli, Carrot.
+</p>
+
+<h3>7.1 The MultiIndex object</h3>
+
+<p>
+  Remember that a Python tuple is an immutable data structure that holds a sequence of values in order. Imagine tuples serving as a DataFrame's index labels.
+</p>
+
+<p>
+  A MultiIndex object is an index (a storage container) in which each label can store mutiple pieces of data.
+</p>
+
+<p>
+  A MultiIndex object can be created independently of a Series or DataFrame. There is a MultiIndex class available as a top-level attribute of pandas. It includes a <code>from_tuples</code> class method that instantiates a MultiIndex from a list of tuples.
+</p>
+
+<pre>
+addresses = [
+    ("8809 Flair Square", "Toddside", "IL", "37206"),
+    ("9901 Austin Street", "Toddside", "IL", "37206"),
+    ("905 Hogan Quarter", "Franklin", "IL", "37206"),
+]
+
+pd.MultiIndex.from_tuples(addresses)
+</pre>
+
+<p>
+  The collection of tuple values at the same position forms a <em>level</em> of the MultiIndex. Each level of the MultiIndex can be assigned a name when using from_tuples:
+</p>
+
+<pre>
+row_index = pd.MultiIndex.from_tuples(
+    addresses,
+    names = ["Street", "City", "State", "Zip"]
+)
+</pre>
+
+<p>
+  To attach a MultiIndex to a DataFrame, the easiest way is passing it in the constructor's <code>index</code> parameter:
+</p>
+
+<pre>
+data = [
+    ['A', 'B+'],
+    ['C+', 'C'],
+    ['D', 'A-'],
+]
+
+columns = ['Schools', 'Cost of Living']
+
+area_grades = pd.DataFrame(data=data, index=row_index, columns=columns)
+</pre>
+
+<p>
+  This DataFrame has a MultiIndex on its row axis. Each row's label holds four values (street, city, state, zip code).
+</p>
+
+<p>
+  The DataFrame's column headers are stored in an index object as well:
+</p>
+
+<pre>
+area_grades.columns
+
+# Index(['Schools', 'Cost of Living'], dtype='object')
+</pre>
+
+<p>
+  It is possible to have a MultiIndex as the column index as well:
+</p>
+
+<pre>
+column_index = pd.MultiIndex.from_tuples(
+    [
+        ("Culture", "Restaurants"),
+        ("Culture", "Museums"),
+        ("Services", "Police"),
+        ("Services", "Schools"),
+    ]
+)
+
+# with the new column structure, the data needs to be 3 x 4:
+data = [
+    ['C', 'B-', 'D', 'A-'],
+    ['A-', 'C-', 'B+', 'B'],
+    ['B+', 'A-', 'C-', 'C+'],
+]
+
+pd.DataFrame(data=data, index=row_index, columns=column_index)
+</pre>
+
+<h3>7.2 MultiIndex DataFrames</h3>
+
+<p>
+  When creating a DataFrame from a CSV with multiple header rows or columns for the row idex, pass the column/row indices to the index_col and header parameters:
+</p>
+
+<pre>
+neighborhoods = pd.read_csv(
+    "neighborhoods.csv", index_col=[0, 1, 2], header=[0, 1]
+)
+
+# describe the DataFrame
+neighborhoods.info()
+neighborhoods.index
+neighborhoods.columns
+
+neighborhoods.index.names
+
+neighborhoods.index.get_level_values(1) # or ("City")
+</pre>
+
+<p>
+  Assign names to columns:
+</p>
+
+<pre>
+neighborhoods.columns.names = ["Category", "Subcategory"]
+
+neighborhoods.columns.get_level_values(0)
+</pre>
+
+<p>
+  A MultiIndex will carry over to new objects derived from a data set. The index can switch axes depending on the operation. If we invoke nunique on neighborhoods, the DataFrame's column MultiIndex will swap axes and become the row's MultiIndex in the resulting Series.
+</p>
+
+<h3>7.3 Sorting a MultiIndex</h3>
+
+<p>
+  Calling sort_index() will sort all levels in ascending order, outside in. To vary the sorting at each level:
+</p>
+
+<pre>
+neighborhoods.sort_index(ascending=[True, False, False])
+</pre>
+
+<p>
+  To sort a level by itself:
+</p>
+
+<pre>
+neighborhoods.sort_index(level=1) # or level="City"
+neighborhoods.sort_index(level=[1, 2], ascending=[True, False])
+# or level=["City", "Street"]
+</pre>
+
+<p>
+  Sorting accepts an axis parameter (with a default value of 0, or row index). To sort the columns, we pass axis=1 or axis="columns".
+</p>
+
+<h3>7.4 Selecting with a MultiIndex</h3>
+
+<p>
+  Consider this 2 x 2 DataFrame:
+</p>
+
+<pre>
+data = [
+    [1, 2],
+    [3, 4]
+]
+
+df = pd.DataFrame(data=data, index=['A', 'B'], columns=['X', 'Y'])
+</pre>
+
+<p>
+  To extract a column, we can use the square bracket syntax:
+</p>
+
+<pre>
+df['X']
+</pre>
+
+<h4>7.4.1 Extracting one or more columns</h4>
+
+<p>
+  If a single value is passed in square brackets, pandas will look for it in the outermost level of the columns' MultiIndex: <code>neighborhoods['Services']</code>
+</p>
+
+<p>
+  To target multiple levels of a MultiIndex, use a tuple:
+</p>
+
+<pre>
+neighborhoods[("Services", "Schools")]
+</pre>
+
+<p>
+  To extract multiple columns, pass a list of tuples (the list may be defined in an intermediate variable for clarity):
+</p>
+
+<pre>
+neighborhoods[[("Services", "Schools"), ("Culture", "Museums")]]
+</pre>
+
+<h4>7.4.2 Extracting one or more rows with loc</h4>
+
+<p>
+  The <code>loc</code> accessor extracts by index label, and <code>iloc</code> extracts by index position. In the 2 x 2 example above, <code>df.loc['A']</code> selects the first row.
+</p>
+
+<p>
+  Similar to selecting a column that has a MultiIndex, pass a tuple to loc to get a specific row (any depth may be passed):
+</p>
+
+<pre>
+neighborhoods.loc[("TX", "Kingchester", "534 Gordon Falls")]
+</pre>
+
+<p>
+  The second argument to loc declares which column(s) to extract:
+</p>
+
+<pre>
+neighborhoods.loc["CA", "Culture"]
+</pre>
+
+<p>
+  To avoid ambiguity between row levels and a column label, wrap all arguments for a given index inside a tuple, remembering that a one-element tuple needs a trailing comma:
+</p>
+
+<pre>
+neighborhoods.loc[("CA", "Dustinmouth"), ("Services",)]
+</pre>
+
+<p>
+  Use a list to store multiple keys, and a tuple to store the components of a multilevel key.
+</p>
+
+<p>
+  To select sequential rows, use the list-slicing syntax:
+</p>
+
+<pre>
+neighborhoods["NE":"NH"]
+neighborhoods[("NE", "Shawnchester"):("NH", "North Latoya")]
+neighborhoods[("NE", "Shawnchester"):("NH",)]
+</pre>
+
+<h4>7.4.3 Extracting one or more rows with iloc</h4>
+
+<p>
+  iloc accepts two arguments to represent the row and column indices.
+</p>
+
+<p>
+  To pull out multiple rows, wrap their index positions in a list:
+</p>
+
+<pre>
+neighborhoods.iloc[[25, 30, 32, 50]]
+</pre>
+
+<p>
+  Slicing with iloc excludes the endpoint: <code>neighborhoods.iloc[25:30]</code> returns 5 rows.
+</p>
+
+<p>
+  A slice may also declare which columns to pull out. Negative indices may also be passed.
+</p>
+
+<pre>
+neighborhoods.iloc[25:30, 1:3]
+neighborhoods.iloc[-4:, -2:]
+</pre>
+
+<p>
+  <strong>Note:</strong> It is not possible to index across consecutive MultiIndex levels with iloc. It serves as a strict positional indexer that does not regard the structure of the DataFrame at all.
+</p>
+
+<h3>7.5 Cross-sections</h3>
+
+<p>
+  The <code>xs</code> method extracts rows by providing a value for <em>one</em> MultiIndex level. We pass the key parameter as the value to look for, and the level parameter as the numeric position or the name of the index level in which to look for the value:
+</p>
+
+<pre>
+neighborhoods.xs(key="Lake Nicole", level=1)
+neighborhoods.xs(key="Lake Nicole", level="City")
+</pre>
+
+<p>
+  To search using columns, pass "columns" or 1 as the axis parameter:
+</p>
+
+<pre>
+neighborhoods.xs(key="Museums", level="Subcategory", axis=1)
+neighborhoods.xs(key="Museums", level="Subcategory", axis="columns")
+</pre>
+
+<p>
+  We can also provide the xs method with keys across nonconsecutive MultiIndex levels by passing them in a tuple:
+</p>
+
+<pre>
+neighborhoods.xs(key=('AK', '238 Andrew Rue'), level=['State', 'Street'])
+</pre>
+
+<h3>7.6 Manipulating the Index</h3>
+
+<h4>7.6.1 Resetting the index</h4>
+
+<p>
+  <code>reorder_levels</code> rearranges the MultiIndex levels in a specified order:
+</p>
+
+<pre>
+new_order = ["City", "State", "Street"]
+neighborhoods.reorder_levels(order=new_order)
+neighborhoods.reorder_levels(order=[1, 0, 2])
+</pre>
+
+<p>
+  reset_index() returns a new DataFrame that integrates the former MultiIndex levels as columns. The new index is the standard numeric one. By default, the new columnns' Subcategory value is an empty string.
+</p>
+
+<p>
+  To set a particular column, pass the col_level parameter:
+</p>
+
+<pre>
+neighborhoods.reset_index(col_level="Subcategory")
+neighborhoods.reset_index(col_level=1)
+</pre>
+
+<p>
+  Passing an argument to col_fill replaces the Category value:
+</p>
+
+<pre>
+neighborhoods.reset_index(col_fill="Address", col_level="Subcategory")
+</pre>
+
+<p>
+  Passing a name to the levels parameter moves a single index level to a regular DataFrame column:
+</p>
+
+<pre>
+neighborhoods.reset_index(level="Street")
+</pre>
+
+<p>
+  Move multiple index levels by passing them in a list:
+</p>
+
+<pre>
+neighborhoods.reset_index(level=["Street", "City"])
+</pre>
+
+<p>
+  To remove a level, pass <code>drop=True</code>
+</p>
+
+<pre>
+neighborhoods.reset_index(level="Street", drop=True)
+</pre>
+
+<h4>7.6.2 Setting the index</h4>
+
+<p>
+  Evaluate this line to set up the DataFrame for this section:
+</p>
+
+<pre>
+neighborhoods = neighborhoods.reset_index()
+</pre>
+
+<p>
+  set_index sets one or more columns as the new index:
+</p>
+
+<pre>
+neighborhoods.set_index(keys="City")
+neighborhoods.set_index(keys=("Culture", "Museums"))
+</pre>
+
+<p>
+  To create a MultiIndex, pass a list with multiple columns:
+</p>
+
+<pre>
+neighborhoods.set_index(keys=["State", "City"])
+</pre>
+
+<h2 id="ch8">8 Reshaping and pivoting</h2>
+
+<p>
+  <em>Reshaping</em> a data set means manipulating it into a different shape, one that tells a better story than its original presentation.
+</p>
+
+<h3>8.1 Wide vs. narrow data</h3>
 
 </div>
 <br>
