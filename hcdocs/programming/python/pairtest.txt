@@ -12,7 +12,7 @@ def pairtest(*pair_args):
     expected = pair_args[1::2]
 
     for t, e in zip(trial, expected):
-	# print(f"Is {t} equal to {e}?")
+        # print(f"Is {t} equal to {e}?")
         if isinstance(t, float):
             tc.assertAlmostEqual(t, e)
         else:
