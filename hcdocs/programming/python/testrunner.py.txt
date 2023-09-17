@@ -1,0 +1,33 @@
+from unittest import TestCase
+
+
+class TestRunner:
+    def __init__(self):
+        self.total_tests = 0
+        self.passed_tests = 0
+        self.failed_tests = 0
+        self.test_case = TestCase('__init__')
+
+    def check(self, actual, expected, description=''):
+        self.total_tests += 1
+        try:
+            if isinstance(actual, float) and isinstance(expected, float):
+                self.test_case.assertAlmostEqual(actual, expected)
+            else:
+                self.test_case.assertEqual(actual, expected)
+            if description:
+                print(f'  Passed {description}!')
+            else:
+                print(f'  Passed (expecting {expected})!')
+            self.passed_tests += 1
+        except:
+            if description:
+                description = f'({description})'
+            print(f'Assertion failed: got {actual}, expected {expected} {description}')
+            self.failed_tests += 1
+
+    def stats(self):
+        percent_passed = round(self.passed_tests / self.total_tests * 100)
+        print(f'\nTotal tests: {self.total_tests}, failed: {self.failed_tests}, passed: {self.passed_tests} ({percent_passed}%)')
+        if self.passed_tests == self.total_tests:
+            print("All tests passed!!")
