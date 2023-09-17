@@ -1,0 +1,31 @@
+import unittest
+
+
+TESTCASE_TOTAL = 0
+TESTCASE_PASS = 0
+TESTCASE_FAIL = 0
+
+def testcase(actual, expected, description=''):
+    global TESTCASE_TOTAL, TESTCASE_PASS, TESTCASE_FAIL
+
+    TESTCASE_TOTAL += 1
+    tc = unittest.TestCase('__init__')
+    try:
+        if isinstance(actual, float) and isinstance(expected, float):
+            tc.assertAlmostEqual(actual, expected)
+        else:
+            tc.assertEqual(actual, expected)
+        print(f'{description}.')
+        TESTCASE_PASS += 1
+    except:
+        if description:
+            description=f'({description})'
+        print(f'Assertion failed: got {actual}, expected {expected} {description}')
+        TESTCASE_FAIL += 1
+
+def testcase_stats():
+    global TESTCASE_TOTAL, TESTCASE_PASS, TESTCASE_FAIL
+
+    print(f'Total tests: {TESTCASE_TOTAL}, failed: {TESTCASE_FAIL}, passed: {TESTCASE_PASS} ({round(TESTCASE_PASS / TESTCASE_TOTAL * 100)}%)')
+    if TESTCASE_TOTAL == TESTCASE_PASS:
+        print("All tests passed!")
