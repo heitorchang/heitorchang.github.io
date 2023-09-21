@@ -2882,6 +2882,95 @@ s[1:-1] # slice(1, -1, None)
 
 <h2 id="ch13">13. Interfaces, Protocols, and ABCs (Abstract Base Classes)</h2>
 
+<p>
+  Since Python 3.8, there are four ways of defining interfaces:
+</p>
+
+<ul>
+  <li>Duck typing: enforced when operations on objects are attempted.</li>
+  <li>Goose typing: runtime checks of objects against ABCs (using isinstance).</li>
+  <li>Static typing: enforced by external type checkers.</li>
+  <li>Static duck typing: also enforced by external type checkers. Related to static protocols.</li>
+</ul>
+
+<h3>Two kinds of protocols</h3>
+
+<p>
+  A <em>Protocol</em> can mean several things. A network protocol such as HTTP specifies commands that a client can send to a server, such as GET and POST.
+</p>
+
+<p>
+  An object protocol specifies methods which an object must provide to fulfill a role.
+</p>
+
+<p>
+  In Python, a protocol may be considered a informal interface.
+</p>
+
+<p>
+  By subclassing <code>typing.Protocol</code>, we define one or more methods that a class must implement or inherit to satisfy a static type checker. Such a protocol is a static protocol.
+</p>
+
+<p>
+  A dynamic protocol is an informal protocol that Python always had. They are implicit. It cannot be checked by a static type checker.
+</p>
+
+<p>
+  Defining an ABC is another way to define an explicit interface.
+</p>
+
+<p>
+  The Sequence ABC shows what a full-fledged Sequence is expected to support. Note that built-ins such as list and str do not rely on this ABC.
+</p>
+
+<h4>Monkey patching: implementing a protocol at runtime</h4>
+
+<p>
+  Monkey patching is dynamically changing a module, class, or function at runtime, to add features or fix bugs. For example, to allow random.shuffle to be used on a FrenchDeck, __setitem__ must be implemented:
+</p>
+
+<pre>
+def set_card(deck, position, card):
+    # Note: deck is replacing the conventional 'self'
+    deck._cards[position] = card
+
+FrenchDeck.__setitem__ = set_card
+</pre>
+
+<h4>Defensive programming and "fail fast"</h4>
+
+<p>
+  Defensive programming is a set of practices to enhance safety (such as when facing careless programmers).
+</p>
+
+<p>
+  Failing fast is raising runtime errors as soon as possible, such as rejecting invalid arguments right at the beginning of a function body. One example is immediately copying an iterable argument to a list with <code>self.my_list = list(iterable)</code>
+</p>
+
+<p>
+  If making a copy of the iterable isn't feasible, use <code>isinstance(iterable, abc.MutableSequence)</code>, <code>len(iterable)</code>, or call <code>iter(iterable)</code> as soon as possible.
+</p>
+
+<p>
+  With ABCs, it is possible to use the ABC's <code>register</code> method to declare that a certain class becomes a virtual subclass of an ABC.
+</p>
+
+<pre>
+from collections.abc import Sequence
+Sequence.register(FrenchDeck)
+</pre>
+
+<h4>Defining and using an ABC</h4>
+
+<p>
+  The example ABC is <code>Tombola</code>.
+</p>
+
+<h2 id="ch14">14. Inheritance: For Better or for Worse</h2>
+<h2 id="ch15">15. More About Type Hints</h2>
+<h2 id="ch16">16. Operator Overloading</h2>
+
+<h2 id="ch17">17. Iterators, Generators, and Classic Coroutines</h2>
 
 </div>
 <br>

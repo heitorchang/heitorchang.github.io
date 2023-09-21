@@ -73,17 +73,30 @@
 
     <h3><a href="../index.html">home</a> / <a href="index.html">tools</a></h3>
     
-<a class="index" href="git-files/index.html">&#x1F4C1; git-files</a><br>
-<a class="index" href="git.html">&#x1F4D8; git.html</a><br>
-<a class="index" href="gpg.html">&#x1F4D8; gpg.html</a><br>
-<a class="index" href="jira.html">&#x1F4D8; jira.html</a><br>
-<a class="index" href="pycharm.html">&#x1F4D8; pycharm.html</a><br>
-<a class="index" href="scrum-notes.txt" target="_blank">&#x1F4C3; scrum-notes.txt</a><br>
-<a class="index" href="scrum.html">&#x1F4D8; scrum.html</a><br>
-<a class="index" href="ubuntu/index.html">&#x1F4C1; ubuntu</a><br>
-<a class="index" href="vscode-files/index.html">&#x1F4C1; vscode-files</a><br>
-<a class="index" href="vscode.html">&#x1F4D8; vscode.html</a><br>
-<a class="index" href="xterm.html">&#x1F4D8; xterm.html</a><br>
+<h1>GPG</h1>
+
+<h3>Symmetric encryption and decryption</h3>
+
+<p>
+  Relies on a single passphrase.
+</p>
+
+<h4>To encrypt</h4>
+
+<pre>
+gpg --symmetric myfile.txt
+</pre>
+
+<p>
+  creates myfile.txt.gpg
+</p>
+
+<h4>To decrypt</h4>
+
+<pre>
+gpg -o myfile_dec.txt -d myfile.txt.gpg
+</pre>
+
 </div>
 <br>
 <hr>
