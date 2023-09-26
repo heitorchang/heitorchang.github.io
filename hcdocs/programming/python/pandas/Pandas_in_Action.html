@@ -1800,6 +1800,120 @@ neighborhoods.set_index(keys=["State", "City"])
 
 <h3>8.1 Wide vs. narrow data</h3>
 
+<p>
+  A <em>narrow</em> data set is also called <em>long</em> or <em>tall</em>. It grows down, increasing its height. The other kind, <em>wide</em> data, increases in width. Consider:
+</p>
+
+<pre>
+   Weekday  Miami  New York
+0   Monday    100        65
+1  Tuesday    105        70
+</pre>
+
+<p>
+  There are three variables: weekdays, temperatures, and cities. This data set is wide, because adding more cities will increase its width.
+</p>
+
+<p>
+  A narrow format makes it easier to manipulate existing data and to add new records:
+</p>
+
+<pre>
+   Weekday      City  Temperature
+0   Monday     Miami          100
+1   Monday  New York           65
+2  Tuesday     Miami          105
+3  Tuesday  New York           70
+4  Tuesday   Chicago           58
+</pre>
+
+<h3>8.2 Creating a pivot table from a DataFrame</h3>
+
+<p>
+  <code>sales_by_employee.csv</code> is a list of business deals at a fictional company.
+</p>
+
+<pre>
+sales = pd.read_csv("sales_by_employee.csv", parse_dates=["Date"])
+</pre>
+
+<h4>8.2.1 The pivot_table method</h4>
+
+<p>
+  A <em>pivot table</em> aggregates a column's values and groups the results by using other columns' values.
+</p>
+
+<p>
+  An <em>aggregate</em> describes a summary computation that involves multiple values. Common aggregations are average, sum, median, and count.
+</p>
+
+<p>
+  The steps to create a pivot table are:
+</p>
+
+<ol>
+  <li>Select the column(s) whose values we want to aggregate</li>
+  <li>Choose the aggregation operation to apply to the column(s)</li>
+  <li>Select the column(s) whose values will group the aggregated data into categories</li>
+  <li>Determine whether to place the groups on the row axis, column axis, or both</li>
+</ol>
+
+<p>
+  The <code>pivot_table</code> method's <code>index</code> parameter accepts the column whose values will make up the pivot table's index labels. Pandas will use the unique values from that column to group the results. The default aggregation operation is to compute the average (mean). It can be declared with the <code>aggfunc</code> parameter.
+</p>
+
+<pre>
+sales.pivot_table(index="Date")
+</pre>
+
+<p>
+  To limit the columns to be aggregated, pass the column(s) to the <code>values</code> parameter as a string or list of strings. In this example, we want to know the total for each day.
+</p>
+
+<pre>
+sales.pivot_table(index="Date", values="Revenue", aggfunc="sum")
+</pre>
+
+<p>
+  Now, to separate the sales by employee, we pass "Name" to the <code>columns</code> parameter:
+</p>
+
+<pre>
+sales.pivot_table(index="Date", columns="Name", values="Revenue", aggfunc="sum")
+</pre>
+
+<p>
+  Use <code>fill_value=0</code> to replace NaNs with zeros.
+</p>
+
+<p>
+  Passing <code>margins=True</code> adds totals for each row and column. <strong>Note:</strong> datetimes are converted to strings because of the new "All" value. <code>margins_name="Custom name"</code> changes from "All" to the given value.
+</p>
+
+<p>
+  <code>aggfunc</code> can also be: max, min, std, median, size (same as count).
+</p>
+
+<p>
+  It is possible to pass a list or dict to <code>aggfunc</code>:
+</p>
+
+<pre>
+aggfunc=["sum", "count"]
+
+aggfunc={"Revenue": "min", "Expenses": "max"}
+</pre>
+
+<p>
+  <code>index</code> can also be a list, resulting in a MultiIndex.
+</p>
+
+<pre>
+index=["Name", "Date"]
+</pre>
+
+<h3>8.3 Stacking and unstacking index levels</h3>
+
 </div>
 <br>
 <hr>

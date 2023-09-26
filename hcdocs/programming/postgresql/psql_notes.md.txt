@@ -2,7 +2,7 @@
 
 ## View all existing connections
 
-select pid, application_name, client_addr, backend_start, query_start, query 
+select pid, application_name, client_addr, backend_start, query_start, query
 from pg_stat_activity where pid <> pg_backend_pid()
 and usename = 'heitor'
 order by backend_start desc;
@@ -18,6 +18,33 @@ select pg_terminate_backend(pid) from pg_stat_activity where pid in (PID1, PID2,
 ## Check active connections
 
 select usename, backend_start, query from pg_stat_activity;
+
+## Ubuntu
+
+Install:
+sudo apt install postgresql
+
+cd /etc/postgresql/REPLACE_WITH_VERSION_NUMBER/main
+
+Just in case, back up the config file
+sudo cp postgresql.conf postgresql-bak.conf
+
+Edit the file above. Change port to 5433.
+
+Restart:
+sudo systemctl restart postgresql
+
+Login with the postgres user to create 'localuser' with password 'localpass'
+sudo -u postgres psql
+
+> create user localuser with encrypted password 'localpass';
+> alter user localuser with superuser;
+
+Create a new database:
+sudo -u postgres createdb new_db_name
+
+Enter the new database:
+psql -h 127.0.0.1 -p 5433 -U localuser -d new_db_name
 
 ## Windows
 
