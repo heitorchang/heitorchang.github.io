@@ -58,6 +58,7 @@
 (setq-default frame-title-format "%f")
 (delete-selection-mode t)
 (menu-bar-mode -1)
+(setq hi-lock-face-defaults '("hi-yellow" "hi-green" "hi-aquamarine" "hi-salmon" "hi-blue" "hi-pink"))
 
 (put 'downcase-region 'disabled nil)
 
