@@ -34,6 +34,6 @@ def calc_nfe(bruto):
 
     print(f"""
 Desenvolvimento de sistema de back-end para dados meteorologicos.
-Dados bancarios, Banco Nubank 0260 Ag. 0001 Conta 92125816-2
+[[[ DADOS BANCARIOS: CHECK DIARY FILE ]]]
 Valor liquido {str((bruto - total_taxes).quantize(Decimal('1.00'), ROUND_HALF_UP)).replace(".", ",")}
 """)
