@@ -73,9 +73,52 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">bash</a></h3>
     
-<a class="index" href="bash.html">&#x1F4D8; bash.html</a><br>
-<a class="index" href="bashrc-windows.txt" target="_blank">&#x1F4C3; bashrc-windows.txt</a><br>
-<a class="index" href="git_simple_precautions.html">&#x1F4D8; git_simple_precautions.html</a><br>
+<h1>Git simple precautions</h1>
+
+<p>
+  Do not: add -A, add in main or master.
+</p>
+
+<pre>
+# intercept git commands
+git() {
+    if [ "$1" == "commit" ] ; then
+        echo Git commit intercepted, adding to /home/heitor/gitcommitlog.txt
+        MSG="$(date +""%d.%b_%H:%M"") $PWD: $3"
+        sed -i '1i '"$MSG"' ' /home/heitor/gitcommitlog.txt
+        command git "$@"
+    elif [ "$2" == "-A" ] ; then
+        echo Should not add all, run /usr/bin/git to override.
+        return 1
+    elif [ "$2" == "-a" ] ; then
+        echo Should not add all, run /usr/bin/git to override.
+        return 1
+    elif [ "$1" == "add" ] ; then
+        branch_name="$(git symbolic-ref --short HEAD 2>/dev/null)"
+        if [ "$branch_name" == "main" ] ; then
+            echo Branch main detected. Doing nothing, run /usr/bin/git to override.
+            return 1
+        elif [ "$branch_name" == "master" ] ; then
+            echo Branch master detected. Doing nothing, run /usr/bin/git to override.
+            return 1
+        else
+            echo Did you run git status, diff, and are adding a single file? Did you edit Tests? [y for yes]
+            read confirm_status
+
+            if [ "$confirm_status" = "y" ]; then
+                echo Adding file. When committing, remember to start the message with the branch name.
+                command git "$@"
+            else
+                echo Aborting.
+                return 1
+            fi
+        fi
+    else
+        command git "$@"
+    fi
+}
+</pre>
+
 </div>
 <br>
 <hr>
