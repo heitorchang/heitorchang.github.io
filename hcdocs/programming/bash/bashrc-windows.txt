@@ -220,6 +220,17 @@ git() {
     fi
 }
 
+prg() {
+    if [ "$1" == "commit" ] ; then
+        echo Git commit intercepted, adding to /home/heitor/gitcommitlog.txt
+        MSG="$(date +""%d.%b_%H:%M"") $PWD: $3"
+        sed -i '1i '"$MSG"' ' /home/heitor/gitcommitlog.txt
+        command git "$@"
+    else
+        command prg "$@"
+    fi
+}
+
 alias eno='emacs -nw --color=no'
 
 alias idea='/home/heitor/tools/intellij/bin/idea.sh &'
