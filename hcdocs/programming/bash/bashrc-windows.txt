@@ -127,6 +127,7 @@ alias gitgraph='git log --all --decorate --oneline --graph'
 export GIT_PS1_SHOWCOLORHINTS=true
 
 # allows C-s to forward-search after using C-r to search history
+# WARNING: HAS CRASHED LAPTOP'S UBUNTU 23, USE WITH CAUTION
 stty -ixon
 
 # using color has a bug: nothing is shown for matches in DOS-encoded files (CRLF end-of-line)
