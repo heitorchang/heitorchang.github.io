@@ -71,24 +71,41 @@
       <div class="content">
 
 
-    <h3><a href="../index.html">home</a> / <a href="index.html">programming</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">clojure</a></h3>
     
-<a class="index" href="asp_net/index.html">&#x1F4C1; asp_net</a><br>
-<a class="index" href="bash/index.html">&#x1F4C1; bash</a><br>
-<a class="index" href="clojure/index.html">&#x1F4C1; clojure</a><br>
-<a class="index" href="clojure-files/index.html">&#x1F4C1; clojure-files</a><br>
-<a class="index" href="common_lisp/index.html">&#x1F4C1; common_lisp</a><br>
-<a class="index" href="comparative/index.html">&#x1F4C1; comparative</a><br>
-<a class="index" href="csharp/index.html">&#x1F4C1; csharp</a><br>
-<a class="index" href="css/index.html">&#x1F4C1; css</a><br>
-<a class="index" href="emacs/index.html">&#x1F4C1; emacs</a><br>
-<a class="index" href="interview_prep/index.html">&#x1F4C1; interview_prep</a><br>
-<a class="index" href="js/index.html">&#x1F4C1; js</a><br>
-<a class="index" href="kotlin/index.html">&#x1F4C1; kotlin</a><br>
-<a class="index" href="postgresql/index.html">&#x1F4C1; postgresql</a><br>
-<a class="index" href="python/index.html">&#x1F4C1; python</a><br>
-<a class="index" href="rust/index.html">&#x1F4C1; rust</a><br>
-<a class="index" href="scheme/index.html">&#x1F4C1; scheme</a><br>
+<h1>Creating a JAR with Leiningen</h1>
+
+<p>
+  Start a new project with <code>lein new hello-clojure</code>.
+</p>
+
+<p>
+  Add to project.clj:
+</p>
+
+<pre>
+:main hello-clojure.core
+</pre>
+
+<p>
+  Add to src/hello-clojure/core.clj:
+</p>
+
+<pre>
+(ns hello-clojure.core (:gen-class))
+
+(defn -main []
+  (println "Hello Clojure"))
+</pre>
+
+<p>
+  Run <code>lein uberjar</code>.
+</p>
+
+<p>
+  Run <code>java -jar target/hello-clojure-0.1.0-SNAPSHOT-standalone.jar</code>
+</p>
+
 </div>
 <br>
 <hr>
