@@ -73,8 +73,26 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">clojure</a></h3>
     
-<a class="index" href="lein_creating_jar.html">&#x1F4D8; lein_creating_jar.html</a><br>
-<a class="index" href="pedestal.html">&#x1F4D8; pedestal.html</a><br>
+<h1>Pedestal notes</h1>
+
+<h3>Starting the server, reloading, and stopping in a REPL</h3>
+
+<p>
+  Load project.clj and run CIDER.
+</p>
+
+<p>
+  To start the server, evaluate <code>(def serv (run-dev))</code>
+</p>
+
+<p>
+  After making changes in service.clj, evaluate <code>(use 'my-project.service :reload)</code>
+</p>
+
+<p>
+  To stop the server: <code>(server/stop serv)</code>
+</p>
+
 </div>
 <br>
 <hr>
