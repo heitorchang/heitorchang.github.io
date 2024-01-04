@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <title>denshitango</title>
+  </head>
+  <body>
+    <!-- version 0.1.1 -->
+    <div id="categoriesDiv" class="mainControls">
+      <select id="categorySelect" onchange="addCategory()">
+        <option value="Choose">Choose a category to add it to the deck.</option>
+      </select>
+    </div>
+
+    <div id="deckDiv">
+      Added: <input type="text" id="deckContentsText">
+    </div>
+
+    <div id="cardDiv">
+      <div id="revealRadioDiv" class="cardControls">
+        Always show:
+        <input type="radio" name="revealRadio" id="revealKana" onchange="updateReveal()" checked><label for="revealKana">Kana</label>
+        <input type="radio" name="revealRadio" id="revealKanji" onchange="updateReveal()"><label for="revealKanji">Kanji</label>
+        <input type="radio" name="revealRadio" id="revealEnglish" onchange="updateReveal()"><label for="revealEnglish">English</label>
+      </div>
+      <div id="cardOrderDiv" class="cardControls">
+        <button id="nextCardButton" onclick="nextCard()">Begin</button><br>
+        <div id="cardMessage"></div>
+      </div>
+      <div id="cardKana" class="cardField" onclick="revealField('cardKana')"></div>
+      <div id="cardKanji" class="cardField" onclick="revealField('cardKanji')"></div>
+      <div id="cardEnglish" class="cardField" onclick="revealField('cardEnglish')"></div>
+      <!-- <div id="cardId" class="hidden">0</div> -->
+      <div id="deckShuffleDiv" class="cardControls">
+        <button id="practiceButton" onclick="initializeCurrentState()">Reshuffle</button>
+      </div>
+    </div>
+
+    <!--
+    <form id="guessForm" action="#" onsubmit="handleGuess()">
+      Type to reveal hidden fields:
+      <input id="guessInput">
+      <input type="submit" value="Try it">
+      <div id="guessMessage"></div>
+    </form>
+    -->
+
+    <script>let words = [];</script>
+
+    <script src="words.js"></script>
+    <script src="words_full.js"></script>
+
+    <script src="denshitango.js"></script>
+  </body>
+</html>

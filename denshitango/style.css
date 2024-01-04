@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'Noto Serif JP';
+    src: url('NotoSerifJP.otf') format('opentype');
+    font-style: normal;
+}
+
+body {
+    font-family: 'Noto Serif JP';
+}
+
+button {
+    font-size: 1.2rem;
+}
+
+.hidden {
+    color: #ddd;
+    background-color: #ddd;
+}
+
+#deckContentsText {
+    width: calc(100% - 8rem);
+}
+
+.mainControls {
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+#cardDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardField {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20vh;
+    width: 85vw;
+    text-align: center;
+    border: 1px solid #ccc;
+    font-size: 2rem;
+}
+
+.cardControls {
+    width: 85vw;
+    text-align: center;
+    padding: 0.5rem;
+}
