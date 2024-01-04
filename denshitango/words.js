@@ -1,8 +1,9 @@
 words = [
-  ["To be", "わたし", "私", "I", 9001],
-  ["To be", "です", "", "is", 9002],
-  ["To be", "あなた", "" , "you", 9005],
-  ["Greetings", "おはようございます", "", "good morning", 9015],
-  ["Greetings", "こんにちは", "今日は", "good day", 9016],
-  ["Greetings", "こんばんは", "今晩は", "good evening", 9017],
+  ["School", "せんせい", "先生", "teacher",103],
+  ["School", "がくせい", "学生", "student",104],
+  ["School", "がっこう", "学校", "school",106],
+  ["Family", "ちち", "父", "my father",31],
+  ["Family", "はは", "母", "my mother",32],
+  ["Family", "あね", "", "my older sister",33],
+  ["Family", "あに", "", "my older brother",34],
 ];

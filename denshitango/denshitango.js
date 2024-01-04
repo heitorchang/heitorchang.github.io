@@ -170,8 +170,8 @@ function handleGuess() {
 function init() {
   loadWords();
   loadCategories();
-  // addGivenCategory("To be");
-  addGivenCategory("Greetings");
+  addGivenCategory("Family");
+  addGivenCategory("School");
   initializeCurrentState();
 }
 
