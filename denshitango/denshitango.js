@@ -16,7 +16,7 @@ const index_id = 4;
 // practice state
 let revealedItem = '';
 let currentRun = []; // shuffled list of deck cards
-let currentId = 9001;
+let currentId = 103;
 let currentKana = '';
 let currentKanji = '';
 let currentEnglish = '';
@@ -118,9 +118,9 @@ function revealField(divId) {
 
 function initializeCurrentState() {
   currentRun = shuffle(Array.from(deck));
-  document.getElementById("cardMessage").innerText = "While practicing, click on a gray box to reveal it. Choosing 'Kana' auto-plays audio.";
+  document.getElementById("cardMessage").innerText = "Afterwards, click on a gray box below to reveal it.";
   document.getElementById("cardKana").innerHTML = "Kana (かな).<br>Clicking here plays audio.";
-  document.getElementById("cardKanji").innerHTML = "Kanji (漢字).<br>If a card doesn't have Kanji, it's skipped.";
+  document.getElementById("cardKanji").innerHTML = "Kanji (漢字).<br>If a card doesn't have Kanji, it's skipped in 'Show Kanji' mode.";
   document.getElementById("cardEnglish").innerText = "English";
 }
 
