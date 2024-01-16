@@ -160,6 +160,13 @@ C-u C-x w r  ;; unhighlights everything
   In the <code>japanese</code> input method, type <code>K</code> to transform the word into katakana.
 </p>
 
+<h3>Emacs built-in current time function</h3>
+
+<pre>
+(setenv "TZ" "UTC0")
+(format-time-string "%Y-%m-%d %H:%M" (current-time))
+</pre>
+
 </div>
 <br>
 <hr>
