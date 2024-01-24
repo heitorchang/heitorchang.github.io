@@ -149,20 +149,19 @@ myfind() {
 
 # intercept git commands
 # if copying partially, remember to add the 'else command git "$@"' branch
+# intercept git commands to a log file
 git() {
-    if [ "$1" == "commit" ] ; then
-        echo Git commit intercepted, adding to /home/heitor/gitcommitlog.txt
-        MSG="$(date +""%d.%b_%H:%M"") $PWD: $3"
-        sed -i '1i '"$MSG"' ' /home/heitor/gitcommitlog.txt
-        command git "$@"
-    elif [ "$2" == "-A" ] ; then
+    # if [ "$1" == "commit" ] ; then
+    #     echo Git commit intercepted, adding to /home/hcbel/gitcommitlog.txt
+    #     MSG="$(date +""%d.%b_%H:%M"") $PWD: $3"
+    #     sed -i '1i '"$MSG"' ' /home/hcbel/gitcommitlog.txt
+    #     command git "$@"
+    # elif
+    if [ "$2" == "-A" ] ; then
         echo Should not add all, run /usr/bin/git to override.
         return 1
     elif [ "$2" == "-a" ] ; then
         echo Should not add all, run /usr/bin/git to override.
-        return 1
-    elif [ "$1" == "checkout" ] && [ "$2" == "master" ] ; then
-        echo Should not checkout to master, run /usr/bin/git to override.
         return 1
     elif [ "$1" == "add" ] ; then
         branch_name="$(git symbolic-ref --short HEAD 2>/dev/null)"
@@ -172,49 +171,17 @@ git() {
         elif [ "$branch_name" == "master" ] ; then
             echo Branch master detected. Doing nothing, run /usr/bin/git to override.
             return 1
-        elif [ "$2" == "ev_workers/kworkers.py" ] ; then
-            echo Should not add kworkers.py. Doing nothing, run /usr/bin/git to override.
-            return 1
         else
             echo Did you run git status, diff, and are adding a single file? Did you edit Tests? [y for yes]
             read confirm_status
 
             if [ "$confirm_status" = "y" ]; then
-                echo Adding file. When committing, remember to start the message with the branch name.
+                echo "Added. 'git commit' 'when applied, this commit will:' ~72 chars, START WITH ISSUE: #1000, see 'On branch'"
                 command git "$@"
             else
                 echo Aborting.
                 return 1
             fi
-        fi
-    elif [ "$1" == "merge" ] ; then
-        echo Should not merge, do pull --rebase instead.
-        echo Aborting.
-        return 1
-    elif [ "$1" == "pull" ] ; then
-        echo Intercepted git pull, looking for --rebase.
-        if [ "$2" != "--rebase" ] ; then
-            echo pull type is not --rebase.
-            echo Aborting.
-            return 1
-        else
-            echo Executing pull --rebase.
-            command git "$@"
-        fi
-    elif [ "$1" == "push" ] ; then
-        if [ "$3" == "master" ] ; then
-            echo Call /usr/bin/git to push to master.
-            echo Aborting.
-            return 1
-        fi
-
-        if [ "$2" != "origin" ] ; then
-            echo Expecting push to origin.
-            echo Aborting.
-            return 1
-        else
-            echo Executing push origin ...
-            command git "$@"
         fi
     else
         command git "$@"
