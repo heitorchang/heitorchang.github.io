@@ -176,7 +176,7 @@ git() {
             read confirm_status
 
             if [ "$confirm_status" = "y" ]; then
-                echo "Added. 'git commit' 'when applied, this commit will:' ~72 chars, START WITH ISSUE: #1000, see 'On branch'"
+                echo "Added. 'git commit' 'when applied, this commit will:' ~64 chars, START WITH ISSUE: #0000, see 'On branch'"
                 command git "$@"
             else
                 echo Aborting.
