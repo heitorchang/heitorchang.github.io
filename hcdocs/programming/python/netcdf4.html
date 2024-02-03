@@ -71,54 +71,93 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">tools</a> / <a href="index.html">ubuntu</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">python</a></h3>
     
-<h1>Ubuntu notes</h1>
+<h1>netCDF4 package</h1>
 
 <p>
-  <strong>Note</strong>: Currently using 23.04
+  Source: <a href="https://unidata.github.io/netcdf4-python/">Unidata GitHub</a>
 </p>
 
-<h3>Creating a emacs.desktop file</h3>
+<h3>Groups</h3>
+
+<p>
+  netCDF 4 files can have a hierarchical structure of groups, similar to a directory tree.
+</p>
+
+<p>
+  The topmost group is called the <em>root group</em>.
+</p>
 
 <pre>
-[Desktop Entry]
-Name=Emacs29
-Exec=/home/heitor/bin/emacs-29.1
-StartupNotify=false
-Terminal=false
-Type=Application
-Icon=emacs
+import netCDF4 as nc
+
+rootgrp = nc.Dataset("tutorial.nc", "w", format="NETCDF4")
 </pre>
 
-<h3>Adding a custom shortcut to the dock</h3>
-
-<ol>
-  <li>Create a emacs.desktop file (see above for Emacs 29, replace "emacs" with the needed program's name) in <code>~/.local/share/applications/</code></li>
-  <li>Click on <em>Activities</em> on the top bar. Search for the "Name" given in the emacs.desktop file.</li>
-  <li>Right-click and choose "Add to Favorites"</li>
-</ol>
-
-<h3>Disable Ctrl + Alt + Left/Right</h3>
+<h3>Dimensions</h3>
 
 <p>
-  These keyboard shortcuts are used in Emacs Paredit, so to disable them, go to Settings &gt; Keyboard &gt; Keyboard Shortcuts. Search for "workspace" and disable all of them. Although <code>Ctrl + Alt + Left/Right</code> does not appear, disabling them solves the issue.
+  The sizes of all variables are defined in terms of <em>dimensions</em>. Dimensions must be created first. A dimension may be unlimited (pass <code>None</code> or <code>0</code> when creating it).
 </p>
 
-<h3>Disable Ctrl + Alt + D</h3>
+<pre>
+time = rootgrp.createDimension("time", None)
+level = rootgrp.createDimension("level", 0)
+lat = rootgrp.createDimension("lat", 73)
+
+print(rootgrp.dimensions)
+print(len(lat))
+</pre>
+
+<h3>Variables</h3>
 
 <p>
-  Search "Hide all normal windows" in Keyboard shortcuts and disable it.
+  netCDF variables behave like NumPy multidimensional arrays. A variable may be a scalar (which is uncommon), created without a dimensions tuple.
 </p>
 
-<h3>International keyboard for Portuguese</h3>
+<pre>
+times = rootgrp.createVariable("time", "f8", ("time",))
+year = rootgrp.createVariable("year", "u2")
+</pre>
 
 <p>
-  In Ubuntu, choose "Intl. with dead keys". In Chrome OS, choose International PC Keyboard.
+  All dimensions and variables in a Dataset or Group are stored in a Python dict.
 </p>
 
+<pre>
+rootgrp.dimensions
+rootgrp.variables
+rootgrp.variables.keys()
+</pre>
+
+<h3>Attributes</h3>
+
 <p>
-  Type Right Alt + comma for a cedilla (ç).
+  Attributes may be found with <code>rootgrp.ncattrs()</code>.
+</p>
+
+<pre>
+rootgrp.ncattrs()
+rootgrp.description
+</pre>
+
+<h3>Reading and writing a variable's data</h3>
+
+<p>
+  The data may be treated as an array of the <code>Variable</code> instance.
+</p>
+
+<pre>
+import numpy as np
+
+lats = np.arange(-90, 91, 2.5)
+latitudes[:] = lats
+print(latitudes[:])
+</pre>
+
+<p>
+  Unlike NumPy arrays, netCDF variables with unlimited dimensions will grow along them if data is assigned outside the currently defined range of indices.
 </p>
 
 </div>

@@ -327,12 +327,12 @@
     <td class="hc-monospace">git stash list</td>
   </tr>
   <tr>
-    <td>Apply</td>
-    <td class="hc-monospace">git stash apply 3</td>
+    <td>Pop (stash item with index 3)</td>
+    <td class="hc-monospace">git stash pop 3</td>
   </tr>
   <tr>
-    <td>Pop</td>
-    <td class="hc-monospace">git stash pop 3</td>
+    <td>Apply (does not remove from stash contents)</td>
+    <td class="hc-monospace">git stash apply 3</td>
   </tr>
 </table>
 
@@ -357,6 +357,21 @@ git config --global core.eol lf
 git config --global core.autocrlf input
 </pre>
 
+
+<h3>Commit message</h3>
+
+<p>
+It is easier to count the number of characters in the message using an editor.
+</p>
+
+<p>
+Since the commit message may start with an issue number (#1000), the comment character must be changed to something else. = was chosen arbitrarily, since it resembles #.
+</p>
+
+<pre>
+git config --global core.editor "emacs -nw"
+git config --global core.commentChar "="
+</pre>
 </div>
 <br>
 <hr>

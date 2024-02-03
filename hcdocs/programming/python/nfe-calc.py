@@ -1,5 +1,26 @@
 """
 Compute taxes due in NF-e
+
+Procedure:
+
+Open email. Check number (Numero da nota) of the latest NF-e, to compare at the end
+Go to https://notadomilhao.prefeitura.sp.gov.br/
+Log in with the certificate
+Click on Emissao de NFS-e
+Tributado em SP, Normal
+Tomador Tempo OK
+Codigo de servico 02692 Programas de computadores (software)
+Run this script and evaluate calc_nfe(AMOUNT)
+Fill in Discriminacao with 'Desenvolvimento de sistema...'
+Continue Discriminacao with 'Dados bancarios...' (check TOK Diary)
+Continue Discriminacao with 'Valor Liquido...'
+
+Valor total is AMOUNT
+
+Leave INSS blank
+IBPT is Valor Aprox. da Carga Tributaria
+
+After submitting, compare the Numero da nota with previous number
 """
 
 from decimal import Decimal, ROUND_HALF_UP

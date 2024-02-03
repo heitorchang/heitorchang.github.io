@@ -167,6 +167,12 @@ C-u C-x w r  ;; unhighlights everything
 (format-time-string "%Y-%m-%d %H:%M" (current-time))
 </pre>
 
+<h3>Slowness in shutting down due to auto-complete</h3>
+
+<p>
+  A Stack Overflow search revealed that after a long time of usage, <code>ac-comphist.dat</code> becomes bloated and slows down shutdown. Simply move it to a <code>.bak</code> file or remove it.
+</p>
+
 </div>
 <br>
 <hr>

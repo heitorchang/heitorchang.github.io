@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #062;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">rust</a></h3>
+    
+<h1>The Rust Programming Language</h1>
+
+<p>
+  By Steve Klabnik and Carol Nichols, <em>for Rust 1.67.1</em>
+</p>
+
+<h3 id="chapters">Chapters</h3>
+
+<ul>
+  <li><a href="#ch1">1. Getting Started</a></li>
+  <li><a href="#ch2">2. Programming a Guessing Game</a></li>
+</ul>
+
+<h2 id="ch1">1. Getting Started</h2>
+
+<h3>Installation on Linux</h3>
+
+<p>
+  Run in a terminal:
+</p>
+
+<pre>
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+</pre>
+
+<p>
+  GCC also needs to be installed.
+</p>
+
+<h3>Cargo</h3>
+
+<p>
+  New project:
+</p>
+
+<pre>
+cargo new my_project
+</pre>
+
+<p>
+  Building and running:
+</p>
+
+<pre>
+cargo run
+</pre>
+
+<p>
+  Build only: <code>cargo run</code>
+</p>
+
+<p>
+  Check if code compiles (does not create an executable, so it's much faster): <code>cargo check</code>
+</p>
+
+<p>
+  Release: <code>cargo build --release</code>
+</p>
+
+<h2 id="ch2">2. Programming a Guessing Game</h2>
+
+<p>
+  <code>cargo new</code> generates a <code>Cargo.toml</code> file and <code>src/main.rs</code>
+</p>
+
+<p>
+  Bring items in a library into the scope of the program:
+</p>
+
+<pre>
+use std::io;
+</pre>
+
+<p>
+  <code>println!</code> is a macro. Macro names end in an exclamation point <code>!</code>.
+</p>
+
+<h3>Reading User Input</h3>
+
+<pre>
+let mut guess = String::new();
+
+io::stdin()
+    .read_line(&mut guess)
+    .expect("Failed to read line.");
+</pre>
+
+<p>
+  <code>read_line</code> appends the user's input into the string that is passed. The newline (as the user presses Enter) becomes part of the target string.
+</p>
+
+<p>
+  <code>&</code> indicates that the argument is a <em>reference</em>.
+</p>
+
+<p>
+  <code>read_line</code> returns a <code>Result</code> value. <code>Result</code> is an <em>enumeration</em> (also called <code>enum</code>). It is a type that can be in one of multiple possible states. Each state is called a <em>variant</em>.
+</p>
+
+<p>
+  In particular, <code>Result</code> has the variants <code>Ok</code> and <code>Err</code>.
+</p>
+
+<p>
+  <code>Ok</code> indicates the operation was successful, and inside it is the the successfully generated value. <code>Err</code> means the operation failed, and it contains information about what went wrong.
+</p>
+
+<p>
+  The <code>expect</code> method of <code>Result</code> causes the program to crash if this instance of <code>Result</code> is an <code>Err</code> value. If the value is <code>Ok</code>, <code>expect</code> will return the value that <code>Ok</code> is holding.
+</p>
+
+<p>
+  In the case of <code>read_line</code>, <code>Ok</code> holds the number of bytes in the user's input.
+</p>
+
+<h3>Printing Values with <code>println!</code> Placeholders</h3>
+
+<p>
+  To print a named variable, place the name inside <code>{}</code>.
+</p>
+
+<pre>
+println!("You guessed: {guess}");
+</pre>
+
+<p>
+  To print expressions, put empty curly brackets <code>{}</code> in the format string, and follow the format string with a comma-separated list of expressions to correspond to each <code>{}</code>.
+</p>
+
+<pre>
+let x = 5;
+let y = 10;
+
+println!("x = {x} and y + 2 = {}", y + 2);
+</pre>
+
+<h3>Generating a Random, Secret Number with the <code>rand</code> crate</h3>
+
+<p>
+  A <em>crate</em> is a collection of Rust source code files.
+</p>
+
+<p>
+  Add <code>rand</code> to the <code>[dependencies]</code> section of <code>Cargo.toml</code>.
+</p>
+
+<pre>
+[dependencies]
+rand = "0.8.5"
+</pre>
+
+<p>
+  <code>"0.8.5"</code> is shorthand for <code>"^0.8.5"</code> (any version that is at least 0.8.5 but below 0.9.0
+</p>
+
+<h3>Ensuring Reproducible Builds with <em>Cargo.lock</em></h3>
+
+<p>
+  When building a project for first time, Cargo figures out all the versions of the dependencies and writes them to the <em>Cargo.lock</em> file. Even if there's a new version of a dependency, the lock file forces builds to use the versions that are known to make the build successful.
+</p>
+
+<p>
+  When you want to update a crate, run <code>cargo update</code>. In this example, to update to <code>"0.9.0"</code>, it must be specified in <em>Cargo.toml</em> (because "0.8.5" specifies versions below "0.9.0").
+</p>
+
+<h3>Generating a Random Number</h3>
+
+<pre>
+use rand::Rng;
+
+let secret_number = rand::thread_rng().gen_range(1..=100);
+</pre>
+
+<p>
+  <code>Rng</code> is a <em>trait</em> that defines methods that random number generators implement.
+</p>
+
+<p>
+  A <em>trait</em> defines functionality that a particular type has and can share with other types. (covered in <a href="#ch10">Chapter 10</a>).
+</p>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+
