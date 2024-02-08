@@ -1,0 +1,396 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script src="jquery.min.js"></script>
+    <script src="jqterm/js/jquery.terminal.js"></script>
+    <script src="jqterm/js/unix_formatting.js"></script>
+    <link
+      href="jqterm/css/jquery.terminal.css"
+      rel="stylesheet"
+    />
+    <style>
+    .terminal {
+      --size: 1.5;
+      --color: rgba(255, 255, 255, 0.8);
+    }
+    .noblink {
+      --animation: terminal-none;
+    }
+    body {
+      background-color: #ffefd5;
+      font-family: sans-serif;
+
+    }
+    #jquery-terminal-logo {
+      color: white;
+      border-color: white;
+      position: absolute;
+      top: 7px;
+      right: 18px;
+      z-index: 2;
+    }
+    #jquery-terminal-logo a {
+      color: gray;
+      text-decoration: none;
+      font-size: 0.7em;
+    }
+    #loading {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      border: 3px solid #172;
+      border-radius: 50%;
+      border-top-color: #ff3;
+      animation: spin 1s ease-in-out infinite;
+      -webkit-animation: spin 1s ease-in-out infinite;
+    }
+
+    #bottomPadding {
+      height: 33vh;
+    }
+
+    @keyframes spin {
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+    @-webkit-keyframes spin {
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    #content {
+      display: none;
+      margin: 2rem;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="loading">&nbsp;</div>
+
+    <div id="content">
+      <div id="nav">
+      </div>
+
+      <div id="chapter-content">
+        <h3>Pizza Party Calculator</h3>
+
+        <p>
+          You're hosting a pizza party for your friends and need to figure out how much it's going to cost.
+        </p>
+
+        <p>
+          A nearby pizza parlor sells a pizza for <strong>$10</strong> and a bottle of cola for <strong>$2</strong>.
+</p>
+
+<p>
+  With an estimate of how many pizzas and bottles of pop you need, you write the following function definition (this initial version is automatically sent to the interpreter)
+</p>
+
+<p>
+  <textarea id="block_pizza_01" rows="8" cols="80" onkeypress="captureShiftEnter(event)">def calc_cost(num_pizzas, num_bottles):
+    pizza_cost = 10
+    bottle_cost = 2
+
+    return num_pizzas * pizza_cost + num_bottles * bottle_cost
+  </textarea>
+</p>
+
+<p>
+  <button onclick="sendTextareaValue('block_pizza_01')">Re-evaluate code above</button>
+</p>
+
+<p>
+  Try calling the function by typing <code>calc_cost(5, 4)</code> in the interpreter below, or click this button: <button onclick="sendToInterpreter('calc_cost(5, 4)')">Calculate cost of five pizzas and four bottles</button>.
+</p>
+
+<p>
+  Now, your sister suggests deep-dish pizza and lemon soda instead, which cost <strong>$15</strong> and <strong>$3</strong>.
+</p>
+
+<p>
+  Update the function definition above, then click on the <strong>Re-evaluate</strong> button (or type Shift + Enter inside the text area instead) to tell Python to use the new values.
+</p>
+
+<p>
+  Call the function for five pizzas and four bottles again. You should get back 87.
+</p>
+
+<p>
+  You can edit the code above as you wish, such as adding more items or renaming the function. A current limitation is that only one function definition may be entered at a time. Also planning to include CodeMirror for easier editing, especially the mandatory indentation.
+</p>
+
+<p>
+  Remember to click on <strong>Re-evaluate</strong> or type Shift + Enter when you're done.
+</p>
+
+      </div>
+
+    </div>
+    <div id="bottomPadding">
+    </div>
+
+
+    <script>
+    "use strict";
+
+    function sleep(s) {
+      return new Promise((resolve) => setTimeout(resolve, s));
+    }
+
+    async function main() {
+      let indexURL = "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/";
+      // const host = "http://127.0.0.1:8000/"
+      // let indexURL = host + "pyodide-core/";
+      const urlParams = new URLSearchParams(window.location.search);
+      const buildParam = urlParams.get("build");
+      if (buildParam) {
+        if (["full", "debug", "pyc"].includes(buildParam)) {
+          indexURL = indexURL.replace(
+        "/full/",
+        "/" + urlParams.get("build") + "/",
+          );
+        } else {
+          console.warn(
+            'Invalid URL parameter: build="' +
+            buildParam +
+            '". Using default "full".',
+          );
+        }
+      }
+      const { loadPyodide } = await import(indexURL + "pyodide.mjs");
+      // to facilitate debugging
+      globalThis.loadPyodide = loadPyodide;
+
+      let term;
+      globalThis.pyodide = await loadPyodide({
+        stdin: () => {
+          let result = prompt();
+          echo(result);
+          return result;
+        },
+      });
+      let namespace = pyodide.globals.get("dict")();
+      pyodide.runPython(
+        `
+            import sys
+            from pyodide.ffi import to_js
+            from pyodide.console import PyodideConsole, repr_shorten, BANNER
+            import __main__
+            BANNER = "Welcome to the Pyodide terminal emulator 🐍\\n" + BANNER
+            pyconsole = PyodideConsole(__main__.__dict__)
+            import builtins
+            async def await_fut(fut):
+              res = await fut
+              if res is not None:
+                builtins._ = res
+              return to_js([res], depth=1)
+            def clear_console():
+              pyconsole.buffer = []
+        `,
+        { globals: namespace },
+      );
+      let repr_shorten = namespace.get("repr_shorten");
+      let banner = namespace.get("BANNER");
+      let await_fut = namespace.get("await_fut");
+      let pyconsole = namespace.get("pyconsole");
+      let clear_console = namespace.get("clear_console");
+      const echo = (msg, ...opts) =>
+        term.echo(
+          msg
+            .replaceAll("]]", "&rsqb;&rsqb;")
+            .replaceAll("[[", "&lsqb;&lsqb;"),
+          ...opts,
+        );
+      namespace.destroy();
+
+      let ps1 = ">>> ",
+          ps2 = "... ";
+
+      async function lock() {
+        let resolve;
+        let ready = term.ready;
+        term.ready = new Promise((res) => (resolve = res));
+        await ready;
+        return resolve;
+      }
+
+      async function interpreter(command) {
+        let unlock = await lock();
+        term.pause();
+        // multiline should be split (useful when pasting)
+        for (const c of command.split("\n")) {
+          const escaped = c.replaceAll(/\u00a0/g, " ");
+          let fut = pyconsole.push(escaped);
+          term.set_prompt(fut.syntax_check === "incomplete" ? ps2 : ps1);
+          switch (fut.syntax_check) {
+            case "syntax-error":
+              term.error(fut.formatted_error.trimEnd());
+              continue;
+            case "incomplete":
+              continue;
+            case "complete":
+              break;
+            default:
+              throw new Error(`Unexpected type ${ty}`);
+          }
+          // In JavaScript, await automatically also awaits any results of
+          // awaits, so if an async function returns a future, it will await
+          // the inner future too. This is not what we want so we
+          // temporarily put it into a list to protect it.
+          let wrapped = await_fut(fut);
+          // complete case, get result / error and print it.
+          try {
+            let [value] = await wrapped;
+            if (value !== undefined) {
+              echo(
+                repr_shorten.callKwargs(value, {
+                  separator: "\n<long output truncated>\n",
+                }),
+              );
+            }
+            if (value instanceof pyodide.ffi.PyProxy) {
+              value.destroy();
+            }
+          } catch (e) {
+            if (e.constructor.name === "PythonError") {
+              const message = fut.formatted_error || e.message;
+              term.error(message.trimEnd());
+            } else {
+              throw e;
+            }
+          } finally {
+            fut.destroy();
+            wrapped.destroy();
+          }
+        }
+        term.resume();
+        await sleep(10);
+        unlock();
+      }
+
+      term = $("body").terminal(interpreter, {
+        greetings: 'Pyodide Interpreter',
+        prompt: ps1,
+        completionEscape: false,
+        completion: function (command, callback) {
+          callback(pyconsole.complete(command).toJs()[0]);
+        },
+        keymap: {
+      "CTRL+C": async function (event, original) {
+            clear_console();
+            term.enter();
+            echo("KeyboardInterrupt");
+            term.set_command("");
+            term.set_prompt(ps1);
+          },
+          TAB: (event, original) => {
+            const command = term.before_cursor();
+            // Disable completion for whitespaces.
+            if (command.trim() === "") {
+              term.insert("\t");
+              return false;
+            }
+            return original(event);
+          },
+          /*
+          // probably not useful because there will be many textareas.
+              "CTRL+Q": (event, original) => {
+            term.disable();
+            $("#py_block").focus();
+          },
+            "ALT+Q": (event, original) => {
+            term.disable();
+            $("#py_block").focus();
+          },
+          */
+        },
+      });
+      window.term = term;
+      pyconsole.stdout_callback = (s) => echo(s, { newline: false });
+      pyconsole.stderr_callback = (s) => {
+        term.error(s.trimEnd());
+      };
+      term.ready = Promise.resolve();
+      $("#loading").hide();
+      $("#content").fadeIn();
+
+      sendTextareaValue("block_pizza_01");
+      pyodide._api.on_fatal = async (e) => {
+        if (e.name === "Exit") {
+          term.error(e);
+          term.error("Pyodide exited and can no longer be used.");
+        } else {
+          term.error(
+          "Pyodide has suffered a fatal error. Please report this to the Pyodide maintainers.",
+          );
+          term.error("The cause of the fatal error was:");
+          term.error(e);
+          term.error("Look in the browser console for more details.");
+        }
+        await term.ready;
+        term.pause();
+        await sleep(15);
+        term.pause();
+      };
+
+      const searchParams = new URLSearchParams(window.location.search);
+      if (searchParams.has("noblink")) {
+        $(".cmd-cursor").addClass("noblink");
+      }
+    }
+      window.console_ready = main();
+
+    function sendToInterpreter(py) {
+      py = py.trim();
+      if (py.includes('\n')) {
+        // when typing blocks, ... appears by default and needs another Carriage Return
+        py += '\n';
+      }
+      term.exec(py);
+      window.setTimeout(term.focus, 150);
+    }
+
+    function add_a_and_b() {
+      const a_val = $("#add_a").val();
+      const b_val = $("#add_b").val();
+      console.log("in add");
+      console.log(a_val);
+      term.exec(`${a_val} + ${b_val}`);
+    }
+
+    function sendTextareaValue(id) {
+      let py = $("#" + id).val();
+      py = py.trim();
+      // remove any blank lines
+      py = py.replace(/^\s*$(?:\r\n?|\n)/gm, "")
+      if (py.includes('\n')) {
+        // when typing blocks, ... appears by default and needs another Carriage Return
+        py += '\n';
+      }
+      term.exec(py);
+      // window.setTimeout(term.focus, 150);
+    }
+
+    function captureShiftEnter(event) {
+      // console.log(event.keyCode);
+      // console.log(event.target.id);
+      if (event.shiftKey && event.keyCode === 13) {
+        event.preventDefault();
+        sendTextareaValue(event.target.id);
+      }
+    }
+
+    function goToChapter(chAndNum) {
+      $("#chapter-content").load("chapters/" + chAndNum + ".html");
+      window.location.hash = "#" + chAndNum;
+    }
+
+    </script>
+  </body>
+</html>
