@@ -71,11 +71,23 @@
       <div class="content">
 
 
-    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">django</a></h3>
+    <h3><a href="../index.html">home</a> / <a href="index.html">tools</a></h3>
     
-<a class="index" href="django-general-01.md.txt" target="_blank">&#x1F4C3; django-general-01.md.txt</a><br>
-<a class="index" href="django-many-to-many-reverse-filter-horiz.py.txt" target="_blank">&#x1F4C3; django-many-to-many-reverse-filter-horiz.py.txt</a><br>
-<a class="index" href="django_minimal_app.html">&#x1F4D8; django_minimal_app.html</a><br>
+<h1>fstab</h1>
+
+<h3>How to mount another partition</h3>
+
+<pre>
+# [file system] [mount point]   [type]  [options]       [dump]  [pass]
+# / was on /dev/nvme0n1p8 during curtin installation
+/dev/disk/by-uuid/5f707de5-21f8-4962-9521-9552ebce38c6 / ext4 defaults 0 1
+/dev/disk/by-uuid/24CB-35DB /boot/efi vfat defaults 0 1
+/swap.img       none    swap    sw      0       0
+
+# The other partition
+/dev/disk/by-uuid/60d4b2a4-1b02-48d7-adfc-3ab907dc8786 /mnt/other-partition ext4 defaults 0 2
+</pre>
+
 </div>
 <br>
 <hr>

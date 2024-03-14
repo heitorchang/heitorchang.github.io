@@ -1,13 +1,12 @@
 import pandas as pd
 import numpy as np
-# import netCDF4 as nc
+import netCDF4 as nc
 import os
 import sys
 import json
 from datetime import datetime, timedelta
 
-# print("Imported Pandas, NumPy, netCDF4, os, and sys.")
-print("Imported Pandas, NumPy, os, and sys.")
+print("Imported Pandas, NumPy, netCDF4, os, and sys.")
 
 
 def json_trav(s, max_level=0, show_values=True, show_levels=False):

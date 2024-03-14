@@ -73,9 +73,149 @@
 
     <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">django</a></h3>
     
-<a class="index" href="django-general-01.md.txt" target="_blank">&#x1F4C3; django-general-01.md.txt</a><br>
-<a class="index" href="django-many-to-many-reverse-filter-horiz.py.txt" target="_blank">&#x1F4C3; django-many-to-many-reverse-filter-horiz.py.txt</a><br>
-<a class="index" href="django_minimal_app.html">&#x1F4D8; django_minimal_app.html</a><br>
+<h1>Django Minimal App</h1>
+
+<p>
+  <strong>Source:</strong> Django tutorial (v5.0) and William Vincent's Django for Professionals (v4.0)
+</p>
+
+<h3>Creating a new project</h3>
+
+<pre>
+cd ~/code/venvs/
+
+python3 -m venv venvdj50
+source ~/code/venvs/venvdj50/bin/activate
+
+pip install --upgrade pip
+pip install django~=5.0
+
+cd ~/code/django_projects/
+
+# it's best to leave out special characters in the app name
+# and they cannot be the same as built-in names
+django-admin startproject minimalapp
+
+cd minimalapp/
+</pre>
+
+<h3>Create a <code>.gitignore</code> file</h3>
+
+<pre>
+__pycache__/
+mysecret*
+db.sqlite3
+</pre>
+
+<h3>Remove the <code>SECRET_KEY</code> from the settings file</h3>
+
+<p>
+  Create a file <code>/minimalapp/mysecrets.py</code> (in the same directory as <code>settings.py</code>).
+</p>
+
+<pre>
+SECRET_KEY = "...some random string..."
+</pre>
+
+<p>
+  In <code>settings.py</code>, remove <code>SECRET_KEY</code> and add:
+</p>
+
+<pre>
+from .mysecrets import SECRET_KEY
+</pre>
+
+<h3>Create a custom user model</h3>
+
+<p>
+  Run:
+</p>
+
+<pre>
+python manage.py startapp accounts
+</pre>
+
+<p>
+  Add to <code>accounts/models.py</code> (keep the existing code)
+</p>
+
+<pre>
+from django.contrib.auth.models import AbstractUser
+
+
+class CustomUser(AbstractUser):
+    pass
+</pre>
+
+<p>
+  Add to <code>settings.py</code>:
+</p>
+
+<pre>
+INSTALLED_APPS = [
+    ...
+    'accounts',
+]
+
+...
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+</pre>
+
+<p>
+  Run:
+</p>
+
+<pre>
+python manage.py makemigrations accounts
+python manage.py migrate
+</pre>
+
+<h3>Add the custom user to the Admin site</h3>
+
+<p>
+  Add to <code>accounts/admin.py</code> (keep the existing code)
+</p>
+
+<pre>
+from django.contrib.auth import get_user_model
+
+CustomUser = get_user_model()
+admin.site.register(CustomUser)
+</pre>
+
+<h3>Create a super user</h3>
+
+<p>
+  Run:
+</p>
+
+<pre>
+python manage.py createsuperuser
+</pre>
+
+<p>
+  The email can be anything, like <code>a@a.com</code>. A possible username is <code>admin</code>.
+</p>
+
+<h3>Run the development server</h3>
+
+<p>
+  Run:
+</p>
+
+<pre>
+python manage.py runserver
+</pre>
+
+<p>
+  To use another port number:
+</p>
+
+<pre>
+python manage.py runserver 8080
+</pre>
+
 </div>
 <br>
 <hr>
