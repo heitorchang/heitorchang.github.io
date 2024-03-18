@@ -76,24 +76,29 @@
 <h1>Django Minimal App</h1>
 
 <p>
-  <strong>Source:</strong> Django tutorial (v5.0) and William Vincent's Django for Professionals (v4.0)
+  <strong>Source:</strong> Django tutorial (v4.2 LTS) and William Vincent's Django for Professionals (v4.0)
 </p>
 
 <h3>Creating a new project</h3>
 
+<p>
+  For now (March 2024), use the LTS release (v4.2)
+</p>
+
 <pre>
 cd ~/code/venvs/
 
-python3 -m venv venvdj50
-source ~/code/venvs/venvdj50/bin/activate
+python3 -m venv venvdj42lts
+source ~/code/venvs/venvdj42lts/bin/activate
 
 pip install --upgrade pip
-pip install django~=5.0
+pip install django~=4.2
 
 cd ~/code/django_projects/
 
 # it's best to leave out special characters in the app name
 # and they cannot be the same as built-in names
+
 django-admin startproject minimalapp
 
 cd minimalapp/
@@ -103,26 +108,69 @@ cd minimalapp/
 
 <pre>
 __pycache__/
-mysecret*
+config_secrets*
 db.sqlite3
 </pre>
 
-<h3>Remove the <code>SECRET_KEY</code> from the settings file</h3>
+<h3>Create a secret file with deployment settings</h3>
 
 <p>
-  Create a file <code>/minimalapp/mysecrets.py</code> (in the same directory as <code>settings.py</code>).
+  Create a file <code>/minimalapp/config_secrets.py</code> (in the same directory as <code>settings.py</code>).
 </p>
 
 <pre>
 SECRET_KEY = "...some random string..."
+DEBUG = False
+DATABASES = {
+    'default': {
+        # ... database settings ...
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'psql_database',
+        'USER': 'psql_user',
+        'PASSWORD': 'secret_password',
+        'HOST': 'name_or_ip',
+        'PORT': 5432,
+    }
+}
+ALLOWED_HOSTS = ['minimalapp.mydomain.com']
 </pre>
 
 <p>
-  In <code>settings.py</code>, remove <code>SECRET_KEY</code> and add:
+  For local testing, the default values are (note that <code>BASE_DIR</code> is used to define the location of <code>db.sqlite3</code>. Copy this variable to the local <code>config_secrets.py</code>):
 </p>
 
 <pre>
-from .mysecrets import SECRET_KEY
+from pathlib import Path
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-n0b&8t*me4zgd$g)p7i(id1bx91###90w$nasj-8v$=*j7+#if'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+# ['127.0.0.1'] is also good for local testing
+ALLOWED_HOSTS = []
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Database
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+</pre>
+
+<p>
+  In <code>settings.py</code>, remove the settings above and add:
+</p>
+
+<pre>
+from .config_secrets import SECRET_KEY, DEBUG, DATABASES, ALLOWED_HOSTS
 </pre>
 
 <h3>Create a custom user model</h3>
@@ -174,14 +222,54 @@ python manage.py migrate
 <h3>Add the custom user to the Admin site</h3>
 
 <p>
-  Add to <code>accounts/admin.py</code> (keep the existing code)
+  Add to <code>/accounts/forms.py</code>
 </p>
 
 <pre>
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = get_user_model()
+        fields = (
+            "email",
+            "username",
+        )
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = get_user_model()
+        fields = (
+            "email",
+            "username",
+        )
+</pre>
+
+<p>
+  Add to <code>/accounts/admin.py</code>:
+</p>
+
+<pre>
+from django.contrib import admin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.admin import UserAdmin
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+
 
 CustomUser = get_user_model()
-admin.site.register(CustomUser)
+
+class CustomUserAdmin(UserAdmin):
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+    model = CustomUser
+    list_display = [
+        "email",
+        "username",
+        "is_superuser",
+    ]
+admin.site.register(CustomUser, CustomUserAdmin)
 </pre>
 
 <h3>Create a super user</h3>
@@ -196,6 +284,12 @@ python manage.py createsuperuser
 
 <p>
   The email can be anything, like <code>a@a.com</code>. A possible username is <code>admin</code>.
+</p>
+
+<h3>django-allauth</h3>
+
+<p>
+  Currently, many sites offer third-party logins (such as with Google accounts). It is best to use an app like <code>django-allauth</code> to handle them.
 </p>
 
 <h3>Run the development server</h3>
@@ -215,6 +309,146 @@ python manage.py runserver
 <pre>
 python manage.py runserver 8080
 </pre>
+
+<h3>Guest book app</h3>
+
+<p>
+  This app consists of a single web page that allows visitors to add comments.
+</p>
+
+<pre>
+python manage.py startapp guestbook
+</pre>
+
+<h3>Install the app</h3>
+
+<p>
+  Add to <code>minimalapp/settings.py</code>
+</p>
+
+<pre>
+INSTALLED_APPS = [
+    ...
+    'guestbook',
+]
+</pre>
+
+<h3>Create a model for comments</h3>
+
+<p>
+  Add to <code>/guestbook/models.py</code>
+</p>
+
+<pre>
+from django.contrib.auth import get_user_model
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    when = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+</pre>
+
+<p>
+  Then, run the migration
+</p>
+
+<pre>
+python manage.py makemigrations guestbook
+python manage.py migrate
+</pre>
+
+<h3>Test the model manually</h3>
+
+<p>
+  Add to <code>/guestbook/admin.py</code>
+</p>
+
+<pre>
+from .models import Comment
+
+
+admin.site.register(Comment)
+</pre>
+
+<p>
+  Start the development server and go to <code>/admin</code>
+</p>
+
+<h3>View the comments</h3>
+
+<p>
+  In a real app, <code>/guestbook/urls.py</code> should be created and used. For this simple, minimal example, edit <code>/minimalapp/urls.py</code>
+</p>
+
+<pre>
+from guestbook.views import guestbook
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('guestbook/', guestbook, name='guestbook'),
+]
+</pre>
+
+<h3>The guestbook view</h3>
+
+<p>
+  Create a template in a new directory <code>/guestbook/templates/guestbook/</code> called <code>guestbook.html</code>
+</p>
+
+<pre>
+&lt;h1&gt;Guest Book&lt;/h1&gt;
+
+{% for comment in comments %}
+  &lt;div&gt;
+    &lt;h3&gt;{{ comment.user }} at {{ comment.when }}&lt;/h3&gt;
+    &lt;p&gt;
+      {{ comment.content }}
+    &lt;/p&gt;
+  &lt;/div&gt;
+{% endfor %}
+
+&lt;div&gt;
+  &lt;h3&gt;Add a comment&lt;/h3&gt;
+  &lt;form action="" method="POST"&gt;
+    {% csrf_token %}
+    &lt;textarea name="comments"&gt;&lt;/textarea&gt;
+    &lt;p&gt;
+      &lt;input type="submit"&gt;
+    &lt;/p&gt;
+  &lt;/form&gt;
+&lt;/div&gt;
+</pre>
+
+<p>
+  Rewrite <code>/guestbook/views.py</code> to:
+</p>
+
+<pre>
+from django.shortcuts import render, redirect
+from django.urls import reverse
+
+# Create your views here.
+
+from .models import Comment
+
+
+def guestbook(request):
+    if request.method == 'GET':
+        comments = Comment.objects.all()
+        return render(request, 'guestbook/guestbook.html', {'comments': comments})
+    elif request.method == 'POST':
+        comments = request.POST['comments']
+        Comment.objects.create(user=request.user, content=comments)
+        return redirect(reverse('guestbook'))
+</pre>
+
+<h3>Conclusion</h3>
+
+<p>
+  The guestbook app is functional for read-only use. The Admin page may be used to add, edit, and delete comments.
+</p>
 
 </div>
 <br>
