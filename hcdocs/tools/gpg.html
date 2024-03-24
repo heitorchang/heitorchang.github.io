@@ -97,6 +97,16 @@ gpg --symmetric myfile.txt
 gpg -o myfile_dec.txt -d myfile.txt.gpg
 </pre>
 
+<h4>Clear cached passphrase in Ubuntu</h4>
+
+<p>
+  As a way to verify decryption, it's best to replicate decrypting the file. Run:
+</p>
+
+<pre>
+gpgconf --reload gpg-agent
+</pre>
+
 </div>
 <br>
 <hr>
