@@ -93,6 +93,18 @@ gpg --symmetric myfile.txt
 
 <h4>To decrypt</h4>
 
+<p>
+  Outputs to terminal (best option, does not require deleting the decrypted file after)
+</p>
+
+<pre>
+gpg -d myfile.txt.gpg
+</pre>
+
+<p>
+  Save to <code>myfile_dec.txt</code>
+</p>
+
 <pre>
 gpg -o myfile_dec.txt -d myfile.txt.gpg
 </pre>
