@@ -58,6 +58,15 @@
           margin-left: auto;
           margin-right: auto;
         }
+
+        table {
+          border-collapse: collapse;
+        }
+
+        td {
+          padding: 0.5rem 0.8rem;
+          border: 1px solid #ccc;
+        }
         </style>
     </head>
     <body>
@@ -79,6 +88,12 @@
 # To find filenames that contain both AAA and BBB
 
 grep -li AAA `grep -lir BBB --include="*.py"`
+
+# add to .bashrc, the third argument is optional, and would typically be an extension, like py
+
+dblgrep() {
+    grep -li "$1" `grep -lir "$2" --include="*$3"`
+}
 
 
 # Show single line and surrounding text where a string occurs (bash function)
