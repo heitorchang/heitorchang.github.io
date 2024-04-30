@@ -257,6 +257,22 @@
 
 <h3>2.3.2 Properties of task environments</h3>
 
+<p>
+  The dimensions of task environments are:
+</p>
+
+<ul>
+  <li><strong>Fully observable vs. Partially observable</strong>: Whether sensors can detect the state of the environment completely or not. If the agent does not have sensors, the environment is unobservable.</li>
+  <li><strong>Single-agent vs. Multiagent</strong>: Is another object's behavior dependent on the primary agent's actions? Multiagent environments may be competitive or cooperative, or a mix of the two.</li>
+  <li><strong>Deterministic vs. Nondeterministic</strong>: The environment is deterministic if the next state of the environment is completely determined by the current state and the action executed by the agent(s). A <strong>stochastic</strong> environment explicitly deals with probabilities (such as a 25% chance of rain), while in a nondeterministic environment, the possibilities are not quantified.</li>
+  <li><strong>Episodic vs. Sequential</strong>: In an episodic environment, the agent's experience is divided into atomic episodes. <em>Important</em>: The next episode does not depend on actions taken in previous episodes. For example, classification tasks are episodic. In sequential environments, the current decision could affect all future decisions. Thinking ahead becomes important in these environments.</li>
+  <li><strong>Static vs. Dynamic</strong>: A dynamic environment can change while the agent is deliberating (taxi driver). A static environment is easier to deal with because the agent does not need to keep looking at the world while it is deciding on an action (crossword puzzle). An environment is semidynamic if it itself does not change, but agent's performance score does with the passage of time. For example, a game of chess with a timer.</li>
+  <li><strong>Discrete vs. Continuous</strong>: The distinctions between these two dimensions apply to the state of the environment, the way time is handled, and the percepts and actions of the agent. A chess environment has a finite number of distinct states (except the clock). On the other hand, taxi driving is a continuous-state and continuous-time problem. Speed, location, and other vehicles sweep through a range of continuous values in a smooth manner. While technically camera input is discrete, it is typically treated as representing continuously varying intensities and locations.</li>
+  <li><strong>Known vs. Unknown</strong>: This distinction refers to the agent's (or designer's) state of knowledge about the "laws of physics" of the environment. In an unknown environment, the agent will have to learn how it works in order to make good decisions. In a never seen before video game, rules in the environment could be unknown.</li>
+</ul>
+
+<h3>2.4 The structure of agents</h3>
+
 </div>
 <br>
 <hr>
