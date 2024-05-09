@@ -92,6 +92,7 @@
   <li><a href="#ch03">Program Structure and Control Flow</a></li>
   <li><a href="#ch04">Objects, Types, and Protocols</a></li>
   <li><a href="#ch05">Functions</a></li>
+  <li><a href="#ch06">Generators</a></li>
 </ol>
 
 
@@ -763,7 +764,228 @@ f()  # UnboundLocalError
 
 <h3>5.13 Recursion</h3>
 
-<p>STOP p. 113 5.13
+<p>
+  The functions <code>sys.getrecursionlimit()</code> and <code>sys.setrecursionlimit()</code> show and alter the maximum recursion depth.
+</p>
+
+<h3>5.14 The <code>lambda</code> Expression</h3>
+
+<pre>
+lambda arg1, arg2: expression
+</pre>
+
+<p>
+  is an anonymous (unnamed) function. The body of the <code>lambda</code> must be a valid expression. Multiple statements or anything that is not an expression, such as <code>try</code> and <code>while</code>, cannot appear in a <code>lambda</code> expression.
+</p>
+
+<p>
+  The value of free variables used in defining a lambda expression are retrieved at the time of evaluation (<em>late binding</em>).
+</p>
+
+<p>
+  To capture the value of a variable at the time of definition, use a default argument:
+</p>
+
+<pre>
+x = 2
+f = lambda y, x=x: x * y
+</pre>
+
+<h3>5.15 Higher-Order Functions</h3>
+
+<p>
+  A <em>closure</em> is a function along with an environment containing all the variables needed to execute the function body.
+</p>
+
+<h3>5.16 Argument Passing in Callback Functions</h3>
+
+<p>
+  One challenging problem with callback functions is passing arguments to the supplied function.
+</p>
+
+<p>
+  One solution is to package up computation into a zero-argument <code>lambda</code> (sometimes called a <em>thunk</em>):
+</p>
+
+<pre>
+import time
+
+def after(seconds, func):
+    time.sleep(seconds)
+    func()
+
+after(10, lambda: add(2, 3))
+</pre>
+
+<p>
+  An alternative is using <code>functools</code>' <code>partial</code>:
+</p>
+
+<pre>
+after(10, partial(add, 2, 3))
+</pre>
+
+<h3>5.18 Decorators</h3>
+
+<pre>
+@decorate
+def func(x):
+    pass
+</pre>
+
+<p>
+  is shorthand for: <code>func = decorate(func)</code>
+</p>
+
+<p>
+  When writing a decorator, it's considerd best practice to use the <code>functools</code>' <code>@wraps()</code> decorator, which copies various function metadata to the replacement function:
+</p>
+
+<pre>
+from functools import wraps
+
+def trace(func):
+    @wraps(func)
+    def call(*args, **kwargs):
+        print("Calling", func.__name__)
+        return func(*args, **kwargs)
+    return call
+</pre>
+
+<p>
+  When stacking decorators, the one closer to the function is applied first to the function:
+</p>
+
+<pre>
+@decorator1
+@decorator2
+def func(x):
+    pass
+</pre>
+
+<p>
+  is <code>func = decorator1(decorator2(func))</code>
+</p>
+
+<p>
+  <code>@classmethod, @staticmethod</code> need to be placed at the outermost level.
+</p>
+
+<p>
+  To implement a decorator that accepts arguments:
+</p>
+
+<pre>
+def trace(message):
+    def decorate(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            print(message.format(func=func))
+            return func(*args, **kwargs)
+        return wrapper
+    return decorate
+</pre>
+
+<p>
+  The outer function is a kind of decorator factory:
+</p>
+
+<pre>
+logged = trace("You called {func.__name__}")
+
+@logged
+def g(x):
+    pass
+</pre>
+
+<p>
+  <strong>Example</strong>: how to build a registry of event handlers:
+</p>
+
+<pre>
+_event_handlers = []
+def event_handler(event):
+    def register_function(func):
+        _event_handlers[event] = func
+        return func
+    return register_function
+
+@event_handler("BUTTON")
+def handle_button(msg):
+    pass
+</pre>
+
+<h3>5.19 Map, Filter, and Reduce</h3>
+
+<p>
+  <code>map(function, *iterables), filter(function, iterable)</code> creates generators.
+</p>
+
+<p>
+  <code>functools</code>' <code>reduce(two-argument function, iterable, optional initial value)</code> accumulates values left-to-right on the supplied iterable (also called a <em>left-fold operation</em>).
+</p>
+
+<h3>5.22 Dynamic Code Execution and Creation</h3>
+
+<p>
+  <code>exec(str [, globals [, locals]])</code> executes arbitrary code in <code>str</code>.
+</p>
+
+<p>
+  <strong>Warning</strong>: changes to local variables have no effect. The dictionary of local and closure variables is not the actual data structure used to hold these variables.
+</p>
+
+<p>
+  Dynamic code execution is used to create functions and methods.
+</p>
+
+<h3>5.23 Asynchronous Functions and <code>await</code></h3>
+
+<p>
+  <em>Async functions</em> (also called coroutines) and <em>awaitables</em> are used for asynchronous execution of code.
+</p>
+
+<p>
+  An asynchronous function (or coroutine) is defined by prefacing a normal function definition with the <code>async</code> keyword:
+</p>
+
+<pre>
+async def greeting(name):
+    print(f"Hello, {name}")
+</pre>
+
+<p>
+  To make such functions run, they must execute under the supervision of other code; for example, <code>asyncio</code>.
+</p>
+
+<pre>
+&gt;&gt;&gt; import asyncio
+&gt;&gt;&gt; asyncio.run(greeting('Guido'))
+</pre>
+
+<p>
+  Async functions call other async functions using an <code>await</code> expression:
+</p>
+
+<pre>
+async def make_greeting(name):
+    return f"Hello, {name}"
+
+async def main():
+    for name in ['Paula', 'Tom', 'Lewis']:
+        a = await make_greeting(name)
+        print(a)
+</pre>
+
+<p>
+  <strong>Warning</strong>: it is not possible to write code that calls an async function from a non-async function.
+</p>
+
+<p>
+  An asynchronous context manager is defined with <code>__aenter__, __aexit__</code>. It is used via <code>async with</code>.
+</p>
+
+<h2 id="ch06">Generators</h2>
 
 </div>
 <br>
