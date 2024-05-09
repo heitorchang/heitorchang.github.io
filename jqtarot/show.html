@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQTarot</title>
+  <link rel="stylesheet" href="lib/jquery-ui-1.13.3.custom/jquery-ui.css">
+  <style>
+  body {
+    background-color: #269;
+  }
+
+  div.card {
+    display: inline-block;
+    vertical-align: top;
+    height: 176px;
+    margin: 0.1rem;
+  }
+
+  .rotated {
+    transform: rotate(180deg);
+  }
+  </style>
+  <script src="lib/jquery-3.7.1.min.js"></script>
+  <script src="lib/jquery-ui-1.13.3.custom/jquery-ui.min.js"></script>
+  <script src="lib/lodash.js"></script>
+</head>
+<body>
+  <link rel="preload" href="img/t00.png" as="image">
+  <link rel="preload" href="img/t01.png" as="image">
+  <link rel="preload" href="img/t02.png" as="image">
+  <link rel="preload" href="img/t03.png" as="image">
+  <link rel="preload" href="img/t04.png" as="image">
+  <link rel="preload" href="img/t05.png" as="image">
+  <link rel="preload" href="img/t06.png" as="image">
+  <link rel="preload" href="img/t07.png" as="image">
+  <link rel="preload" href="img/t08.png" as="image">
+  <link rel="preload" href="img/t09.png" as="image">
+  <link rel="preload" href="img/t10.png" as="image">
+  <link rel="preload" href="img/t11.png" as="image">
+  <link rel="preload" href="img/t12.png" as="image">
+  <link rel="preload" href="img/t13.png" as="image">
+  <link rel="preload" href="img/t14.png" as="image">
+  <link rel="preload" href="img/t15.png" as="image">
+  <link rel="preload" href="img/t16.png" as="image">
+  <link rel="preload" href="img/t17.png" as="image">
+  <link rel="preload" href="img/t18.png" as="image">
+  <link rel="preload" href="img/t19.png" as="image">
+  <link rel="preload" href="img/t20.png" as="image">
+  <link rel="preload" href="img/t21.png" as="image">
+  <link rel="preload" href="img/t22.png" as="image">
+  <link rel="preload" href="img/t23.png" as="image">
+  <link rel="preload" href="img/t24.png" as="image">
+  <link rel="preload" href="img/t25.png" as="image">
+  <link rel="preload" href="img/t26.png" as="image">
+  <link rel="preload" href="img/t27.png" as="image">
+  <link rel="preload" href="img/t28.png" as="image">
+  <link rel="preload" href="img/t29.png" as="image">
+  <link rel="preload" href="img/t30.png" as="image">
+  <link rel="preload" href="img/t31.png" as="image">
+  <link rel="preload" href="img/t32.png" as="image">
+  <link rel="preload" href="img/t33.png" as="image">
+  <link rel="preload" href="img/t34.png" as="image">
+  <link rel="preload" href="img/t35.png" as="image">
+  <link rel="preload" href="img/t36.png" as="image">
+  <link rel="preload" href="img/t37.png" as="image">
+  <link rel="preload" href="img/t38.png" as="image">
+  <link rel="preload" href="img/t39.png" as="image">
+  <link rel="preload" href="img/t40.png" as="image">
+  <link rel="preload" href="img/t41.png" as="image">
+  <link rel="preload" href="img/t42.png" as="image">
+  <link rel="preload" href="img/t43.png" as="image">
+  <link rel="preload" href="img/t44.png" as="image">
+  <link rel="preload" href="img/t45.png" as="image">
+  <link rel="preload" href="img/t46.png" as="image">
+  <link rel="preload" href="img/t47.png" as="image">
+  <link rel="preload" href="img/t48.png" as="image">
+  <link rel="preload" href="img/t49.png" as="image">
+  <link rel="preload" href="img/t50.png" as="image">
+  <link rel="preload" href="img/t51.png" as="image">
+  <link rel="preload" href="img/t52.png" as="image">
+  <link rel="preload" href="img/t53.png" as="image">
+  <link rel="preload" href="img/t54.png" as="image">
+  <link rel="preload" href="img/t55.png" as="image">
+  <link rel="preload" href="img/t56.png" as="image">
+  <link rel="preload" href="img/t57.png" as="image">
+  <link rel="preload" href="img/t58.png" as="image">
+  <link rel="preload" href="img/t59.png" as="image">
+  <link rel="preload" href="img/t60.png" as="image">
+  <link rel="preload" href="img/t61.png" as="image">
+  <link rel="preload" href="img/t62.png" as="image">
+  <link rel="preload" href="img/t63.png" as="image">
+  <link rel="preload" href="img/t64.png" as="image">
+  <link rel="preload" href="img/t65.png" as="image">
+  <link rel="preload" href="img/t66.png" as="image">
+  <link rel="preload" href="img/t67.png" as="image">
+  <link rel="preload" href="img/t68.png" as="image">
+  <link rel="preload" href="img/t69.png" as="image">
+  <link rel="preload" href="img/t70.png" as="image">
+  <link rel="preload" href="img/t71.png" as="image">
+  <link rel="preload" href="img/t72.png" as="image">
+  <link rel="preload" href="img/t73.png" as="image">
+  <link rel="preload" href="img/t74.png" as="image">
+  <link rel="preload" href="img/t75.png" as="image">
+  <link rel="preload" href="img/t76.png" as="image">
+  <link rel="preload" href="img/t77.png" as="image">
+
+  <div id="cards">
+  </div>
+
+  <script>
+  let order = [...Array(78).keys()];
+
+  function addCard(id) {
+    let idNum = id.toString();
+    if (idNum < 10) {
+      idNum = "0" + idNum;
+    }
+    $("#cards").append('<div class="card"><img src="img/t' + idNum + '.png" alt="Card"></div>');
+  }
+
+  function show() {
+    order = _.shuffle(order);
+
+    order.forEach(
+      id => {
+        addCard(id);
+      }
+    );
+  }
+
+  show();
+  </script>
+</body></html>
