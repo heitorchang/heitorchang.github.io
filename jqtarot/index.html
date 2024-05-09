@@ -13,6 +13,10 @@
     position: fixed;
     height: 176px;
   }
+
+  .rotated {
+    transform: rotate(180deg);
+  }
   </style>
   <script src="lib/jquery-3.7.1.min.js"></script>
   <script src="lib/jquery-ui-1.13.3.custom/jquery-ui.min.js"></script>
@@ -25,7 +29,8 @@
   }
 
   function flip(idNum) {
-    document.getElementById("i" + idNum).src = "img/t" + idNum + ".png";
+    const imgelem = document.getElementById("i" + idNum);
+    imgelem.src = "img/t" + idNum + ".png";
   }
 
   $( function() {
@@ -215,6 +220,11 @@
         card.style.left = "5px";
         card.style.zIndex = order[order_index];
         order_index++;
+        if (Math.random() < 0.5) {
+          card.classList.add("rotated");
+        } else {
+          card.classList.remove("rotated");
+        }
       }
     );
 
