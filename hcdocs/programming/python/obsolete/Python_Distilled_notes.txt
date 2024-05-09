@@ -1,0 +1,272 @@
+This book was written for Python version 3.8 to 3.9. Structural pattern matching is not included
+
+1. Python Basics
+
+In the interactive REPL (Read-Eval-Print Loop), the _ variable holds the result of the last operation
+
+The primitive types are bool, int, float, and str
+
+A variable is a name that refers to a value
+
+An expression is a combination of primitives, names, and operators that produces a value
+
+The while statement tests the conditional expression that immediately follows. If this condition is true, the body executes
+
+An f-string can contain formatting specifiers that change the appearance of values: print(f'{year:>3d} {value:0.2f}')
+
+A value is considered false if it is False, None, zero, or empty. Anything else is considered true
+
+Use if-elif-else statements for conditional branching
+
+A conditional expression is written:
+maxval = a if a > b else b
+
+An assignment expression uses := and must be surrounded by parentheses. There is no augmented assignment expression such as +:=
+x = 0
+while (x := x + 1) < 10:
+    print(x)
+    
+break aborts a loop early (only the innermost loop)
+
+continue skips the rest of the loop body and goes back to the top
+
+Triple-quoted strings may be multi-line
+
+Immediately adjacent string literals are concatenated into a single string
+
+format() and % may be used to format strings
+
+len(s) returns the length of a string
+
++ concatenates strings
+
+int(s) and float(s) convert strings to numeric values
+
+any value can be converted to a string with str(), repr(), and format()
+
+str() produces what you get with print()
+
+repr() creates a string that you can type into a program, representing exactly the value of that object
+
+To read a file line by line:
+with open('data.txt') as file:
+    for line in file:
+        print(line, end='')
+
+To read the entire file as a string:
+with open('data.txt') as file:
+    data = file.read()
+    
+To read a file in chunks:
+with open('data.txt') as file:
+    while (chunk := file.read(10_000)):
+        print(chunk, end='')
+
+To write to a file:
+with open('out.txt', 'w') as out:
+    value = 100
+    print(value, file=out)
+    
+out.write(a_string) also writes to the file 'out'
+
+If a script is to run in multiple environments, it's best to pass encoding='utf-8' when opening a file.
+
+To get a string from an interactive session, use:
+name = input('Enter your name: ')
+# the newline is not included
+
+List literals are comma-separated values enclosed in square brackets. An empty list is []
+
+To add an item to the end: a_list.append(new_value)
+
+To insert in a specific position: a_list.insert(index, new_value)
+
+To iterate: for name in names:
+
+To concatenate: a + b
+
+Values may be assigned to slices 
+
+list(obj) converts obj to a list
+
+A list comprehension (listcomp) is an expression that constructs a new list:
+[value * 2 for value in values]
+
+A tuple is an immutable object represented as a comma-separated group of values enclosed in parentheses
+
+An empty tuple is ()
+A one-element tuple is (item,) # the trailing comma is mandatory
+
+Tuple members cannot be reassigned
+
+A set is an unordered collection of unique objects. They are useful to find distinct values or manage problems related to membership
+
+An empty set is set()
+A set literal is {1, 2, 3}
+
+Only immutable objects may be added to sets
+
+{value[0] for value in a_set} is a set comprehension
+
+a_set.add(new_item) # adds a single item
+a_set.update({4, 5, 6}) # adds multiple items
+
+a_set.remove(x) # raises KeyError if not found
+a_set.discard(x) # does not raise an error
+
+An empty dict is {}
+
+A dict is a mapping between keys and values. They are written as:
+{'name': 'John', 'age': 36}
+
+A dict may be created from a list of key-value tuples
+pairs = [('John', 36), ('Ann', 28)]
+dict(pairs)
+
+To retrieve a value: a_dict['key_name']
+
+Or: a_dict.get(some_key, value_if_not_found)
+
+To check if a value is a key: key in a_dict
+
+To remove an element:
+del a_dict[some_key]
+
+Any immutable object may be used as a key. Any object can be a value
+
+A dictionary comprehension (dictcomp) looks like:
+{s[0]: 0 for s in values}
+
+collections.Counter tallies how many times each item occurs in a sequence of objects
+
+A dict's components may be obtained with:
+a_dict.keys()
+a_dict.values()
+a_dict.items()
+
+Dicts maintain the key insertion order
+
+A for loop iterates over a collection of items (strs, lists, dicts, files, etc.)
+
+range(1, n) creates a sequence of integers from 1 up to n - 1
+
+A function is defined with def:
+def f(arg):
+    """Docstring"""
+    print(arg)
+    
+Multi-line docstrings look like:
+def g(arg):
+    """Multi-line
+    docstring
+    """
+    print(arg)
+    
+Use a tuple to return multiple values from a function
+
+To unpack a tuple:
+q, r = my_divide(1230, 22)
+
+Assign a default value to a parameter:
+def h(arg=0):
+   ...
+   
+try-except blocks allow you to catch an exception
+try:
+    name = row[0]
+except IndexError as err:
+    print('Could not get item from row. Reason:', err)
+    
+To signal an exception:
+raise RuntimeError('Something went wrong.')
+
+try-finally allows you ensure certain actions are performed no matter what happens (such as releasing a lock)
+
+The with statement also cleans up when leaving the context of the block
+
+To force a program to quit:
+raise SystemExit("Optional message")
+
+To perform a specific action:
+import atexit
+
+conn = open_connection(...)
+
+def cleanup():
+    close_connection(conn)
+    
+atexit.register(cleanup)
+
+All values are objects. Methods are functions associated with a class and its instances
+
+The class statement is used to define new types of objects.
+class Stack:
+    def __init__(self):
+        self._items = []
+            
+    def push(self, item):
+        self._items.append(item)
+        
+    def pop(self):
+        return self._items.pop()
+    
+    def __repr__(self):
+        return f'<{type(self).__name__} at 0x{id(self):x}, size={len(self)}>'
+    
+    def __len__(self):
+        return len(self._items)
+
+Inheritance is defined like this:
+class MyStack(Stack):
+    ...
+    
+super() is used to invoke the superclass' definition of a method:
+class NumericStack(Stack):
+    def push(self, item):
+        if not isinstance(item, (int, float)):
+            raise TypeError('item is not an int or float')
+        super().push(item)
+        
+Using import creates a new namespace and executes all the statements in the given .py file
+
+import readport as rp
+from readport import read_contents
+
+If a script is run as the main script, this block will execute (but not when imported):
+if __name__ == '__main__':
+    main() 
+
+A package is a hierarchical collection of modules. You should put a collection of files in a directory, and add an empty __init__.py file.
+
+tutorial/
+  __init__.py
+  readport.py
+  pcost.py
+  stack.py
+  
+A fully qualified module import is:
+from tutorial import readport
+
+while a package-relative import is:
+from . import readport
+
+When structuring an application, pick a unique package name for the top-level directory, so that it's isolated from all other code. For example:
+
+tutorial-project/
+  tutorial/
+    __init__.py
+    readport.py
+    stack.py
+  tests/
+    test_stack.py
+    test_pcost.py
+  examples/
+    sample.py
+  doc/
+    tutorial.txt
+    
+Create a virtual environment with:
+python3 -m venv myproject_venv
+
+2. Operators, Expressions, and Data Manipulation
+

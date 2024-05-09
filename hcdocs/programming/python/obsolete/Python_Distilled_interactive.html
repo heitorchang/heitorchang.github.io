@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #062;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        table {
+          border-collapse: collapse;
+        }
+
+        td {
+          padding: 0.5rem 0.8rem;
+          border: 1px solid #ccc;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">obsolete</a></h3>
+    
+<h1>Python Distilled, &copy; 2022</h1>
+
+<style>
+h2 {
+  margin-bottom: 0;
+}
+
+div.snippet {
+
+}
+
+div.snippet h4 {
+  font-weight: normal;
+  margin: 2rem 0 0.2rem 0;
+}
+
+code.py-snippet {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+div.py-expr {
+  background-color: #f3faff;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+div.py-value {
+  background-color: #bef;
+  color: #226666;
+  padding: 0 0 0.5rem 1.6rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+h3.subsection {
+  display: inline-block;
+  border-bottom: 2px solid #08c;
+  margin: 3rem 0 0 0;
+}
+</style>
+
+<div id="toc">
+  <h3>Table of contents</h3>
+  <ol>
+    <li><a href="#ch1">Python Basics</a></li>
+  </ol>
+</div>
+
+<div id="content"></div>
+
+<!-- Begin BiwaScheme HTML generation -->
+<script src="../../js/biwascheme-0.8.0-custom.min.js"></script>
+<script type="text/biwascheme">
+(define add-chapter-header
+  (lambda (ch-id ch-name)
+    (let ((content (getelem "#content")))
+      (element-append-child!
+       content
+       (element-new
+        `(,(string-append "h2#" ch-id) ,ch-name))))))
+
+(define add-code-div
+  (lambda (div-id div-title contents)
+    (let ((content (getelem "#content")))
+      (element-append-child!
+       content
+       (element-new
+        `(,(string-append "div#sec" div-id)
+          ("h3.subsection" ,(string-append div-id " " div-title))
+          ("div.snippet"
+           ,@(map (lambda (row)
+                    `(div (h4 ,(list-ref row 0))
+                          ("div.py-expr" ("code.py-snippet" ,(list-ref row 1)))
+                          ,(if (> (string-length (list-ref row 2)) 0)
+                               `("div.py-value" ("code.py-snippet" ,(list-ref row 2)))
+                               "")))
+                  contents))))))))
+
+(add-chapter-header
+ "ch1"
+ "1. Python Basics")
+
+(add-code-div
+ "1.1"
+ "Running Python"
+ '(("In interactive mode, <code>_</code> holds the result of the last operation."
+    ""
+    "")))
+
+(add-code-div
+ "1.2"
+ "Python Programs"
+ '(("Python source files are UTF-8 encoded text files."
+    "# hello.py
+print(\"Hello, World!\")"
+    "")))
+
+(add-code-div
+ "1.3"
+ "Primitives, Variables, and Expressions"
+ '(("The four main primitive types are integers, floats, strings, and bools."
+    "(42, 4.2, 'forty-two', True, False)"
+    "")
+
+   ("A variable is a name that refers to a value. A value represents an object of some type."
+    "x = 42"
+    "")
+
+   ("A type hint (attached to a name) is only used by third-party code-checking tools. It is completely ignored (not enforced) by the actual interpreter (there will be no complaints about inconsistencies)."
+    "x: int = 42"
+    "")
+
+   ("An expression is a combination of values and operators that produces a value (maybe the same value)."
+    "2 + 3 * 4"
+    "14")))
+
+(add-code-div
+ "1.4"
+ "Arithmetic Operators"
+ '(("Truncating division"
+    "7 // 3"
+    "2")
+
+   ("Exponentiation (power)"
+    "2 ** 16"
+    "65536")
+
+   ("Modulo (remainder)"
+    "9 % 2"
+    "1")
+
+   ("divmod returns the quotient and remainder."
+    "divmod(9, 2)"
+    "(4, 1)")
+
+   ("round() returns \"banker's rounding\", that is, ?.5 rounds to the nearest even multiple."
+    "round(2.5)"
+    "2")
+
+   ("Bitwise operators"
+    "<< >> & | ^ ~"
+    "")))
+
+(add-code-div
+ "1.5"
+ "Conditionals and Control Flow"
+ '(("if, elif, and else is used for conditional execution."
+    "if size < 4:
+    print(\"small\")
+elif 5 <= size <= 7:
+    print(\"medium\")
+else:
+    pass # do nothing"
+    "")
+
+   ("A conditional expression may be used in assignments"
+    "maxval = a if a > b else b"
+    "")
+
+   ("An assignment may be combined in other code with the <code>:=</code> operator (coloquially called the \"walrus operator\")."
+    "x = 0
+while (x := x + 1) < 10:
+    print(x)"
+    "")
+
+   ("<code>break</code> exits a loop, and <code>continue</code> skips the remainder of the loop body and goes on with the next iteration. Note that parentheses are needed to perform the correct comparison check."
+    ""
+    "")))
+
+(add-code-div
+ "1.6"
+ "Text Strings"
+ '(("Immediately adjacent string literals are concatenated."
+    "print(
+\"Hello!\"
+\" \"
+\"Goodbye.\"
+)"
+    "Hello! Goodbye.")
+
+   ("An f-string is a string prefaced by an <code>f</code>. In f-strings, escaped expressions are evaluated. Any valid expression may be used."
+    "value = 3.141592
+print(f'The approximate value is {value:0.2f}')"
+    "The approximate value is 3.14")
+
+   ("Some common string methods are: (evaluate <code>dir(str)</code> for the full list)."
+    "s.startswith, s.endswith, s.replace, s.upper, s.lower"
+    "")
+
+   ("The following methods have an <code>\"r...\"</code> variant that starts from the end of the string:"
+    "s.find, s.rfind, s.index, s.rindex, s.split, s.rsplit, s.strip, s.rstrip"
+    "")
+
+   ("Convert between strings and numbers with <code>str(), repr(), format(), int(), float()</code>. String concatenation with <code>+</code> only works for strings."
+    "\"January \" + str(1) + \"st\""
+    "'January 1st'")
+
+   ("When debugging, use <code>repr(s)</code> to produce output because it often shows you more information about the value."
+    ""
+    "")))
+
+(add-code-div
+ "1.7"
+ "File Input and Output"
+ '(("Open a file and read its contents line by line. The <code>with</code> block is a context manager that automatically closes the file when execution leaves the block."
+    "with open('data.txt', encoding='utf-8') as file:
+    for line in file:
+        print(line, end='') # omit the extra newline"
+    "")
+
+   ("Read a file in its entirety as a string:"
+    "with open('data.txt') as file:
+    contents = file.read()"
+    "")
+
+   ("Use the <code>read()</code> method to read in chunks of <code>n</code> characters:"
+    "with open('data.txt', encoding='utf-8') as file:
+    while chunk := file.read(3):
+        print(chunk, end=';')"
+    "")
+
+   ("Pass the <code>file</code> argument to <code>print</code> in order to write a string to a file."
+    "with open('out.txt', 'w') as out:
+    print('data', file=outfile)"
+    "")
+
+   ("Alternatively, use the <code>write</code> method of a file object."
+    "out.write(name + ' says hi')"
+    "")
+
+   ("Read a string interactively:"
+    "name = input(\"What's your name?\")"
+    "")))
+
+(add-code-div
+ "1.8"
+ "Lists"
+ '(("A list literal consists of comma-separated values enclosed by square brackets:"
+    "names = ['Amy', 'Bob', 'Carl']"
+    "")
+
+   ("Empty list literals"
+    "[]
+list() # not commonly used"
+    "")
+
+   ("Add a single item to the end of a list:"
+    "names.append('Dave')"
+    "")
+
+   ("Insert an item at a specific position:"
+    "names.insert(1, 'Ann')"
+    "")
+
+   ("Iterate over the items:"
+    "for name in names:
+    print(name)"
+    "")
+
+   ("Use slices to retrieve a part of the list or to replace values. The second index is not included"
+    "names[0:2] = ['Judy', 'Kim', 'Laura', 'Maria']"
+    "['Judy', 'Kim', 'Laura', 'Maria', 'Carl']")
+
+   ("Concatenate lists"
+    "[1, 2] + [3, 4, 5]"
+    "[1, 2, 3, 4, 5]")
+
+   ("Separate a string into its constituent characters"
+    "list('banana')"
+    "['b', 'a', 'n', 'a', 'n', 'a']")
+
+   ("A list comprehension is an expression that builds a list according to its specification:"
+    "[x * x for x in range(6)]"
+    "[0, 1, 4, 9, 16, 25]")))
+
+(add-code-div
+ "1.9"
+ "Tuples"
+ '(("A tuple is an immutable object that encloses values in parentheses. Elements cannot be changed, nor removed or added to the tuple. However, a tuple may hold references to mutable objects and these mutable objects may be altered."
+    "('Tim', 34)"
+    "")
+
+   ("A 0-tuple (empty tuple) literal"
+    "a = ()"
+    "")
+
+   ("A 1-tuple (single-element tuple) literal has a trailing comma"
+    "b = ('apple',)"
+    "")
+
+   ("Retrieving values in a tuple is commonly done by \"unpacking\" them."
+    "name, address, item, quantity = customer_order"
+    "")))
+
+(add-code-div
+ "1.10"
+ "Sets"
+ '(("A set is an unordered collection of unique objects. They are used to find distinct values or to manage membership relationships. A set literal is enclosed in curly braces. Also, a set may be constructed from a list:"
+    "names = {'Joe', 'Kim'}
+names = set(['Anna', 'Beth'])
+empty_set = set()"
+    "")
+
+   ("A set cannot contain lists (or other unhashable types)"
+    "set([[1, 2], [3]])"
+    "TypeError: unhashable type: 'list'")
+
+   ("A set comprehension is written with curly braces:"
+    "names = {s[0] for s in students}"
+    "")
+
+   ("Common set operations:"
+    "a | b  # union
+a & b  # intersection
+a - b  # difference
+a ^ b  # symmetric difference
+a <= b  # a is a subset of b
+a < b  # a is a proper subset of b (a cannot be the same as b)"
+    "")
+
+   ("Add a single item"
+    "a.add(99)"
+    "")
+
+   ("Add multiple items"
+    "a.update({20, 30, 40})
+a.update([20, 30, 40])"
+    "")
+
+   ("Delete an item"
+    "a.remove(30)  # raises KeyError if absent
+a.discard(30)  # does nothing if absent"
+    "")))
+
+(add-code-div
+ "1.11"
+ "Dictionaries"
+ '(("A dictionary is a mapping between keys and values. A dict literal is key-value pairs enclosed by curly braces. Note that <code>{}</code> is an empty dict, and an empty set is <code>set()</code>.<br><br>Like set elements, keys must be hashable. Key insertion order is preserved as long as insertions and deletions have not occurred."
+    "d = {'name': 'Ken', 'age': 23}"
+    "")
+
+   ("To access members of a dict, use the indexing operator:"
+    "d['name']"
+    "'Ken'")
+
+   ("To add key-value pairs:"
+    "d['height'] = 182"
+    "")
+
+   ("Check key membership"
+    "'weight' in d"
+    "False")
+
+   ("Use a default value if the key does not exist:"
+    "p = d.get('pet', 'cat')"
+    "")
+
+   ("Remove a key-value pair:"
+    "del d['weight']"
+    "")
+
+   ("Keys may be tuples:"
+    "d[('Japan', '2009-01-15')] = 344"
+    "")
+
+   ("Example of a dict comprehension:"
+    "names = ['amy', 'jim', 'paul']
+initials = {name: name[0].upper() for name in names}"
+    "{'amy': 'A', 'jim': 'J', 'paul': 'P'}")
+
+   ("The Counter object tallies objects"
+    "from collections import Counter
+ctr = Counter(\"banana\")"
+    "Counter({'a': 3, 'n': 2, 'b': 1})")
+
+   ("<code>dict()</code> may be used with a list of key-value tuples:"
+    "dict([('A', 21), ('B', 33), ('C', 19)])"
+    "{'A': 21, 'B': 33, 'C': 19}")
+
+   ("Converting a dict to a list returns the keys"
+    "list({'A': 21, 'B': 33, 'C': 19})
+['A', 'B', 'C']"
+    "")
+
+   ("Alternatively, use the following methods (note: they return views):"
+    "d.keys()
+d.values()
+d.items()"
+    "")))
+
+(add-code-div
+ "1.12"
+ "Iteration and Looping"
+ '(("The <code>for</code> loop iterates over a collection of items (such as a string, list, range, or tuple). More complex objects may also be iterated over, such as files (reads them line by line)."
+    "for n in [1, 2, 3]:
+    print(f'The square of {n} is {n * n}.')"
+    "")
+
+   ("The <code>range(i, j, step)</code> function creates an object that represents a sequence of integers from i up to, but not including j, with the increment of step (by default, 1)."
+    "list(range(5))"
+    "[0, 1, 2, 3, 4]")))
+
+(add-code-div
+ "1.13"
+ "Functions"
+ '(("Create a function:"
+    "def add_one(x):
+    \"\"\"Add one to the argument.
+    (This is a multi-line docstring, described in PEP 257.
+    Keep triple double quotes in the same line if the docstring is a single line.)
+    \"\"\"
+    return x + 1"
+    "")
+
+   ("Return multiple values by placing them in a tuple:"
+    "def initial_and_length(name):
+    return (name[0], len(name))
+
+initial_and_length('Adam')"
+    "('A', 4)")
+
+   ("Use an assignment in the parameter list to define a default value (<strong>Warning:</strong> do not put mutable values as default values!)"
+    "def connect(host, port, timeout=500):
+    pass"
+    "")
+
+   ("When calling a function, the parameter may be named. If all are named, the order no longer matters:"
+    "connect(host='www.python.org', timeout=100, port=8000)"
+    "")))
+
+(add-code-div
+ "1.14"
+ "Exceptions"
+ '(
+
+))
+</script>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

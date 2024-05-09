@@ -82,9 +82,688 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">python</a></h3>
     
-<h1>Python Distilled, &copy;&nbsp;2022</h1>
+<h1>Python Distilled, &copy; 2022</h1>
 
-<iframe style="width: 100%; height: 70vh;" src="Python_Distilled_notes.txt"></iframe>
+<h2>Contents</h2>
+
+<ol>
+  <li><a href="#ch01">Python Basics</a></li>
+  <li><a href="#ch02">Operators, Expressions, and Data Manipulation</a></li>
+  <li><a href="#ch03">Program Structure and Control Flow</a></li>
+  <li><a href="#ch04">Objects, Types, and Protocols</a></li>
+  <li><a href="#ch05">Functions</a></li>
+</ol>
+
+
+<h2 id="ch01">1. Python Basics</h2>
+
+<p>
+  This book assumes Python 3.8 or newer.
+</p>
+
+<p>
+  The underscore <code>_</code> variable in interactive sessions holds the result of the last operation.
+</p>
+
+<h3>1.3 Primitives, variables, and expressions</h3>
+
+<p>
+  The main primitive types are <code>int, float, str, bool</code>.
+</p>
+
+<p>
+  A variable is a name that refers to a value. A value represents an object. When a variable's value is a mutable object, assigning another variable's value as the other variable will result in both variables referring to the same object.
+</p>
+
+<h3>1.5 Conditionals and control flow</h3>
+
+<p>
+  <code>if, elif, else, while</code> are used for looping and conditional code execution.
+</p>
+
+<p>
+  To assign a value in combination with a test (the <code>else</code> clause is required):
+</p>
+
+<pre>
+maxval = a if a > b else b
+</pre>
+
+<h3>1.6 Text strings</h3>
+
+<p>
+  Although <code>str()</code> and <code>repr()</code> both create strings, <code>str()</code> is called when using <code>print()</code>, while <code>repr()</code> should create a string that you type into a program to exactly represent the value of that object.
+</p>
+
+<h3>1.11 Dictionaries</h3>
+
+<p>
+  A tuple may be used as an entry's key (a multipart key):
+</p>
+
+<pre>
+prices[('IBM', '2020-01-15')] = 91.23
+prices['IBM', '2020-01-15'] = 91.23  # without parentheses
+</pre>
+
+<h3>1.13 Functions</h3>
+
+<p>
+  Functions can access variables defined outside of a function as long as they are defined in the same file:
+</p>
+
+<pre>
+debug = True
+a = 1
+
+def f(x):
+    if debug:
+        print("in debug")
+        print(a)
+    print(f"end f with {x}")
+
+if __name__ == "__main__":
+    f(123)
+</pre>
+
+<h3>1.14 Exceptions</h3>
+
+<p>
+  To perform actions no matter what happens in a <code>try</code> block, use <code>try-finally</code> or a <code>with</code> block.
+</p>
+
+<h3>1.15 Program termination</h3>
+
+<p>
+  To force a program to quit:
+</p>
+
+<pre>
+raise SystemExit()
+raise SystemExit("Unexpected error")
+</pre>
+
+<p>
+  To perform specific actions:
+</p>
+
+<pre>
+import atexit
+
+conn = open_connection("abc.com")
+
+def cleanup():
+    print("Cleaning up...")
+
+atexit.register(cleanup)
+</pre>
+
+<h3>1.17 Modules</h3>
+
+<p>
+  A <em>module</em> is a file with statements and definitions. To use this module in other files, use the <code>import</code> statement.
+</p>
+
+<h3>1.19 Packages</h3>
+
+<p>
+  A package is a hierarchical collection of modules. In the filesystem, it is a directory containing an <code>__init__.py</code> file, which may be empty.
+</p>
+
+<p>
+  The filesystem location of a package may be found with <code>pkg.__file__</code>
+</p>
+
+<h2 id="ch02">2. Operators, Expressions, and Data Manipulation</h2>
+
+<p>
+  In numeric literals, underscores may be added as a visual separator between digits: <code>1_2443_02_1.33</code> is <code>12443021.33</code>
+</p>
+
+<p>
+  The left hand side of an assignment represents a location where a value or reference to an object is stored (such as a variable's name, an object's attribute, or an index within a container such as a list or dict).
+</p>
+
+<p>
+  The "assignment expression" operator (also called the "walrus operator"), <code>:=</code>, combines expression evaluation and assignment. It is usually used in <code>if</code> and <code>while</code> statements.
+</p>
+
+<pre>
+while (line := file.readline()):
+    print(line)
+</pre>
+
+<p>
+  If using <code>None</code> as a keyword argument's default value, check for it with <code>arg is None</code>, because the value passed may be falsy and will appear as if the value was not passed.
+</p>
+
+<p>
+  Unpacking a variable number of items:
+</p>
+
+<pre>
+items = [1, 2, 3, 4, 5]
+a, b, *extra = items  # a = 1, b = 2, extra = [3, 4, 5]
+</pre>
+
+<p>
+  "Splatting" (expanding) an iterable:
+</p>
+
+<pre>
+items = [1, 2, 3]
+a = [10, *items, 11]  # a = [10, 1, 2, 3, 11]
+</pre>
+
+<p>
+  Operations on references to mutable objects copy the reference. So if one of the values in a referenced object changes, it will be seen in all copies.
+</p>
+
+<p>
+  For lists, the constructor <code>list()</code> makes a unique copy:
+</p>
+
+<pre>
+a = [3, 4, 5]
+c = [list(a) for _ in range(4)]
+</pre>
+
+<h3>2.14 List, Set, and Dictionary Comprehensions</h3>
+
+<pre>
+nums = [1, 2, 3, 4, 5]
+squares = [n * n for n in nums]
+
+squares_n_is_3_or_more = [n * n for n in nums if n >= 3]  # [9, 16, 25]
+</pre>
+
+<p>
+  Within a comprehension, it's not possible to do exception handling. As a workaround, wrap exceptions with a function, and use this function in the comprehension.
+</p>
+
+<pre>
+def to_int(x):
+    try:
+        return int(x)
+    except ValueError:
+        return None
+
+values = ['1', '2', 'n/a']
+data = [to_int(x) for x in values]
+</pre>
+
+<p>
+  If the custom function is used in a conditional, it's possible to use an assignment expression to evaluate the function only once:
+</p>
+
+<pre>
+data2 = [v for x in values if (v:=to_int(x)) is not None]  # parentheses needed to avoid a SyntaxError
+</pre>
+
+<h3>2.15 Generator Expressions</h3>
+
+<p>
+  A generator expression is an object that carries out the same computation as a list comprehension but produces the result iteratively. The syntax is the same, except that parentheses are used instead of square brackets.
+</p>
+
+<pre>
+nums = [1, 2, 3]
+squares = (x * x for x in nums)
+next(squares)   # 1
+next(squares)   # 4
+next(squares)   # 9
+next(squares)   # StopIteration
+</pre>
+
+<h2 id="ch03">Program Structure and Control Flow</h2>
+
+<h3>3.3 Loops and Iteration</h3>
+
+<p>
+  In the statement <code>for i in s</code>, the variable <code>i</code> is called the <em>iteration variable</em>. The scope of the iteration variable is not private to the <code>for</code> statement. A previously defined variable with the same name will be overwritten. The iteration variable retains the last value after the loop has completed.
+</p>
+
+<p>
+  It is possible to unpack elements produced by iteration:
+</p>
+
+<pre>
+s = [(1, 2, 3), (4, 5, 6)]
+
+for x, y, z in s:
+    pass
+</pre>
+
+<h3>3.4 Exceptions</h3>
+
+<p>
+  It is good style to only catch exceptions from which your code can actually recover. If recovery is not possible, let the exception propagate.
+</p>
+
+<p>
+  <code>raise</code> by itself re-raises the current exception.
+</p>
+
+<p>
+  Multiple exception-handling blocks may be used:
+</p>
+
+<pre>
+try:
+    # do something
+except TypeError as e:
+    # handle e
+except ValueError as e:
+    # handle e
+</pre>
+
+<p>
+  To handle multiple exception types in one block:
+</p>
+
+<pre>
+try:
+    # do something
+except (TypeError, ValueError) as e:
+    # handle e
+</pre>
+
+<p>
+  An <code>else</code> block after the last <code>except</code> (and before <code>finally</code>) will be executed if the <code>try</code> block doesn't raise an exception.
+</p>
+
+<h3>3.4.1 The Exception Hierarchy</h3>
+
+<p>
+  Exceptions are organized into a hierarchy via inheritance. It may be easier to focus on general categories of errors. For example, instead of handling <code>IndexError</code> and <code>KeyError</code>, handle only <code>LookupError</code>.
+</p>
+
+<p>
+  The most common categories of built-in exceptions are:
+</p>
+
+<table>
+  <tr>
+    <td><code>BaseException</code></td>
+    <td>The root class for all exceptions</td>
+  </tr>
+  <tr>
+    <td><code>Exception</code></td>
+    <td>Base class for program-related errors</td>
+  </tr>
+  <tr>
+    <td><code>ArithmeticError</code></td>
+    <td>Math-related errors</td>
+  </tr>
+  <tr>
+    <td><code>ImportError</code></td>
+    <td>Import-related errors</td>
+  </tr>
+  <tr>
+    <td><code>LookupError</code></td>
+    <td>Container lookup errors</td>
+  </tr>
+  <tr>
+    <td><code>OSError</code></td>
+    <td>System-related errors (including files, network, and permissions). <code>IOError</code> and <code>EnvironmentError</code> are aliases</td>
+  </tr>
+  <tr>
+    <td>ValueError</td>
+    <td>Value-related errors, including Unicode</td>
+  </tr>
+  <tr>
+    <td>UnicodeError</td>
+    <td>Unicode string encoding-related errors</td>
+  </tr>
+</table>
+
+<p>
+  <code>SystemExit</code> is used to make a program terminate on purpose. As an argument, pass an integer exit code or a string message (in this case, <code>1</code> will be the exit code).
+</p>
+
+<h3>3.4.3 Defining New Exceptions</h3>
+
+<p>
+  To create a new exception, create a new class definition that inherits from <code>Exception</code>:
+</p>
+
+<pre>
+class DeviceError(Exception):
+    pass
+</pre>
+
+<p>
+  To accept a custom number of arguments (it is important to assign a tuple containing the arguments to <code>self.args</code>:
+</p>
+
+<pre>
+class DeviceError(Exception):
+    def __init__(self, errno, msg):
+        self.args = (errno, msg)
+        self.errno = errno
+        self.errmsg = msg
+</pre>
+
+<p>
+  The constant <code>__debug__</code> is <code>True</code> if Python was not started with the <code>-O</code> option.
+</p>
+
+<h2 id="ch04">4. Objects, Types, and Protocols</h2>
+
+<p>
+  The type of an object is itself an object: the object's class. <code>type(type(x))</code> is <code>&lt;class 'type'&gt;</code>.
+</p>
+
+<p>
+  To check if an object is of a certain type:
+</p>
+
+<code>
+if isinstance(items, list):
+    # do something
+
+if isinstance(items, (list, tuple)):
+    # do something
+</code>
+
+<p>
+  A <em>subtype</em> is a type defined by inheritance.
+</p>
+
+<p>
+  <code>isinstance</code> is the best way of checking an object's type. It iw aware of subtypes.
+</p>
+
+<h3>4.4 References and Copies</h3>
+
+<p>
+  When a program makes an assignment such as <code>b = a</code>, a new reference to <code>a</code> is created.
+</p>
+
+<p>
+  For immutable objects such as numbers and strings, this assignment appears to create a copy of <code>a</code>, but this is not the case.
+</p>
+
+<p>
+  For mutable objects, <code>a</code> and <code>b</code> end up referring to the same object. Changes made to one of the variables is reflected in the other.
+</p>
+
+<p>
+  A list copy made with <code>list(a)</code> is a shallow copy. A new list is created, but it is populated with references to the items contained in the original object.
+</p>
+
+<p>
+  To create a deep copy:
+</p>
+
+<pre>
+import copy
+
+a = [1, 2, [3, 4]]
+b = copy.deepcopy(a)
+</pre>
+
+<p>
+  <code>deepcopy()</code> is actively discouraged. It will fail with objects that involve system or runtime state (such as open files, network connections, threads, and generators).
+</p>
+
+<p>
+  All objects are <em>first-class</em>. This means that anything that can be assigned to a name can be treated as data, referred to by variables, called (if it is callable), passed as arguments, returned from functions, and more.
+</p>
+
+<h3>4.8 Object Protocols and Data Abstraction</h3>
+
+<p>
+  <em>Special</em> (also called <em>magic</em> or <em>dunder</em>) methods are preceded and followed by double underscores: <code>__</code>.
+</p>
+
+<p>
+  Categories of core interpreter features are called <em>protocols</em>.
+</p>
+
+<p>
+  <code>NotImplemented</code> is an exception that should be used when a special method is unable to produce a value (example in section 4.11, Comparison Protocol).
+</p>
+
+<h3>4.9 Object Protocol</h3>
+
+<p>
+  Management of objects:
+</p>
+
+<p>
+  <code>__new__, __init__, __del__, __repr__</code>
+</p>
+
+<p>
+  The convention of defining <code>__repr__</code> is to return an expression string that can be evaluated to re-create the object using <code>eval()</code>.
+</p>
+
+<p>
+  If re-creation is not possible (say for complex objects), return a string of the form <code>&lt;...message...&gt;</code>, such as <code>"&lt;_io.TextIOWrapper name='data.txt'&gt;</code>.
+</p>
+
+<h3>4.10 Number Protocol</h3>
+
+<p>
+  Special methods of the number protocol, such as <code>__add__, __radd__, __abs__</code>, provide mathematical operations.
+</p>
+
+<p>
+  <strong>Note</strong>: There are no methods that can be used to define the behavior of <code>and, or, not</code>. Because they are short-circuiting, a regular function is unable to reproduce this behavior. They are deeply embedded in the implementation of Python.
+</p>
+
+<h3>4.11 Comparison Protocol</h3>
+
+<p>
+  The identity check, <code>is</code> cannot be redefined.
+</p>
+
+<p>
+  Comparison methods can return any value (in addition to the usual Boolean).
+</p>
+
+<p>
+  When adding comparison operators to a user-defined class, the <code>@total_ordering</code> class decorator from <code>functools</code> may be useful (it generates comparison methods based on minimally implementing <code>__eq__()</code> and one of the other comparisons, such as <code>__lt__()</code>).
+</p>
+
+<p>
+  <code>__eq__()</code> should always be defined together with <code>__hash__()</code>. It is possible for two objects to have the same hash value, so <code>__eq__()</code> is used to resolve collisions.
+</p>
+
+<h3>4.12 Conversion Protocols</h3>
+
+<p>
+  Python does not implicitly perform type conversions. You must explicitly call <code>int()</code>, for example.
+</p>
+
+<h3>4.13 Container Protocol</h3>
+
+<p>
+  <code>__len__, __getitem__, __setitem__, __delitem__, __contains__</code>
+</p>
+
+<p>
+  It is possible to have a multidimensional slice: <code>m[1:10, 3:20]</code>, used in NumPy.
+</p>
+
+<p>
+  Ellipsis (<code>...</code>) denotes any number of trailing or leading dimensions in an extended slice: <code>m[..., 10:20]</code>
+</p>
+
+<h3>4.14 Iteration Protocol</h3>
+
+<p>
+  If an instance <code>obj</code> supports iteration, it provides a method <code>obj.__iter__()</code> that returns an iterator. In turn, an iterator <code>iter</code> implements a single method, <code>iter.__next__()</code>, that returns the next object or <code>StopIteration</code>.
+</p>
+
+<p>
+  Optionally, <code>__reversed__()</code> provides a reversed iterator, to be used with <code>reversed()</code>.
+</p>
+
+<p>
+  A common implementation technique for iteration is to use a generator function involving <code>yield</code>.
+</p>
+
+<pre>
+class FRange:
+    def __init__(self, start, stop, step):
+        self.start = start
+        self.stop = stop
+        self.step = step
+
+    def __iter__(self):
+        x = self.start
+        while x < self.stop:
+            yield x
+            x += self.step
+</pre>
+
+<p>
+  Example usage:
+</p>
+
+<pre>
+nums = FRange(0.0, 1.0, 0.1)
+
+for x in nums:
+    print(x)
+</pre>
+
+<h3>4.15 Attribute Protocol</h3>
+
+<p>
+  The methods <code>__getattribute__, __getattr__, __setattr__, __delattr__</code> read, write, and delete attributes of an object using the dot operator <code>.</code> and the <code>del</code> operator.
+</p>
+
+<p>
+  Whenever an attribute is accessed, the <code>__getattribute__</code> method is invoked. If the attribute is located, it is returned. Otherwise, <code>__getattr__</code> is invoked. Its default behavior is to raise an <code>AttributeError</code> exception.
+</p>
+
+<h3>4.16 Function Protocol</h3>
+
+<p>
+  An object can emulate a function by providing the <code>__call__</code> method.
+</p>
+
+<h3>4.17 Context Manager Protocol</h3>
+
+<p>
+  The <code>with</code> statement allows a sequence of statements to execute under the control of an instance called a <em>context manager</em>.
+</p>
+
+<p>
+  <code>__enter__</code> is called when entering a new context. <code>__exit__</code> is called when leaving a context.
+</p>
+
+<h2 id="ch05">5. Functions</h2>
+
+<h3>5.2 Default Arguments</h3>
+
+<p>
+  When a function defines a parameter with a default value, that parameter and all others that follow it become optional. It is not possible to specify a parameter without a default value after any parameter with a default value.
+</p>
+
+<p>
+  Avoid using mutable objects as default values because the default value is evaluated once when the function is defined. If using mutable default values, set the default value to <code>None</code> and add a check:
+</p>
+
+<pre>
+def f(x, items=None):
+    if items is None:
+        items = []
+    items.append(x)
+    return items
+</pre>
+
+<p>
+  It is possible to force the use of keyword arguments by listing parameters after a <code>*</code> argument or by including a single <code>*</code> in the definition:
+</p>
+
+<pre>
+def read_data(filename, *, debug=False):
+   pass
+</pre>
+
+<h3>5.6 Functions Accepting All Inputs</h3>
+
+<p>
+  By using both <code>*</code> (variadic arguments) and <code>**</code> (variadic keyword arguments), a function will accept any combination of arguments. Positional arguments are passed as a tuple, and keyword arguments are passed as a dictionary.
+</p>
+
+<h3>5.7 Positional-Only Arguments</h3>
+
+<p>
+  Arguments appearing before a slash, <code>/</code>, can only be specified by position. It's useful to prevent name clashes between parameter names and keyword arguments:
+</p>
+
+<pre>
+def f(x, y, /):
+    pass
+</pre>
+
+<h3>5.8 Names, Documentation Strings, and Type Hints</h3>
+
+<p>
+  The name of a function is accessible with <code>__name__</code>: <code>f.__name__</code>
+</p>
+
+<h3>5.9 Function Application and Parameter Passing</h3>
+
+<p>
+  Python passes supplied objects to a function "as is", without making copies. When references to mutable objects are passed, changes made inside the function are reflected in the object that is referred to.
+</p>
+
+<p>
+  Such mutation of input values and changes of state to other parts of the program are called <em>side effects</em>. It is best to avoid side effects. Generally, functions with side effects return <code>None</code>.
+</p>
+
+<p>
+  Reassigning a value to a name does not overwrite the previous object. The name just gets reassigned to a different object.
+</p>
+
+<h3>5.12 Scoping Rules</h3>
+
+<p>
+  Variable names never change their scope&mdash;they are either global variables or local variables, and this is determined at function definition time.
+</p>
+
+<pre>
+x = 42
+def f():
+    print(x)
+
+f()  # prints 42
+</pre>
+
+<p>
+  However, if <code>x</code> is defined in <code>f()</code> after <code>print</code>, an <code>UnboundLocalError</code> exception is raised.
+</p>
+
+<pre>
+x = 42
+def f():
+    print(x)
+    x = 2  # adding this causes an error
+
+f()  # UnboundLocalError
+</pre>
+
+<p>
+  If <code>print</code> is removed, it looks like the global <code>x</code> changes, but in fact, <code>x</code> is local to <code>f</code>.
+</p>
+
+<p>
+  To change the global variable, <code>global x</code> can be used, though it's considered poor style to do so. It is better to create a new class and mutate an instance or class variable.
+</p>
+
+<p>
+  Variables in nested functions are bound using lexical scoping. Note that this is not a dynamic process. To reassign values of local variables defined in an outer function, use <code>nonlocal x</code>. Like <code>global</code>, <code>nonlocal</code> is not commonly used.
+</p>
+
+<h3>5.13 Recursion</h3>
+
+<p>STOP p. 113 5.13
 
 </div>
 <br>

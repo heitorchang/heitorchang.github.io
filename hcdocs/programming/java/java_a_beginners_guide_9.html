@@ -94,16 +94,16 @@
   <li><a href="#ch05">More Data Types and Operators</a></li>
   <li><a href="#ch06">A Closer Look at Methods and Classes</a></li>
   <li><a href="#ch07">Inheritance</a></li>
-  <li><a href="#ch08">Packages and Interfaces</a></li>
-  <li><a href="#ch09">Exception Handling</a></li>
-  <li><a href="#ch10">Using I/O</a></li>
-  <li><a href="#ch11">Multithreaded Programming</a></li>
-  <li><a href="#ch12">Enumerations, Autoboxing, Annotations, and More</a></li>
+  <li><a href="#ch08">Packages and Interfaces <em>(skipped)</em></a></li>
+  <li><a href="#ch09">Exception Handling <em>(skipped)</em></a></li>
+  <li><a href="#ch10">Using I/O <em>(skipped)</em></a></li>
+  <li><a href="#ch11">Multithreaded Programming <em>(skipped)</em></a></li>
+  <li><a href="#ch12">Enumerations, Autoboxing, Annotations, and More <em>(skipped)</em></a></li>
   <li><a href="#ch13">Generics</a></li>
   <li><a href="#ch14">Lambda Expressions and Method References</a></li>
   <li><a href="#ch15">Modules</a></li>
-  <li><a href="#ch16">Switch Expressions, Records, and Other Recently Added Features</a></li>
-  <li><a href="#ch17">Introducing Swing</a></li>
+  <li><a href="#ch16">Switch Expressions, Records, and Other Recently Added Features <em>(skipped)</em></a></li>
+  <li><a href="#ch17">Introducing Swing <em>(skipped)</em></a></li>
 </ol>
 
 <h2 id="ch01">1. Java Fundamentals</h2>
@@ -1063,7 +1063,395 @@ absval = val < 0 ? -val : val;
 
 <h2 id="ch06">6. A Closer Look at Methods and Classes</h2>
 
-<p>STOP p. 188
+<h3>Controlling access to class members</h3>
+
+<p>
+  The <em>access modifiers</em> are: <strong>public</strong>, <strong>private</strong>, and <strong>protected</strong>. If no access modifier is used, the <em>default access setting</em> is assumed. If code is not broken down into packages, it is the same as <strong>public</strong>.
+</p>
+
+<p>
+  The <strong>protected</strong> modifier is used in inheritance. A <strong>protected</strong> member is accessible within its package and to subclasses in other packages.
+</p>
+
+<h3>Behavior of wrapper classes (Integer, Double, Character)</h3>
+
+<p>
+  Code such as:
+</p>
+
+<pre>
+class ModifyInteger {
+  public static void main(String[] args) {
+    Integer i = new Integer(12);
+    System.out.println(i);
+    modify(i);
+    System.out.println(i);
+  }
+
+  static void modify(Integer n) {
+    n = n + 1;
+    System.out.println("modified n to " + n);
+  }
+}
+</pre>
+
+<p>
+  will result in:
+</p>
+
+<pre>
+12
+modified to 13
+12
+</pre>
+
+<p>
+  What is happening is that the variable <code>n</code> is a reference to <code>i</code>, but in the assignment <code>n = n + 1;</code>, a new <code>Integer</code> is created and this local variable will refer to the new Integer. The original <code>i</code> remains unchanged when <code>modify</code> returns.
+</p>
+
+<p>
+  In addition, <code>Integer</code> is immutable, and is now deprecated.
+</p>
+
+<p>
+  In Java, there is only call-by-value. What happens with objects is that the object's reference is passed.
+</p>
+
+<p>
+  Both methods and constructors may be overloaded. Often, constructors are overloaded to allow one object to initialize another:
+</p>
+
+<pre>
+class Summation {
+  int sum;
+
+  Summation(int num) {
+    sum = 0;
+    for (int i = 1; i <= num; i++) {
+      sum += i;
+    }
+  }
+
+  Summation(Summation ob) {
+    sum = ob.sum;
+  }
+}
+</pre>
+
+<p>
+  In the example above, when creating a new Summation object, it is more efficient to copy the argument's sum than to recompute it.
+</p>
+
+<h3>The <code>static</code> declaration</h3>
+
+<p>
+  A <strong>static</strong> member can be accessed before any objects of its class are created, and without reference to any object. Both variables and methods may be static.
+</p>
+
+<p>
+  Outside the class, a static member needs to be preceded by its class' name and the dot operator: <code>Math.sqrt()</code>.
+</p>
+
+<p>
+  A static variable is effectively a <em>global variable</em>.
+</p>
+
+<p>
+  Static methods have several restrictions:
+</p>
+
+<ul>
+  <li>They can directly call only other static methods in their class</li>
+  <li>They can directly access only static variables in their class</li>
+  <li>They do not have a <code>this</code> reference</li>
+</ul>
+
+<h3>Static blocks</h3>
+
+<p>
+  A static block is executed once, when a class is first loaded. This behavior is useful to run some type of initialization before a class creates objects.
+</p>
+
+<pre>
+class StaticBlockDemo {
+  public static void main(String[] args) {
+    StaticBlock sb1 = new StaticBlock("sb1");
+    System.out.println("Sq. root of 2 in of sb1 is " + sb1.rootOf2);
+
+    StaticBlock sb2 = new StaticBlock("sb2");
+    System.out.println("Sq. root of 2 in of sb2 is " + sb2.rootOf2);
+  }
+}
+
+class StaticBlock {
+  static double rootOf2;
+
+  static {
+    System.out.println("Inside static block");
+    rootOf2 = Math.sqrt(2.0);
+  }
+
+  StaticBlock(String msg) {
+    System.out.println("Constructing with message " + msg);
+  }
+}
+</pre>
+
+<h3>Nested and inner classes</h3>
+
+<p>
+  A nested class does not exist independently of its enclosing class. The scope of a nested class is bounded by its outer class. It may be declared as a member of its enclosing class, and also even as a class local to a block.
+</p>
+
+<p>
+  Nested classes may be static or non-static. A static nested class can only access other static members of the enclosing class. A non-static nested class is also called an <em>inner class</em>. It has access to all of the variables and methods of its outer class. An inner class can be used to provide a set of services that is needed only by its enclosing class.
+</p>
+
+<h3>Varargs: variable-length arguments</h3>
+
+<p>
+  A method that takes a variable number of arguments is called a <em>varargs method</em>:
+</p>
+
+<pre>
+static void vaTest(int ... v) {  // implicitly declares v as int[]
+  System.out.println("Number of args: " + v.length);
+}
+
+// the variable-length parameter must be the last parameter
+int f(int a, int b, double c, int ... vals) {
+  // ...
+}
+</pre>
+
+<h2 id="ch07">7. Inheritance</h2>
+
+<p>
+  A class that is inherited is called a <em>superclass</em>, while the class that does the inheriting is the <em>subclass</em>. A subclass is a specialized version of a superclass. Only one superclass can be specified for a subclass. For example:
+</p>
+
+<pre>
+class TwoDShape {
+  double width;
+  double height;
+}
+
+class Triangle extends TwoDShape {
+  String style;
+  // ...
+}
+</pre>
+
+<p>
+  Private members are not inherited.
+</p>
+
+<h3>Constructors and inheritance</h3>
+
+<p>
+  What constructor is responsible for building an object of the subclass?
+</p>
+
+<p>
+  <em>Answer</em>: The constructor for the superclass constructs the superclass portion of the object, and the constructor for the subclass constructs the subclass part. (Their construction are separate). When both the superclass and subclass define constructors, both constructors must be executed. <code>super</code> is used to call the superclass constructor. <code>super</code> has another use, which is to access a member of the superclass that has been hidden by a member of a subclass (similar to how <code>this</code> is used). See below.
+</p>
+
+<p>
+  <code>super(parameter-list);</code> calls the superclass' constructor. The <code>super()</code> call must always be the first statement executed inside a subclass constructor.
+</p>
+
+<pre>
+class Triangle extends TwoDShape {
+  private String style;
+
+  Triangle(String s, double w, double h) {
+    super(w, h);
+    style = s;
+  }
+}
+</pre>
+
+<h3>Using super to access superclass members</h3>
+
+<p>
+  <code>super.member</code> is used to access methods and instance variables of the superclass. It is used when member names of a subclass hide members of the same name in the superclass.
+</p>
+
+<h3>When are constructors executed?</h3>
+
+<p>
+  Constructors complete their execution in order of derivation (from superclass to subclass). For example:
+</p>
+
+<pre>
+class A {
+  A() {
+    System.out.println("Constructing A");
+  }
+}
+
+class B extends A {
+  B() {
+    System.out.println("Constructing B");
+  }
+}
+</pre>
+
+<p>
+  <code>Constructing A</code> will be printed first.
+</p>
+
+<h3>Superclass references and subclass objects</h3>
+
+<p>
+  A reference variable of a superclass can be assigned a reference to an object of any subclass derived from the superclass. In other words, a superclass reference can refer to a subclass object.
+</p>
+
+<p>
+  <strong>Important</strong>: When a reference to a subclass object is assigned to a superclass reference variable, you will only have access to thos parts of the object defined by the superclass (a superclass has no knowledge of what a subclass adds to it).
+</p>
+
+<p>
+  An important place where subclass references are assigned to superclass variables is when constructors are called in a class hierarchy (it is common for a class to define a constructor that takes an object of the class as a parameter--this allows the class to construct a copy of an object).
+</p>
+
+<pre>
+class TwoDShape {
+  double width, height;
+
+  TwoDShape() {
+    // a default constructor
+  }
+
+  TwoDShape(TwoDShape ob) {
+    width = ob.width;
+    height = ob.height;
+  }
+}
+
+class Triangle extends TwoDShape {
+  String style;
+  Triangle() {
+    super();
+    style = "none";
+  }
+
+  Triangle(Triangle ob) {
+    super(ob);
+    style = ob.style;
+  }
+}
+</pre>
+
+<p>
+  In the example above, it's perfectly acceptable to pass a reference to an object of a subclass of <code>TwoDShape</code> to the <code>TwoDShape()</code> constructor.
+</p>
+
+<h3>Method overriding</h3>
+
+<p>
+  When a method in a subclass has the same return type and signature as a method in its superclass, the method <em>overrides</em> the method in the superclass. To access the superclass version of an overridden method, use <code>super.method()</code>
+</p>
+
+<h3>Overridden methods support polymorphism and dynamic method dispatch</h3>
+
+<p>
+  <em>Dynamic method dispatch</em> is the mechanism by which a call to an overridden method is resolved at run time rather than at compile time.
+</p>
+
+<p>
+  When an overridden method is called through a superclass reference, Java determines which version of that method to execute based upon the type of the object being referred to at the time the call occurs.
+</p>
+
+<p>
+  In other words, it is the type of the object being referred to, not the type of the reference variable, that determines which version of an overridden method will be executed.
+</p>
+
+<h3>Using abstract classes</h3>
+
+<p>
+  The <code>abstract</code> modifier applies only to instance methods. It cannot be applied to static methods or to constructors. Subclasses must override abstract methods.
+</p>
+
+<p>
+  A class that contains one or more abstract methods must also be declared <code>abstract</code>.
+</p>
+
+<p>
+  If a subclass does not implement a superclass' abstract method, the subclass must also be declared <code>abstract</code>.
+</p>
+
+<h3>Using final</h3>
+
+<p>
+  A method declared <code>final</code> cannot be overridden. You can prevent a class from being inherited by declaring it <code>final</code> (note that since abstract classes are to be subclassed, it cannot be final). A data member that is <code>final</code> cannot be changed, so in effect, it becomes a named constant.
+</p>
+
+<p>
+  <code>final</code> and <code>static</code> may be used together. <code>final</code> may also be used with method parameters and local variables to prevent them from being reassigned.
+</p>
+
+<h3>The <code>Object</code> class</h3>
+
+<p>
+  <code>Object</code> is an implicit superclass of all other classes. This means that a reference variable of type <code>Object</code> can refer to an object of any other class, and even any array, since arrays are implemented as classes.
+</p>
+
+<p>
+  Some methods defined on <code>Object</code> (and as a result, available in every object) are:
+</p>
+
+<p>
+  <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait</code>
+</p>
+
+<p>
+  <code>getClass()</code> returns <code>Class&lt;?&gt;</code>. This is a <em>generics</em> feature, which allows the type of data used by a class or method to be specified as a parameter.
+</p>
+
+<h2 id="ch08">8. Packages and Interfaces</h2>
+
+<h3>SKIP to Ch. 13</h3>
+
+<h2 id="ch13">13. Generics</h2>
+
+<p>
+  The term <em>generics</em> means <em>parameterized types</em>. It is possible to create classes, interfaces, and methods in which the type of data upon which they operate is specified as a parameter. They are called <em>generic classes</em> and <em>generic methods</em>.
+</p>
+
+<p>
+  Prior to generics, <code>Object</code> references were widely used. However, casting from <code>Object</code> is not type-safe. Generics allows writing type-safe code.
+</p>
+
+<p>
+  Example:
+</p>
+
+<pre>
+class GenDemo {
+  public static void main(String[] args) {
+    Gen&lt;Integer&gt; iOb;
+    iOb = new Get&lt;Integer&gt;(88);
+    iOb.showType();
+  }
+}
+
+class Gen&lt;T&gt; {
+  T ob;
+
+  Gen(T o) {
+    ob = o;
+  }
+
+  T getOb() {
+    return ob;
+  }
+
+  void showType() {
+    System.out.println("T is of type" + ob.getClass().getName());
+  }
+}
+</pre>
 
 </div>
 <br>
