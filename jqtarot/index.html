@@ -1,52 +1,10 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html><html lang="en">
+  <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>jQTarot</title>
+
   <link rel="stylesheet" href="lib/jquery-ui-1.13.3.custom/jquery-ui.css">
-  <style>
-  body {
-    background-color: #269;
-  }
-
-  div.card {
-    display: inline-block;
-    position: fixed;
-    height: 176px;
-  }
-
-  .rotated {
-    transform: rotate(180deg);
-  }
-  </style>
-  <script src="lib/jquery-3.7.1.min.js"></script>
-  <script src="lib/jquery-ui-1.13.3.custom/jquery-ui.min.js"></script>
-  <script src="lib/lodash.js"></script>
-  <script>
-  let currentZIndex = 78;
-
-  function front(idNum) {
-    document.getElementById("c" + idNum).style.zIndex = currentZIndex++;
-  }
-
-  function flip(idNum) {
-    const imgelem = document.getElementById("i" + idNum);
-    imgelem.src = "img/t" + idNum + ".png";
-  }
-
-  $( function() {
-    for (let i = 0; i < 78; i++) {
-      let idNum = i.toString();
-      if (idNum < 10) {
-        idNum = "0" + idNum;
-      }
-      $("#c" + idNum).draggable({ start: function(ev, ui) { front(idNum) }, stop: function(ev, ui) { flip(idNum) }});
-    }
-  });
-  </script>
-</head>
-<body>
-  <button id="reshuffle" onclick="deckShuffle()" style="font-size: 1.2rem; border-radius: 0.2rem; position: fixed; right: 5px;">Reshuffle</button>
-
   <link rel="preload" href="img/t00.png" as="image">
   <link rel="preload" href="img/t01.png" as="image">
   <link rel="preload" href="img/t02.png" as="image">
@@ -125,6 +83,50 @@
   <link rel="preload" href="img/t75.png" as="image">
   <link rel="preload" href="img/t76.png" as="image">
   <link rel="preload" href="img/t77.png" as="image">
+
+  <style>
+  body {
+    background-color: #269;
+  }
+
+  div.card {
+    display: inline-block;
+    position: fixed;
+    height: 176px;
+  }
+
+  .rotated {
+    transform: rotate(180deg);
+  }
+  </style>
+  <script src="lib/jquery-3.7.1.min.js"></script>
+  <script src="lib/jquery-ui-1.13.3.custom/jquery-ui.min.js"></script>
+  <script src="lib/lodash.js"></script>
+  <script>
+  let currentZIndex = 78;
+
+  function front(idNum) {
+    document.getElementById("c" + idNum).style.zIndex = currentZIndex++;
+  }
+
+  function flip(idNum) {
+    const imgelem = document.getElementById("i" + idNum);
+    imgelem.src = "img/t" + idNum + ".png";
+  }
+
+  $( function() {
+    for (let i = 0; i < 78; i++) {
+      let idNum = i.toString();
+      if (idNum < 10) {
+        idNum = "0" + idNum;
+      }
+      $("#c" + idNum).draggable({ start: function(ev, ui) { front(idNum) }, stop: function(ev, ui) { flip(idNum) }});
+    }
+  });
+  </script>
+</head>
+<body>
+  <button id="reshuffle" onclick="deckShuffle()" style="font-size: 1.2rem; border-radius: 0.2rem; position: fixed; right: 5px;">Reshuffle</button>
 
   <div class="card" id="c00"><img class="cardimg" id="i00" src="img/diffraction.png" alt="00"></div>
   <div class="card" id="c01"><img class="cardimg" id="i01" src="img/diffraction.png" alt="01"></div>
