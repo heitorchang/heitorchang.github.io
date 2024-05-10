@@ -117,7 +117,7 @@
   $( function() {
     for (let i = 0; i < 78; i++) {
       let idNum = i.toString();
-      if (idNum < 10) {
+      if (i < 10) {
         idNum = "0" + idNum;
       }
       $("#c" + idNum).draggable({ start: function(ev, ui) { front(idNum) }, stop: function(ev, ui) { flip(idNum) }});
