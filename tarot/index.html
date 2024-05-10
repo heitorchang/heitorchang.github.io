@@ -1,8 +1,9 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
   <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>interact.js tarot</title>
+  <title>RWS Tarot Playground</title>
 
   <link rel="preload" href="img/t00.png" as="image">
   <link rel="preload" href="img/t01.png" as="image">
@@ -85,6 +86,7 @@
 
   <style>
   body {
+    font-family: sans-serif;
     background-color: #269;
   }
 
@@ -104,6 +106,8 @@
   <script src="lib/lodash.js"></script>
   <script>
   let currentZIndex = 78;
+  const CARD_BASELINE = 180;
+  let baseline = document.documentElement.clientHeight - CARD_BASELINE;
 
   function front(idNum) {
     document.getElementById("c" + idNum).style.zIndex = currentZIndex++;
@@ -117,7 +121,10 @@
   </script>
 </head>
 <body>
-  <button id="reshuffle" onclick="deckShuffle()" style="font-size: 1.2rem; border-radius: 0.2rem; position: fixed; right: 5px;">Reshuffle</button>
+  <div style="color: white; font-size: 1.3rem; border-radius: 0.2rem; position: fixed; right: 5px;">
+    <input type="checkbox" id="reversals" checked onchange="deckShuffle()" style="width: 20px; height: 20px;"> Reversals&nbsp;&nbsp;&nbsp;&nbsp;
+    <button id="reshuffle" onclick="deckShuffle()" style="font-size: 1.2rem;">Shuffle</button>
+  </div>
 
   <div class="card" id="c00"><img class="cardimg" id="i00" src="img/diffraction.png" alt="00"></div>
   <div class="card" id="c01"><img class="cardimg" id="i01" src="img/diffraction.png" alt="01"></div>
@@ -207,20 +214,23 @@
     order = _.shuffle(order);
 
     let order_index = 0;
+    baseline = document.documentElement.clientHeight - CARD_BASELINE;
     Array.from(cards).forEach(
       card => {
         card.style.top = "5px";
         card.style.left = "5px";
         card.style.zIndex = order[order_index];
         order_index++;
-        if (Math.random() < 0.5) {
-          card.rotation = 180;
-        } else {
-          card.rotation = 0;
+        card.rotation = 0;
+        if (document.getElementById('reversals').checked) {
+          if (Math.random() < 0.5) {
+            card.rotation = 180;
+          }
         }
         card.setAttribute('data-x', 0);
-        card.setAttribute('data-y', 0);
-        card.style.transform = 'translate(0px, 0px)';
+        card.setAttribute('data-y', baseline);
+        // card.style.transform = 'translate(0px, 0px)';
+        card.style.transform = 'translate(0px, ' + baseline + 'px)';
         card.style.transform += 'rotate(' + card.rotation + 'deg)';
       }
     );
