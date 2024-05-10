@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>interact.js tarot</title>
+  <link rel="stylesheet" href="lib/jquery-ui-1.13.3.custom/jquery-ui.css">
+
+  <link rel="preload" href="img/t00.png" as="image">
+  <link rel="preload" href="img/t01.png" as="image">
+  <link rel="preload" href="img/t02.png" as="image">
+  <link rel="preload" href="img/t03.png" as="image">
+  <link rel="preload" href="img/t04.png" as="image">
+  <link rel="preload" href="img/t05.png" as="image">
+  <link rel="preload" href="img/t06.png" as="image">
+  <link rel="preload" href="img/t07.png" as="image">
+  <link rel="preload" href="img/t08.png" as="image">
+  <link rel="preload" href="img/t09.png" as="image">
+  <link rel="preload" href="img/t10.png" as="image">
+  <link rel="preload" href="img/t11.png" as="image">
+  <link rel="preload" href="img/t12.png" as="image">
+  <link rel="preload" href="img/t13.png" as="image">
+  <link rel="preload" href="img/t14.png" as="image">
+  <link rel="preload" href="img/t15.png" as="image">
+  <link rel="preload" href="img/t16.png" as="image">
+  <link rel="preload" href="img/t17.png" as="image">
+  <link rel="preload" href="img/t18.png" as="image">
+  <link rel="preload" href="img/t19.png" as="image">
+  <link rel="preload" href="img/t20.png" as="image">
+  <link rel="preload" href="img/t21.png" as="image">
+  <link rel="preload" href="img/t22.png" as="image">
+  <link rel="preload" href="img/t23.png" as="image">
+  <link rel="preload" href="img/t24.png" as="image">
+  <link rel="preload" href="img/t25.png" as="image">
+  <link rel="preload" href="img/t26.png" as="image">
+  <link rel="preload" href="img/t27.png" as="image">
+  <link rel="preload" href="img/t28.png" as="image">
+  <link rel="preload" href="img/t29.png" as="image">
+  <link rel="preload" href="img/t30.png" as="image">
+  <link rel="preload" href="img/t31.png" as="image">
+  <link rel="preload" href="img/t32.png" as="image">
+  <link rel="preload" href="img/t33.png" as="image">
+  <link rel="preload" href="img/t34.png" as="image">
+  <link rel="preload" href="img/t35.png" as="image">
+  <link rel="preload" href="img/t36.png" as="image">
+  <link rel="preload" href="img/t37.png" as="image">
+  <link rel="preload" href="img/t38.png" as="image">
+  <link rel="preload" href="img/t39.png" as="image">
+  <link rel="preload" href="img/t40.png" as="image">
+  <link rel="preload" href="img/t41.png" as="image">
+  <link rel="preload" href="img/t42.png" as="image">
+  <link rel="preload" href="img/t43.png" as="image">
+  <link rel="preload" href="img/t44.png" as="image">
+  <link rel="preload" href="img/t45.png" as="image">
+  <link rel="preload" href="img/t46.png" as="image">
+  <link rel="preload" href="img/t47.png" as="image">
+  <link rel="preload" href="img/t48.png" as="image">
+  <link rel="preload" href="img/t49.png" as="image">
+  <link rel="preload" href="img/t50.png" as="image">
+  <link rel="preload" href="img/t51.png" as="image">
+  <link rel="preload" href="img/t52.png" as="image">
+  <link rel="preload" href="img/t53.png" as="image">
+  <link rel="preload" href="img/t54.png" as="image">
+  <link rel="preload" href="img/t55.png" as="image">
+  <link rel="preload" href="img/t56.png" as="image">
+  <link rel="preload" href="img/t57.png" as="image">
+  <link rel="preload" href="img/t58.png" as="image">
+  <link rel="preload" href="img/t59.png" as="image">
+  <link rel="preload" href="img/t60.png" as="image">
+  <link rel="preload" href="img/t61.png" as="image">
+  <link rel="preload" href="img/t62.png" as="image">
+  <link rel="preload" href="img/t63.png" as="image">
+  <link rel="preload" href="img/t64.png" as="image">
+  <link rel="preload" href="img/t65.png" as="image">
+  <link rel="preload" href="img/t66.png" as="image">
+  <link rel="preload" href="img/t67.png" as="image">
+  <link rel="preload" href="img/t68.png" as="image">
+  <link rel="preload" href="img/t69.png" as="image">
+  <link rel="preload" href="img/t70.png" as="image">
+  <link rel="preload" href="img/t71.png" as="image">
+  <link rel="preload" href="img/t72.png" as="image">
+  <link rel="preload" href="img/t73.png" as="image">
+  <link rel="preload" href="img/t74.png" as="image">
+  <link rel="preload" href="img/t75.png" as="image">
+  <link rel="preload" href="img/t76.png" as="image">
+  <link rel="preload" href="img/t77.png" as="image">
+
+  <style>
+  body {
+    background-color: #269;
+  }
+
+  div.card {
+    display: inline-block;
+    position: fixed;
+    height: 176px;
+    touch-action: none;
+    user-select: none;
+  }
+
+  .rotated {
+    transform: rotate(180deg);
+  }
+  </style>
+  <script src="lib/interact.min.js"></script>
+  <script src="lib/lodash.js"></script>
+  <script>
+  let currentZIndex = 78;
+
+  function front(idNum) {
+    document.getElementById("c" + idNum).style.zIndex = currentZIndex++;
+  }
+
+  function flip(idNum) {
+    const imgelem = document.getElementById("i" + idNum);
+    imgelem.src = "img/t" + idNum + ".png";
+  }
+
+  </script>
+</head>
+<body>
+  <button id="reshuffle" onclick="deckShuffle()" style="font-size: 1.2rem; border-radius: 0.2rem; position: fixed; right: 5px;">Reshuffle</button>
+
+  <div class="card" id="c00"><img class="cardimg" id="i00" src="img/diffraction.png" alt="00"></div>
+  <div class="card" id="c01"><img class="cardimg" id="i01" src="img/diffraction.png" alt="01"></div>
+  <div class="card" id="c02"><img class="cardimg" id="i02" src="img/diffraction.png" alt="02"></div>
+  <div class="card" id="c03"><img class="cardimg" id="i03" src="img/diffraction.png" alt="03"></div>
+  <div class="card" id="c04"><img class="cardimg" id="i04" src="img/diffraction.png" alt="04"></div>
+  <div class="card" id="c05"><img class="cardimg" id="i05" src="img/diffraction.png" alt="05"></div>
+  <div class="card" id="c06"><img class="cardimg" id="i06" src="img/diffraction.png" alt="06"></div>
+  <div class="card" id="c07"><img class="cardimg" id="i07" src="img/diffraction.png" alt="07"></div>
+  <div class="card" id="c08"><img class="cardimg" id="i08" src="img/diffraction.png" alt="08"></div>
+  <div class="card" id="c09"><img class="cardimg" id="i09" src="img/diffraction.png" alt="09"></div>
+  <div class="card" id="c10"><img class="cardimg" id="i10" src="img/diffraction.png" alt="10"></div>
+  <div class="card" id="c11"><img class="cardimg" id="i11" src="img/diffraction.png" alt="11"></div>
+  <div class="card" id="c12"><img class="cardimg" id="i12" src="img/diffraction.png" alt="12"></div>
+  <div class="card" id="c13"><img class="cardimg" id="i13" src="img/diffraction.png" alt="13"></div>
+  <div class="card" id="c14"><img class="cardimg" id="i14" src="img/diffraction.png" alt="14"></div>
+  <div class="card" id="c15"><img class="cardimg" id="i15" src="img/diffraction.png" alt="15"></div>
+  <div class="card" id="c16"><img class="cardimg" id="i16" src="img/diffraction.png" alt="16"></div>
+  <div class="card" id="c17"><img class="cardimg" id="i17" src="img/diffraction.png" alt="17"></div>
+  <div class="card" id="c18"><img class="cardimg" id="i18" src="img/diffraction.png" alt="18"></div>
+  <div class="card" id="c19"><img class="cardimg" id="i19" src="img/diffraction.png" alt="19"></div>
+  <div class="card" id="c20"><img class="cardimg" id="i20" src="img/diffraction.png" alt="20"></div>
+  <div class="card" id="c21"><img class="cardimg" id="i21" src="img/diffraction.png" alt="21"></div>
+  <div class="card" id="c22"><img class="cardimg" id="i22" src="img/diffraction.png" alt="22"></div>
+  <div class="card" id="c23"><img class="cardimg" id="i23" src="img/diffraction.png" alt="23"></div>
+  <div class="card" id="c24"><img class="cardimg" id="i24" src="img/diffraction.png" alt="24"></div>
+  <div class="card" id="c25"><img class="cardimg" id="i25" src="img/diffraction.png" alt="25"></div>
+  <div class="card" id="c26"><img class="cardimg" id="i26" src="img/diffraction.png" alt="26"></div>
+  <div class="card" id="c27"><img class="cardimg" id="i27" src="img/diffraction.png" alt="27"></div>
+  <div class="card" id="c28"><img class="cardimg" id="i28" src="img/diffraction.png" alt="28"></div>
+  <div class="card" id="c29"><img class="cardimg" id="i29" src="img/diffraction.png" alt="29"></div>
+  <div class="card" id="c30"><img class="cardimg" id="i30" src="img/diffraction.png" alt="30"></div>
+  <div class="card" id="c31"><img class="cardimg" id="i31" src="img/diffraction.png" alt="31"></div>
+  <div class="card" id="c32"><img class="cardimg" id="i32" src="img/diffraction.png" alt="32"></div>
+  <div class="card" id="c33"><img class="cardimg" id="i33" src="img/diffraction.png" alt="33"></div>
+  <div class="card" id="c34"><img class="cardimg" id="i34" src="img/diffraction.png" alt="34"></div>
+  <div class="card" id="c35"><img class="cardimg" id="i35" src="img/diffraction.png" alt="35"></div>
+  <div class="card" id="c36"><img class="cardimg" id="i36" src="img/diffraction.png" alt="36"></div>
+  <div class="card" id="c37"><img class="cardimg" id="i37" src="img/diffraction.png" alt="37"></div>
+  <div class="card" id="c38"><img class="cardimg" id="i38" src="img/diffraction.png" alt="38"></div>
+  <div class="card" id="c39"><img class="cardimg" id="i39" src="img/diffraction.png" alt="39"></div>
+  <div class="card" id="c40"><img class="cardimg" id="i40" src="img/diffraction.png" alt="40"></div>
+  <div class="card" id="c41"><img class="cardimg" id="i41" src="img/diffraction.png" alt="41"></div>
+  <div class="card" id="c42"><img class="cardimg" id="i42" src="img/diffraction.png" alt="42"></div>
+  <div class="card" id="c43"><img class="cardimg" id="i43" src="img/diffraction.png" alt="43"></div>
+  <div class="card" id="c44"><img class="cardimg" id="i44" src="img/diffraction.png" alt="44"></div>
+  <div class="card" id="c45"><img class="cardimg" id="i45" src="img/diffraction.png" alt="45"></div>
+  <div class="card" id="c46"><img class="cardimg" id="i46" src="img/diffraction.png" alt="46"></div>
+  <div class="card" id="c47"><img class="cardimg" id="i47" src="img/diffraction.png" alt="47"></div>
+  <div class="card" id="c48"><img class="cardimg" id="i48" src="img/diffraction.png" alt="48"></div>
+  <div class="card" id="c49"><img class="cardimg" id="i49" src="img/diffraction.png" alt="49"></div>
+  <div class="card" id="c50"><img class="cardimg" id="i50" src="img/diffraction.png" alt="50"></div>
+  <div class="card" id="c51"><img class="cardimg" id="i51" src="img/diffraction.png" alt="51"></div>
+  <div class="card" id="c52"><img class="cardimg" id="i52" src="img/diffraction.png" alt="52"></div>
+  <div class="card" id="c53"><img class="cardimg" id="i53" src="img/diffraction.png" alt="53"></div>
+  <div class="card" id="c54"><img class="cardimg" id="i54" src="img/diffraction.png" alt="54"></div>
+  <div class="card" id="c55"><img class="cardimg" id="i55" src="img/diffraction.png" alt="55"></div>
+  <div class="card" id="c56"><img class="cardimg" id="i56" src="img/diffraction.png" alt="56"></div>
+  <div class="card" id="c57"><img class="cardimg" id="i57" src="img/diffraction.png" alt="57"></div>
+  <div class="card" id="c58"><img class="cardimg" id="i58" src="img/diffraction.png" alt="58"></div>
+  <div class="card" id="c59"><img class="cardimg" id="i59" src="img/diffraction.png" alt="59"></div>
+  <div class="card" id="c60"><img class="cardimg" id="i60" src="img/diffraction.png" alt="60"></div>
+  <div class="card" id="c61"><img class="cardimg" id="i61" src="img/diffraction.png" alt="61"></div>
+  <div class="card" id="c62"><img class="cardimg" id="i62" src="img/diffraction.png" alt="62"></div>
+  <div class="card" id="c63"><img class="cardimg" id="i63" src="img/diffraction.png" alt="63"></div>
+  <div class="card" id="c64"><img class="cardimg" id="i64" src="img/diffraction.png" alt="64"></div>
+  <div class="card" id="c65"><img class="cardimg" id="i65" src="img/diffraction.png" alt="65"></div>
+  <div class="card" id="c66"><img class="cardimg" id="i66" src="img/diffraction.png" alt="66"></div>
+  <div class="card" id="c67"><img class="cardimg" id="i67" src="img/diffraction.png" alt="67"></div>
+  <div class="card" id="c68"><img class="cardimg" id="i68" src="img/diffraction.png" alt="68"></div>
+  <div class="card" id="c69"><img class="cardimg" id="i69" src="img/diffraction.png" alt="69"></div>
+  <div class="card" id="c70"><img class="cardimg" id="i70" src="img/diffraction.png" alt="70"></div>
+  <div class="card" id="c71"><img class="cardimg" id="i71" src="img/diffraction.png" alt="71"></div>
+  <div class="card" id="c72"><img class="cardimg" id="i72" src="img/diffraction.png" alt="72"></div>
+  <div class="card" id="c73"><img class="cardimg" id="i73" src="img/diffraction.png" alt="73"></div>
+  <div class="card" id="c74"><img class="cardimg" id="i74" src="img/diffraction.png" alt="74"></div>
+  <div class="card" id="c75"><img class="cardimg" id="i75" src="img/diffraction.png" alt="75"></div>
+  <div class="card" id="c76"><img class="cardimg" id="i76" src="img/diffraction.png" alt="76"></div>
+  <div class="card" id="c77"><img class="cardimg" id="i77" src="img/diffraction.png" alt="77"></div>
+
+  <script>
+  const cards = document.getElementsByClassName("card");
+  const cardimgs = document.getElementsByClassName("cardimg");
+  let order = [...Array(78).keys()];
+
+  function deckShuffle() {
+    order = _.shuffle(order);
+
+    let order_index = 0;
+    Array.from(cards).forEach(
+      card => {
+        card.style.top = "5px";
+        card.style.left = "5px";
+        card.style.zIndex = order[order_index];
+        order_index++;
+        if (Math.random() < 0.5) {
+          card.rotation = 180;
+        } else {
+          card.rotation = 0;
+        }
+        card.setAttribute('data-x', 0);
+        card.setAttribute('data-y', 0);
+        card.style.transform = 'translate(0px, 0px)';
+        card.style.transform += 'rotate(' + card.rotation + 'deg)';
+      }
+    );
+
+    Array.from(cardimgs).forEach(
+      cardimg => {
+        cardimg.src = "img/diffraction.png";
+      }
+    );
+  }
+
+  deckShuffle();
+
+  function dragMoveListener (event) {
+    var target = event.target
+    // keep the dragged position in the data-x/data-y attributes
+    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+    target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+    target.style.transform += 'rotate(' + target.rotation + 'deg)';
+
+    target.setAttribute('data-x', x)
+    target.setAttribute('data-y', y)
+  }
+
+  for (let i = 0; i < 78; i++) {
+    let idNum = i.toString();
+    if (i < 10) {
+      idNum = "0" + idNum;
+    }
+    interact('#c' + idNum).draggable({
+      listeners: {
+        start (event) {
+          front(idNum);
+        },
+        move: dragMoveListener,
+        end (event) {
+          flip(idNum);
+        }
+      }
+    });
+  };
+  </script>
+</body></html>
