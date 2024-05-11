@@ -93,6 +93,12 @@
   <li><a href="#ch04">Objects, Types, and Protocols</a></li>
   <li><a href="#ch05">Functions</a></li>
   <li><a href="#ch06">Generators</a></li>
+  <li><a href="#ch07">Classes and Object-Oriented Programming</a></li>
+  <li><a href="#ch08">Modules and Packages</a></li>
+  <!--
+  <li><a href="#ch09">Input and Output</a></li>
+  <li><a href="#ch10">Built-in Functions and Standard Library</a></li>
+  -->
 </ol>
 
 
@@ -794,7 +800,7 @@ f = lambda y, x=x: x * y
 <h3>5.15 Higher-Order Functions</h3>
 
 <p>
-  A <em>closure</em> is a function along with an environment containing all the variables needed to execute the function body.
+  A <em>closure</em> is a function along with an environment containing all the variables needed to execute the function body. When a function is called, a new stack frame with new memory for local variables is created.
 </p>
 
 <h3>5.16 Argument Passing in Callback Functions</h3>
@@ -985,7 +991,956 @@ async def main():
   An asynchronous context manager is defined with <code>__aenter__, __aexit__</code>. It is used via <code>async with</code>.
 </p>
 
-<h2 id="ch06">Generators</h2>
+<h2 id="ch06">6. Generators</h2>
+
+<h3>6.1 Generators and <code>yield</code></h3>
+
+<p>
+  If a function uses the <code>yield</code> keyword, it defines a <em>generator</em>. Their primary use is to produce values for use in iteration (such as a <code>for</code> loop).
+</p>
+
+<p>
+  Another way to start iterating on a generator is to call <code>next()</code> on it:
+</p>
+
+<pre>
+def countdown(n):
+    print('Counting down from', n)
+    while n > 0:
+        yield n
+        n -= 1
+
+for x in countdown(10):
+    print('T-minus', x)
+
+c = countdown(10)
+next(c)
+</pre>
+
+<p>
+  <code>next()</code> is shorthand for invoking the <code>__next__()</code> method:
+</p>
+
+<pre>
+c.__next__()
+</pre>
+
+<p>
+  Using a <code>return</code> statement raises a <code>StopIteration</code> exception that terminates a loop. To capture the return value, you need to catch the <code>StopIteration</code>:
+</p>
+
+<pre>
+try:
+    next(f)
+except StopIteration as e:
+    value = e.value
+</pre>
+
+<p>
+  Cleanup code must be in a <code>finally</code> block of <code>try-finally</code>:
+</p>
+
+<pre>
+def countdown(n):
+    print('Counting down from', n)
+    try:
+        while n > 0:
+            yield n
+            n -= 1
+    finally:
+        print('Only made it to', n)
+</pre>
+
+<p>
+  Using a context manager (a <code>with</code> block) also guarantees that cleanup will happen when the generator terminates.
+</p>
+
+<h3>6.2 Restartable Generators</h3>
+
+<p>
+  Normally, a generator function executes only once. To allow for repeated iteration, define it in a class and make the <code>__iter__()</code> method a generator:
+</p>
+
+<pre>
+class Countdown:
+    def __init__(self, start):
+        self.start = start
+
+    def __iter__(self):
+        n = self.start
+        while n > 0:
+            yield n
+            n -= 1
+</pre>
+
+<p>
+  Each time you iterate, a fresh generator is created by <code>__iter__()</code>.
+</p>
+
+<h3>6.3 Generator Delegation</h3>
+
+<p>
+  A generator using <code>yield</code> never executes by itself (calling a generator function is not enough to make it execute).
+</p>
+
+<p>
+  <code>yield from</code> delegates the iteration process to an outer iteration:
+</p>
+
+<pre>
+def countup(stop):
+    n = 1
+    while n <= stop:
+        yield n
+        n += 1
+
+def countdown(start):
+    n = start
+    while n > 0:
+        yield n
+        n -= 1
+
+def up_and_down(n):
+    yield from countup(n)
+    yield from countdown(n)
+
+for x in up_and_down(5):
+    print(x, end=' ')  # 1 2 3 4 5 5 4 3 2 1
+</pre>
+
+<p>
+  <code>yield from</code> is useful when writing code that must recursively iterate through nested iterables.
+</p>
+
+<p>
+  <strong>Example</strong>: flatten nested lists:
+</p>
+
+<pre>
+def flatten(items):
+    for i in items:
+        if isinstance(i, list):
+            yield from flatten(i)
+        else:
+            yield(i)
+
+for x in flatten(a):
+    print(x)
+</pre>
+
+<p>
+  Generators are a useful abstraction to break down problems into small, well-defined tasks.
+</p>
+
+<h3>6.5 Enhanced Generators and <code>yield</code> Expressions</h3>
+
+<p>
+  The <code>yield</code> statement by itself can be used in the right-hand side of an assignment operator:
+</p>
+
+<pre>
+def receiver():
+    print('Ready to receive')
+    while True:
+        n = yield
+        print('Got', n)
+</pre>
+
+<p>
+  Such a function is called an <em>enhanced generator</em> or <em>generator-based coroutine</em>.
+</p>
+
+<p>
+  Instead of producing values, enhanced generators executes in response to values sent to it.
+</p>
+
+<pre>
+&gt;&gt;&gt; r = receiver()
+&gt;&gt;&gt; r.send(None)  # advances to the first yield
+Ready to receive
+&gt;&gt;&gt; r.send(1)
+Got 1
+&gt;&gt;&gt; r.send(2)
+Got 2
+</pre>
+
+<p>
+  <code>r.close()</code> can be used to shut down the generator (it raises a <code>GeneratorExit</code> exception, and sending it more values will start raising <code>StopIteration</code>).
+</p>
+
+<p>
+  To raise exceptions inside a generator, use <code>throw(exception_type [, exception_argument [, traceback]])</code>.
+</p>
+
+<h3>6.6 Applications of Enhanced Generators</h3>
+
+<p>
+  <code>contextlib</code>'s <code>contextmanager</code> uses <code>yield</code> to separate the <code>__enter__</code> and <code>__exit__</code> blocks of a regular context manager definition.
+</p>
+
+<p>
+  Another application of extended generators is using functions to encapsulate a "worker" task. One might use a generator to set up a long-lived task. Accessing local variables in a generator is much faster than accessing attributes of classes and instances.
+</p>
+
+<h2 id="ch07">7. Classes and Object-Oriented Programming</h2>
+
+<p>
+  Use <code>type()</code> to view an object's type.
+</p>
+
+<p>
+  To check if an object is of a certain type:
+</p>
+
+<code>
+if isinstance(items, list):
+    pass
+</code>
+
+<p>
+  A <code>class</code> statement and block does not create any instances of that class. It is like a blueprint for creating instances.
+</p>
+
+<p>
+  <code>vars(a)</code> returns a dictionary containing the instance variables.
+</p>
+
+<p>
+  Methods are found on the class instead:
+</p>
+
+<pre>
+&gt;&gt;&gt; type(a).inquiry
+&lt;function Account.inquiry at ...&gt;
+</pre>
+
+<h3>7.4 Attribute Access</h3>
+
+<p>
+  There are only three basic operations that can be performed on an instance: getting, setting, and deleting an attribute.
+</p>
+
+<p>
+  Instead of using the dot operator (<code>.</code>) to perform these operations, you can supply an attribute name to <code>getattr, setattr, delattr, hasattr</code>:
+</p>
+
+<pre>
+a = Account('Guido', 1000.0)
+getattr(a, 'owner')  # 'Guido'
+setattr(a, 'balance', 1250.0)
+delattr(a, 'deprecated_name')
+</pre>
+
+<p>
+  <code>getattr()</code> takes an optional default value:
+</p>
+
+<pre>
+getattr(s, 'balance', 'unknown')
+</pre>
+
+<p>
+  Accessing a method as an attribute results in a <em>bound method</em>:
+</p>
+
+<pre>
+w = a.withdraw
+w(100)
+</pre>
+
+<h3>7.5 Scoping Rules</h3>
+
+<p>
+  There is no class-level scope in Python. Attributes and methods must be fully qualified; in other words, you use <code>self.balance</code>, not <code>balance</code>.
+</p>
+
+<h3>7.7 Inheritance</h3>
+
+<p>
+  <code>object</code> is a class that is the root of all Python objects.
+</p>
+
+<p>
+  For a derived class to call the original implementation of a method, use <code>super()</code>:
+</p>
+
+<pre>
+def inquiry(self):
+    return multiplier * super().inquiry()
+</pre>
+
+<p>
+  In a subclass' <code>__init__()</code>, the superclass' initialization must be explicitly called; otherwise, you'll end up with a half-initialized object that will most likely break.
+</p>
+
+<pre>
+class BadAccount(Account):
+    def __init__(self, owner, balance, multiplier):
+        super().__init__(owner, balance)
+        self.multiplier = multiplier
+</pre>
+
+<p>
+  Avoid hardcoding class names. Use instead: <code>f'{type(self).__name__}'</code>.
+</p>
+
+<h3>7.8 Avoiding Inheritance via Composition</h3>
+
+<p>
+  Sometimes, it's better to include a class as part of a new class, rather than subclass that original class. Example: a Stack can have a list as an implementation detail, instead of subclassing <code>list</code>.
+</p>
+
+<p>
+  <em>Dependency injection</em> is making a class depend on any object a user decides to pass in, provided it implements the required interface.
+</p>
+
+<h3>7.10 Dynamic Binding and Duck Typing</h3>
+
+<p>
+  Dynamic binding is the runtime mechanism that Python uses to find the attributes of objects. This behavior is also called <em>duck typing</em> (if it looks like a duck, quacks like a duck, and walks like a duck, then it's a duck).
+</p>
+
+<p>
+  As an example, there are all sorts of objects that work with the <code>for</code> loop. But none of them inherit from a special <em>iterable</em> base class. They merely implement the methods required to perform iteration, and everything works.
+</p>
+
+<h3>7.11 The Danger of Inheriting from Built-in Types</h3>
+
+<p>
+  Do not subclass built-in types. They aren't implemented like normal classes&mdash;they're implemented in C. This means that the expected routing through magic methods doesn't happen.
+</p>
+
+<p>
+  Instead, subclass from <code>UserDict, UserList, UserString</code>.
+</p>
+
+<h3>7.12 Class Variables and Methods</h3>
+
+<p>
+  Class variables are defined outside the normal <code>__init__()</code> method. It is possible to access a class variable from an instance (<code>a.num_accounts</code>).
+</p>
+
+<p>
+  A <em>class method</em> is applied to the class itself, not instances. Decorate a method with <code>@classmethod</code>.
+</p>
+
+<p>
+  The first argument of a class method is the class itself. By convention, it is named <code>cls</code>.
+</p>
+
+<p>
+  A class method can be used as an alternative constructor:
+</p>
+
+<pre>
+class Account:
+    def __init__(self, owner, balance):
+        pass
+
+    @classmethod
+    def from_xml(cls, data):
+        doc = XML(data)
+        return cls(doc.findtext('owner'), float(doc.findtext('amount')))
+</pre>
+
+<p>
+  <code>cls()</code> is like calling <code>Account()</code>.
+</p>
+
+<h3>7.13 Static Methods</h3>
+
+<p>
+  Sometimes, a class is merely used as a namespace for functions declared as static methods using <code>@staticmethod</code>. A static method does not take <code>self</code> or <code>cls</code>. It is an ordinary function that happens to be defined inside a class.
+</p>
+
+<p>
+  Normally, you just call the functions directly through the class: <code>Ops.add(1, 2)</code>.
+</p>
+
+<p>
+  Instead of inheritance, customized behavior can be achieved with classes that only hold static methods. <strong>Example</strong>: <em>StandardPolicy</em> for bank accounts. This policy can be swapped.
+</p>
+
+<h3>7.15 Data Encapsulation and Private Attributes</h3>
+
+<p>Using a single leading underscore (<code>_</code>) indicates internal implementation. Double leading underscores (<code>__</code>) will be automatically renamed to <code>_Classname__name</code> to avoid subclasses overwriting identical names in the superclass. This <em>name mangling</em> occurs only once when the class is defined.
+</p>
+
+<h3>7.17 Properties</h3>
+
+<p>
+  It is possible to place restrictions on an attribute if it is under the management of a <em>property</em>.
+</p>
+
+<p>
+  A property is a special kind of attribute that intercepts attribute access and handles it via user-defined methods.
+</p>
+
+<p>
+  The <code>@property</code> decorator is used to establish an attribute as a property. The <code>@owner.setter</code> decorator is used to optionally implement a method for setting the attribute value.
+</p>
+
+<pre>
+@property
+def owner(self):
+    return self._owner
+
+@owner.setter
+def owner(self, value):
+    # business logic
+    self._owner = value
+</pre>
+
+<p>
+  A critical feature of properties is that the associated name, <code>owner</code>, becomes "magical". Any use of that attribute automatically routes through the getter/setter methods that are implemented. Note that in <code>__init__()</code>, the assignment is <code>self.owner = owner</code>. The actual value needs to be stored under a different name, <code>_owner</code>. If <code>owner</code> were used, it would cause infinite recursion.
+</p>
+
+<p>
+  Getting, setting, and deleting the attribute value is accomplished with <code>@attrname.getter, @attrname.setter, @attrname.deleter</code>. It is not necessary to implement all parts of a property.
+</p>
+
+<p>
+  <strong>Example</strong>: Read-only computed data attributes:
+</p>
+
+<pre>
+class Box:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    @property
+    def perimeter(self):
+        return (2 * self.width) + (2 * self.height)
+
+    @property
+    def area(self):
+        return self.width * self.height
+
+b = Box(4, 5)
+print(b.area)  # 20
+</pre>
+
+<h3>7.18 Types, Interfaces, and Abstract Base Classes</h3>
+
+<p>
+  When you create an instance of a class, the type of that instance is the class itself.
+</p>
+
+<p>
+  <code>issubclass(A, B)</code> returns <code>True</code> if <code>A</code> is a subclass of <code>B</code>.
+</p>
+
+<p>
+  To circumvent a subclass not having implemented an expected function, it is common to define interfaces as <code>abstract base classes</code> (ABCs) using the <code>abc</code> module:
+</p>
+
+<pre>
+from abc import ABC, abstractmethod
+
+class Stream(ABC):
+    @abstractmethod
+    def receive(self):
+        pass
+
+    @abstractmethod
+    def send(self, msg):
+        pass
+</pre>
+
+<p>
+  An abstract class cannot be instantiated directly. It is meant to be used as a superclass:
+</p>
+
+<pre>
+class SocketStream(Stream):
+    def read(self):
+        pass
+    ...
+</pre>
+
+<p>
+  Calling <code>super().receive()</code> from a subclass is allowed.
+</p>
+
+<h3>7.19 Multiple Inheritance, Interfaces, and Mixins</h3>
+
+<p>
+  One possible use of multiple inheritance is to check type relations (to perform type checks).
+</p>
+
+<p>
+  Another use of multiple inheritance is to define <em>mixin classes</em>. A mixin class is a class that modifies or extends the functionality of other classes.
+</p>
+
+<p>
+  A mixin might use <code>super()</code> to delegate to a nonexistent parent class:
+</p>
+
+<pre>
+class LoudMixin:
+    def noise(self):
+        return super().noise().upper()
+</pre>
+
+<p>
+  They only work in combination with other classes that implement the missing functionality:
+</p>
+
+<pre>
+class Duck:
+    def noise(self):
+        return 'Quack'
+
+class LoudDuck(LoudMixin, Duck):
+    pass
+
+duck = LoudDuck()
+duck.noise()  # 'QUACK'
+</pre>
+
+<p>
+  Whenever you use inheritance, Python builds a linear chain of classes known as the <em>Method Resolution Order</em> (MRO). This is available as the <code>__mro__</code> attribute on a class. It specifies the search order for attribute lookup.
+</p>
+
+<p>
+  It is possible to make a direct call to a parent: <code>Base.noise()</code>. However, they are not safe to use with multiple inheritance. It breaks the proper chain of method calls and causes confusion. Use <code>super()</code> in multiple inheritance.
+</p>
+
+<h3>7.20 Type-Based Dispatch</h3>
+
+<p>
+  A common solution to dispatching based on a specific type is using a dictionary:
+</p>
+
+<pre>
+handlers = {
+    Duck: handle_duck,
+    Trombonist: handle_trombonist,
+    Cyclist: handle_cyclist
+}
+
+def dispatch(obj):
+    func = handlers.get(type(obj))
+</pre>
+
+<p>
+  If inheritance needs to be supported, you need to traverse the MRO:
+</p>
+
+<pre>
+def dispatch(obj):
+    for t in type(obj).__mro__:
+        func = handlers.get(t)
+        if func:
+            return func(obj)
+    raise RuntimeError(f'No handler for {obj}')
+</pre>
+
+<p>
+  A class-based approach is also possible:
+</p>
+
+<pre>
+class Dispatcher:
+    def handle(self, obj):
+        for t in type(obj).__mro__:
+            meth = getattr(self, f'handle_{t.__name__}', None)
+            if meth:
+                return meth(obj)
+        raise RuntimeError(f'No handler for {obj}')
+
+    def handle_Duck(self, obj):
+        pass
+
+    def handle_Trombonist(self, obj):
+        pass
+
+    def handle_Cyclist(self, obj):
+        pass
+
+d = Dispatcher()
+d.handle(Duck())
+</pre>
+
+<h3>7.21 Class Decorators</h3>
+
+<p>
+  A class decorator is a function that takes a class as input and returns a class as output. It could perform extra processing steps such as adding the class to a registry or generating extra support code.
+</p>
+
+<p>
+  A class decorator is a common alternative to mixins or multiple inheritance.
+</p>
+
+<p>
+  Using the <code>@dataclass</code> decorador is a convenient way to define a data structure:
+</p>
+
+<pre>
+from dataclasses import dataclass
+
+@dataclass
+class Point:
+    x: int
+    y: int
+</pre>
+
+<h3>7.22 Supervised Inheritance</h3>
+
+<p>
+  A parent class can perform extra actions on behalf of its subclasses with <code>__init_subclass__(cls)</code>.
+</p>
+
+<p>
+  Supervising inheritance with <code>__init_subclass__()</code> is one of Python's most powerful customization features (a lot of it is due to its implicit nature).
+</p>
+
+<h3>7.23 The Object Life Cycle and Memory Management</h3>
+
+<p>
+  The creation of an instance is carried out in two steps, with <code>__new__()</code> that creates the new instance and <code>__init__()</code> that initializes it.
+</p>
+
+<p>
+  <code>__new__</code> should be defined with the <code>@staticmethod</code> decorator.
+</p>
+
+<p>
+  To force garbage collection, import <code>gc</code> and call <code>gc.collect()</code>.
+</p>
+
+<h3>7.24 Weak References</h3>
+
+<p>
+  A weak reference is a way of creating a reference to an object without increasing its reference count:
+</p>
+
+<pre>
+import weakref
+
+a = Account('Guido', 1250.0)
+a_ref = weakref.ref(a)
+
+del a
+a_ref  # &lt;weakref at 0x...; dead&gt;
+</pre>
+
+<p>
+  To get the actual object, you need to call the weak reference as a function with no arguments.
+</p>
+
+<pre>
+acct = a_ref()
+</pre>
+
+<p>
+  Support for weak references requires instances to have a mutable <code>__weakref__</code> attribute. User-defined classes normally have such an attribute by default, but built-in types do not. A variant that adds <code>__weakref__</code> needs to be defined:
+</p>
+
+<pre>
+class wdict(dict):
+    __slots__ = ('__weakref__',)
+</pre>
+
+<h3>7.25 Internal Object Representation and Attribute Binding</h3>
+
+<p>
+  An instance's state is stored in a dictionary that's accessible as its <code>__dict__</code> attribute. Modifications to an instance are always reflected in <code>__dict__</code>, unless the attribute is being managed by a property.
+</p>
+
+<p>
+  A class' <code>__dict__</code> is where you find its methods.
+</p>
+
+<p>
+  <code>__bases__</code> is a tuple of base classes. It is only informational.
+</p>
+
+<h3>7.26 Proxies, Wrappers, and Delegation</h3>
+
+<p>
+  A proxy is an object that exposes the same interface as another object, but isn't related to the original object via inheritance.
+</p>
+
+<p>
+  For example, a proxy can hold an internal reference to the other object. Methods are delegated via the <code>__getattr__()</code> method:
+</p>
+
+<pre>
+class A:
+    pass
+
+class LoggedA:
+    def __init__(self):
+        self_a = A()
+
+    def __getattr__(self, name):
+        print("Accessing", name)
+        return getattr(self_a, name)
+</pre>
+
+<p>
+  However, this approach does not apply to operations mapped to special methods. Each special method you wish to support needs to be implemented.
+</p>
+
+<h3>7.27 Reducing Memory Use with <code>__slots__</code></h3>
+
+<p>
+  Slots is a definition hint that allows Python to make performance optimizations for memory use and execution speed.
+</p>
+
+<p>
+  Only instance attributes may be stored in <code>__slots__</code>.
+</p>
+
+<p>
+  When using inheritance, a subclass of a class that uses slots also needs to define its own slots (even if it doesn't add any).
+</p>
+
+<p>
+  Slots cannot be used with multiple inheritance.
+</p>
+
+<h3>7.28 Descriptors</h3>
+
+<p>
+  Normally, attribute access corresponds to dictionary operations. If more control is needed, attribute access can be routed through user-defined <code>__get__, __set__, __delete__</code> functions.
+</p>
+
+<p>
+  A property is actually implemented using a lower-level construct known as a <em>descriptor</em>.
+</p>
+
+<p>
+  Descriptors can only be instantiated at the class level. They are class-level objects that manage access to an attribute.
+</p>
+
+<h3>7.30 Dynamic Class Creation</h3>
+
+<p>
+  <code>types.new_class()</code> allows the creation of a class without using the <code>class</code> statement. This way is preferred over code such as <code>Account = type('Account', (), methods)</code>
+</p>
+
+<h3>7.31 Metaclasses</h3>
+
+<p>
+  When you define a class in Python, the class definition itself becomes an object.
+</p>
+
+<p>
+  The creation of a class object is controlled by a special kind of class called a <em>metaclass</em>. It's a class that creates instances of classes.
+</p>
+
+<p>
+  This metaclass is a built-in class called <code>type</code>.
+</p>
+
+<p>
+  To create a new metaclass, define a class that inherits from <code>type</code>.
+</p>
+
+<p>
+  Metaclasses may be used to rewrite the contents of the class namespace prior to the creation of the class object (such as using <code>__slots__</code>). Also, you can alter the class definition environment (such as to prevent duplicating an attribute name).
+</p>
+
+<h2 id="ch08">Modules and Packages</h2>
+
+<h3>8.1 Modules and the <code>import</code> Statement</h3>
+
+<p>
+  Any Python source file can be imported as a module:
+</p>
+
+<pre>
+# my_module.py
+
+a = 37
+
+def func():
+    pass
+
+print('Loaded my_module.py')
+</pre>
+
+<pre>
+import mymodule
+</pre>
+
+<p>
+  The file to be imported needs to be placed in one of the directories found in <code>sys.path</code>.
+</p>
+
+<p>
+  It is possible to selectively import a module:
+</p>
+
+<pre>
+if platform == 'unix':
+    import unixmodule as module
+elif platform == 'windows':
+    import windowsmodule as module
+...
+</pre>
+
+<p>
+  Modules are first-class objects in Python.
+</p>
+
+<p>
+  Code for a module is loaded and executed only once. Re-importing will only bind the module name to the module object already created by the previous import.
+</p>
+
+<p>
+  If the source code is modified, the new code will not be re-read in a new <code>import</code> execution.
+</p>
+
+<p>
+  While in general, module imports should go at the top of a file, it may make sense to import large modules conditionally to avoid the expensive operation.
+</p>
+
+<p>
+  There is <code>importlib.reload(modulename)</code> to reload <code>modulename</code>, which works like typing the new source code on top of the old. However, it is not recursive and existing instances do not get the updated class definition.
+</p>
+
+<p>
+  The best course of action is to restart the Python interpreter process.
+</p>
+
+<h3>8.7 The Module Search Path</h3>
+
+<p>
+  When importing modules, the interpreter searches for directories in <code>sys.path</code>. It is possible to append directories or ZIP files to <code>sys.path</code>:
+</p>
+
+<pre>
+sys.path.append('mymodules.zip')
+</pre>
+
+<p>
+  On UNIX, setting the <code>PYTHONPATH</code> environment value also adds its directories to <code>sys.path</code>:
+</p>
+
+<pre>
+env PYTHONPATH=/home/me/code:/home/me/libs python3
+</pre>
+
+<p>
+  If you've made a directory of Python code, you can execute the directory if it contains a special <code>__main__.py</code> file:
+</p>
+
+<pre>
+myapp/
+  module1.py
+  module2.py
+  __main__.py
+
+$ python3 myapp
+</pre>
+
+<p>
+  When importing a package without an <code>__init__.py</code> file, it gets imported as a <em>namespace package</em>. In general, it's best to create <code>__init__.py</code> files.
+</p>
+
+<h3>8.10 Imports Within a Package</h3>
+
+<p>
+  A package-relative import looks like:
+</p>
+
+<pre>
+# graphics/primitives/fill.py
+
+from . import lines  # import graphics/primitives/lines.py
+</pre>
+
+<p>
+  To import from other directories:
+</p>
+
+<pre>
+# graphics/graph2d/plot2d.py
+
+from ..primitive import lines
+</pre>
+
+<p>
+  Relative imports can only be used from within a package.
+</p>
+
+<h3>8.11 Running a Package Submodule as a Script</h3>
+
+<p>
+  Code that's organized into a package has a different runtime environment than a simple script. It is not possible to run Python directly on a package source file.
+</p>
+
+<p>
+  To run a submodule as a main script:
+</p>
+
+<pre>
+python3 -m graphics.graph2d.plot2d
+</pre>
+
+<h3>8.12 Controlling the Package Namespace</h3>
+
+<p>
+  Importing only a top-level name does not make submodules accessible:
+</p>
+
+<pre>
+import graphics
+graphics.primitive.fill.floodfill()  # fails
+</pre>
+
+<p>
+  The only file that imports is the <code>__init__.py</code> file.
+</p>
+
+<h3>8.13 Controlling Package Exports</h3>
+
+<p>
+  A submodule often declares an explicit list of exports by defining an <code>__all__</code> variable.
+</p>
+
+<h3>8.14 Package Data</h3>
+
+<p>
+  To read package data, use <code>pkgutil.get_data(package, resource)</code>:
+</p>
+
+<pre>
+mycode/
+  resources/
+    data.json
+  __init__.py
+  code.py
+
+# code.py
+raw_data = pkgutil.get_data(__package__, 'resources/data.json')
+text_data = raw_data.decode('utf-8')
+data = json.loads(text_data)
+</pre>
+
+<p>
+  In general, it's not a good idea to store lots of data in packages. Reserve package resources for configuration data and other assorted bits of stuff needed to make your package work.
+</p>
+
+<h3>8.17 Start With a Package</h3>
+
+<p>
+  It's tempting to start with a single file, <code>program.py</code>, but after it grows, it may be troublesome to organize it.
+</p>
+
+<p>
+  Start with a program package, and begin working in <code>__main__.py</code> (running it with <code>python3 -m program</code>).
+</p>
+
+<pre>
+program/
+  __init__.py
+  __main__.py
+</pre>
 
 </div>
 <br>
