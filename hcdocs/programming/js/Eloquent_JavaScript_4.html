@@ -82,20 +82,73 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">js</a></h3>
     
-<a class="index" href="biwascheme-0.8.0-custom.min.js">&#x1F4F0; biwascheme-0.8.0-custom.min.js</a><br>
-<a class="index" href="data_structures_common_crud.html">&#x1F4D8; data_structures_common_crud.html</a><br>
-<a class="index" href="Eloquent_JavaScript_4.html">&#x1F4D8; Eloquent_JavaScript_4.html</a><br>
-<a class="index" href="functional_light_js.html">&#x1F4D8; functional_light_js.html</a><br>
-<a class="index" href="js-tricks.html">&#x1F4D8; js-tricks.html</a><br>
-<a class="index" href="js_files/index.html">&#x1F4C1; js_files</a><br>
-<a class="index" href="js_language_notes.html">&#x1F4D8; js_language_notes.html</a><br>
-<a class="index" href="modern_javascript_for_the_impatient_2020.html">&#x1F4D8; modern_javascript_for_the_impatient_2020.html</a><br>
-<a class="index" href="modern_javascript_for_the_impatient_code_snippets.html">&#x1F4D8; modern_javascript_for_the_impatient_code_snippets.html</a><br>
-<a class="index" href="react/index.html">&#x1F4C1; react</a><br>
-<a class="index" href="react-notes.html">&#x1F4D8; react-notes.html</a><br>
-<a class="index" href="site-opener-page.html.txt" target="_blank">&#x1F4C3; site-opener-page.html.txt</a><br>
-<a class="index" href="site-opener.html">&#x1F4D8; site-opener.html</a><br>
-<a class="index" href="svelte/index.html">&#x1F4C1; svelte</a><br>
+<h1>Eloquent JavaScript, 4th Edition</h1>
+
+<h2>Contents</h2>
+
+<ol>
+  <li><a href="#ch01">Values, Types, and Operators</a></li>
+  <li><a href="#ch02">Program Structure</a></li>
+</ol>
+
+<h2 id="ch01">1. Values, Types, and Operators</h2>
+
+<h3>Strings</h3>
+
+<p>
+  Strings that use single or double quotes behave very much the same.
+</p>
+
+<p>
+  Backtick-quoted strings are called <em>template literals</em>. They can be multi-line and can embed values inside <code>${}</code>.
+</p>
+
+<pre>
+`half of 100 is ${100 / 2}`
+</pre>
+
+<h3>Unary Operators</h3>
+
+<p>
+  <code>typeof object_or_literal</code> returns a string value naming the type of its argument.
+</p>
+
+<h3>Automatic Type Conversion</h3>
+
+<p>
+  When <code>null</code> or <code>undefined</code> occurs on either side of <code>==</code>, it produces <code>true</code> only if the other side is also one of <code>null</code> or <code>undefined</code>.
+</p>
+
+<p>
+  This behavior is useful to test whether a value has a real value instead of <code>null</code> or <code>undefined</code>, using either <code>==</code> or <code>!=</code>.
+</p>
+
+<h3>Short-circuiting of Logical Operators</h3>
+
+<p>
+  Only the values <code>0, NaN, ""</code> (empty string) are considered as false. <code>[]</code> is considered true. (Try <code>[] || "abc"</code> or <code>if ([]) { ... }</code>.
+</p>
+
+<p>
+  The <code>??</code> operator checks if the left-hand side value is <code>null</code> or <code>undefined</code>. If so, it returns the value on the right.
+</p>
+
+<h2 id="ch02">2. Program Structure</h2>
+
+<h3>Bindings</h3>
+
+<p>
+  The keyword <code>let</code> defines a binding. A binding grabs hold of a value. The <code>=</code> operator makes the name of the binding point to the value on the right-hand side.
+</p>
+
+<h3>Control Flow</h3>
+
+<p>
+  <code>Number(), String(), Boolean()</code> convert their argument to those types.
+</p>
+
+<p>STOP Conditional Execution
+
 </div>
 <br>
 <hr>
