@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../resources/css/jquery.terminal.css">
+    <link rel="stylesheet" href="../resources/css/codemirror.css">
+    <link rel="stylesheet" href="../resources/css/codemirror_ambiance.css">
+    <link rel="stylesheet" href="../resources/css/livro.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <title>Programo Python</title>
+  </head>
+  <body>
+    <div id="loading">&nbsp;</div>
+
+    <div id="content">
+      <div id="chapter">
+        <p>
+          <a href="index.html" class="home-link">Índice</a>
+        </p>
+
+        <h1>1. Programe agora mesmo</h1>
+
+        <h3>Python no seu navegador</h3>
+
+        <p>
+          <span id="maria">0</span>
+        </p>
+
+        <p id="mariaEx" class="exercise">
+          Exercicio: Atribua, no interpretador, o valor 23 a maria.
+        </p>
+
+        <p id="forLoopEx" class="exercise">
+          Exercicio: No interpretador, usando for ... range(), conte os numeros de 10 a 15, incluindo esses dois numeros.
+        </p>
+
+        <p id="fnEx" class="exercise">
+          Exercicio: Crie a funcao "ao_quadrado" nesta caixa escura, que calcula o valor de um numero ao quadrado.
+          <textarea id="block1">def </textarea>
+
+          <button onclick="sendTextarea('block1', false)">Avalie</button>
+        </p>
+
+        <table class="ch-links">
+          <tr>
+
+
+            <td class="next-ch-link">
+              <a href="cap_variaveis.html">2. Variáveis &gt;&gt;&gt; </a>
+            </td>
+
+          </tr>
+        </table>
+
+
+        <p>
+          <a href="index.html" class="home-link">Índice</a>
+        </p>
+      </div>
+
+      <div id="bottom-padding">&nbsp;</div>
+
+    </div>
+
+    <div id="terminal-control" onclick="toggleTerminal()"></div>
+
+    <script src="../resources/js/jquery.min.js"></script>
+    <script src="../resources/js/jquery.terminal.js"></script>
+    <script src="../resources/js/lodash.min.js"></script>
+    <script src="../resources/js/unix_formatting.js"></script>
+    <script src="../resources/js/codemirror.js"></script>
+    <script src="../resources/js/codemirror_python.js"></script>
+    <script src="../resources/js/matchbrackets.js"></script>
+
+    <script src="../resources/js/init_codemirror.js"></script>
+    <script src="../resources/js/init_pyodide.js"></script>
+    <script>
+    // call pyodide
+    function runTests() {
+      return pyodide.runPython(`
+tritest(1, 2, 3)
+      `);
+    }
+
+    function handleExercises() {
+      const mariaValue = pyodide.globals.get("maria");
+      const printLog = pyodide.globals.get("print_log");
+      if (printLog.length >= 8) {
+        const lastEntries = printLog.slice(printLog.length - 8);
+        if (_.isEqual(lastEntries, ['---STATEMENT---', 10, 11, 12, 13, 14, 15, '---STATEMENT---'])) {
+          $("#forLoopEx").addClass("exercise-correct");
+        }
+      }
+      $("#maria").html(mariaValue);
+      if (mariaValue === 23) {
+        $("#mariaEx").addClass('exercise-correct');
+      }
+      const aoQ = pyodide.globals.get("ao_quadrado");
+      if (aoQ != null) {
+        const failures = pyodide.runPython(`tritest(
+ao_quadrado(3), 9, 'tres',
+ao_quadrado(-1), 1, 'negativo',
+ao_quadrado(10), 100, 'dez'
+)
+        `);
+        if (failures.length === 0) {
+          $("#fnEx").addClass('exercise-correct');
+        } else {
+          failures.forEach(fail => {
+            console.log(fail.toJs());
+          });
+        }
+      }
+    }
+    </script>
+  </body>
+</html>

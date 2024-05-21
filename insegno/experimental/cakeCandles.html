@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../resources/css/jquery.terminal.css">
+    <link rel="stylesheet" href="../resources/css/codemirror.css">
+    <link rel="stylesheet" href="../resources/css/codemirror_ambiance.css">
+    <link rel="stylesheet" href="../resources/css/livro.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <title>Python Book</title>
+  </head>
+  <body>
+    <div id="loading">&nbsp;</div>
+
+    <div id="content">
+      <div id="chapter">
+        <h1>How many candles will my cake have?</h1>
+
+        <p>
+          You're planning ahead for your birthday party, and candles are in your shopping list. The question is, how many do you need? What about 5 years from now?
+        </p>
+
+        <p id="varEx" class="exercise">
+          <strong>Exercise</strong>: First, click on the dark blue interpreter window below, and create a variable called <code>born</code> bound to the year you were born. This value won't be saved anywhere. It disappears when your browser is closed.<br><br>
+          For example: <code>born = 1997</code>
+        </p>
+
+        <p id="varErrors" class="errors">
+        </p>
+
+        <p id="fnEx" class="exercise">
+          <strong>Exercise</strong>: After defining which year you were born, complete the function below, so that it <code>return</code>s how many candles you need for the given year.
+
+          <br><br>
+          When you're done, type <code>Shift + Enter</code>, or click on the yellow button to send your code to the interpreter. Afterwards, you can run your function in the interpreter as much as you'd like.
+          <br><br>
+          <textarea id="block1">def ...
+    # Please complete the exercise above</textarea>
+
+          <button onclick="sendTextarea('block1', false)">Send to interpreter</button>
+        </p>
+
+        <p id="fnErrors" class="errors">
+        </p>
+
+        <p id="printEx" class="exercise">
+          <strong>Exercise</strong>: This page has loaded a variable called <code>greeting</code> with a "hidden" message. Click on the interpreter and <code>print</code> the message <strong>IN ALL CAPS</strong>.
+          <br><br>
+          <em>Hint</em>: Use the <code>upper()</code> method: <code>print(greeting.upper())</code>.
+        </p>
+
+      </div>
+
+      <div id="bottom-padding">&nbsp;</div>
+
+    </div>
+
+    <div id="terminal-control" onclick="toggleTerminal()"></div>
+
+    <script src="../resources/js/productionUrl.js"></script>
+
+    <script src="../resources/js/jquery.min.js"></script>
+    <script src="../resources/js/jquery.terminal.js"></script>
+    <script src="../resources/js/lodash.min.js"></script>
+    <script src="../resources/js/unix_formatting.js"></script>
+    <script src="../resources/js/codemirror.js"></script>
+    <script src="../resources/js/codemirror_python.js"></script>
+    <script src="../resources/js/matchbrackets.js"></script>
+
+    <script src="../resources/js/init_codemirror.js"></script>
+    <script src="../resources/js/init_pyodide.js"></script>
+    <script>
+    // call pyodide
+    function runTests() {
+      return pyodide.runPython(`
+tritest(1, 2, 3)
+      `);
+    }
+
+    let fnInitialized = false;
+    let fnComplete = false;
+    let bornInitial = null;
+
+    function handleExercises() {
+      const bornValue = pyodide.globals.get("born");
+      if (bornValue != null) {
+        if (typeof bornValue === "number") {
+          $("#varEx").addClass('exercise-correct');
+          if (!fnInitialized) {
+            cm_instances.get("block1").setValue(`def candles(year):
+    born = ${bornValue}`);
+            bornInitial = bornValue;
+            fnInitialized = true;
+          }
+          $("#varErrors").hide()
+        } else {
+          $("#varErrors").html("Make sure your year of birth is a plain number, and not another type, like a string.");
+          $("#varErrors").show()
+        }
+      }
+
+      const printLog = pyodide.globals.get("print_log");
+      if (printLog.length >= 3) {
+        const lastEntries = printLog.slice(printLog.length - 3);
+        if (_.isEqual(lastEntries, ['---STATEMENT---', 'HAPPY BIRTHDAY TO ME!!', '---STATEMENT---'])) {
+          $("#printEx").addClass("exercise-correct");
+        }
+      }
+
+      const candles = pyodide.globals.get("candles");
+      if (candles != null) {
+        const failures = pyodide.runPython(`tritest(
+candles(2024), ${2024 - bornInitial}, 'Year this page was written',
+)
+        `);
+        if (fnComplete || failures.length === 0) {
+          $("#fnEx").addClass('exercise-correct');
+          $("#fnErrors").hide();
+          fnComplete = true;
+        } else {
+          failures.forEach(fail => {
+            console.log(fail.toJs());
+          });
+          const gotValue = pyodide.runPython(`candles(2024)`);
+          if (gotValue == null) {
+            $("#fnErrors").html(`Whoops! I'm not getting any value. Did you use <code>return</code> for the function to produce a value?`);
+            $("#fnErrors").show()
+          } else {
+            $("#fnErrors").html(`Whoops! For the year 2024, you should have ${2024 - bornInitial} candles, but I got ${gotValue}.`);
+            $("#fnErrors").show()
+          }
+        }
+      }
+    }
+    </script>
+  </body>
+</html>
