@@ -82,10 +82,80 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">common_lisp</a></h3>
     
-<a class="index" href="postmodern.html">&#x1F4D8; postmodern.html</a><br>
-<a class="index" href="practical-common-lisp/index.html">&#x1F4C1; practical-common-lisp</a><br>
-<a class="index" href="sbclrc.txt" target="_blank">&#x1F4C3; sbclrc.txt</a><br>
-<a class="index" href="windows_setup.html">&#x1F4D8; windows_setup.html</a><br>
+<h1>Postmodern</h1>
+
+<h2>A PostgreSQL programming interface</h2>
+
+<h3>Ubuntu setup</h3>
+
+<p>
+  Login with the postgres user to create the user 'localuser' with password 'localpass'
+</p>
+
+<pre>
+sudo -u postgres psql
+
+&gt; create user localuser with encrypted password 'localpass';
+&gt; alter user localuser with superuser;
+
+Create a new database:
+sudo -u postgres createdb localdb
+
+Enter the new database:
+psql -h 127.0.0.1 -p 5433 -U localuser -d localdb
+</pre>
+
+<h3>Usage</h3>
+
+<p>
+  If doing local testing, it's easiest to create a top-level connection:
+</p>
+
+<pre>
+(connect-toplevel "localdb" "localuser" "localpass" "127.0.0.1")
+</pre>
+
+<h3>DAOs</h3>
+
+<p>
+  Define an entity:
+</p>
+
+<pre>
+(defclass country ()
+    ((name :col-type string :initarg :name :reader country-name)
+     (inhabitants :col-type integer :initarg :inhabitants :accessor country-inhabitants)
+     (sovereign :col-type (or db-null string) :initarg :sovereign :accessor country-sovereign))
+    (:metaclass dao-class)
+    (:keys name))
+</pre>
+
+<p>
+  Create a table:
+</p>
+
+<pre>
+(execute (dao-table-definition 'country))
+</pre>
+
+<p>
+  Insert values:
+</p>
+
+<pre>
+(insert-dao (make-instance 'country :name "San Marino" :inhabitants 120000 :sovereign "Mr. P."))
+</pre>
+
+<p>
+  Read values:
+</p>
+
+<pre>
+(query "select * from country")
+
+(query (:select '* :from 'country))
+</pre>
+
 </div>
 <br>
 <hr>

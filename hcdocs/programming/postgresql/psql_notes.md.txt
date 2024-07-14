@@ -40,11 +40,14 @@ sudo -u postgres psql
 > create user localuser with encrypted password 'localpass';
 > alter user localuser with superuser;
 
-Create a new database:
+Create a new database (ignore the error "could not change directory")
 sudo -u postgres createdb new_db_name
 
-Enter the new database:
+Enter the new database
 psql -h 127.0.0.1 -p 5433 -U localuser -d new_db_name
+
+Drop a database
+sudo -u postgres dropdb db_name
 
 ## Windows
 
