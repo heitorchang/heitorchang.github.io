@@ -82,11 +82,110 @@
 
     <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">django</a></h3>
     
-<a class="index" href="class_based_views_bookstore.html">&#x1F4D8; class_based_views_bookstore.html</a><br>
-<a class="index" href="django-general-01.md.txt" target="_blank">&#x1F4C3; django-general-01.md.txt</a><br>
-<a class="index" href="django-many-to-many-reverse-filter-horiz.py.txt" target="_blank">&#x1F4C3; django-many-to-many-reverse-filter-horiz.py.txt</a><br>
-<a class="index" href="django_blog.html">&#x1F4D8; django_blog.html</a><br>
-<a class="index" href="django_minimal_custom_user.html">&#x1F4D8; django_minimal_custom_user.html</a><br>
+<h1>Class-Based Views example (Bookstore)</h1>
+
+<p>
+  <code>models.py</code>
+</p>
+
+<pre>
+from django.db import models
+
+# Create your models here.
+
+class Author(models.Model):
+    name = models.CharField(max_length=80)
+
+    def __str__(self):
+        return self.name
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=80)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    price = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.title} by {self.author.name} (${self.price})"
+</pre>
+
+<p>
+  <code>views.py</code>
+</p>
+
+<pre>
+from django.views.generic import ListView, DetailView
+from django.shortcuts import render
+
+from .models import Author, Book
+
+# Create your views here.
+
+def index(request):
+    return render(request, 'bookstore/index.html')
+
+
+class AuthorListView(ListView):
+    model = Author
+
+
+class AuthorDetailView(DetailView):
+    model = Author
+</pre>
+
+<p>
+  <code>urls.py</code>
+</p>
+
+<pre>
+from django.urls import path
+from . import views
+
+
+app_name = 'bookstore'
+
+urlpatterns = [
+    path('', views.index, name="index"),
+    path("authors/", views.AuthorListView.as_view(), name="author_list"),
+    path("author/&lt;int:pk&gt;/", views.AuthorDetailView.as_view(), name="author_detail"),
+]
+</pre>
+
+<p>
+  <code>admin.py</code>
+</p>
+
+<pre>
+from django.contrib import admin
+
+from .models import Author, Book
+
+# Register your models here.
+
+admin.site.register(Author)
+admin.site.register(Book)
+</pre>
+
+<p>
+  <code>templates/bookstore/</code>
+</p>
+
+<pre>
+Author detail:
+{{ object }}
+
+{% for book in object.book_set.all %}
+  {{ book }}
+{% endfor %}
+</pre>
+
+<pre>
+Author list:
+{% for author in object_list %}
+  {{ author.pk }}: {{ author }}
+{% endfor %}
+</pre>
+
 </div>
 <br>
 <hr>
