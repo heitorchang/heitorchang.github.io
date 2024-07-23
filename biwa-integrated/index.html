@@ -10,29 +10,13 @@
     <script src="biwascheme-0.8.0-custom.min.js"></script>
 
     <button onclick="openPopup()">Open REPL popup</button>
+    <p>
+      Use <code>(disp ...)</code> for <code>console.log(...)</code> in the main window.
+    </p>
+
     <script type="text/biwascheme">
     (load "my-script.scm")
-    (define print console-log)
     </script>
-
-    <script>
-    let repl = null;
-
-    const onBiwaError = (e) => {
-      repl.displayError(e);
-      throw(e)
-    }
-
-    window.biwascheme = new BiwaScheme.Interpreter(onBiwaError);
-    const bsConsole = document.getElementById("bs-console");
-
-    function biwaEval(inputValue) {
-      biwascheme.evaluate(inputValue);
-    }
-
-    function openPopup() {
-      repl = open("repl.html", "replWindow", "width=540,height=360");
-    }
-    </script>
+    <script src="replLoader.js"></script>
   </body>
 </html>
