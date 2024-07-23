@@ -371,14 +371,6 @@ span.CodeMirror-selectedtext { background: none; }
     transition: 0.3s linear;
 }
 
-#input-area {
-    width: 30rem;
-    height: 8rem;
-    position: fixed;
-    bottom: 12.5rem;
-    right: 0;
-}
-
 #biwaError {
     width: 100%;
     border-radius: 0.4rem;
@@ -386,8 +378,16 @@ span.CodeMirror-selectedtext { background: none; }
     font-family: monospace;
 }
 
+#input-area {
+    width: 32rem;
+    height: 8rem;
+    position: fixed;
+    bottom: 12.5rem;
+    right: 0;
+}
+
 #output-area {
-    width: 30rem;
+    width: 32rem;
     height: 10rem;
     position: fixed;
     bottom: 0.5rem;

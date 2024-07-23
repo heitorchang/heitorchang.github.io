@@ -13,5 +13,5 @@ function biwaEval(inputValue) {
 }
 
 function openPopup() {
-  repl = open("repl.html", "replWindow", "width=540,height=360");
+  repl = open("repl.html", "replWindow", "width=565,height=360");
 }

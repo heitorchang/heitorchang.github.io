@@ -10585,7 +10585,7 @@ var input = CodeMirror.fromTextArea(replInput, {
   lineWrapping: true,
   autoCloseBrackets: true,
   extraKeys: {
-    "Shift-Enter": () => {
+    "Alt-Enter": () => {
       setCursorAtEnd()
       biwaEval()
     },
@@ -10597,14 +10597,14 @@ var input = CodeMirror.fromTextArea(replInput, {
 })
 
 // hardcoded style
-input.setSize("40rem", "8rem")
+input.setSize("32rem", "8rem")
 const biwaErrorMsg = document.getElementById("biwaError")
 
 function biwaEval() {
   const inputValue = cleanReplOutput(input.getValue().trim())
   inputHistory.unshift(inputValue)
   inputHistoryIndex = -1
-  window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 32)))
+  window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 50)))
   window.opener.biwascheme.evaluate(inputValue, function (result) {
     output.value += "\n" + inputValue
     output.value += "\n;=> " + BiwaScheme.to_write(result) + '\n'

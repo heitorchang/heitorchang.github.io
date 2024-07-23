@@ -11,8 +11,10 @@
 
     <button onclick="openPopup()">Open REPL popup</button>
     <p>
-      Use <code>(disp ...)</code> for <code>console.log(...)</code> in the main window.
+      Use <code>(pp ...)</code> for <code>console.log(...)</code> in the main window.<br>
+      Type Alt + Enter to evaluate code.
     </p>
+    <div id="sandbox">Sandbox div</div>
 
     <script type="text/biwascheme">
     (load "my-script.scm")
