@@ -9,14 +9,30 @@
   <body>
     <script src="biwascheme-0.8.0-custom.min.js"></script>
 
-    <!-- set display to 'none' to hide REPL, 'block' to show -->
-    <div id="repl" style="display: block;">
-      <div id="input-area"><button onclick="hideRepl()">Hide (eval showRepl() in console to show)</button><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
-      <div id="output-area"><button onclick="clearOutput()">Clear output</button><br><textarea id="replOutput"></textarea></div>
-    </div>
-    <script src="repl.js"></script>
+    <button onclick="openPopup()">Open REPL popup</button>
     <script type="text/biwascheme">
-    ;; (load "scm/my-script.scm")
+    (load "my-script.scm")
+    (define print console-log)
+    </script>
+
+    <script>
+    let repl = null;
+
+    const onBiwaError = (e) => {
+      repl.displayError(e);
+      throw(e)
+    }
+
+    window.biwascheme = new BiwaScheme.Interpreter(onBiwaError);
+    const bsConsole = document.getElementById("bs-console");
+
+    function biwaEval(inputValue) {
+      biwascheme.evaluate(inputValue);
+    }
+
+    function openPopup() {
+      repl = open("repl.html", "replWindow", "width=540,height=360");
+    }
     </script>
   </body>
 </html>

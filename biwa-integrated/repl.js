@@ -10529,16 +10529,6 @@ CodeMirror.defineMIME("text/x-scheme", "scheme");
 
 // repl.js
 
-const biwaErrorMsg = document.getElementById("biwaError")
-
-const onBiwaError = (e) => {
-  biwaErrorMsg.innerText = e.message
-  biwaErrorMsg.className = 'biwaErrorFlash'
-  throw(e)
-}
-
-const biwascheme = new BiwaScheme.Interpreter(onBiwaError)
-
 const replInput = document.getElementById("replInput")
 const output = document.getElementById("replOutput")
 let inputHistoryFromStorage = window.localStorage.getItem("biwaReplHistory") || "[]"
@@ -10608,13 +10598,14 @@ var input = CodeMirror.fromTextArea(replInput, {
 
 // hardcoded style
 input.setSize("40rem", "8rem")
+const biwaErrorMsg = document.getElementById("biwaError")
 
 function biwaEval() {
   const inputValue = cleanReplOutput(input.getValue().trim())
   inputHistory.unshift(inputValue)
   inputHistoryIndex = -1
   window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 32)))
-  biwascheme.evaluate(inputValue, function (result) {
+  window.opener.biwascheme.evaluate(inputValue, function (result) {
     output.value += "\n" + inputValue
     output.value += "\n;=> " + BiwaScheme.to_write(result) + '\n'
     output.scrollTop = output.scrollHeight
@@ -10622,4 +10613,9 @@ function biwaEval() {
     biwaErrorMsg.innerText = ""
     biwaErrorMsg.className = "biwaNoError"
   })
+}
+
+function displayError(e) {
+  biwaErrorMsg.innerText = e.message
+  biwaErrorMsg.className = 'biwaErrorFlash'
 }
