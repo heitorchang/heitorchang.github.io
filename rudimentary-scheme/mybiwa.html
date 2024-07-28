@@ -1,0 +1,46 @@
+<head>
+  <style>
+  #bs-console {
+    position: fixed;
+    width: 95%;
+    height: 33%;
+    bottom: 0;
+    padding: 1rem;
+    overflow: auto;
+    background-color: #defa;
+  }
+  </style>
+</head>
+
+<body>
+  <input id="repl_input">
+  <button onclick="biwaEval()">eval</button>
+  <div id="bs-console">
+  </div>
+  <script src="biwascheme-0.8.0-min.js"></script>
+  <script>
+  const biwascheme = new BiwaScheme.Interpreter();
+  const bsConsole = document.getElementById("bs-console");
+
+  function biwaEval() {
+    const inputValue = document.getElementById("repl_input").value;
+    biwascheme.evaluate(inputValue, function (result) {
+      console.log(result);
+      bsConsole.scrollTop = bsConsole.scrollHeight;
+      document.getElementById("repl_input").value = "";
+    })
+  }
+  </script>
+  <script type="text/biwascheme">
+  (load "myscm.scm")
+  (g)
+  (g)
+  (g)
+  (g)
+  (g)
+  (g)
+  (g)
+  (g)
+  (js-eval "biwaEval()")
+  </script>
+</body>

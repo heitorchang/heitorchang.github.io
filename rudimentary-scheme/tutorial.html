@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="ui.css"> <link rel="stylesheet" href="repl.css">
+
+    <title>Tutorial - Scheme Programming</title>
+  </head>
+
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div class="grid">
+      <div id="repl"><strong>REPL</strong>
+        <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
+      </div>
+
+      <div id="sandbox">
+        <strong>Exercise answers</strong>
+        <p>
+          Answer 1: <input id="ans_1" class="input-small" readonly> <span id="check_1" class="check check-hidden">OK</span>
+        </p>
+
+        <p>
+          Answer 2: <input id="ans_2" class="input-small" readonly> <span id="check_2" class="check check-hidden">OK</span>
+        </p>
+
+        <p>
+          Answer 3: <input id="ans_3" class="input-small" readonly> <span id="check_3" class="check check-hidden">OK</span>
+        </p>
+
+      </div>
+
+      <div id="content">
+        <h1>Tutorial</h1>
+
+        <p>
+          Scheme code is written inside parentheses. For example, <code>(string-append "Scheme" "2.0")</code>
+        </p>
+
+        <p>
+          A collection of space-separated elements enclosed by parentheses is called a <em>list</em>.
+        </p>
+
+        <p>
+          The first element of a list may be a <strong>function name</strong> or a <strong>special operator</strong>, such as <code>if</code>.
+        </p>
+
+        <p>
+          The four arithmetic operators are represented by the symbols <code>+ - / *</code>.
+        </p>
+
+        <p>
+          Try adding two numbers by writing the expression <code>(+ 1 2)</code> in the REPL.
+        </p>
+
+        <p>
+          Type <code>Shift + Enter</code> to <em>evaluate</em> the expression. Alternatively, <code>Ctrl + Enter</code> and <code>Alt + Enter</code> also work.
+        </p>
+
+        <p>
+          You should see the result <code>;; =&gt; 3</code> in the bottom panel. The semicolons mark the beginning of a <em>comment</em>, which is text that is ignored by the evaluator. It is printed in case you wish to copy and paste that portion of the output, but not evaluate it.
+        </p>
+
+        <p>
+          To recover previous expressions, type <code>Ctrl + Up/Down</code> or <code>Alt + Up/Down</code>.
+        </p>
+
+        <h3>
+          Exercise 1: Submit an answer
+        </h3>
+
+        <p>
+          You have added the numbers <code>1</code> and <code>2</code>. This exercise shows how to submit an answer to be verified.
+        </p>
+
+        <p>
+          The function <code>answer</code> is pre-loaded in every page. It expects two values, the answer number to be filled (here it's <code>1</code>, <code>2</code>, or <code>3</code>) and the value you wish to submit, in the format <code>(answer id-number value)</code>
+        </p>
+
+        <p>
+          The first answer box should be filled with the result of <code>(+ 1 2)</code>.
+        </p>
+
+        <p>
+          The exercise checker only cares about the final result, so you may type either:
+        </p>
+
+        <p>
+          <code>(answer 1 (+ 1 2))</code>
+        </p>
+
+        <p>
+          <em>or</em>
+        </p>
+
+        <p>
+          <code>(answer 1 3)</code>
+        </p>
+
+        <p>
+          and then type <code>Shift + Enter</code>, <code>Ctrl + Enter</code>, or <code>Alt + Enter</code> so that it's evaluated.
+        </p>
+
+        <h3>
+          Exercise 2: Calling a pre-loaded function
+        </h3>
+
+        <p>
+          There is another pre-loaded function, <code>double</code>, defined in this page. It accepts a single numerical value, and returns that value doubled (multiplied by 2).
+        </p>
+
+        <p>
+          Submit the double of <code>6</code> to the <em>Answer 2</em> box.
+        </p>
+
+        <h3>
+          Exercise 3: Write your own function
+        </h3>
+
+        <p>
+          For the final exercise, you will define the <code>square</code> function, which multiplies a given number by itself.
+        </p>
+
+        <p>
+          Functions in Scheme are defined with the <code>define</code> special form. Defining a function that accepts one <em>argument</em> looks like:
+        </p>
+
+        <pre>
+(define (function-name argument)
+  return-expression)</pre>
+
+        <p>
+          So far the only expressions we've seen were plain numbers and function calls. A trivial function that always returns <code>16</code> may be written as:
+        </p>
+
+        <pre>
+(define (give-me-two)
+  2)</pre>
+
+        <p>
+          Note that we are not adding any arguments, as we will always get <code>2</code> back.
+        </p>
+
+        <p>
+          Remember that to call a function, it must be inside parentheses: <code>(give-me-two)</code>. Evaluating it without parentheses will print the function as an object, which appears as <code>[object Object]</code> in the console.
+        </p>
+
+        <p>
+          To answer the original question, our function <code>square</code> has to return an expression that manipulates its argument. Suppose our argument is named <code>n</code>. Then, we want to compute <code>n<sup>2</sup></code>, which is <code>n</code> &times; <code>n</code>.
+        </p>
+
+        <p>
+          Think about what that looks like in Scheme: <code>(* n n)</code>
+        </p>
+
+        <p>
+          Now, we just place this expression as the <code>return-expression</code> of a <code>define</code> expression that wants to define <code>(square n)</code>
+        </p>
+
+        <pre>
+(define (square n)
+  (* n n))</pre>
+
+        <p>
+          Try typing this function definition and evaluate it. Note that <code>no value</code> is returned.
+        </p>
+
+        <p>
+          You can experiment calculating various squares, such as <code>(square 0)</code>, <code>(square 1)</code>, and <code>(square 16)</code>.
+        </p>
+
+        <p>
+          <em>Answer 3</em> is looking for the square of <code>7</code>. Remember to call <code>answer</code> with the ID number <code>3</code> to place the right value in its box!
+        </p>
+
+      </div>
+
+      <div id="consoleWrapper"><pre id="bs-console">;; Console output
+
+</pre></div>
+
+    </div>
+    <script src="repl.js"></script>
+    <script type="text/biwascheme">
+    (load "ui.scm")
+    (load "tutorial.scm")
+    </script>
+    <script>
+    function runTests() {
+      const ans_1 = document.getElementById("ans_1");
+      const ans_2 = document.getElementById("ans_2");
+      const ans_3 = document.getElementById("ans_3");
+
+      const check_1 = document.getElementById("check_1");
+      const check_2 = document.getElementById("check_2");
+      const check_3 = document.getElementById("check_3");
+
+      if (parseInt(ans_1.value) === 3) {
+        check_1.classList.remove("check-hidden");
+      } else {
+        check_1.classList.add("check-hidden");
+      }
+
+      if (parseInt(ans_2.value) === 12) {
+        check_2.classList.remove("check-hidden");
+      } else {
+        check_2.classList.add("check-hidden");
+      }
+
+      if (parseInt(ans_3.value) === 49) {
+        check_3.classList.remove("check-hidden");
+      } else {
+        check_3.classList.add("check-hidden");
+      }
+    }
+    </script>
+  </body>
+</html>

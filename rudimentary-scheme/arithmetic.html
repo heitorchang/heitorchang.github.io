@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Scheme Programming</title>
+
+    <link rel="stylesheet" href="ui.css">
+    <link rel="stylesheet" href="repl.css">
+  </head>
+
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div class="grid">
+      <div id="repl">
+        <strong>REPL</strong>
+        <div id="input-area">
+          <textarea id="replInput" rows="4" cols="72" autofocus></textarea>
+          <div id="biwaError"></div>
+        </div>
+      </div>
+
+      <div id="sandbox">
+        <strong>Sandbox</strong>
+        <input id="ans">
+      </div>
+
+      <div id="content"></div>
+
+      <div id="consoleWrapper">
+        <pre id="bs-console">;; Console output
+
+</pre>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script>
+    const ans = document.getElementById("ans");
+    function runTests() {
+      console.log("Running tests with JS, that should use the DOM to check for correct values.");
+      console.log(`ans.value is ${ans.value}`);
+      if (parseInt(ans.value) === 3) {
+        console.log("Test passed!");
+      }
+    }
+    </script>
+  </body>

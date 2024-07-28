@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="ui.css"> <link rel="stylesheet" href="repl.css">
+
+    <title>Scheme Programming</title>
+  </head>
+
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div class="grid">
+      <div id="repl"><strong>REPL</strong>
+        <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
+      </div>
+
+      <div id="sandbox">
+        <strong>Sandbox</strong>
+      </div>
+
+      <div id="content">
+      </div>
+
+      <div id="consoleWrapper"><pre id="bs-console">;; Console output
+
+</pre></div>
+
+    </div>
+    <script src="repl.js"></script>
+    <script type="text/biwascheme">
+    (load "ui.scm")
+    </script>
+    <script>
+      function runTests() {
+
+      }
+    </script>
+  </body>
+</html>
