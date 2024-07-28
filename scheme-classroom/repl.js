@@ -10584,8 +10584,9 @@ function clearInput() {
 
 var input = CodeMirror.fromTextArea(replInput, {
   mode: 'scheme',
+  theme: 'default',
   matchBrackets: true,
-  lineNumbers: true,
+  lineNumbers: false,
   lineWrapping: true,
   autoCloseBrackets: true,
   extraKeys: {
@@ -10606,7 +10607,7 @@ var input = CodeMirror.fromTextArea(replInput, {
 })
 
 // hardcoded style
-input.setSize("100%", "calc(70vh - 3.5rem)")
+input.setSize("100%", "calc(100% - 3.5rem)")
 const biwaErrorMsg = document.getElementById("biwaError")
 
 // BiwaScheme functions

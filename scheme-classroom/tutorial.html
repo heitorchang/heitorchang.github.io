@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="ui.css"> <link rel="stylesheet" href="repl.css">
-
+    <link rel="stylesheet" href="ui.css">
+    <link rel="stylesheet" href="repl.css">
     <title>Tutorial - Scheme Programming</title>
   </head>
 
@@ -42,12 +42,26 @@
         </p>
 
         <p>
-          The first element of a list may be a <strong>function name</strong> or a <strong>special operator</strong>, such as <code>if</code>.
+          The first element of a list must be a <strong>function name</strong> or a <strong>special operator</strong>, such as <code>if</code>.
+        </p>
+
+        <p>
+          When a function name is placed at the start of a list, the remaining elements of the list are the <em>arguments</em> that the function will operate on.
+        </p>
+
+        <p>
+          Each special form has its own rules that apply to the remaining elements of its list.
+        </p>
+
+        <p>
+          Addition in Scheme is computed by starting a list with <code>+</code> and typing the numbers to be added after it. Note that you may add as many numbers as you wish, with only one <code>+</code> in the whole expression: <code>(+ 1 5 10 200)</code>
         </p>
 
         <p>
           The four arithmetic operators are represented by the symbols <code>+ - / *</code>.
         </p>
+
+        <p>
 
         <p>
           Try adding two numbers by writing the expression <code>(+ 1 2)</code> in the REPL.

@@ -7436,7 +7436,7 @@ var BiwaScheme = (function () {
     push(e, t) {
       hack_eval_count++;
       if (hack_eval_count > HACK_EVAL_COUNT_LIMIT) {
-        throw new Error(`Too much recursion, stack limit reached.`);
+        throw new Error(`Too much recursion: stack limit reached.`);
       }
 
       return (this.stack[t] = e), t + 1;
