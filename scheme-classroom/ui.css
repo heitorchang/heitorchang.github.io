@@ -38,8 +38,17 @@ code {
 }
 
 #repl {
-    background-color: #efffe9;
     height: 100%;
+}
+
+.biwaReady {
+    background-color: #efffe9;
+    transition: 0.1s linear;
+}
+
+.biwaReceived {
+    background-color: #cfc;
+    transition: 0.1s linear;
 }
 
 #sandbox {

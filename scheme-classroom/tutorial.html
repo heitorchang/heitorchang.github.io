@@ -10,8 +10,8 @@
   <body>
     <script src="biwascheme-0.8.0-custom.js"></script>
     <div class="grid">
-      <div id="repl"><strong>REPL</strong>
-        <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
+      <div id="repl" class="biwaReady"><strong>REPL</strong>
+        <div id="input-area"><textarea class="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
       </div>
 
       <div id="sandbox">
@@ -38,11 +38,15 @@
         </p>
 
         <p>
+          <textarea class="replInput" rows="4" cols="72" autofocus></textarea>
+        </p>
+
+        <p>
           A collection of space-separated elements enclosed by parentheses is called a <em>list</em>.
         </p>
 
         <p>
-          The first element of a list must be a <strong>function name</strong> or <strong>special operator</strong>, such as <code>if</code>.
+          The first element of a list must be a <strong>function name</strong> or a <strong>special operator</strong>, such as <code>if</code>.
         </p>
 
         <p>
@@ -68,7 +72,7 @@
         </p>
 
         <p>
-          Type <code>Shift + Enter</code> to <em>evaluate</em> the expression. Alternatively, <code>Ctrl + Enter</code> and <code>Alt + Enter</code> also work.
+          Type <code>Ctrl + Enter</code> or <code>Alt + Enter</code> to <em>evaluate</em> the expression.
         </p>
 
         <p>

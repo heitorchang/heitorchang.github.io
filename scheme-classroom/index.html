@@ -4,23 +4,24 @@
     <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="ui.css">
     <link rel="stylesheet" href="repl.css">
-    <link rel="stylesheet" href="duotone-light.css">
-    <title>Scheme Programming</title>
+    <title>Scratch - Scheme</title>
   </head>
 
   <body>
     <script src="biwascheme-0.8.0-custom.js"></script>
     <div class="grid">
-      <div id="repl"><strong>REPL</strong>
-        <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea></div>
-        <div id="biwaError"></div>
+      <div id="repl" class="biwaReady"><strong>REPL</strong>
+        <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
       </div>
 
       <div id="sandbox">
-        <strong>Sandbox</strong>
+        <h3>Permanent Content</h3>
       </div>
 
       <div id="content">
+        <h3>localStorage scratch text (saves on REPL eval)</h3>
+        <textarea id="scratch-text" style="width: 100%; height: calc(100% - 3.5rem);"></textarea>
+        <button id="save-scratch" onclick="saveScratch()">Save scratch text</button>
       </div>
 
       <div id="consoleWrapper"><pre id="bs-console">;; Console output
@@ -31,11 +32,24 @@
     <script src="repl.js"></script>
     <script type="text/biwascheme">
     (load "ui.scm")
+    (load "tutorial.scm")
     </script>
     <script>
-      function runTests() {
+    function runTests() {
 
-      }
+    }
+
+    const scratchTextarea = document.getElementById("scratch-text");
+
+    function loadScratch() {
+      scratchTextarea.value = window.localStorage.getItem("scratchText");
+    }
+
+    function saveScratch() {
+      window.localStorage.setItem("scratchText", scratchTextarea.value);
+    }
+
+    loadScratch();
     </script>
   </body>
 </html>

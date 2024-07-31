@@ -10590,9 +10590,9 @@ var input = CodeMirror.fromTextArea(replInput, {
   lineWrapping: true,
   autoCloseBrackets: true,
   extraKeys: {
-    "Shift-Enter": biwaEval,
-    "Alt-Enter": biwaEval,
-    "Ctrl-Enter": biwaEval,
+    "Shift-Enter": () => { biwaEval(input) },
+    "Ctrl-Enter": () => { biwaEval(input) },
+    "Alt-Enter": () => { biwaEval(input) },
 
     "Ctrl-Up": histUp,
     "Alt-Up": histUp,
@@ -10604,10 +10604,10 @@ var input = CodeMirror.fromTextArea(replInput, {
 
     "Esc": clearInput,
   }
-})
+});
 
-// hardcoded style
 input.setSize("100%", "calc(100% - 3.5rem)")
+
 const biwaErrorMsg = document.getElementById("biwaError")
 
 // BiwaScheme functions
@@ -10619,28 +10619,36 @@ function setErrorCursor() {
 
 const onBiwaError = (e) => {
   displayError(e);
-  window.setTimeout(() => { setErrorCursor() }, 200);
   throw(e);
 }
 
 const biwascheme = new BiwaScheme.Interpreter(onBiwaError);
 const consoleWrapper = document.getElementById("consoleWrapper");
 const bsConsole = document.getElementById("bs-console");
+const replElem = document.getElementById("repl");
 
-function biwaEval() {
-  setCursorAtEnd();
-  const inputValue = cleanReplOutput(input.getValue().trim())
+function biwaEval(input) {
+  // flash transition
+  replElem.classList.remove("biwaReady");
+  replElem.classList.add("biwaReceived");
+  window.setTimeout(() => { replElem.classList.remove("biwaReceived"); replElem.classList.add("biwaReady"); }, 200);
+  const inputValue = input.getValue();
   inputHistory.unshift(inputValue)
   inputHistoryIndex = -1
   window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 50)))
   biwascheme.evaluate(inputValue, function (result) {
-    bsConsole.innerText += inputValue + '\n';
-    bsConsole.innerText += ';; => ' + result + '\n\n';
+    bsConsole.innerText += inputValue + '\n\n';
+    bsConsole.innerText += ';; => ' + result + '\n\n\n';
     consoleWrapper.scrollTop = consoleWrapper.scrollHeight;
     input.setValue("")
     biwaErrorMsg.innerText = ""
     biwaErrorMsg.className = "biwaNoError"
   })
+
+  // save scratch if the function is present
+  if (typeof window.saveScratch === 'function') {
+    window.saveScratch();
+  }
 }
 
 function displayError(e) {
