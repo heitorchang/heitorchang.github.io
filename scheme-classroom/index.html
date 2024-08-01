@@ -10,7 +10,7 @@
   <body>
     <script src="biwascheme-0.8.0-custom.js"></script>
     <div class="grid">
-      <div id="repl" class="biwaReady"><strong>REPL</strong>
+      <div id="repl"><strong>REPL</strong>
         <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
       </div>
 
@@ -19,12 +19,12 @@
       </div>
 
       <div id="content">
-        <h3>localStorage scratch text (saves on REPL eval)</h3>
+        <h3>localStorage scratch</h3>
         <textarea id="scratch-text" style="width: 100%; height: calc(100% - 3.5rem);"></textarea>
-        <button id="save-scratch" onclick="saveScratch()">Save scratch text</button>
+        <button id="save-scratch" onclick="saveScratch()">Save and eval scratch text</button>
       </div>
 
-      <div id="consoleWrapper"><pre id="bs-console">;; Console output
+      <div id="consoleWrapper" class="biwaReady"><pre id="bs-console">;; Console output
 
 </pre></div>
 
@@ -47,6 +47,9 @@
 
     function saveScratch() {
       window.localStorage.setItem("scratchText", scratchTextarea.value);
+      input.setValue(scratchTextarea.value);
+      biwaEval(input);
+      scratchTextarea.focus();
     }
 
     loadScratch();

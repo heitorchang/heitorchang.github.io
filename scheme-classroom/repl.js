@@ -10629,9 +10629,9 @@ const replElem = document.getElementById("repl");
 
 function biwaEval(input) {
   // flash transition
-  replElem.classList.remove("biwaReady");
-  replElem.classList.add("biwaReceived");
-  window.setTimeout(() => { replElem.classList.remove("biwaReceived"); replElem.classList.add("biwaReady"); }, 200);
+  consoleWrapper.classList.remove("biwaReady");
+  consoleWrapper.classList.add("biwaReceived");
+  window.setTimeout(() => { consoleWrapper.classList.remove("biwaReceived"); consoleWrapper.classList.add("biwaReady"); }, 150);
   const inputValue = input.getValue();
   inputHistory.unshift(inputValue)
   inputHistoryIndex = -1
@@ -10644,11 +10644,6 @@ function biwaEval(input) {
     biwaErrorMsg.innerText = ""
     biwaErrorMsg.className = "biwaNoError"
   })
-
-  // save scratch if the function is present
-  if (typeof window.saveScratch === 'function') {
-    window.saveScratch();
-  }
 }
 
 function displayError(e) {

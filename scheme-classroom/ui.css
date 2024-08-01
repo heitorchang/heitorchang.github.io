@@ -39,16 +39,17 @@ code {
 
 #repl {
     height: 100%;
+    background-color: #efd
 }
 
 .biwaReady {
-    background-color: #efffe9;
-    transition: 0.1s linear;
+    background-color: #def;
+    transition: 0.05s linear;
 }
 
 .biwaReceived {
-    background-color: #cfc;
-    transition: 0.1s linear;
+    background-color: #cdf;
+    transition: 0.05s linear;
 }
 
 #sandbox {
@@ -86,7 +87,6 @@ code {
 #consoleWrapper {
     grid-column: 1 / span 3;
     overflow: auto;
-    background-color: #def;
 }
 
 #bs-console {
