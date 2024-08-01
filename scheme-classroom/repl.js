@@ -10627,6 +10627,8 @@ const consoleWrapper = document.getElementById("consoleWrapper");
 const bsConsole = document.getElementById("bs-console");
 const replElem = document.getElementById("repl");
 
+replElem.addEventListener("click", () => { input.focus(); });
+
 function biwaEval(input) {
   // flash transition
   consoleWrapper.classList.remove("biwaReady");
@@ -10640,7 +10642,9 @@ function biwaEval(input) {
     bsConsole.innerText += inputValue + '\n\n';
     bsConsole.innerText += ';; => ' + result + '\n\n\n';
     // save result as _
-    biwascheme.evaluate(`(define _ ${result})`, function (res) {});
+    if (typeof result === "number") {
+      biwascheme.evaluate(`(define _ ${result})`, function (res) {});
+    }
     consoleWrapper.scrollTop = consoleWrapper.scrollHeight;
     input.setValue("")
     biwaErrorMsg.innerText = ""
