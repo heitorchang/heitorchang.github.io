@@ -10639,6 +10639,8 @@ function biwaEval(input) {
   biwascheme.evaluate(inputValue, function (result) {
     bsConsole.innerText += inputValue + '\n\n';
     bsConsole.innerText += ';; => ' + result + '\n\n\n';
+    // save result as _
+    biwascheme.evaluate(`(define _ ${result})`, function (res) {});
     consoleWrapper.scrollTop = consoleWrapper.scrollHeight;
     input.setValue("")
     biwaErrorMsg.innerText = ""
