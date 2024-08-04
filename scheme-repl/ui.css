@@ -1,0 +1,114 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+body {
+    line-height: 1.25;
+    background-color: #fcfcfc;
+    font-family: sans-serif;
+}
+
+code {
+    color: #363;
+    margin: 0 0.3rem;
+    font-size: 1.0rem;
+}
+
+a {
+    text-decoration: none;
+    color: #33f;
+}
+
+.grid {
+    padding: 0.5rem;
+    display: grid;
+    height: 100vh;
+
+    grid-template-columns: minmax(0, 2fr) 3fr;
+    grid-template-rows: minmax(0, 2fr) 1fr;
+    grid-gap: 0.5rem;
+
+}
+
+.grid > * {
+    border: 1px dotted #99f;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    overflow: auto;
+    position: relative;
+}
+
+#repl {
+    height: 100%;
+    background-color: #efd
+}
+
+.biwaReady {
+    background-color: #def;
+    transition: 0.05s linear;
+}
+
+.biwaReceived {
+    background-color: #cdf;
+    transition: 0.05s linear;
+}
+
+#sandbox {
+    background-color: #fff;
+}
+
+#sandbox p {
+    margin-top: 1rem;
+}
+
+#sandbox .input-small {
+    width: 6rem;
+}
+
+#content {
+    background-color: #f9f6ef;
+}
+
+#content pre {
+    box-sizing: border-box;
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #ffefd5;
+    border-radius: 0.8rem;
+    overflow: auto;
+    min-width: calc(100% - 2rem);
+    font-size: 0.9rem;
+}
+
+#content p {
+    margin: 1.5rem 0.5rem;
+}
+
+#consoleWrapper {
+    grid-column: 1 / span 2;
+    overflow: auto;
+}
+
+#bs-console {
+
+}
+
+#replInput {
+    max-height: 30vh;
+}
+
+.check {
+    color: #fff;
+    background-color: #393;
+    border-radius: 0.3rem;
+    padding: 3px;
+}
+
+.check-hidden {
+    visibility: hidden;
+}

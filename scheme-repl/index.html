@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="ui.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>Scratch - Scheme</title>
+  </head>
+
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div class="grid">
+      <div id="repl"><a href="https://biwascheme.org/" target="_blank">BiwaScheme</a> REPL
+        <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
+      </div>
+
+      <div id="content">
+        localStorage scratch<br>
+        <textarea id="scratch-text" style="width: 100%; height: calc(100% - 3.5rem);"></textarea>
+        <button id="save-scratch" onclick="saveScratch()">Save and eval scratch text</button>
+      </div>
+
+      <div id="consoleWrapper" class="biwaReady"><pre id="bs-console">;; Console output
+
+</pre></div>
+
+    </div>
+    <script src="repl.js"></script>
+    <script type="text/biwascheme">
+    (load "ui.scm")
+    (load "tutorial.scm")
+    </script>
+    <script>
+    function runTests() {
+
+    }
+
+    const scratchTextarea = document.getElementById("scratch-text");
+
+    function loadScratch() {
+      scratchTextarea.value = window.localStorage.getItem("scratchText");
+    }
+
+    function saveScratch() {
+      window.localStorage.setItem("scratchText", scratchTextarea.value);
+      input.setValue(scratchTextarea.value);
+      biwaEval(input);
+      scratchTextarea.focus();
+    }
+
+    loadScratch();
+
+    // eval scratch contents
+    saveScratch();
+    window.setTimeout(() => { input.focus(); }, 250);
+    </script>
+  </body>
+</html>

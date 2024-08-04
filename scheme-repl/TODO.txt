@@ -1,0 +1,9 @@
+[  ] button to click on a code block to send it to repl
+[  ] "registers" to save blocks of code (or use "Sandbox" panel for this)
+[  ] multiple codemirrors in content that can send code to evaluator
+
+[  ] Place error bar at top of console output
+[  ] move flashing transition to console panel (since there will be many editors)
+[  ] fix tutorial content editor (cursor is in wrong place)
+
+[OK] flash css transition when evaluating (to indicate the repl received the input)
