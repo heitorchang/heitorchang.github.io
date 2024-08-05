@@ -10638,8 +10638,8 @@ function biwaEval(input) {
   inputHistory.unshift(inputValue)
   inputHistoryIndex = -1
   window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 50)))
+  bsConsole.innerText += inputValue + '\n\n';
   biwascheme.evaluate(inputValue, function (result) {
-    bsConsole.innerText += inputValue + '\n\n';
     bsConsole.innerText += ';; => ' + result + '\n\n\n';
     // save result as _
     if (typeof result === "number") {
