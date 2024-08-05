@@ -1,0 +1,165 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+body {
+    line-height: 1.25;
+    background-color: #fcfcfc;
+    font-family: sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #39b;
+}
+
+code {
+    color: #363;
+    margin: 0 0.3rem;
+    font-size: 1.0rem;
+}
+
+li {
+    margin: 0.5rem 0;
+}
+
+h3 {
+    margin: 0.8rem 0.25rem;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0.4rem 0.5rem;
+}
+
+td {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid #ccc;
+}
+
+#divgrid {
+    display: none;
+}
+
+#loading {
+    display: inline-block;
+    background-color: #eff;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    z-index: 2;
+}
+
+@keyframes loadblink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.grid {
+    padding: 0.8rem;
+    display: grid;
+    height: 100vh;
+
+    grid-template-columns: minmax(0, 2fr) 2fr;
+    grid-template-rows: minmax(0, 71fr) 29fr;
+    grid-gap: 0.8rem;
+
+}
+
+.grid > * {
+    border: 1px dotted #99f;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    overflow: auto;
+    position: relative;
+}
+
+#repl {
+    height: 100%;
+    background-color: #efd
+}
+
+.pyReady {
+    font-size: 0.7rem;
+    color: #229;
+    background-color: #aaf;
+    transition: 0.05s linear;
+}
+
+.pyReceived {
+    font-size: 0.7rem;
+    color: #229;
+    background-color: #aaf;
+    transition: 0.05s linear;
+}
+
+#sandbox {
+    background-color: #fff;
+}
+
+#sandbox p {
+    margin-top: 1rem;
+}
+
+#sandbox .input-small {
+    width: 6rem;
+}
+
+#content {
+    background-color: #f9f6ec;
+}
+
+#content pre {
+    box-sizing: border-box;
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #ffefd5;
+    border-radius: 0.8rem;
+    overflow: auto;
+    min-width: calc(100% - 2rem);
+    font-size: 0.9rem;
+}
+
+#content p {
+    margin: 1.5rem 0.5rem;
+}
+
+#consoleWrapper {
+    grid-column: 1 / span 2;
+    overflow: auto;
+}
+
+#bs-console {
+
+}
+
+#replInput {
+    max-height: 30vh;
+}
+
+.check {
+    color: #fff;
+    background-color: #393;
+    border-radius: 0.3rem;
+    padding: 3px;
+}
+
+.check-hidden {
+    visibility: hidden;
+}

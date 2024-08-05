@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="ui.css">
+    <link rel="stylesheet" href="repl.css">
+    <link rel="stylesheet" href="jquery.terminal.css">
+    <title>Tutorial - An Untitled Python Book</title>
+  </head>
+
+  <body>
+    <div id="loading">
+      Loading...
+      <span style="animation: loadblink 1s steps(1, end) 64;">|</span>
+    </div>
+    <div class="grid">
+      <div id="repl">
+        <strong>Code editor</strong>
+        <button style="margin-bottom: 0.5rem;" onclick="clearInput()">Clear</button>
+        <div id="input-area">
+          <textarea id="replInput" rows="4" cols="72" autofocus># Loading...</textarea>
+          <div id="pyError"></div>
+        </div>
+      </div>
+
+      <div id="content">
+        <h3>Tutorial</h3>
+
+        <div id="book">
+          <p>
+            This website contains a bare-bones Python interpreter in the bottom panel that processes textual input just like a standard Python installation.
+          </p>
+
+          <p>
+            Due to the limitations of being inside a single page of a web browser, it cannot handle graphics, network connections, operating system functions, or similar actions like a full Python installation in your computer.
+          </p>
+
+          <p>
+            Temporary code may be typed on the left panel.
+          </p>
+
+          <h3>Keyboard shortcuts</h3>
+
+          <table>
+            <tr>
+              <td>Ctrl + Enter</td>
+              <td>Evaluate the code block, without clearing the inputted code</td>
+            </tr>
+            <tr>
+              <td>Alt + Enter</td>
+              <td>Evaluate the code block and clear the inputted code</td>
+            </tr>
+            <tr>
+              <td>Ctrl + Up/Down</td>
+              <td>Retrieve previously evaluated code</td>
+            </tr>
+            <tr>
+              <td>Esc</td>
+              <td>Clear the code editor's contents</td>
+            </tr>
+            <tr>
+              <td>Alt + J</td>
+              <td>Focus on the code editor</td>
+            </tr>
+            <tr>
+              <td>Alt + K</td>
+              <td>Focus on the Python interpreter</td>
+            </tr>
+          </table>
+
+          <p>
+            Throughout the book, there will be several <em>code blocks</em>. Clicking on one of them will transfer the code to the code editor. This action will delete whatever was there, so be careful!
+          </p>
+
+          <pre onclick="sendPre(event)">
+def square(x):
+    return x * x </pre>
+
+          <p>
+            After defining the <code>square</code> function, it may be called to compute the result. Clicking below will print the result in the interpreter panel.
+          </p>
+
+          <pre onclick="sendPre(event)">
+print(square(99)) </pre>
+        </div>
+      </div>
+
+      <div id="consoleWrapper" class="pyReady"><pre id="py-console"># Loading...<span style="animation: loadblink 1s steps(1, end) 64;">|</span></pre></div>
+
+    </div>
+    <script src="repl.js"></script>
+
+    <script src="jquery.min.js"></script>
+    <script src="jquery.terminal.js"></script>
+    <script src="unix_formatting.js"></script>
+    <script src="matchbrackets.js"></script>
+    <script src="init_pyodide.js"></script>
+
+    <script>
+    window.addEventListener('hashchange', function() {
+      const sectionName = window.location.hash.replaceAll("#", "");
+      // eval
+    });
+    </script>
+  </body>
+</html>

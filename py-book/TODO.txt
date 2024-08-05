@@ -1,0 +1,10 @@
+[  ] Keyboard shortcut to switch from CodeMirror to console
+[  ] Unit tests can be another pre block under the exercise prompt. tests may be edited by the reader
+[  ] Ctrl + Enter and Alt + Enter do different things (one can clear input area and the other, not)
+
+
+Tutorial
+--------
+Tab, Shift + Tab
+
+Ctrl/Alt + Up/Down
