@@ -1,0 +1,74 @@
+$h1 Tutorial
+
+There are three main parts to this website:
+
+!html
+<ul>
+  <li>On the left, in green, is the <strong>Code editor</strong>. You will spend most of the time writing code there.</li>
+  <li>On the right, in light yellow, is the <strong>Book content</strong>. It contains the main text of this book.</li>
+  <li>On the bottom, in dark blue, is the <strong>Interpreter</strong>. It contains the heart of the embedded Python system.</li>
+</ul>
+!end
+
+$h3 Code editor
+
+The <em>Code editor</em> is a temporary location where blocks (or just a single line) of code can be written. This website stores the last 50 code blocks that were evaluated in your browser's <em>localStorage</em>.
+
+To reliably save your original work, you will have to copy and paste your code to a more permanent location.
+
+$h3 Book Content
+
+The <em>Book content</em> includes several <em>code blocks</em>, which appear in a box with a slightly darker background.
+
+Clicking in these code blocks replaces the content of the Code editor (be careful if you have unfinished work!) and also <em>evaluates</em> (processes) the code.
+
+$h3 Python Interpreter
+
+The interpreter runs components developed by the <a href="https://pyodide.org/en/stable/" target="_blank">Pyodide</a> project.
+
+It is possible to type code directly in the interpreter. However, it behaves just like a standard operating system terminal, and the keyboard actions are different from the Code editor's.
+
+$h3 Greetings
+
+Maintaining a long-standing tradition, we will see how to display a greeting in a few different ways.
+
+The <em>function</em> (roughly, a piece of code that performs an action) called `print` will display its <em>argument</em> (a value given, or passed, to the function) in the Python interpreter or terminal where the code is run.
+
+<strong>Exercise:</strong> Click on the left panel and type:
+
+`print("Hello, World!")`
+
+Then, type the combination <strong>Ctrl + Enter</strong> (press and hold Ctrl, then press Enter). This will send the current code to the interpreter. Observe that the words `Hello, World!` appear in the interpreter below.
+
+You may type <strong>Ctrl + Enter</strong> again and again to repeat the code evaluation.
+
+Now, try typing <strong>Alt + Enter</strong>. The interpreter will receive the code, and the editor will become empty. This keyboard shortcut is convenient when you know you don't have to keep the current code.
+
+In order to retrieve older code, type <strong>Ctrl + Up</strong> once or more times. Then, <strong>Ctrl + Down</strong> will scroll backwards in this history.
+
+Typing <strong>Esc</strong> will clear the current contents of the Code editor.
+
+$h3 Interpreter keyboard shortcuts
+
+Working in the interpreter is also possible, though much less convenient if you are writing multiline code. Typing <strong>Enter</strong> will make the interpreter evaluate a single line of code.
+
+To process multiple lines, you have to type <strong>Shift + Enter</strong> to go to the next line.
+
+If you get stuck and wish to start over, type <strong>Ctrl + C</strong>.
+
+I recommend editing code only in the Code editor. However, it's handy to know how a terminal behaves.
+
+$h3 Code blocks in the book's text
+
+Throughout the chapters, there will be blocks of text that explain concepts or defines values. They look like this:
+
+@py
+our_planet = "Earth"
+our_satellite = "Moon"
+
+print("Hello", our_satellite, "from", our_planet)
+@end
+
+Clicking inside this block will replace whatever is in the Code editor with its contents and evaluate it. Be careful if you have unevaluated code in the Code editor!
+
+When you're satisfied trying out the parts of this website, continue on to the next chapter.

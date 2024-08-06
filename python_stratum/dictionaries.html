@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="ui.css">
+    <link rel="stylesheet" href="repl.css">
+    <link rel="stylesheet" href="jquery.terminal.css">
+    <title>Python Stratum</title>
+  </head>
+
+  <body>
+
+    <div id="loading">
+      Loading...
+      <span style="animation: loadblink 1s steps(1, end) 64;">|</span>
+    </div>
+
+    <div class="grid">
+      <div id="repl">
+        <strong>Code editor</strong>
+        <button style="margin-bottom: 0.5rem;" onclick="clearInput()">Clear</button>
+<!-- NOTE: while developing, in build.py, comment out the loading div above and init_pyodide.js to save from running it and having to wait -->
+        <div id="input-area">
+          <textarea id="replInput" rows="4" cols="72" autofocus># Loading...</textarea>
+          <div id="pyError"></div>
+          <button style="margin-top: 0.25rem;" onclick="pyEval(input)">Evaluate</button>
+        </div>
+      </div>
+
+      <div id="content">
+        <strong><a href="index.html">Table of Contents</a></strong>
+        <div id="book">
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="sequence_types.html"> &lt;&lt;&lt; 6. Sequence Types
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="sets.html">8. Sets
+ &gt;&gt;&gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>7. Dictionaries</h1>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="sequence_types.html"> &lt;&lt;&lt; 6. Sequence Types
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="sets.html">8. Sets
+ &gt;&gt;&gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+        </div>
+      </div>
+      <div id="consoleWrapper" class="pyReady"><pre id="py-console"># Loading...<span style="animation: loadblink 1s steps(1, end) 64;">|</span></pre></div>
+    </div>
+
+    <script src="repl.js"></script>
+
+    <script src="jquery.min.js"></script>
+    <script src="jquery.terminal.js"></script>
+    <script src="unix_formatting.js"></script>
+    <script src="matchbrackets.js"></script>
+
+    <script src="init_pyodide.js"></script>
+
+  </body>
+</html>
+

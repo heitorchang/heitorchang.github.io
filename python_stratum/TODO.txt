@@ -1,0 +1,17 @@
+[  ] Unit tests can be another pre block under the exercise prompt
+
+
+Content Ideas
+-------------
+[  ] Sorting algorithm
+[  ] JS Canvas
+
+
+Done
+----
+[OK] Keyboard shortcut to switch from CodeMirror to console
+[OK] Ctrl + Enter and Alt + Enter do different things (one can clear input area and the other, not)
+[OK] Make bs-console visibility hidden
+[OK] Chapters: Start with an introduction, talking about what will be taught, then the tutorial, then the content
+[OK] Repurpose build_livro.py from programopy/
+[OK] Explain that the Python interpreter works like a typical terminal (up/down instead of Ctrl+Up/down, enter instead of ctrl/alt+enter)
