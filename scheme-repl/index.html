@@ -10,7 +10,7 @@
   <body>
     <script src="biwascheme-0.8.0-custom.js"></script>
     <div class="grid">
-      <div id="repl"><a href="https://biwascheme.org/" target="_blank">BiwaScheme</a> REPL
+      <div id="repl">REPL ; Alt + J to focus. _ holds last num
         <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
       </div>
 
@@ -36,6 +36,20 @@
     }
 
     const scratchTextarea = document.getElementById("scratch-text");
+
+    scratchTextarea.addEventListener("keyup", (event) => {
+      if (event.altKey && event.keyCode === 74) {
+        input.focus();
+      }
+    });
+
+    const bodyElem = document.getElementsByTagName("body")[0];
+    bodyElem.addEventListener("keyup", (event) => {
+      if (event.altKey && event.keyCode === 74) {
+        input.focus();
+        term.blur();
+      }
+    });
 
     function loadScratch() {
       scratchTextarea.value = window.localStorage.getItem("scratchText");
