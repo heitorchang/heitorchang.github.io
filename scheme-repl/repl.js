@@ -10590,7 +10590,7 @@ var input = CodeMirror.fromTextArea(replInput, {
   lineWrapping: true,
   autoCloseBrackets: true,
   extraKeys: {
-    "Shift-Enter": () => { biwaEval(input) },
+    // "Shift-Enter": () => { biwaEval(input) },
     "Ctrl-Enter": () => { biwaEval(input) },
     "Alt-Enter": () => { biwaEval(input) },
 
