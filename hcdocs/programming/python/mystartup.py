@@ -5,11 +5,12 @@ import os
 import sys
 import json
 from datetime import datetime, timedelta
+from pathlib import Path
 
 print("Imported Pandas, NumPy, netCDF4, os, and sys.")
 
 
-def json_trav(s, max_level=0, show_values=True, show_levels=False):
+def json_traverse(s, max_level=0, show_values=True, show_levels=False):
     """Traverse a JSON string or dict.
     Parameters are: obj, max_level (default 0), show_values, show_levels.
     """
