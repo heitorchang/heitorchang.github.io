@@ -1,0 +1,85 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    line-height: 1.25;
+    font-family: sans-serif;
+}
+
+.grid {
+    display: grid;
+    height: calc(100vh - 2rem);
+
+    grid-template-columns: 400px 1fr;
+    grid-template-rows: 3fr 2fr 400px;
+}
+
+.grid > * {
+    border: 1px solid #dedede;
+}
+
+#content {
+    padding: 1rem;
+}
+
+#editor {
+    grid-row: 1;
+    overflow: auto;
+}
+
+#consoleWrapper {
+    background-color: #23a;
+    color: #eee;
+    grid-row: 2;
+    overflow: auto;
+}
+
+#graphicsout {
+    grid-row: 3;
+    overflow: hidden;
+}
+
+#book {
+    background-color: #f6fcfc;
+    grid-column: 2 / 3;
+    grid-row: 1 / span 3;
+    overflow: auto;
+}
+
+h2, h3, h4 {
+    margin: 1.5rem 0.5rem 1rem 0.5rem;
+}
+
+#book p {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+#book code {
+    color: #363;
+    margin: 0 0.3rem;
+    font-size: 1.0rem;
+}
+
+#book pre {
+    box-sizing: border-box;
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #ffefd5;
+    border-radius: 0.8rem;
+    overflow: auto;
+    min-width: calc(100% - 2rem);
+    font-size: 0.9rem;
+}
+
+#book li {
+    margin-left: 2rem;
+    margin-bottom: 0.25rem;
+}
