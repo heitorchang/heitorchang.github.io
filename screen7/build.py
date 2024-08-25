@@ -54,7 +54,7 @@ HEADER = f'''<!DOCTYPE html>
           <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
         </div>
 
-        <div id="consoleWrapper" class="biwaReady"><pre id="bs-console">;; Write your code above
+        <div id="consoleWrapper" class="biwaReady"><pre id="bs-console">;; BiwaScheme console
 </pre>
         </div>
 

@@ -75,3 +75,4 @@
 
 (clear)
 (axes)
+(js-eval "document.getElementById('bs-console').innerText = ';; Write your code above\\n\\n'")
