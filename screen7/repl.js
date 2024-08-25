@@ -10642,7 +10642,7 @@ function biwaEval(input, clearInput = false) {
   consoleWrapper.classList.remove("biwaReady");
   consoleWrapper.classList.add("biwaReceived");
   window.setTimeout(() => { consoleWrapper.classList.remove("biwaReceived"); consoleWrapper.classList.add("biwaReady"); }, 150);
-  const inputValue = input.getValue();
+  const inputValue = input.getValue().trim();
   bsConsole.innerText += inputValue + '\n';
   biwascheme.evaluate(inputValue, function (result) {
     const curValue = inputValue;

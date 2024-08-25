@@ -1,8 +1,8 @@
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+const canvas = document.getElementById('canvas')
+const ctx = canvas.getContext('2d')
 
-ctx.fillStyle = "#fff";
-ctx.fillRect(0, 0, 400, 400)
+const canvasW = 360
+const canvasH = 360
 
 function bg(color) {
   ctx.fillStyle = color
@@ -13,11 +13,11 @@ function fg(color) {
 }
 
 function projx(x) {
-  return 200 + x
+  return (canvasW / 2) + x
 }
 
 function projy(y) {
-  return 200 - y
+  return (canvasH / 2) - y
 }
 
 function rect(px, py, w, h) {
@@ -46,34 +46,3 @@ function circle(x, y, r) {
   ctx.arc(projx(x), projy(y), r, 0, 2 * Math.PI);
   ctx.stroke()
 }
-
-/* Sample drawings
-fg("red")
-line(-200, -200, 200, 200)
-
-bg("green")
-for (let x = -200; x <= 200; x++) {
-  pt(x, 0.01 * x * x)
-}
-
-bg("blue")
-for (let x = -200; x <= 200; x++) {
-  // x^2 + y^2 = 100
-  // y = sqrt(...
-  pt(x, Math.pow(38200 - x * x, 0.5))
-  pt(x, -Math.pow(38200 - x * x, 0.5))
-}
-*/
-
-// fg("purple")
-// circle(0, 0, 100)
-
-bg("#ffa")
-fg("#333")
-
-// Add event listeners to pre blocks
-document.querySelectorAll("pre").forEach((p) => {
-  p.addEventListener("click", () => {
-    sendPre(event);
-  });
-});

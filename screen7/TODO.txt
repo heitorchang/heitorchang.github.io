@@ -1,0 +1,9 @@
+TODO
+----
+[  ] Build system like py-book/book-template/build.py
+
+
+MAYBE
+-----
+[  ] Add text to canvas
+[  ] Check if custom fonts can be used

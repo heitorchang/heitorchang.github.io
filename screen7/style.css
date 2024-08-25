@@ -8,16 +8,21 @@
 }
 
 body {
+    background-color: #fff;
     line-height: 1.25;
     font-family: sans-serif;
+}
+
+a {
+    text-decoration: none;
 }
 
 .grid {
     display: grid;
     height: calc(100vh - 2rem);
 
-    grid-template-columns: 400px 1fr;
-    grid-template-rows: 3fr 2fr 400px;
+    grid-template-columns: 360px 1fr;
+    grid-template-rows: 2fr 1fr 360px;
 }
 
 .grid > * {
@@ -25,7 +30,7 @@ body {
 }
 
 #content {
-    padding: 1rem;
+    padding: 1rem 0 1rem 1rem;
 }
 
 #editor {
@@ -34,8 +39,9 @@ body {
 }
 
 #consoleWrapper {
-    background-color: #23a;
+    background-color: #129;
     color: #eee;
+    padding: 0.25rem;
     grid-row: 2;
     overflow: auto;
 }
@@ -45,20 +51,31 @@ body {
     overflow: hidden;
 }
 
+.ltYellow {
+   background-color: #ffefd5;
+}
+
 #book {
-    background-color: #f6fcfc;
-    grid-column: 2 / 3;
+    padding: 1.75rem;
+     grid-column: 2 / 3;
     grid-row: 1 / span 3;
     overflow: auto;
 }
 
-h2, h3, h4 {
+h1 {
+    margin: 1.35rem 0 1.25rem 0;
+}
+
+h2 {
+    margin: 0 0.5rem 1rem 0.5rem;
+}
+
+h3, h4 {
     margin: 1.5rem 0.5rem 1rem 0.5rem;
 }
 
 #book p {
-    margin-left: 1rem;
-    margin-bottom: 1rem;
+    margin: 1rem;
 }
 
 #book code {
@@ -72,7 +89,7 @@ h2, h3, h4 {
     margin: 1rem;
     padding: 1rem;
     border: 1px solid #ccc;
-    background-color: #ffefd5;
+    background-color: #ffffef;
     border-radius: 0.8rem;
     overflow: auto;
     min-width: calc(100% - 2rem);
@@ -80,6 +97,42 @@ h2, h3, h4 {
 }
 
 #book li {
-    margin-left: 2rem;
+    margin-left: 3rem;
     margin-bottom: 0.25rem;
+}
+
+table.ch-links {
+    border: none;
+    width: 100%;
+    font-size: 1.1rem;
+    margin: 0.3rem 0;
+}
+
+td.prev-ch-link {
+    font-weight: bold;
+    border: none;
+}
+
+td.next-ch-link {
+    font-weight: bold;
+    border: none;
+    text-align: right;
+}
+
+.indexDiv {
+    text-align: center;
+}
+
+p.index-p {
+    margin: 1.5rem 0;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+p.index-subtitle {
+    margin-left: 2rem;
+}
+
+p.reg-p {
+    margin: 0.75rem;
 }

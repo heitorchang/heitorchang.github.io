@@ -68,4 +68,10 @@
   (line 0 -200 0 200)
   (fg fg-color))
 
+;; Evaluate pre blocks
+(for-each
+ (lambda (e) (js-eval (string-append "biwascheme.evaluate(`" (js-ref e "innerText") "`)")))
+ (js-array->list (getelem ".codeBlock")))
+
+(clear)
 (axes)
