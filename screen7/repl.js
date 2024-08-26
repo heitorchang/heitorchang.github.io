@@ -10596,7 +10596,7 @@ var input = CodeMirror.fromTextArea(replInput, {
   theme: 'default',
   matchBrackets: true,
   lineNumbers: false,
-  lineWrapping: true,
+  lineWrapping: false,
   autoCloseBrackets: true,
   extraKeys: {
     "Ctrl-Enter": () => { biwaEval(input) },

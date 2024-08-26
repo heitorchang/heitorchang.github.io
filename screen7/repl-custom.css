@@ -1,13 +1,5 @@
 /* BASICS */
 
-/*
-Edited colors:
-
-div.CodeMirror span.CodeMirror-matchingbracket
-
-.CodeMirror-selected
-*/
-
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: RobotoMono;
@@ -15,16 +7,20 @@ div.CodeMirror span.CodeMirror-matchingbracket
   height: 300px;
   color: black;
   direction: ltr;
+  /*
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+ */
 }
 
 /* PADDING */
 
 .CodeMirror-lines {
-  padding: 4px 0; /* Vertical padding around content */
+    padding: 0;
 }
 .CodeMirror pre.CodeMirror-line,
 .CodeMirror pre.CodeMirror-line-like {
-  padding: 0 4px; /* Horizontal padding of content */
+  padding: 0 0; /* Vertical and horizontal padding of content */
 }
 
 .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
@@ -148,8 +144,8 @@ div.CodeMirror span.CodeMirror-matchingbracket
 
 /* Default styles for common addons */
 
-div.CodeMirror span.CodeMirror-matchingbracket {color: #060; background-color: #6cf;}
-div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #fff; background-color: #a33;}
+div.CodeMirror span.CodeMirror-matchingbracket {color: #0b0; background-color: #cef; }
+div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #fff; background-color: #f60;}
 .CodeMirror-matchingtag { background: rgba(255, 150, 0, .3); }
 .CodeMirror-activeline-background {background: #e8f2ff;}
 
@@ -240,11 +236,12 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #fff; background-color
 .CodeMirror-lines {
   cursor: text;
   min-height: 1px; /* prevents collapsing before first draw */
+  padding: 0.35rem;
 }
 .CodeMirror pre.CodeMirror-line,
 .CodeMirror pre.CodeMirror-line-like {
   /* Reset some styles that the rest of the page might have set */
-  -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
+  /* -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; */
   border-width: 0;
   background: transparent;
   font-family: inherit;

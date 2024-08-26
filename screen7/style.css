@@ -97,13 +97,14 @@ h3, h4 {
 
 #book pre {
     box-sizing: border-box;
-    margin: 1rem;
+    margin: 1rem auto;
     padding: 1rem;
     border: 1px solid #ccc;
     background-color: #ffffef;
     border-radius: 0.8rem;
     overflow: auto;
-    min-width: calc(100% - 2rem);
+    width: calc(43ch + 2rem + 2px);
+    font-family: RobotoMono;
     font-size: 0.9rem;
 }
 
