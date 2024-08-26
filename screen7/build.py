@@ -45,6 +45,7 @@ HEADER = f'''<!DOCTYPE html>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="repl.css">
     <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
   </head>
   <body>
     <script src="biwascheme-0.8.0-custom.js"></script>
@@ -97,7 +98,7 @@ INDEX_TEMPLATE_HEADER = f'''
 
 <h1 style="margin-top: 2rem;">{book_title}</h1>
 <p class="index-subtitle">
-  <em>A book on introductory programming, using 2-D graphics and the Scheme language.</em>
+  <em>An introductory book on programming, using the Scheme language and 2-D graphics.</em>
 <br><br>
 by <a href="https://heitorchang.github.io/" target="_blank">Heitor Chang</a>
 </p>
@@ -140,8 +141,10 @@ def generate_index(chapters):
 def replace_html_special_chars(line):
     line = line.replace(" < ", " &lt; ")
     line = line.replace(" > ", " &gt; ")
-    line = line.replace("`<", "`&lt;")
-    line = line.replace(">`", "&gt;`")
+    line = line.replace("(<", "(&lt;")
+    line = line.replace("(>", "(&gt;")
+    line = line.replace("->", "-&gt;")
+    line = line.replace("=>", "=&gt;")
     line = line.replace(" & ", " &amp; ")
     return line
 
@@ -264,6 +267,8 @@ def convert_raw_contents(contents, chapter_number, converted_file):
     in_html_block = False
     html_block = []
 
+    backtick_template = re.compile(r'`([^`]*?)`')
+
     for raw_line in contents.splitlines():
         if not in_pre_block and not in_html_block and len(raw_line) == 0:
             continue
@@ -274,7 +279,9 @@ def convert_raw_contents(contents, chapter_number, converted_file):
             pre_block = []
             in_pre_block = False
         elif in_pre_block:
-            pre_block.append(raw_line)
+            converted_line = replace_html_special_chars(raw_line)
+            converted_line = re.sub(backtick_template, r'<code>\1</code>', converted_line)
+            pre_block.append(converted_line)
         elif raw_line.startswith("!html"):
             in_html_block = True
         elif raw_line.startswith("!end"):
@@ -282,7 +289,9 @@ def convert_raw_contents(contents, chapter_number, converted_file):
             html_block = []
             in_html_block = False
         elif in_html_block:
-            html_block.append(raw_line)
+            converted_line = replace_html_special_chars(raw_line)
+            converted_line = re.sub(backtick_template, r'<code>\1</code>', converted_line)
+            html_block.append(converted_line)
         else:
             print(convert_line(raw_line, chapter_number), file=converted_file)
             print(file=converted_file)
@@ -290,9 +299,14 @@ def convert_raw_contents(contents, chapter_number, converted_file):
 
 if __name__ == '__main__':
     idx = 1
+
     chapters = [
-        'introduction',
-        'data_types',
+        'hello-reader',
+        # 'arithmetic-functions',
+        # 'strings',
+        # 'cartesian-plane',
+        # 'lists',
+
         'api_reference',
 
     ]

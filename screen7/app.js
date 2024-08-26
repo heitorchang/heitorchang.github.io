@@ -4,6 +4,15 @@ const ctx = canvas.getContext('2d')
 const canvasW = 360
 const canvasH = 360
 
+// TODO: use these values to alter the plot's limits
+let xmin = -180
+let xmax = 180
+let ymin = -180
+let ymax = 180
+
+let textSize = 12
+let textFont = "monospace"
+
 function bg(color) {
   ctx.fillStyle = color
 }
@@ -45,4 +54,23 @@ function circle(x, y, r) {
   ctx.beginPath()
   ctx.arc(projx(x), projy(y), r, 0, 2 * Math.PI);
   ctx.stroke()
+}
+
+function ellipse(x, y, w, h) {
+  ctx.beginPath()
+  ctx.ellipse(projx(x), projy(y), w, h, 0, 0, 2 * Math.PI)
+  ctx.stroke()
+}
+
+function text(x, y, s) {
+  ctx.font = `${textSize}px ${textFont}`
+  ctx.fillText(s, projx(x), projy(y))
+}
+
+function setTextSize(s) {
+  textSize = s
+}
+
+function setTextFont(f) {
+  textFont = f
 }

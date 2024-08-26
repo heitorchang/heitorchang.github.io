@@ -7,6 +7,10 @@
 (define js-pt (js-eval "pt"))
 (define js-line (js-eval "line"))
 (define js-circle (js-eval "circle"))
+(define js-ellipse (js-eval "ellipse"))
+(define js-text (js-eval "text"))
+(define js-set-text-size (js-eval "setTextSize"))
+(define js-set-text-font (js-eval "setTextFont"))
 
 (define bg-color "#fff")
 (define fg-color "#000")
@@ -30,8 +34,8 @@
   "no value")
 
 ;; aliases
-(define fill-color bg)
-(define stroke-color fg)
+(define set-fill! bg)
+(define set-stroke! fg)
 
 (define (rect x y w h)
   (js-call js-rect x y w h)
@@ -53,6 +57,22 @@
   (js-call js-circle x y r)
   "no value")
 
+(define (ellipse x y w h)
+  (js-call js-ellipse x y w h)
+  "no value")
+
+(define (text x y s)
+  (js-call js-text x y s)
+  "no value")
+
+(define (set-font-size! s)
+  (js-call js-set-text-size s)
+  "no value")
+
+(define (set-font! f)
+  (js-call js-set-text-font f)
+  "no value")
+
 (define (clear)
   ;; Temporarily set the bg color to white, then restore the previous value
   ;; Exceed canvas edges by 10px
@@ -68,6 +88,7 @@
   (line 0 -200 0 200)
   (fg fg-color))
 
+;; Initialization
 ;; Evaluate pre blocks
 (for-each
  (lambda (e) (js-eval (string-append "biwascheme.evaluate(`" (js-ref e "innerText") "`)")))

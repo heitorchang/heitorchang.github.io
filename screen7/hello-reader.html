@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady"><pre id="bs-console">;; BiwaScheme console
+</pre>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            
+            <td class="next-ch-link">
+              <a href="api_reference.html">2. API Reference
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>1. Hello, Reader!</h1>
+
+<p>Welcome and thank you for joining me in this programming journey! I will cover the basics of computer science, geometry, and algebra with a text-based console and two-dimensional graphics to explain concepts.</p>
+
+<p>The programming language you will be working with is called <em>Scheme</em>. It is a minimalistic language and fundamental computer science concepts can be expressed without complicated syntax.</p>
+
+<p>In this book, there will not be any convoluted code. The code editor is fairly limited, and chapter examples will be written as stand-alone entities that won't require loading code from previous chapters.</p>
+
+<p>After finishing this book you will be able to apply what you have learned to a full-fledged language (or languages) of your choice. Just like spoken languages share elements of grammar, programming languages have many concepts in common with each other.</p>
+
+<h3>Hello, World!</h3>
+
+<p>The traditional "first program" in introductory books displays the words <code>Hello, World!</code> on the screen.</p>
+
+<p>Scheme allows the programmer to type code and immediately run it, without the intermediate <em>compilation</em> stage, which translates human-readable code into machine language code that your computer can run.</p>
+
+<p>This book includes a Scheme <em>interpreter</em>, which is a piece of software that reads Scheme code and runs it. In Scheme terminology, running code is called <em>evaluating</em> it.</p>
+
+<p>There are several <em>code boxes</em> in lighter yellow in this book. Clicking inside any one of them will copy its contents to the code editor on the top-left corner and evaluate it right away. It saves you from having to type them.</p>
+
+<p>Click on the box below to evaluate the <code>Hello, World!</code> program:</p>
+
+<pre class="codeBlock">(print "Hello, World!")</pre>
+
+<p>You should see the Scheme code and below it, the text <code>Hello, World!</code> inside the dark blue box under the editor. This box is called the <em>console</em>, and it displays values that are the results of your code, and values given to the <code>print</code> function.</p>
+
+<p>A <em>function</em> is a collection of code that performs an action. In <code>print</code>'s case, the action is to output a value to the console. Details about functions, and how write your own, will be explained later.</p>
+
+<h3>The graphics box</h3>
+
+<p>Drawing shapes and plotting data plays a big role in this book. Below is a bit of code that draws a bullseye pattern of circles. Click anywhere inside the code box to run it:</p>
+
+<pre class="codeBlock">(define (concentric radius)
+  (circle 0 0 radius))
+
+(clear)
+(for-each concentric (iota 4 40 40))</pre>
+<p>Each portion of the code block above will be explained in the following chapters. For now, I just wished to show what simple Scheme code looks like.</p>
+
+<p>Can you guess how the code is related to the drawing? <code>concentric</code> draws a circle centered at <code>(0, 0)</code> with the given <code>radius</code>, and the <code>iota</code> function creates <code>4</code> values, starting at <code>40</code>, with an increment of <code>40</code> at each step.</p>
+
+<p>With the use of <code>for-each</code> to <em>call</em> the <code>concentric</code> function, four circles with radii of <code>40</code>, <code>80</code>, <code>120</code>, and <code>160</code> pixels are drawn.</p>
+
+<p>The default dimensions of the graphics box is <em>360 pixels by 360 pixels</em>, with <code>-180 <= x &lt; 180</code> and <code>-180 <= y &lt; 180</code>. Later, we will see how to change these limits.</p>
+
+<p><code>(clear)</code> is added so that the graphics box is cleared before drawing the picture.</p>
+
+<p>Try writing your own values of <code>iota</code>. Remember, the first number is how many circles to draw, the second number is the initial radius, and the last number is how far apart the remaining circles should be.</p>
+
+<p>Try, for example, <code>(iota 2 100 20)</code> and press <code>Ctrl+Enter</code> or <code>Alt+Enter</code> to redraw. You should see two circles with a large initial radius, and a slightly larger circle.</p>
+
+<p>If you wish to clear the code editor's contents after evaluating your code, press <code>Shift+Ctrl+Enter</code> or <code>Shift+Alt+Enter</code>.</p>
+
+<p>To restore previously evaluated code, press <code>Ctrl+Up</code> or <code>Alt+Up</code>. Unevaluated code will be lost, so be careful! <code>Ctrl+Down</code> or <code>Alt+Down</code> will scroll forwards in this list.</p>
+
+<p>Finally, to clear the contents of the code editor, press <code>Esc</code>. The cleared code may be recovered with <code>Ctrl+Up</code> or <code>Alt+Up</code>.</p>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            
+            <td class="next-ch-link">
+              <a href="api_reference.html">2. API Reference
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
+

@@ -2,7 +2,8 @@
 
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
-  font-family: monospace;
+  font-family: RobotoMono;
+  font-size: 13px;
   height: 300px;
   color: black;
   direction: ltr;

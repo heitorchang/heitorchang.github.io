@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="repl.css">
     <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
   </head>
   <body>
     <script src="biwascheme-0.8.0-custom.js"></script>
@@ -30,7 +31,7 @@
           <tr>
             
             <td class="prev-ch-link">
-              <a href="data_types.html"> &lt; 2. Data Types
+              <a href="hello-reader.html"> &lt; 1. Hello, Reader!
 </a>
             </td>
         
@@ -38,7 +39,7 @@
           </tr>
         </table>
     
-<h1>3. API Reference</h1>
+<h1>2. API Reference</h1>
 
 <h3>Code editor</h3>
 
@@ -61,7 +62,7 @@
 
 <p>The origin, <code>(0, 0)</code>, is at the center.</p>
 
-<p>The bottom-left corner is <code>(-180, -180)</code> and the top-right corner is <code>(180, 180)</code>.</p>
+<p>The bottom-left corner is <code>(-180, -180)</code> and the top-right corner is <code>(179, 179)</code>.</p>
 
 <h4>Clear</h4>
 
@@ -103,11 +104,39 @@
 
 <h4>Circle</h4>
 
-<p>Draws a circle with its center at <code>(x, y)</code>, with radius <code>r</code>.</p>
+<p>Draws a circle with centered at <code>(x, y)</code>, with radius <code>r</code>.</p>
 
 <p><code>(circle x y r)</code></p>
 
 <pre class="codeBlock">(circle 30 30 60)</pre>
+
+<h4>Ellipse</h4>
+
+<p>Draws an ellipse with centered at <code>(x, y)</code>, with x-radius <code>w</code> and y-radius <code>h</code>.</p>
+
+<p><code>(ellipse x y w h)</code></p>
+
+<pre class="codeBlock">(ellipse 30 30 90 45)</pre>
+
+<h4>Text</h4>
+
+<p>Draws the string value of the argument <code>v</code> with the lower-left corner at <code>(x, y)</code>.</p>
+
+<p><code>(text x y v)</code></p>
+
+<pre class="codeBlock">(text 30 60 "Hello")</pre>
+
+<h4>Set font size</h4>
+
+<p>Changes the font size to the given value, in pixels.</p>
+
+<pre class="codeBlock">(set-font-size! 14)</pre>
+
+<h4>Set font</h4>
+
+<p>Changes the font. By default, <code>"serif"</code>, <code>"sans-serif"</code>, and <code>"monospace"</code> are available.</p>
+
+<pre class="codeBlock">(set-font! "sans-serif")</pre>
 
 <h3>Color</h3>
 
@@ -115,17 +144,17 @@
 
 <p>The color that fills the inside of rectangles and circles. A color may be a CSS name, such as <code>"PaleVioletRed"</code> or a 3-digit or 6-digit hexadecimal value. Setting an invalid color has no effect.</p>
 
-<pre class="codeBlock">(fill-color "green")</pre>
+<pre class="codeBlock">(set-fill! "green")</pre>
 
-<pre class="codeBlock">(fill-color "PaleVioletRed")</pre>
+<pre class="codeBlock">(set-fill! "PaleVioletRed")</pre>
 
-<pre class="codeBlock">(fill-color "#99eeff")</pre>
+<pre class="codeBlock">(set-fill! "#1a2a30")</pre>
 
 <h4>Stroke color</h4>
 
 <p>The color of lines and outlines of rectangles and circles. The color may be a value described above. Setting an invalid color has no effect.</p>
 
-<pre class="codeBlock">(stroke-color "blue")</pre>
+<pre class="codeBlock">(set-stroke! "blue")</pre>
 
 <h4>Fill shape</h4>
 
@@ -163,19 +192,33 @@
 
 <pre class="codeBlock">(iota 11 -10 2)</pre>
 
-<p><code>domain</code> will be the 360 pixels of the canvas. Then, the quadratic function <code>0.003 * x<sup>2</sup></code> will be plotted.</p>
+<p><code>domain</code> will be the 360 pixels of the canvas. Then, the quadratic function \(f(x) = 0.003 x^2 + 50\) will be plotted.</p>
 
 <pre class="codeBlock">(define domain (iota 360 -180))
 (define (f x)
-  (* 0.003 x x))
+  (+ (* 0.003 (expt x 2)) 50))
 
 (for-each pt domain (map f domain))</pre>
+<h3>The quadratic formula</h3>
+
+<p>Given a quadratic equation \(ax^2 + bx + c = 0\), the roots are given by</p>
+
+<p>\[x = {-b \pm \sqrt{b^2-4ac} \over 2a}\]</p>
+
+<pre class="codeBlock">(define (roots a b c)
+  (let ((det (sqrt (- (expt b 2) (* 4 a c)))))
+    (list (/ (+ (- b) det) (* 2 a))
+          (/ (- (- b) det) (* 2 a)))))</pre>
+<p>Suppose we have \((x - 3)(x + 2) = 0\). Expanding, we have \(x^2 - x - 6 = 0\). Using the formula above, the roots are:</p>
+
+<pre class="codeBlock">(roots 1 -1 -6)</pre>
+
 
         <table class="ch-links">
           <tr>
             
             <td class="prev-ch-link">
-              <a href="data_types.html"> &lt; 2. Data Types
+              <a href="hello-reader.html"> &lt; 1. Hello, Reader!
 </a>
             </td>
         

@@ -1,9 +1,40 @@
+SCREEN 7
+
+NOTE: should not host in heitorchang.github.io because MathJax is over 20 MB
+
 TODO
 ----
-[  ] Build system like py-book/book-template/build.py
+[  ] Arithmetic section (arithmetic.html) "write your own function" in this section
+[  ] Custom font
+[  ] See notes [1] below for the difference between (list) and (quote)
+
+DONE
+----
+[OK] Build system like py-book/book-template/build.py
 
 
 MAYBE
 -----
-[  ] Add text to canvas
-[  ] Check if custom fonts can be used
+[OK] Add text to canvas
+[NO] Check if custom fonts can be used
+
+
+LATER
+-----
+[  ] Rename SCREEN 7 to something more apropos to content
+
+
+NOTES
+-----
+[1] https://icem.folkwang-uni.de/~finnendahl/cm_kurse/doc/schintro/schintro_38.html
+
+One subtlety about quote is that a quote expression doesn't create a data structure every time it's called--evaluating the same expression many times may return many pointers to the same structure.
+
+Consider the procedure definition
+
+(define (foo)
+  '(1 2 3))
+
+The list (1 2 3) may be created when we define the procedure foo, and each time we call it, it may return a pointer to that same list. (Exactly what happens depends on the particular implementation of Scheme, but most work this way, for efficiency reasons. Evaluating the quote expression just fetches a pointer to a data structure that was created beforehand.)
+
+For this reason, it's an error to modify a data structure returned from a quote form. Unfortunately, many Scheme systems don't detect this error, and will let you do it.
