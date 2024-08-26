@@ -10542,6 +10542,9 @@ const setCursorAtEnd = () => {
 
 const histUp = () => {
   inputHistoryIndex = Math.min(inputHistory.length - 1, inputHistoryIndex + 1)
+  if (inputHistory[inputHistoryIndex] === input.getValue()) {
+    inputHistoryIndex += 1
+  }
   input.setValue(inputHistory[inputHistoryIndex] || "")
   input.setValue(input.getValue().trim())
   setCursorAtEnd()
@@ -10659,8 +10662,6 @@ function biwaEval(input, clearInput = false) {
     consoleWrapper.scrollTop = consoleWrapper.scrollHeight;
     if (clearInput) {
       input.setValue("")
-    } else {
-      histUp();
     }
     biwaErrorMsg.innerText = ""
     biwaErrorMsg.className = "biwaNoError"
