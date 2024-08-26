@@ -148,7 +148,7 @@ div.CodeMirror span.CodeMirror-matchingbracket
 
 /* Default styles for common addons */
 
-div.CodeMirror span.CodeMirror-matchingbracket {color: #060; background-color: #6cf;}
+div.CodeMirror span.CodeMirror-matchingbracket {color: #060; background-color: #aef;}
 div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #fff; background-color: #a33;}
 .CodeMirror-matchingtag { background: rgba(255, 150, 0, .3); }
 .CodeMirror-activeline-background {background: #e8f2ff;}
