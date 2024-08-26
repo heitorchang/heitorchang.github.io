@@ -28,7 +28,7 @@ a {
     height: calc(100vh - 2rem);
 
     grid-template-columns: 360px 1fr;
-    grid-template-rows: 2fr 1fr 360px;
+    grid-template-rows: 2fr minmax(5.5rem, 1fr) 360px;
 }
 
 .grid > * {
@@ -42,7 +42,11 @@ a {
 #editor {
     background-color: #dedede;
     grid-row: 1;
-    overflow: auto;
+    overflow-y: hidden;
+}
+
+#input-area {
+    height: 100%;
 }
 
 #consoleWrapper {
@@ -51,6 +55,12 @@ a {
     padding: 0.25rem;
     grid-row: 2;
     overflow: auto;
+}
+
+.biwaError {
+    background-color: #921;
+    color: #fff;
+    margin-top: 0.25rem;
 }
 
 #bs-console {

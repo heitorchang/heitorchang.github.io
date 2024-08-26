@@ -1,4 +1,6 @@
 (define pi 3.141592653589793)
+(define NaN (js-eval "NaN"))
+(define Infinity (js-eval "Infinity"))
 
 (define js-bg (js-eval "bg"))
 (define js-fg (js-eval "fg"))
@@ -96,4 +98,4 @@
 
 (clear)
 (axes)
-(js-eval "document.getElementById('bs-console').innerText = ';; Write your code above\\n\\n'")
+(js-eval "document.getElementById('bs-console').innerText = ';; Write your code above\\n'")

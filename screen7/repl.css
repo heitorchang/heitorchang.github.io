@@ -12,7 +12,7 @@ div.CodeMirror span.CodeMirror-matchingbracket
   /* Set height, width, borders, and global font properties here */
   font-family: RobotoMono;
   font-size: 13px;
-  height: 300px;
+  height: 90%;
   color: black;
   direction: ltr;
 }

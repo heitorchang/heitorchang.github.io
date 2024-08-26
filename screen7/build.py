@@ -52,11 +52,13 @@ HEADER = f'''<!DOCTYPE html>
     <div id="content">
       <div class="grid">
         <div id="editor">
-          <div id="input-area"><textarea id="replInput" rows="4" cols="43" autofocus></textarea><div id="biwaError"></div></div>
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
         </div>
 
-        <div id="consoleWrapper" class="biwaReady"><pre id="bs-console">;; BiwaScheme console
-</pre>
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
         </div>
 
         <div id="graphicsout">

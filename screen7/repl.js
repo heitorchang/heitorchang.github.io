@@ -10617,9 +10617,7 @@ var input = CodeMirror.fromTextArea(replInput, {
   }
 });
 
-input.setSize("100%", "calc(100% - 3.5rem)")
-
-const biwaErrorMsg = document.getElementById("biwaError")
+input.setSize("100%", "100%")
 
 // BiwaScheme functions
 function setErrorCursor() {
@@ -10640,13 +10638,17 @@ const replElem = document.getElementById("editor");
 
 replElem.addEventListener("click", () => { input.focus(); });
 
+function htmlspecialchars(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 function biwaEval(input, clearInput = false) {
   // flash transition
   consoleWrapper.classList.remove("biwaReady");
   consoleWrapper.classList.add("biwaReceived");
   window.setTimeout(() => { consoleWrapper.classList.remove("biwaReceived"); consoleWrapper.classList.add("biwaReady"); }, 150);
   const inputValue = input.getValue().trim();
-  bsConsole.innerText += inputValue + '\n';
+  bsConsole.innerHTML += `<p><br><pre>${htmlspecialchars(inputValue)}<pre></p>`;
   biwascheme.evaluate(inputValue, function (result) {
     const curValue = inputValue;
     if (curValue !== inputHistory[0]) {
@@ -10654,7 +10656,7 @@ function biwaEval(input, clearInput = false) {
     }
     inputHistoryIndex = -1
     window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 50)))
-    bsConsole.innerText += ';; => ' + result + '\n\n';
+    bsConsole.innerHTML += `<p>;; =&gt; ${htmlspecialchars(result.toString())}</p>`;
     // save result as _
     if (typeof result === "number") {
       biwascheme.evaluate(`(define _ ${result})`, function (res) {});
@@ -10663,14 +10665,12 @@ function biwaEval(input, clearInput = false) {
     if (clearInput) {
       input.setValue("")
     }
-    biwaErrorMsg.innerText = ""
-    biwaErrorMsg.className = "biwaNoError"
   })
 }
 
 function displayError(e) {
-  biwaErrorMsg.innerText = e.message
-  biwaErrorMsg.className = 'biwaErrorFlash'
+  bsConsole.innerHTML += `<p class="biwaError">${htmlspecialchars(e.message)}<p>`;
+  consoleWrapper.scrollTop = consoleWrapper.scrollHeight;
 }
 
 function sendPre(e) {

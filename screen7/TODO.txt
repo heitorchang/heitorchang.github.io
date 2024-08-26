@@ -5,8 +5,9 @@ NOTE: should not host in heitorchang.github.io because MathJax is over 20 MB
 TODO
 ----
 [  ] Arithmetic section (arithmetic.html) "write your own function" in this section
-[  ] Custom font
 [  ] See notes [1] below for the difference between (list) and (quote)
+[  ] function (limits) that (print)s graphics boundaries
+
 
 DONE
 ----
@@ -22,6 +23,7 @@ MAYBE
 LATER
 -----
 [  ] Rename SCREEN 7 to something more apropos to content
+[  ] Custom fonts in graphics box
 
 
 NOTES

@@ -12,11 +12,13 @@
     <div id="content">
       <div class="grid">
         <div id="editor">
-          <div id="input-area"><textarea id="replInput" rows="4" cols="43" autofocus></textarea><div id="biwaError"></div></div>
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
         </div>
 
-        <div id="consoleWrapper" class="biwaReady"><pre id="bs-console">;; BiwaScheme console
-</pre>
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
         </div>
 
         <div id="graphicsout">
@@ -75,12 +77,12 @@
   (circle 0 0 radius))
 
 (clear)
-(for-each concentric (iota 4 40 40))</pre>
+(for-each concentric (iota 4 10 50))</pre>
 <p>Each portion of the code block above will be explained in the following chapters. For now, I just wished to show what simple Scheme code looks like.</p>
 
-<p>Can you guess how the code is related to the drawing? <code>concentric</code> draws a circle centered at <code>(0, 0)</code> with the given <code>radius</code>, and the <code>iota</code> function creates <code>4</code> values, starting at <code>40</code>, with an increment of <code>40</code> at each step.</p>
+<p>Can you guess how the code is related to the drawing? <code>concentric</code> draws a circle centered at <code>(0, 0)</code> with the given <code>radius</code>, and the <code>iota</code> function creates <code>4</code> values, starting at <code>10</code>, with an increment of <code>50</code> at each step.</p>
 
-<p>With the use of <code>for-each</code> to <em>call</em> the <code>concentric</code> function, four circles with radii of <code>40</code>, <code>80</code>, <code>120</code>, and <code>160</code> pixels are drawn.</p>
+<p>With the use of <code>for-each</code> to <em>call</em> the <code>concentric</code> function, four circles with radii of <code>10</code>, <code>60</code>, <code>110</code>, and <code>160</code> pixels are drawn.</p>
 
 <p>The default dimensions of the graphics box is <em>360 pixels by 360 pixels</em>, with <code>-180 <= x &lt; 180</code> and <code>-180 <= y &lt; 180</code>. Later, we will see how to change these limits.</p>
 
