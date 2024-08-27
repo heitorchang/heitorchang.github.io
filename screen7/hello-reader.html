@@ -34,7 +34,7 @@
             
             
             <td class="next-ch-link">
-              <a href="api_reference.html">2. API Reference
+              <a href="arithmetic-functions.html">2. Simple Arithmetic
  &gt; </a>
             </td>
         
@@ -43,7 +43,7 @@
     
 <h1>1. Hello, Reader!</h1>
 
-<p>Welcome and thank you for joining me in this programming journey! I will cover the basics of computer science, geometry, and algebra with a text-based console and two-dimensional graphics to explain concepts.</p>
+<p>Welcome and thank you for joining me in this programming journey! I will cover the basics of computer science and geometry with traditional text-based output and two-dimensional graphics.</p>
 
 <p>The programming language you will be working with is called <em>Scheme</em>. It is a minimalistic language and fundamental computer science concepts can be expressed without complicated syntax.</p>
 
@@ -53,21 +53,23 @@
 
 <h3>Hello, World!</h3>
 
-<p>The traditional "first program" in introductory books displays the words <code>Hello, World!</code> on the screen.</p>
+<p>The typical first program in introductory books displays the words <code>Hello, World!</code> on the screen.</p>
 
-<p>Scheme allows the programmer to type code and immediately run it, without the intermediate <em>compilation</em> stage, which translates human-readable code into machine language code that your computer can run.</p>
+<p>Scheme allows you to type code and immediately run it, as opposed to <em>compiled</em> languages, where an intermediate step of translating human-readable code to machine language code needs to happen.</p>
 
-<p>This book includes a Scheme <em>interpreter</em>, which is a piece of software that reads Scheme code and runs it. In Scheme terminology, running code is called <em>evaluating</em> it.</p>
+<p>This book includes a Scheme <em>interpreter</em>, which is a piece of software that reads Scheme code and runs it.</p>
 
-<p>There are several <em>code boxes</em> in lighter yellow in this book. Clicking inside any one of them will copy its contents to the code editor on the top-left corner and evaluate it right away. It saves you from having to type them.</p>
+<p>There are several <em>code boxes</em> in lighter yellow in this book. Clicking inside any one of them will copy its contents to the code editor on the top-left corner and run it right away. It saves you from having to type them.</p>
 
-<p>Click on the box below to evaluate the <code>Hello, World!</code> program:</p>
+<p>Click on the box below to run the <code>Hello, World!</code> program:</p>
 
 <pre class="codeBlock">(print "Hello, World!")</pre>
 
-<p>You should see the Scheme code and below it, the text <code>Hello, World!</code> inside the dark blue box under the editor. This box is called the <em>console</em>, and it displays values that are the results of your code, and values given to the <code>print</code> function.</p>
+<p>You should see the Scheme code and below it, the text <code>Hello, World!</code> inside the dark blue box under the editor. This box is called the <em>console</em>, and it displays the results of your code and values passed to the <code>print</code> function.</p>
 
-<p>A <em>function</em> is a collection of code that performs an action. In <code>print</code>'s case, the action is to output a value to the console. Details about functions, and how write your own, will be explained later.</p>
+<p>A <em>function</em> is a collection of code that performs an action. In <code>print</code>'s case, the action is to output a value to the console. For now, it's enough to know that a function is <em>called</em>, or run, by writing its name and the values it should process inside parentheses <code>(...)</code></p>
+
+<p>Details about functions and how write your own, will be explained later.</p>
 
 <h3>The graphics box</h3>
 
@@ -78,33 +80,67 @@
 
 (clear)
 (for-each concentric (iota 4 10 50))</pre>
-<p>Each portion of the code block above will be explained in the following chapters. For now, I just wished to show what simple Scheme code looks like.</p>
+<p>Each portion of the code block above will be explained in the following chapters. This block of code shows what simple Scheme code looks like.</p>
 
 <p>Can you guess how the code is related to the drawing? <code>concentric</code> draws a circle centered at <code>(0, 0)</code> with the given <code>radius</code>, and the <code>iota</code> function creates <code>4</code> values, starting at <code>10</code>, with an increment of <code>50</code> at each step.</p>
 
-<p>With the use of <code>for-each</code> to <em>call</em> the <code>concentric</code> function, four circles with radii of <code>10</code>, <code>60</code>, <code>110</code>, and <code>160</code> pixels are drawn.</p>
+<p>The <em>radius</em> of a circle is the distance from the center to the edge. The term <em>concentric</em> used to describe the multiple circles means that they are all centered on the same point.</p>
 
-<p>The default dimensions of the graphics box is <em>360 pixels by 360 pixels</em>, with <code>-180 <= x &lt; 180</code> and <code>-180 <= y &lt; 180</code>. Later, we will see how to change these limits.</p>
+<p>Using <code>for-each</code> to call the <code>concentric</code> function makes Scheme draw four circles with radii of <code>10</code>, <code>60</code>, <code>110</code>, and <code>160</code> pixels. A pixel is a small graphical unit, used to place points and shapes in the two-dimensional space.</p>
+
+<p>The default dimensions of the graphics box is <em>360 pixels by 360 pixels</em>, with limits of <code>-180 <= x &lt; 180</code> and <code>-180 <= y &lt; 180</code>. Later, we will see how to change these limits.</p>
 
 <p><code>(clear)</code> is added so that the graphics box is cleared before drawing the picture.</p>
 
 <p>Try writing your own values of <code>iota</code>. Remember, the first number is how many circles to draw, the second number is the initial radius, and the last number is how far apart the remaining circles should be.</p>
 
-<p>Try, for example, <code>(iota 2 100 20)</code> and press <code>Ctrl+Enter</code> or <code>Alt+Enter</code> to redraw. You should see two circles with a large initial radius, and a slightly larger circle.</p>
+<p>Try, for example, <code>(iota 3 100 20)</code> and press <code>Ctrl+Enter</code> to redraw. You should see three circles with a large initial radius, and two slightly larger circles.</p>
 
-<p>If you wish to clear the code editor's contents after evaluating your code, press <code>Shift+Ctrl+Enter</code> or <code>Shift+Alt+Enter</code>.</p>
+<p>If you prefer, you may press <code>Alt</code> instead of <code>Ctrl</code> in all of these keyboard shortcuts.</p>
 
-<p>To restore previously evaluated code, press <code>Ctrl+Up</code> or <code>Alt+Up</code>. Unevaluated code will be lost, so be careful! <code>Ctrl+Down</code> or <code>Alt+Down</code> will scroll forwards in this list.</p>
+<p>If you wish to clear the code editor's contents after running your code, press <code>Shift+Ctrl+Enter</code>.</p>
 
-<p>Finally, to clear the contents of the code editor, press <code>Esc</code>. The cleared code may be recovered with <code>Ctrl+Up</code> or <code>Alt+Up</code>.</p>
+<p>To restore previous code, press <code>Ctrl+Up</code>. Code that has not run will be lost, so be careful! (In the Chrome browser, <code>Ctrl-Z</code> will undo this action).</p>
 
+<p><code>Ctrl+Down</code> will scroll forwards in the code history.</p>
+
+<p>Finally, to clear the contents of the code editor, press <code>Esc</code>. The cleared code may be recovered with <code>Ctrl+Up</code>.</p>
+
+<p>Here's a summary of the code editor's keyboard shortcuts (<code>Ctrl</code> and <code>Alt</code> are interchangeable).</p>
+
+<table class="bordered">
+  <tr>
+    <td><strong>Key combination</strong></td>
+    <td><strong>Effect</strong></td>
+  </tr>
+  <tr>
+    <td><code>Ctrl+Enter</code></td>
+    <td>Run code block</td>
+  </tr>
+  <tr>
+    <td><code>Shift+Ctrl+Enter</code></td>
+    <td>Run code block and clear editor</td>
+  </tr>
+  <tr>
+    <td><code>Ctrl+Up</code></td>
+    <td>Recover previously run code (history)</td>
+  </tr>
+  <tr>
+    <td><code>Ctrl+Down</code></td>
+    <td>Scroll forwards in the history</td>
+  </tr>
+  <tr>
+    <td><code>Esc</code></td>
+    <td>Clear the editor</td>
+  </tr>
+</table>
 
         <table class="ch-links">
           <tr>
             
             
             <td class="next-ch-link">
-              <a href="api_reference.html">2. API Reference
+              <a href="arithmetic-functions.html">2. Simple Arithmetic
  &gt; </a>
             </td>
         
@@ -112,6 +148,7 @@
         </table>
     
 
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
         </div>
       </div>
     </div>

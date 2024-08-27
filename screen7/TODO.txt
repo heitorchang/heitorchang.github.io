@@ -1,6 +1,7 @@
 SCREEN 7
 
 NOTE: should not host in heitorchang.github.io because MathJax is over 20 MB
+NOTE 2: <pre class="skip"> uses a dummy CSS class to skip automatic execution
 
 TODO
 ----

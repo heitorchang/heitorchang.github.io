@@ -4,3 +4,9 @@ document.querySelectorAll(".codeBlock").forEach((p) => {
     sendPre(event)
   });
 });
+
+document.querySelectorAll(".skip").forEach((p) => {
+  p.addEventListener("mousedown", () => {
+    sendPre(event)
+  });
+});

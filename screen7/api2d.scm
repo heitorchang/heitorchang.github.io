@@ -43,6 +43,10 @@
   (js-call js-rect x y w h)
   "no value")
 
+(define (rect-corners x1 y1 x2 y2)
+  (rect x1 y1 (- x2 x1) (- y2 y1))
+  "no value")
+
 (define (fill)
   (js-call js-fill)
   "no value")
@@ -64,7 +68,9 @@
   "no value")
 
 (define (text x y s)
+  (temp-bg fg-color)
   (js-call js-text x y s)
+  (bg bg-color)
   "no value")
 
 (define (set-font-size! s)
@@ -92,9 +98,17 @@
 
 ;; Initialization
 ;; Evaluate pre blocks
+(define eval-alias (js-eval "evalAlias"))
 (for-each
- (lambda (e) (js-eval (string-append "biwascheme.evaluate(`" (js-ref e "innerText") "`)")))
+ (lambda (e)
+   (let ((e-text (js-ref e "innerText")))
+     (js-call eval-alias e-text)))
  (js-array->list (getelem ".codeBlock")))
+
+;; Hack
+;; (for-each
+;;  (lambda (e) (js-eval (string-append "biwascheme.evaluate(`" (js-ref e "innerText") "`)")))
+;;  (js-array->list (getelem ".codeBlock")))
 
 (clear)
 (axes)

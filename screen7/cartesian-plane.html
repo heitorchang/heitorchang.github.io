@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="strings-variables.html"> &lt; 3. Strings and Variables
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="api_reference.html">5. API Reference
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>4. The Cartesian Plane</h1>
+
+<p>Let's take a closer look at the graphics box.</p>
+
+<p>The default setting of the graphics box is a Cartesian plane with the limits <code>-180 &lt;= x &lt; 180</code> and <code>-180 &lt;= y &lt; 180</code>. It looks and behaves like the 2-D plane in math textbooks.</p>
+
+<p>The center of the graphics box, <code>(0, 0)</code> is called the <em>origin</em>. Positive <code>x</code> values go towards the right, and positive <code>y</code> values go towards the top.</p>
+
+<h3>Text</h3>
+
+<p>It is very useful to place a label anywhere in the graphics box. The <code>(text x y string)</code> function accepts <code>x</code> and <code>y</code> coordinates where the <code>string</code>'s bottom-left corner should be placed.</p>
+
+<p>Let's try writing <code>"center"</code> at the very center.</p>
+
+<pre class="codeBlock">(text 0 0 "center")</pre>
+
+<p>Now, let's label each of the four <em>quadrants</em> of the two-dimensional plane. Each quadrant is separated from each other by the two <em>axes</em>. The <em>x-axis</em> is the straight horizontal line where \(y = 0\) everywhere, and similarly, the <em>y-axis</em> is the vertical line where \(x = 0\) everywhere.</p>
+
+<pre class="codeBlock">(text 80 80 "(80, 80)")
+(text -80 80 "(-80, 80)")
+(text -80 -80 "(-80, -80)")
+(text 80 -80 "(80, -80)")
+(text 110 10 "x-axis")
+(text 10 160 "y-axis")</pre>
+<h3>Points</h3>
+
+<p>The simplest drawing function is <code>pt</code>. It is short for <code>point</code>. It takes two numbers, <code>x</code> and <code>y</code>, for the <code>(x, y)</code> location where to draw the point. Since a single point is hard to see, let's draw a short line segment of 5 points. Click on the code block below.</p>
+
+<pre class="codeBlock">(pt 20 20)
+(pt 20 21)
+(pt 20 22)
+(pt 20 23)
+(pt 20 24)</pre>
+<p>You should see a small vertical line segment close to the center.</p>
+
+<p>A dotted diagonal line segment may be created by increasing both <code>x</code> and <code>y</code> values at the same time. By adding a bit of space in between the points, we make it appear dotted:</p>
+
+<pre class="codeBlock">(pt 20 20)
+(pt 23 23)
+(pt 26 26)
+(pt 29 29)
+(pt 32 32)
+(pt 35 35)</pre>
+<p>If you wish, click below to <code>(clear)</code> the contents of the graphics box. <code>(axes)</code> will redraw the <code>x</code> and <code>y</code> axes.</p>
+
+<pre class="codeBlock">(clear)
+(axes)</pre>
+<p>As you can see, it's tedious to generate a drawing point-by-point. We will revisit the use of points later. For now, let's look at other kinds of drawing functions.</p>
+
+<h3>Lines</h3>
+
+<p>Another basic element of drawing is a <em>line</em>. It is a function that takes 4 <em>arguments</em>.</p>
+
+<p>They are <code>x1</code>, <code>y1</code>, <code>x2</code>, and <code>y2</code>, where <code>(x1, y1)</code> are the coordinates of one endpoint, and <code>(x2, y2)</code> are the coordinates of the other endpoint.</p>
+
+<p>For example, the function call below will draw a diagonal line in the top-right quadrant:</p>
+
+<pre class="codeBlock">(line 40 20 150 150)</pre>
+
+<h3>Rectangles</h3>
+
+<p>A rectangle is a four-sided shape with right angles. There are two ways of drawing rectangles:</p>
+
+<p>The first way, <code>(rect x y width height)</code>, behaves a bit differently from lines. The bottom-left corner <code>x</code> and <code>y</code> values are the first two arguments, then the <code>width</code> and the <code>height</code>. The edges will extend to the right an upwards.</p>
+
+<p>The second way, <code>(rect-corners x1 y1 x2 y2)</code> is more similar to <code>(line ...)</code>, because you define two corners, the bottom-left and top-right corners. The diagonal is not drawn, however.</p>
+
+<p>Try drawing the rectangles below and observe where their corners are:</p>
+
+<pre class="codeBlock">(rect -100 -100 50 80)</pre>
+
+<pre class="codeBlock">(rect-corners 100 10 170 50)</pre>
+
+<p>If you wish, clear the graphics box:</p>
+
+<pre class="codeBlock">(clear)</pre>
+
+<h3>Circles</h3>
+
+<p>Another frequently used shape is the <em>circle</em>. Its parameters are the <code>x</code> and <code>y</code> coordinates of its center, and a <code>radius</code>. The radius is the distance between the center and the edge.</p>
+
+<pre class="codeBlock">(circle 70 -60 50)</pre>
+
+<h3>Ellipses</h3>
+
+<p>The last shape we'll look at for now is the <em>ellipse</em>. Drawing one combines part of <code>circle</code> and part of <code>rect</code>. The arguments you pass are the <code>x</code> and <code>y</code> coordinates of the center, the <code>width</code> and the <code>height</code>. The width and height are from the center to the edges. The function call below draws an ellipse that is taller than its width.</p>
+
+<pre class="codeBlock">(ellipse -50 50 25 40)</pre>
+
+<h3>Colors</h3>
+
+<p>The graphics element works with two colors: the <em>stroke color</em> , used on shapes' outlines and lines, and the <em>fill color</em>, used to paint the inside of shapes and text.</p>
+
+<p>The functions <code>set-stroke!</code> and <code>set-fill!</code> are used to set these two colors.</p>
+
+<p>They accept one argument, which is a string representing a color's name, such as <code>"green"</code> or <code>"LightSkyBlue"</code>, or a 6-digit hexadecimal value starting with <code>#</code>, such as <code>"#39a0da"</code>. Hexadecimal colors are widely used in <em>HTML</em> and <em>CSS</em> definitions.</p>
+
+<p>Briefly, hexadecimal numbers go from <code>0</code> to <code>9</code>, then <code>a</code> to <code>f</code>. Each pair of digits corresponds to the intensity of <em>red</em>, <em>green</em>, and <em>blue</em>, in this order. For example, <code>#0000ff</code> is pure blue, and <code>#ff00ff</code> is magenta.</p>
+
+<pre class="skip">(set-stroke! "#9c307a") ; a dark purple</pre>
+
+<pre class="skip">(set-fill! "LightSkyBlue")</pre>
+
+<p>The valid color names are the <em>CSS color names</em> <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/named-color" target="_blank">(view a list in external documentation)</a>.</p>
+
+<p>Click below to draw a line and circle using the current values of stroke and fill colors:</p>
+
+<pre class="codeBlock">(line -100 140 100 140)
+(circle 0 0 80)
+(fill)</pre>
+<h4>Example: colored circles</h4>
+
+<p>Let's finish the chapter with a simple example: drawing four circles around the origin, with of them two colored black.</p>
+
+<p>First, we should clear the graphics box, and redraw the axes (to ensure our circles are lined up with the center):</p>
+
+<pre class="codeBlock">(clear)
+(axes)</pre>
+<p>Let's have circles with a radius of <code>20</code> pixels:</p>
+
+<pre class="codeBlock">(define r 20)</pre>
+
+<p>Having the circles around the origin means that their centers will be <code>r</code> pixels away from the origin. Negative values must be written as <code>(- r)</code>, because inverting the sign of a number is a function, and function calls must be enclosed in parentheses.</p>
+
+<p>An alternative would be defining a new variable, such as <code>(define neg-r (- r))</code></p>
+
+<p>With this information, we draw the circles, filling every other circle (remember that drawing the outline and filling the shape are separate functions).</p>
+
+<pre class="codeBlock">(set-stroke! "black")
+(set-fill! "black")
+(circle r r r)  ; top-right
+(fill)
+(circle (- r) r r)  ; top-left
+(circle (- r) (- r) r)  ; bottom-left
+(fill)
+(circle r (- r) r)  ; bottom-right</pre>
+<p>Let's check that the <code>neg-r</code> version works:</p>
+
+<pre class="codeBlock">(clear)
+(axes)
+(define neg-r (- r))
+(set-stroke! "green")
+(set-fill! "SteelBlue")
+(circle r r r)
+(circle neg-r neg-r r)
+(fill)</pre>
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="strings-variables.html"> &lt; 3. Strings and Variables
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="api_reference.html">5. API Reference
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
+

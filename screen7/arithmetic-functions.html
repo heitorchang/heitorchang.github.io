@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="hello-reader.html"> &lt; 1. Hello, Reader!
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="strings-variables.html">3. Strings and Variables
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>2. Simple Arithmetic</h1>
+
+<p>In this chapter, you will see how the four arithmetic <em>operations</em> are carried out in Scheme</p>
+
+<h3>Functions</h3>
+
+<p>In Scheme, a function is <em>called</em> (in other words, made to run) by writing its name inside parentheses:</p>
+
+<p><code>(function-name argument-1 argument-2 argument-3)</code></p>
+
+<p>The <em>arguments</em> of a function call are values that are <em>passed</em> to the function, which manipulates them according to the code contained in the function.</p>
+
+<h3>Adding numbers</h3>
+
+<p>The four arithmetic functions are defined as these symbols:</p>
+
+<table class="bordered">
+  <tr>
+    <td><code>+</code></td> <td>addition</td>
+  </tr>
+  <tr>
+    <td><code>-</code></td> <td>subtraction</td>
+  </tr>
+  <tr>
+    <td><code>*</code></td> <td>multiplication</td>
+  </tr>
+  <tr>
+    <td><code>/</code></td> <td>division</td>
+  </tr>
+</table>
+<p>Let's say we wish to calculate <code>15 + 75</code>. In Scheme, the <em>function</em> is the first element inside parentheses. The numbers to be added are written after the <code>+</code>.</p>
+
+<pre class="codeBlock">(+ 15 75)</pre>
+
+<p>Click on the code block above to get the answer: <code>90</code>.</p>
+
+<p>What happens if <code>+</code> is the <em>only</em> element?</p>
+
+<pre class="codeBlock">(+)</pre>
+
+<p>We don't get an error. Instead, <code>0</code> is the return value. In the case of addition, <code>0</code> is its <em>identity</em>, meaning that adding anything to <code>0</code> returns the same value. Instead of generating an error, Scheme chooses to return <code>0</code>.</p>
+
+<p>Multiplication also has an identity: <code>1</code>. Any number multiplied by <code>1</code> will stay the same.</p>
+
+<pre class="codeBlock">(*)</pre>
+
+<p>However, subtraction and division by themselves will generate errors.</p>
+
+<pre class="codeBlock">(-)</pre>
+
+<pre class="codeBlock">(/)</pre>
+
+<p>Scheme allows any number of <em>arguments</em> to be passed to the arithmetic functions. The effect is like repeatedly placing the <em>operator</em> in between the numbers in standard math notation:</p>
+
+<p><code>(+ 1 2 3)</code> is the same as <code>1 + 2 + 3</code></p>
+
+<pre class="codeBlock">(+ 1 2 3)</pre>
+
+<pre class="codeBlock">(- 50 10 2)</pre>
+
+<pre class="codeBlock">(* 2 10 5)</pre>
+
+<pre class="codeBlock">(/ 1000 2 10)</pre>
+
+<p>Let's revisit the parentheses issue. If we try writing <code>+</code> and some numbers without the parentheses, the final number, <code>3</code>, is displayed, not the expected result of the calculation.</p>
+
+<pre class="codeBlock">+ 1 2 3</pre>
+
+<p>Writing a calculation in standard notation will also "run", but again, the final number is returned, not the desired result of the calculation.</p>
+
+<pre class="codeBlock">12 / 2</pre>
+
+<p>Writing the calculation in Scheme notation will give us the expected answer, <code>6</code>.</p>
+
+<pre class="codeBlock">(/ 12 2)</pre>
+
+<h3>Order of operations</h3>
+
+<p>Since Scheme makes it mandatory to write function calls inside parentheses, there is never any ambiguity about which calculation takes place first. As in standard math, the innermost calculations should be done first.</p>
+
+<p>For example, is <code>2 + 3 * 4</code> equal to <code>2 + 12</code> or <code>5 * 4</code>?</p>
+
+<pre class="codeBlock">;; with multiplication done first
+(+ 2 (* 3 4))</pre>
+<pre class="codeBlock">;; with addition done first
+(* (+ 2 3) 4)</pre>
+<p>It may take a bit to get used to writing operators and function names as the first element, but what may look like a major disadvantage right now is also Scheme's greatest strength&mdash;uniformity and the ability to represent code as <em>lists</em> of elements.</p>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="hello-reader.html"> &lt; 1. Hello, Reader!
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="strings-variables.html">3. Strings and Variables
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
+

@@ -18,10 +18,24 @@ This is a paragraph with some content.
 
 Text inside backticks `this is an expression` is converted to <code>this is an expression</code>.
 
-pre blocks begin and end with <pre> and </pre>
+Code can be written as
+
+$pre (a-function param-1)
+
+or with pre blocks, which begin and end with <pre> and </pre>
 
 <pre>
 (define pre-content ...)
+</pre>
+
+Code written in these two methods will be evaluated automatically. To skip evaluation, write
+
+$skip (a-function param-1)
+
+or
+
+<pre class="skip">
+(code-to-skip-evaluation)
 </pre>
 
 A raw HTML block is marked with !html and ends with !end
@@ -70,6 +84,7 @@ HEADER = f'''<!DOCTYPE html>
 '''
 
 FOOTER = '''
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
         </div>
       </div>
     </div>
@@ -96,7 +111,7 @@ INDEX_TEMPLATE_HEADER = f'''
     <title>{book_title}</title>
   </head>
   <body class="indexDiv ltYellow">
-    <div style="font-family: sans-serif; max-width: 60rem; margin: auto; text-align: left;">
+    <div style="font-family: sans-serif; max-width: 60rem; margin: auto; padding: 2.5rem; text-align: left;">
 
 <h1 style="margin-top: 2rem;">{book_title}</h1>
 <p class="index-subtitle">
@@ -161,14 +176,17 @@ def convert_line(line, chapter_number):
     extra_attr = ""
     if tagname == 'pre':
         extra_attr = ' class="codeBlock"'
+    elif tagname == 'skip':
+        extra_attr = ' class="skip"'
+        tagname = 'pre'
     backtick_template = re.compile(r'`([^`]*?)`')
     contents = replace_html_special_chars(' '.join(rest))
     contents = re.sub(backtick_template, r'<code>\1</code>', contents)
     return f"<{tagname}{extra_attr}>{chapter_label}{contents}</{tagname}>"
 
-def wrap_pre_block(lines):
+def wrap_pre_block(lines, cls_name="codeBlock"):
     textarea_contents = ''
-    textarea_contents += f'''<pre class="codeBlock">'''
+    textarea_contents += f'''<pre class="{cls_name}">'''
     for line in lines:
         textarea_contents += line + '\n'
     textarea_contents = textarea_contents[:-1]  # remove final newline
@@ -274,10 +292,13 @@ def convert_raw_contents(contents, chapter_number, converted_file):
     for raw_line in contents.splitlines():
         if not in_pre_block and not in_html_block and len(raw_line) == 0:
             continue
-        if raw_line.startswith("<pre>"):
+        if raw_line.startswith("<pre"):  # cover <pre> and <pre class="skip">
             in_pre_block = True
+            pre_class = "codeBlock"
+            if "skip" in raw_line:
+                pre_class = "skip"
         elif raw_line.startswith("</pre>"):
-            print(wrap_pre_block(pre_block), file=converted_file)
+            print(wrap_pre_block(pre_block, pre_class), file=converted_file)
             pre_block = []
             in_pre_block = False
         elif in_pre_block:
@@ -304,13 +325,12 @@ if __name__ == '__main__':
 
     chapters = [
         'hello-reader',
-        # 'arithmetic-functions',
-        # 'strings',
-        # 'cartesian-plane',
+        'arithmetic-functions',
+        'strings-variables',
+        'cartesian-plane',
         # 'lists',
 
         'api_reference',
-
     ]
 
     print(f"Converting {len(chapters)} chapters.\n")

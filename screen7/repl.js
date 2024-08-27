@@ -10534,6 +10534,7 @@ const output = document.getElementById("replOutput")
 let inputHistoryFromStorage = window.localStorage.getItem("biwaReplHistory") || "[]"
 let inputHistory = JSON.parse(inputHistoryFromStorage)
 let inputHistoryIndex = -1
+let inputHistoryLength = 64
 
 const setCursorAtEnd = () => {
   input.focus()
@@ -10587,7 +10588,7 @@ function doClearInput() {
     inputHistory.unshift(curValue)
   }
   inputHistoryIndex = -1
-  window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 50)))
+  window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, inputHistoryLength)))
   input.setValue("")
 }
 
@@ -10628,7 +10629,8 @@ function setErrorCursor() {
 
 const onBiwaError = (e) => {
   displayError(e);
-  throw(e);
+  // avoid purposely erroneous blocks from stopping automatic execution
+  // throw(e);
 }
 
 const biwascheme = new BiwaScheme.Interpreter(onBiwaError);
@@ -10646,7 +10648,8 @@ function biwaEval(input, clearInput = false) {
   // flash transition
   consoleWrapper.classList.remove("biwaReady");
   consoleWrapper.classList.add("biwaReceived");
-  window.setTimeout(() => { consoleWrapper.classList.remove("biwaReceived"); consoleWrapper.classList.add("biwaReady"); }, 150);
+  // Flash background
+  // window.setTimeout(() => { consoleWrapper.classList.remove("biwaReceived"); consoleWrapper.classList.add("biwaReady"); }, 150);
   const inputValue = input.getValue().trim();
   bsConsole.innerHTML += `<p><br><pre>${htmlspecialchars(inputValue)}<pre></p>`;
   biwascheme.evaluate(inputValue, function (result) {
@@ -10655,7 +10658,7 @@ function biwaEval(input, clearInput = false) {
       inputHistory.unshift(curValue)
     }
     inputHistoryIndex = -1
-    window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, 50)))
+    window.localStorage.setItem("biwaReplHistory", JSON.stringify(inputHistory.slice(0, inputHistoryLength)))
     bsConsole.innerHTML += `<p>;; =&gt; ${htmlspecialchars(result.toString())}</p>`;
     // save result as _
     if (typeof result === "number") {
@@ -10669,7 +10672,7 @@ function biwaEval(input, clearInput = false) {
 }
 
 function displayError(e) {
-  bsConsole.innerHTML += `<p class="biwaError">${htmlspecialchars(e.message)}<p>`;
+  bsConsole.innerHTML += `<p class="biwaError">;; ${htmlspecialchars(e.message)}<p>`;
   consoleWrapper.scrollTop = consoleWrapper.scrollHeight;
 }
 
@@ -10678,4 +10681,8 @@ function sendPre(e) {
   input.setValue(code);
   biwaEval(input);
   setCursorAtEnd();
+}
+
+function evalAlias(c) {
+  biwascheme.evaluate(c);
 }

@@ -20,7 +20,10 @@ body {
 }
 
 a {
-    text-decoration: none;
+    color: #057;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 4px;
 }
 
 .grid {
@@ -100,8 +103,13 @@ h3, h4 {
     margin: 1rem;
 }
 
+#book em {
+    color: #732;
+    padding: 0 0.25rem;
+}
+
 #book code {
-    color: #363;
+    color: #252;
     margin: 0 0.3rem;
     font-size: 1.0rem;
 }
@@ -112,9 +120,10 @@ h3, h4 {
     padding: 1rem;
     border: 1px solid #ccc;
     background-color: #ffffef;
+    color: #149;
     border-radius: 0.8rem;
     overflow: auto;
-    width: calc(43ch + 2rem + 2px);
+    width: calc(72ch);
     font-family: RobotoMono;
     font-size: 0.9rem;
 }
@@ -132,6 +141,7 @@ table.bordered {
 table.bordered td {
     padding: 0.5rem 0.8rem;
     border: 1px solid #ccc;
+    background-color: #f9f9f9;
 }
 
 table.ch-links {

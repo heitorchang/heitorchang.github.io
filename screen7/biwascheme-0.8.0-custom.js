@@ -5607,7 +5607,8 @@ var BiwaScheme = (function () {
     CoreEnv = {},
     nil = {
       toString: function () {
-        return "nil";
+        // return "nil";
+        return "()";  // heitor edit
       },
       to_write: function () {
         return "()";

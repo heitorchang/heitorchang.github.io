@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="arithmetic-functions.html"> &lt; 2. Simple Arithmetic
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="cartesian-plane.html">4. The Cartesian Plane
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>3. Strings and Variables</h1>
+
+<p>Remember that our <code>print</code> commands were enclosed in parentheses <code>(...)</code>? Without parentheses, the function will not be <em>called</em>.</p>
+
+<p>If you try running the <code>print</code> code without parentheses, it will still work, and misleadingly, the message will still appear, but this happens because <code>"Hello, World!"</code> was the final value of our code block.</p>
+
+<p>Running any code block will <em>return</em> its final value.</p>
+
+<p>If you look closely, running <code>(print "Hello, World")</code> will result in <code>=&gt; #&lt;no value&gt;</code>, meaning that <code>print</code> does not return a value. When the parentheses are left out, it will return the value <code>"Hello, World!"</code> instead. The value shown after the <code>;; =&gt;</code> characters is the <em>return value</em> of the code block.</p>
+
+<p>Try clicking on both code blocks below and observe the difference:</p>
+
+<pre class="codeBlock">(print "Hello, World!")</pre>
+
+<pre class="codeBlock">print "Hello, World!"</pre>
+
+<p>It's worth noting that the semicolon <code>;</code> character marks the beginning of a <em>comment</em>. The text following the semicolon (and including it) up to the end of the line is ignored by the interpreter. Comments are useful to describe what the code is doing, useful remarks, or even temporary observations.</p>
+
+<pre class="codeBlock">;; Code that displays "Howdy!" in the console
+(print "Howdy!")  ; this is also a comment</pre>
+<h3>Strings</h3>
+
+<p>A <em>string</em> is a textual value, which may contain characters from alphabets of worldwide languages, numbers, and punctuation marks.</p>
+
+<p>A string must be enclosed in double quotes: <code>"this is a string"</code>. If a double quote character needs to be included, it must be written as <code>\"</code> (a backslash followed by the double quote character).</p>
+
+<pre class="codeBlock">(print "Alice said, \"Good day!\"")</pre>
+
+<h3>Writing your own function</h3>
+
+<p>Creating a function in Scheme looks like this:</p>
+
+<pre class="codeBlock">(define (function-name parameter-1 parameter-2 more-parameters)
+  function-body)</pre>
+<p>Let's improve our <code>Hello, World!</code> program so that it can be more specific. We'll call our function <code>greet</code>. In its body, it will call <code>print</code>:</p>
+
+<pre class="codeBlock">(define (greet name)
+  (print "Hello, " name))</pre>
+<p>In our function, <code>name</code> is a <em>parameter</em>. Try the following:</p>
+
+<pre class="codeBlock">(greet "Alan")</pre>
+
+<p>When we call a function, the actual values passed are called <em>arguments</em>. The <code>name</code> <em>parameter</em> in the function definition will be <em>bound</em> to the value of the <em>argument</em>.</p>
+
+<p>In Scheme, you can pass anything as an argument to a function. For <code>greet</code>, only textual values (strings) will make sense, but you can also pass numbers and even the <code>greet</code> function itself:</p>
+
+<pre class="codeBlock">(greet 99)</pre>
+
+<pre class="codeBlock">(greet greet)</pre>
+
+<p>The meaning of <code>#&lt;Closure&gt;</code>, which shows up as the result of <code>(greet greet)</code> will be explained later.</p>
+
+<p>For arithmetic functions, strings cannot be used. You will see an error message if you try to add strings:</p>
+
+<pre class="codeBlock">(+ "1" "2")</pre>
+
+<h3>Lists</h3>
+
+<p>We've been using <em>lists</em> the whole time, but without specifically calling them lists.</p>
+
+<p>A list in Scheme is enclosed in parentheses <code>(...)</code> and may contain any number of elements. An empty list, <code>()</code>, is also a valid list.</p>
+
+<h3>Variables</h3>
+
+<p>What happens if we forget the double quotes around <code>"Alan"</code>? You will get an error.</p>
+
+<pre class="codeBlock">(greet bob)</pre>
+
+<p>When Scheme encounters a sequence of characters such as <code>cats</code>, it considers it a <em>symbol</em>. (Remember, strings need to be enclosed in double quotes, so <code>cats</code> is <em>not</em> the same as <code>"cats"</code>).</p>
+
+<p>If the symbol occurs as the first element of a list, Scheme will treat the symbol as a function name and try calling it with the remaining elements of the list as arguments.</p>
+
+<p>If the symbol occurs after the first element, it will try to <em>evaluate</em> that symbol. To <em>evaluate</em> something is to try to obtain its <em>value</em>.</p>
+
+<p>Remember <code>(greet greet)</code>? It turns out that the value of <code>greet</code>, when you try to display it in the console, is <code>#&lt;Closure&gt;</code>.</p>
+
+<p>A <em>variable</em> is defined by <em>binding</em> a symbol to a <em>value</em>. It looks very similar to a function definition:</p>
+
+<pre class="skip">(define bob "Bob Schemer")</pre>
+
+<p>Click on the box above to define <code>bob</code>, then click again on <code>(greet bob)</code> further up.</p>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="arithmetic-functions.html"> &lt; 2. Simple Arithmetic
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="cartesian-plane.html">4. The Cartesian Plane
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
+
