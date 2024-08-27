@@ -82,13 +82,13 @@
   function-body)</pre>
 <p>Let's improve our <code>Hello, World!</code> program so that it can be more specific. We'll call our function <code>greet</code>. In its body, it will call <code>print</code>:</p>
 
-<pre class="codeBlock">(define (greet name)
-  (print "Hello, " name))</pre>
-<p>In our function, <code>name</code> is a <em>parameter</em>. Try the following:</p>
+<pre class="codeBlock">(define (greet first-name)
+  (print "Hello, " first-name))</pre>
+<p>In our function, <code>first-name</code> is a <em>parameter</em>. Try the following:</p>
 
 <pre class="codeBlock">(greet "Alan")</pre>
 
-<p>When we call a function, the actual values passed are called <em>arguments</em>. The <code>name</code> <em>parameter</em> in the function definition will be <em>bound</em> to the value of the <em>argument</em>.</p>
+<p>When we call a function, the actual values passed are called <em>arguments</em>. The <em>parameter</em> called <code>first-name</code> in the function definition will be <em>bound</em> to the value of the <em>argument</em>.</p>
 
 <p>In Scheme, you can pass anything as an argument to a function. For <code>greet</code>, only textual values (strings) will make sense, but you can also pass numbers and even the <code>greet</code> function itself:</p>
 
@@ -110,7 +110,7 @@
 
 <h3>Variables</h3>
 
-<p>What happens if we forget the double quotes around <code>"Alan"</code>? You will get an error.</p>
+<p>What happens if we forget the double quotes around the argument? You will get an error.</p>
 
 <pre class="codeBlock">(greet bob)</pre>
 

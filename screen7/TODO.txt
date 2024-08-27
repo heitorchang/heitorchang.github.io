@@ -1,18 +1,12 @@
 SCREEN 7
 
-NOTE: should not host in heitorchang.github.io because MathJax is over 20 MB
-NOTE 2: <pre class="skip"> uses a dummy CSS class to skip automatic execution
+NOTE: should not host MathJax in heitorchang.github.io because it is over 20 MB
 
 TODO
 ----
-[  ] Arithmetic section (arithmetic.html) "write your own function" in this section
+[  ] drawing example for if: if x % 2 == 0, then rect else circle
 [  ] See notes [1] below for the difference between (list) and (quote)
 [  ] function (limits) that (print)s graphics boundaries
-
-
-DONE
-----
-[OK] Build system like py-book/book-template/build.py
 
 
 MAYBE
@@ -41,3 +35,9 @@ Consider the procedure definition
 The list (1 2 3) may be created when we define the procedure foo, and each time we call it, it may return a pointer to that same list. (Exactly what happens depends on the particular implementation of Scheme, but most work this way, for efficiency reasons. Evaluating the quote expression just fetches a pointer to a data structure that was created beforehand.)
 
 For this reason, it's an error to modify a data structure returned from a quote form. Unfortunately, many Scheme systems don't detect this error, and will let you do it.
+
+
+DONE
+----
+[OK] Build system like py-book/book-template/build.py
+[OK] Arithmetic section (arithmetic.html) "write your own function" in this section
