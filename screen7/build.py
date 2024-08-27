@@ -324,7 +324,7 @@ if __name__ == '__main__':
     idx = 1
 
     chapters = [
-        'hello-reader',
+        'scheme',
         'arithmetic-functions',
         'strings-variables',
         'cartesian-plane',

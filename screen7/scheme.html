@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            
+            <td class="next-ch-link">
+              <a href="arithmetic-functions.html">2. Simple Arithmetic
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>1. The Scheme programming language</h1>
+
+<p>Welcome and thank you for joining me in this programming journey! I will cover the basics of computer science and geometry with traditional text-based output and two-dimensional graphics.</p>
+
+<p>The language we will use is <em>Scheme</em>. It is a minimalistic language and fundamental computer science concepts can be expressed without complicated syntax.</p>
+
+<p>In this book, there will not be any convoluted code. The code editor is fairly limited, and chapter examples will be written as stand-alone entities that won't require loading code from previous chapters.</p>
+
+<p>After finishing this book you will be able to apply what you have learned to a full-fledged language (or languages) of your choice. Just like spoken languages share elements of grammar, programming languages have many concepts in common with each other.</p>
+
+<h3>Hello, World!</h3>
+
+<p>The typical first program in introductory books displays the words <code>Hello, World!</code> on the screen.</p>
+
+<p>This book includes a Scheme <em>interpreter</em>, which is a piece of software that reads Scheme code and runs it.</p>
+
+<p>There are several <em>code boxes</em> in lighter yellow in this book. Clicking inside any one of them will copy its contents to the code editor on the top-left corner and run it right away. It saves you from having to type them.</p>
+
+<p>Click on the box below to run the <code>Hello, World!</code> program:</p>
+
+<pre class="codeBlock">(print "Hello, World!")</pre>
+
+<p>You should see the Scheme code and below it, the text <code>Hello, World!</code> inside the dark blue box under the editor. This box is called the <em>console</em>, and it displays the results of your code and values passed to the <code>print</code> function.</p>
+
+<p>A <em>function</em> is a collection of code that performs an action. In <code>print</code>'s case, the action is to output a value to the console. For now, it's enough to know that a function is <em>called</em>, or run, by writing its name and the values it should process inside parentheses <code>(...)</code></p>
+
+<p>Details about functions and how write your own will be explained later.</p>
+
+<h3>The graphics box</h3>
+
+<p>Drawing shapes and plotting data plays a big role in this book. The code below draws a circle. Click anywhere inside the code box to run it:</p>
+
+<pre class="codeBlock">(clear)
+(set-stroke! "SkyBlue")
+(circle 0 0 100)</pre>
+<p><code>clear</code> wipes the contents of the graphics box.</p>
+
+<p><code>set-stroke!</code> is a function that sets the color of shape outlines. We are setting it to <code>"SkyBlue"</code>.</p>
+
+<p>The <code>circle</code> function needs three numbers: the <code>x</code>-coordinate of its center, the <code>y</code>-coordinate of its center, and the <code>radius</code> (the distance between the center and the edge).</p>
+
+<p>To edit code, you must click on the white box in the top-left corner of the page and write your changes. The yellow-colored content here cannot be edited.</p>
+
+<p>Try changing the values passed to <code>circle</code> and press <code>Ctrl+Enter</code> to redraw. If you wish to keep previous circles, remove the <code>(clear)</code> from the code editor.</p>
+
+<p>If you prefer, you may press <code>Alt</code> instead of <code>Ctrl</code> in all of these keyboard shortcuts.</p>
+
+<p>If you wish to clear the code editor's contents after running your code, press <code>Shift+Ctrl+Enter</code>.</p>
+
+<p>To restore previous code, press <code>Ctrl+Up</code>. Code that has not run will be lost, so be careful! (In the Chrome browser, <code>Ctrl-Z</code> will undo this action).</p>
+
+<p><code>Ctrl+Down</code> will scroll forwards in the code history.</p>
+
+<p>Finally, to clear the contents of the code editor, press <code>Esc</code>. The cleared code may be recovered with <code>Ctrl+Up</code>.</p>
+
+<p>Here's a summary of the code editor's keyboard shortcuts (<code>Ctrl</code> and <code>Alt</code> are interchangeable).</p>
+
+<table class="bordered">
+  <tr>
+    <td><strong>Key combination</strong></td>
+    <td><strong>Effect</strong></td>
+  </tr>
+  <tr>
+    <td><code>Ctrl+Enter</code></td>
+    <td>Run code block</td>
+  </tr>
+  <tr>
+    <td><code>Shift+Ctrl+Enter</code></td>
+    <td>Run code block and clear editor</td>
+  </tr>
+  <tr>
+    <td><code>Ctrl+Up</code></td>
+    <td>Recover previously run code (history)</td>
+  </tr>
+  <tr>
+    <td><code>Ctrl+Down</code></td>
+    <td>Scroll forwards in the history</td>
+  </tr>
+  <tr>
+    <td><code>Esc</code></td>
+    <td>Clear the editor</td>
+  </tr>
+</table>
+
+        <table class="ch-links">
+          <tr>
+            
+            
+            <td class="next-ch-link">
+              <a href="arithmetic-functions.html">2. Simple Arithmetic
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
+

@@ -1,6 +1,9 @@
 (define pi 3.141592653589793)
 (define NaN (js-eval "NaN"))
 (define Infinity (js-eval "Infinity"))
+(define true #t)
+(define false #f)
+(define nil '())
 
 (define js-bg (js-eval "bg"))
 (define js-fg (js-eval "fg"))
