@@ -328,7 +328,8 @@ if __name__ == '__main__':
         'arithmetic-functions',
         'strings-variables',
         'cartesian-plane',
-        # 'lists',
+        'lists',
+        'conditionals',
 
         'api_reference',
     ]

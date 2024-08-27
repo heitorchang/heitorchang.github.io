@@ -7,6 +7,7 @@ TODO
 [  ] drawing example for if: if x % 2 == 0, then rect else circle
 [  ] See notes [1] below for the difference between (list) and (quote)
 [  ] function (limits) that (print)s graphics boundaries
+[  ] idea for algebra: rather than (+ (* 3 x x) (* 9 x) 6) write a (quadratic 3 9 6) wrapper
 
 
 MAYBE

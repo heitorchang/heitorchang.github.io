@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="cartesian-plane.html"> &lt; 4. The Cartesian Plane
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="conditionals.html">6. Conditionals
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>5. Lists</h1>
+
+<p>The primary compound data structure provided by Scheme is the <em>list</em>. We've been using lists the whole time&mdash;they're written as a sequence of values surrounded by parentheses.</p>
+
+<p>It is Scheme's <em>syntax</em> (rules of how code must be written) that specifies that the first element of a list should be a function that will be called. This is the behavior we've seen so far&mdash;lists as code.</p>
+
+<p>To create a value that is a list with data, we use the <code>list</code> function:</p>
+
+<pre class="codeBlock">(list 3 5 12)</pre>
+
+<p>Notice what appears in the console: <code>(3 5 12)</code>. This is the <em>printed representation</em> of the list with the elements <code>3</code>, <code>5</code>, and <code>12</code>.</p>
+
+<p>If we try evaluating it, we get an error, because Scheme thinks we are trying to call the function named <code>3</code>.</p>
+
+<pre class="skip">(3 5 12)</pre>
+
+<p>Remember <code>(define ...)</code>? Let's define a short <code>prime-numbers</code> list:</p>
+
+<pre class="codeBlock">(define lucky-numbers (list 7 21 32 51 55 60))</pre>
+
+<p>The size of a list can be obtained with <code>length</code>:</p>
+
+<pre class="codeBlock">(length lucky-numbers)</pre>
+
+<h3>A shortcut for writing lists</h3>
+
+<p>If you're manually writing many lists, there's a shortcut called <code>quote</code> that tells Scheme <em>not</em> to try evaluating the value following <code>quote</code>. For example:</p>
+
+<pre class="codeBlock">(quote ("apples" "bananas" "oranges"))</pre>
+
+<p>It <em>looks</em> like <code>list</code>, but there are some differences. For now, both ways of making lists will work, and I'll explain later when you have to be careful.</p>
+
+<p>So far, I've just replaced <code>list</code> with <code>quote</code>. The shortcut is that <code>(quote value)</code> may be written as <code>'value</code>. This is a "straight" quote (<code>'</code>), not a "backquote" (<code>&#x60;</code>). Be careful not to mix them up.</p>
+
+<p>So the code above is the same as:</p>
+
+<pre class="codeBlock">'("apples" "bananas" "oranges")</pre>
+
+<p><code>quote</code> happens to be a <em>special form</em>, which use <em>reserved words</em>. Special forms <strong>look like</strong> functions, but behave according to special rules. If <code>quote</code> were a function, the list would have had to be evaluated, and you would have gotten an error.</p>
+
+<h3>Generating evenly spaced numbers</h3>
+
+<p>The bullseye example from the first chapter uses the <code>iota</code> function, which creates a list with a given number of elements, starting from a specific number and with a specific <em>step</em> between adjacent numbers.</p>
+
+<p>The simplest way of using <code>iota</code> is passing a single number. This many numbers will be created, starting from <code>0</code>. (Most modern programming languages start counting from <code>0</code>).</p>
+
+<pre class="codeBlock">(iota 5)</pre>
+
+<p>If you add another argument, say <code>10</code>, the resulting list will start at <code>10</code>. (five numbers, starting from <code>10</code> and stepping by <code>1</code>).</p>
+
+<pre class="codeBlock">(iota 5 10)</pre>
+
+<p>Finally, passing three numbers will specify the step as well:</p>
+
+<pre class="codeBlock">(iota 5 10 30)</pre>
+
+<h3>Iterating over a list</h3>
+
+<p>It would be impractical to <em>iterate</em> (repeatedly take an element one by one) over a long list. Of course, we wish to do something with each value. Remember that <em>functions</em> are actions that operate on <em>values</em>.</p>
+
+<p>The function <code>for-each</code> takes a function name (for example, <code>f</code>) as the first argument, followed by lists. The number of lists you need to pass depends on how many arguments <code>f</code> takes.</p>
+
+<p>It sounds confusing, so let's look at some examples.</p>
+
+<p>The simplest thing you can do to a value is <code>print</code> it.</p>
+
+<pre class="codeBlock">(define players '("Adam" "Beth" "Cathy"))
+(for-each print players)</pre>
+<p>Look at the output in the console. Each player's name was printed, one per line.</p>
+
+<p>Let's take a look at the entire bullseye example from the first chapter:</p>
+
+<pre class="codeBlock">(define (centered-circle radius)
+  (circle 0 0 radius))
+
+(clear)
+(set-stroke! "SkyBlue")
+(for-each centered-circle (iota 4 10 50))</pre>
+<p>Now you should be able to understand the entire block of code.</p>
+
+<p>The first part defines the <code>centered-circle</code> function, then the graphics box is <code>clear</code>ed, a color is chosen, and the list of radii <code>(10 60 110 160)</code> is passed to <code>for-each</code> so that it knows what sized <code>centered-circle</code> to draw!</p>
+
+<p>Above, I've said that it matters how many arguments are accepted by the function passed to <code>for-each</code>.</p>
+
+<p>Let's make a variation of the bullseye code, using rectangles instead.</p>
+
+<p>To simplify the code a bit, let's make all rectangles' bottom-left corner fixed at <code>(0, 0)</code>. So we will only vary their widths and heights. We want to vary the width greatly, but the heights, less so:</p>
+
+<pre class="codeBlock">(define (fixed-rect w h)
+  (rect 0 0 w h))
+
+(clear)
+(axes)
+(set-stroke! "SkyBlue")
+(define widths '(30 70 110 170))
+(define heights '(10 15 25 35))
+(for-each fixed-rect widths heights)</pre>
+<p>What is happening is that <code>fixed-rect</code> operates initially on the first element of <code>widths</code> and the first element of <code>heights</code>. Then, it moves on to the second elements, and so on.</p>
+
+<p>We can achieve the same drawing without <code>for-each</code>, by drawing the four rectangles with their correct size. The color has been changed so you can compare the two versions:</p>
+
+<pre class="codeBlock">(clear)
+(axes)
+(set-stroke! "Maroon")
+(rect 0 0 30 10)
+(rect 0 0 70 15)
+(rect 0 0 110 25)
+(rect 0 0 170 35)</pre>
+<p>With a few items, the amount of code is nearly the same. However, consider applying a function to all <code>360</code> pixels of the x-axis. Certainly you will want a concise manner of doing so!</p>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="cartesian-plane.html"> &lt; 4. The Cartesian Plane
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="conditionals.html">6. Conditionals
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
+
