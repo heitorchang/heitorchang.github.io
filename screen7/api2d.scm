@@ -47,6 +47,10 @@
   (rect x1 y1 (- x2 x1) (- y2 y1))
   "no value")
 
+(define (square x y side)
+  (rect x y side side)
+  "no value")
+
 (define (fill)
   (js-call js-fill)
   "no value")

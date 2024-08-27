@@ -88,7 +88,7 @@
 
 <h3>Generating evenly spaced numbers</h3>
 
-<p>The bullseye example from the first chapter uses the <code>iota</code> function, which creates a list with a given number of elements, starting from a specific number and with a specific <em>step</em> between adjacent numbers.</p>
+<p>The <code>iota</code> function creates a list with a given number of elements, starting from a specific number and with a specific <em>step</em> between adjacent numbers.</p>
 
 <p>The simplest way of using <code>iota</code> is passing a single number. This many numbers will be created, starting from <code>0</code>. (Most modern programming languages start counting from <code>0</code>).</p>
 
@@ -116,7 +116,7 @@
 (for-each print players)</pre>
 <p>Look at the output in the console. Each player's name was printed, one per line.</p>
 
-<p>Let's take a look at the entire bullseye example from the first chapter:</p>
+<p>Let's take a look at some code that creates a drawing of concentric circles (they share the same center).</p>
 
 <pre class="codeBlock">(define (centered-circle radius)
   (circle 0 0 radius))
@@ -124,8 +124,6 @@
 (clear)
 (set-stroke! "SkyBlue")
 (for-each centered-circle (iota 4 10 50))</pre>
-<p>Now you should be able to understand the entire block of code.</p>
-
 <p>The first part defines the <code>centered-circle</code> function, then the graphics box is <code>clear</code>ed, a color is chosen, and the list of radii <code>(10 60 110 160)</code> is passed to <code>for-each</code> so that it knows what sized <code>centered-circle</code> to draw!</p>
 
 <p>Above, I've said that it matters how many arguments are accepted by the function passed to <code>for-each</code>.</p>

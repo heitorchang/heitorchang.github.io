@@ -73,31 +73,20 @@
 
 <h3>The graphics box</h3>
 
-<p>Drawing shapes and plotting data plays a big role in this book. Below is a bit of code that draws a bullseye pattern of circles. Click anywhere inside the code box to run it:</p>
+<p>Drawing shapes and plotting data plays a big role in this book. The code below draws a circle. Click anywhere inside the code box to run it:</p>
 
-<pre class="codeBlock">(define (centered-circle radius)
-  (circle 0 0 radius))
-
-(clear)
+<pre class="codeBlock">(clear)
 (set-stroke! "SkyBlue")
-(for-each centered-circle (iota 4 10 50))</pre>
-<p>Each portion of the code block above will be explained in the following chapters. This block of code shows what simple Scheme code looks like.</p>
-
-<p>Can you guess how the code is related to the drawing? <code>centered-circle</code> draws a circle centered at <code>(0, 0)</code> with the given <code>radius</code>, and the <code>iota</code> function creates <code>4</code> values, starting at <code>10</code>, with an increment of <code>50</code> at each step.</p>
-
-<p>The <em>radius</em> of a circle is the distance from the center to the edge.</p>
+(circle 0 0 100)</pre>
+<p><code>clear</code> wipes the contents of the graphics box.</p>
 
 <p><code>set-stroke!</code> is a function that sets the color of shape outlines. We are setting it to <code>"SkyBlue"</code>.</p>
 
-<p>Using <code>for-each</code> to call the <code>centered-circle</code> function makes Scheme draw four circles with radii of <code>10</code>, <code>60</code>, <code>110</code>, and <code>160</code> pixels. A pixel is a small graphical unit, used to place points and shapes in the two-dimensional space.</p>
+<p>The <code>circle</code> function needs three numbers: the <code>x</code>-coordinate of its center, the <code>y</code>-coordinate of its center, and the <code>radius</code> (the distance between the center and the edge).</p>
 
-<p>The default dimensions of the graphics box is <em>360 pixels by 360 pixels</em>, with limits of <code>-180 <= x &lt; 180</code> and <code>-180 <= y &lt; 180</code>. Later, we will see how to change these limits.</p>
+<p>To edit code, you must click on the white box in the top-left corner of the page and write your changes. The yellow-colored content here cannot be edited.</p>
 
-<p><code>(clear)</code> is added so that the graphics box is cleared before drawing the picture.</p>
-
-<p>Try writing your own values of <code>iota</code>. Remember, the first number is how many circles to draw, the second number is the initial radius, and the last number is how far apart the remaining circles should be.</p>
-
-<p>Try, for example, <code>(iota 3 100 20)</code> and press <code>Ctrl+Enter</code> to redraw. You should see three circles with a large initial radius, and two slightly larger circles.</p>
+<p>Try changing the values passed to <code>circle</code> and press <code>Ctrl+Enter</code> to redraw. If you wish to keep previous circles, remove the <code>(clear)</code> from the code editor.</p>
 
 <p>If you prefer, you may press <code>Alt</code> instead of <code>Ctrl</code> in all of these keyboard shortcuts.</p>
 
