@@ -52,19 +52,6 @@
 
 <p><em>Recursion</em> means defining something in terms of itself. Of course, at some point, we wish the computation to stop. Therefore, in every call to itself, a recursive function must somehow become smaller or lead to a fixed, final goal value.</p>
 
-<h3>A custom safeguard</h3>
-
-<p>This book's Scheme interpreter contains custom code that halts the execution of an expression when it exceeds a fixed number of function calls.</p>
-
-<p>Try the following code block, which prints a number, and calls itself with that number plus <code>1</code>:</p>
-
-<pre class="skip">(define (never-ending x)
-  (print x)
-  (never-ending (+ x 1)))
-
-(never-ending 0)</pre>
-<p>During my testing, the last number printed was <code>24614</code>. You may see a different value. In any case, without this safeguard, your browser window would have crashed.</p>
-
 <h3>Adding a sequence of numbers</h3>
 
 <p>Consider a sequence of whole numbers starting from <code>1</code>, such as <code>1, 2, 3, 4, 5</code>. First of all, we can start adding left-to-right, like <code>1 + 2 + 3 + 4 + 5</code>, or right-to-left, like <code>5 + 4 + 3 + 2 + 1</code>.</p>
@@ -159,7 +146,7 @@
           (sierpinski x y half-side)
           (sierpinski midpt-ax midpt-ay half-side)
           (sierpinski midpt-bx midpt-by half-side)))))
-
+(clear)
 (sierpinski -170 -170 340)</pre>
 
         <table class="ch-links">
