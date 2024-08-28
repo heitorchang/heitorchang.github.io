@@ -2,12 +2,10 @@ SCREEN 7
 
 NOTE: should not host MathJax in heitorchang.github.io because it is over 20 MB
 
-
 TODO
 ----
-[  ] recursion: draw triangles inside triangles
-[  ] see notes [1] below for the difference between (list) and (quote)
-
+[  ] arithmetic: define a function like computing a conversion of units to explain what a return value is
+[  ] explain let in recursion.html or earlier
 
 See DONE at the end of this file
 
@@ -49,6 +47,8 @@ For this reason, it's an error to modify a data structure returned from a quote 
 
 DONE
 ----
+[OK] see notes [1] below for the difference between (list) and (quote)
+[OK] recursion: draw triangles inside triangles
 [OK] book is not exhaustive, only covers the surface
 [OK] Part I, II in build.py. Really should only be in the index
 [OK] Build system like py-book/book-template/build.py

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="first-class-functions.html"> &lt; 7. First-Class Functions
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="api_reference.html">9. API Reference
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>8. Recursion</h1>
+
+<p>If functions returning functions wasn't enough of a mind bender, consider a function that calls itself. It's called a <em>recursive</em> function.</p>
+
+<p><em>Recursion</em> means defining something in terms of itself. Of course, at some point, we wish the computation to stop. Therefore, in every call to itself, a recursive function must somehow become smaller or lead to a fixed, final goal value.</p>
+
+<h3>A custom safeguard</h3>
+
+<p>This book's Scheme interpreter contains custom code that halts the execution of an expression when it exceeds a fixed number of function calls.</p>
+
+<p>Try the following code block, which prints a number, and calls itself with that number plus <code>1</code>:</p>
+
+<pre class="skip">(define (never-ending x)
+  (print x)
+  (never-ending (+ x 1)))
+
+(never-ending 0)</pre>
+<p>During my testing, the last number printed was <code>24614</code>. You may see a different value. In any case, without this safeguard, your browser window would have crashed.</p>
+
+<h3>Adding a sequence of numbers</h3>
+
+<p>Consider a sequence of whole numbers starting from <code>1</code>, such as <code>1, 2, 3, 4, 5</code>. First of all, we can start adding left-to-right, like <code>1 + 2 + 3 + 4 + 5</code>, or right-to-left, like <code>5 + 4 + 3 + 2 + 1</code>.</p>
+
+<p>It is preferable to start with the largest number, because you should always think of recursive steps making things <em>smaller</em>.</p>
+
+<pre class="codeBlock">(define (add-sequence n)
+  (if (= n 0)
+      0
+      (+ n (add-sequence (- n 1)))))</pre>
+<p>The smallest, and trivial case, is adding <code>0</code>. The return value should be <code>0</code>. We use the <code>if</code> special form to signal the end of the recursion.</p>
+
+<p>Now, let's say <code>n</code> is <code>5</code>, to solve the addition shown above. What does the following return?</p>
+
+<pre class="codeBlock">(add-sequence 5)</pre>
+
+<p>Breaking down the computation step-by-step, we have:</p>
+
+<pre class="codeBlock">;; (add-sequence 5)
+  (if (= 5 0)
+      0
+      (+ 5 (add-sequence (- 5 1))))</pre>
+<p>Clearly <code>5</code> is not <code>0</code>, so we take the <em>else branch</em>, which is</p>
+
+<pre class="codeBlock">(+ 5 (add-sequence (- 5 1)))</pre>
+
+<p>which is</p>
+
+<pre class="codeBlock">(+ 5 (add-sequence 4))</pre>
+
+<p>Repeating the same logic, the next step is</p>
+
+<pre class="codeBlock">(+ 5 (+ 4 (add-sequence 3)))</pre>
+
+<p>And so on until <code>n</code> is <code>0</code>:</p>
+
+<pre class="codeBlock">(+ 5 (+ 4 (+ 3 (+ 2 (+ 1 (add-sequence 0))))))</pre>
+
+<p>We finally get a <code>true</code> value for <code>(if (= 0 0) ...)</code>, meaning</p>
+
+<pre class="codeBlock">(add-sequence 0)</pre>
+
+<p>is <code>0</code>.</p>
+
+<p>The final result, computed manually, is:</p>
+
+<pre class="codeBlock">(+ 5 (+ 4 (+ 3 (+ 2 (+ 1 0)))))</pre>
+
+<p>which is <code>15</code>.</p>
+
+<p>If we pass a negative number to <code>add-sequence</code>, it will crash, because we were assuming positive numbers are to be added. <code>n</code> is decreased by <code>1</code> in each step, and we only check if it equals <code>0</code>. A negative number only becomes more negative after each step.</p>
+
+<p>Using <code><=</code> instead of <code>=</code> is a possible solution, but can be misleading because negative numbers can be added, but the function will return <code>0</code>. It really depends on what you and the user wishes to accomplish.</p>
+
+<p>Compared to an <em>imperative</em> language, which often relies on reassigning variables to new values, the recursion above seems excessively complex. But from a mathematical standpoint, if each step is sufficiently complex, recursion will result in cleaner and easier to follow code than alternative code using loops and assignments.</p>
+
+<h3>The Sierpinski triangle</h3>
+
+<p>To end this chapter, let's see how a recursive definition can be used to generate the <em>Sierpinski triangle</em>.</p>
+
+<p>It starts by creating an outer triangle, dividing it into four parts, and drawing itself in each of the three right-side-up triangles. Try to draw a triangle that is too small is the signal to stop our recursion, because we won't even be able to see anything smaller than a few pixels.</p>
+
+<p>A right triangle is used to simplify the geometrical calculations (the triangle draws itself from the midpoints of each edge). Coordinates for the midpoints in an equilateral triangle would have involved many more calculations.</p>
+
+<p>The special forms <code>let</code> and <code>let*</code> are used to define temporary variables, to avoid re-typing the same values over and over again, and <code>begin</code> is used to wrap a sequence of actions in the else branch of <code>if</code>.</p>
+
+<pre class="codeBlock">(define (triangle x y side)
+  ;; draw three sides with points a, b, and c
+  (let ((ax x)
+        (ay y)
+        (bx (+ x side))
+        (by y)
+        (cx x)
+        (cy (+ y side)))
+    (line ax ay bx by)
+    (line ax ay cx cy)
+    (line cx cy bx by)))</pre>
+<p>The outer triangle is:</p>
+
+<pre class="codeBlock">(triangle -170 -170 340)</pre>
+
+<pre class="skip">(define (sierpinski x y side)
+  (let* ((half-side (/ side 2))
+         (midpt-ax x)
+         (midpt-ay (+ y half-side))
+         (midpt-bx (+ x half-side))
+         (midpt-by y))
+    (if (&lt; side 10)  ; stop at 10 pixels
+        "done"
+        (begin
+          (triangle x y side)
+          (sierpinski x y half-side)
+          (sierpinski midpt-ax midpt-ay half-side)
+          (sierpinski midpt-bx midpt-by half-side)))))
+
+(sierpinski -170 -170 340)</pre>
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="first-class-functions.html"> &lt; 7. First-Class Functions
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="api_reference.html">9. API Reference
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
+

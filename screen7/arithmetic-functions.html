@@ -134,6 +134,30 @@
 (* (+ 2 3) 4)</pre>
 <p>It may take a bit to get used to writing operators and function names as the first element, but what may look like a major disadvantage right now is also Scheme's greatest strength&mdash;uniformity and the ability to represent code as <em>lists</em> of elements.</p>
 
+<h3>Writing your own function</h3>
+
+<p>Creating a function in Scheme looks like this:</p>
+
+<pre class="codeBlock">(define (function-name parameter-1 parameter-2 more-parameters)
+  function-body)</pre>
+<p>In most programming languages, you have to explicitly write <code>return</code> followed by the value you wish to return (or no value at all).</p>
+
+<p>However, in Scheme, the last value inside the <code>(define ...)</code> definition is implicitly returned.</p>
+
+<h3>Convert miles to inches</h3>
+
+<p>Let's write a simple function to convert miles to inches. One mile is <code>5280</code> feet, and one foot is <code>12</code> inches. So, we have:</p>
+
+<pre class="codeBlock">(define (miles-to-inches miles)
+  (* miles 5280 12))</pre>
+<p>One mile is:</p>
+
+<pre class="codeBlock">(miles-to-inches 1)</pre>
+
+<p>And three miles are:</p>
+
+<pre class="codeBlock">(miles-to-inches 3)</pre>
+
 
         <table class="ch-links">
           <tr>

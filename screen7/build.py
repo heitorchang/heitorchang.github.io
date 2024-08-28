@@ -330,18 +330,11 @@ if __name__ == '__main__':
 
     parts = {
         "Part I: Fundamentals": [
-
-            'scheme',
-            'arithmetic-functions',
-            'strings-variables',
-            'cartesian-plane',
-            'lists',
-            'conditionals',
-            'first-class-functions',
+            'scheme', 'arithmetic-functions', 'strings-variables', 'cartesian-plane', 'lists', 'conditionals', 'first-class-functions', 'recursion',
         ],
-        "Part II: Algebra": [
-            'quadratic-equations',
-        ],
+        # "Part II: Algebra": [
+        #     'quadratic-equations',
+        # ],
         "Reference": [
             'api_reference',
         ]

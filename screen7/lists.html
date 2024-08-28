@@ -76,7 +76,7 @@
 
 <pre class="codeBlock">(quote ("apples" "bananas" "oranges"))</pre>
 
-<p>It <em>looks</em> like <code>list</code>, but there are some differences. For now, both ways of making lists will work, and I'll explain later when you have to be careful.</p>
+<p>It <em>looks</em> like <code>list</code>, but there are some differences. For now, both ways of making lists will work. A value created with <code>quote</code> should not be modified, but this will not happen in this book.</p>
 
 <p>So far, I've just replaced <code>list</code> with <code>quote</code>. The shortcut is that <code>(quote value)</code> may be written as <code>'value</code>. This is a "straight" quote (<code>'</code>), not a "backquote" (<code>&#x60;</code>). Be careful not to mix them up.</p>
 
@@ -126,11 +126,9 @@
 (for-each centered-circle (iota 4 10 50))</pre>
 <p>The first part defines the <code>centered-circle</code> function, then the graphics box is <code>clear</code>ed, a color is chosen, and the list of radii <code>(10 60 110 160)</code> is passed to <code>for-each</code> so that it knows what sized <code>centered-circle</code> to draw!</p>
 
-<p>Above, I've said that it matters how many arguments are accepted by the function passed to <code>for-each</code>.</p>
+<p>Above, I've said that it matters how many arguments are accepted by the function passed to <code>for-each</code>. We'll use the rectangle-drawing function, <code>rect</code>, as another argument to <code>for-each</code>.</p>
 
-<p>Let's make a variation of the bullseye code, using rectangles instead.</p>
-
-<p>To simplify the code a bit, let's make all rectangles' bottom-left corner fixed at <code>(0, 0)</code>. So we will only vary their widths and heights. We want to vary the width greatly, but the heights, less so:</p>
+<p>Let's make all rectangles' bottom-left corner fixed at <code>(0, 0)</code>. So we will only vary their widths and heights. We want to vary the width greatly, but the heights, less so:</p>
 
 <pre class="codeBlock">(define (fixed-rect w h)
   (rect 0 0 w h))

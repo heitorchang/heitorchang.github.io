@@ -20,7 +20,7 @@
 
 // Crude mechanism to count pushes to the stack and halt when the limit is reached.
 let hack_eval_count = 0;
-const HACK_EVAL_COUNT_LIMIT = 80000;
+const HACK_EVAL_COUNT_LIMIT = 320000;
 
 !(function (e, t) {
   "use strict";
