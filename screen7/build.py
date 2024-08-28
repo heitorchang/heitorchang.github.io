@@ -329,8 +329,8 @@ if __name__ == '__main__':
     idx = 1
 
     parts = {
-        "Part I: Fundamentals": [
-            'scheme', 'arithmetic-functions', 'strings-variables', 'cartesian-plane', 'lists', 'conditionals', 'first-class-functions', 'recursion',
+        "The Scheme Language": [
+            'printing-and-drawing', 'arithmetic-functions', 'strings-variables', 'cartesian-plane', 'lists', 'conditionals', 'first-class-functions', 'recursion',
         ],
         # "Part II: Algebra": ['quadratic-equations'],
         "Reference": [
