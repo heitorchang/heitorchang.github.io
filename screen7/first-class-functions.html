@@ -77,15 +77,15 @@
 
 <p>Consider having to draw circles of various sizes, but without having to repeatedly pass the radius as an argument to draw one. What we'll make is a function that accepts the desired radius, and returns a circle-drawing function that only requires the <code>x</code> and <code>y</code> coordinates of the center:</p>
 
-<pre class="codeBlock">(define (make-circle radius)
+<pre class="codeBlock">(define (make-sized-circle-fn radius)
   (lambda (x y)
     (circle x y radius)))</pre>
 <p>The <code>(x y)</code> list after <code>lambda</code> is the <em>parameter list</em>, that is, the values that will be filled in by the caller of the function.</p>
 
 <p>To use a function created by this factory, we have to somehow identify it. We use the <code>(define name value)</code> construction to do so:</p>
 
-<pre class="codeBlock">(define small-circle (make-circle 20))
-(define large-circle (make-circle 70))</pre>
+<pre class="codeBlock">(define small-circle (make-sized-circle-fn 20))
+(define large-circle (make-sized-circle-fn 70))</pre>
 <p>To test these functions, we will put small circles on the left half, and large circles on the right half:</p>
 
 <pre class="codeBlock">(small-circle -150 50)
