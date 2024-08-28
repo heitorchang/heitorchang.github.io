@@ -103,6 +103,10 @@
   (line 0 -200 0 200)
   (fg fg-color))
 
+(define (clear-console)
+  (js-eval "document.getElementById('bs-console').innerText = ''")
+  "no value")
+
 ;; Initialization
 ;; Evaluate pre blocks
 (define eval-alias (js-eval "evalAlias"))

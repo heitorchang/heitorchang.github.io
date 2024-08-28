@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="conditionals.html"> &lt; 6. Conditionals
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="quadratic-equations.html">8. Quadratic Equations
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>7. First-Class Functions</h1>
+
+<p>So far, we've been treating the creation of functions as making entities different from numbers and strings.</p>
+
+<p>We've passed functions to <code>for-each</code>, so we've seen that functions are valid arguments to other functions.</p>
+
+<p>In addition, a function can make new functions and have them returned. The fact that functions can be created by other functions and passed around like values maket them <em>first-class citizens</em> in Scheme.</p>
+
+<h3>The <code>lambda</code> special form</h3>
+
+<p><code>lambda</code> is a special form that creates a function, as an alternative to the <code>(define (function-name arguments) ...)</code> construction. In effect, the evaluated value of a <code>lambda</code> expression is an <em>anonymous function</em> (a function without a name).</p>
+
+<p>In ancient Scheme texts, the construction <code>(define function-name (lambda (argument) body))</code> was used instead of <code>(define (function-name argument) body)</code>.</p>
+
+<p>Both methods are valid and result in two named functions with the same behavior. Let's test this hypothesis:</p>
+
+<pre class="codeBlock">(define (add-one x)
+  (+ x 1))
+
+(add-one 2)</pre>
+<pre class="codeBlock">(define alt-add-one
+  (lambda (x)
+    (+ x 1)))
+
+(alt-add-one 2)</pre>
+<h3>A function that returns another function</h3>
+
+<p>You might never need to create a factory that produces functions, but this technique is very simple in Scheme.</p>
+
+<p>Consider having to draw circles of various sizes, but without having to repeatedly pass the radius as an argument to draw one. What we'll make is a function that accepts the desired radius, and returns a circle-drawing function that only requires the <code>x</code> and <code>y</code> coordinates of the center:</p>
+
+<pre class="codeBlock">(define (make-circle radius)
+  (lambda (x y)
+    (circle x y radius)))</pre>
+<p>The <code>(x y)</code> list after <code>lambda</code> is the <em>parameter list</em>, that is, the values that will be filled in by the caller of the function.</p>
+
+<p>To use a function created by this factory, we have to somehow identify it. We use the <code>(define name value)</code> construction to do so:</p>
+
+<pre class="codeBlock">(define small-circle (make-circle 20))
+(define large-circle (make-circle 70))</pre>
+<p>To test these functions, we will put small circles on the left half, and large circles on the right half:</p>
+
+<pre class="codeBlock">(small-circle -150 50)
+(small-circle -100 -20)
+(small-circle -90 -80)
+
+(large-circle 120 60)
+(large-circle 80 20)
+(large-circle 90 -55)</pre>
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="conditionals.html"> &lt; 6. Conditionals
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="quadratic-equations.html">8. Quadratic Equations
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
+

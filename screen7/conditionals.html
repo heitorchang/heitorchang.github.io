@@ -39,7 +39,7 @@
         
             
             <td class="next-ch-link">
-              <a href="api_reference.html">7. API Reference
+              <a href="first-class-functions.html">7. First-Class Functions
  &gt; </a>
             </td>
         
@@ -48,9 +48,101 @@
     
 <h1>6. Conditionals</h1>
 
-<p>if</p>
+<p>One of the most important features of programming languages is the ability to branch off into multiple possible courses of actions based on a <em>condition</em>, that is, the particular state of variables or environment at a point in time.</p>
 
-<p>cond</p>
+<p>Usually, conditions are comparisons between a changing value and a fixed value. For example, you would like to consider a shoe as <code>"regular"</code> or <code>"large"</code> based on its size:</p>
+
+<pre class="codeBlock">(define shoe-size 12)
+
+(print "The shoe size " shoe-size " is: ")
+(if (&gt; shoe-size 9)
+  "large"
+  "regular")</pre>
+<p>You should interpret the value after the <code>;; =&gt;</code> characters as the <em>return value</em> of the function call. In other words, it's the result of the evaluation of the function call.</p>
+
+<h3>Changing the value of variables</h3>
+
+<p><code>define</code> is used to <em>initialize</em> variables (to give them an initial value). For making changes to one, use <code>(set! variable-name new-value)</code>. Although re-running <code>(define variable-name new-value)</code> will also work, using <code>set!</code> makes it clear that you are changing an existing variable.</p>
+
+<p>Note the exclamation mark (<code>!</code>) after <code>set</code>. Scheme has a convention that functions ending in <code>!</code> modify a value.</p>
+
+<p>Now try changing <code>shoe-size</code> and re-running the <code>if</code> code:</p>
+
+<pre class="codeBlock">(set! shoe-size 7)
+
+(print "The shoe size " shoe-size " is: ")
+(if (&gt; shoe-size 9)
+  "large"
+  "regular")</pre>
+<p>This time, the shoe is judged to be <code>"regular"</code>.</p>
+
+<h3>Booleans</h3>
+
+<p>To understand how <code>if</code> works, I need to digress a bit. There is a <em>boolean</em> type that I haven't talked about yet. The boolean named after the logician <em>George Boole</em>, and it represents a <em>truth value</em>.</p>
+
+<p>There are only two valid values: <em>true</em> and <em>false</em>. In standard Scheme, they are <code>#t</code> and <code>#f</code>, and they will work here, but I added the <em>aliases</em> <code>true</code> and <code>false</code> because they are easier to read. An alias is another name for a particular thing.</p>
+
+<h3>The <code>if</code> conditional</h3>
+
+<p><code>if</code> is the simplest <em>conditional</em>. It has this structure:</p>
+
+<pre class="codeBlock">(if condition
+  then-branch
+  else-branch)</pre>
+<p>First, the <em>condition</em> is evaluated. The truth value of the condition is used to determine whether the <code>then-branch</code> or <code>else-branch</code> is evaluated next.</p>
+
+<p>If the condition is <code>true</code>, the <code>then-branch</code> is evaluated. Otherwise, the <code>else-branch</code> is evaluated.</p>
+
+<h3>Nested expressions</h3>
+
+<p>The majority of code written so far relied on single <em>expressions</em> being evaluated from top to bottom. An <em>expression</em> is a unit of code, which can be a standalone value, such as <code>"Shoes"</code>, or a list that can be evaluated: <code>(print "I am going to buy shoes.")</code></p>
+
+<p>In Scheme, expressions may be nested, to produce units that encompass other units. Printing a value based on a conditional can be written as:</p>
+
+<pre class="codeBlock">(define apples 2)
+
+(print "I have "
+  (if (&gt; apples 6)
+    "many"
+    "few")
+  " apples")</pre>
+<p>It's common for Scheme functions to have five or more levels of nesting!</p>
+
+<h3>More than two branches</h3>
+
+<p>You will often need to make a decision based on more than a simple true or false value. For this purpose, there's <code>cond</code>.</p>
+
+<p>Below is some code that returns the color of a flower based on its name. If the flower is not listed, it returns <code>"I'm not sure"</code>. The function <code>string=?</code> compares two strings, returning either <code>true</code> or <code>false</code>.</p>
+
+<pre class="codeBlock">(define (flower-color flower)
+  (cond ((string=? flower "rose") "red")
+        ((string=? flower "violet") "blue")
+        ((string=? flower "sunflower") "yellow")
+        (else "I'm not sure")))</pre>
+<p>Try running it with a known flower and an unknown one:</p>
+
+<pre class="codeBlock">(flower-color "violet")</pre>
+
+<pre class="codeBlock">(flower-color "lily")</pre>
+
+<h3>Example: conditional colors</h3>
+
+<p>Continuing with the colors theme, suppose we wish to draw circle outlines in one color if they are small, and in another color when they are larger. Remember that <code>set-stroke!</code> changes shapes' outline colors.</p>
+
+<pre class="codeBlock">(define (large-is-gold size)
+  (set-stroke! (if (&gt; size 100) "gold" "gray"))
+  (circle 0 0 size))</pre>
+<p>Now try drawing some circles with the new function:</p>
+
+<pre class="codeBlock">(large-is-gold 50)</pre>
+
+<pre class="codeBlock">(large-is-gold 80)</pre>
+
+<pre class="codeBlock">(large-is-gold 110)</pre>
+
+<pre class="codeBlock">(large-is-gold 140)</pre>
+
+<p>As we have defined, the radii greater than <code>100</code> appear in <code>gold</code>.</p>
 
 
         <table class="ch-links">
@@ -63,7 +155,7 @@
         
             
             <td class="next-ch-link">
-              <a href="api_reference.html">7. API Reference
+              <a href="first-class-functions.html">7. First-Class Functions
  &gt; </a>
             </td>
         

@@ -33,7 +33,7 @@
           <tr>
             
             <td class="prev-ch-link">
-              <a href="conditionals.html"> &lt; 6. Conditionals
+              <a href="quadratic-equations.html"> &lt; 8. Quadratic Equations
 </a>
             </td>
         
@@ -41,7 +41,7 @@
           </tr>
         </table>
     
-<h1>7. API Reference</h1>
+<h1>9. API Reference</h1>
 
 <h3>Code editor</h3>
 
@@ -182,45 +182,12 @@
 
 ;; draw five circles in a diagonal line
 (for-each medium-circle '(-50 -30 0 30 50) '(-150 -75 0 75 150))</pre>
-<h3>Defining the x-axis as the domain and a function on this domain</h3>
-
-<p>The <code>iota</code> function creates a list of <code>n</code> evenly spaced numbers, starting at <code>start</code> (default is <code>0</code>) with a step of <code>step</code> (default is <code>1</code>).</p>
-
-<p><code>(iota n start step)</code></p>
-
-<pre class="codeBlock">(iota 10)</pre>
-
-<pre class="codeBlock">(iota 6 -12 3)</pre>
-
-<pre class="codeBlock">(iota 11 -10 2)</pre>
-
-<p><code>domain</code> will be the 360 pixels of the canvas. Then, the quadratic function \(f(x) = 0.003 x^2 + 50\) will be plotted.</p>
-
-<pre class="codeBlock">(define domain (iota 360 -180))
-(define (f x)
-  (+ (* 0.003 (expt x 2)) 50))
-
-(for-each pt domain (map f domain))</pre>
-<h3>The quadratic formula</h3>
-
-<p>Given a quadratic equation \(ax^2 + bx + c = 0\), the roots are given by</p>
-
-<p>\[x = {-b \pm \sqrt{b^2-4ac} \over 2a}\]</p>
-
-<pre class="codeBlock">(define (roots a b c)
-  (let ((det (sqrt (- (expt b 2) (* 4 a c)))))
-    (list (/ (+ (- b) det) (* 2 a))
-          (/ (- (- b) det) (* 2 a)))))</pre>
-<p>Suppose we have \((x - 3)(x + 2) = 0\). Expanding, we have \(x^2 - x - 6 = 0\). Using the formula above, the roots are:</p>
-
-<pre class="codeBlock">(roots 1 -1 -6)</pre>
-
 
         <table class="ch-links">
           <tr>
             
             <td class="prev-ch-link">
-              <a href="conditionals.html"> &lt; 6. Conditionals
+              <a href="quadratic-equations.html"> &lt; 8. Quadratic Equations
 </a>
             </td>
         

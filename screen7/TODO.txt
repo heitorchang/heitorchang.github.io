@@ -2,24 +2,33 @@ SCREEN 7
 
 NOTE: should not host MathJax in heitorchang.github.io because it is over 20 MB
 
+
 TODO
 ----
-[  ] drawing example for if: if x % 2 == 0, then rect else circle
-[  ] See notes [1] below for the difference between (list) and (quote)
+[  ] recursion: draw triangles inside triangles
+[  ] see notes [1] below for the difference between (list) and (quote)
+
+
+See DONE at the end of this file
+
+
+ALGEBRA
+-------
+[  ] map
 [  ] function (limits) that (print)s graphics boundaries
-[  ] idea for algebra: rather than (+ (* 3 x x) (* 9 x) 6) write a (quadratic 3 9 6) wrapper
-
-
-MAYBE
------
-[OK] Add text to canvas
-[NO] Check if custom fonts can be used
+[  ] rather than (+ (* 3 x x) (* 9 x) 6) write a (quadratic 3 9 6) wrapper
+[  ] draw arbitrary polygons by defining points and filling: function varargs
 
 
 LATER
 -----
 [  ] Rename SCREEN 7 to something more apropos to content
 [  ] Custom fonts in graphics box
+[  ] if, and, or short-circuiting
+[  ] let, let*
+[  ] grep for exec
+[  ] vector
+[  ] list membership
 
 
 NOTES
@@ -40,5 +49,10 @@ For this reason, it's an error to modify a data structure returned from a quote 
 
 DONE
 ----
+[OK] book is not exhaustive, only covers the surface
+[OK] Part I, II in build.py. Really should only be in the index
 [OK] Build system like py-book/book-template/build.py
 [OK] Arithmetic section (arithmetic.html) "write your own function" in this section
+[OK] Add text to canvas
+[NO] Check if custom fonts can be used
+[OK] functions returning functions (make-adder, closure)

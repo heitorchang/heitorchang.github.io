@@ -119,12 +119,13 @@ INDEX_TEMPLATE_HEADER = f'''
 <br><br>
 by <a href="https://heitorchang.github.io/" target="_blank">Heitor Chang</a>
 </p>
-'''
-
-INDEX_TEMPLATE_FOOTER = '''
 <p class="index-p">
 <a href="credits.html" class="home-chapter-link">Credits and License</a>
 </p>
+<p>&nbsp;</p>
+'''
+
+INDEX_TEMPLATE_FOOTER = '''
     </div>
   </body>
 </html>
@@ -145,13 +146,17 @@ def generate_index_chapter_link(n, idx):
     '''
 
 
-def generate_index(chapters):
+def generate_index(parts):
     print(f"Generating index")
     with open(f"index.html", 'w') as index_f:
         print(INDEX_TEMPLATE_HEADER, file=index_f)
-        for i, n in enumerate(chapters, 1):
-            print(n)
-            print(generate_index_chapter_link(n, i), file=index_f)
+        chapter_num = 1
+        for part in parts:
+            print(f"<h2>{part}</h2>", file=index_f)
+            for n in parts[part]:
+                print(n)
+                print(generate_index_chapter_link(n, chapter_num), file=index_f)
+                chapter_num += 1
         print(INDEX_TEMPLATE_FOOTER, file=index_f)
 
 
@@ -323,19 +328,30 @@ def convert_raw_contents(contents, chapter_number, converted_file):
 if __name__ == '__main__':
     idx = 1
 
-    chapters = [
-        'scheme',
-        'arithmetic-functions',
-        'strings-variables',
-        'cartesian-plane',
-        'lists',
-        'conditionals',
+    parts = {
+        "Part I: Fundamentals": [
 
-        'api_reference',
-    ]
+            'scheme',
+            'arithmetic-functions',
+            'strings-variables',
+            'cartesian-plane',
+            'lists',
+            'conditionals',
+            'first-class-functions',
+        ],
+        "Part II: Algebra": [
+            'quadratic-equations',
+        ],
+        "Reference": [
+            'api_reference',
+        ]
+    }
 
-    print(f"Converting {len(chapters)} chapters.\n")
-    generate_index(chapters)
+    generate_index(parts)
+    chapters = []
+    for part in parts:
+        for c in parts[part]:
+            chapters.append(c)
     for cur, prev, nxt in zip(chapters, [None] + chapters[:-1], chapters[1:] + [None]):
         convert_raw(cur, prev, nxt, idx)
         idx += 1
