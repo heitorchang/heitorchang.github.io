@@ -1,0 +1,58 @@
+SCREEN 7
+
+NOTE: should not host MathJax in heitorchang.github.io because it is over 20 MB
+
+TODO
+----
+[  ] arithmetic: define a function like computing a conversion of units to explain what a return value is
+[  ] explain let in recursion.html or earlier
+
+See DONE at the end of this file
+
+
+ALGEBRA
+-------
+[  ] map
+[  ] function (limits) that (print)s graphics boundaries
+[  ] rather than (+ (* 3 x x) (* 9 x) 6) write a (quadratic 3 9 6) wrapper
+[  ] draw arbitrary polygons by defining points and filling: function varargs
+
+
+LATER
+-----
+[  ] Rename SCREEN 7 to something more apropos to content
+[  ] Custom fonts in graphics box
+[  ] if, and, or short-circuiting
+[  ] let, let*
+[  ] grep for exec
+[  ] vector
+[  ] list membership
+
+
+NOTES
+-----
+[1] https://icem.folkwang-uni.de/~finnendahl/cm_kurse/doc/schintro/schintro_38.html
+
+One subtlety about quote is that a quote expression doesn't create a data structure every time it's called--evaluating the same expression many times may return many pointers to the same structure.
+
+Consider the procedure definition
+
+(define (foo)
+  '(1 2 3))
+
+The list (1 2 3) may be created when we define the procedure foo, and each time we call it, it may return a pointer to that same list. (Exactly what happens depends on the particular implementation of Scheme, but most work this way, for efficiency reasons. Evaluating the quote expression just fetches a pointer to a data structure that was created beforehand.)
+
+For this reason, it's an error to modify a data structure returned from a quote form. Unfortunately, many Scheme systems don't detect this error, and will let you do it.
+
+
+DONE
+----
+[OK] see notes [1] below for the difference between (list) and (quote)
+[OK] recursion: draw triangles inside triangles
+[OK] book is not exhaustive, only covers the surface
+[OK] Part I, II in build.py. Really should only be in the index
+[OK] Build system like py-book/book-template/build.py
+[OK] Arithmetic section (arithmetic.html) "write your own function" in this section
+[OK] Add text to canvas
+[NO] Check if custom fonts can be used
+[OK] functions returning functions (make-adder, closure)

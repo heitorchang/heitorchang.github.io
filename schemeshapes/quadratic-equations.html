@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="recursion.html"> &lt; 8. Recursion
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="api_reference.html">10. API Reference
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>9. Quadratic Equations</h1>
+
+<h3>Defining the x-axis as the domain and a function on this domain</h3>
+
+<p>The <code>iota</code> function creates a list of <code>n</code> evenly spaced numbers, starting at <code>start</code> (default is <code>0</code>) with a step of <code>step</code> (default is <code>1</code>).</p>
+
+<p><code>(iota n start step)</code></p>
+
+<pre class="codeBlock">(iota 10)</pre>
+
+<pre class="codeBlock">(iota 6 -12 3)</pre>
+
+<pre class="codeBlock">(iota 11 -10 2)</pre>
+
+<p><code>domain</code> will be the 360 pixels of the canvas. Then, the quadratic function \(f(x) = 0.003 x^2 + 50\) will be plotted.</p>
+
+<pre class="codeBlock">(define domain (iota 360 -180))
+(define (f x)
+  (+ (* 0.003 (expt x 2)) 50))
+
+(for-each pt domain (map f domain))</pre>
+<h3>The quadratic formula</h3>
+
+<p>Given a quadratic equation \(ax^2 + bx + c = 0\), the roots are given by</p>
+
+<p>\[x = {-b \pm \sqrt{b^2-4ac} \over 2a}\]</p>
+
+<pre class="codeBlock">(define (roots a b c)
+  (let ((det (sqrt (- (expt b 2) (* 4 a c)))))
+    (list (/ (+ (- b) det) (* 2 a))
+          (/ (- (- b) det) (* 2 a)))))</pre>
+<p>Suppose we have \((x - 3)(x + 2) = 0\). Expanding, we have \(x^2 - x - 6 = 0\). Using the formula above, the roots are:</p>
+
+<pre class="codeBlock">(roots 1 -1 -6)</pre>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            <td class="prev-ch-link">
+              <a href="recursion.html"> &lt; 8. Recursion
+</a>
+            </td>
+        
+            
+            <td class="next-ch-link">
+              <a href="api_reference.html">10. API Reference
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
+

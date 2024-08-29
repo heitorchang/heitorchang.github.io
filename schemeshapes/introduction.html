@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+    <script src="mathjax/tex-chtml.js" id="MathJax-script" async></script>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady"><pre id="bs-console">;; BiwaScheme console
+</pre>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <div style="text-align: center;"><strong><a href="index.html">Table of Contents</a></strong></div>
+
+
+        <table class="ch-links">
+          <tr>
+            
+            
+            <td class="next-ch-link">
+              <a href="data_types.html">2. Data Types
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+<h1>1. Introduction</h1>
+
+<table class="bordered">
+  <tr>
+    <td>abc</td>
+    <td>123</td>
+  </tr>
+  <tr>
+    <td>abcdefg</td>
+    <td>12345</td>
+  </tr>
+</table>
+<p>Welcome and thank you for joining me in this programming journey! I will cover the basics of computer science, geometry, and algebra with a text-based console and two-dimensional graphics to explain concepts.</p>
+
+<p>The programming language you will be working with is called <em>Scheme</em>. It is a minimalistic language and fundamental computer science concepts can be expressed without complicated syntax.</p>
+
+<p>In this book, there will not be any convoluted code. The code editor is fairly limited, and chapter examples will be written as stand-alone entities that won't require loading code from previous chapters.</p>
+
+<p>Drawing shapes and plotting data plays a big role in this book. Below is a bit of code that draws a bullseye pattern of circles. Click anywhere inside the code box to run it:</p>
+
+<pre class="codeBlock">(define (concentric radius)
+  (circle 0 0 radius))
+
+(for-each concentric (iota 4 30 40))</pre>
+<p>Each portion of this code will be explained in the following chapters. For now, I just wished to show what simple Scheme code looks like.</p>
+
+<p>After finishing this book you will be able to apply what you have learned to a full-fledged language (or languages) of your choice. Just like spoken languages share elements of grammar, programming languages have many concepts in common with each other.</p>
+
+<p>If you wish to clear the graphics box, ciick below:</p>
+
+<pre class="codeBlock">(clear)</pre>
+
+<h3>Hello, World!</h3>
+
+<p>The traditional "first program" in an introductory book is one that displays the words <code>Hello, World!</code> on the screen.</p>
+
+<p>Scheme allows the programmer to type code and immediately run it, without the intermediate <em>compiling</em> stage, which translates human-readable code into machine language code that your computer can execute.</p>
+
+<p>This book includes a Scheme <em>interpreter</em>, which is software that reads Scheme code and executes it. You may enter any Scheme code in the box on the top-left corner of this page. Pressing <code>Ctrl+Enter</code> or <code>Alt+Enter</code> executes the code.</p>
+
+<p>There are several <em>code boxes</em> in lighter yellow in this book. As you've seen above, clicking inside any one of them will copy the code to the editor and execute it right away, saving you from having to type them. The term Schemers use for running code is to <em>evaluate</em> it.</p>
+
+<p>Click on the box below to evaluate the <code>Hello, World!</code> program:</p>
+
+<pre class="codeBlock">(print "Hello, World!")</pre>
+
+<p>You should see the Scheme code and below it, the text <code>Hello, World!</code> inside the dark blue box under the editor. This box is called the <em>console</em>, and it displays values that are the results of your code, and values given to <code>print</code>.</p>
+
+<p><code>print</code> is a <em>function</em>, which is a collection of code that performs an action. In <code>print</code>'s case, the action is to output a value to the console.</p>
+
+<p>The value we pass to <code>print</code> is <code>"Hello, World!"</code>. Textual values such as this are called <em>strings</em>. They must be enclosed in <em>double quotes</em> (<code>"..."</code>), otherwise, Scheme will think you're referring to names of functions or variables. Note that single quotes won't work. They have a special meaning in Scheme.</p>
+
+<p>Finally, notice that we enclose the entire <em>expression</em> with parentheses <code>(...)</code>. Without parentheses, the function will not be <em>called</em>. If you try the previous code without the parentheses, it will still run, and misleadingly, <code>"Hello, World!"</code> will still appear, but only because the string was the final value of our code block.</p>
+
+<p>If you look closely, <code>(print "Hello, World")</code> returns <code>#&lt;no value&gt;</code>, while when the parentheses are left out, it will return the value <code>"Hello, World!"</code> instead. The <code>=&gt;</code> characters indicate a return value.</p>
+
+<p>When calling an arithmetic function later on, such as <code>+</code> to add numbers, we'll see that without the parentheses, only the final number is displayed, not the expected result of the calculation.</p>
+
+<h3>Writing your own function</h3>
+
+<p>Okay, <code>World</code> is a bit too generic. Let's try making Scheme say, <code>"Hello, Alan!"</code> or <code>"Hello, Alice!"</code> instead. The simplest way is merely</p>
+
+<pre class="codeBlock">(print "Hello, Alan")</pre>
+
+<p>But we want to make it a bit simpler to change the name without having to re-type <code>"Hello, "</code> whenever we have a new name.</p>
+
+<p>Creating a function in Scheme looks like this:</p>
+
+<pre class="codeBlock">(define (function-name argument-1 argument-2 many-more-arguments)
+  function-body)</pre>
+<p>Let's call our function <code>greet</code>. In its body, it will call <code>print</code>:</p>
+
+<pre class="codeBlock">(define (greet name)
+  (print "Hello, " name))</pre>
+<p>In our function, <code>name</code> is an <em>identifier</em>, whose value is <em>bound</em> when we call the <code>greet</code> function. Try the following:</p>
+
+<pre class="codeBlock">(greet "Alan")</pre>
+
+<p>Then, try changing <code>"Alan"</code> to your own name (or another one if your name <em>is</em> Alan) then press <code>Ctrl+Enter</code> or <code>Alt+Enter</code> to evaluate the new code.</p>
+
+<p>You should see <code>Hello, your-name</code> in the console.</p>
+
+<p>If you wish to clear the editor's contents after evaluating your code, hold <code>Shift</code> in addition to <code>Ctrl</code> or <code>Alt</code> when pressing <code>Enter</code>.</p>
+
+<p>At any time, pressing <code>Ctrl+Up</code> or <code>Alt+Up</code> will restore previously evaluated code. <code>Ctrl+Down</code> or <code>Alt+Down</code> will scroll forwards in this list.</p>
+
+<p>Finally, to clear the contents of the code editor, press <code>Esc</code>. The cleared code may be recovered with <code>Ctrl+Up</code> or <code>Alt+Up</code>.</p>
+
+<h3>Drawing example</h3>
+
+<p>Now that you have seen how a simple function works, let's take another look at the graphics box.</p>
+
+<p>The default setting of the graphics box is a Cartesian plane with the limits <code>-180 &lt;= x &lt; 180</code> and <code>-180 &lt;= y &lt; 180</code>. It looks and behaves like the 2-D plane in math textbooks.</p>
+
+<p>The center, <code>(0, 0)</code> is in the middle of the box, positive <code>x</code> values go towards the right, and positive <code>y</code> values go towards the top.</p>
+
+<p>One of the basic elements of drawing is a <em>line</em>. It is a function that takes 4 <em>arguments</em> (values passed to the function). They are:</p>
+
+<p><code>(line x1 y1 x2 y2)</code></p>
+
+<p>where <code>(x1, y1)</code> are the coordinates of one endpoint, and <code>(x2, y2)</code> are the coordinates of the other endpoint.</p>
+
+<p>For example, the function call below will draw a diagonal line in the top-right quadrant:</p>
+
+<pre class="codeBlock">(line 40 20 150 150)</pre>
+
+<p>Feel free to change the coordinates and re-evaluate the code by pressing <code>Ctrl+Enter</code> or <code>Alt+Enter</code>.</p>
+
+<p>When you're done trying out the function, the <code>clear</code> function will wipe the contents of the graphics box.</p>
+
+<pre class="codeBlock">(clear)</pre>
+
+<p>The axes may be redrawn, if you wish:</p>
+
+<pre class="codeBlock">(axes)</pre>
+
+<p>In later chapters, I will explain the components of the following block of code, which draws a pattern of lines:</p>
+
+<pre class="codeBlock">(define (to-top-edge x)
+  (line -180 -180 x 180))
+(define (to-right-edge x)
+  (line -180 -180 180 x))
+(define endpoints (iota 37 -180 10))
+
+(set-stroke! "Maroon")
+(for-each to-top-edge endpoints)
+(set-stroke! "LightSkyBlue")
+(for-each to-right-edge endpoints)</pre>
+
+        <table class="ch-links">
+          <tr>
+            
+            
+            <td class="next-ch-link">
+              <a href="data_types.html">2. Data Types
+ &gt; </a>
+            </td>
+        
+          </tr>
+        </table>
+    
+
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
+

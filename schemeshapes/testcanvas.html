@@ -1,0 +1,54 @@
+<body style="background-color: #ccc;">
+
+  <canvas id="canvas" width="600" height="600"></canvas>
+
+  <script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, 600, 600)
+
+  ctx.fillStyle = "#f00";
+
+  function proj(x, y) {
+    return [300 + x, 300 - y]
+  }
+
+  function rect(projp, w, h) {
+    px = projp[0]
+    py = projp[1]
+    ctx.fillRect(px, py, w, -h)
+  }
+
+  function bg(color) {
+    ctx.fillStyle = color
+  }
+
+  bg("#ccc")
+  rect(proj(-300, 0), 600, 1)
+  rect(proj(0, -300), 1, 600)
+
+  bg("#f00")
+  rect(proj(10, 30), 10, 30)
+  rect(proj(100, 45), 100, 2)
+  rect(proj(-100, -225), 100, 2)
+
+  function line(p1, p2) {
+
+  }
+
+  function pt(projp) {
+    rect(projp, 1, 1)
+  }
+
+  bg("blue")
+  for (let x = -300; x < 300; x++) {
+    pt(proj(x, 0.01 * x * x))
+    // x^2 + y^2 = 100
+    // y = sqrt(...
+    pt(proj(x, Math.pow(87000 - x * x, 0.5)))
+  }
+
+
+  </script>
+</body>

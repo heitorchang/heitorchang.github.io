@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>SCREEN 7</title>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area"><textarea id="replInput" rows="4" cols="72" autofocus></textarea><div id="biwaError"></div></div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady"><pre id="bs-console">;; Write your code above
+</pre>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="360" height="360"></canvas>
+        </div>
+
+        <div id="book">
+          <h2>SCREEN 7</h2>
+
+          <p>
+            <em>Programming with 2-D graphics</em>
+          </p>
+
+          <h3>Editor</h3>
+          <p>
+            Keyboard shortcuts:
+          </p>
+
+          <ul>
+            <li><code>Ctrl+Enter</code> or <code>Alt+Enter</code>: Evaluate code</li>
+            <li><code>Shift+Ctrl+Enter</code> or <code>Shift+Alt+Enter</code>: Evaluate code and clear editor</li>
+            <li><code>Ctrl+Up</code> or <code>Alt+Up</code>: Recover previously evaluated code block</li>
+            <li><code>Ctrl+Down</code> or <code>Alt+Down</code>: Scroll to next evaluated code block</li>
+            <li><code>Esc</code>: Clear editor</li>
+          </ul>
+
+          <h3>Drawing API</h3>
+
+          <h4>Canvas</h4>
+          <p>
+            The canvas uses a Cartesian coordinate system, where a point is defined as <code>(x, y)</code>. Its size is <em>360 pixels by 360 pixels</em>.
+          </p>
+
+          <p>
+            Increasing <code>x</code> values go to the right, and increasing <code>y</code> values go to the top. This is consistent with math standards, and is <strong>not</strong> the same as the behavior of HTML/JavaScript <code>canvas</code>.
+          </p>
+
+          <p>
+            The origin, <code>(0, 0)</code>, is at the center.
+          </p>
+
+          <p>
+            The bottom-left corner is <code>(-180, -180)</code> and the top-right corner is <code>(180, 180)</code>.
+          </p>
+
+          <h4>Clear</h4>
+          <p>
+            The <code>clear</code> function fills the entire canvas white.
+          </p>
+
+          <p>
+            Click on any code block below to copy its code to the editor and immediately evaluate it.
+          </p>
+          <pre>(clear)</pre>
+
+          <h4>Redraw the axes</h4>
+          <p>
+            After clearing the canvas, the axes will also be gone. Evaluate <code>axes</code> to redraw the axes.
+          </p>
+          <pre>(axes)</pre>
+
+
+          <h3>Shapes</h3>
+
+          <h4>Point</h4>
+          <p>
+            <code>(pt x y)</code>
+          </p>
+          <pre>(pt 15 20)</pre>
+
+          <h4>Line</h4>
+          <p>
+            Draws a line from <code>(x1, y1)</code> to <code>(x2, y2)</code>.
+          </p>
+
+          <p>
+            <code>(line x1 y1 x2 y2)</code>
+          </p>
+          <pre>(line -100 50 180 100)</pre>
+
+          <h4>Rectangle</h4>
+          <p>
+            Draws a rectangle with its bottom-left corner at <code>(x, y)</code>, with width <code>w</code>, and height <code>h</code>.
+          </p>
+
+          <p>
+            <code>(rect x y w h)</code>
+          </p>
+          <pre>(rect -75 25 50 75)</pre>
+
+          <h4>Circle</h4>
+          <p>
+            Draws a circle with its center at <code>(x, y)</code>, with radius <code>r</code>.
+          </p>
+
+          <p>
+            <code>(circle x y r)</code>
+          </p>
+          <pre>(circle 30 30 60)</pre>
+
+          <h3>Color</h3>
+
+          <h4>Fill color</h4>
+          <p>
+            The color that fills the inside of rectangles and circles. A color may be a CSS name, such as <code>"PaleVioletRed"</code> or a 3-digit or 6-digit hexadecimal value. Setting an invalid color has no effect.
+          </p>
+          <pre>(fill-color "green")</pre>
+          <pre>(fill-color "PaleVioletRed")</pre>
+          <pre>(fill-color "#99eeff")</pre>
+
+          <h4>Stroke color</h4>
+          <p>
+            The color of lines and outlines of rectangles and circles. The color may be a value described above. Setting an invalid color has no effect.
+          </p>
+          <pre>(stroke-color "blue")</pre>
+
+          <h4>Fill shape</h4>
+          <p>
+            Fills the last shape drawn with the current fill color.
+          </p>
+          <pre>(fill)</pre>
+
+
+          <h3>Loops</h3>
+          <p>
+            The basic looping construct is <code>for-each</code>. The first argument it expects is a function with <code>n</code> parameters. Following the function, <code>n</code> lists of the same length must be provided.
+          </p>
+
+          <p>
+            The function will be called as many times as there are elements in a list. In the beginning, the function will be called using the first elements of each list as arguments, then the second elements of the lists, and so on.
+          </p>
+
+          <pre>
+;; a function with one parameter (the center is fixed)
+(define (centered-circle radius)
+  (circle 0 0 radius))
+
+;; draw three circles of increasing radius
+(for-each centered-circle '(10 50 150))
+          </pre>
+
+          <pre>
+;; a function with two parameters (the radius is fixed)
+(define (medium-circle x y)
+  (circle x y 30))
+
+;; draw five circles in a diagonal line
+(for-each medium-circle '(-50 -30 0 30 50) '(-150 -75 0 75 150))
+          </pre>
+
+          <h3>Defining the x-axis as the domain and a function on this domain</h3>
+          <p>
+            The <code>iota</code> function creates a list of <code>n</code> evenly spaced numbers, starting at <code>start</code> (default is <code>0</code>) with a step of <code>step</code> (default is <code>1</code>).
+          </p>
+          <p>
+            <code>(iota n start step)</code>
+          </p>
+          <pre>(iota 10)</pre>
+          <pre>(iota 6 -12 3)</pre>
+          <pre>(iota 11 -10 2)</pre>
+
+          <p>
+            <code>domain</code> will be the 360 pixels of the canvas. Then, the quadratic function <code>0.003 * x<sup>2</sup></code> will be plotted.
+          </p>
+          <pre>
+(define domain (iota 360 -180))
+(define (f x)
+  (* 0.003 x x))
+
+(for-each pt domain (map f domain))
+          </pre>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+  </body>
+</html>
