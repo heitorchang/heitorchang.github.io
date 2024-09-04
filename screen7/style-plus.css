@@ -81,6 +81,8 @@ a {
 
 #canvas {
     margin-bottom: 15px;
+    border-width: 0;
+    border: 0;
 }
 
 .ltYellow {
