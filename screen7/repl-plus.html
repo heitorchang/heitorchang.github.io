@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style-plus.css">
+    <link rel="stylesheet" href="repl.css">
+    <title>Scheme REPL-Plus</title>
+  </head>
+  <body>
+    <script src="biwascheme-0.8.0-custom.js"></script>
+    <div id="content">
+      <div class="grid">
+        <div id="editor">
+          <div id="input-area">
+            <textarea id="replInput" rows="4" cols="43" autofocus></textarea>
+          </div>
+        </div>
+
+        <div id="consoleWrapper" class="biwaReady">
+          <div id="bs-console"></div>
+        </div>
+
+        <div id="book" class="ltYellow">
+          <h1>REPL-Plus</h1>
+
+          <pre>
+Ctrl/Alt + Enter: eval
+Shift + Ctrl/Alt + Enter: eval and clear editor
+Ctrl/Alt + Up/Down: scroll through history
+Esc: clear editor
+Alt + J: focus on editor
+
+Canvas is 400 x 400</pre>
+        </div>
+
+        <div id="graphicsout">
+          <canvas id="canvas" width="400" height="400"></canvas>
+        </div>
+
+      </div>
+    </div>
+
+    <script src="repl.js"></script>
+    <script src="app.js"></script>
+    <script src="onload.js"></script>
+    <script type="text/biwascheme">
+    (load "api2d.scm")
+    </script>
+    <script>
+    const bodyElem = document.getElementsByTagName("body")[0];
+    bodyElem.addEventListener("keyup", (event) => {
+      if (event.altKey && event.keyCode === 74) {
+        input.focus();
+      }
+    });
+    </script>
+  </body>
+</html>

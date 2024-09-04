@@ -1,0 +1,188 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('RobotoMono.ttf') format('truetype');
+    font-style: normal;
+}
+
+body {
+    background-color: #fff;
+    line-height: 1.25;
+    font-family: sans-serif;
+}
+
+a {
+    color: #057;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 4px;
+}
+
+.grid {
+    display: grid;
+    height: calc(100vh - 2rem);
+
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 200px 215px;
+}
+
+.grid > * {
+    border: 1px solid #dedede;
+}
+
+#content {
+    padding: 1rem 0 1rem 1rem;
+}
+
+#editor {
+    background-color: #dedede;
+    grid-row: 1 / span 2;
+    overflow-y: hidden;
+}
+
+#input-area {
+    height: 100%;
+}
+
+#consoleWrapper {
+    background-color: #129;
+    color: #eee;
+    padding: 0.25rem;
+    grid-row: 3;
+    overflow: auto;
+}
+
+.biwaError {
+    background-color: #921;
+    color: #fff;
+    margin-top: 0.25rem;
+}
+
+#bs-console {
+    font-family: RobotoMono;
+    font-size: 13px;
+}
+
+#graphicsout {
+    grid-row: 2 / span 2;
+    grid-column: 2;
+    overflow: hidden;
+    border: 0;
+    text-align: center;
+}
+
+#canvas {
+    margin-bottom: 15px;
+}
+
+.ltYellow {
+   background-color: #ffefd5;
+}
+
+#book {
+    padding: 1.75rem;
+    grid-column: 2 / 3;
+    grid-row: 1 / span 3;
+    overflow: auto;
+}
+
+h1 {
+    margin: 1.35rem 0 1.25rem 0;
+}
+
+h2 {
+    margin: 0 0.5rem 1rem 0.5rem;
+}
+
+h3, h4 {
+    margin: 1.5rem 0.5rem 1rem 0.5rem;
+}
+
+#book p {
+    margin: 1rem;
+}
+
+#book em {
+    color: #732;
+    padding: 0 0.25rem;
+}
+
+#book code {
+    color: #252;
+    margin: 0 0.3rem;
+    font-size: 1.0rem;
+}
+
+#book pre {
+    box-sizing: border-box;
+    margin: 1rem auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #ffffef;
+    color: #149;
+    border-radius: 0.8rem;
+    overflow: auto;
+    width: 90%;
+    font-family: RobotoMono;
+    font-size: 0.9rem;
+}
+
+#book li {
+    margin-left: 3rem;
+    margin-bottom: 0.25rem;
+}
+
+table.bordered {
+    margin-left: 2rem;
+    border-collapse: collapse;
+}
+
+table.bordered td {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+table.ch-links {
+    border: none;
+    width: 100%;
+    font-size: 1.1rem;
+    margin: 0.3rem 0;
+}
+
+td.prev-ch-link {
+    font-weight: bold;
+    border: none;
+}
+
+td.next-ch-link {
+    font-weight: bold;
+    border: none;
+    text-align: right;
+}
+
+.indexDiv {
+    text-align: center;
+}
+
+p.index-p {
+    margin: 1.5rem 2em;;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+p.index-subtitle {
+    margin-left: 2rem;
+}
+
+p.reg-p {
+    margin: 0.75rem;
+}
