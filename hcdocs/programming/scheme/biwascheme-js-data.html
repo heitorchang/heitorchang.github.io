@@ -99,16 +99,18 @@
   To "initialize" a value:
 </p>
 
-<pre>const jsondata = {"key": 123}
-(define js-data (js-eval "jsondata"))
-
-const listdata = [1,2,4,9,16]
+<pre>const listdata = [1,2,4,9,16]
 (define js-listdata (js-eval "listdata"))
+(define listdata (js-array-&gt;list js-listdata))
+
+const jsondata = {"key": 123}
+(define js-data (js-eval "jsondata"))
+(define data (js-obj-&gt;alist js-data))  ; (("key" . 123))
 
 const listobjs = [{"name": "A", "age": 12}, {"name": "B", "age": 23}]
-(define listobjs (js-array->list (js-eval "listobjs")))
+(define listobjs (js-array-&gt;list (js-eval "listobjs")))
 
-(js-obj->alist (car listobjs))
+(js-obj-&gt;alist (car listobjs))
 </pre>
 
 </div>
