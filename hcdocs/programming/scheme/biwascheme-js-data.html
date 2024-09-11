@@ -82,20 +82,35 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">scheme</a></h3>
     
-<a class="index" href="biwascheme-examples.html">&#x1F4D8; biwascheme-examples.html</a><br>
-<a class="index" href="biwascheme-js-data.html">&#x1F4D8; biwascheme-js-data.html</a><br>
-<a class="index" href="biwascheme-reference.html">&#x1F4D8; biwascheme-reference.html</a><br>
-<a class="index" href="biwascheme.html">&#x1F4D8; biwascheme.html</a><br>
-<a class="index" href="biwascheme_files/index.html">&#x1F4C1; biwascheme_files</a><br>
-<a class="index" href="concrete-abstractions.html">&#x1F4D8; concrete-abstractions.html</a><br>
-<a class="index" href="concrete-abstractions_files/index.html">&#x1F4C1; concrete-abstractions_files</a><br>
-<a class="index" href="halting-problem.html">&#x1F4D8; halting-problem.html</a><br>
-<a class="index" href="little-schemer/index.html">&#x1F4C1; little-schemer</a><br>
-<a class="index" href="scheme-files/index.html">&#x1F4C1; scheme-files</a><br>
-<a class="index" href="Scheme-High-School.html">&#x1F4D8; Scheme-High-School.html</a><br>
-<a class="index" href="scheme.html">&#x1F4D8; scheme.html</a><br>
-<a class="index" href="sicp-ch5-machine-sim.scm.txt" target="_blank">&#x1F4C3; sicp-ch5-machine-sim.scm.txt</a><br>
-<a class="index" href="teach_yourself_scheme.html">&#x1F4D8; teach_yourself_scheme.html</a><br>
+<h1>BiwaScheme reading JS data</h1>
+
+<p>
+  There are four conversion functions:
+</p>
+
+<ul>
+  <li><code>(js-array-&gt;list)</code></li>
+  <li><code>(list-&gt;js-array)</code></li>
+  <li><code>(js-obj-&gt;alist)</code></li>
+  <li><code>(alist-&gt;js-obj)</code></li>
+</ul>
+
+<p>
+  To "initialize" a value:
+</p>
+
+<pre>const jsondata = {"key": 123}
+(define js-data (js-eval "jsondata"))
+
+const listdata = [1,2,4,9,16]
+(define js-listdata (js-eval "listdata"))
+
+const listobjs = [{"name": "A", "age": 12}, {"name": "B", "age": 23}]
+(define listobjs (js-array->list (js-eval "listobjs")))
+
+(js-obj->alist (car listobjs))
+</pre>
+
 </div>
 <br>
 <hr>

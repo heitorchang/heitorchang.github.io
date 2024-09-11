@@ -219,13 +219,13 @@
   <h3 id="macro">Macro</h3>
 
   <p>BiwaScheme does not have <code>syntax-rules</code> or <code>syntax-case</code>, but has <code>define-macro</code>.</p>
-  <pre><code class="language-scheme">(define-macro (test expr)
+  <pre>(define-macro (test expr)
   `(if ,expr
     #t
     (print (format &quot;test failed: ~a&quot; (quote ,expr)))))
 
 (test (= 1 2)) ;=&gt; test failed: (= 1 2)
-  </code></pre>
+</pre>
   <p>Other macro-related functions:</p>
   <ul>
     <li><code>macroexpand</code> <code>macroexpand-1</code> <code>%macroexpand</code> <code>%macroexpand-1</code> <code>gensym</code></li>
@@ -611,17 +611,17 @@
   </ul>
   <h4 id="using-nodejs-libraries">Using Node.js libraries</h4>
   <p>You can also use Node.js libraries via <code>js-eval</code>, etc.</p>
-  <pre><code class="language-scheme">(define fs (js-eval &quot;require(&#39;fs&#39;)&quot;))
+  <pre>(define fs (js-eval &quot;require(&#39;fs&#39;)&quot;))
 
 (define path &quot;.&quot;)
 (print (js-invoke fs &#39;readdirSync path))
 ; Alternatively you can use `..` macro syntax:
 ; (print (.. fs `(readdirSync ,path)))
-  </code></pre>
+</pre>
   <h3 id="js-api">BiwaScheme JavaScript API</h3>
 
   <h4 id="evaluate-scheme-program">Evaluate Scheme program</h4>
-  <pre><code class="language-js">&lt;script type=&quot;text/javascript&quot; src=&quot;biwascheme.js&quot;&gt;&lt;/script&gt;
+  <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;biwascheme.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot;&gt;
 var onError = function(e){ console.error(e); }
 var biwa = new BiwaScheme.Interpreter(onError)
@@ -629,7 +629,7 @@ biwa.evaluate(&quot;(+ 1 2)&quot;, function(result) {
   alert(result);  //=&gt; 3
 });
 &lt;/script&gt;
-  </code></pre>
+</pre>
   <h4 id="define-library-function">Define library function</h4>
   <p>You can write JavaScript library function with <code>BiwaScheme.define_libfunc</code>.</p>
   <ul>
@@ -638,12 +638,12 @@ biwa.evaluate(&quot;(+ 1 2)&quot;, function(result) {
     <li>3rd argument: maximum number of arguments (pass null for infinite)</li>
     <li>4th argument: function body</li>
   </ul>
-  <pre><code class="language-js">BiwaScheme.define_libfunc(&quot;add&quot;, 2, 2, function(ar){
+  <pre>BiwaScheme.define_libfunc(&quot;add&quot;, 2, 2, function(ar){
   BiwaScheme.assert_integer(ar[0]);
   BiwaScheme.assert_integer(ar[1]);
   return ar[0] + ar[1];
 });
-  </code></pre>
+</pre>
   <p>See <code>src/library/*.js</code> for more examples.</p>
   <h4 id="stringify-scheme-object">Stringify scheme object</h4>
   <ul>
