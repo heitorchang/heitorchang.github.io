@@ -44,38 +44,38 @@
 
 ;; Professional item format
 ;; (("Company name" "company-h3-id")
-;;  ("Role title" "Dates"
+;;  ("Role title"
+;;   "Dates"
 ;;   ("List of responsibilities"
 ;;    "List continued")))
 ;;
 ;; Add a page break in the associated CSS file.
 (define professional-items
-  '(
-    (("Belgingur, LLC., Reykjavik, Iceland (Remote)" "belgingur")
-     ("Senior Back-end Engineer" "Jan. 2024 &ndash; present"
-      ("Improved the flexibility of the Weather On Demand Python system by expanding the number of available configuration files."
-       "Completed a linear regression model for forecasting weather variables based on the closest grid points."
-       "Converted scientific Fortran code that models volcanic activity to Python modules that leverage NumPy and NetCDF libraries.")))
-
-    (("Freelance Software Engineer, São Paulo, SP" "freelance")
-     ("Senior Full-Stack Developer" "Mar. 2023 &ndash; Dec. 2023"
+  '((("Freelance Software Engineer, São Paulo, SP" "freelance")
+     ("Senior Full-Stack Developer"
+      "Mar. 2023 &ndash; Dec. 2023"
       ("Created REST APIs in Python with FastAPI and backed by PostgreSQL to read time series data for various scenarios and deployed them to Google Cloud."
        "Developed a static site generator in Python to mirror documents in a local directory and add a practical navigation interface.")))
 
     (("Mediafly, Inc., Chicago, IL (Remote)" "mediafly")
-     ("Senior Software Engineer, Data and Client Squad" "Aug. 2022 &ndash; Feb. 2023"
+     ("Senior Software Engineer, Data and Client Squad"
+      "Aug. 2022 &ndash; Feb. 2023"
       ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new custom objects holding metadata."
        "Improved the Python video call processing pipeline, filtering out unwanted blocks of silence."
        "Corrected multiple occurrences of temporary files not being cleared and other data inconsistencies in the Python pipeline code.")))
 
     (("Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP" "tempook")
-     ("Senior Full-Stack Developer" "June 2020 &ndash; Aug. 2022"
+     ("Senior Full-Stack Developer"
+      "June 2020 &ndash; Aug. 2022"
       ("Built and administered the public-facing website with Django, including custom user management and authentication with a JWT extension."
+       "Architected a PostgreSQL database in Google Cloud Platform to store meteorological observation and forecast time series at client-supplied locations and government-operated stations."
        "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and Bitbucket's Continuous Deployment pipeline."
-       "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs.")))
+       "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."
+       "Created a hydroelectric energy forecasting dashboard containing Google Maps and Apache ECharts widgets in Vue.js and the Vuetify Material Design front-end framework.")))
 
     (("Pontual Export &amp; Import Ltd., São Paulo, SP" "pontual")
-     ("Full-Stack Developer" "Jan. 2014 &ndash; June 2020"
+     ("Full-Stack Developer"
+      "Jan. 2014 &ndash; June 2020"
       ("Used MA (Moving Average) indicators in a Django and Python project to predict the demand for 600 products and calculate appropriate amounts for restocking."
        "Prepared sales forecasts and summarized business-critical statistics in a Django app."
        "Visualized historical sales with NumPy and Pandas, reporting totals and outliers for each product.")))))
