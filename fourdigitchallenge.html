@@ -31,7 +31,13 @@
     let b = 0;
 
     function generateNum() {
-      return Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+      // from 2222 to 9999, 0, 1 are eliminated
+      const trial = Math.floor(Math.random() * (9999 - 3333 + 1)) + 3333;
+      const trialStr = trial.toString();
+      if (trialStr.includes('0') || trialStr.includes('1')) {
+        return generateNum();
+      }
+      return trial;
     }
 
     function setup() {
