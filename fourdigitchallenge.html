@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    .hidden {
+      display: none;
+    }
+    </style>
+  </head>
+
+  <body>
+
+    <h3>
+      <span id="m1"></span> x <span id="m2"></span> = ?
+    </h3>
+
+    <br>
+
+    <input id="ans"> <button onclick="check()">Submit</button>
+    <br><br>
+    <div id="links" class="hidden">
+      <iframe src="secretfourdigitlinks.html"></iframe>
+    </div>
+
+    <script>
+    let a = 0;
+    let b = 0;
+
+    function generateNum() {
+      return Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+    }
+
+    function setup() {
+      a = generateNum();
+      b = generateNum();
+
+      m1.innerText = a;
+      m2.innerText = b;
+    }
+
+    function check() {
+      if (parseInt(ans.value) == a * b) {
+        links.classList.remove("hidden");
+      }
+      else {
+        alert("try again");
+      }
+    }
+
+    setup();
+
+    </script>
+
+</body>
