@@ -666,6 +666,129 @@ print(&sv[1..3]);
 
 <h4>String literals</h4>
 
+<h2 id="ch5">5. References</h2>
+
+<h3>References to values</h3>
+
+<p>
+  A <em>shared reference</em> lets you read but not modify its referent. You can have as many shared references to a particular value at a time as you like. <code>&e</code> is a shared reference to <code>e</code>'s value. If <code>e</code> has the type <code>T</code>, then <code>&e</code> has the type <code>&T</code>, pronounced "ref T".
+</p>
+
+<p>
+  A <em>mutable reference</em> to a value allows reading and modifying the value. However, only a single mutable reference (and no other reference) may be active at a time. <code>&mut e</code> has the type <code>&mut T</code>, pronounced "ref mute T".
+</p>
+
+<p>
+  Reference rules cover the borrowed value's owner as well. As long as there are shared references to a value, not even its owner can modify it.
+</p>
+
+<p>
+  When passing a value to a function in a way that moves ownership of the value to the function, we say that it was passed <em>by value</em>.
+</p>
+
+<p>
+  If we instead pass the function a reference to the value, we say that it was passed <em>by reference</em>.
+</p>
+
+<p>
+  Rust references are dereferenced explicitly with the <code>*</code> operator:
+</p>
+
+<pre>
+let x = 10;
+let r = &x;  // &x is a shared reference to x
+assert!(*r == 10);  // dereference x
+</pre>
+
+<p>
+  Since references are widely used, the <code>.</code> operator implicitly dereferences its left operand, if needed:
+</p>
+
+<pre>
+struct Anime { name: &'static str, bechdel_pass: bool };
+let aria = Anime { name: "Aria: The Animation", bechdel_pass: true };
+let anime_ref = &aria;
+assert_eq!(anime_ref.name, "Aria: The Animation");
+// is equivalent to assert_eq!((*anime_ref).name, "Aria: The Animation");
+</pre>
+
+<h3>Receiving references as function arguments</h3>
+
+<p>
+  Suppose we have a function <code>f</code> that takes a reference and stores it in a global variable:
+</p>
+
+<pre>
+// Code with several problems that doesn't compile
+static mut STASH: &i32;
+fn f(p: &i32) { STASH = p; }
+</pre>
+
+<p>
+  Every static must be initialized, and mutable statics are inherently not thread-safe.
+</p>
+
+<p>
+  The signature of <code>f</code> is actually shorthand for:
+</p>
+
+<pre>
+fn f&lt;'a&gt;(p: &'a i32) { ... }
+</pre>
+
+<p>
+  <code>'a</code> (pronounced "tick A") is the <em>lifetime parameter</em> of <code>f</code>. <code>&lt;'a&gt;</code> can be read as "for any lifetime <code>'a</code>".
+</p>
+
+<p>
+  The assignment <code>STASH = p</code> becomes a point of contention. Since <code>STASH</code> lives for the program's entire execution, the reference type it holds must have a lifetime of the same length. Rust calls this the <code>'static</code> lifetime.
+</p>
+
+<p>
+  In Rust, a function's signature always exposes the body's behavior.
+</p>
+
+<h3>Returning references</h3>
+
+<p>
+  It's common for a function to take a reference to some data structure and then return a reference into some part of that structure. Here's a function that returns a reference to the smallest element of a slice:
+</p>
+
+<pre>
+fn smallest(v: &[i32]) -> &i32 {
+    let mut s = &v[0];
+    for r in &v[1..] {
+        if *r < *s { s = r;
+    }
+    s
+}
+</pre>
+
+<p>
+  Calling <code>smallest</code> with a slice enclosed in a block will not work because the slice does not outlive the block:
+</p>
+
+<pre>
+let s;
+{
+    let parabola = [9, 4, 1, 0, 1, 4, 9];
+    s = smallest(&parabola);
+}
+assert_eq!(*s, 0);
+</pre>
+
+<p>
+  The lifetime of <code>s</code> must be contained within <code>parabola</code>'s:
+</p>
+
+<pre>
+{
+    let parabola = [9, 4, 1, 0, 1, 4, 9];
+    let s = smallest(&parabola);
+    assert_eq!(*s, 0);
+}
+</pre>
+
 </div>
 <br>
 <hr>
