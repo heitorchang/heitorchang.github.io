@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #062;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        table {
+          border-collapse: collapse;
+        }
+
+        td {
+          padding: 0.5rem 0.8rem;
+          border: 1px solid #ccc;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">django</a></h3>
+    
+<h1>Polls App (Django 5.1)</h1>
+
+<p>
+  <a href="https://docs.djangoproject.com/en/5.1/intro/tutorial01/" target="_blank">Official Django Tutorial</a>
+</p>
+
+<p>
+  The public site lets people view and vote in polls. The admin site manages the creation, editing, and deletion of polls.
+</p>
+
+<h2 id="part1">Part 1</h2>
+
+<h3>Install Django</h3>
+
+<pre>
+cd ~/code/venvs
+python3 -m venv venv_django_5_1_3
+source venv_django_5_1_3/bin/activate
+pip install --upgrade pip
+pip install django==5.1.3
+</pre>
+
+<h3>Start a new Django project</h3>
+
+<p>
+  Create a <code>mysite</code> project inside the <code>djangotutorial</code> directory:
+</p>
+
+<pre>
+cd ~/code/django_projects
+mkdir djangotutorial
+django-admin startproject mysite djangotutorial
+</pre>
+
+<h3>Test the site creation</h3>
+
+<pre>
+cd djangotutorial
+python manage.py runserver
+</pre>
+
+<h3>Create the <code>polls</code> app</h3>
+
+<pre>
+python manage.py startapp polls
+</pre>
+
+<h3>Write a dummy view</h3>
+
+<pre>
+# polls/views.py
+
+from django.http import HttpResponse
+
+
+def index(request):
+    return HttpResponse("Hello, world! This is the polls index.")
+</pre>
+
+<h3>Define the URL</h3>
+
+<pre>
+# polls/urls.py
+
+from django.urls import path
+
+from . import views
+
+
+urlpatterns = [
+    path("", views.index, name="index"),
+]
+</pre>
+
+<p>
+  Refer to the <code>polls</code> URLs in the global URLconf:
+</p>
+
+<pre>
+# mysite/urls.py
+
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path('polls/', include("polls.urls")),
+    path('admin/', admin.site.urls),
+]
+</pre>
+
+<h2>Part 2</h2>
+
+<h3>PostgreSQL setup</h3>
+
+<p>
+  See <a href="../postgresql_setup.html">PostgreSQL setup</a> to install PostgreSQL.
+</p>
+
+<p>
+  Install <code>psycopg</code>:
+</p>
+
+<pre>
+pip install psycopg==3.1.8
+</pre>
+
+<p>
+  Create a <em>connection service file</em> (in the home directory) called <code>~/.pg_service.conf</code>
+</p>
+
+<pre>
+[my_service]
+host=127.0.0.1
+user=djangouser
+dbname=djangotutorial
+port=5432
+</pre>
+
+<p>
+  Also, create a <em>password file</em> called <code>/djangotutorial/mysite/.my_pgpass</code>
+</p>
+
+<pre>
+127.0.0.1:5432:djangotutorial:djangouser:djangopass
+</pre>
+
+<h4>Set the password file's permissions to <code>0600</code></h4>
+
+<pre>
+chmod 0600 mysite/.my_pgpass
+</pre>
+
+<p>
+  Add to <code>mysite/settings.py</code>:
+</p>
+
+<pre>
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'OPTIONS': {
+            'service': 'my_service',
+            'passfile': BASE_DIR / 'mysite' / '.my_pgpass',
+        },
+    }
+}
+</pre>
+
+<h3>Set the <code>TIME_ZONE</code></h3>
+
+<p>
+  Change <code>TIME_ZONE</code> to your location. (<code>America/Sao_Paulo</code>, for example).
+</p>
+
+<h3>Run default migrations</h3>
+
+<pre>
+python manage.py migrate
+</pre>
+
+<h3>Creating models</h3>
+
+<p>
+  The <code>polls</code> app has two models: a <code>Question</code> and a <code>Choice</code>. Each <code>Choice</code> is associated with a <code>Question</code>.
+</p>
+
+<p>
+  Edit <code>models.py</code> so it looks like:
+</p>
+
+<pre>
+from django.db import models
+
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField("date published")
+
+    def __str__(self):
+        return self.question_text
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.choice_text
+</pre>
+
+<h3>Add <code>polls</code> to <code>INSTALLED_APPS</code></h3>
+
+<pre>
+# mysite/settings.py
+
+INSTALLED_APPS = [
+    "polls.apps.PollsConfig",
+    "django.contrib.admin",
+    # ...
+]
+</pre>
+
+<p>
+  Make migrations and migrate:
+</p>
+
+<pre>
+python manage.py makemigrations polls
+python manage.py migrate
+</pre>
+
+<h4>Add a custom method to <code>Question</code></h4>
+
+<pre>
+# polls/models.py
+
+import datetime
+
+from django.db import models
+from django.utils import timezone
+
+
+class Question(models.Model):
+    # ...
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+</pre>
+
+<h3>Create a superuser</h3>
+
+<p>
+  The email can be anything, like <code>a@a.com</code>
+</p>
+
+<pre>
+python manage.py createsuperuser
+</pre>
+
+<h3>Make <code>polls</code> modifiable in the admin</h3>
+
+<pre>
+# polls/admin.py
+
+from django.contrib import admin
+
+from .models import Question, Choice
+
+
+admin.site.register([Question, Choice])
+</pre>
+
+<h2>Part 3</h2>
+
+<h3>Views</h3>
+
+<p>
+  A <em>view</em> is a type of web page that serves a specific function and uses a specific template. For example, the homepage, a detail page, and an archive page.
+</p>
+
+<p>
+  The <code>polls</code> app has four views:
+</p>
+
+<ul>
+  <li>index - displays questions</li>
+  <li>detail - displays a question text and a form for voting</li>
+  <li>results - displays results for a question</li>
+  <li>vote (action) - handles voting (recording a choice for a question)</li>
+</ul>
+
+<p>
+  Add to <code>polls/views.py</code>:
+</p>
+
+<pre>
+# polls/views.py
+
+from django.shortcuts import get_object_or_404, render
+
+from .models import Question
+
+# ...
+
+def detail(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, "polls/detail.html", {"question": question})
+
+def results(request, question_id):
+    return HttpResponse(f"Results of question {question_id}")
+
+def vote(request, question_id):
+    return HttpResponse(f"Vote on question {question_id}")
+</pre>
+
+<h3>Add paths to <code>urlpatterns</code> and namespace the URL names</h3>
+
+<pre>
+# polls/urls.py
+
+# ...
+
+app_name = "polls"
+
+urlpatterns = [
+    path("", views.index, name="index"),
+    path("&lt;int:question_id&gt;/", views.detail, name="detail"),
+    path("&lt;int:question_id&gt;/results/", views.results, name="results"),
+    path("&lt;int:question_id&gt;/vote/", views.vote, name="vote"),
+]
+</pre>
+
+<p>
+  Edit the <code>index</code> view:
+</p>
+
+<pre>
+# polls/views.py
+
+from django.shortcuts import render
+
+# ...
+
+def index(request):
+    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    context = {"latest_question_list": latest_question_list}
+    return render(request, "polls/index.html", context)
+</pre>
+
+<p>
+  Create an index template in <code>polls/templates/polls/index.html</code>:
+</p>
+
+<pre>
+{% if latest_question_list %}
+  &lt;ul&gt;
+    {% for question in latest_question_list %}
+    &lt;li&gt;&lt;a href="{% url 'polls:detail' question_id %}"&gt;{{ question.question_text }}&lt;/a&gt;
+    &lt;/li&gt;
+    {% endfor %}
+  &lt;/ul&gt;
+{% else %}
+  &lt;p&gt;No polls available.&lt;/p&gt;
+{% endif %}
+</pre>
+
+<p>
+  Create a template in <code>polls/templates/polls/detail.html</code>:
+</p>
+
+<pre>
+&lt;h1&gt;{{ question.question_text }}&lt;/h1&gt;
+&lt;ul&gt;
+  {% for choice in question.choice_set.all %}
+    &lt;li&gt;{{ choice.choice_text }}&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+</pre>
+
+<h2>Part 4</h2>
+
+<h3>Write a minimal form</h3>
+
+<p>
+  Replace <code>polls/templates/polls/detail.html</code> with:
+</p>
+
+<pre>
+&lt;form action="{% url 'polls:vote' question.id %}" method="post"&gt;
+  {% csrf_token %}
+  &lt;fieldset&gt;
+      &lt;legend&gt;&lt;h1&gt;{{ question.question_text }}&lt;/h1&gt;&lt;/legend&gt;
+      {% if error_message %}&lt;p&gt;&lt;strong&gt;{{ error_message }}&lt;/strong&gt;&lt;/p&gt;{% endif %}
+      {% for choice in question.choice_set.all %}
+      &lt;input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"&gt;
+      &lt;label for="choice{{ forloop.counter }}"&gt;{{ choice.choice_text }}&lt;/label&gt;
+      &lt;br&gt;
+      {% endfor %}
+  &lt;/fieldset&gt;
+  &lt;input type="submit" value="Vote"&gt;
+&lt;/form&gt;
+</pre>
+
+<h3>Record a vote</h3>
+
+<p>
+  Add to <code>polls/views.py</code>:
+</p>
+
+<p>
+  <strong>Warning</strong>: the <code>F()</code> object assigned to model fields persist after saving the model instance and is applied on each <code>save()</code>. Saving twice will increment the field twice.
+</p>
+
+<pre>
+from django.db.models import F
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+
+from .models import Choice, Question
+
+# ...
+
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST["choice"])
+    except (KeyError, Choice.DoesNotExist):
+        return render(request, "polls/detail.html", {"question": question, "error_message": "Please select a character."})
+    else:
+        selected_choice.votes = F("votes") + 1
+        selected_choice.save()
+        return HttpResponseRedirect(reverse("polls:results", args=(question_id,)))
+</pre>
+
+<h3>Show results</h3>
+
+<p>
+  Update <code>views.py</code>
+</p>
+
+<pre>
+# ...
+
+def results(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, "polls/results.html", {"question": question})
+</pre>
+
+<p>
+  And create a <code>polls/templates/polls/results.html</code> template:
+</p>
+
+<pre>
+&lt;h1&gt;{{ question.question_text }}&lt;/h1&gt;
+
+&lt;ul&gt;
+  {% for choice in question.choice_set.all %}
+  &lt;li&gt;{{ choice.choice_text }}: {{ choice.votes }} vote{{ choice.votes|pluralize }}&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+
+&lt;p&gt;
+  &lt;a href="{% url 'polls:detail' question.id %}"&gt;Vote again&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+  &lt;a href="{% url 'polls:index' %}"&gt;Back to home&lt;/a&gt;
+&lt;/p&gt;
+</pre>
+
+<h3>Use generic views</h3>
+
+<p>
+  Replace URLs in <code>polls/urls.py</code>
+</p>
+
+<pre>
+# polls/urls.py
+
+from django.urls import path
+
+from . import views
+
+
+app_name = "polls"
+
+urlpatterns = [
+    path("", views.IndexView.as_view(), name="index"),
+    path("&lt;int:pk&gt;/", views.DetailView.as_view(), name="detail"),
+    path("&lt;int:pk&gt;/results/", views.ResultsView.as_view(), name="results"),
+    path("&lt;int:question_id&gt;/vote/", views.vote, name="vote"),
+]
+</pre>
+
+<p>
+  Edit <code>views.py</code>
+</p>
+
+<pre>
+from django.views import generic
+
+# ...
+
+class IndexView(generic.ListView):
+    template_name = "polls/index.html"
+    context_object_name = "latest_question_list"
+
+    def get_queryset(self):
+        return Question.objects.order_by("-pub_date")[:5]
+
+
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = "polls/detail.html"
+
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = "polls/results.html"
+</pre>
+
+<h2>Part 5</h2>
+
+<h3>Create a test</h3>
+
+<p>
+  Add to <code>tests.py</code>
+</p>
+
+<pre>
+import datetime
+
+from django.test import TestCase
+from django.utils import timezone
+
+from .models import Question
+
+
+class QuestionModelTests(TestCase):
+    def test_was_publisehd_recently_with_future_question(self):
+        """
+        was_published_recently() returns False for questions whose pub_date
+        is in the future
+        """
+        time = timezone.now() + datetime.timedelta(days=30)
+        future_question = Question(pub_date=time)
+        self.assertIs(future_question.was_published_recently(), False)
+</pre>
+
+<h3>Fix the bug</h3>
+
+<p>
+  Edit <code>polls/models.py</code>
+</p>
+
+<pre>
+def was_published_recently(self):
+    now = timezone.now()
+    return now - datetime.timedelta(days=1) <= self.pub_date <= now
+</pre>
+
+<p>
+  Add a few more time-related tests:
+</p>
+
+<pre>
+    # ...
+
+    def test_was_publisehd_recently_with_old_question(self):
+        time = timezone.now() - datetime.timedelta(days=1, seconds=1)
+        old_question = Question(pub_date=time)
+        self.assertIs(old_question.was_published_recently(), False)
+
+
+    def test_was_publisehd_recently_with_recent_question(self):
+        time = timezone.now() - datetime.timedelta(hours=23, minutes=59)
+        recent_question = Question(pub_date=time)
+        self.assertIs(recent_question.was_published_recently(), True)
+</pre>
+
+<h3>Test a view</h3>
+
+<p>
+  If a <code>pub_date</code> is in the future, it should not be displayed.
+</p>
+
+<h4>The Django test client</h4>
+
+<p>
+  The test <code>Client</code> simulates a user interacting with the code at the view level.
+</p>
+
+<p>
+  The test client may be used in the <em>shell</em>. Note that this method does not create a test database, so the commands will be run against the existing database.
+</p>
+
+<pre>
+python manage.py shell
+</pre>
+
+<p>
+  Then, in the shell:
+</p>
+
+<pre>
+from django.test.utils import setup_test_environment
+setup_test_environment()
+
+from django.test import Client
+client = Client()
+
+from django.urls import reverse
+response = client.get(reverse("polls:index"))
+response.status_code
+response.content
+response.context["latest_question_list"]
+</pre>
+
+<p>
+  Change <code>latest_question_list</code> to exclude future questions:
+</p>
+
+<pre>
+# polls/views.py
+
+# ...
+from django.utils import timezone
+
+# ...
+
+class IndexView(...):
+    # ...
+
+    def get_queryset(self):
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+</pre>
+
+<h3>Test the new view</h3>
+
+<p>
+  Add to <code>polls/tests.py</code>:
+</p>
+
+<pre>
+from django.urls import reverse
+
+# ...
+def create_question(question_text, days):
+    time = timezone.now() + datetime.timedelta(days=days)
+    return Question.objects.create(question_text=question_text, pub_date=time)
+
+class QuestionIndexViewTests(TestCase):
+    def test_no_questions(self):
+        """
+        If no questions exist, an appropriate message is displayed.
+        """
+        response = self.client.get(reverse("polls:index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No polls are available.")
+        self.assertQuerySetEqual(response.context["latest_question_list"], [])
+
+    def test_past_question(self):
+        """
+        Questions with a pub_date in the past are displayed.
+        """
+        question = create_question(question_text="Past question", days=-30)
+        response = self.client.get(reverse("polls:index"))
+        self.assertQuerySetEqual(
+            response.context["latest_question_list"],
+            [question],
+        )
+
+    def test_future_question(self):
+        """
+        Questions with a pub_date in the future aren't displayed.
+        """
+        question = create_question(question_text="Future question", days=30)
+        response = self.client.get(reverse("polls:index"))
+        self.assertQuerySetEqual(
+            response.context["latest_question_list"],
+            [],
+        )
+
+    def test_past_question_and_future_question(self):
+        """
+        The question in the past is displayed but not the future one.
+        """
+        past_question = create_question(question_text="Past Question", days=-30)
+        future_question = create_question(question_text="Future Question", days=30)
+        response = self.client.get(reverse("polls:index"))
+        self.assertQuerySetEqual(
+            response.context["latest_question_list"],
+            [past_question],
+        )
+
+    def test_two_past_questions(self):
+        """
+        Both questions with a pub_date in the past are displayed.
+        """
+        question1 = create_question(question_text="Q.1", days=-5)
+        question2 = create_question(question_text="Q.2", days=-30)
+        response = self.client.get(reverse("polls:index"))
+        self.assertQuerySetEqual(
+            response.context["latest_question_list"],
+            [question1, question2],
+        )
+</pre>
+
+<h3>Test the <code>DetailView</code></h3>
+
+<p>
+  The <code>DetailView</code> in <code>views.py</code> also needs to filter questions:
+</p>
+
+<pre>
+# polls/views.py
+
+class DetailView(...):
+    # ...
+
+    def get_queryset(self):
+        """
+        Excludes any questions that aren't published yet.
+        """
+        return Question.objects.filter(pub_date__lte=timezone.now())
+</pre>
+
+<p>
+  Add to <code>polls/tests.py</code>
+</p>
+
+<pre>
+class QuestionDetailViewTests(TestCase):
+    def test_future_question(self):
+        future_question = create_question(question_text="Future Question", days=30)
+        url = reverse("polls:detail", args=(future_question.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_past_question(self):
+        past_question = create_question(question_text="Past Question", days=-30)
+        url = reverse("polls:detail", args=(past_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, past_question.question_text)
+</pre>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

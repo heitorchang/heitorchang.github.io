@@ -80,14 +80,68 @@
       <div class="content">
 
 
-    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">django</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">python</a></h3>
     
-<a class="index" href="class_based_views_bookstore.html">&#x1F4D8; class_based_views_bookstore.html</a><br>
-<a class="index" href="django-general-01.md.txt" target="_blank">&#x1F4C3; django-general-01.md.txt</a><br>
-<a class="index" href="django-many-to-many-reverse-filter-horiz.py.txt" target="_blank">&#x1F4C3; django-many-to-many-reverse-filter-horiz.py.txt</a><br>
-<a class="index" href="django_blog.html">&#x1F4D8; django_blog.html</a><br>
-<a class="index" href="django_minimal_custom_user.html">&#x1F4D8; django_minimal_custom_user.html</a><br>
-<a class="index" href="tutorial_official.html">&#x1F4D8; tutorial_official.html</a><br>
+<h1>Setting up local PostgreSQL for Django</h1>
+
+<h2>Installing PostgreSQL</h2>
+
+<pre>
+sudo apt install postgresql
+</pre>
+
+<p>
+  To restart the server:
+</p>
+
+<pre>
+sudo systemctl restart postgresql
+</pre>
+
+<h2>Creating a new database</h2>
+
+<pre>
+sudo -u postgres psql
+</pre>
+
+<p>
+  Inside <code>psql</code>:
+</p>
+
+<pre>
+create user djangouser with encrypted password 'djangopass';
+alter user djangouser with superuser;
+</pre>
+
+<p>
+  Also, create a user in <code>psql</code> for the username who will run tests:
+</p>
+
+<pre>
+create user heitor with encrypted password 'heitorpass';
+alter user heitor with superuser;
+</pre>
+
+<p>
+  Create a new database (ignore the error "could not change directory")
+</p>
+
+<pre>
+sudo -u postgres createdb django_db_name
+</pre>
+
+<h2>Access the new database</h2>
+
+<pre>
+psql -h 127.0.0.1 -p 5432 -U djangouser -d django_db_name
+</pre>
+
+<h2>Drop a database</h2>
+
+<p>
+  sudo -u postgres dropdb db_name
+</p>
+
 </div>
 <br>
 <hr>
