@@ -1,0 +1,41 @@
+"""
+Run commands to create a Django project as described in William Vincent's book
+Django for Beginners, 5th ed.
+"""
+
+import sys
+from pathlib import Path
+import subprocess
+
+
+SCRIPT_VERSION = "1.0.1"
+PROJECTS_DIR = "~/code/django_projects"
+
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python3 django_project.py DJANGO_VERSION PROJECT_NAME")
+        raise SystemExit(0)
+    else:
+        print(f"django_project.py version {SCRIPT_VERSION}")
+        print()
+
+        _, version, name = sys.argv
+        print(f"Creating Django {version} project {name}")
+
+        # Ensure PROJECTS_DIR exists
+        projects_dir_path = Path(PROJECTS_DIR)
+        print(f"Looking for projects directory {projects_dir_path}")
+        assert projects_dir_path.expanduser().exists()
+
+        script = f"""cd {PROJECTS_DIR}
+mkdir {name}
+cd {name}
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install django~={version}
+django-admin startproject django_project .
+python manage.py migrate"""
+
+        subprocess.run(script, shell=True, executable="/usr/bin/bash")
+        print(f"\nNow run:\ncd {name}\nsource .venv/bin/activate")

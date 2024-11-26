@@ -1,0 +1,139 @@
+# Traverse the src/ directory, looking for .html files
+# for each .html file, concatenate header.html, the body, and footer.html and save it in the corresponding location of build/
+
+import os
+import sys
+import shutil
+import glob
+import re
+
+
+valid_tags = set("!DOCTYPE !doctype !-- html head header meta title body main aside nav h1 h2 h3 h4 h5 h6 a p div span script style br hr b i em strong strike code pre table thead th tbody tr td ul ol li img button textarea input link blockquote iframe canvas undef {}".split())
+tag_pattern = re.compile(f'<([^/=\-,<\s{{]+?)[\s>]')
+
+
+def build_breadcrumbs(dir_name):
+    breadcrumbs = ""
+    dir_name = dir_name.replace("\\", "/")
+    dir_components = [d for d in dir_name.split("/") if d != '']
+    dir_components = dir_components[1:] # skip src/ or build/
+    cur_dir = ""
+    back_to_home = '/'.join(['..'] * len(dir_components)) if len(dir_components) > 0 else '.'
+    try:
+        cur_dir = dir_components[-1]
+    except:
+        pass
+
+    for i, dirname in enumerate(dir_components[:-1]):
+        link = dirname
+        back_dirs = '/'.join(['..'] * (len(dir_components) - i - 1))
+        breadcrumbs += f'<a href="{back_dirs}/index.html">{dirname}</a> / '
+
+    return f"""
+    <h3><a href="{back_to_home}/index.html">home</a> / {breadcrumbs}<a href="index.html">{cur_dir}</a></h3>
+    """
+
+
+def verify_html_tags(html, filename):
+    """Check the names of HTML tags found. Warn if non-HTML tags are found"""
+    groups = tag_pattern.findall(html)
+    if groups:
+        for t in groups:
+            tagname = t[1:].replace(">", "").strip()
+            if tagname not in valid_tags:
+                print(f"Warning: in {filename}: found unknown tag '{tagname}' in match {t}")
+    return html
+
+
+def replace_non_html_tags(html):
+    def replacer(match):
+        tag = match.group(1)
+        if tag not in valid_tags:
+            return f"&lt;{tag}&gt;"
+        return match.group(0)
+    return tag_pattern.sub(replacer, html)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python3 runbuild.py root_directory")
+        print()
+        print("Examples:")
+        print("python3 runbuild.py src")
+        print("python3 runbuild.py src/programming")
+        exit(0)
+
+    print("Removing build/")
+    try:
+        shutil.rmtree("build")
+    except FileNotFoundError:
+        print("Could not find build/")
+
+    print(f"Processing files")
+    root_dir = sys.argv[1]
+    if root_dir[-1] == '/':
+        root_dir = root_dir[:-1]
+    print("Root directory:", root_dir)
+    print()
+
+    for full_filename in sorted(glob.glob(f'{root_dir}/**', recursive=True), key=lambda e: e.lower()):
+        filename_parts = full_filename.split(os.sep)
+        if os.path.isfile(full_filename):
+            dirname, basename = full_filename.rsplit(os.sep, 1)
+            build_dirname = dirname.replace("src", "build", 1)
+            if not os.path.exists(build_dirname):
+                os.makedirs(build_dirname)
+            if basename.endswith(".html"):
+                with open(os.path.join(build_dirname, basename), 'w', encoding="utf-8") as build_file:
+                    for f in ['header.html', full_filename, 'footer.html']:
+                        with open(f, 'r', encoding="utf-8") as file_handle:
+                            if f == full_filename:
+                                print(build_breadcrumbs(dirname), file=build_file)
+                            # print(verify_html_tags(file_handle.read(), basename), file=build_file)
+                            print(replace_non_html_tags(file_handle.read()), file=build_file)
+            else:
+                # copy non-html files
+                shutil.copy(full_filename, os.path.join(build_dirname, basename))
+        else:
+            # in a directory, generate index.html
+            build_dirname = full_filename.replace("src", "build", 1)
+            if 'work' in full_filename:
+                print("Should not save work files here, use workdocs instead.")
+                raise RuntimeError
+            if not os.path.exists(build_dirname):
+                os.makedirs(build_dirname)
+            with open(os.path.join(full_filename.replace("src", "build"), 'index.html'), 'w', encoding="utf-8") as file_index:
+                dir_name = full_filename.replace("\\", "/")
+                with open("header.html", encoding="utf-8") as file_header:
+                    print(file_header.read(), file=file_index)
+
+                print(build_breadcrumbs(dir_name), file=file_index)
+
+                for filename in sorted(glob.glob(f'{full_filename}/**'), key=lambda e: e.lower()):
+                    basename = os.path.basename(filename)
+                    link = basename if "." in basename else f"{basename}/index.html"
+                    target = ""
+                    icon = ""
+                    if ".txt" in basename:
+                        icon = "&#x1F4C3;"
+                        target = ' target="_blank"'
+                    elif ".html" in basename:
+                        icon = "&#x1F4D8;"
+                    elif "." in basename:
+                        icon = "&#x1F4F0;"
+                    else:
+                        icon = "&#x1F4C1;"
+                    print(f'<a class="index" href="{link}"{target}>{icon} {basename}</a><br>', file=file_index)
+
+                with open("footer.html", encoding="utf-8") as file_header:
+                    print(file_header.read(), file=file_index)
+
+    print()
+    print("To view docs, open the build/ folder in a browser (using the file protocol).")
+    print()
+    print("Or run any HTTP server, such as Python's.")
+    print("cd build")
+    print("python3 -m http.server")
+    print()
+    print("To copy the static files to a public server, run:")
+    print("/bin/cp -f -r build/* ~/code/heitorchang.github.io/hcdocs/")
