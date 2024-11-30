@@ -91,6 +91,8 @@
   <li><a href="#ch2">Hello, World Website</a></li>
   <li><a href="#ch3">Personal Website</a></li>
   <li><a href="#ch4">Company Website</a></li>
+  <li><a href="#ch5">Message Board Website</a></li>
+  <li><a href="#ch6">Blog Website</a></li>
 </ol>
 
 <h2 id="ch1">Chapter 1: Initial Set Up</h2>
@@ -510,6 +512,753 @@ git push -u origin main
 </pre>
 
 <h2 id="ch4">Chapter 4: Company Website</h2>
+
+<h3>Initial Set Up</h3>
+
+<p>
+  As in the previous chapter, create a new Django project, calling it <code>company</code>. Use the <code>django_project.py</code> script:
+</p>
+
+<pre>
+python3 django_project.py 5.0.0 company
+</pre>
+
+<p>
+  Also, create the <code>pages</code> app, and add it to <code>INSTALLED_APPS</code>.
+</p>
+
+<pre>
+python manage.py startapp pages
+</pre>
+
+<pre>
+INSTALLED_APPS = [
+    ...
+    'pages',
+]
+</pre>
+
+<h3>Project-Level Templates</h3>
+
+<p>
+  Although Django finds templates in the <code>templates/</code> directory in each app's directory, it is also a good practice to create a single project-level <code>templates/</code> directory and placing all templates within it.
+</p>
+
+<pre>
+# Go to the top-level directory if not there already
+cd ~/code/django_projects/company
+
+mkdir templates
+</pre>
+
+<p>
+  And update <code>django_project/settings.py</code>:
+</p>
+
+<pre>
+# django_project/settings.py
+
+TEMPLATES = [
+    {
+        ...
+        'DIRS': [BASE_DIR / "templates"],
+        ...
+    }
+]
+</pre>
+
+<p>
+  Create <code>templates/home.html</code>:
+</p>
+
+<pre>
+&lt;!-- templates/home.html --&gt;
+&lt;h1&gt;Company Homepage&lt;/h1&gt;
+</pre>
+
+<h3>Function-Based View and URL</h3>
+
+<p>
+  Create the view:
+</p>
+
+<pre>
+# pages/views.py
+
+from django.shortcuts import render
+
+
+def home_page_view(request):
+    return render(request, "home.html")
+</pre>
+
+<p>
+  Create the <code>pages</code> URL dispatcher:
+</p>
+
+<pre>
+# pages/urls.py
+
+from django.urls import path
+
+from .views import home_page_view
+
+
+urlpatterns = [
+    path("", home_page_view),
+]
+</pre>
+
+<p>
+  Add a reference to the <code>pages</code> URLs file in the main URL file:
+</p>
+
+<pre>
+# django_project/urls.py
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("pages.urls")),
+]
+</pre>
+
+<h3>Template Context, Tags, and Filters</h3>
+
+<p>
+  A <em>tag</em> performs operations such as loops, conditionals, and template inheritance.
+</p>
+
+<p>
+  A <em>filter</em> is used to perform simple transformations that modify the display of variables, such as formatting dates, truncating text, or converting strings to uppercase.
+</p>
+
+<p>
+  Add the following context dict to the homepage view:
+</p>
+
+<pre>
+# pages/views.py
+
+...
+
+def home_page_view(request):
+    context = {
+        "inventory_list": ["Widget A", "Widget B", "Widget C"],
+        "greeting": "thank you for visiting acme company"
+    }
+    return render(request, "home.html", context)
+</pre>
+
+<p>
+  Update the homepage template to use the context values:
+</p>
+
+<pre>
+&lt;!-- templates/home.html --&gt;
+&lt;h1&gt;Company Homepage&lt;/h1&gt;
+
+&lt;p&gt;The current date and time is {% now "DATETIME_FORMAT" %}&lt;/p&gt;
+&lt;p&gt;There are {{ inventory_list|length }} items in the inventory.&lt;/p&gt;
+&lt;ul&gt;
+  {% for item in inventory_list %}
+  &lt;li&gt;{{ item }}&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+&lt;p&gt;
+  {{ greeting|title }}
+&lt;/p&gt;
+{% comment %}Add more content here{% endcomment %}
+</pre>
+
+<h3>Class-Based Views and Generic Class-Based Views</h3>
+
+<p>
+  Generic function-based views cannot easily be extended or customized. Class-based and generic class-based views help with code reusability.
+</p>
+
+<h3>TemplateView</h3>
+
+<p>
+  <code>TemplateView</code> is a generic class-based view. Add to <code>views.py</code>:
+</p>
+
+<pre>
+# pages/views.py
+
+...
+from django.views.generic import TemplateView
+
+
+def home_page_view ...
+
+
+class AboutPageView(TemplateView):
+    template_name = "about.html"
+</pre>
+
+<p>
+  Update the URL dispatcher:
+</p>
+
+<pre>
+# pages/urls.py
+
+from .views import home_page_view, AboutPageView
+
+
+urlpatterns = [
+    path("about/", AboutPageView.as_view()),
+    path("", home_page_view),
+]
+</pre>
+
+<p>
+  Create the template:
+</p>
+
+<pre>
+&lt;!-- templates/about.html" --&gt;
+&lt;h1&gt;Company About Page&lt;/h1&gt;
+</pre>
+
+<h3>get_context_data()</h3>
+
+<p>
+  Using <code>get_context_data</code> is the recommended approach for updating the template context in a generic class-based view:
+</p>
+
+<pre>
+# pages/views.py
+
+...
+
+class AboutPageView(TemplateView):
+    template_name = "about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["contact_address"] = "123 Main Street"
+        context["phone_number"] = "555-555-1234"
+
+        return context
+</pre>
+
+<p>
+  Update the template:
+</p>
+
+<pre>
+&lt;!-- templates/about.html" --&gt;
+&lt;h1&gt;Company About Page&lt;/h1&gt;
+
+&lt;p&gt;
+  We are located at {{ contact_address }} and our phone number is {{ phone_number }}.
+&lt;/p&gt;
+</pre>
+
+<h3>Template Inheritance</h3>
+
+<p>
+  Create the parent template, <code>base.html</code>:
+</p>
+
+<pre>
+&lt;!-- templates/base.html --&gt;
+&lt;header&gt;
+  &lt;a href="/"&gt;Home&lt;/a&gt;
+  &lt;a href="/about"&gt;About&lt;/a&gt;
+&lt;/header&gt;
+
+{% block content %}{% endblock %}
+</pre>
+
+<p>
+  Update the child templates, <code>home.html</code> and <code>about.html</code>.
+</p>
+
+<pre>
+&lt;!-- templates/home.html --&gt;
+{% extends "base.html" %}
+
+{% block content %}
+&lt;h1&gt;Company Homepage&lt;/h1&gt;
+
+&lt;p&gt;The current date and time is {% now "DATETIME_FORMAT" %}&lt;/p&gt;
+&lt;p&gt;There are {{ inventory_list|length }} items in the inventory.&lt;/p&gt;
+&lt;ul&gt;
+{% for item in inventory_list %}
+&lt;li&gt;{{ item }}&lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;
+&lt;p&gt;
+{{ greeting|title }}
+&lt;/p&gt;
+{% comment %}Add more content here{% endcomment %}
+{% endblock %}
+</pre>
+
+<pre>
+&lt;!-- templates/about.html" --&gt;
+{% extends "base.html" %}
+
+{% block content %}
+&lt;h1&gt;Company About Page&lt;/h1&gt;
+
+&lt;p&gt;
+  We are located at {{ contact_address }} and our phone number is {{ phone_number }}.
+&lt;/p&gt;
+{% endblock %}
+</pre>
+
+<h3>Named URLs</h3>
+
+<p>
+  A canonical name for a URL can be defined in the URL dispatcher:
+</p>
+
+<p>
+  <strong>Note</strong>: The book does not discuss <code>app_name</code>. It's a good idea to add it as part of the named URL, because most likely, many apps will have the <code>"home"</code> name.
+</p>
+
+<pre>
+# pages/urls.py
+
+...
+
+app_name = "pages"
+
+urlpatterns = [
+    path("about/", AboutPageView.as_view(), name="about"),
+    path("", home_page_view, name="home"),
+]
+</pre>
+
+<p>
+  Update <code>base.html</code> to use the named URLs:
+</p>
+
+<pre>
+&lt;!-- templates/base.html --&gt;
+&lt;header&gt;
+  &lt;a href="{% url 'pages:home' %}"&gt;Home&lt;/a&gt;
+  &lt;a href="{% url 'pages:about' %}"&gt;About&lt;/a&gt;
+&lt;/header&gt;
+
+{% block content %}{% endblock %}
+</pre>
+
+<h3>Tests</h3>
+
+<p>
+  To use the named URLs in tests, call the <code>reverse</code> function:
+</p>
+
+<pre>
+# pages/tests.py
+
+from django.test import SimpleTestCase
+from django.urls import reverse
+
+
+class HomepageTests(SimpleTestCase):
+    def test_url_exists_at_correct_location(self):
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_url_available_by_name(self):
+        response = self.client.get(reverse("pages:home"))
+        self.assertEqual(response.status_code, 200)
+
+
+class AboutPageTests(SimpleTestCase):
+    def test_url_exists_at_correct_location(self):
+        response = self.client.get("/about/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_url_available_by_name(self):
+        response = self.client.get(reverse("pages:about"))
+        self.assertEqual(response.status_code, 200)
+</pre>
+
+<p>
+  Check that the right template and content is displayed:
+</p>
+
+<pre>
+# pages/tests.py
+
+...
+
+class HomepageTests(SimpleTestCase):
+    ...
+
+    def test_template_name_correct(self):
+        response = self.client.get(reverse("pages:home"))
+        self.assertTemplateUsed(response, "home.html")
+
+    def test_template_content(self):
+        response = self.client.get(reverse("pages:home"))
+        self.assertContains(response, "<h1>Company Homepage</h1>")
+
+
+class AboutPageTests(SimpleTestCase):
+    ...
+
+    def test_template_name_correct(self):
+        response = self.client.get(reverse("pages:about"))
+        self.assertTemplateUsed(response, "about.html")
+
+    def test_template_content(self):
+        response = self.client.get(reverse("pages:home"))
+        self.assertContains(response, "<h1>Company About Page</h1>")
+</pre>
+
+<h3>Git and GitHub</h3>
+
+<p>
+  Same as in the last chapter.
+</p>
+
+<h2 id="ch5">Chapter 5: Message Board Website</h2>
+
+<h3>Initial Set Up</h3>
+
+<p>
+  Create a <code>message-board</code> project, then a <code>posts</code> app.
+</p>
+
+<p>
+  To run the development server with a different port, pass the desired number:
+</p>
+
+<pre>
+python manage.py runserver 8080
+</pre>
+
+<h3>Django's ORM</h3>
+
+<p>
+  An ORM (Object-Relational Mapper) allows us to write Python code to define database models and interact with them.
+</p>
+
+<p>
+  Migrations provide a way to track and sync database changes over time.
+</p>
+
+<p>
+  Our data will consist of a single table, <code>post</code>, with a single field, <code>text</code>.
+</p>
+
+<h3>Database Model</h3>
+
+<p>
+  Define the <em>Post</em> model:
+</p>
+
+<pre>
+# posts/models.py
+
+from django.db import models
+
+
+class Post(models.Model):
+    text = models.TextField()
+</pre>
+
+<p>
+  Stop the server (if running) and run (remember to specify the app to make migrations for, in case someone else is editing other apps):
+</p>
+
+<pre>
+python manage.py makemigrations posts
+python manage.py migrate
+</pre>
+
+<h3>Django Admin</h3>
+
+<p>
+  Create a superuser:
+</p>
+
+<pre>
+python manage.py createsuperuser
+</pre>
+
+<p>
+  Usually I enter <code>admin</code>, <code>a@a.com</code>, and <code>django33</code>
+</p>
+
+<p>
+  Add <code>Post</code> to <code>posts/admin.py</code> for it to show up in the Admin interface:
+</p>
+
+<pre>
+# posts/admin.py
+
+from django.contrib import admin
+
+from .models import Post
+
+
+admin.site.register(Post)
+</pre>
+
+<p>
+  Add a <code>__str__</code> method to the <code>Post</code> model so it becomes useful in the Admin:
+</p>
+
+<pre>
+# posts/models.py
+
+...
+
+class Post(models.Model):
+    text = models.TextField()
+
+    def __str__(self):
+        return self.text[:50]
+</pre>
+
+<h3>Function-Based View</h3>
+
+<p>
+  Start with the view:
+</p>
+
+<pre>
+# posts/views.py
+
+from django.shortcuts import render
+from .models import Post
+
+
+def post_list(request):
+    posts = Post.objects.all()
+    return render(request, "post_list.html", {"posts": posts})
+</pre>
+
+<p>
+  <code>objects</code>is the default manager for the <code>Post</code> model. <code>all()</code> is a method provided by the manager.
+</p>
+
+<h3>Templates and URLs</h3>
+
+<p>
+  Create the template:
+</p>
+
+<pre>
+# in the top-level <code>message-board</code> directory
+
+mkdir templates
+</pre>
+
+<p>
+  Update the templates setting:
+</p>
+
+<pre>
+# django_project/settings.py
+
+TEMPLATES = [
+    {
+        ...
+        "DIRS": [BASE_DIR / "templates"],
+        ...
+    }
+]
+</pre>
+
+<p>
+  Create the template:
+</p>
+
+<pre>
+&lt;!-- templates/post_list.html --&gt;
+&lt;h1&gt;Message Board Homepage&lt;/h1&gt;
+&lt;ul&gt;
+  {% for post in posts %}
+  &lt;li&gt;{{ post.text }}&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+</pre>
+
+<p>
+  Create the Posts app's URL dispatcher:
+</p>
+
+<pre>
+# posts/urls.py
+
+from django.urls import path
+from .views import post_list
+
+
+app_name = "posts"
+
+urlpatterns = [
+    path("", post_list, name="post_list")
+]
+</pre>
+
+<p>
+  And update the global URL dispatcher:
+</p>
+
+<pre>
+# django_project/urls.py
+
+from django.contrib import admin
+from django.urls import path, include
+
+
+app_name = "posts"
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("", include("posts.urls")),
+]
+</pre>
+
+<h3>ListView</h3>
+
+<p>
+  It is only a matter of preference whether a function-based view or generic class-based view is used.
+</p>
+
+<pre>
+# posts/views.py
+
+from django.views.generic import ListView
+from .models import Post
+
+
+class PostList(ListView):
+    model = Post
+    template_name = "post_list.html"
+</pre>
+
+<p>
+  Update the template, replacing the context variable's name:
+</p>
+
+<pre>
+&lt;!-- templates/post_list.html --&gt;
+...
+  {% for post in posts %}
+  <li>{{ post.text }}</li>
+  {% endfor %}
+...
+</pre>
+
+<p>
+  Finally, update the URL path:
+</p>
+
+<pre>
+# posts/urls.py
+
+...
+from .views import PostList
+
+...
+    path("", PostList.as_view(), name="home"),
+...
+</pre>
+
+<h3>Tests</h3>
+
+<p>
+  Since we now have a database, <code>TestCase</code> is the appropriate choice. Test names should start with <code>test</code>.
+</p>
+
+<p>
+  Use <code>setUpTestData()</code> (which should be a class method) to create test data:
+</p>
+
+<pre>
+# posts/tests.py
+
+from django.test import TestCase
+
+from .models import Post
+
+
+class PostTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.post = Post.objects.create(text="This is a test! A post!")
+
+    def test_model_content(self):
+        self.assertEqual(self.post.text, "This is a test! A post!")
+</pre>
+
+<p>
+  Now, we check that:
+</p>
+
+<ul>
+  <li>URL exists at / and returns a 200 HTTP status code</li>
+  <li>URL is available by its name of <code>"home"</code></li>
+  <li>Correct template is used and called "post_list.html"</li>
+  <li>Homepage content matches what we expect (database contents)</li>
+</ul>
+
+<pre>
+# posts/tests.py
+
+from django.test import TestCase
+from django.urls import reverse
+
+from .models import Post
+
+
+class PostTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.post = Post.objects.create(text="This is a test! A post!")
+
+    def test_model_content(self):
+        self.assertEqual(self.post.text, "This is a test! A post!")
+
+    def test_url_exists_at_correct_location(self):
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_url_available_by_name(self):
+        response = self.client.get(reverse("posts:home"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_template_name_correct(self):
+        response = self.client.get(reverse("posts:home"))
+        self.assertTemplateUsed(response, "post_list.html")
+
+    def test_template_content(self):
+        response = self.client.get(reverse("posts:home"))
+        self.assertContains(response, "This is a test!")
+</pre>
+
+<p>
+  It is arguably easier to understand a test that combines the last three above:
+</p>
+
+<pre>
+    ...
+    def test_homepage(self):
+        response = self.client.get(reverse("posts:home"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "post_list.html")
+        self.assertContains(response, "This is a test!")
+</pre>
+
+<h2 id="ch6">Chapter 6: Blog Website</h2>
+
+<p>
+
+</p>
 
 </div>
 <br>
