@@ -97,6 +97,12 @@
 
 <h2 id="ch1">Chapter 1: Initial Set Up</h2>
 
+<h3>Overview</h3>
+
+<p>
+  Running the development server.
+</p>
+
 <h3>Virtual environments</h3>
 
 <pre>
@@ -131,6 +137,12 @@ python manage.py runserver
 </pre>
 
 <h2 id="ch2">Chapter 2: Hello, World Website</h2>
+
+<h3>Overview</h3>
+
+<p>
+  The bare minimum view to display "Hello, World!".
+</p>
 
 <h3>Django Architecture</h3>
 
@@ -259,10 +271,12 @@ git commit -m "initial commit"
 </pre>
 
 <p>
-  <strong>Note</strong>: For now, the secrets in <code>settings.py</code> are saved in Git. In the Deployment section, these secret values are moved to environment variables.
+  <strong>Note</strong>: For now, the secrets in <code>settings.py</code> are saved in Git. In the Deployment chapter, these secret values are moved to environment variables.
 </p>
 
 <h2 id="ch3">Chapter 3: Personal Website</h2>
+
+<h3>Overview</h3>
 
 <p>
   This website will contain a Homepage and an About page.
@@ -513,6 +527,10 @@ git push -u origin main
 
 <h2 id="ch4">Chapter 4: Company Website</h2>
 
+<p>
+  Template inheritance and class-based views.
+</p>
+
 <h3>Initial Set Up</h3>
 
 <p>
@@ -520,6 +538,7 @@ git push -u origin main
 </p>
 
 <pre>
+cd ~/code/django_projects
 python3 django_project.py 5.0.0 company
 </pre>
 
@@ -924,6 +943,14 @@ class AboutPageTests(SimpleTestCase):
 
 <h2 id="ch5">Chapter 5: Message Board Website</h2>
 
+<p>
+  A database-backed app with class-based views.
+</p>
+
+<p>
+
+</p>
+
 <h3>Initial Set Up</h3>
 
 <p>
@@ -1256,8 +1283,113 @@ class PostTests(TestCase):
 
 <h2 id="ch6">Chapter 6: Blog Website</h2>
 
-<p>
+<h3>Overview</h3>
 
+<p>
+  A message posting app with CRUD (Create-Read-Update-Delete) functionality.
+</p>
+
+<h3>Initial Set Up</h3>
+
+<p>
+  Create a new project called <code>blog</code> and a new app also called <code>blog</code>.
+</p>
+
+<p>
+  Add to <code>blog/models.py</code>
+</p>
+
+<pre>
+# blog/models.py
+
+from django.db import models
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=200)  # Note: becomes ForeignKey below
+    body = models.TextField()
+
+    def __str__(self):
+        return self.title
+</pre>
+
+<p>
+  Make the migration file and migrate:
+</p>
+
+<pre>
+python manage.py makemigrations blog
+python manage.py migrate
+</pre>
+
+<p>
+  Update <code>author</code> to be a foreign key (in this case, <em>many-to-one</em>):
+</p>
+
+<pre>
+# blog/models.py
+
+...
+
+class Post(models.Model):
+    ...
+    author = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    ...
+</pre>
+
+<p>
+  <strong>Note</strong>: If there is existing data, it must be cleared for a migration to run properly.
+</p>
+
+<p>
+  Make the migration file again and migrate:
+</p>
+
+<pre>
+python manage.py makemigrations blog
+python manage.py migrate
+</pre>
+
+<h3>Admin</h3>
+
+<p>
+  Add to <code>blog/admin.py</code>
+</p>
+
+<pre>
+# blog/admin.py
+
+from django.contrib import admin
+from .models import Post
+
+admin.site.register(Post)
+</pre>
+
+<p>
+  To display all three fields of a <code>Post</code>:
+</p>
+
+<pre>
+# blog/admin.py
+
+...
+
+class PostAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "author",
+        "body",
+    )
+
+
+admin.site.register(Post, PostAdmin)
+</pre>
+
+<h3>Views</h3>
+
+<p>
+  STOP p. 129
 </p>
 
 </div>

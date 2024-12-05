@@ -85,10 +85,75 @@
 <h1>Svelte Tutorial</h1>
 
 <p>
-  <a href="https://svelte.dev/tutorial/basics" target="_blank">Tutorial start</a> accessed 31 May 2023.
+  <a href="https://svelte.dev/tutorial/welcome-to-svelte" target="_blank">Tutorial start</a>
 </p>
 
-<h3>App is built, not interpreted at runtime</h3>
+<h1>Basic Svelte</h1>
+
+<h2>Reactivity</h2>
+
+<h3>State</h3>
+
+<p>
+  To make a declaration reactive, wrap the value with <code>$state(...)</code>. This is called a <em>rune</em>. It tells Svelte that <code>count</code> is not an ordinary variable. It's part of the Svelte language.
+</p>
+
+<pre>
+let count = $state(0);
+</pre>
+
+<h3>Deep state</h3>
+
+<p>
+  State reacts to <em>reassignments</em> and <em>mutations</em> (this is <em>deep reactivity</em>). Deep reactivity is implemented with <em>proxies</em>.
+</p>
+
+<p>
+  The example is mutating an array:
+</p>
+
+<pre>
+let numbers = $state([1, 2, 3]);
+
+numbers[numbers.length] = 10;
+numbers.push(20);
+</pre>
+
+<h3>Derived state</h3>
+
+<p>
+  Derived state is declared with the <code>$derived</code> rune. Unlike normal state, derived state is read-only.
+</p>
+
+<pre>
+let numbers = $state([1, 2, 3]);
+let total = $derived(numbers.reduce((t, n) => t + n, 0));
+</pre>
+
+<h3>Inspecting state</h3>
+
+<p>
+  <code>$state.snapshot(...)</code> creates a non-reactive <em>snapshot</em> of the state.
+</p>
+
+<p>
+  Also, the <code>$inspect</code> rune automatically logs a snapshot of the state whenever it changes.
+</p>
+
+<pre>
+$inspect(numbers);
+$inspect(numbers).with(console.trace);
+</pre>
+
+<p>
+  <strong>Note</strong>: <code>$inspect</code> can only be used inside an effect (e.g. during component initialization).
+</p>
+
+<h3>Effects</h3>
+
+<p>
+  STOP
+</p>
 
 </div>
 <br>
