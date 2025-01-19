@@ -1,10 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="resume_maven_web.css">
-        <title>Heitor Chang</title>
+        <title>Heitor Chang - Resume</title>
     </head>
     <body>
       <h1>Heitor Chang</h1>
@@ -15,122 +15,83 @@
 
       <div id="professional">
         <h2>Professional Experience</h2>
+          <div>
+    
+    <div>
+      <h3 id="belgingur">Belgingur, LLC., Reykjavik, Iceland (Remote)</h3>
+    
+    <div>
+      <div class="prof-header-container">
+        <div class="prof-header-title">Senior Back-End Engineer</div>
+        <div class="prof-header-dates">Jan. 2024 &ndash; present</div>
+      </div>
+      <ul>
+        <li>Improved the flexibility of the Weather On Demand Python system by expanding the number of available configuration files.</li>
+<li>Completed a closest points linear regression model for weather forecasting</li>
+<li>Converted scientific Fortran code that models volcanic activity to Python modules that leverage NumPy and NetCDF libraries.</li>
+      </ul>
+    </div>
+    
+    </div>
+    
+    <div>
+      <h3 id="mediafly">Mediafly, Inc., Chicago, IL (Remote)</h3>
+    
+    <div>
+      <div class="prof-header-container">
+        <div class="prof-header-title">Senior Software Engineer, Data and Client Squad</div>
+        <div class="prof-header-dates">Aug. 2022 &ndash; Feb. 2023</div>
+      </div>
+      <ul>
+        <li>Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new custom objects holding metadata.</li>
+<li>Improved the Python video call processing pipeline, filtering out unwanted blocks of silence.</li>
+<li>Corrected multiple occurrences of temporary files not being cleared and other data inconsistencies in the Python pipeline code.</li>
+      </ul>
+    </div>
+    
+    </div>
+    
+    <div>
+      <h3 id="tempook">Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP</h3>
+    
+    <div>
+      <div class="prof-header-container">
+        <div class="prof-header-title">Senior Full-Stack Developer</div>
+        <div class="prof-header-dates">June 2020 &ndash; Aug. 2022</div>
+      </div>
+      <ul>
+        <li>Built and administered the public-facing website with Django, including custom user management and authentication with a JWT extension.</li>
+<li>Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and Continuous Deployment.</li>
+<li>Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs.</li>
+      </ul>
+    </div>
+    
+    </div>
+    
+    </div>
+    
       </div>
 
       <div id="education">
         <h2>Education</h2>
+          <div>
+    <h3 class="education">Stanford University, Stanford, CA</h3>
+      <div>
+        <div class="major">M.S. in Materials Science and Engineering</div>
+<div class="major">B.S. in Applied Mathematics</div>
+      </div>
+    </div>
+    
       </div>
 
       <div id="languages">
         <h2 class="skills">Skills</h2>
         <ul>
           <li>Advanced knowledge of <strong>Python</strong>.</li>
-          <li>Intermediate knowledge of <strong>JavaScript</strong>, <strong>CSS</strong>, <strong>HTML</strong>, <strong>Django</strong>, <strong>PostgreSQL</strong>, and <strong>Scheme</strong>.</li>
-          <li>Fluent in <strong>English</strong> and <strong>Brazilian Portuguese</strong>.</li>
-          <li>Intermediate knowledge of <strong>Italian</strong>.</li>
+          <li>Intermediate knowledge of <strong>JavaScript</strong>, <strong>CSS</strong>, <strong>HTML</strong>, <strong>Django</strong>, and <strong>PostgreSQL</strong>.</li>
+          <li>Fluent in <strong>English</strong> and <strong>Brazilian Portuguese</strong>. Intermediate knowledge of <strong>Italian</strong>.</li>
         </ul>
       </div>
-
-<script src="biwascheme-0.8.0-custom.min.js"></script>
-<script type="text/biwascheme">
-(console-log "resume-scm v.1.3.0")
-;; changelog
-;; 1.3.0 Add company ID in order to define page breaks
-;; 1.2.3 leave scm alone for now
-;; 1.2.2 allow multiple roles per company
-
-(define professional-section (getelem "#professional"))
-(define education-section (getelem "#education"))
-
-;; Professional item format
-;; (("Company name" "company-h3-id")
-;;  ("Role title" "Dates"
-;;   ("List of responsibilities"
-;;    "List continued")))
-;;
-;; Add a page break in the associated CSS file.
-(define professional-items
-  '(
-    (("Belgingur, LLC., Reykjavik, Iceland (Remote)" "belgingur")
-     ("Senior Back-End Engineer" "Jan. 2024 &ndash; present"
-      ("Improved the flexibility of the Weather On Demand Python system by expanding the number of available configuration files."
-       "Completed a linear regression model for forecasting weather variables based on the closest grid points."
-       "Converted scientific Fortran code that models volcanic activity to Python modules that leverage NumPy and NetCDF libraries.")))
-
-    (("Freelance Software Engineer, São Paulo, SP" "freelance")
-     ("Senior Full-Stack Developer" "Mar. 2023 &ndash; Dec. 2023"
-      ("Created REST APIs in Python with FastAPI and backed by PostgreSQL to read time series data for various scenarios and deployed them to Google Cloud."
-       "Developed a static site generator in Python to mirror documents in a local directory and add a practical navigation interface.")))
-
-    (("Mediafly, Inc., Chicago, IL (Remote)" "mediafly")
-     ("Senior Software Engineer, Data and Client Squad" "Aug. 2022 &ndash; Feb. 2023"
-      ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new custom objects holding metadata."
-       "Improved the Python video call processing pipeline, filtering out unwanted blocks of silence."
-       "Corrected multiple occurrences of temporary files not being cleared and other data inconsistencies in the Python pipeline code.")))
-
-    (("Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP" "tempook")
-     ("Senior Full-Stack Developer" "June 2020 &ndash; Aug. 2022"
-      ("Built and administered the public-facing website with Django, including custom user management and authentication with a JWT extension."
-       "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and Bitbucket's Continuous Deployment pipeline."
-       "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs.")))
-
-    (("Pontual Export &amp; Import Ltd., São Paulo, SP" "pontual")
-     ("Full-Stack Developer" "Jan. 2014 &ndash; June 2020"
-      ("Used MA (Moving Average) indicators in a Django and Python project to predict the demand for 600 products and calculate appropriate amounts for restocking."
-       "Prepared sales forecasts and summarized business-critical statistics in a Django app."
-       "Visualized historical sales with NumPy and Pandas, reporting totals and outliers for each product.")))))
-
-(define education-items
-  '(("New York University, New York, NY"
-     ("M.S. in Financial Mathematics"))
-    ("Stanford University, Stanford, CA"
-     ("B.S. in Applied Mathematics"))))
-
-;;; Professional Experience section
-(define (create-professional-item item)
-  (element-new
-   `(div
-     (,(string-append "h3#" (cadar item) ".professional") ,(caar item)) ; company name
-     ,@(roles-markup (cdr item)))))
-
-(define (roles-markup roles-list)
-  (map (lambda (role)
-         (role-markup role)) roles-list))
-
-(define (role-markup item)
-  `(div
-    ("div.prof-role" ,(car item))
-    ("div.prof-dates" ,(cadr item))
-    ,(tasks-markup (caddr item))))
-
-(define (tasks-markup tasks)
-  `(ul ,@(map (lambda (task) `(li ,task)) tasks)))
-
-;;; Education section
-(define (create-education-item item)
-  (element-new
-   `(div
-     ("h3.education" ,(car item))
-     ,(degrees-markup (cadr item)))))
-
-(define (degrees-markup degrees)
-  `(div ,@(map (lambda (major) `("div.major" ,major)) degrees)))
-
-;;; Mutate top-level sections
-(define (add-items-to-section section create-fn items)
-  (when (not (null? items))
-    (element-append-child! section (create-fn (car items)))
-    (add-items-to-section section create-fn (cdr items))))
-
-(add-items-to-section
- professional-section
- create-professional-item
- professional-items)
-
-(add-items-to-section
- education-section
- create-education-item
- education-items)
-</script>
     </body>
 </html>
+
