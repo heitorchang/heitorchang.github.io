@@ -13,7 +13,7 @@ professional_items = [
                 "time": "Jan. 2024 &ndash; present",
                 "responsibilities": [
                     "Improved the flexibility of the Weather On Demand Python system by expanding the number of available configuration files.",
-                    "Completed a closest points linear regression model for weather forecasting",
+                    "Completed a closest points linear regression model for weather forecasting.",
                     "Converted scientific Fortran code that models volcanic activity to Python modules that leverage NumPy and NetCDF libraries.",
                 ]
             },
