@@ -148,7 +148,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "PapayaWhip" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight light :height 120 :width normal :foundry "outline" :family "ProggyTinyTTSZ"))))
- '(sldb-restartable-frame-line-face ((t (:foreground "dark green")))))
+ '(sldb-restartable-frame-line-face ((t (:foreground "dark green"))))
+ '(idle-highlight ((t (:background "#bdf1de")))))
+
+(use-package idle-highlight-mode
+  :config (setq idle-highlight-idle-time 0.1)
+  :hook ((python-mode) . idle-highlight-mode))
 
 ;; auto-complete-mode
 (require 'auto-complete-config)
