@@ -23,20 +23,20 @@
 (define (bg color)
   (set! bg-color color)
   (js-call js-bg color)
-  "no value")
+  "#<no value>")
 
 (define (fg color)
   (set! fg-color color)
   (js-call js-fg color)
-  "no value")
+  "#<no value>")
 
 (define (temp-bg color)
   (js-call js-bg color)
-  "no value")
+  "#<no value>")
 
 (define (temp-fg color)
   (js-call js-fg color)
-  "no value")
+  "#<no value>")
 
 ;; aliases
 (define set-fill! bg)
@@ -44,49 +44,49 @@
 
 (define (rect x y w h)
   (js-call js-rect x y w h)
-  "no value")
+  "#<no value>")
 
 (define (rect-corners x1 y1 x2 y2)
   (rect x1 y1 (- x2 x1) (- y2 y1))
-  "no value")
+  "#<no value>")
 
 (define (square x y side)
   (rect x y side side)
-  "no value")
+  "#<no value>")
 
 (define (fill)
   (js-call js-fill)
-  "no value")
+  "#<no value>")
 
 (define (pt x y)
   (js-call js-pt x y)
-  "no value")
+  "#<no value>")
 
 (define (line x1 y1 x2 y2)
   (js-call js-line x1 y1 x2 y2)
-  "no value")
+  "#<no value>")
 
 (define (circle x y r)
   (js-call js-circle x y r)
-  "no value")
+  "#<no value>")
 
 (define (ellipse x y w h)
   (js-call js-ellipse x y w h)
-  "no value")
+  "#<no value>")
 
 (define (text x y s)
   (temp-bg fg-color)
   (js-call js-text x y s)
   (bg bg-color)
-  "no value")
+  "#<no value>")
 
 (define (set-font-size! s)
   (js-call js-set-text-size s)
-  "no value")
+  "#<no value>")
 
 (define (set-font! f)
   (js-call js-set-text-font f)
-  "no value")
+  "#<no value>")
 
 (define (clear)
   ;; Temporarily set the bg color to white, then restore the previous value
@@ -105,7 +105,7 @@
 
 (define (clear-console)
   (js-eval "document.getElementById('bs-console').innerText = ''")
-  "no value")
+  "#<no value>")
 
 ;; Initialization
 ;; Evaluate pre blocks
