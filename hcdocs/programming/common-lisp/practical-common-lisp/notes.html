@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #062;
+          font-size: 1rem;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        table {
+          border-collapse: collapse;
+        }
+
+        td {
+          padding: 0.5rem 0.8rem;
+          border: 1px solid #ccc;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">common-lisp</a> / <a href="index.html">practical-common-lisp</a></h3>
+    
+<h1>Practical Common Lisp</h1>
+
+<p>
+  A <em>plist</em> (property list) is used to represent CDs.
+</p>
+
+<pre>
+(defun make-cd (title artist rating ripped)
+  (list :title title :artist artist :rating rating :ripped ripped))
+
+(getf a-cd :artist)
+</pre>
+
+<pre>
+(defun prompt-read (prompt)
+  "Read a piece of information from the user"
+  (format *query-io* "~a: " prompt)
+  (force-output *query-io*)
+  (read-line *query-io*))
+</pre>
+
+<p>
+  <code>(y-or-n-p question-string)</code> returns <code>T</code> or <code>NIL</code> based on the user's answer.
+</p>
+
+<p>
+  Use <code>(return)</code> to leave a <code>(loop)</code>.
+</p>
+
+<p>
+  Chapter 3's example stores a database of CDs in a list called <code>*db*</code>. It is persisted in a text file, <code>my-cds.db</code>.
+</p>
+
+<pre>
+(defun save-db (filename)
+  (with-open-file (out filename
+                       :direction :output
+                       :if-exists :supersede)
+    (with-standard-io-syntax
+      (let ((*print-pretty* t))
+        (print *db* out)
+        t))))
+
+(defun load-db (filename)
+  (with-open-file (in filename)
+    (with-standard-io-syntax
+      (setf *db* (read in))
+      t)))
+</pre>
+
+<p>
+  <code>(remove-if-not #'predicate list-of-items)</code> will return a new list with items that satisfy the predicate.
+</p>
+
+<p>
+  Example of setting a value in a plist: <code>(setf (getf row :title) title))</code>
+</p>
+
+<p>
+  An <em>s-expression</em> can mean both the textual representation and the object that results from reading it.
+</p>
+
+<p>
+  Anything that you can <code>READ</code> can be fed to <code>PRINT</code>.
+</p>
+
+<p>
+  <code>NIL</code>, also written as <code>()</code>, is both an atom and a list. Note that the Little Schemer considers <code>NIL</code> to be only a list.
+</p>
+
+<pre>
+;; Little Schemer
+(defun atom? (x)
+  (not (listp x)))
+</pre>
+
+<p>
+  <em>Symbols</em> are objects that represent names used in programs. <em>Keyword symbols</em> are symbols whose names start with <code>:</code>.
+</p>
+
+<p>
+  (p. 44) Literal objects such as quoted lists, strings, arrays, and vectors must not be modified. Lists that are to be manipulated should be created with <code>(LIST ...)</code>.
+</p>
+
+<p>
+  (p. 44) A macro is a function that takes s-expressions as arguments and returns a Lisp form that is then evaluated.
+</p>
+
+<p>
+  Two phases occur:
+</p>
+
+<ol>
+  <li>The elements of the macro form are passed, unevaluated, to the macro function. Since these elements are not evaluated, they do not need to be valid Lisp forms.</li>
+  <li>The form returned by the macro function (its expansion) is evaluated according to normal rules.</li>
+</ol>
+
+<p>
+  <strong>Note:</strong> when compiling a file, all macro forms are recursively expanded until the code consists only of function calls and special forms.
+</p>
+
+<p>
+  (p. 71) Dynamic variables may be given a temporary value with a <code>LET</code> form or as a function parameter. After this code returns, the original value of the dynamic variable is restored.
+</p>
+
+<pre>
+(defvar *x* 10)
+(defun f ()
+  (format t "x: ~d~%" *x*))
+
+(let ((*x* 20)) (f))
+(f)
+</pre>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

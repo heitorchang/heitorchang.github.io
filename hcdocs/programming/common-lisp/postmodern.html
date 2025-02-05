@@ -80,24 +80,82 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">scheme</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">common-lisp</a></h3>
     
-<a class="index" href="biwascheme-examples.html">&#x1F4D8; biwascheme-examples.html</a><br>
-<a class="index" href="biwascheme-js-data.html">&#x1F4D8; biwascheme-js-data.html</a><br>
-<a class="index" href="biwascheme-reference.html">&#x1F4D8; biwascheme-reference.html</a><br>
-<a class="index" href="biwascheme.html">&#x1F4D8; biwascheme.html</a><br>
-<a class="index" href="biwascheme_files/index.html">&#x1F4C1; biwascheme_files</a><br>
-<a class="index" href="concrete-abstractions.html">&#x1F4D8; concrete-abstractions.html</a><br>
-<a class="index" href="concrete-abstractions_files/index.html">&#x1F4C1; concrete-abstractions_files</a><br>
-<a class="index" href="halting-problem.html">&#x1F4D8; halting-problem.html</a><br>
-<a class="index" href="little-schemer/index.html">&#x1F4C1; little-schemer</a><br>
-<a class="index" href="mit-scheme.html">&#x1F4D8; mit-scheme.html</a><br>
-<a class="index" href="scheme-files/index.html">&#x1F4C1; scheme-files</a><br>
-<a class="index" href="Scheme-High-School.html">&#x1F4D8; Scheme-High-School.html</a><br>
-<a class="index" href="scheme.html">&#x1F4D8; scheme.html</a><br>
-<a class="index" href="sicp-ch5-machine-sim.scm.txt" target="_blank">&#x1F4C3; sicp-ch5-machine-sim.scm.txt</a><br>
-<a class="index" href="standalone-biwascheme.html">&#x1F4D8; standalone-biwascheme.html</a><br>
-<a class="index" href="teach_yourself_scheme.html">&#x1F4D8; teach_yourself_scheme.html</a><br>
+<h1>Postmodern</h1>
+
+<h2>A PostgreSQL programming interface</h2>
+
+<h3>Ubuntu setup</h3>
+
+<p>
+  Login with the postgres user to create the user 'localuser' with password 'localpass'
+</p>
+
+<pre>
+sudo -u postgres psql
+
+&gt; create user localuser with encrypted password 'localpass';
+&gt; alter user localuser with superuser;
+
+Create a new database:
+sudo -u postgres createdb localdb
+
+Enter the new database:
+psql -h 127.0.0.1 -p 5433 -U localuser -d localdb
+</pre>
+
+<h3>Usage</h3>
+
+<p>
+  If doing local testing, it's easiest to create a top-level connection:
+</p>
+
+<pre>
+(connect-toplevel "localdb" "localuser" "localpass" "127.0.0.1")
+</pre>
+
+<h3>DAOs</h3>
+
+<p>
+  Define an entity:
+</p>
+
+<pre>
+(defclass country ()
+    ((name :col-type string :initarg :name :reader country-name)
+     (inhabitants :col-type integer :initarg :inhabitants :accessor country-inhabitants)
+     (sovereign :col-type (or db-null string) :initarg :sovereign :accessor country-sovereign))
+    (:metaclass dao-class)
+    (:keys name))
+</pre>
+
+<p>
+  Create a table:
+</p>
+
+<pre>
+(execute (dao-table-definition 'country))
+</pre>
+
+<p>
+  Insert values:
+</p>
+
+<pre>
+(insert-dao (make-instance 'country :name "San Marino" :inhabitants 120000 :sovereign "Mr. P."))
+</pre>
+
+<p>
+  Read values:
+</p>
+
+<pre>
+(query "select * from country")
+
+(query (:select '* :from 'country))
+</pre>
+
 </div>
 <br>
 <hr>
