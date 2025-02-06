@@ -1,4 +1,5 @@
 (declaim (optimize (debug 3) (safety 3) (space 0) (speed 0)))
+(declaim (sb-ext:muffle-conditions sb-kernel:redefinition-warning))
 (require 'uiop)
 
 (load "~/code/japanese-vocab/japanese-vocab.lisp")

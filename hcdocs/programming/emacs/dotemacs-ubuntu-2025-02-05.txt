@@ -509,18 +509,6 @@ they line up with the line containing the corresponding opening bracket."
           (lambda ()
             (local-set-key [S-return] (lambda () (interactive) (call-interactively 'eval-print-last-sexp) (insert "\n")))))
 
-(add-hook 'slime-repl-mode-hook
-          (lambda ()
-            (auto-complete-mode 0)
-            (enable-paredit-mode)
-            (define-key paredit-mode-map (kbd "<C-left>") 'backward-word)
-            (define-key paredit-mode-map (kbd "<C-right>") 'forward-word)
-            (define-key paredit-mode-map (kbd "<M-left>") 'backward-sexp)
-            (define-key paredit-mode-map (kbd "<M-right>") 'forward-sexp)
-            (define-key paredit-mode-map (kbd "<C-return>") 'slime-repl-return)
-            (define-key paredit-mode-map (kbd "<return>") 'newline-and-indent)
-            (local-set-key (kbd "C-c C-q") 'slime-repl-quit)))
-
 (add-hook 'lisp-mode-hook
           (lambda ()
             (auto-complete-mode 1)
@@ -530,7 +518,15 @@ they line up with the line containing the corresponding opening bracket."
             (define-key paredit-mode-map (kbd "<C-right>") 'forward-word)
             (define-key paredit-mode-map (kbd "<M-left>") 'backward-sexp)
             (define-key paredit-mode-map (kbd "<M-right>") 'forward-sexp)
+            (define-key paredit-mode-map (kbd "<S-return>") 'my-next-line-and-eval)
             (define-key paredit-mode-map (kbd "<C-return>") 'slime-eval-buffer)))
+
+(add-hook 'slime-repl-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)
+            (enable-paredit-mode)
+            (define-key paredit-mode-map (kbd "<M-return>") 'newline-and-indent)
+            (local-set-key (kbd "C-c C-q") 'slime-repl-quit)))
 
 (add-hook 'scheme-mode-hook
           (lambda ()
@@ -712,6 +708,12 @@ they line up with the line containing the corresponding opening bracket."
   (interactive)
   (end-of-line)
   (newline-and-indent))
+
+(defun my-next-line-and-eval ()
+  (interactive)
+  (end-of-line)
+  (newline-and-indent)
+  (slime-eval-last-expression))
 
 (defun my-inferior-scheme-newline ()
   (interactive)
