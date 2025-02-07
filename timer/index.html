@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Timer</title>
+  </head>
+  <body>
+    <div>
+      Label:
+      <input id="label">
+      <button id="clearLabel">Clear</button>
+    </div>
+    <br>
+    <div>
+      <span id="elapsed">0:00:00</span>
+      <input type="button" value="Start timer" id="startTimer">
+    </div>
+    <script>
+    var alertWindow;
+    var intv;
+
+    document.getElementById("clearLabel").addEventListener("click", function() {
+      document.getElementById("label").value = "";
+    });
+
+    document.getElementById("startTimer").addEventListener("click", function() {
+      var startDate = (new Date()).getTime();
+      var secs = 0;
+
+      document.title = "Start...";
+
+      clearInterval(intv);
+
+      intv = setInterval(function () {
+        var disp = secstohms(secs);
+        document.title = disp;
+        document.getElementById("elapsed").innerText = disp;
+        secs = secsDiff(startDate);
+      }, 1000);
+    });
+
+    function secsDiff(start) {
+      return Math.floor(((new Date()).getTime() - start) / 1000);
+    }
+
+    function secstomins(s) {
+      var secsdisp = s % 60;
+      var minsdisp = Math.floor(s / 60);
+      if (minsdisp < 10) {
+        minsdisp = "0" + minsdisp;
+      }
+      if (secsdisp < 10) {
+        secsdisp = "0" + secsdisp;
+      }
+      return minsdisp + ":" + secsdisp;
+    }
+
+    function secstohms(s) {
+      // s < 3600 is 0:59:59
+      var hoursdisp = Math.floor(s / 3600);
+      var secsleft = s - hoursdisp * 3600;
+      return hoursdisp + ":" + secstomins(secsleft);
+    }
+
+    var now = new Date();
+
+    function parsehhmm(s) {
+      var parts = s.split(":");
+      var hh = parseInt(parts[0]);
+      var mm = parseInt(parts[1]);
+
+      if (isNaN(hh)) {
+        hh = 0;
+      }
+
+      if (isNaN(mm)) {
+        mm = 0;
+      }
+
+      return { hh: hh, mm: mm };
+    }
+    </script>
+    </body>
+</html>
