@@ -82,17 +82,330 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">bash</a></h3>
     
-<h1>bash</h1>
-
-<h3>Bypassing git checks in Windows</h3>
+<h1>Bash Tutorial</h1>
 
 <p>
-  Copy <code>git.exe</code> to <code>prg.exe</code>
+  <a href="https://ryanstutorials.net/bash-scripting-tutorial/" target="_blank">Tutorial website</a>
 </p>
 
-<h3>Windows .bashrc</h3>
+<h3>Variables</h3>
 
-<iframe width="800" height="400" src="bashrc-windows.txt"></iframe>
+<ul>
+  <li>Setting a variable: <code>variable_name=value</code></li>
+  <li>Reading a variable: <code>$variable_name</code></li>
+</ul>
+
+<h4>Command line arguments</h4>
+
+<p>
+  <code>$1</code>,<code>$2</code>, etc. are automatically available.
+</p>
+
+<p>
+  Special variables:
+</p>
+
+<ul>
+  <li>$0 (the name of the Bash script)</li>
+  <li>$# (number of arguments passed via the command line)</li>
+  <li>$@ (all arguments supplied)</li>
+  <li>$? (exit status of the most recently run process)</li>
+  <li>$$ (process ID of the current script)</li>
+  <li>$LINENO (current line number in the script)</li>
+</ul>
+
+<p>
+  Running <code>env</code> lists additional variables that may be used.
+</p>
+
+<h3>Quotes</h3>
+
+<p>
+  Single quotes treat every character literally. Double quotes allow substitutions (in other words, to include variables.
+</p>
+
+<pre>
+myvar='my value'
+literal='The literal string $myvar'
+substituted="The value of myvar $myvar"
+
+echo Literal: $literal
+echo Substituted: $substituted
+</pre>
+
+<h3>Command substitution</h3>
+
+<p>
+  Place the command inside parentheses, such as <code>entries=$(ls /etc | wc -l)</code>
+</p>
+
+<h3>Exporting variables</h3>
+
+<p>
+  To make values available to other process, they must be in exported variables.
+</p>
+
+<pre>
+var1=blah
+export var1
+</pre>
+
+<h3>User input</h3>
+
+<p>
+  <em>Skipped</em>
+</p>
+
+<h3>Arithmetic</h3>
+
+<p>
+  Use <code>let</code> to do simple arithmetic. Use quotes (single or double) to be able to use spaces:
+</p>
+
+<pre>
+let "a = 2 + 3"
+let 'b = 4 + 8'
+
+echo $a $b
+
+let "a = a + 1000"
+echo $a
+</pre>
+
+<p>
+  <code>expr</code> prints the value instead of saving it to a variable.
+</p>
+
+<h4>Double parentheses</h4>
+
+<p>
+  An arithmetic expression may be placed inside double parentheses:
+</p>
+
+<pre>
+a=$((2 + 3))
+echo $a
+</pre>
+
+<p>
+  Increase a counter with <code>++</code>
+</p>
+
+<pre>
+counter=1
+echo $counter
+((counter++))
+</pre>
+
+<h3>If statements</h3>
+
+<pre>
+if [ &lt;a test&gt; ]
+then
+    &lt;commands&gt;
+fi
+</pre>
+
+<pre>
+if [ $1 -gt 100 ]
+then
+    echo That\'s a large number.
+fi
+</pre>
+
+<p>
+  The contents inside the square brackets is a reference to the command <code>test</code>. The most common operators are:
+</p>
+
+<ul>
+  <li>! expression: this expression is false</li>
+  <li>-n str: the length of str is greater than zero</li>
+  <li>-z str: the length of str is zero (empty)</li>
+  <li>str1 = str2: the two strings are equal</li>
+  <li>str1 != str2: the two strings are not equal</li>
+  <li>int1 -eq int2: the two integers are equal</li>
+  <li>int1 -gt int2: int1 is greater than int2 (-ge is greater than or equal)</li>
+  <li>int1 -lt int2: int1 is less than int2 (-le is less than or equal)</li>
+  <li>-d file: file exists and is a directory</li>
+  <li>-e file: file exists</li>
+  <li>-s file: file exists and its size is greater than zero (not empty)</li>
+  <li>-r file: file exists and the read permission is granted</li>
+</ul>
+
+<h4>If-else</h4>
+
+<pre>
+if [ &lt;a test&gt; ]
+then
+    &lt;commands&gt;
+else
+    &lt;other commands&gt;
+fi
+</pre>
+
+<h4>If-elif-else</h4>
+
+<pre>
+if [ &lt;a test&gt; ]
+then
+    &lt;commands&gt;
+elif [ &lt;a test&gt; ]
+then
+    &lt;commands&gt;
+else
+    &lt;other commands&gt;
+fi
+</pre>
+
+<h4>Boolean operators</h4>
+
+<p>
+  Use <code>&&</code> for <strong>and</strong> and <code>||</code> for <strong>or</strong>.
+</p>
+
+<pre>
+if [ -r $1 ] && [ -s $1 ]
+then
+    echo This file is useful.
+fi
+</pre>
+
+<h4>Case statements</h4>
+
+<p>
+  <em>Skipped</em>
+</p>
+
+<h3>Loops</h3>
+
+<h4>While loops</h4>
+
+<pre>
+while [ &lt;a test&gt; ]
+do
+    &lt;commands&gt;
+done
+</pre>
+
+<p>
+  <code>until</code> is similar to <code>while</code>. It executes the commands until the test becomes true.
+</p>
+
+<h4>For loops</h4>
+
+<pre>
+for var in &lt;list&gt;
+do
+    &lt;commands&gt;
+done
+</pre>
+
+<p>
+  The list is defined as a series of strings, separated by spaces.
+</p>
+
+<h5>Integer ranges</h5>
+
+<p>
+  A for loop can process a series of numbers. Both endpoints are included:
+</p>
+
+<pre>
+for i in {1..5}
+do
+    echo $i
+done
+</pre>
+
+<h5>Process a set of files</h5>
+
+<pre>
+for value in *.txt
+do
+    echo $value
+done
+</pre>
+
+<h4>break and continue</h4>
+
+<p>
+  These two statements modify the flow of the loop.
+</p>
+
+<h4>Select statement</h4>
+
+<p>
+  <em>Skipped</em>
+</p>
+
+<h3>Functions</h3>
+
+<pre>
+fn_name () {
+    &lt;commands&gt;
+}
+</pre>
+
+<p>
+  or
+</p>
+
+<pre>
+function fn_name {
+    &lt;commands&gt;
+}
+</pre>
+
+<p>
+  The two methods shown above do the same thing. Choosing one is a matter of personal preference.
+</p>
+
+<p>
+  Arguments passed to the function do not go inside the parentheses. They are accessible within the function as <code>$1</code>, <code>$2</code>, etc.
+</p>
+
+<p>
+  The function definition must appear before any calls to it.
+</p>
+
+<p>
+  There is no such thing as a return value. A return status may be set, but using it as a return value is a kind of hack. Based on manual testing, only values 0-255 get printed (larger numbers wrap around).
+</p>
+
+<p>
+  One way around this limitation is to use command substitution and have the function print the result:
+</p>
+
+<pre>
+lines_in_file () {
+    cat $1 | wc -l
+}
+
+num_lines=$(lines_in_file $1)
+echo The file $1 has $num_lines lines.
+</pre>
+
+<h3>Variable scope</h3>
+
+<p>
+  Within functions, it's a good idea to declare variables as <em>local</em>:
+</p>
+
+<pre>
+var_change () {
+    local var1='local 1'
+    echo In var_change $var1
+    var1='changed var1'
+    echo In var_change after change $var1
+}
+
+var1='global 1'
+echo Before var_change $var1
+
+var_change
+
+echo After var_change $var1
+</pre>
 
 </div>
 <br>
