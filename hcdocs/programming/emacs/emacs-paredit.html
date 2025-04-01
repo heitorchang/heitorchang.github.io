@@ -214,13 +214,37 @@
       <td class="hc-monospace">jump-to-last-sexp</td>
       <td class="hc-monospace">&bull; &nbsp;</td>
     </tr>
-    <tr>
-      <td class="hc-monospace">C-return</td>
-      <td class="hc-monospace">my-newline-without-breaking</td>
-      <td class="hc-monospace">&bull; &nbsp;</td>
-    </tr>
   </tbody>
 </table>
+
+<h3>Emacs Lisp mode keybindings</h3>
+
+<pre>
+(add-hook 'lisp-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)
+            (electric-indent-mode 1)
+            (enable-paredit-mode)
+            (define-key paredit-mode-map (kbd "&lt;C-right&gt;") 'forward-word)
+  (define-key paredit-mode-map (kbd "&lt;C-left&gt;") 'backward-word)
+  (define-key paredit-mode-map (kbd "&lt;M-right&gt;") 'forward-sexp)
+  (define-key paredit-mode-map (kbd "&lt;M-left&gt;") 'backward-sexp)
+  (define-key paredit-mode-map (kbd "&lt;S-return&gt;") 'my-next-line-and-eval)
+  (define-key paredit-mode-map (kbd "&lt;C-return&gt;") 'slime-eval-buffer)))
+
+(add-hook 'slime-repl-mode-hook
+          (lambda ()
+            (auto-complete-mode 1)
+            (enable-paredit-mode)
+            (define-key paredit-mode-map (kbd "&lt;M-return&gt;") 'newline-and-indent)
+  (local-set-key (kbd "C-c C-q") 'slime-repl-quit)))
+
+(defun my-next-line-and-eval ()
+  (interactive)
+  (end-of-line)
+  (newline-and-indent)
+  (slime-eval-last-expression))
+</pre>
 
 </div>
 <br>
