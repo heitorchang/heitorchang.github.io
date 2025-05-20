@@ -80,23 +80,57 @@
       <div class="content">
 
 
-    <h3><a href="../index.html">home</a> / <a href="index.html">tools</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">scheme</a></h3>
     
-<a class="index" href="fstab.html">&#x1F4D8; fstab.html</a><br>
-<a class="index" href="git-files/index.html">&#x1F4C1; git-files</a><br>
-<a class="index" href="git.html">&#x1F4D8; git.html</a><br>
-<a class="index" href="gpg.html">&#x1F4D8; gpg.html</a><br>
-<a class="index" href="grep.html">&#x1F4D8; grep.html</a><br>
-<a class="index" href="jira.html">&#x1F4D8; jira.html</a><br>
-<a class="index" href="misc_users/index.html">&#x1F4C1; misc_users</a><br>
-<a class="index" href="pycharm.html">&#x1F4D8; pycharm.html</a><br>
-<a class="index" href="scrum-notes.txt" target="_blank">&#x1F4C3; scrum-notes.txt</a><br>
-<a class="index" href="scrum.html">&#x1F4D8; scrum.html</a><br>
-<a class="index" href="ubuntu/index.html">&#x1F4C1; ubuntu</a><br>
-<a class="index" href="vscode-files/index.html">&#x1F4C1; vscode-files</a><br>
-<a class="index" href="vscode.html">&#x1F4D8; vscode.html</a><br>
-<a class="index" href="wget.html">&#x1F4D8; wget.html</a><br>
-<a class="index" href="xterm.html">&#x1F4D8; xterm.html</a><br>
+<h1>Chicken Scheme</h1>
+
+<h2>Command-line script</h2>
+
+<pre>
+(import (chicken port)
+        (chicken process-context))
+
+(define (square n)
+  (* n n))
+
+(display
+ (square
+  (string->number
+   (car (command-line-arguments)))))
+</pre>
+
+<h2>Separating user-defined functions into modules</h2>
+
+<h3>Library module</h3>
+
+<pre>
+(module
+ my-lib-mod (cube)
+ (import scheme)
+
+ (define (cube n)
+   (* n n n))
+ ;;
+)
+</pre>
+
+<pre>
+(module
+ my-main-mod ()
+ (import scheme)
+ (import my-lib-mod)
+
+ (display (cube 8)))
+</pre>
+
+<h3>Compilation and execution</h3>
+
+<pre>
+csc -s -J my-lib-mod.scm
+csc my-main-mod.scm
+./my-main-mod
+</pre>
+
 </div>
 <br>
 <hr>

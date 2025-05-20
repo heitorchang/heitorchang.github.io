@@ -1,0 +1,10 @@
+#!/bin/bash
+
+gpg --symmetric tmp_for_edit_misc_users.txt
+
+if [ $? -eq 0 ]; then
+    mv -f tmp_for_edit_misc_users.txt.gpg misc_users.txt.gpg
+    rm -f tmp_for_edit_misc_users.txt
+else
+    echo GPG did not complete successfully.
+fi

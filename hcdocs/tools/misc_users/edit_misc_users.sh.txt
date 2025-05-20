@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -f misc_users.txt.gpg ]; then
+    gpg -d misc_users.txt.gpg > tmp_for_edit_misc_users.txt
+    echo Edit tmp_for_edit_misc_users.txt
+else
+    echo Could not find misc_users.txt.gpg
+fi

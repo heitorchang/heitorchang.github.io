@@ -1,4 +1,4 @@
-import pandas as pd
+# import pandas as pd
 import numpy as np
 import netCDF4 as nc
 import os
@@ -7,7 +7,7 @@ import json
 from datetime import datetime, timedelta
 from pathlib import Path
 
-print("Imported Pandas, NumPy, netCDF4, os, and sys.")
+print("Imported NumPy, netCDF4, os, and sys.")
 
 
 def json_traverse(s, max_level=0, show_values=True, show_levels=False):
