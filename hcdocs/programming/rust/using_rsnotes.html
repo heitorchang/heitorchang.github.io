@@ -82,14 +82,55 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">rust</a></h3>
     
-<a class="index" href="actix.html">&#x1F4D8; actix.html</a><br>
-<a class="index" href="programming_rust_2nd_ed.html">&#x1F4D8; programming_rust_2nd_ed.html</a><br>
-<a class="index" href="rocket.html">&#x1F4D8; rocket.html</a><br>
-<a class="index" href="rust_book_klabnik.html">&#x1F4D8; rust_book_klabnik.html</a><br>
-<a class="index" href="rust_book_klabnik_guessing_game.txt" target="_blank">&#x1F4C3; rust_book_klabnik_guessing_game.txt</a><br>
-<a class="index" href="rust_book_notes.html">&#x1F4D8; rust_book_notes.html</a><br>
-<a class="index" href="rust_general.html">&#x1F4D8; rust_general.html</a><br>
-<a class="index" href="using_rsnotes.html">&#x1F4D8; using_rsnotes.html</a><br>
+rsnotes v.0.1
+<h1>Using rsnotes</h1>
+<p>The initial version of <code>rsnotes</code> (0.1) is very simple: it takes a filename of Markdown-formatted content, and outputs converted HTML to <em>stdout</em>.</p>
+<p>This document has been created in Emacs and converted with <code>rsnotes</code>.</p>
+<h2>Usage</h2>
+<p>Build with <code>cargo build</code> then run:</p>
+<p><code>./target/debug/rsnotes input.md &gt; output.html</code></p>
+<h2>rsnotes v.0.1 source code</h2>
+<pre><code>use std::env;
+use std::fs;
+
+use minijinja::{Environment, context};
+use pulldown_cmark::{Parser, Options};
+
+
+fn run_jinja(body: &amp;str) {
+    // todo: have a link to parent directory
+    let mut env = Environment::new();
+    env.add_template("hello", "{{ body }}").unwrap();
+
+    let tmpl = env.get_template("hello").unwrap();
+    println!("{}", tmpl.render(context!(name =&gt; "John", body =&gt; &amp;body)).unwrap());
+}
+
+fn run_markdown(md: &amp;str) -&gt; String {
+    let options = Options::empty();
+    let parser = Parser::new_ext(md, options);
+    let mut html_output = String::new();
+    pulldown_cmark::html::push_html(&amp;mut html_output, parser);
+    html_output
+}
+
+fn main() {
+    // Idea: cargo build, then run
+    // ./target/debug/rsnotes markdown_input/content.md &gt; html_output/page.html
+    // use a shell script to automate it
+    // copy the output to hcdocs
+
+    println!("rsnotes v.0.1");
+
+    let args: Vec&lt;String&gt; = env::args().collect();
+    let file_path = &amp;args[1];
+
+    let contents = fs::read_to_string(file_path).expect("Could not read file");
+    run_jinja(&amp;run_markdown(&amp;contents));
+}
+</code></pre>
+
+
 </div>
 <br>
 <hr>
