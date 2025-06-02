@@ -84,42 +84,61 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">cooking</a> / <a href="index.html">recipes</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">rust</a></h3>
     
-<h1>Chicken Cacciatore (traditional)</h1>
+<h1>rsnotes</h1>
+<p>Rust Markdown-to-HTML Conversion</p>
+<h2>Usage</h2>
+<p>Build with <code>cargo build</code> then run:</p>
+<p><code>./target/debug/rsnotes input.md &gt; output.html</code></p>
+<h2>Cargo.toml</h2>
+<pre><code>[package]
+name = "rsnotes"
+version = "0.1.0"
+edition = "2024"
 
-<h3>Source: Dona Benta Comer Bem, Nacional, (c) 2021, p. 486</h3>
+[dependencies]
+pulldown-cmark = "0.13.0"
+minijinja = "2.10.2"
+</code></pre>
+<h2>Source code</h2>
+<pre><code>use std::env;
+use std::fs;
 
-<h3>Ingredients</h3>
-
-<ul>
-  <li>1 kg Chicken pieces (such as boneless and skinless thighs)</li>
-  <li>4 Garlic cloves, minced</li>
-  <li>Oil</li>
-  <li>1 Onion, diced</li>
-  <li>Sliced mushrooms</li>
-  <li>Diced red bell pepper</li>
-  <li>100 mL white wine</li>
-  <li>6 tomatoes, peeled and seeded</li>
-  <li>150 g cherry tomatoes, peeled</li>
-</ul>
-
-<p>
-  To peel tomatoes easily, score the tomatoes' ends in a cross shape using a knife. Then, boil water (enough to cover the tomatoes) to blanch the tomatoes (1 minute for regular tomatoes, 20 seconds for cherry tomatoes). Peel them with a knife.
-</p>
+use minijinja::{Environment, context};
+use pulldown_cmark::{Parser, Options};
 
 
-<h3>Procedure:</h3>
+// rsnotes v.0.1
 
-<ol>
-  <li>Season chicken with garlic, salt, and pepper.</li>
-  <li>Heat oil. Brown chicken in batches. Set aside.</li>
-  <li>Brown onions.</li>
-  <li>Deglaze with white wine. Reduce by half.</li>
-  <li>Add all ingredients back in pot, except mushrooms.</li>
-  <li>Cover and let the tomatoes become a sauce.</li>
-  <li>Reduce until desired thickness, stirring occasionally. Estimate about 8 minutes cooking time for the mushrooms.</li>
-</ol>
+fn run_jinja(body: &amp;str) {
+    // todo: have a link to parent directory
+    let mut env = Environment::new();
+    env.add_template("hello", "{{ body }}").unwrap();
+
+    let tmpl = env.get_template("hello").unwrap();
+    println!("{}", tmpl.render(context!(name =&gt; "John", body =&gt; &amp;body)).unwrap());
+}
+
+fn run_markdown(md: &amp;str) -&gt; String {
+    let mut options = Options::empty();
+    options.insert(Options::ENABLE_HEADING_ATTRIBUTES);
+    let parser = Parser::new_ext(md, options);
+    let mut html_output = String::new();
+    pulldown_cmark::html::push_html(&amp;mut html_output, parser);
+    html_output
+}
+
+fn main() {
+    let args: Vec&lt;String&gt; = env::args().collect();
+    let file_path = &amp;args[1];
+
+    let contents = fs::read_to_string(file_path).expect("Could not read file");
+    run_jinja(&amp;run_markdown(&amp;contents));
+}
+</code></pre>
+
+
 
 </div>
 <br>

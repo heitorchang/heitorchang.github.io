@@ -174,6 +174,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setq ac-disable-faces nil)
 
 (global-auto-complete-mode t)
+(add-to-list 'ac-modes 'fundamental-mode)
 (setq ac-ignore-case nil)
 (define-key ac-completing-map "\r" nil)  ; remove completion with RET
 (setq ac-auto-start 1)
