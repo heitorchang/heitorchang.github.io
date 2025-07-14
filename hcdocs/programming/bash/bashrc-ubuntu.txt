@@ -1,0 +1,286 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# echo "***************"
+# echo "* Run pullall *"
+# echo "***************"
+
+source ~/.mysecrets
+
+source ~/code/git-prompt.sh
+
+# cd /home/hcbel/code
+
+# Libraries from /wodroot
+# Main files to run or read
+MPIEXEC=$(find /wodroot/wrf/intel/ -name mpiexec.hydra | head -1)
+MPIVARS=/wodroot/wrf/intel/mpivars.sh
+MACHINEFILE="/etc/wod/machinefile-${RUN_CONF}.txt"
+
+# Set up MPI Variables if this distribution has them
+LD_LIBRARY_PATH=$(xargs -I_ -a /wodroot/wrf/intel/library_path echo -n /wodroot/wrf/intel/_:)
+LD_LIBRARY_PATH=${LD_LIBRARY_PATH}/wodroot/wrf/dependencies/lib:/wodroot/wrf/intel-v19.1.3.304/compilers_and_libraries_2020.4.304/linux/mpi/intel64/libfabric/lib/prov
+export LD_LIBRARY_PATH
+
+
+# export WRF_CHEM=1
+# export CC=icc
+# export CXX=icc
+# export FC=ifort
+
+# export DIR=/home/hcbel/code/wrf-tutorial/Build_WRF/LIBRARIES
+# export FCFLAGS=-m64
+# export F77=gfortran
+# export FFLAGS=-m64
+# export JASPERLIB=${DIR}/grib2/lib
+# export JASPERINC=${DIR}/grib2/include
+
+# export LDFLAGS=-L/wodroot/wrf/dependencies/lib
+# export CPPFLAGS=-I/wodroot/wrf/dependencies/include
+
+# export LIBS="-L/home/hcbel/libs/lib -lnetcdf -lm -lz -lcurl"
+# export NETCDF=/home/hcbel/code/wrf-tutorial/Build_WRF/LIBRARIES/netcdf
+# export NETCDF=/wodroot/wrf/dependencies
+# export NCARG_ROOT=/home/hcbel/ncarg
+
+# export PREPCHEM=/home/hcbel/code/belgingur/prep-chem
+# export FC=gfortran
+# export CC=gcc
+
+# allow C-s to forward-search after using C-r
+# DO NOT USE: CRASHES ON STARTUP
+# stty -ixon
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
+    else
+        color_prompt=
+    fi
+fi
+
+# Original
+# PS1='\u@\[\033[01;32m\]\h:\w\[\033[0m\]$(__git_ps1 " [%s]") $ '
+
+# PS1 with Hours:Minutes
+# PS1='[\D{%H:%M}] \u@local:\[\033[01;32m\]\w\[\033[0m\]$(__git_ps1 " [%s]") $ '
+
+# PS1 short
+PS1='local:\[\033[01;32m\]\w\[\033[0m\]$(__git_ps1 " [%s]") $ '
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# for psql
+export PAGER='less -S -c'
+
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+# using color has a bug: nothing is shown for matches in DOS-encoded files (CRLF end-of-line)
+padgrep() {
+    grep -Iinor --color=never --exclude-dir=".git" --exclude-dir="dist" --exclude-dir="node_modules" ".\{0,26\}$1.\{0,26\}"
+}
+
+dblgrep() {
+    grep -li "$1" `grep -lir "$2" --include="*$3"`
+}
+
+myfind() {
+    find . -name "$1"
+}
+
+# intercept git commands to a log file
+git() {
+    # if [ "$1" == "commit" ] ; then
+    #     echo Git commit intercepted, adding to /home/hcbel/gitcommitlog.txt
+    #     MSG="$(date +""%d.%b_%H:%M"") $PWD: $3"
+    #     sed -i '1i '"$MSG"' ' /home/hcbel/gitcommitlog.txt
+    #     command git "$@"
+    # elif
+    if [ "$1" == "merge" ] ; then
+        echo Should not run merge, run rebase instead
+        return 1
+    elif [ "$2" == "-A" ] ; then
+        echo Should not add all, run /usr/bin/git to override.
+        return 1
+    elif [ "$2" == "-a" ] ; then
+        echo Should not add all, run /usr/bin/git to override.
+        return 1
+    elif [ "$1" == "add" ] ; then
+        branch_name="$(git symbolic-ref --short HEAD 2>/dev/null)"
+        if [ "$branch_name" == "main" ] ; then
+            echo Branch main detected. Doing nothing, run /usr/bin/git to override.
+            return 1
+        elif [ "$branch_name" == "master" ] ; then
+            echo Branch master detected. Doing nothing, run /usr/bin/git to override.
+            return 1
+        else
+            echo Did you run git status and adding a single file? Did you test and edit Docs? [y for yes]
+            read confirm_status
+
+            if [ "$confirm_status" = "y" ]; then
+                echo "Added. 'git commit' 'when applied, this commit will:' 70 chars, START WITH ISSUE: #0000, see 'On branch'"
+                command git "$@"
+            else
+                echo Aborting.
+                return 1
+            fi
+        fi
+    else
+        command git "$@"
+    fi
+}
+
+prg() {
+    if [ "$1" == "commit" ] ; then
+        # echo Git commit intercepted, adding to /home/hcbel/gitcommitlog.txt
+        # MSG="$(date +""%d.%b_%H:%M"") $PWD: $3"
+        # sed -i '1i '"$MSG"' ' /home/hcbel/gitcommitlog.txt
+        command git "$@"
+    else
+        command prg "$@"
+    fi
+}
+
+
+alias githist='git log --pretty=format:"%h%x09%<(17)%ah%s"'
+alias gitst='git status'
+alias gitdiff='git diff'
+alias gitname='git log --name-only'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/hcbel/tools/google-cloud-sdk/path.bash.inc' ]; then . '/home/hcbel/tools/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/hcbel/tools/google-cloud-sdk/completion.bash.inc' ]; then . '/home/hcbel/tools/google-cloud-sdk/completion.bash.inc'; fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# With .nvm node 14
+# export PATH="/home/hcbel/bin:/home/hcbel/code/wrf-tutorial/Build_WRF/WRF/run:/home/hcbel/code/wrf-tutorial/Build_WRF/WPS:/home/hcbel/code/wrf-tutorial/Build_WRF/WPS/util:/home/hcbel/code/wrf-tutorial/Build_WRF/LIBRARIES/netcdf/bin:/home/hcbel/.nvm/versions/node/v14.17.6/bin:$PATH"
+
+export PATH="/home/hcbel/bin:/wodroot/wrf/dependencies-intel-v19.1.3.304/bin:/home/hcbel/code/wrf-tutorial/Build_WRF/WRF/run:/home/hcbel/code/wrf-tutorial/Build_WRF/WPS:/home/hcbel/code/wrf-tutorial/Build_WRF/WPS/util:/home/hcbel/code/wrf-tutorial/Build_WRF/LIBRARIES/netcdf/bin:/home/hcbel/intel/oneapi/compiler/2024.0/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/hcbel/conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/hcbel/conda/etc/profile.d/conda.sh" ]; then
+        . "/home/hcbel/conda/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/hcbel/conda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+alias actwod='conda activate wod'
+alias ipy='ipython --simple-prompt'
+alias largeemacs='emacs -l ~/.emacs-large'
+alias csis='/share/chicken/csi -s'
+
+alias pyhttp='python3 -m http.server'
+
+alias dudepth='du -h --max-depth=1 | sort -h'
+
+export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
+export PYTHONPATH="/home/hcbel/wod.git/troupe/src:/home/hcbel/wod.git/pylib-utils/src:/home/hcbel/wod.git/pylib-wrfout/src"
+
+export KAFKA_CLUSTER_ID=drRCt93HRJ-FD15kWBKgIQ
+
+export PATH=${HOME}/conda/bin:${PATH}
