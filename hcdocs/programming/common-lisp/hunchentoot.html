@@ -86,11 +86,54 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">common-lisp</a></h3>
     
-<a class="index" href="hunchentoot.html">&#x1F4D8; hunchentoot.html</a><br>
-<a class="index" href="postmodern.html">&#x1F4D8; postmodern.html</a><br>
-<a class="index" href="practical-common-lisp/index.html">&#x1F4C1; practical-common-lisp</a><br>
-<a class="index" href="sbclrc.txt" target="_blank">&#x1F4C3; sbclrc.txt</a><br>
-<a class="index" href="windows_setup.html">&#x1F4D8; windows_setup.html</a><br>
+<h1>Hunchentoot</h1>
+
+<h2>Code</h2>
+
+<pre>
+;; app.lisp
+
+(ql:quickload '("hunchentoot" "easy-routes" "djula"))
+
+(defvar *server* nil)
+(defvar *port* 8899)
+
+;; Routes
+
+(easy-routes:defroute home "/" ()
+  "Hello Hunchentoot quit t")
+
+;; Operational
+
+(defun start-server ()
+  (format t "Starting server on port ~a" *port*)
+  (force-output)
+  (setf *server* (make-instance 'easy-routes:easy-routes-acceptor :port *port*))
+  (hunchentoot:start *server*)
+  (sleep most-positive-fixnum))
+
+(start-server)
+</pre>
+
+<h2>Daemon</h2>
+
+<pre>
+#!/bin/bash
+
+# Replace app.lisp with full path
+exec sbcl --load app.lisp
+</pre>
+
+<h2>Server Setup</h2>
+
+<pre>
+curl -O https://beta.quicklisp.org/quicklisp.lisp
+sbcl --load quicklisp.lisp
+
+(quicklisp-quickstart:install)
+(ql:add-to-init-file)
+</pre>
+
 </div>
 <br>
 <hr>
