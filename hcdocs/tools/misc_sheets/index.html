@@ -84,56 +84,10 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">common-lisp</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">tools</a> / <a href="index.html">misc_sheets</a></h3>
     
-<h1>Hunchentoot</h1>
-
-<h2>Code</h2>
-
-<pre>
-;; app.lisp
-
-(ql:quickload '("hunchentoot" "easy-routes" "djula"))
-
-(defvar *server* nil)
-(defvar *port* 8899)
-
-;; Routes
-
-(easy-routes:defroute home "/" ()
-  "Hello Hunchentoot app")
-
-;; Operational
-
-(defun start-server ()
-  (format t "Starting server on port ~a" *port*)
-  (force-output)
-  (setf *server* (make-instance 'easy-routes:easy-routes-acceptor :port *port*))
-  (hunchentoot:start *server*)
-  (sleep most-positive-fixnum))
-
-(start-server)
-</pre>
-
-<h2>Daemon</h2>
-
-<pre>
-#!/bin/bash
-
-# Replace app.lisp with full path
-exec sbcl --load app.lisp
-</pre>
-
-<h2>Server Setup</h2>
-
-<pre>
-curl -O https://beta.quicklisp.org/quicklisp.lisp
-sbcl --load quicklisp.lisp
-
-(quicklisp-quickstart:install)
-(ql:add-to-init-file)
-</pre>
-
+<a class="index" href="edit_misc_sheets.sh">&#x1F4F0; edit_misc_sheets.sh</a><br>
+<a class="index" href="save_misc_sheets.sh">&#x1F4F0; save_misc_sheets.sh</a><br>
 </div>
 <br>
 <hr>
