@@ -9,8 +9,8 @@
      :roles ((:title "Senior Back-End Engineer"
               :period "Jan. 2024 &ndash; present"
               :responsibilities
-              ("Improved the flexibility of the Weather On Demand Python system by expanding the number of available configuration files."
-               "Completed a closest points linear regression model for weather forecasting."
+              ("Increased the flexibility of the Weather On Demand Python system by expanding the number of available configuration files."
+               "Implemented a closest points linear regression model for statistically improved weather forecasting."
                "Converted scientific Fortran code that models volcanic activity to Python modules that leverage NumPy and NetCDF libraries."))))
 
     (:company "Mediafly, Inc., Chicago, IL (Remote)"
@@ -85,17 +85,18 @@
         (:div :id "languages"
               (:h2 :class "skills" "Skills")
               (:ul
-               (:li "Advanced knowledge of"
-                    (:strong "Python."))
-               (:li "Intermediate knowledge of"
-                    (:strong "JavaScript, ")
-                    (:strong "Django, ")
-                    (:strong "PostgreSQL, ")
-                    (:strong "Bash, ") "and"
-                    (:strong "Common Lisp."))
-               (:li "Fluent in"
-                    (:strong "English")
-                    "and"
-                    (:strong "Brazilian Portuguese.")
-                    "Intermediate knowledge of"
-                    (:strong "Italian.")))))))))
+               (:li "Advanced knowledge of "
+                    "Python.")
+               (:li "Intermediate knowledge of "
+                    "JavaScript, "
+                    "Django, "
+                    "PostgreSQL, "
+                    "Bash, "
+                    "and "
+                    "Common Lisp.")
+               (:li "Fluent in "
+                    "English "
+                    "and "
+                    "Brazilian Portuguese. "
+                    "Intermediate knowledge of "
+                    "Italian."))))))))
