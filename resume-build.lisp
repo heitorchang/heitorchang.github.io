@@ -43,7 +43,7 @@
        :lang "en"
        (:head
         (:meta :charset "utf-8")
-        (:meta :name "description" :content "Generated with resume-build.lisp")
+        (:meta :name "description" :content "Generated with resume-build")
         (:meta :name "viewport" :content "width=device-width, initial-scale=1")
         (:link :rel "stylesheet" :href "resume_maven_web.css")
         (:title "Heitor Chang - Resume"))
@@ -91,9 +91,8 @@
                     "JavaScript, "
                     "Django, "
                     "PostgreSQL, "
-                    "Bash, "
                     "and "
-                    "Common Lisp.")
+                    "Bash.")
                (:li "Fluent in "
                     "English "
                     "and "
