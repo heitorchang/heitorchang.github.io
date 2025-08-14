@@ -9,29 +9,36 @@
      :roles ((:title "Senior Back-End Engineer"
               :period "Jan. 2024 &ndash; present"
               :responsibilities
-              ("Increased the flexibility of the Weather On Demand Python system by expanding the number of available configuration files."
-               "Implemented a closest points linear regression model for statistically improved weather forecasting."
+              ("Developed an automated Python system that processes raw radar data to be assimilated into wind and precipitation forecasts."
+               "Implemented a closest points linear regression model to reduce bias and statistical error."
                "Converted scientific Fortran code that models volcanic activity to Python modules that leverage NumPy and NetCDF libraries."))))
+
+    (:company "Freelance Software Developer, São Paulo, SP"
+     :id "freelance-2024"
+     :roles ((:title "Senior Full-Stack Developer"
+              :period "Mar. 2023 &ndash; Dec. 2023"
+              :responsibilities
+              ("Created REST APIs in Python with FastAPI and backed by PostgreSQL to read time series data for various scenarios and deployed them to Google Cloud."
+               "Developed a static site generator in Python to mirror documents with a practical navigation system."))))
 
     (:company "Mediafly, Inc., Chicago, IL (Remote)"
      :id "mediafly"
      :roles ((:title "Senior Software Engineer, Data and Client Squad"
               :period "Aug. 2022 &ndash; Feb. 2023"
               :responsibilities
-              ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new custom objects holding metadata."
-               "Improved the Python video call processing pipeline, filtering out unwanted blocks of silence."
-               "Corrected multiple occurrences of temporary files not being cleared and other data inconsistencies in the Python pipeline code."))))
+              ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new objects with custom metadata."
+               "Corrected data inconsistencies in the Python pipeline code and fixed the audio processor to nullify noise and remove segments of silence."))))
 
     (:company "Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP"
      :id "tempook"
      :roles ((:title "Senior Full-Stack Developer"
               :period "June 2020 &ndash; Aug. 2022"
               :responsibilities
-              ("Built and administered the public-facing website with Django, including custom user management and authentication with a JWT extension."
-               "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and Continuous Deployment."
+              ("Built the public-facing website in Django with custom user management and JWT authentication."
+               "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and cloud Continuous Deployment."
                "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."))))))
 
-(defun build-resume (professional-items)
+(defun build-resume ()
   (setf (cl-who:html-mode) :html5)
   (setf cl-who:*attribute-quote-char* #\")
 
@@ -56,7 +63,7 @@
         (:div :id "professional"
               (:h2 "Professional Experience")
               (:div
-               (dolist (pro-item professional-items)
+               (dolist (pro-item *professional-items*)
                  (cl-who:htm
                   (:div
                    (:h3
@@ -79,20 +86,18 @@
               (:h2 "Education")
               (:div
                (:h3 :class "education" "Stanford University, Stanford, CA")
-               (:div :class "major" "M.S. in Materials Science and Engineering")
-               (:div :class "major" "B.S. in Applied Mathematics")))
+               (:div :class "major" "M.S. in Materials Science and Engineering, B.S. in Mathematical and Computational Science")))
 
         (:div :id "languages"
               (:h2 :class "skills" "Skills")
               (:ul
                (:li "Advanced knowledge of "
-                    "Python.")
-               (:li "Intermediate knowledge of "
+                    "Python. "
+                    "Intermediate knowledge of "
                     "JavaScript, "
                     "Django, "
-                    "PostgreSQL, "
                     "and "
-                    "Bash.")
+                    "PostgreSQL.")
                (:li "Fluent in "
                     "English "
                     "and "
