@@ -27,7 +27,7 @@
               :period "Aug. 2022 &ndash; Feb. 2023"
               :responsibilities
               ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new objects with custom metadata."
-               "Corrected data inconsistencies in the Python pipeline code and upgraded the audio processor to nullify noise and remove segments of silence."))))
+               "Corrected data inconsistencies in the Python pipeline code and upgraded the audio processor to attenuate noise and remove segments of silence."))))
 
     (:company "Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP"
      :id "tempook"
