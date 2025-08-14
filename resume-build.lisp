@@ -27,14 +27,14 @@
               :period "Aug. 2022 &ndash; Feb. 2023"
               :responsibilities
               ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new objects with custom metadata."
-               "Corrected data inconsistencies in the Python pipeline code and fixed the audio processor to nullify noise and remove segments of silence."))))
+               "Corrected data inconsistencies in the Python pipeline code and upgraded the audio processor to nullify noise and remove segments of silence."))))
 
     (:company "Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP"
      :id "tempook"
      :roles ((:title "Senior Full-Stack Developer"
               :period "June 2020 &ndash; Aug. 2022"
               :responsibilities
-              ("Built the public-facing website in Django with custom user management and JWT authentication."
+              ("Architected the company website in Django with custom user management and JWT authentication."
                "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and cloud Continuous Deployment."
                "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."))))))
 
