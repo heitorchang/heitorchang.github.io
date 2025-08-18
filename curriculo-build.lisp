@@ -2,6 +2,9 @@
 
 (ql:quickload "cl-who")
 
+(setf (cl-who:html-mode) :html5)
+(setf cl-who:*attribute-quote-char* #\")
+
 (defparameter *output-file* #P"/home/hcbel/code/heitorchang.github.io/curriculo.html")
 (defparameter *professional-items*
   '((:company "Belgingur, LLC., Reykjavik, Islândia (Remoto)"
@@ -47,9 +50,6 @@
         "Criei um painel geoespacial contendo a renderização de imagens de satélite calculadas a partir de dados científicos da NASA e de estações meteorológicas obtidos das APIs públicas."))))))
 
 (defun build-curriculo ()
-  (setf (cl-who:html-mode) :html5)
-  (setf cl-who:*attribute-quote-char* #\")
-
   (with-open-file (out *output-file*
                        :direction :output
                        :if-exists :supersede)
@@ -107,8 +107,8 @@
                     "e "
                     "PostgreSQL.")
                (:li "Fluente em "
-                    "Inglês "
+                    "inglês "
                     "e "
-                    "Português. "
+                    "português. "
                     "Conhecimento intermediário de "
-                    "Italiano."))))))))
+                    "italiano."))))))))

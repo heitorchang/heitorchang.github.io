@@ -2,6 +2,9 @@
 
 (ql:quickload "cl-who")
 
+(setf (cl-who:html-mode) :html5)
+(setf cl-who:*attribute-quote-char* #\")
+
 (defparameter *output-file* #P"/home/hcbel/code/heitorchang.github.io/resume.html")
 (defparameter *professional-items*
   '((:company "Belgingur, LLC., Reykjavik, Iceland (Remote)"
@@ -39,9 +42,6 @@
                "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."))))))
 
 (defun build-resume ()
-  (setf (cl-who:html-mode) :html5)
-  (setf cl-who:*attribute-quote-char* #\")
-
   (with-open-file (out *output-file*
                        :direction :output
                        :if-exists :supersede)
