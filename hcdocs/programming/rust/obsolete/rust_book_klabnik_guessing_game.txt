@@ -1,0 +1,18 @@
+Programming a Guessing Game
+
+Bring items in a library into the scope of the program:
+use std::io;
+
+println! is a macro. Macro names end in an exclamation point !
+
+Reading User Input
+
+let mut guess = String::new();
+
+io::stdin()
+    .read_line(&mut guess)
+    .expect("Failed to read line.");
+
+& indicates that the argument is a reference
+
+Some special characters ->; a < b; &n

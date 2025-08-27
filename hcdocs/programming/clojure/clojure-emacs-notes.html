@@ -86,48 +86,25 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">clojure</a></h3>
     
-<h1>Clojure (1.11) Project</h1>
-
-<h2>Files</h2>
-
-<pre>
-hello-proj
-+-- deps.edn
-+-- src
-    +-- hello.clj
-</pre>
+<h1>Clojure Emacs notes</h1>
 
 <p>
-  <code>deps.edn</code> can be simply <code>{}</code>
+  A collection of tips.
 </p>
 
-<h3>hello.clj</h3>
+<h3>Find usages of a function</h3>
 
 <p>
-  As long as there's a <code>deps.edn</code> file, Cider can be started (<code>cider-jack-in</code>)
+  Redefine <code>M-?</code> as <code>cider-xref-fn-refs</code> (It conflicts with a Paredit binding).
 </p>
 
 <pre>
-(ns hello)
-
-(defn run [opts]
-  (println opts)  ;; nil or pairs of values
-  (println "this is hello 3"))
+(define-key paredit-mode-map (kbd "M-?") 'cider-xref-fn-refs)
 </pre>
 
 <p>
-  Use <code>(in-ns 'hello)</code> in the REPL.
+  Tested only when code is inside a namespace (that is, it doesn't work at all in the <code>user</code> namespace).
 </p>
-
-<h2>Running</h2>
-
-<p>
-  In <code>hello-proj</code>, run with:
-</p>
-
-<pre>
-clj -X hello/run
-</pre>
 
 </div>
 <br>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #062;
+          font-size: 1rem;
+        }
+
+        pre > code {
+          padding: 0;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        table {
+          border-collapse: collapse;
+        }
+
+        td {
+          padding: 0.5rem 0.8rem;
+          border: 1px solid #ccc;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">rust</a> / <a href="index.html">obsolete</a></h3>
+    
+<h1>The Rust Programming Language (Rust Book) Markdown notes</h1>
+<p>By Steve Klabnik, Carol Nichols, and Chris Krycho, <em>for Rust 1.82.0</em></p>
+<h2>Contents</h2>
+<ol start="0">
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#ch1">Getting Started</a></li>
+<li><a href="#ch2">Programming a Guessing Game</a></li>
+<li><a href="#ch3">Common Programming Concepts</a></li>
+<li><a href="#ch4">Understanding Ownership</a></li>
+<li><a href="#ch5">Using Structs to Structure Related Data</a></li>
+<li><a href="#ch6">Enums and Pattern Matching</a></li>
+<li><a href="#ch7">Managing Growing Projects with Packages, Crates, and Modules</a></li>
+<li><a href="#ch8">Common Collections</a></li>
+<li><a href="#ch9">Error Handling</a></li>
+<li><a href="#ch10">Generic Types, Traits, and Lifetimes</a></li>
+<li><a href="#ch11">Writing Automated Tests</a></li>
+<li><a href="#ch12">An I/O Project: Building a Command Line Program</a></li>
+<li><a href="#ch13">Functional Language Features: Iterators and Closures</a></li>
+<li><a href="#ch14">More about Cargo and Crates.io</a></li>
+<li><a href="#ch15">Smart Pointers</a></li>
+<li><a href="#ch16">Fearless Concurrency</a></li>
+<li><a href="#ch17">Fundamentals of Asynchronous Programming: Async, Await, Futures, and Streams</a></li>
+<li><a href="#ch18">Object-Oriented Programming Features of Rust</a></li>
+<li><a href="#ch19">Patterns and Matching</a></li>
+<li><a href="#ch20">Advanced Features</a></li>
+<li><a href="#ch21">Final Project: Building a Web Server</a></li>
+<li><a href="#ch22">Appendix</a></li>
+</ol>
+<h1 id="intro">Introduction</h1>
+<p>Rust development tools include:</p>
+<ul>
+<li><strong>Cargo:</strong> dependency manager and build tool.</li>
+<li><strong>rustfmt:</strong> ensures a consistent coding style. Run with <code>rustfmt --edition 2024 --check main.rs</code> to show changes. Run without <code>--check</code> to apply the changes.</li>
+<li><strong>rust-analyzer:</strong> powers IDE integration.</li>
+</ul>
+<p>Ferris (crab) symbols:</p>
+<ul>
+<li><strong>?</strong> Code does not compile</li>
+<li><strong>both pincers raised</strong> Code panics</li>
+<li><strong>one pincer raised</strong> Code does not produce the desired behavior</li>
+</ul>
+<p>There are three project chapters:</p>
+<ul>
+<li><a href="#ch2">Ch. 2: Guessing Game</a></li>
+<li><a href="#ch12">Ch. 12: A Command Line I/O Program</a></li>
+<li><a href="#ch21">Ch. 21: A Multithreaded Web Server</a></li>
+</ul>
+<h1 id="ch1">Chapter 1: Getting Started</h1>
+<p>The most up-to-date method of installing Rust should be explained in the official Rust language website. Use a search engine to find it.</p>
+<p>Update Rust with <code>rustup update</code></p>
+<p>Open documentation with <code>rustup doc</code></p>
+<h3>Using Cargo</h3>
+<p><code>cargo new hello_cargo</code></p>
+<p><code>cd hello_cargo</code></p>
+<p><code>cargo run</code></p>
+<p><code>cargo check</code> checks the code to make sure it compiles, but doesn't produce an executable (it runs much faster than <code>cargo build</code>)</p>
+<p><code>cargo doc --open</code> builds documentation provided by all your dependencies</p>
+<p><code>cargo build</code></p>
+<p><code>cargo build --release</code></p>
+<h1 id="ch2">Chapter 2: Programming a Guessing Game</h1>
+<p>The game generates a secret, random number between 1 and 100. The player has to make guesses until the secret number is picked. The game responds each guess with a message that it is too low or too high.</p>
+<h3>Read player input</h3>
+<pre><code>use std::io;
+
+...
+
+let mut guess = String::new();
+
+io::stdin()
+    .read_line(&amp;mut guess)
+    .expect("Failed to read line");
+</code></pre>
+<p><code>mut</code> marks a variable as mutable.</p>
+<p><code>Type::function</code> indicates that the function is an <em>associated function</em> of <em>Type</em>. Methods follow a dot <code>.</code> , for example, <code>stdin().read_line(&amp;mut guess)</code>.</p>
+<p>The <code>stdin</code> function returns an instance of <code>std::io::Stdin</code>, a type that represents a handle to the standard input of the terminal.</p>
+<p><code>.read_line</code> is a method on the standard input handle.</p>
+<p><code>&amp;</code> indicates that what follows is a <em>reference</em>, which allows access to a piece of data without needing to copy that data in memory multiple times. They are immutable by default, so <code>&amp;mut</code> is needed to mutate <code>guess</code>.</p>
+<h3>Handling potential failure with Result</h3>
+<p><code>read_line</code> puts the user input into the string argument, and it also returns a <code>Result</code> value.</p>
+<p><code>Result</code> is an <em>enumeration</em> (<em>enum</em>). It's a type that can be in multiple possible states. Each state is called a <em>variant</em>.</p>
+<p><code>Result</code> has the variants <code>Ok</code> and <code>Err</code>. <code>Result</code> also has an <code>expect</code> method. If <code>Result</code> is an <code>Err</code>, <code>expect</code> will cause the program to crash and display the error message</p>
+<p>If <code>Result</code> is <code>Ok</code>, <code>expect</code> will return the value that <code>Ok</code> is holding. In this case (<code>read_line</code>), the value is the number of bytes in the user's input.</p>
+<h3>Printing values with <code>println!</code></h3>
+<p><code>println!("You guessed {}", guess);</code></p>
+<p>or</p>
+<p><code>println!("You guessed {guess}", guess);</code></p>
+<h3>Generating a secret number</h3>
+<p>Crates can be either a <code>binary crate</code> or <code>library crate</code>.</p>
+<p>Add to <code>Cargo.toml</code>:</p>
+<pre><code>[dependencies]
+rand = "0.8.5"
+</code></pre>
+<p><code>0.8.5</code> is actually shorthand for <code>^0.8.5</code>, which means any version that is at least <code>0.8.5</code> but below <code>0.9.0</code>.</p>
+<p>When including an external dependency, Cargo fetches the needed versions from the <em>registry</em>, which is a copy of data from Crates.io.</p>
+<p><code>cargo update</code> overwrites <code>Cargo.lock</code> with the latest versions of the dependencies.</p>
+<h3>Generating a random number</h3>
+<pre><code>use rand::Rng;
+
+...
+
+let secret_number = rand::thread_rng().gen_range(1..=100);
+</code></pre>
+<p>The method <code>gen_range</code> is defined by the <code>Rng</code> trait that was brought into scope by <code>use rand::Rng;</code>.</p>
+<h3>Comparing the guess to the secret number</h3>
+<p><code>std::cmp::Ordering</code> and <code>match</code> are used.</p>
+<p>A <code>match</code> expression is made up of <em>arms</em>. An arm consists of a <em>pattern</em> to match against.</p>
+<p><code>match guess.cmp(&amp;secret_number) { ... }</code></p>
+<p>The <code>cmp</code> method returns one of <code>Ordering::Less, Ordering::Equal, Ordering::Greater</code>.</p>
+<p>The default type of an integer is <code>i32</code>.</p>
+<p>To convert the input (String) to an integer:</p>
+<p><code>let guess: u32 = guess.trim().parse().expect("Please type a number")</code>.</p>
+<h3>Allowing multiple guesses with looping</h3>
+<p><code>loop</code> creates an infinite loop.</p>
+<p>Exit the loop with <code>break</code>.</p>
+<p>Instead of using <code>except</code> when parsing the input, we can use <code>match</code> to handle the error:</p>
+<pre><code>let guess: u32 = match guess.trim().parse() {
+    Ok(num) =&gt; num,
+    Err(_) =&gt; continue,
+};
+</code></pre>
+<h3>Full code</h3>
+<pre><code>use rand::Rng;
+use std::cmp::Ordering;
+use std::io;
+
+fn main() {
+    println!("Guess the number!");
+
+    let secret_number = rand::thread_rng::gen_range(1..=100);
+
+    loop {
+        println!("Input your guess.");
+        let mut guess = String::new();
+
+        io::stdin()
+            .read_line(&amp;mut guess)
+            .expect("Could not read line");
+
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) =&gt; num,
+            Err(_) =&gt; continue,
+        };
+
+        println!("Your guess: {guess}");
+
+        match guess.cmp(&amp;secret_number) {
+            Ordering::Less =&gt; println!("Too small!"),
+            Ordering::Greater =&gt; println!("Too big!"),
+            Ordering::Equal =&gt; {
+                println!("You got it!");
+                break;
+            }
+        }
+    }
+}
+</code></pre>
+<h1 id="ch3">Chapter 3: Common Programming Concepts</h1>
+<h3>Keywords (Appendix A)</h3>
+<p>(not including commonly used keywords)</p>
+<p><code>as, crate, dyn, extern, impl, match, mod, move, trait, type, unsafe</code></p>
+<p>Reserved keywords:</p>
+<p><code>abstract, become, box, do, final, gen, override, priv, try, unsized, virtual, yield</code></p>
+<p>It is possible to prefix a keyword with <code>r#</code> to be able to use it.</p>
+<h2>3.1 Variables and Mutability</h2>
+<p>Variables are immutable by default. They cannot be reassigned.</p>
+<p>Add <code>mut</code> in front of the variable name to make it mutable: <code>let mut x = 3;</code></p>
+<p>Creating a constant with <code>const</code> requires adding the type of the value. They also must be a constant expression, not a value that can only be computed at runtime. Use <code>CAPITALS_SNAKE_CASE</code> for constants' names.</p>
+<h3>Shadowing</h3>
+<p>Declaring a new variable with the same name as a previous variable <em>shadows</em> it. When the new variable's scope ends, the previous one will become visible again.</p>
+<p>The new variable may be of a different type (only the names are the same).</p>
+<h3>Cannot mutate a variable's type</h3>
+<p>Mutation does not allow a variable's type to be reassigned:</p>
+<pre><code>let mut spaces = "    ";
+spaces = spaces.len();  // mismatched types
+</code></pre>
+<h2>3.2 Data Types</h2>
+<p>A <em>data type</em> tells Rust what kind of data is being specified. There are scalar and compound data types.</p>
+<p>Rust is <em>statically typed</em> (it must know the types of all variables at compile time).</p>
+<p>A <em>scalar</em> type represents a single value. They are: integers, floating-point numbers, Booleans, and characters.</p>
+<h4>Integer types</h4>
+<p>Signed integer types begin with <code>i</code> and unsigned with <code>u</code>. Their length go from <code>8</code> to <code>128</code>. <code>isize</code> and <code>usize</code> depend on the architecture of the computer the program runs on (32 or 64 bits).</p>
+<p><code>_</code> may be used as a visual separator, such as <code>1_500_000</code> or <code>3291_2392</code>.</p>
+<p>The default integer type is <code>i32</code>. <code>isize</code> and <code>usize</code> are used when indexing a collection.</p>
+<p>In debug mode, integer overflow results in a panic. In release mode, an overflow results in <em>two's complement wrapping</em>.</p>
+<p>There are four specific ways of handling overflow:</p>
+<ul>
+<li><code>wrapping_*</code> (wrap in all modes)</li>
+<li><code>checked_*</code> (return <code>None</code>)</li>
+<li><code>overflowing_*</code> (return the value and a boolean indicating whether there was overflow)</li>
+<li><code>saturating_*</code> (fix at the value's minimum or maximum values)</li>
+</ul>
+<h4>Floating-point types</h4>
+<p><code>f32</code> and <code>f64</code> are available. Both kinds are signed.</p>
+<h4>Booleans</h4>
+<p>A boolean is one byte in size. It may be <code>true</code> or <code>false</code>.</p>
+<h4>Characters</h4>
+<p>A <code>char</code> value is four bytes in size and represents a Unicode Scalar Value. They are enclosed in single quotes (while strings are enclosed in double quotes).</p>
+<h3>Compound Types</h3>
+<p>The two primitive compound types are <em>tuples</em> and <em>arrays</em>.</p>
+<h4>The Tuple Type</h4>
+<p>A <em>tuple</em> groups a fixed number of values with a variety of types.</p>
+<pre><code>let tup: (i32, f64, u8) = (500, 6.4, 1);
+</code></pre>
+<p>(type annotations are optional)</p>
+<p>Pattern matching is used to destructure a tuple:</p>
+<pre><code>let tup = (500, 6.4, 1);
+let (x, y, z) = tup;
+</code></pre>
+<p>To access an element directly, use a period followed by the index of the value we want to access: <code>tup.0, tup.2</code></p>
+<p>A tuple is like a struct.</p>
+<p>The tuple without any values is called <em>unit</em>. It is written <code>()</code>, and represents an empty value or empty return type. Expressions not returning any value implicitly return the unit value.</p>
+<h4>The Array Type</h4>
+<p>Every element of an array must have the same type. Data is allocated on the stack (the same as the other types seen so far).</p>
+<p>A vector is similar, but can grow and shrink (it is also placed on the heap).</p>
+<p>Declare an array of 5 elements:</p>
+<pre><code>let a: [i32; 5] = [1, 2, 3, 4, 5]
+</code></pre>
+<p>Initialize to the same value repeated a certain number of times:</p>
+<pre><code>let a = [3; 100];
+</code></pre>
+<p>Access elements using indexing: <code>a[0]</code>, <code>a[1]</code>.</p>
+<h2>3.3 Functions</h2>
+<p>The <code>main</code> function is the entry point of many programs.</p>
+<p>Use <code>snake_case</code> for function and variable names.</p>
+<p>Functions are declared with <code>fn</code></p>
+<p>Function <em>parameters</em> are special variables that are part of a function's signature. Concrete values passed to the function are <em>arguments</em>. In practice, the two terms are interchangeable.</p>
+<p>The type of each parameter and return type must be declared in function signatures.</p>
+<h3>Statements and Expressions</h3>
+<ul>
+<li><em>Statements</em> are instructions that perform some action and do not return a value</li>
+<li><em>Expressions</em> evaluate to a resultant value</li>
+</ul>
+<p>Creating a variable and assigning a value to it with <code>let</code> is a statement.</p>
+<p>Expressions do not include ending semicolons.</p>
+<p>The return value of a function is the value of the final expression in the block of the body of the function. You can also return early with the <code>return</code> keyword.</p>
+<p>At runtime, indexing out of bounds causes the program to panic.</p>
+<h2>3.5 Control Flow</h2>
+<pre><code>if number &lt; 5 {
+    println!("Number is small");
+} else {
+    println!("Number is big");
+}
+</code></pre>
+<p><code>if number != 0 { ... }</code></p>
+<pre><code>if number % 4 == 0 {
+    println!("Number is divisible by 4");
+} else if number % 3 == 0 {
+    println!("Number is divisible by 3");
+} else {
+    println!("Number is not divisible by 3 nor 4");
+}
+</code></pre>
+<h3>Using <code>if</code> in a <code>let</code> statement</h3>
+<p><code>if</code> is an expression. It can be used on the right side of a <code>let</code> statement:</p>
+<p><code>let number = if condition { 5 } else { 6 };</code></p>
+<h3>Repetition with Loops</h3>
+<p><code>loop</code>, <code>while</code>, <code>for</code></p>
+<p>You can return a value after a <code>break</code></p>
+<p>Labeling a loop:</p>
+<pre><code>let mut count = 0;
+'counting_up: loop {
+    ...
+    loop {
+        ...
+        break 'counting_up;
+    }
+}
+</code></pre>
+<pre><code>while number != 0 {
+    ...
+    number -= 1;
+}
+</code></pre>
+<pre><code>let a = [1, 2, 3, 4, 5];
+
+for element in a {
+    println!("the value is: {element}");
+}
+</code></pre>
+<p>A <code>Range</code> is <code>(start..finish)</code> or <code>(start..=finish)</code> to include the final value.</p>
+<pre><code>for number in (1..=3).rev() {
+    println!("{number}");
+}
+println!("Lift off!");
+</code></pre>
+<h1 id="ch4">Chapter 4: Understanding Ownership</h1>
+<h2>4.1 What is Ownership?</h2>
+<p><em>Ownership</em> is a set of rules that govern how Rust manages memory.</p>
+<p>Adding and removing items from the stack is called <em>pushing onto the stack</em> and <em>popping off the stack</em>.</p>
+<p>The heap is less organized. Memory is <em>allocated on the heap</em> and a <em>pointer</em> is returned (the address of the location in memory). It's like being seated at a restaurant: you request the number of seats and the host finds an empty table.</p>
+<h3>Ownership Rules</h3>
+<ul>
+<li>Each value has an <em>owner</em></li>
+<li>There can only be one owner at a time</li>
+<li>When the owner goes out of scope, the value is dropped (the <code>drop</code> function is called automatically)</li>
+</ul>
+<h3>Variable Scope</h3>
+<p>The <em>scope</em> of a variable is the range within a program for which it is valid.</p>
+<h3>The <code>String</code> Type</h3>
+<p>The <code>String</code> type manages data allocated on the heap (therefore it is able to store an amount of text that is unknown at compile time).</p>
+<pre><code>let s = String::from("Hello");
+
+// or
+
+let s2 = "Hello".to_string();
+</code></pre>
+<p>Mutable string:</p>
+<pre><code>let mut s = String::from("Hello");
+s.push_str(", World");
+</code></pre>
+<h3>Memory and Allocation</h3>
+<h4>Variables and Data Interacting with Move</h4>
+<pre><code>let x = 5;
+let y = x;
+</code></pre>
+<p>Since integers are trivial, a copy is made and assigned to <code>y</code>. The types that implement the <code>Copy</code> trait behave like this.</p>
+<p>However, data on the heap is not copied. The value is <code>moved</code> to the <code>s2</code>. This prevents a <em>double free</em> memory error.</p>
+<pre><code>let s1 = String::from("hello");
+let s2 = s1;
+</code></pre>
+<p>When reassigning a variable, the initial value is dropped.</p>
+<p>To make a deep copy of the data, use <code>clone()</code>.</p>
+<p>If any part of a type implements the <code>Drop</code> trait, it cannot also implement <code>Copy</code>. All scalar types and tuples containing only scalars implement <code>Copy</code>.</p>
+<h3>Ownership and Functions</h3>
+<p>The mechanics of passing a value to a function are similar to assigning a value to a variable. Just like assignment, what will happen is a move or copy.</p>
+<p>Returning values can also transfer ownership.</p>
+<h2>4.2 References and Borrowing</h2>
+<p>Rust's feature for using a value without transferring ownership is called <em>references</em>.</p>
+<p>A <em>reference</em> is like a pointer in that it's an address we can follow to access the data stored there.</p>
+<pre><code>fn main() {
+    let s1 = String::from("hello");
+    let len = calculate_length(&amp;s1);
+    println!("The length of '{s1}' is {len}.");
+}
+
+fn calculate_length(s: &amp;String) -&gt; usize {
+    s.len()
+}
+</code></pre>
+<p>Ampersands <code>&amp;</code> represent <em>references</em>. They refer to some value without taking ownership of it.</p>
+<p>Dereferencing is accomplished with <code>*</code></p>
+<p><strong>Note</strong>: (from *Programming Rust, Ch. 5, References &gt; Working with References)</p>
+<p>Since references are so widely used, the dot operator <code>.</code> implicitly dereferences its left operand, if needed.</p>
+<pre><code>let aria = Anime { name: "Aria, the animation" };
+let anime_ref = &amp;aria;
+assert_eq!(anime_ref.name, "Aria, the animation");
+// is the same as assert_eq!((*anime_ref).name, "Aria, the animation");
+</code></pre>
+<p>The dot operator can also implicitly borrow a reference to its left operand, if needed for a method call</p>
+<pre><code>let mut v = vec![1973, 1968];
+v.sort();
+// is the same as (&amp;mut v).sort();
+</code></pre>
+<p>The action of creating a reference is called <em>borrowing</em>.</p>
+<h3>Mutable References</h3>
+<p>To modify a borrowed value, use a <em>mutable reference</em>.</p>
+<pre><code>fn main() {
+    let mut s = String::from("hello");
+    change(&amp;mut s);
+}
+
+fn change(some_string: &amp;mut String) {
+    some_string.push_str(", world");
+}
+</code></pre>
+<p>Mutable references have one big restriction: if you have a mutable reference to a value, you can have no other references to that value. This behavior prevents <em>data races</em>.</p>
+<p>Curly brackets create new scopes and can be used to limit the extent of a mutable reference:</p>
+<pre><code>let mut s = String::from("hello");
+
+{
+    let r1 = &amp;mut s;
+}
+
+let r2 = &amp;mut s;
+</code></pre>
+<p>If it's evident that a reference (mutable or not) will no longer be used after a certain point, the code will compile:</p>
+<pre><code>let mut s = String::from("hello");
+
+let r1 = &amp;s;
+let r2 = &amp;s;
+println!("{r1} and {r2}");
+// r1 and r2 are not used after this point
+
+let r3 = &amp;mut s;
+println!("{r3}");
+</code></pre>
+<h3>Dangling references</h3>
+<p>A <em>dangling pointer</em> references a location in memory that may have been given to someone else (such as by freeing a location in memory while preserving a pointer to it)</p>
+<pre><code>fn dangle() -&gt; &amp;String {
+    let s = String::from("hello");
+
+    &amp;s
+}
+</code></pre>
+<p>Once <code>dangle</code> is finished, <code>s</code> is deallocatied. The solution is to return the <code>String</code> directly:</p>
+<pre><code>fn dangle() -&gt; String {
+    let s = String::from("hello");
+
+    s
+}
+</code></pre>
+<h3>The Rules of References</h3>
+<ul>
+<li>At any given time, you can have <em>either</em> one mutable reference <em>or</em> any number of immutable references.</li>
+<li>References must always be valid.</li>
+</ul>
+<h2>4.3 The Slice Type</h2>
+<p><em>Slices</em> is a kind of reference. They reference a contiguous sequence of elements in a <em>collection</em> rather than the whole thing.</p>
+<h3>String Slices</h3>
+<p>A <em>string slice</em> is a reference to a part of a <code>String</code>.</p>
+<pre><code>let s = String::from("hello world");
+let hello = &amp;s[0..5];
+let world = &amp;s[6..11];
+</code></pre>
+<p><code>&amp;s[..2]</code> is the same as <code>&amp;s[0..2]</code> and <code>&amp;s[3..]</code> is the same as <code>&amp;s[3..len]</code> where <code>len</code> is <code>s.len()</code></p>
+<p><code>&amp;s[..]</code> is a slice of the entire string.</p>
+<p>In this section, ASCII-only text is assumed. String slice ranges that occur inside a UTF-8 character boundary cause the program to exit with an error.</p>
+<h3>String literals as slices</h3>
+<p>The type of a string literal is <code>&amp;str</code>. It's a slice pointing to that specific point of the binary. <code>&amp;str</code> is an immutable reference.</p>
+<p>Using <code>&amp;str</code> in a function signature allows it to work on both <code>&amp;String</code> and <code>&amp;str</code> values.</p>
+<h1 id="ch5">Chapter 5: Using Structs to Structure Related Data</h1>
+<h1 id="ch6">Chapter 6: Enums and Pattern Matching</h1>
+<h1 id="ch7">Chapter 7: Managing Growing Projects with Packages, Crates, and Modules</h1>
+<h1 id="ch8">Chapter 8: Common Collections</h1>
+<h1 id="ch9">Chapter 9: Error Handling</h1>
+<h1 id="ch10">Chapter 10: Generic Types, Traits, and Lifetimes</h1>
+<h1 id="ch11">Chapter 11: Writing Automated Tests</h1>
+<h1 id="ch12">Chapter 12: An I/O Project: Building a Command Line Program</h1>
+<h1 id="ch13">Chapter 13: Functional Language Features: Iterators and Closures</h1>
+<h1 id="ch14">Chapter 14: More about Cargo and Crates.io</h1>
+<h1 id="ch15">Chapter 15: Smart Pointers</h1>
+<h1 id="ch16">Chapter 16: Fearless Concurrency</h1>
+<p><em>Concurrent programming</em> means different parts of a program execute independently</p>
+<p><em>Parallel programming</em> means different parts of a program execute at the same time</p>
+<h2>16.1 Using Threads to Run Code Simultaneously</h2>
+<p>An executed program's code is run in a <em>process</em>. The operating system will manage multiple processes at once.</p>
+<p>Within a program, you can also have independent parts that run simultaneously. The features that run these independent parts are called <em>threads</em>. For example, a web server could have multiple threads so it could respond to more than one request at the same time.</p>
+<h2>16.2 Using Message Passing to Transfer Data Between Threads</h2>
+<h2>16.3 Shared-State Concurrency</h2>
+<h2>16.4 Extensible Concurrency with the Sync and Send Traits</h2>
+<h1 id="ch17">Chapter 17: Fundamentals of Asynchronous Programming: Async, Await, Futures, and Streams</h1>
+<h1 id="ch18">Chapter 18: Object-Oriented Programming Features of Rust</h1>
+<h1 id="ch19">Chapter 19: Patterns and Matching</h1>
+<h1 id="ch20">Chapter 20: Advanced Features</h1>
+<h1 id="ch21">Chapter 21: Final Project: Building a Web Server</h1>
+<h1 id="ch22">Chapter 22: Appendix</h1>
+
+
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

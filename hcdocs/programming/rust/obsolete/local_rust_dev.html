@@ -84,50 +84,30 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">clojure</a></h3>
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">rust</a> / <a href="index.html">obsolete</a></h3>
     
-<h1>Clojure (1.11) Project</h1>
+<h1>Local Rust Development</h1>
+<h2>Overview</h2>
+<p>For safety reasons, Rust and the <code>cargo</code> command have been set up with the <code>luser</code> user.</p>
+<h2>New project</h2>
+<pre><code>su - luser
+cd /share/rust
+cargo new RUST_PROJECT
+chmod -R 777 RUST_PROJECT
+cd RUST_PROJECT
+cargo watch -x run
 
-<h2>Files</h2>
+# could also be cargo watch -x check
+</code></pre>
+<p>Edit the <code>main.rs</code> file as the <code>hcbel</code> user.</p>
+<h2>Git</h2>
+<p>The Rust project already has a <code>main</code> branch. Add the remote origin and push:</p>
+<pre><code>prg remote add origin https://gitlab.com/heitorchang/RUST_PROJECT.git
+prg push -u origin main
+</code></pre>
+<p>(<code>prg</code> intercepts <code>git</code>, see Bash notes)</p>
 
-<pre>
-hello-proj
-+-- deps.edn
-+-- src
-    +-- hello.clj
-</pre>
 
-<p>
-  <code>deps.edn</code> can be simply <code>{}</code>
-</p>
-
-<h3>hello.clj</h3>
-
-<p>
-  As long as there's a <code>deps.edn</code> file, Cider can be started (<code>cider-jack-in</code>)
-</p>
-
-<pre>
-(ns hello)
-
-(defn run [opts]
-  (println opts)  ;; nil or pairs of values
-  (println "this is hello 3"))
-</pre>
-
-<p>
-  Use <code>(in-ns 'hello)</code> in the REPL.
-</p>
-
-<h2>Running</h2>
-
-<p>
-  In <code>hello-proj</code>, run with:
-</p>
-
-<pre>
-clj -X hello/run
-</pre>
 
 </div>
 <br>

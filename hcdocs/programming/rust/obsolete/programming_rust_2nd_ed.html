@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #062;
+          font-size: 1rem;
+        }
+
+        pre > code {
+          padding: 0;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        table {
+          border-collapse: collapse;
+        }
+
+        td {
+          padding: 0.5rem 0.8rem;
+          border: 1px solid #ccc;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="../index.html">&#x23EB; up</a>
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">rust</a> / <a href="index.html">obsolete</a></h3>
+    
+<h1>Programming Rust, 2nd ed.</h1>
+
+<h2>Generally useful notes</h2>
+
+<h3>Saving a backtrace to a file</h3>
+
+<p>
+  The output cannot be captured by <code>less</code> or <code>&gt; backtrace.txt</code>. Use instead:
+</p>
+
+<pre>
+RUST_BACKTRACE=1 cargo run arg1 arg2 2&gt; backtrace.txt
+</pre>
+
+<p>
+  <code>RUST_BACKTRACE=full</code> produces even more details.
+</p>
+
+<h3>Local documentation</h3>
+
+<p>
+  <code>rustup doc --std</code> opens the standard library documentation.
+</p>
+
+<h3>? in the main function</h3>
+
+<p>
+  Since <code>main</code> doesn't return a value, using <code>?</code> in the main function won't work. It's possible to use a <code>match</code> statement, <code>unwrap</code>, and <code>expect</code>.
+</p>
+
+
+<h2 id="ch1">1. Systems programmers can have nice things</h2>
+
+<p>
+  The benefits of Rust are:
+</p>
+
+<ul>
+  <li>Memory safety</li>
+  <li>Easy parallelism</li>
+  <li>"Fast"</li>
+  <li>Good package management</li>
+</ul>
+
+<h2 id="ch2">2. A tour of Rust</h2>
+
+<p>
+  Install Rust by following instructions at <a href="https://rustup.rs" target="_blank">rustup.rs</a>
+</p>
+
+<h3>New project</h3>
+
+<pre>
+cargo new hello
+</pre>
+
+<p>
+  Run the program (an executable is created in <code>target/debug/</code>.
+</p>
+
+<pre>
+cargo run [arguments]
+</pre>
+
+<h3>Integer types</h3>
+
+<p>
+  <code>i32</code> is a signed 32-bit integer. <code>u8</code> is an unsigned 8-bit integer (used for bytes).
+</p>
+
+<p>
+  <code>f32</code> and <code>f64</code> are floating-point types.
+</p>
+
+<h3>Additional notes on the GCD program</h3>
+
+<p>
+  <code>mut</code> (pronounced <em>mute</em>) is used to make a variable <em>mutable</em>.
+</p>
+
+<p>
+  <code>assert!</code> is a <em>macro</em>. The exclamation point is used for macros. <code>debug_assert!</code> calls are skipped when the program is compiled for speed.
+</p>
+
+<p>
+  Function signatures must be typed.
+</p>
+
+<p>
+  The final expression (not followed by a semicolon) in a function's body is taken as the return value.
+</p>
+
+<p>
+  Any block surrounded by curly braces is interpreted as an expression (the following block yields <code>x.cos()</code> as its value:
+</p>
+
+<pre>
+{
+    println!("Evaluating cos of x");
+    x.cos()
+}
+</pre>
+
+<p>
+  Because of this behavior where final expressions are the return value, <code>return</code> statements are used only for explicit early returns from a function.
+</p>
+
+<h3>Writing and running unit tests</h3>
+
+<pre>
+#[test]
+fn test_gcd() {
+    assert_eq!(gcd(14, 15), 1);
+    // ...
+}
+</pre>
+
+<p>
+  Run tests with <code>cargo test</code>
+</p>
+
+<p>
+  <code>#[test]</code> is an <em>attribute</em> (similar to annotations in Java).
+</p>
+
+<h3>Handling command-line arguments</h3>
+
+<p>
+  <code>use std::str::FromStr</code> is a declaration that brings the standard library <em>trait</em> <code>FromStr</code> into scope.
+</p>
+
+<p>
+  A trait is a collection of methods that types can implement. The <code>u64</code> type implements <code>FromStr</code>. A type that implements this trait has a <code>from_str</code> to parse a value from a string.
+</p>
+
+<p>
+  The <code>args</code> function from <code>std::env</code> returns an iterator, a value that produces each argument on demand. Iterators are ideal for anything that makes sense to loop over.
+</p>
+
+<p>
+  <code>from_str</code> does not return a <code>u64</code> value directly, but rather a <code>Result</code> value that indicates whether the parse succeeded or failed.
+</p>
+
+<p>
+  A <code>Result</code> value is either <code>Ok(v)</code>, where <code>v</code> is the value produced, or <code>Err(e)</code>, with an error value <code>e</code>.
+</p>
+
+<p>
+  Rust does not have exceptions. Errors are handled using either <code>Result</code> or <em>panic</em>.
+</p>
+
+<p>
+  The <code>&</code> operator borrows a reference to an object. <code>&numbers[1..]</code> borrows references to the vector's elements from the second one onward.
+</p>
+
+<p>
+  The <code>*</code> operator is used for dereferencing. <code>*m</code> dereferences m, yielding the value it refers to.
+</p>
+
+<p>
+  For now, remember that <code>&x</code> borrows a reference to <code>x</code>, and that <code>*r</code> is the value that <code>r</code> refers to.
+</p>
+
+<h3>Serving pages to the Web</h3>
+
+<p>
+  <strong>Note</strong>: build breaks because of a change in a dependency. Add to <code>Cargo.toml</code>'s <code>[dependencies]</code>:
+</p>
+
+<pre>
+chrono = { version = "= 0.4.29" }
+</pre>
+
+<p>
+  A Rust package, which may be a library or an executable, is called a <code>crate</code>.
+</p>
+
+<p>
+  The most relevant crates used in our web server are <em>actix-web</em> and <em>serde</em>.
+</p>
+
+<p>
+  A <em>closure</em> is a value that can be called as if it were a function. Arguments appear between the vertical bars (||).
+</p>
+
+<p>
+  The <em>raw string</em> syntax is the letter <code>r</code> followed by zero or more hash marks (<code>#</code>), and a double quote. To close the string, write a double quote and the same number of hash marks.
+</p>
+
+<h3>Concurrency</h3>
+
+<p>
+  All Rust functions are thread-safe.
+</p>
+
+<p>
+  The <code>Option</code> type is:
+</p>
+
+<pre>
+enum Option&lt;T&gt; {
+    None,
+    Some(T),
+}
+</pre>
+
+<p>
+  A documentation comment starts with three slashes: <code>///</code>
+</p>
+
+<h3>Filesystems and command-line tools</h3>
+
+<p>
+  <em>(rest of the chapter skipped)</em>
+</p>
+
+<h2 id="ch3">3. Fundamental types</h2>
+
+<p>
+  The types that hold data are: boxes, tuples, arrays, and strings.
+</p>
+
+<p>
+  <code>Unit</code> is an empty tuple: <code>()</code>
+</p>
+
+<p>
+  Kinds of structs:
+</p>
+
+<table>
+  <tr>
+    <td><code>struct S { x: f32, y: f32 }</code></td><td>Named-field struct</td>
+  </tr>
+  <tr>
+    <td><code>struct T (i32, char)</code></td><td>Tuple-like struct</td>
+  </tr>
+  <tr>
+    <td><code>struct E</code></td><td>Unit-like struct (has no fields)</td>
+  </tr>
+</table>
+
+<p>
+  A <code>Box&lt;...&gt;</code> owns a pointer to a value in heap
+</p>
+
+<h3>Fixed-width numeric types</h3>
+
+<p>
+  Unsigned integers begin with <code>u</code>: <code>u8, u16, u32, u64, u128, usize</code>. The last type, <code>usize</code>, uses the machine word (size of an address on the machine, 32 or 64 bits).
+</p>
+
+<p>
+  Signed integers begin with <code>i</code>. Floating-point numbers are either <code>f32</code> or <code>f64</code>.
+</p>
+
+<p>
+  A <code>char</code> is distinct from numeric values (though it's 32 bits long).
+</p>
+
+<p>
+  Array indices must be <code>usize</code> values.
+</p>
+
+<p>
+  Integer literals can take a suffix specifying their type: <code>42u8</code>. The default is <code>i32</code>.
+</p>
+
+<p>
+  Underscores may be added anywhere in a literal: <code>4_294</code>, <code>0xff_ffff</code>.
+</p>
+
+<p>
+  Byte literals are character-like literals for <code>u8</code> values: <code>b'A'</code>. Single quotes, backslashes, and whitespace need to be written with a backslash: <code>b'\'', b'\\', b'\n', b'\r', b'\t'</code>.
+</p>
+
+<p>
+  A hexadecimal value may be used: <code>b'\x??'</code>.
+</p>
+
+<h3>Type casting</h3>
+
+<p>
+  An explicit conversion uses <code>as</code>: <code>65000_u16 as i32</code>
+</p>
+
+<p>
+  To resolve ambiguities, a number can have the type as a suffix, or the type's function can be called:
+</p>
+
+<pre>
+println!("{}", (-4_i32).abs());
+println!("{}", i32::abs(-4));
+</pre>
+
+<p>
+  There are several ways to handle integer overflow:
+</p>
+
+<ul>
+  <li><em>Checked</em>: returns an <code>Option</code> of the result (<code>Some</code> if the result is mathematically correct) or <code>None</code>.</li>
+  <li><em>Wrapping</em></li>
+  <li><em>Saturating</em>: capped at the limit</li>
+  <li><em>Overflowing</em>: returns a tuple <code>(result, overflowed)</code></li>
+</ul>
+
+<p>
+  Floating-point numbers default to the <code>f64</code> type.
+</p>
+
+<h3>The bool type</h3>
+
+<p>
+  The two values are <code>true</code> and <code>false</code>.
+</p>
+
+<p>
+  Other types are not acceptable in Boolean contexts.
+</p>
+
+<p>
+  It is possible to convert a bool to an integer, but not the other way around: <code>true as i32</code>
+</p>
+
+<p>
+  An entire byte is used for a bool, so you can create a pointer to it.
+</p>
+
+<h3>Characters</h3>
+
+<p>
+  A char is a 32-bit value. However, UTF-8 is used for encoding strings and streams of text.
+</p>
+
+<p>
+  A char is enclosed in single quotes. A Unicode character can be written as <code>'\u{HHHHHH}'</code> (up to six hexadecimal digits).
+</p>
+
+<p>
+  It is possible to convert a char to an integer, but the value may be truncated.
+</p>
+
+<p>
+  The only possible reverse conversions (integer to char) is u8 to char and <code>std::char::from_u32</code> that returns an <code>Option&lt;char&gt;</code>
+</p>
+
+<h3>Tuples</h3>
+
+<p>
+  A tuple may be called a pair, triple, quadruple, quintuple, or <em>n-tuple</em>.
+</p>
+
+<p>
+  A literal tuple is <code>("Brazil", 1985)</code>. To access its elements, write <code>tup.0</code>, <code>tup.1</code>, and so on. It is not possible to access tuple elements in any other way.
+</p>
+
+<pre>
+// divide a string into two parts
+fn split_at(&self, mid: usize) -> (&str, &str)
+...
+let text = "I see the eigenvalue in thine eye";
+let (head, tail) = text.split_at(21);
+</pre>
+
+<p>
+  The zero tuple, <code>()</code>, is called the <em>unit type</em>. Omitting a function's return type means that it returns the unit type.
+</p>
+
+<p>
+  Tuples, argument lists, arrays, structs, and enum definitions may all have trailing commas. For a one-element tuple, the trailing comma is mandatory.
+</p>
+
+<h3>Pointer types</h3>
+
+<p>
+  In rust, values nest by default. <code>((0, 0), (1440, 900))</code> is stored as four adjacent integers. Such a variable is not allocated in the heap.
+</p>
+
+<h4>References</h4>
+
+<p>
+  A value of type <code>&String</code> (pronounced "ref String") is a reference to a String value. A <code>&i32</code> is a reference to an <code>i32</code>, and so on.
+</p>
+
+<p>
+  A reference is a single machine word holding the address of the <code>i32</code>, which may be on the stack or in the heap.
+</p>
+
+<p>
+  The expression <code>&x</code> produces a reference to <code>x</code>. In Rust terminology, we say that it <em>borrows a reference to x</em>.
+</p>
+
+<p>
+  Given a reference <code>r</code>, the expression <code>*r</code> refers to the value <code>r</code> points to.
+</p>
+
+<p>
+  It is impossible to have a null reference in Rust.
+</p>
+
+<p>
+  <code>&T</code> is an immutable, shared reference. There may be any number of shared references to a given value at the same time, but they are read-only.
+</p>
+
+<p>
+  <code>&mut T</code> (pronounced "mute") is a mutable, exclusive reference. For as long as the reference exists, you may not have any other references of any kind to that value. The only way to access the value is through this mutable reference.
+</p>
+
+<p>
+  The behavior can be summarized as "single read-write or multiple readers".
+</p>
+
+<h4>Boxes</h4>
+
+<p>
+  <code>Box::new</code> is the simplest way to allocate a value in the heap:
+</p>
+
+<pre>
+let t = (12, "eggs");
+let b = Box::new(t); // allocates a tuple in the heap
+</pre>
+
+<p>
+  The type of <code>t</code> is <code>(i32, &str)</code>, and the type of <code>b</code> is <code>Box&lt;(i32, &str)&gt;</code>.
+</p>
+
+<h4>Raw pointers</h4>
+
+<p>
+  <code>*mut T</code> and <code>*const T</code> are raw pointers. They are unsafe, and must be inside an <em>unsafe block</em>.
+</p>
+
+<h3>Arrays, vectors, and slices</h3>
+
+<p>
+  The type <code>[T; n]</code> represents an array of <code>n</code> values, each of type <code>T</code>. This size is determined at compile time and is a part of the type. The array cannot be grow or shrink.
+</p>
+
+<p>
+  The type <code>Vec&lt;T&gt;</code>, called a <em>vector of Ts</em>, is a dynamically allocated, growable sequence. The elements are stored on the heap.
+</p>
+
+<p>
+  The types <code>&[T]</code> (shared slice of Ts) and <code>&mut [T]</code> (mutable slice of Ts) are references to a series of elements that are a part of some other value, like an array or vector.
+</p>
+
+<p>
+  A slice is like a pointer to its first element, together with a count of the number of elements you can access starting at that point. The <em>i</em>th element of any of these types must fall within the valid range. It must also be a <code>usize</code> value.
+</p>
+
+<h3>Arrays</h3>
+
+<p>
+  Array literals:
+</p>
+
+<pre>
+let numbers: [u32; 6] = [1, 2, 4, 8, 10, 12];
+let taxonomy = ["Animalia", "Arthropoda", "Insecta"];
+
+assert_eq!(taxonomy.len(), 3);
+
+// a long array filled with some value
+let zeros = [0u8; 10000];
+</pre>
+
+<p>
+  When an array whose length varies at run time is needed, use a <em>vector</em>.
+</p>
+
+<h3>Vectors</h3>
+
+<p>
+  A vector <code>Vec&lt;T&gt;</code> is a resizable array of elements of type <code>T</code> allocated on the heap.
+</p>
+
+<p>
+  A vector literal can be created with the <code>vec!</code> macro:
+</p>
+
+<pre>
+let mut primes = vec![2, 3, 5, 7];
+assert_eq!(primes.iter().product::&lt;i32&gt;(), 210);
+
+primes.push(11);
+primes.push(13);
+assert_eq!(primes.iter().product::&lt;i32&gt;(), 30030);
+</pre>
+
+<p>
+  A vector can also be built by repeating a given value a certain number of times:
+</p>
+
+<pre>
+fn new_pixel_buffer(rows: usize, cols: usize) -> Vec&lt;u8&gt; {
+    vec![0; rows * cols]
+}
+</pre>
+
+<p>
+  The <code>vec!</code> macro is equivalent to calling <code>Vec::new</code>, then pushing elements onto it:
+</p>
+
+<pre>
+let mut v = Vec::new();
+v.push("this");
+v.push("is");
+v.push("a");
+v.push("vec");
+</pre>
+
+<p>
+  <code>Vec::with_capacity</code> specifies the initial size, to avoid reallocation if you know how large to make the vector. If this estimate is exceeded, the storage is enlarged as usual.
+</p>
+
+<p>
+  <code>v.capacity()</code> returns the number of elements the vector could hold without reallocation.
+</p>
+
+<p>
+  <code>v.insert(at_index, value)</code> and <code>v.remove(at_index)</code> will shift all elements, so they may be slow for large vectors.
+</p>
+
+<p>
+  <code>v.pop()</code> removes and returns the last element. It returns an <code>Option&lt;T&gt;</code>. It is <code>None</code> if the vector was empty, or <code>Some(value)</code> if the last element had been <code>value</code>.
+</p>
+
+<p>
+  To iterate over a vector, you can use a <code>for</code> loop:
+</p>
+
+<pre>
+let languages: Vec&lt;String&gt; = std::env::args().skip(1).collect();
+
+for lang in languages {
+    println!("{} has {} character(s).", lang, lang.len());
+}
+</pre>
+
+<h3>Slices</h3>
+
+<p>
+  A slice is a region of an array or vector. It is written <code>[T]</code>, without specifying the length.
+</p>
+
+<p>
+  A slice can be any length, so it can't be stored directly in variables or passed as function arguments. They are always passed by reference.
+</p>
+
+<p>
+  A reference to a slice is a <em>fat pointer</em> (a two-word value comprising a pointer to the slice's first element, and the number of elements in the slice.
+</p>
+
+<p>
+  The last two lines of the following code automatically converts the <code>&Vec&lt;f64&gt;</code> and <code>&[f64; 4]</code> references to slice references that point directly to the data.
+</p>
+
+<pre>
+let v: Vec&lt;f64&gt; = vec![0.0, 0.7, 1.0, 0.7];
+let a: [f64; 4] = [0, -0.7, -1, -0.7];
+
+let sv: &[f64] = &v;
+let sa: &[f64] = &a;
+</pre>
+
+<p>
+  An ordinary reference is a non-owning pointer to a single value, while a reference to a slice is a non-owning pointer to a range of consecutive values in memory.
+</p>
+
+<p>
+  A reference to a slice of an array or vector can be created by indexing an array, vector, or another slice:
+</p>
+
+<pre>
+print(&v[0..2]);  // first two elements
+print(&a[2..]);
+print(&sv[1..3]);
+</pre>
+
+<h3>String types</h3>
+
+<h4>String literals</h4>
+
+<h2 id="ch5">5. References</h2>
+
+<h3>References to values</h3>
+
+<p>
+  A <em>shared reference</em> lets you read but not modify its referent. You can have as many shared references to a particular value at a time as you like. <code>&e</code> is a shared reference to <code>e</code>'s value. If <code>e</code> has the type <code>T</code>, then <code>&e</code> has the type <code>&T</code>, pronounced "ref T".
+</p>
+
+<p>
+  A <em>mutable reference</em> to a value allows reading and modifying the value. However, only a single mutable reference (and no other reference) may be active at a time. <code>&mut e</code> has the type <code>&mut T</code>, pronounced "ref mute T".
+</p>
+
+<p>
+  Reference rules cover the borrowed value's owner as well. As long as there are shared references to a value, not even its owner can modify it.
+</p>
+
+<p>
+  When passing a value to a function in a way that moves ownership of the value to the function, we say that it was passed <em>by value</em>.
+</p>
+
+<p>
+  If we instead pass the function a reference to the value, we say that it was passed <em>by reference</em>.
+</p>
+
+<p>
+  Rust references are dereferenced explicitly with the <code>*</code> operator:
+</p>
+
+<pre>
+let x = 10;
+let r = &x;  // &x is a shared reference to x
+assert!(*r == 10);  // dereference x
+</pre>
+
+<p>
+  Since references are widely used, the <code>.</code> operator implicitly dereferences its left operand, if needed:
+</p>
+
+<pre>
+struct Anime { name: &'static str, bechdel_pass: bool };
+let aria = Anime { name: "Aria: The Animation", bechdel_pass: true };
+let anime_ref = &aria;
+assert_eq!(anime_ref.name, "Aria: The Animation");
+// is equivalent to assert_eq!((*anime_ref).name, "Aria: The Animation");
+</pre>
+
+<h3>Receiving references as function arguments</h3>
+
+<p>
+  Suppose we have a function <code>f</code> that takes a reference and stores it in a global variable:
+</p>
+
+<pre>
+// Code with several problems that doesn't compile
+static mut STASH: &i32;
+fn f(p: &i32) { STASH = p; }
+</pre>
+
+<p>
+  Every static must be initialized, and mutable statics are inherently not thread-safe.
+</p>
+
+<p>
+  The signature of <code>f</code> is actually shorthand for:
+</p>
+
+<pre>
+fn f&lt;'a&gt;(p: &'a i32) { ... }
+</pre>
+
+<p>
+  <code>'a</code> (pronounced "tick A") is the <em>lifetime parameter</em> of <code>f</code>. <code>&lt;'a&gt;</code> can be read as "for any lifetime <code>'a</code>".
+</p>
+
+<p>
+  The assignment <code>STASH = p</code> becomes a point of contention. Since <code>STASH</code> lives for the program's entire execution, the reference type it holds must have a lifetime of the same length. Rust calls this the <code>'static</code> lifetime.
+</p>
+
+<p>
+  In Rust, a function's signature always exposes the body's behavior.
+</p>
+
+<h3>Returning references</h3>
+
+<p>
+  It's common for a function to take a reference to some data structure and then return a reference into some part of that structure. Here's a function that returns a reference to the smallest element of a slice:
+</p>
+
+<pre>
+fn smallest(v: &[i32]) -> &i32 {
+    let mut s = &v[0];
+    for r in &v[1..] {
+        if *r < *s { s = r;
+    }
+    s
+}
+</pre>
+
+<p>
+  Calling <code>smallest</code> with a slice enclosed in a block will not work because the slice does not outlive the block:
+</p>
+
+<pre>
+let s;
+{
+    let parabola = [9, 4, 1, 0, 1, 4, 9];
+    s = smallest(&parabola);
+}
+assert_eq!(*s, 0);
+</pre>
+
+<p>
+  The lifetime of <code>s</code> must be contained within <code>parabola</code>'s:
+</p>
+
+<pre>
+{
+    let parabola = [9, 4, 1, 0, 1, 4, 9];
+    let s = smallest(&parabola);
+    assert_eq!(*s, 0);
+}
+</pre>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="../index.html">&#x23EB; Up</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

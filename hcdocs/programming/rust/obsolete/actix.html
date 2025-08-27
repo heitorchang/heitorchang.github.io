@@ -84,50 +84,39 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">clojure</a></h3>
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">rust</a> / <a href="index.html">obsolete</a></h3>
     
-<h1>Clojure (1.11) Project</h1>
+<h1>Actix</h1>
 
-<h2>Files</h2>
+<h3>Getting Started</h3>
+
+<p>
+  After following the tutorial, use Insomnia or similar (Postman) to test the /echo route. Send a plain text POST request to /echo.
+</p>
+
+<h3>Concatenating the /echo string</h3>
 
 <pre>
-hello-proj
-+-- deps.edn
-+-- src
-    +-- hello.clj
+#[post("/echo")]
+async fn echo(req_body: String) -> impl Responder {
+    HttpResponse::Ok().body(format!("{}...{}", req_body, req_body))
+}
 </pre>
 
-<p>
-  <code>deps.edn</code> can be simply <code>{}</code>
-</p>
-
-<h3>hello.clj</h3>
+<h3>Automatically rebuilding the server when a file changes</h3>
 
 <p>
-  As long as there's a <code>deps.edn</code> file, Cider can be started (<code>cider-jack-in</code>)
-</p>
-
-<pre>
-(ns hello)
-
-(defn run [opts]
-  (println opts)  ;; nil or pairs of values
-  (println "this is hello 3"))
-</pre>
-
-<p>
-  Use <code>(in-ns 'hello)</code> in the REPL.
-</p>
-
-<h2>Running</h2>
-
-<p>
-  In <code>hello-proj</code>, run with:
+  Suppose we wish to change the manual_hello greeting. Using <code>cargo-watch</code>, we don't need to manually run <code>cargo run</code>.
 </p>
 
 <pre>
-clj -X hello/run
+cargo install cargo-watch
+cargo watch -x run
 </pre>
+
+<p>
+  Rebuilding takes a few seconds and the server will be down during this time. Also, the browser will not auto-refresh.
+</p>
 
 </div>
 <br>
