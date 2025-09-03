@@ -16,6 +16,14 @@
                "Implemented a closest points linear regression model to reduce bias and statistical error."
                "Converted scientific Fortran code that models volcanic activity to Python modules that leverage NumPy and NetCDF libraries."))))
 
+    (:company "Freelance Software Developer, São Paulo, SP"
+     :id "freelance-2024"
+     :roles ((:title "Senior Full-Stack Developer"
+              :period "Mar. 2023 &ndash; Dec. 2023"
+              :responsibilities
+              ("Created REST APIs in Python with FastAPI and backed by PostgreSQL to read time series data for various scenarios and deployed them to Google Cloud."
+               "Developed a static site generator in Python to mirror documents with a practical navigation system."))))
+
     (:company "Mediafly, Inc., Chicago, IL (Remote)"
      :id "mediafly"
      :roles ((:title "Senior Software Engineer, Data and Client Squad"
@@ -27,21 +35,11 @@
     (:company "Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP"
      :id "tempook"
      :roles ((:title "Senior Full-Stack Developer"
-              :period "Jun. 2020 &ndash; Aug. 2022"
+              :period "June 2020 &ndash; Aug. 2022"
               :responsibilities
               ("Architected the company website in Django with custom user management and JWT authentication."
                "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and cloud Continuous Deployment."
-               "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."))))
-
-    (:company "Pontual Export &amp; Import Ltd., São Paulo, SP"
-     :id "pontual_update"
-     :roles ((:title "Full-Stack Developer"
-              :period "Jan. 2014 &ndash; Jun. 2020"
-              :responsibilities
-              ("Used MA (Moving Average) indicators in a Django project to predict the demand for 600 products and calculate ideal amounts for restocking."
-               "Created a REST API with the PHP Slim micro framework to be consumed by a React app for the public website."
-               "Visualized historical sales with NumPy and Pandas, reporting totals and outliers for each product."
-               "Created a SPA (Single-Page App) with AngularJS and Firebase to organize product reservations by clients and their assigned salesperson in real-time."))))))
+               "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."))))))
 
 (defun build-resume ()
   (with-open-file (out *output-file*
@@ -54,7 +52,7 @@
         (:meta :charset "utf-8")
         (:meta :name "description" :content "Generated with resume-build")
         (:meta :name "viewport" :content "width=device-width, initial-scale=1")
-        (:link :rel "stylesheet" :href "resume_build_v1.css")
+        (:link :rel "stylesheet" :href "resume_maven_web.css")
         (:title "Heitor Chang - Resume"))
        (:body
         (:h1 "Heitor Chang")
