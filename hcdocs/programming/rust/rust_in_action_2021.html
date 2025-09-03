@@ -88,20 +88,32 @@
 <h1>Rust in Action © 2021</h1>
 <p><strong>Note</strong>: Projects and code snippets are saved in <code>~/reading_list/rust-in-action-2021/</code></p>
 <h2>Contents</h2>
-<ol>
-<li><a href="#ch1">Introducing Rust (1)</a></li>
-<li><a href="#ch2">Language foundations (31)</a></li>
-<li><a href="#ch3">Compound data types (77)</a></li>
-<li><a href="#ch4">Lifetimes, ownership, and borrowing (107)</a></li>
-<li><a href="#ch5">Data in depth (137)</a></li>
-<li><a href="#ch6">Memory (175)</a></li>
-<li><a href="#ch7">Files and storage (212)</a></li>
-<li><a href="#ch8">Networking (251)</a></li>
-<li><a href="#ch9">Time and timekeeping (293)</a></li>
-<li><a href="#ch10">Processes, threads, and containers (328)</a></li>
-<li><a href="#ch11">Kernel (365)</a></li>
-<li><a href="#ch12">Signals, interrupts, and exceptions (390)</a></li>
+<ol start="0">
+<li><a href="#comparison_to_python">Comparison to Python</a></li>
+<li><a href="#ch1">Introducing Rust (1) (30 p.)</a></li>
 </ol>
+<p>Part 1: Rust language distinctives</p>
+<ol start="2">
+<li><a href="#ch2">Language foundations (31) (46 p.)</a></li>
+<li><a href="#ch3">Compound data types (77) (30 p.)</a></li>
+<li><a href="#ch4">Lifetimes, ownership, and borrowing (107) (30 p.)</a></li>
+</ol>
+<p>Part 2: Demystifying systems programming</p>
+<ol start="5">
+<li><a href="#ch5">Data in depth (137) (38 p.)</a></li>
+<li><a href="#ch6">Memory (175) (37 p.)</a></li>
+<li><a href="#ch7">Files and storage (212) (39 p.)</a></li>
+<li><a href="#ch8">Networking (251) (42 p.)</a></li>
+<li><a href="#ch9">Time and timekeeping (293) (35 p.)</a></li>
+<li><a href="#ch10">Processes, threads, and containers (328) (37 p.)</a></li>
+<li><a href="#ch11">Kernel (365) (25 p.)</a></li>
+<li><a href="#ch12">Signals, interrupts, and exceptions (390) (27 p.)</a></li>
+</ol>
+<h2 id="comparison_to_python">0. Comparison to Python</h2>
+<p>These are my personal observations.</p>
+<p>While <code>for f in fruits</code> works, <code>for (i, f) in fruits.enumerate()</code> does not. You need <code>iter()</code>: <code>for (i, f) in fruits.iter().enumerate()</code>.</p>
+<p><code>enumerate()</code> is a 0-argument method. You cannot start with something other than 0, and must add the offset manually.</p>
+<p>In <code>println!({i})</code>, only a variable may be inside braces. <code>{i + 10}</code> is not allowed.</p>
 <h2 id="ch1">1. Introducing Rust</h2>
 <h3>1.6 What is Rust?</h3>
 <h4>1.6.1 Goal of Rust: Safety</h4>
@@ -179,16 +191,841 @@ fn main() {
 <p>The <code>new()</code> static method is not part of the language. It is typically implemented by convention only.</p>
 <p>A <em>static method</em> is a function that is available for a type, but it's not an instance of that type.</p>
 <h3>2.4 Flow control</h3>
+<h4>2.4.1 For: the central pillar of iteration</h4>
+<pre><code>for item in &amp;container {
+    // ...
+}
+</code></pre>
+<p>To reuse <code>container</code>, a reference is needed. Otherwise, its lifetime ends.</p>
+<p>To modify each <code>item</code> during the loop: <code>for item in &amp;mut collection</code></p>
+<p>By convention, <code>_</code> is used as a variable name when it won't be used within a block: <code>for _ in 0..10</code></p>
+<p>If possible, avoid <code>for i in 0..collection.len()</code>. It performs worse than a standard <code>for ... in</code> loop.</p>
+<h4>2.4.2 Continue</h4>
+<p><code>continue</code> skips the rest of the current iteration.</p>
+<h4>2.4.3 While</h4>
+<pre><code>while samples.len() &lt; 10 {
+    // ...
+}
+</code></pre>
+<h4>2.4.4 Loop</h4>
+<p>Use <code>loop</code> instead of <code>while true</code>.</p>
+<h4>2.4.5 Break</h4>
+<p><code>break</code> breaks out of a loop. <code>break</code> can return a value: <code>break 123;</code></p>
+<h5>Nested loops</h5>
+<pre><code>'outer: for x in 0.. {
+    for y in 0.. {
+        for z in 0.. {
+            if x + y + z &gt; 1000 {
+                break 'outer;
+            }
+        }
+    }
+}
+</code></pre>
+<p><code>loop</code> can also have labels.</p>
+<h4>2.4.6 if, if else, else</h4>
+<pre><code>if item == 42 {
+    // ...
+} else if item == 132 {
+    // ...
+} else {
+    // ...
+}
+</code></pre>
+<p>In Rust, <code>true</code> and <code>false</code> are the only valid values for conditions. Other values are not considered "truthy" or "falsey".</p>
+<h5>Rust is an expression-based language</h5>
+<p>Statements that are not expressions include:</p>
+<ul>
+<li>Expressions needing a semicolon (<code>;</code>)</li>
+<li>Binding a name to a value with <code>=</code> (assignment)</li>
+<li>Function, type, and data type declarations (<code>fn</code>, <code>struct</code>, <code>enum</code>)</li>
+</ul>
+<p><code>()</code> is "no value". It is the Unit type.</p>
+<h4>2.4.7 Match: Type-aware pattern matching</h4>
+<p>It is safer to use <code>match</code> instead of <code>if/else</code> blocks.</p>
+<pre><code>match item {
+    0 =&gt; "zero",
+    10 ..= 20 =&gt; "medium",
+    15 | 25 =&gt; "reserved",
+    _ =&gt; "oversized",
+}
+</code></pre>
+<p>Among the allowed kinds of values are:</p>
+<ul>
+<li>ranges (<code>10 ..= 20</code>)</li>
+<li>Boolean OR (<code>|</code>)</li>
+</ul>
+<p>The underscore (<code>_</code>) matches anything else not declared. A <code>match</code> that leaves unhandled possibilities does not compile.</p>
+<h3>2.5 Defining functions</h3>
+<p><code>fn add(i: i32, j: i32) -&gt; i32 { ... }</code></p>
+<h3>2.6 Using references</h3>
+<p>A <em>reference</em> is a value that stands in place for another value. Instead of duplicating an array, for example, the array's address is the reference.</p>
+<p>A reference can be <code>dereferenced</code> to make its value available.</p>
+<pre><code>fn main() {
+    let a = 42;
+    let r = &amp;a;
+    let b = a + *r;
+
+    println!("a + a = {}", b);
+}
+</code></pre>
+<pre><code>fn main() {
+    let needle = 0o204;
+    let haystack = [1, 1, 2, 5, 15, 52, 203, 866, 40140, 221142];
+
+    // iterates over references to elements within haystack
+    for item in &amp;haystack {
+        if *item == needle {  // dereference item
+            println!("{}", item);
+        }
+    }
+}
+</code></pre>
+<h3>2.7 Project: Mandelbrot set</h3>
+<p>See <code>reading-list/rust-in-action-2021/mandelbrot/src/main.rs</code>.</p>
+<h3>2.8 Advanced function definitions</h3>
+<h4>2.8.1 Explicit lifetime annotations</h4>
+<p>Consider:</p>
+<p><code>fn add_with_lifetimes&lt;'a, 'b&gt;(i: &amp;'a i32, j: &amp;'b i32) -&gt; i32 { ... }</code></p>
+<p><code>&lt;'a, 'b&gt;</code> declares two lifetime variables: <code>'a</code> and <code>'b</code>. They are called <em>lifetime a</em> and <em>lifetime b</em></p>
+<p><code>i: &amp;'a i32</code> binds lifetime <code>'a</code> to the lifetime of <code>i</code>.</p>
+<p>Lifetime annotations allow programmers to declare their intent. All values bound to a given lifetime must live as long as the last access to any value bound to that lifetime.</p>
+<p>Functions that accept multiple references as arguments or return a reference usually need lifetime annotations.</p>
+<h4>2.8.2 Generic functions</h4>
+<p><code>fn add&lt;T&gt;(i: T, j: T) -&gt; T { ... }</code> (doesn't compile)</p>
+<p><code>T</code> is called a type variable. Conventionally, <code>U</code> and <code>V</code> are also used. <code>E</code> stands for an error type.</p>
+<p>All of Rust's operators (including basic ones like addition) are defined within <em>traits</em>. A <em>trait bound</em> must be added alongside the type variable:</p>
+<pre><code>fn add&lt;T: std::ops::Add&lt;Output = T&gt;&gt;(i: T, j: T) -&gt; T {
+    i + j
+}
+</code></pre>
+<p>This trait bound means that <code>T</code> must implement <code>std::ops::Add</code>.</p>
+<p>A trait is like an interface, protocol, or contract. It may also be compared to an abstract base class. In practice, traits enable types to advertise that they are using common behavior.</p>
+<p>The addition operator <code>+</code> is defined as the <code>std::ops::Add</code> trait.</p>
+<p>All of Rust's operators are syntactic sugar for a trait's methods. Operator overloading is supported with them. <code>a + b</code> becomes <code>a.add(b)</code>.</p>
+<p><em>Listing 2.17</em></p>
+<pre><code>use std::ops::{Add};
+use std::time::{Duration};
+
+fn add&lt;T: Add&lt;Output = T&gt;&gt;(i: T, j: T) -&gt; T {
+    i + j
+}
+
+fn main() {
+    let floats = add(1.2, 3.4);
+    let ints = add(10, 20);
+    let durations = add(Duration::new(5, 0), Duration::new(10, 0));
+
+    println!("{}", floats);
+    println!("{}", ints);
+    println!("{:?}", durations);
+}
+</code></pre>
+<h3>2.9 grep-lite</h3>
+<pre><code>fn main() {
+    let search_term = "picture";
+    let quote = "\
+Every face, every shop,
+a dark square is a picture.
+It is the same with books.
+What do we seek?";
+
+    for line in quote.lines() {
+        if line.contains(search_term) {
+            println!("{line}");
+        }
+    }
+}
+</code></pre>
+<h5>Navigating Rust's rich collection of string types</h5>
+<p><code>String</code> and <code>&amp;str</code> both represent text, but are distinct types.</p>
+<p>Until intuition develops, converting to <code>String</code> usually results in fewer errors.</p>
+<p><code>String</code> is the closest thing to strings in other languages. It supports concatenation, appending new text, and trimming whitespace.</p>
+<p><code>str</code> is a high-performance, feature-poor type. A <code>str</code> cannot expand or shrink, and is similar to a raw memory array. However, a <code>str</code> is guaranteed to be valid UTF-8.</p>
+<p>You usually see <code>&amp;str</code> (pronounced <em>string slice</em>). It contains a reference to <code>str</code> data and a length. As <code>str</code> values can be of any length, they can only be stored as local variables by reference. Attempting to assign a variable to type <code>str</code> will not work.</p>
+<p><code>String</code> uses dynamic memory allocation, while using <code>&amp;str</code> avoids memory allocation (higher performance).</p>
+<p><code>String</code> is an <em>owned</em> type. The owner is able to make changes to the data and is responsible for deleting other values it owns. On the other hand, a <code>&amp;str</code> is a <em>borrowed</em> type. In practice, this means that <code>&amp;str</code> values are read-only.</p>
+<p>String literals such as <code>"Rust"</code> are <code>&amp;str</code>s. Their full type signature is <code>&amp;'static str</code>. The <code>'static</code> lifetime is special. It belongs to a section in memory with hard-coded values, called <em>static memory</em>. It is read-only during execution.</p>
+<p>A <code>char</code> is 4 bytes, equivalent to UTF-32. <code>[u8]</code> is a slice of raw bytes. <code>Vec&lt;u8&gt;</code> is a vector of raw bytes, usually created when consuming <code>[u8]</code> data. A <code>String</code> is to <code>Vec&lt;u8&gt;</code> as <code>str</code> is to <code>[u8]</code>.</p>
+<p><code>std::ffi::OSString</code> is a platform-native string. It's not guaranteed to be UTF-8.</p>
+<p><code>std::path::Path</code> is a string-like type dedicated to handle filesystem paths.</p>
+<p>To add the line number to <em>grep-lite</em>, we can keep a <code>line_num</code> counter:</p>
+<pre><code>let mut line_num: usize = 1;
+...
+for ... {
+    // line contains search_term?
+    line_num += 1;
+}
+</code></pre>
+<p>Alternatively, use <code>enumerate()</code>:</p>
+<pre><code>for (i, line) in quote.lines().enumerate() {
+    ...
+    if line.contains(search_term) {
+        let line_num = i + 1;
+        println!("{}: {}", line_num, line);
+    }
+}
+</code></pre>
+<h3>2.10 Arrays, slices, and vectors</h3>
+<p>Arrays are fixed-width and extremely lightweight.</p>
+<p>Vectors are growable but there is some bookkeeping overhead.</p>
+<h4>2.10.1 Arrays</h4>
+<p>An array literal is <code>[1, 2, 3]</code>. A <em>repeat expression</em> is <code>[0; 100]</code> (<code>0</code> repeated 100 times).</p>
+<p>To declare an array: <code>let b: [u8; 3] = [0; 3];</code> Arrays of different sizes are considered to be of different types.</p>
+<p>In practice, a slice (<code>[T]</code>) is how arrays are used. Interaction happens by reference: <code>&amp;[T]</code>. Both slices and references to slices are called <em>slices</em>.</p>
+<h4>2.10.2 Slices</h4>
+<p>Slices are dynamically sized array-like objects. This means that their size is not known at compile time. They do not change size while the program runs.</p>
+<p>It's easier to implement traits for slices than arrays. A slice is not tied to a specific size (as arrays are).</p>
+<p>A slice acts as a view on arrays (or other slices). A <em>view</em> gives fast, read-only access to data without having to copy anything.</p>
+<h4>2.10.3 Vectors</h4>
+<p>Vectors are declared as <code>Vec&lt;T&gt;</code>. They are growable lists of <code>T</code>.</p>
+<p>(Improvement to grep-lite: save context around matches. A two-pass strategy is used, first to tag matching lines, then to collect lines around them).</p>
+<p><code>Vec&lt;T&gt;</code> performs best when initializing with a capacity: <code>Vec::with_capacity(...)</code>.</p>
+<h3>2.11 Including third-party code</h3>
+<p><code>cargo add CRATE@version</code> will automatically include the crate. It is possible to edit <code>Cargo.toml</code> but you will need to find the appropriate version number.</p>
+<p><code>unwrap()</code> unwraps a <code>Result</code>, crashing if an error occurs.</p>
+<p><code>Some(T)</code> is the positive case of an <code>Option</code>. <code>None</code> is the negative case.</p>
+<p><code>cargo doc</code> generates HTML documentation.</p>
+<h3>2.12 Supporting command-line arguments</h3>
+<p>Rust's standard library does not include many batteries. The third-party crate used here is <code>clap</code>.</p>
+<p>Other than adding command-line arguments, the final version of <em>grep-lite</em> allows regexes and reads from files or stdin:</p>
+<h3>2.13, 2.14 Reading from files and stdin</h3>
+<p>Start a new project:</p>
+<p><code>cargo new grep-lite</code>, <code>cd grep-lite</code></p>
+<p>Add dependencies:</p>
+<p><code>cargo add regex clap@2</code></p>
+<p>Write the code in <code>main.rs</code>:</p>
+<pre><code>use std::fs::File;
+use std::io;
+use std::io::BufReader;
+use std::io::prelude::*;
+use regex::Regex;
+use clap::{App, Arg};
+
+fn process_lines&lt;T: BufRead + Sized&gt;(reader: T, re: Regex) {
+    for line_ in reader.lines() {
+        let line = line_.unwrap();
+        match re.find(&amp;line) {
+            Some(_) =&gt; println!("{}", line),
+            None =&gt; (),
+        }
+    }
+}
+
+fn main() {
+    let args = App::new("grep-lite")
+        .version("0.1")
+        .about("Searches for regex pattern")
+        .arg(Arg::with_name("pattern")
+            .help("The pattern to search for")
+            .takes_value(true)
+            .required(true))
+        .arg(Arg::with_name("input")
+            .help("File to search")
+            .takes_value(true)
+            .required(false))
+        .get_matches();
+
+    let pattern = args.value_of("pattern").unwrap();
+    let re = Regex::new(pattern).unwrap();
+    let input = args.value_of("input").unwrap_or("-");
+    if input == "-" {
+        let stdin = io::stdin();
+        let reader = stdin.lock();
+        process_lines(reader, re);
+    } else {
+        let f = File::open(input).unwrap();
+        let reader = BufReader::new(f);
+        process_lines(reader, re);
+    }
+}
+</code></pre>
+<p>To run:</p>
+<pre><code>cargo run -q -- some_regex
+cargo run -q -- some_regex some_file
+</code></pre>
 <h2 id="ch3">3. Compound data types</h2>
+<h3>3.1 Using plain functions to experiment with an API</h3>
+<pre><code>#![allow(unused_variables)]
+
+type File = String;
+
+fn open(f: &amp;mut File) -&gt; bool {
+    true
+}
+
+fn close(f: &amp;mut File) -&gt; bool {
+    true
+}
+
+#[allow(dead_code)]
+fn read(f: &amp;mut File, save_to: &amp;mut Vec&lt;u8&gt;) -&gt; ! {
+    unimplemented!()
+}
+
+fn main() {
+    let mut f1 = File::from("f1.txt");
+    open(&amp;mut f1);
+    // read(f1, vec![]);
+    close(&amp;mut f1);
+}
+</code></pre>
+<p><code>#!</code> applies to the entire file, while <code>#</code> applies only to what follows.</p>
+<p><code>!</code> is the "Never" type. It indicates that a function never returns (especially when it is guaranteed to crash).</p>
+<h3>3.2 Modeling with struct</h3>
+<pre><code>#[derive(Debug)]
+struct File {
+    name: String,
+    data: Vec&lt;u8&gt;,
+}
+
+fn main() {
+    let f1 = File {
+        name: String::from("f1.txt"),
+        data: Vec::new(),
+    };
+
+    // Accessing by reference prevents their use after move issues
+    // The f1_name and f1_length variables are borrowing the data these refer to
+    let f1_name = &amp;f1.name;
+    let f1_length = &amp;f1.data.len();
+}
+</code></pre>
+<h5>The newtype pattern</h5>
+<p>The <code>newtype</code> pattern consists of wrapping a core type within a single field <code>struct</code> or <code>tuple</code>.</p>
+<pre><code>struct Hostname(String);  // Hostname is our new type
+
+fn connect(host: Hostname) {
+    println!("Connected to {}", host.0);
+}
+
+fn main() {
+    let ordinary_string = String::from("localhost");
+    let host = Hostname(ordinary_string.clone());
+
+    connect(ordinary_string);  // causes an error
+}
+</code></pre>
+<p>Using the <code>newtype</code> pattern can strengthen a program by preventing data from being misused.</p>
+<p><em>Listing 3.3</em></p>
+<pre><code>#![allow(unused_variables)]
+
+#[derive(Debug)]
+struct File {
+    name: String,
+    data: Vec&lt;u8&gt;,
+}
+
+fn open(f: &amp;mut File) -&gt; bool {
+    true
+}
+
+fn close(f: &amp;mut File) -&gt; bool {
+    true
+}
+
+fn read(f: &amp;File, save_to: &amp;mut Vec&lt;u8&gt;) -&gt; usize {
+    let mut tmp = f.data.clone();
+    let read_length = tmp.len();
+    save_to.reserve(read_length);
+    save_to.append(&amp;mut tmp);
+    read_length
+}
+
+fn main() {
+    let mut f2 = File {
+        name: String::from("2.txt"),
+        data: vec![114, 117, 115, 116, 33],
+    };
+
+    let mut buffer: Vec&lt;u8&gt; = vec![];
+
+    open(&amp;mut f2);
+    let f2_length = read(&amp;f2, &amp;mut buffer);
+    close(&amp;mut f2);
+
+    let text = String::from_utf8_lossy(&amp;buffer);
+    println!("{:?}", f2);
+    println!("{} is {} bytes long", &amp;f2.name, f2_length);
+    println!("{}", text);
+}
+</code></pre>
+<h3>3.3 Adding methods to a struct with impl</h3>
+<p>A method is a function that is coupled to some object. Syntactically, it is just a function that doesn't need to specify one of its arguments.</p>
+<p>Rust does not have classes. Structs do not support inheritance. <code>impl</code> blocks are outside <code>struct</code>s:</p>
+<pre><code>struct File {
+    // ... data ...
+}
+
+impl File {
+    // ... methods ...
+}
+</code></pre>
+<h4>3.3.1 Simplifying object creation by implementing new()</h4>
+<p>Using <code>new()</code> is a convention. It is not a keyword, nor does it have some sort of blessed status above other methods.</p>
+<pre><code>#[derive(Debug)]
+struct File {
+    name: String,
+    data: Vec&lt;u8&gt;,
+}
+
+impl File {
+    fn new(name: &amp;str) -&gt; File {
+        File {
+            name: String::from(name),
+            data: Vec::new(),
+        }
+    }
+
+    fn new_with_data(
+        name: &amp;str,
+        data: &amp;Vec&lt;u8&gt;,
+    ) -&gt; File {
+        let mut f = File::new(name);
+        f.data = data.clone();
+        f
+    }
+
+    fn read(
+        self: &amp;File,
+        save_to: &amp;mut Vec&lt;u8&gt;,
+    ) -&gt; usize {
+        // ...
+    }
+}
+
+fn main() {
+    // ...
+}
+</code></pre>
+<h3>3.4 Returning errors</h3>
+<h4>3.4.1 Modifying a known global variable</h4>
+<p>This method is common in systems programming, despite being error-prone (<code>errno</code> in C programming).</p>
+<p>Mutable global variables are denoted with <code>static mut</code>. Global variables, by convention, use ALL CAPS.</p>
+<p>Read-only references (borrows) declared with <code>let</code> can alias the same data. Read-write references (mutable borrows) are guaranteed to never alias data.</p>
+<h4>3.4.2 Making use of the Result return type</h4>
+<p>The <code>Result</code> type stands for both the standard case and the error case. It has two states: <code>Ok</code> and <code>Err</code>. <code>Result</code> is an <em>enum</em>.</p>
+<ul>
+<li>Functions that interact with the file system, such as <code>open()</code>, return <code>Result&lt;File, String&gt;</code>. If successful, <code>Ok(File)</code> is returned. Otherwise, <code>Err(String)</code> is returned.</li>
+<li>Calling functions that return <code>Result</code> need to use <code>unwrap()</code> to actually extract the value. More sophisticated error handling is explained in chapter 4. Calling <code>unwrap()</code> is often considered poor style.</li>
+<li>Passing an argument without <code>&amp;</code> will give its ownership to the function that is being called.</li>
+</ul>
+<h3>3.5 Defining and making use of an enum</h3>
+<p>An <em>enum</em> (enumeration) is a type that can represent multiple known variants. An enum represents several predefined known options, such as the suits of playing cards, or names of planets.</p>
+<pre><code>enum Suit {
+    Clubs,
+    Diamonds,
+    Hearts,
+    Spades,
+}
+</code></pre>
+<p><em>Listing 3.10 Defining an enum and using it to parse an event log</em></p>
+<pre><code>#[derive(Debug)]
+enum Event {
+    Update,
+    Delete,
+    Unknown,
+}
+
+type Message = String;
+
+fn parse_log(line: &amp;str) -&gt; (Event, Message) {
+    let parts: Vec&lt;_&gt; = line.splitn(2, ' ').collect();
+    if parts.len() == 1 {
+        return (Event::Unknown, String::from(line))
+    }
+    let event = parts[0];
+    let rest = String::from(parts[1]);
+
+    match event {
+        "UPDATE" | "update" =&gt; (Event::Update, rest),
+        "DELETE" | "delete" =&gt; (Event::Delete, rest),
+        _ =&gt; (Event::Unknown, String::from(line)),
+    }
+}
+</code></pre>
+<p>Enums can have <code>impl</code> blocks. They are more powerful than a set of constants.</p>
+<p>It's possible to include data within an enum's variant:</p>
+<pre><code>enum Card {
+    King(Suit),
+    Queen(Suit),
+    Jack(Suit),
+    Ace(Suit),
+    Pip(Suit, usize),
+}
+</code></pre>
+<pre><code>#[derive(Debug, PartialEq)]
+enum FileState {
+    Open,
+    Closed,
+}
+
+//...
+</code></pre>
+<h3>3.6 Defining common behavior with traits</h3>
+<p>The File interface should be independent of how the file is actually stored (disk drive, network connection, superposition of an electron). It's possible to define rules that say, "To call yourself a file, you must implement this."</p>
+<p>In other languages, they are called interfaces, protocols, type classes, abstract base classes, and contracts.</p>
+<p><code>#[derive(Debug)]</code> implements the <code>Debug</code> trait for the type that follows.</p>
+<h4>3.6.1 Creating a Read trait</h4>
+<p>Traits say that a type is attempting to perform certain tasks. <code>#[derive(Debug)]</code> says that the types that use it all print to the console via the <code>println!</code> macro and similar.</p>
+<pre><code>#[derive(Debug)]
+struct File;
+
+trait Read {
+    fn read(
+        self: &amp;Self,
+        save_to: &amp;mut Vec&lt;u8&gt;,
+    ) -&gt; Result&lt;usize, String&gt;;
+}
+
+impl Read for File {
+    fn read(self: &amp;File, save_to: &amp;mut Vec&lt;u8&gt;) -&gt; Result&lt;usize, String&gt; {
+        Ok(0)
+    }
+}
+
+fn main() {
+    let f = File{};
+    let mut buffer = vec!();
+    let n_bytes = f.read(&amp;mut buffer).unwrap();
+    println!("{} byte(s) read from {:?}", n_bytes, f);
+}
+</code></pre>
+<p><code>PartialEq</code> enables comparisons with the <code>==</code> operator. "Partial" means that cases where two values that match exactly should not be treated as equal. For example, two floating point <code>NaN</code> values are not considered equal.</p>
+<p>"<code>T</code> is <code>Debug</code>" means that <code>T</code> implements the <code>Debug</code> trait.</p>
+<h4>3.6.2 Implementing std::fmt::Display for your own types</h4>
+<p><code>Display</code> requires that types implement a <code>fmt</code> method, which returns <code>fmt::Result</code>.</p>
+<pre><code>#[derive(Debug, PartialEq)]
+enum FileState {
+    Open,
+    Closed,
+}
+</code></pre>
+<pre><code>impl Display for FileState {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+        match *self {
+            FileState::Open =&gt; write!(f, "OPEN"),
+            FileState::Closed =&gt; write!(f, "CLOSED"),
+        }
+    }
+}
+
+impl Display for File {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+        write!(f"&lt;{}, {}&gt;", self.name, self.state)
+    }
+}
+</code></pre>
+<h3>3.7 Exposing your types to the world</h3>
+<h4>3.7.1 Protecting private data</h4>
+<p>By default, things are kept private. Use the <code>pub</code> keyword to make things public, such as <code>pub enum FileState</code>. Struct methods must be marked as public, even if the struct itself is already public.</p>
+<h3>3.8 Creating inline documentation for your projects</h3>
+<p><code>///</code> generates documents for the item that immediately follows.</p>
+<p><code>//!</code> refers to the current item as the compiler scans the code. By convention, it is used only to annotate the current module.</p>
+<p><code>rustdoc</code> produces HTML for the inline documents. <code>cargo doc</code> renders docs for a crate.</p>
+<p>Markdown is supported in documentation comments:</p>
+<pre><code>impl File {
+    /// Creates a new, empty `File`
+    ///
+    /// # Examples
+    /// `let f = File::new("f1.txt");`
+</code></pre>
 <h2 id="ch4">4. Lifetimes, ownership, and borrowing</h2>
+<p>Rust uses a <em>borrow checker</em> to make sure all access to data is legal. It underpins the term <em>fearless concurrency</em>.</p>
+<p>Borrow checking relies on these interrelated concepts:</p>
+<ul>
+<li><em>Ownership</em>: unlike its general meaning, ownership relates to cleaning values when these are no longer needed.</li>
+<li><em>Lifetime</em>: the period when accessing a value is valid behavior. For example, a function's local variables live until the function returns.</li>
+<li><em>Borrowing</em>: to borrow a value is to access it. There's no obligation to "return" the value to its owner. Many parts of the program can access the value.</li>
+</ul>
+<h3>4.1 Implementing a CubeSat (satellite constellation) ground station</h3>
+<ul>
+<li>CubeSat: an artificial satellite</li>
+<li>Ground station: an intermediary between operators and satellites. Listens on a radio and transmits messages</li>
+<li>Constellation: the collective noun for satellites in orbit</li>
+</ul>
+<h4>4.1.1 Encountering our first lifetime issue</h4>
+<p>Consider a type to model satellites:</p>
+<p><em>Listing 4.3</em></p>
+<pre><code>#[derive(Debug)]
+struct CubeSat {
+    id: u64,
+}
+
+#[derive(Debug)]
+enum StatusMessage {
+    Ok,
+}
+
+fn check_status(sat_id: CubeSat) -&gt; StatusMessage {
+    StatusMessage::Ok
+}
+
+fn main() {
+    let sat_a = CubeSat { id: 0 };
+    let sat_b = CubeSat { id: 1 };
+    let sat_c = CubeSat { id: 2 };
+
+    let a_status = check_status(sat_a);
+    let b_status = check_status(sat_b);
+    let c_status = check_status(sat_c);
+
+    println!("a: {:?}, b: {:?}, c: {:?}", a_status, b_status, c_status);
+
+    // ... waiting
+
+    let a_status = check_status(sat_a);
+    let b_status = check_status(sat_b);
+    let c_status = check_status(sat_c);
+
+    // results in "value of sat_a moved" error
+    println!("a: {:?}, b: {:?}, c: {:?}", a_status, b_status, c_status);
+}
+</code></pre>
+<p><strong>NOTE</strong>: <code>println!</code> does not move its arguments:</p>
+<p>Movement refers to transfer of ownership.</p>
+<p>Rebinding is legal when values are not borrowed. Note that above, <code>sat_a</code> is the value being moved.</p>
+<p>In the code above, when the first <code>check_status()</code> returns, the <code>sat_a</code> value is dropped.</p>
+<h4>4.1.2 Special behavior of primitive types</h4>
+<p>Primitives in Rust implement the <code>Copy</code> trait. Values that implement <code>Copy</code> are duplicated. Primitives are said to possess <em>copy semantics</em>, while more complex types have <em>move semantics</em>.</p>
+<h3>4.3 What is an owner and its responsibilities?</h3>
+<p>Destroying objects occur behind the scenes. To provide a custom destructor, you must implement <code>Drop</code> with <code>drop(&amp;mut self)</code>. This is typically needed when there are <code>unsafe</code> blocks.</p>
+<p>Values cannot outlive their owner. This makes implementing trees and graphs somewhat bureaucratic. A root node that owns an entire tree cannot be removed without taking ownership into account.</p>
+<p>Owners of values do not have special access to their owned data.</p>
+<h3>4.4 How ownership moves</h3>
+<p>Assignment and passing data to functions are the two ways to shift ownership from one variable to another.</p>
+<h3>4.5 Resolving ownership issues</h3>
+<p>The ownership system ensures memory safety without needing a garbage collector.</p>
+<p>These are general strategies to keep in mind:</p>
+<ul>
+<li>Use references where full ownership is not required</li>
+<li>Duplicate the value</li>
+<li>Refactor code to reduce the number of long-lived objects</li>
+<li>Wrap data in a type designed to assist with movement issues</li>
+</ul>
+<h4>4.5.1 Use references where full ownership is not required</h4>
+<p>Use a "borrow" instead of transferring ownership.</p>
+<ul>
+<li>Read-only: <code>&amp;T</code></li>
+<li>Read-write: <code>&amp;mut T</code></li>
+</ul>
+<p>Using ownership: <code>fn send(to: CubeSat, msg: Message) { to.mailbox.messages.push(msg); }</code>
+Using a mutable reference: <code>fn send(to: &amp;mut CubeSat, msg: Message) { to.mailbox.messages.push(msg); }</code></p>
+<p><strong>My example</strong> Final Fantasy Summoner</p>
+<pre><code>#[derive(Debug)]
+struct Summoner {
+    name: String,
+    mp_left: usize,
+}
+
+struct MagicalBeast {
+    name: String,
+    mp_cost: usize,
+}
+
+fn summon(summoner: &amp;mut Summoner, beast: &amp;MagicalBeast) {
+    println!("{} summons {}", summoner.name, beast.name);
+    summoner.mp_left -= beast.mp_cost;
+}
+
+fn main() {
+    let mut rydia = Summoner { name: "Rydia".to_string(), mp_left: 100 };
+    let ifrit = MagicalBeast { name: "Ifrit".to_string(), mp_cost: 14 };
+
+    summon(&amp;mut rydia, &amp;ifrit);
+    println!("{:?}", rydia);
+
+    let shiva = MagicalBeast { name: "Shiva".to_string(), mp_cost: 15 };
+
+    summon(&amp;mut rydia, &amp;shiva);
+    println!("{:?}", rydia);
+}
+</code></pre>
+<p><em>Listing 4.13</em> Avoiding ownership issues with references</p>
+<pre><code>#[derive(Debug)]
+struct CubeSat {
+    id: u64,
+    mailbox: Mailbox,
+}
+
+type Message = String;
+
+#[derive(Debug)]
+struct Mailbox {
+    messages: Vec&lt;Message&gt;,
+}
+
+struct GroundStation;
+
+impl GroundStation {
+    fn send(&amp;self, to: &amp;mut CubeSat, msg: Message) {
+        to.mailbox.messages.push(msg);
+    }
+}
+
+impl CubeSat {
+    fn recv(&amp;mut self) -&gt; Option&lt;Message&gt; {
+        self.mailbox.messages.pop()
+    }
+}
+
+fn main() {
+    let base = GroundStation {};
+    let mut sat_a = CubeSat {
+        id: 0,
+        mailbox: Mailbox {
+            messages: vec![],
+        },
+    };
+    println!("time 0: {:?}", sat_a);
+    base.send(&amp;mut sat_a, Message::from("Hello base to Sat A"));
+
+    println!("time 1: {:?}", sat_a);
+    let msg = sat_a.recv();
+
+    println!("time 2: {:?}", sat_a);
+    println!("msg: {:?}", msg);
+}
+</code></pre>
+<h4>4.5.2 Use fewer long-lived values</h4>
+<p>For a program to be more manageable, keep components discrete and ephemeral. A function that returns CubeSat identifiers is assumed to be a black box that's responsible for communicating with some store of identifiers, such as a database.</p>
+<pre><code>fn fetch_sat_ids() -&gt; Vec&lt;u64&gt; {
+    // black box
+    vec![1, 2, 3]
+}
+</code></pre>
+<p>Also, we can create a CubeSat instance on demand once:</p>
+<pre><code>impl GroundStation {
+    fn connect(&amp;self, sat_id: u64) -&gt; CubeSat {
+        CubeSat { id: sat_id, mailbox: Mailbox { messages: vec![] } }
+    }
+}
+</code></pre>
+<p>Note on <em>Listing 4.14</em>: There is a modification done in a loop, then the function returns. Because of the <code>return</code>, the compiler accepts this code, though it's considered bad practice.</p>
+<h4>4.5.3 Duplicate the value</h4>
+<p>Generally, this is a bad idea, and to be used only as a last resort.</p>
+<p>There are two kinds of duplication: cloning (<code>std::clone::Clone</code>) and copying (<code>std::marker::Copy</code>). Copying acts implicitly. Whenever ownership would otherwise be moved to an inner scope, the value is duplicated instead. Copying is fast and cheap.</p>
+<p><code>Clone</code> acts explicitly, on the other hand. It may be slow and expensive.</p>
+<h5>Implementing Copy</h5>
+<pre><code>#[derive(Copy, Clone, Debug)]
+struct CubeSat {
+    id: u64,
+}
+
+#[derive(Copy, Clone, Debug)]
+enum StatusMessage {
+    Ok,
+}
+</code></pre>
+<p>Implementing <code>Copy</code> manually requires an implementation of <code>Clone</code>.</p>
+<pre><code>impl Copy for StatusMessage { }
+
+impl Clone for StatusMessage {
+    fn clone(&amp;self) -&gt; Self {
+        *self
+    }
+}
+
+// fn clone(&amp;self) -&gt; Self { CubeSat { id: self.id } }
+
+#### 4.5.4 Wrap data within specialty types
+
+Using *wrapper* types is similar to opting in to garbage collection. They incur runtime costs.
+
+`std:rc::Rc` takes a type parameter `T` and is typically referred to as `Rc&lt;T&gt;` (*R C of T*). It stands for *a reference-counted value of type T*.  It provides shared ownership of T. While there's an owner of `T`, it won't be destroyed.
+
+To wrap `GroundStation`, write: `Rc::new(GroundStation {})`.
+</code></pre>
+<p><code>Rc&lt;T&gt;</code> implements <code>Clone</code>. A call to <code>ground_station.clone()</code> increments an internal counter. A <code>Drop</code> decrements the counter.</p>
+<p>For mutation, another wrapper is needed: <code>Rc&lt;RefCell&lt;T&gt;&gt;</code>.</p>
+<p><code>let mut base_2 = base.borrow_mut();</code> is used to modify <code>base</code>.</p>
+<p><code>Rc&lt;T&gt;</code> is not thread-safe. In multithreaded code, <code>Arc&lt;T&gt;</code> is needed. The equivalent mutable version is <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>. <code>Arc</code> stands for <em>atomic reference counter</em>.</p>
+<h1>Part 2. Demystifying systems programming</h1>
 <h2 id="ch5">5. Data in depth</h2>
+<p>The primary purpose of <code>unsafe</code> blocks is to allow Rust to interact with external code, such as libraries and OS interfaces.</p>
+<p>In this book, <em>bit numbering</em> refers to the most significant bit, while <em>endianness</em> refers to the most significant byte.</p>
+<p><em>Listing 5.12</em>
+<code>impl From&lt;f64&gt; for Q7 ...</code> <em>Q7</em> is a fixed-point format developed by Texas Instruments.</p>
+<p><em>Listing 5.14</em>
+The full implementation of the Q7 format</p>
+<h3>5.7 Implementing a CPU to establish that functions are also data</h3>
+<p>This section implements the <em>CHIP-8</em> system.</p>
+<h4>5.7.1 CPU RIA/1: The adder</h4>
+<ul>
+<li>An <em>operation</em> (shortened to <em>op</em>) refers to a procedure that is supported natively by the system. It may also be called as "implemented in hardware" or an "intrinsic operation".</li>
+<li>A <em>register</em> is a container for data that the CPU accesses directly. In CHIP-8, a register holds <code>u8</code> values.</li>
+<li>An <em>opcode</em> is a number that maps to an operation. CHIP-8 opcodes include both the operation and the operands' registers.</li>
+</ul>
+<p>The initial version of the CPU supports only addition and has two registers.</p>
+<p><em>Listing 5.18</em></p>
+<pre><code>struct CPU {
+    current_operation: u16,
+    registers: [u8; 2],
+}
+</code></pre>
+<p>The process for addition is:</p>
+<ol>
+<li>Initialize a CPU</li>
+<li>Load <code>u8</code> values into the <code>registers</code></li>
+<li>Load the addition opcode into <code>current_operation</code></li>
+<li>Perform the operation</li>
+</ol>
+<p>A <em>nibble</em> is a 4-bit value (half a byte).</p>
+<h4>5.7.3 CPU RIA/2: The multiplier</h4>
+<p>This version includes memory, a main loop, and a stopping condition.</p>
+<h4>5.7.4 CPU RIA/3: The caller</h4>
+<p>This version includes the <code>CALL</code> opcode, allowing it to call functions.</p>
 <h2 id="ch6">6. Memory</h2>
+<p>This chapter is meant to be the most accessible guide to pointers and memory management.</p>
+<h3>6.1 Pointers</h3>
+<p>A pointer is just a number that refers to somewhere else. A book's table of contents can be considered a list of pointers.</p>
+<p>Inside a computer, a pointer is encoded as an integer (of size <code>usize</code>), which is the memory address of the referent (the data that the pointer refers to).</p>
+<p>An <em>address space</em> is a retrieval system (to get data from RAM).</p>
+<p>An <code>Option&lt;T&gt;</code> type occupies 0 bytes in the compiled binary. The <code>None</code> variant is represented by a <em>null pointer</em> (a pointer to invalid memory), allowing the <code>Some(T)</code> variant to have no additional indirection.</p>
+<p>A <em>memory address</em>, or just <em>address</em>, is a number that refers to a single byte in memory. A <em>pointer</em> is an address that points to a value of some type. It's an abstraction provided by high-level languages. A <em>reference</em> is a Rust abstraction that is a pointer and in the case of dynamically sized types, a pointer and an integer with extra guarantees.</p>
+<h3>6.2 Exploring Rust's reference and pointer types</h3>
+<p><em>Listing 6.1</em> Mimicking pointers with references</p>
+<pre><code>static B: [u8; 3] = [99, 98, 114];
+static C: [u8; 2] = [101, 116];
+
+fn main() {
+    let a = 42;
+    let b = &amp;B;
+    let c = &amp;C;
+
+    // :p formats the variable as a pointer and prints the memory address that the value points to
+    println!("a: {}, b: {:p}, c: {:p}", a, b, c);
+}
+</code></pre>
+<p>The <code>Box&lt;[u8]&gt;</code> type is a boxed byte slice. When values are placed in a box, ownership of the value moves to the owner of the box.</p>
+<p><code>std::borrow::Cow</code> is a smart pointer type that reads from its pointer location without needing to copy it first (Copy on write).</p>
+<p><code>std::ffi::CStr</code> is a C-like string type that allows Rust to read in zero-terminated strings.</p>
+<p><code>std::os::raw::c_char</code> is a type alias for the <code>i8</code> type. It is possible to use platform-specific nuances.</p>
+<h4>6.2.1 Raw pointers in Rust</h4>
+<p>These are inherently unsafe. They are denoted <code>*const T</code> and <code>*mut T</code>. The difference between the two is minimal.</p>
+<p>Rust references (<code>&amp;T</code> and <code>&amp;mut T</code>) actually compile down to raw pointers.</p>
+<p>The process of fetching data from RAM from a pointer is called <em>dereferencing a pointer</em>.</p>
+<p>The typical reasons to use raw pointers are:</p>
+<ul>
+<li>There's no other choice (an OS call or external library requires a raw pointer).</li>
+<li>Shared access is required and runtime performance is paramount.</li>
+</ul>
+<h4>6.2.2 Rust's pointer ecosystem</h4>
+<p>The safe alternative is <em>smart pointers</em>.</p>
+<p>STOP 185</p>
 <h2 id="ch7">7. Files and storage</h2>
 <h2 id="ch8">8. Networking</h2>
 <h2 id="ch9">9. Time and timekeeping</h2>
 <h2 id="ch10">10. Processes, threads, and containers</h2>
 <h2 id="ch11">11. Kernel</h2>
 <h2 id="ch12">12. Signals, interrupts, and exceptions</h2>
+<h1>Progress</h1>
+<p>2025-09-03 185
+2025-09-02 176
+2025-08-30 137
+2025-08-29 98
+2025-08-28 77
+2025-08-27 54</p>
 
 
 
