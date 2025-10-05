@@ -1,0 +1,3003 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>HC Docs</title>
+        <style>
+        body {
+          font-family: sans-serif;
+        }
+
+        a {
+          text-decoration: none;
+          display: inline-block;
+          color: #21c;
+        }
+
+        a:visited {
+          color: #82a;
+        }
+
+        a.index {
+          margin-bottom: 1rem;
+        }
+
+        h2, h3, h4 {
+          margin-top: 2.75rem;
+        }
+
+        li {
+          margin: 0.25rem 0;
+        }
+
+        pre {
+          box-sizing: border-box;
+          margin: 1rem;
+          padding: 1rem;
+          border: 1px solid #ccc;
+          background-color: #ffefd5;
+          border-radius: 0.8rem;
+          overflow: auto;
+          min-width: calc(100% - 2rem);
+          font-size: 1rem;
+        }
+
+        code {
+          padding: 0 0.2rem;
+          color: #062;
+          font-size: 1rem;
+        }
+
+        pre > code {
+          padding: 0;
+        }
+
+        .hc-monospace {
+          font-family: monospace;
+        }
+
+        .content {
+          max-width: 820px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        table {
+          border-collapse: collapse;
+        }
+
+        td {
+          padding: 0.5rem 0.8rem;
+          border: 1px solid #ccc;
+        }
+        </style>
+    </head>
+    <body>
+      <div style="position: fixed; top: 0; padding: 0.5em; background-color: #fff;">
+        <a href="javascript:history.back()">&#x1F519; bk</a>&nbsp;&nbsp;
+        <a href="index.html">&#x1F4C2; dir</a>&nbsp;&nbsp;
+        <a href="#top">&#x1F51D; top</a>&nbsp;&nbsp;
+      </div>
+      <div id="top">&nbsp;</div>
+      <div class="content">
+
+
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">obsolete</a></h3>
+    
+<h1>Fluent Python, 2nd edition (April 2022)</h1>
+
+<p>
+  <strong>Note</strong>: The code in this book was tested with Python 3.10.
+</p>
+
+<h3>The five parts of this book</h3>
+
+<ul>
+  <li>I. Data structures&mdash;Python Data Model, sequences, mappings, sets</li>
+  <li>II. Functions as objects&mdash;functions as first-class objects, callables</li>
+  <li>III. Classes and protocols&mdash;building your own collections, abstract base classes, protocols, operator overloading</li>
+  <li>IV. Control flow&mdash;generators, context managers, coroutines, async</li>
+  <li>V. Metaprogramming&mdash;dynamically created attributes, descriptors</li>
+</ul>
+
+<h3 id="chapters">Chapters</h3>
+
+<h4>Part I: Data Structures</h4>
+
+<ul>
+  <li><a href="#ch1">1. The Python Data Model</a></li>
+  <li><a href="#ch2">2. An Array of Sequences</a></li>
+  <li><a href="#ch3">3. Dictionaries and Sets</a></li>
+  <li><a href="#ch4">4. Unicode Text Versus Bytes</a></li>
+  <li><a href="#ch5">5. Data Class Builders</a></li>
+  <li><a href="#ch6">6. Object References, Mutability, and Recycling</a></li>
+</ul>
+
+<h4>Part II: Functions as Objects</h4>
+
+<ul>
+  <li><a href="#ch7">7. Functions as First-Class Objects</a></li>
+  <li><a href="#ch8">8. Type Hints in Functions</a></li>
+  <li><a href="#ch9">9. Decorators and Closures</a></li>
+  <li><a href="#ch10">10. Design Patterns with First-Class Functions</a></li>
+</ul>
+
+<h4>Part III: Classes and Protocols</h4>
+
+<ul>
+  <li><a href="#ch11">11. A Pythonic Object</a></li>
+  <li><a href="#ch12">12. Special Methods for Sequences</a></li>
+  <li><a href="#ch13">13. Interfaces, Protocols, and ABCs (Abstract Base Classes)</a></li>
+  <li><a href="#ch14">14. Inheritance: For Better or for Worse</a></li>
+  <li><a href="#ch15">15. More About Type Hints</a></li>
+  <li><a href="#ch16">16. Operator Overloading</a></li>
+</ul>
+
+<h4>Part IV: Control Flow</h4>
+
+<ul>
+  <li><a href="#ch17">17. Iterators, Generators, and Classic Coroutines</a></li>
+  <li><a href="#ch18">18. with, match, and else Blocks</a></li>
+  <li><a href="#ch19">19. Concurrency Models in Python</a></li>
+  <li><a href="#ch20">20. Concurrent Executors</a></li>
+  <li><a href="#ch21">21. Asynchronous Programming</a></li>
+</ul>
+
+<h4>Part V: Metaprogramming</h4>
+
+<ul>
+  <li><a href="#ch22">22. Dynamic Attributes and Properties</a></li>
+  <li><a href="#ch23">23. Attribute Descriptors</a></li>
+  <li><a href="#ch24">24. Class Metaprogramming</a></li>
+</ul>
+
+<h2 id="ch1">1. The Python Data Model</h2>
+
+<p>
+  The <em>Python Data Model</em> can be thought of as a framework that formalizes the interfaces of the building blocks of the language. For example, sequences, functions, iterators, coroutines, classes, and context managers.
+</p>
+
+<p>
+  Special method names are always written with leading and trailing double underscores <code>__</code>. They are also called <em>magic methods</em> and <em>dunder methods</em> (for example, <em>dunder getitem</em>). Some possible constructs are:
+</p>
+
+<ul>
+  <li>Collections</li>
+  <li>Attribute access</li>
+  <li>Iteration and asynchronous iteration</li>
+  <li>Operator overloading</li>
+  <li>Function and method invocation</li>
+  <li>String representation and formatting</li>
+  <li>Object creation and destruction</li>
+  <li>Managed contexts (<code>with</code> and <code>async</code>)</li>
+</ul>
+
+<h4>A Pythonic card deck</h4>
+
+<p>
+  This example of a playing-card deck implements two special methods, <code>__getitem__</code> and <code>__len__</code>.
+</p>
+
+<pre>
+import collections
+
+Card = collections.namedtuple('Card', ['rank', 'suit'])
+
+class FrenchDeck:
+    ranks = [str(n) for n in range(2, 11)] + list('JQKA')
+    suits = 'clubs diamonds hearts spades'.split()
+
+    def __init__(self):
+        self._cards = [Card(rank, suit) for suit in self.suits
+                                        for rank in self.ranks]
+
+    def __len__(self):
+        return len(self._cards)
+
+    def __getitem__(self, position):
+        return self._cards[position]
+</pre>
+
+<p>
+  <code>namedtuple</code> works like a database record. It's used to build classes of objects that are just bundles of attributes with no methods.
+</p>
+
+<p>
+  The special methods allow the FrenchDeck to respond to len() and indexing:
+</p>
+
+<pre>
+len(deck) # 52
+deck[-1] # Card(rank='A', suit='spades')
+deck[:3] # returns the first three clubs cards
+
+from random import choice
+choice(deck) # Card(rank='3', suit='hearts')
+</pre>
+
+<h4>Emulating numeric types</h4>
+
+<p>
+  This example implements a 2-D vector (that may be extended to any number of dimensions) with the special methods:
+</p>
+
+<ul>
+  <li><code>__repr__</code>: string representation</li>
+  <li><code>__abs__</code>: absolute value</li>
+  <li><code>__add__</code>: element-wise addition</li>
+  <li><code>__mul__</code>: scalar multiplication</li>
+</ul>
+
+<pre>
+import math
+
+class Vector:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        # !r returns the standard representation of the attributes, not a string
+        return f'Vector({self.x!r}, {self.y!r})'
+
+    def __abs__(self):
+        return math.hypot(self.x, self.y)
+
+    def __bool__(self):
+        # if abs(self) is 0, return False
+        return bool(abs(self))
+
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+
+    def __mul__(self, scalar):
+        return Vector(self.x * scalar, self.y * scalar)
+</pre>
+
+<p>
+  It's preferable to implement <code>__repr__</code> over <code>__str__</code>.
+</p>
+
+<h4>Collection API</h4>
+
+<p>
+  The interfaces of the essential collection types are:
+</p>
+
+<ul>
+  <li>Iterable</li>
+  <li>Sized</li>
+  <li>Container</li>
+  <li>Reversible</li>
+  <li>Collection</li>
+  <li>Sequence</li>
+  <li>Mapping</li>
+  <li>Set</li>
+</ul>
+
+<p>
+  Since Python 3.7, the <code>dict</code> type is ordered, in the sense that key insertion order is preserved. It is not possible to rearrange the keys however you like.
+</p>
+
+<h4>Special method categories</h4>
+
+<ul>
+  <li>String/bytes representation</li>
+  <li>Conversion to number</li>
+  <li>Emulating collections</li>
+  <li>Iteration</li>
+  <li>Callable or coroutine execution</li>
+  <li>Context management</li>
+  <li>Instance creation and destruction</li>
+  <li>Attribute management</li>
+  <li>Attribute descriptors</li>
+  <li>Abstract base classes</li>
+  <li>Class metaprogramming</li>
+</ul>
+
+<h4>Special method categories for operators</h4>
+
+<ul>
+  <li>Unary numeric: <code>- + abs</code></li>
+  <li>Rich comparison: <code>&lt; &lt;= == != &gt; &gt;=</code></li>
+  <li>Arithmetic: <code>+ - * / // % @ ** divmod round pow</code></li>
+  <li>Reversed arithmetic (arithmetic operators with swapped operands)</li>
+  <li>Augmented assignment arithmetic: <code>+= -= *= /= //= %= @= **=</code></li>
+  <li>Bitwise: <code>& | ^ &lt;&lt; &gt;&gt; ~</code></li>
+  <li>Reversed bitwise (bitwise operators with swapped operands)</li>
+  <li>Augmented assignment bitwise: <code>&= |= ^= &lt;&lt;= &gt;&gt;=</code></li>
+</ul>
+
+<p>
+  The reversed operator special method is called on the second operand when the corresponding special method on the first operand cannot be used.
+</p>
+
+<h4>Why len is not a method</h4>
+
+<p>
+  The length of an object is read directly from a field in a C struct. No method is called.
+</p>
+
+<p>
+  It gets special treatment as part of the Python Data Model, like <code>abs</code>. Both abs and len can be thought of as unary operators.
+</p>
+
+<h2 id="ch2">2. An Array of Sequences</h2>
+
+<p>
+  Sequences such as strings, lists, bytes, arrays, XML elements, and database results all share a set of common operations, such as iteration, slicing, sorting, and concatenation.
+</p>
+
+<h4>Container sequences</h4>
+
+<p>
+  Can hold items of different types, including nested containers. Examples: list, tuple, collections.deque. They hold references to the objects they contain.
+</p>
+
+<h4>Flat sequences</h4>
+
+<p>
+  Can hold items of one simple type. Examples: str, bytes, array.array. They store the value of their contents in their own memory space. They are limited to holding primitive machine values like bytes, integers, and floats.
+</p>
+
+<p>
+  Every Python object in memory has a header with metadata. A <code>float</code> is the simplest Python object. It has a value field and two metadata fields:
+</p>
+
+<ul>
+  <li>ob_refcnt: the object's reference count</li>
+  <li>ob_type: a pointer to the object's type</li>
+  <li>ob_fval: a C double holding the value of the float</li>
+</ul>
+
+<p>
+  Another way to group sequences types is by mutability:
+</p>
+
+<h4>Mutable sequences</h4>
+
+<p>
+  list, bytearray, array.array, collections.deque.
+</p>
+
+<h4>Immutable sequences</h4>
+
+<p>
+  str, tuple, bytes.
+</p>
+
+<p>
+  The most fundamental sequence type is the <code>list</code>.
+</p>
+
+<h4>List comprehensions (listcomps) and generator expressions (genexps)</h4>
+
+<p>
+  A listcomp is explicit: its goal is to build a new list.
+</p>
+
+<pre>
+chars = "abcxyz"
+codes = [ord(ch) for ch in chars]
+</pre>
+
+<p>
+  <em>Tip:</em> line breaks are ignored inside <code>[], {}, ()</code>, so multiline lists, listcomps, tuples, dicts, etc. may be created. Also, a trailing comma is ignored.
+</p>
+
+<p>
+  <strong>Note:</strong> While comprehensions have a local scope to hold its variables, using the walrus operator <code>:=</code> will create variables that remain accessible outside its comprehension or expression. The scope of these variables is the enclosing function, unless there is a global or nonlocal declaration.
+</p>
+
+<p>
+  Avoid functional constructs with map and filter. Listcomps can do everything they do.
+</p>
+
+<h4>Cartesian products</h4>
+
+<p>
+  The items that make up the Cartesian product of multiple iterables are tuples made from items of every input iterable. For example, a list of possible T-shirts, given their sizes and colors.
+</p>
+
+<pre>
+colors = ['black', 'orange', 'white']
+sizes = ['S', 'M', 'L', 'XL']
+tshirts = [(color, size) for color in colors for size in sizes]
+</pre>
+
+<h4>Generator expressions</h4>
+
+<p>
+  A genexp may be used to initialize tuples, arrays, and other types of sequences. Genexps save memory because they yield items one by one instead of building an entire list. Whenever you don't need to hold the entire result in memory, use a genexp.
+</p>
+
+<p>
+  Genexps use the same syntax as listcomps, but are enclosed by parentheses, not square brackets.
+</p>
+
+<pre>
+chars = "abcxyz"
+tuple(ord(ch) for ch in chars)
+
+import array
+array.array('I', (ord(ch) for ch in chars))
+
+for tshirt in (f'{c} {s}' for c in colors for s in sizes):
+    print(tshirt)
+</pre>
+
+<h3>Tuples</h3>
+
+<p>
+  Tuples are not just immutable lists. They may also be used as <strong>records with no field names</strong>.
+</p>
+
+<p>
+  When using tuples as records, the position of their contents is important. Sorting the tuple will destroy this information.
+</p>
+
+<p>
+  Using tuples as immutable lists may be clearer than regular lists because you know its length never changes, and a tuple is more performant than a list.
+</p>
+
+<p>
+  <strong>Note:</strong> The immutability of a tupe applies only to the references contained in it. These references cannot be deleted or replaced. But if these references point to mutable objects, those may be changed.
+</p>
+
+<p>
+  To assert that the value of a tuple is fixed, evaluate <code>hash(t)</code>. A list will cause the function to raise a TypeError.
+</p>
+
+<h4>Unpacking sequences and iterables</h4>
+
+<pre>
+coords = (33.92, 118.4)
+lat, lon = coords
+
+# swap a and b
+b, a = a, b
+
+# prefix an argument with * when calling a function
+t = (20, 8)
+divmod(*t)
+</pre>
+
+<h4>Using * to grab excess items</h4>
+
+<pre>
+a, b, *rest = range(5)
+a, *body, c = range(5)
+
+def f(a, b, c, *rest):
+    return a, b, c, rest
+
+*range(4), 4 # defines a tuple
+</pre>
+
+<p>
+  Unpacking may be nested:
+</p>
+
+<pre>
+metro_areas = [
+    ('Tokyo', 'JPN', 35.993, (35.68, 139.59)),
+    ('New York', 'USA', 20.104, (40.82, -74.02)),
+]
+
+for name, country, _, (lat, lon) in metro_areas:
+    print(f'{name}, {country}, ({lat},{lon})')
+</pre>
+
+<p>
+  It's possible to use a list as the target of an unpacking assignment. For example, a database query with <code>LIMIT 1</code>:
+</p>
+
+<pre>
+[record] = query_that_returns_a_single_row()
+
+[[field]] = query_that_returns_a_single_row_and_single_field()
+</pre>
+
+<p>
+  A tuple would also work, but remember that single-item tuples must have a trailing comma:
+</p>
+
+<pre>
+(record,) = query_that_returns_a_single_row()
+
+((field,),) = query_that_returns_a_single_row_and_single_field()
+</pre>
+
+<h3>Pattern matching with sequences</h3>
+
+<p>
+  The pattern matching statement uses <code>match/case</code>, where the subject value follows <code>match</code> and the patterns follow <code>case</code>.
+</p>
+
+<p>
+  For example, imagine designing a robot that accepts commands as sequences of words and numeric values. After splitting the command into a list, the message will look like <code>['BEEP', 440, 3]</code>.
+</p>
+
+<pre>
+def handle_command(self, message):
+    match message:
+        case ['BEEP', frequency, times]:
+            self.beep(frequency, times)
+        case ['LED', id, red, green, blue]:
+            self.leds[id].set_color(red, green, blue)
+        case ['LED', id, intensity]:
+            self.leds[id].set_brightness(intensity)
+        case _:
+            raise InvalidCommand(message)
+</pre>
+
+<p>
+  <code>case _</code> is a catch-all case. It's better to handle situations where there is no match instead of ending the <code>match</code> silently.
+</p>
+
+<p>
+  Pattern matching <em>destructures</em>&mdash;it is a more advanced form of unpacking.
+</p>
+
+<p>
+  A <code>case</code> clause can have a condition (<code>if</code> condition). The condition is evaluated only if the pattern matches.
+</p>
+
+<pre>
+case [name, _, (lat, lon)] if lon <= 0:
+</pre>
+
+<p>
+  In a sequence pattern, tuples and lists are interchangeable: parentheses and square brackets mean the same thing.
+</p>
+
+<p>
+  Sequence patterns match: list, tuple, memoryview, range, array.array, collections.deque.
+</p>
+
+<p>
+  They do not match: str, bytes, bytearray. These are considered to be "atomic", and to handle their contents, convert them first. For example:
+</p>
+
+<pre>
+match tuple(phone):
+    case['1', *rest]:
+        print('USA')
+    case['2', *rest]:
+        print('Africa')
+</pre>
+
+<p>
+  Iterables that are not sequences also can't be destructured.
+</p>
+
+<p>
+  Any part of a pattern can be bound to a variable with the <code>as</code> keyword:
+</p>
+
+<pre>
+case [name, _, (lat, lon) as coords]:
+</pre>
+
+<p>
+  The _ variable is special. It is never bound, and can appear more than once in a pattern. <code>_*</code> will match any number of items. <code>*extra</code> will bind the items to <code>extra</code>.
+</p>
+
+<p>
+  Type information can make patterns more specific (note that it's the same syntax as a constructor call):
+</p>
+
+<pre>
+case [str(name), _, (float(lat), float(lon))]:
+</pre>
+
+<p>
+  Pattern matching is an example of <em>declarative programming</em>&mdash;describing "what" you want to match, not "how" to match it.
+</p>
+
+<h3>Slicing</h3>
+
+<p>
+  The advantages of excluding the last item of a slice include:
+</p>
+
+<ul>
+  <li>The length of the slice is <code>stop - start</code>, or just <code>stop</code> if only the endpoint is passed.</li>
+  <li>Splitting a sequence in two parts at index <code>n</code> is: <code>a_list[:x]</code> and <code>a_list[x:]</code>.</li>
+</ul>
+
+<h4>Slice objects</h4>
+
+<p>
+  <code>a_list[a:b:c]</code> produces a slice object: <code>slice(a, b, c)</code>. They may be given names and assigned to variables.
+</p>
+
+<pre>
+DESCRIPTION = slice(6, 40)
+PRICE = slice(42, 52)
+
+print(item[DESCRIPTION], item[PRICE])
+</pre>
+
+<p>
+  The <code>[]</code> operator can take multiple indexes or slices separated by commas, such as NumPy's <code>a[m:n, w:v]</code>.
+</p>
+
+<p>
+  Except for memoryview, the built-in sequence types are one-dimensional, so they only support one index or slice.
+</p>
+
+<p>
+  The ellipsis <code>...</code> is a valid token. It's used in NumPy, and may be used in user-defined types and extensions.
+</p>
+
+<p>
+  Mutable sequences may be grafted, excised, and modified using slice notation.
+</p>
+
+<h3>Using + and * with sequences</h3>
+
+<p>
+  Both + and * always create a new object, and don't change their operands.
+</p>
+
+<h4>Building lists of lists</h4>
+
+<p>
+  To initialize nested lists, use a list comprehension. Using * on different levels may result in the same reference being repeated in the outer level.
+</p>
+
+<pre>
+# works
+board = [['_'] * 3 for i in range(3)]
+
+# bad, rows are repeated
+weird_board = [['_'] * 3] * 3
+</pre>
+
+<p>
+  list.sort() sorts a list in place (without making a copy). It returns <code>None</code> (a convention of methods that change an object in place). A drawback of this convention is that methods cannot be cascaded (chained).
+</p>
+
+<p>
+  On the other hand, <code>sorted(a_list)</code> creates a new list and returns it. Both sort and sorted take these optional arguments: reverse (a Boolean) and key (a one-argument function that is applied to each item to produce its sorting key).
+</p>
+
+<h3>When a list is not the answer</h3>
+
+<p>
+  If membership needs to be checked often, it's better to use a set than a list.
+</p>
+
+<p>
+  If there's a need to add and remove items from both ends of a sequence, use collections.deque.
+</p>
+
+<p>
+  If you are dealing with large amounts of numbers, use array.array or NumPy.
+</p>
+
+<p>
+  memoryview is a built-in class that lets you handle slices of arrays without copying bytes (a shared-memory sequence type).
+</p>
+
+<h2 id="ch3">3. Dictionaries and Sets</h2>
+
+<p>
+  In addition to dicts, sets and frozensets are also based on hash tables.
+</p>
+
+<h4>dict comprehensions (dictcomps)</h4>
+
+<p>
+  A dictcomp builds a dict instance by taking <code>key: value</code> pairs from any iterable:
+</p>
+
+<pre>
+dial_codes = [
+    (880, 'Bangladesh'),
+    (55, 'Brazil'),
+    (1, 'USA'),
+]
+
+country_dial = {country: code for code, country in dial_codes}
+{code: country.upper() for country, code in sorted(country_dial.items())}
+</pre>
+
+<h4>Unpacking mappings</h4>
+
+<p>
+  <code>**</code> may be applied to more than one argument in a function call, as long as the keys are all strings and there are no duplicates.
+</p>
+
+<p>
+  <code>**</code> may also be used in a dict literal. In this case, if there are duplicates, the last value is used:
+</p>
+
+<pre>
+{'a': 0, **{'x': 1}, 'y': 2, **{'z': 3, 'x': 4}}
+</pre>
+
+<h4>Merging mappings with |</h4>
+
+<p>
+  | behaves like the set union operator. The two dicts are merged.
+</p>
+
+<pre>
+dict1 | dict2
+dict1 |= dict2 # updates dict1 in place
+</pre>
+
+<h3>Pattern matching with mappings</h3>
+
+<p>
+  Patterns for mappings look like dict literals, but can match instances of any subclass of collections.abc.Mapping. Previously, we have seen sequence mappings. Mappings of any kind may be used together.
+</p>
+
+<pre>
+def get_creators(record: dict) -> list:
+    match record:
+        case {'type': 'book', 'authors': [*names]}:
+            return names
+        case {'type': 'book', 'author': name}:
+            return [name]
+        case {'type': 'movie', 'director': name}:
+            return [name]
+        case _:
+            raise ValueError(f'Invalid record: {record!r}')
+</pre>
+
+<p>
+  In contrast with sequence patterns, mapping patterns succeed on partial matches. For example, books with titles will match, even though 'title' is not in any pattern.
+</p>
+
+<p>
+  To capture extra key-value pairs, use <code>**extra</code> as the last variable in the pattern.
+</p>
+
+<pre>
+match food:
+    case {'category': 'ice cream', **details}:
+        print(f'Ice cream details: {details}')
+</pre>
+
+<h3>Standard API of Mapping types</h3>
+
+<p>
+  To implement a custom mapping, it's easier to extend <code>collections.UserDict</code> or wrap a dict by composition, instead of subclassing Mapping ABCs.
+</p>
+
+<p>
+  An object is hashable if it has a hash code which never changes during its lifetime and can be compared to other objects. Hashable objects which compare equal must have the same hash code.
+</p>
+
+<p>
+  A frozenset is always hashable. Tuples are hashable only if all its items are hashable.
+</p>
+
+<p>
+  If a user-defined type implements a custom __eq__() that takes into account its internal state, it will be hashable only if its __hash__() always returns the same hash code. In practice, this requires that __eq__() and __hash__() only take into account instance attributes that never change during the life of the object.
+</p>
+
+<h4>Inserting or updating mutable values</h4>
+
+<p>
+  <code>d.get(key, default)</code> is an alternative to <code>d[key]</code> when getting the default value is more convenient than handling a KeyError.
+</p>
+
+<h4>setdefault</h4>
+
+<pre>
+my_dict.setdefault(key, []).append(new_value)
+
+# is the same as
+if key not in my_dict:
+    my_dict[key] = []
+my_dict[key].append(new_value)
+</pre>
+
+<h4>defaultdict: Another take on missing keys</h4>
+
+<p>
+  When instantiating a defaultdict, provide a callable to produce a default value whenever __getitem__ is passed a nonexistent key.
+</p>
+
+<pre>
+dd = defaultdict(list)
+dd['new_key'] # calls list(), inserts it using the key 'new_key'
+              # and returns a reference to that list
+</pre>
+
+<p>
+  <strong>Note:</strong> <code>a_defaultdict.get(k)</code> will not create a default value. Only <code>a_defaultdict[k]</code> will.
+</p>
+
+<p>
+  The __missing__ method is called when __getitem__ fails to find a key.
+</p>
+
+<p>
+  Since Python 3.6, key insertion order is preserved. The most common reason to use <code>OrderedDict</code> is for backward compatibility. Algorithmically, OrderedDict is better when there are frequently reordering operations.
+</p>
+
+<h4>collections.ChainMap</h4>
+
+<p>
+  A ChainMap holds a list of mappings that can be searched as one. The lookup is performed on each input mapping in the order it appears in the constructor call.
+</p>
+
+<p>
+  The ChainMap does not copy the input mappings; it holds references to them. Updates to the ChainMap only affect the first input mapping.
+</p>
+
+<h4>collections.Counter</h4>
+
+<p>
+  A Counter holds an integer count for each key. Updating it with a new value will add to its count:
+</p>
+
+<pre>
+from collections import Counter
+ct = Counter('banana') # Counter({'a': 3, 'n': 2, 'b': 1})
+ct.update('zzyzx') # Counter({'a': 3, 'z': 3, 'n': 2, 'b': 1, 'y': 1, 'x': 1})
+</pre>
+
+<p>
+  <strong>Note:</strong> <code>a_counter.most_common(n)</code> will only show <code>n</code> counts, even when there are ties.
+</p>
+
+<h4>shelve.Shelf</h4>
+
+<p>
+  The shelve module persists a mapping of string keys to Python objects serialized in the pickle format. However, pickle has several drawbacks.
+</p>
+
+<h4>Subclassing UserDict instead of dict</h4>
+
+<p>
+  A UserDict has an internal dict instance called <code>data</code>. Using <code>data</code> avoids undesired recursion in special methods like __setitem__.
+</p>
+
+<h4>Immutable mappings</h4>
+
+<p>
+  The types module provides <code>MappingProxyType</code>, which returns a read-only but dynamic proxy for the original mapping.
+</p>
+
+<h3>Dictionary views</h3>
+
+<p>
+  The dict instance methods .keys(), .values(), and .items() return instances of classes called dict_keys, dict_values, and dict_items. They are read-only projections of the internal data structures.
+</p>
+
+<h3>Sets</h3>
+
+<p>
+  A set is a collection of unique objects. Objects must be hashable to be included. A set cannot contain another set, but it can have a frozenset.
+</p>
+
+<p>
+  To remove duplicates but keep the order of the first occurrence of each item, use a dict:
+</p>
+
+<pre>
+list(dict.fromkeys(a_list).keys())
+</pre>
+
+<p>
+  Set operations:
+</p>
+
+<ul>
+  <li>a | b (union)</li>
+  <li>a & b (intersection)</li>
+  <li>a - b (difference)</li>
+  <li>a ^ b (symmetric difference)</li>
+</ul>
+
+<p>
+  Set literals are written as: <code>{1, 2}</code>. Since <code>{}</code> is an empty dict, an empty set is written <code>set()</code>.
+</p>
+
+<h4>Set comprehensions (setcomps)</h4>
+
+<p>
+  Setcomps are similar to dictcomps. Only the elements are defined.
+</p>
+
+<pre>
+cities = [('Rome', 'Italy'), ('Chicago', 'USA'), ('Venice', 'Italy')]
+countries = {country for _, country in cities}
+# {'USA', 'Italy'}
+</pre>
+
+<p>
+  It is possible to create the union of multiple iterables:
+</p>
+
+<pre>
+a_set = {*a, *b, *c}
+</pre>
+
+<p>
+  JSON syntax is identical to Python's dicts and lists, except for True, False, and None. It's possible to alias them in order to copy and paste JSON directly:
+</p>
+
+<pre>
+true, false, null = True, False, None
+</pre>
+
+<h2 id="ch4">4. Unicode Text Versus Bytes</h2>
+
+<p>
+  The identity of a character is its <em>code point</em>, a number from 0 to 1,114,111 (in base 10). This is U+0000 to U+10FFFF.
+</p>
+
+<p>
+  The actual bytes used to represent a character depend on the <em>encoding</em> used. UTF-8 is the most widely used encoding; it is represented as 'utf-8', 'utf8', 'utf_8', and 'u8'.
+</p>
+
+<pre>
+s = 'café'
+cafe_bytes = s.encode('utf8')
+cafe_bytes.decode('utf8')
+</pre>
+
+<p>
+  <code>bytes</code> is an immutable type, while <code>bytearray</code> is a mutable one. In both, each element is an integer from 0 to 255. str methods may be used, except those that do formatting and those that depend on Unicode data (such as casefold and isnumeric).
+</p>
+
+<p>
+  <code>bytes</code> can produce a binary sequence from a string containing pairs of hex digits (optionally separated by spaces).
+</p>
+
+<pre>
+bytes.fromhex('31 4b ce a9')
+</pre>
+
+<p>
+  bytes and bytearray may also be created with:
+</p>
+
+<ul>
+  <li>An iterable providing items with values from 0 to 255</li>
+  <li>An object that implements the buffer protocol to copy bytes</li>
+</ul>
+
+<p>
+  UTF-8 is the default source encoding for Python 3.
+</p>
+
+<p>
+  UTF-8 encoding with BOM (Byte-Order Mark) is called UTF-8-SIG, encoded as <code>b'\xef\xbb\xbf'</code>. It may be an issue when dealing with Windows files. In general, avoid BOMs.
+</p>
+
+<h3>Handling text files</h3>
+
+<p>
+  The best practice for handling text I/O is the "Unicode Sandwich":
+</p>
+
+<pre>
+bytes -> str  Decode bytes on input
+  100% str    Process text only (business logic)
+str -> bytes  Encode text on output
+</pre>
+
+<p>
+  <strong>Warning:</strong> Code that has to run on multiple platforms should never depend on the default encoding. Always pass <code>encoding="utf-8"</code>.
+</p>
+
+<p>
+  There are four main ways to write Unicode literals in a str:
+</p>
+
+<ul>
+  <li><code>\x61</code> two-digit Unicode escape</li>
+  <li><code>\u450f</code> four-digit Unicode escape</li>
+  <li><code>\U0001f600</code> eight-digit Unicode escape</li>
+  <li><code>\N{infinity}</code> official name (verbose, but recommended if mistyping a hex code could happen)</li>
+</ul>
+
+<p>
+  <em>Text normalization</em> is converting text to a uniform representation for comparisons (and sorting).
+</p>
+
+<p>
+  While two Unicode strings may look the same superficially, they may have been constructed differently: an accented letter é may be a single character, or the character 'e' with <code>\N{combining acute accent}</code>
+</p>
+
+<p>
+  <code>unicodedata.normalize()</code> may be used to convert strings to a common representation. It accepts these four strings as the first argument:
+</p>
+
+<ul>
+  <li><code>'NFC'</code> composes the code points to produce the shortest equivalent string. <strong>This is the recommended normalization form.</strong></li>
+  <li><code>'NFD'</code> decomposes composed characters into base characters and separate combining characters</li>
+  <li><code>'NFKC'</code>, <code>'NFKD'</code> K stands for "compatibility". These are stronger forms of normalization, affecting "compatibility characters" such as the MICRO SIGN that was added for compatibility with Latin-1, though it exists as part of the Greek alphabet (μ).</li>
+</ul>
+
+<p>
+  The compatibility normalizations may lose or distort information, but when used as an intermediate representation for searching and indexing, may still be useful. They should not be used for permanent storage of text.
+</p>
+
+<h4>Case folding</h4>
+
+<p>
+  Case folding is converting all text to lowercase, possibly with additional transformations. Note that there are around 300 code points where casefold() and lower() return different results.
+</p>
+
+<h4>Extreme "normalization": taking out diacritics</h4>
+
+<p>
+  Out of laziness, people can type words without accents. They may also be removed from languages over time. To remove all diacritics, use:
+</p>
+
+<pre>
+import unicodedata
+import string
+
+def shave_marks(txt):
+    """Remove all diacritic marks."""
+    norm_txt = unicodedata.normalize('NFD', txt)
+    shaved = ''.join(c for c in norm_txt if not unicodedata.combining(c))
+    return unicodedata.normalize('NFC', shaved)
+</pre>
+
+<p>
+  To limit the shaving to Latin letters only:
+</p>
+
+<pre>
+def shave_marks_latin(txt):
+    """Remove all diacritic marks from Latin base characters."""
+    norm_txt = unicodedata.normalize('NFD', txt)
+    latin_base = False
+    preserve = []
+    for c in norm_txt:
+        if unicodedata.combining(c) and latin_base:
+            continue
+        preserve.append(c)
+        if not unicodedata.combining(c):
+            latin_base = c in string.ascii_letters
+    shaved = ''.join(preserve)
+    return unicodedata.normalize('NFC', shaved)
+</pre>
+
+<h3>Sorting Unicode text</h3>
+
+<p>
+  Standard Python depends on the operating system having the right locale installed to correctly sort text (such as accented letters).
+</p>
+
+<p>
+  A better solution is using the third-party library <code>PyICU</code>, which takes the text's language into account.
+</p>
+
+<h4>Finding characters by name</h4>
+
+<pre>
+from unicodedata import name
+
+name('é') # 'LATIN SMALL LETTER E WITH ACUTE'
+</pre>
+
+<p>
+  <code>unicodedata.numeric(char)</code> shows the numeric value if it has one. Otherwise, it raises ValueError.
+</p>
+
+<h4>str versus bytes in regular expressions</h4>
+
+<p>
+  In a regular expression built with bytes, patterns such as \d and \w only match ASCII characters. With str, Unicode digits and letters beyond ASCII are matched.
+</p>
+
+<h4>str versus bytes in os functions</h4>
+
+<p>
+  It is possible to pass bytes arguments to <code>os</code> functions and get back bytes values.
+</p>
+
+<h2 id="ch5">5. Data Class Builders</h2>
+
+<p>
+  A <em>data class</em> is a simple class that is just a collection of fields, without methods or extra functionality. Here are three available class builders:
+</p>
+
+<ul>
+  <li>collections.namedtuple</li>
+  <li>typing.NamedTuple (requires type hints on the fields</li>
+  <li>@dataclasses.dataclass</li>
+</ul>
+
+<p>
+  There is also typing.TypedDict; however, it does not build concrete classes that can be instantiated. It's just syntax to write type hints for function parameters and variables that accept mapping values used as records, with keys as field names.
+</p>
+
+<h3>Overview of data class builders</h3>
+
+<p>
+  Consider a simple class to represent a geographic coordinate pair:
+</p>
+
+<pre>
+class Coordinate:
+    def __init__(self, lat, lon):
+        self.lat = lat
+        self.lon = lon
+</pre>
+
+<p>
+  The default behavior of such custom classes is that __eq__ compares object IDs. So two Coordinates with the same lats and lons will not be equal to each other.
+</p>
+
+<p>
+  None of the class builders described here depend on inheritance to do their work. namedtuples are subclasses of tuple. @dataclass is a class decorator that does not affect the class hierarchy.
+</p>
+
+<p>
+  Here is the same Coordinate data class using collections.namedtuple:
+</p>
+
+<pre>
+from collections import namedtuple
+Coordinate = namedtuple('Coordinate', 'lat lon')
+
+# __eq__ is meaningful:
+moscow = Coordinate(55.756, 37.617)
+moscow == Coordinate(55.756, 37.617) # True
+</pre>
+
+<p>
+  typing.NamedTuple requires a type annotation to each field:
+</p>
+
+<pre>
+from typing import NamedTuple
+Coordinate = NamedTuple('Coordinate', lat=float, lon=float)
+
+# or
+Coordinate = NamedTuple('Coordinate', [('lat', float), ('lon', float)])
+</pre>
+
+<p>
+  <strong>Warning:</strong> it is possible to assign values of different types at runtime (such as the interactive REPL (Read-Eval-Print Loop).
+</p>
+
+<p>
+  typing.NamedTuple can also be used in a <code>class</code> statement, with type annotations written next to the fields (although NamedTuple appears to be a superclass, it is not; it acts as a metaclass):
+</p>
+
+<pre>
+from typing import NamedTuple
+
+class Coordinate(NamedTuple):
+    lat: float
+    lon: float
+
+    def __str__(self):
+        return f'{self.lat}, {self.lon}'
+</pre>
+
+<p>
+  The <code>dataclass</code> decorator allows for similar syntax to declare fields. Passing <code>frozen=True</code> prevents assignments to instance fields:
+</p>
+
+<pre>
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Coordinate:
+    lat: float
+    lon: float
+
+    def __str__(self):
+        return f'{self.lat}, {self.lon}'
+</pre>
+
+<p>
+  Some methods of dataclasses are:
+</p>
+
+<ul>
+  <li>dataclasses.asdict(x)</li>
+  <li>[f.name for f in dataclasses.fields(x)]</li>
+  <li>[f.default for f in dataclasses.fields(x)]</li>
+  <li>dataclasses.replace(x, ...)</li>
+  <li>inspect.get_annotations(MyClass)</li>
+</ul>
+
+<p>
+  To create a new class at runtime, the dataclasses module provides <code>make_dataclass()</code>
+</p>
+
+<p>
+  A namedtuple's <code>_asdict()</code> method may be useful to serialize the data (for example, in JSON format).
+</p>
+
+<pre>
+c = Coordinate(1.23, -30.45)
+c._asdict() # {'lat': 1.23, 'lon': -30.45}
+</pre>
+
+<p>
+  To convert such a dict to a namedtuple Coordinate, use <code>**a_dict</code>:
+</p>
+
+<pre>
+d2 = {'lat': -9.12, 'lon': 10.45}
+c2 = Coordinate(**d2)
+</pre>
+
+<p>
+  namedtuple accepts a <code>defaults</code> keyword-only argument providing an iterable of n default values for each of the n rightmost fields of the class:
+</p>
+
+<pre>
+Student = namedtuple('Student', 'name grade fav_color fav_food', defaults=['white', 'fruit'])
+st = Student('Tina', 3)
+# Student(name='Tina', grade=3, fav_color='white', fav_food='fruit')
+</pre>
+
+<p>
+  For typing.NamedTuple, the default is written after the type:
+</p>
+
+<pre>
+from typing import NamedTuple
+
+class Coordinate(NamedTuple):
+    lat: float
+    lon: float
+    reference: str = 'WGS84'
+</pre>
+
+<h3>Type Hints</h3>
+
+<p>
+  Type hints (also called type annotations) are ways to declare the expected type of function arguments, return values, variables, and attributes.
+</p>
+
+<p>
+  Type hints are not enforced at all by the bytecode compiler and interpreter. Think of them as merely documentation that can be verified by IDEs (like PyCharm) and type checkers (like Mypy).
+</p>
+
+<h4>Variable annotation syntax</h4>
+
+<p>
+  The basic syntax of variable annotation is:
+</p>
+
+<pre>
+var_name: a_type = default_value # the default value is optional
+</pre>
+
+<p>
+  <code>a_type</code> may be:
+</p>
+
+<ul>
+  <li>str, MyClass</li>
+  <li>list[int], tuple[str, float]</li>
+  <li>typing.Optional: for example, Optional[str]. It may be str or None</li>
+</ul>
+
+<p>
+  At import time, the annotations are read into the __annotations__ dictionary used by NamedTuple and @dataclass.
+</p>
+
+<p>
+  NamedTuple's attributes are in reality <em>descriptors</em>. They work like property getters (so in practice, they work as read-only instance attributes).
+</p>
+
+<p>
+  Default valued fields must come at the end of the fields' declaration.
+</p>
+
+<p>
+  Do not put mutable values as a default value. They will be reused in future invocations. Dataclasses do not accept mutable values as defaults. A <code>default_factory</code> must be used.
+</p>
+
+<pre>
+from dataclasses import dataclass, field
+
+@dataclass
+class ClubMember:
+    name: str
+    guests: list = field(default_factory=list)
+
+# or using a parameterized generic type:
+
+@dataclass
+class ClubMember:
+    name: str
+    guests: list[str] = field(default_factory=list) # since Python 3.9
+</pre>
+
+<p>
+  The default_factory accepts a function, class, or other callable of zero arguments.
+</p>
+
+<p>
+  A __post_init__ method may be defined to do further processing when initializing an instance. For example, validation and computing derived values.
+</p>
+
+<p>
+  To code a class variable with a type hint, use <code>typing.ClassVar</code>.
+</p>
+
+<pre>
+all_usernames: ClassVar[set[str]] = set()
+</pre>
+
+<p>
+  To declare <em>init-only variables</em> (that are not instance fields), use <code>typing.InitVar</code>.
+</p>
+
+<pre>
+@dataclass
+class C:
+    i: int
+    database: InitVar[DatabaseType] = None
+</pre>
+
+<p>
+  The Dublin Core Schema is a set of terms that can be used to describe multimedia (audio, video, images, web pages, etc.).
+</p>
+
+<pre>
+from dataclasses import dataclass, field
+from typing import Optional
+from enum import Enum, auto
+from datetime import date
+
+class ResourceType(Enum):
+    BOOK = auto()
+    EBOOK = auto()
+    VIDEO = auto()
+
+@dataclass
+class Resource:
+    """Media resource description."""
+    identifier: str
+    title: str = '[untitled]'
+    creators: list[str] = field(default_factory=list)
+    date: Optional[date] = None
+    resource_type: ResourceType = ResourceType.BOOK
+    description: str = ''
+</pre>
+
+<p>
+  Generally speaking, in object-oriented design, a class should do something (have methods). So a dataclass should be avoided. However, they are useful as scaffolding and as intermediate representation that can be used in your business logic and to be serialized as JSON.
+</p>
+
+<h3>Pattern matching class instances</h3>
+
+<p>
+  Class patterns can match class instances by type and optionally by attributes.
+</p>
+
+<h4>Simple class patterns</h4>
+
+<p>
+  The syntax for class patterns looks like a constructor invocation.
+</p>
+
+<pre>
+match x:
+    case float():
+        handle(x)
+</pre>
+
+<p>
+  Be careful not to write <code>case float:</code>. This will match any subject, because <code>float</code> will be seen as a variable, which is then bound to the subject.
+</p>
+
+<p>
+  This simple pattern is a special case that applies only to these built-ins: <code>bytes, dict, float, frozenset, int, list, set, str, tuple</code>.
+</p>
+
+<p>
+  When writing <code>float(x)</code>, <code>x</code> is bound to the whole subject instance or the part of the subject that matches a subpattern.
+</p>
+
+<p>
+  If the class being used is not one of the nine above, the argument-like variables represent patterns to be matched against attributes of an instance of that class.
+</p>
+
+<h4>Keyword class patterns</h4>
+
+<p>
+  Consider the <code>City</code> class below and its instances:
+</p>
+
+<pre>
+import typing
+
+class City(typing.NamedTuple):
+    continent: str
+    name: str
+    country: str
+
+cities = [
+    City('Asia', 'Tokyo', 'JP'),
+    City('Asia', 'Delhi', 'IN'),
+    City('Americas', 'New York', 'US'),
+]
+</pre>
+
+<p>
+  The following function will return a list of Asian cities:
+</p>
+
+<pre>
+def match_asian_cities():
+    results = []
+    for city in cities:
+        match city:
+            case City(continent='Asia'):
+                results.append(city)
+    return results
+</pre>
+
+<p>
+  To collect the value of <code>country</code>, you could write:
+</p>
+
+<pre>
+...
+            case City(continent='Asia', country=cc): # cc could be country too
+                results.append(cc)
+</pre>
+
+<h4>Positional class patterns</h4>
+
+<p>
+  The following pattern would return Asian cities as well, because it looks for 'Asia' in the first attribute:
+</p>
+
+<pre>
+...
+            case City('Asia'):
+...
+
+# to collect the value of country, write:
+
+            case City('Asia', _, country):
+...
+</pre>
+
+<h2 id="ch6">6. Object References, Mutability, and Recycling</h2>
+
+<p>
+  A name is not the object. Variables are named labels attached to objects, not boxes.
+</p>
+
+<p>
+  Python variables are like Java reference variables.
+</p>
+
+<p>
+  If we define a list with <code>a = [1, 2, 3]</code>, the statement <code>b = a</code> will attach the label <code>b</code> to the list that already has the label <code>a</code>. Changing the list via <code>a</code> or <code>b</code> (such as with <code>append</code>) will affect the same list.
+</p>
+
+<p>
+  Python assignments are made right-to-left. The righthand side object is created or retrieved first, then, the variable is assigned to that object.
+</p>
+
+<p>
+  The <code>is</code> operator checks if two objects have the same id. <code>==</code> checks the objects' values.
+</p>
+
+<p>
+  Always write <code>x is None</code> to check if a variable is None. Also, use <code>is</code> when comparing an object to a singleton (the only instance of a class). The opposite is <code>x is not None</code>.
+</p>
+
+<p>
+  A sentinel object is implemented as a singleton:
+</p>
+
+<pre>
+END_OF_DATA = object()
+
+def traverse(...):
+    if node is END_OF_DATA:
+        return
+</pre>
+
+<h4>The relative immutability of tuples</h4>
+
+<p>
+  Tuples hold references to objects. These referenced objects may be mutable, and it is possible to alter them. Only the references themselves cannot be changed.
+</p>
+
+<h4>Copies are shallow by default</h4>
+
+<p>
+  The easiest way to copy a list is to use its own constructor. However, what happens is that the outermost container is duplicated, and the copy is filled with the same references of the original:
+</p>
+
+<pre>
+a = [1, 2, 3]
+another_list = list(a)
+</pre>
+
+<p>
+  If the list only contains immutable items, a shallow copy is OK. To make deep copies, use <code>my_copy = copy.deepcopy(original)</code>.
+</p>
+
+<h3>Function parameters as references</h3>
+
+<p>
+  The only mode of parameter passing in Python is <em>call by sharing</em>. This means that each formal parameter of the function gets a copy of each reference in the arguments. In other words, the parameters inside the function become aliases of the actual arguments.
+</p>
+
+<p>
+  A function may change any mutable object passed as a parameter, but it cannot change the identity of those objects.
+</p>
+
+<p>
+  Avoid using mutable objects as default values for parameters. Subsequent calls will refer to the initial list, which is usually not what you want. Instead, use None as the default value, and check for it upon initialization.
+</p>
+
+<p>
+  Be careful when receiving mutable arguments. The caller may not be expecting those arguments to be changed. It's better to make a copy of the argument if the contents will be manipulated.
+</p>
+
+<h3>del and garbage collection</h3>
+
+<p>
+  <code>del</code> is not a function, it's a statement. You write <code>del x</code>. It deletes references, not objects. If there are other references to that object, it will remain there.
+</p>
+
+<p>
+  Avoid implementing <code>__del__</code>. It's used by the interpreter and its proper use is tricky.
+</p>
+
+<p>
+  A weak reference to an object does not increase its reference count, and thus does not prevent the target object from being garbage collected. They are useful in caching applications, because you don't want to keep cached objects alive just because of the reference by the cache.
+</p>
+
+<p>
+  <code>weakref.finalize(obj, bye_function)</code> registers a callback function to be called when an object is destroyed. This function must not be a bound method of the object or otherwise hold a reference to it.
+</p>
+
+<p>
+  For tuple, str, bytes, and frozenset, making a copy actually returns a reference to the same object.
+</p>
+
+<p>
+  Augmented assignment with += or *= creates new objects if the lefthand variable is bound to an immutable object, but may modify a mutable object in place.
+</p>
+
+<h2 id="ch7">7. Functions as First-Class Objects</h2>
+
+<p>
+  Functions in Python are first-class objects. A first-class object can be:
+</p>
+
+<ul>
+  <li>created at runtime</li>
+  <li>assigned to a variable or element in a data structure</li>
+  <li>passed as an argument to a function</li>
+  <li>returned as the result of a function</li>
+</ul>
+
+<p>
+  A variable may be assigned to a function:
+</p>
+
+<pre>
+def factorial(n):
+    return 1 if n < 2 else n * factorial(n - 1)
+
+fact = factorial
+list(map(factorial, range(11)))
+</pre>
+
+<p>
+  In the functional programming paradigm, the best known higher-order functions are map, filter, reduce, and apply.
+</p>
+
+<p>
+  Instead of apply(fn, args, kwargs), write <code>fn(*args, **kwargs)</code>.
+</p>
+
+<p>
+  Listcomps and genexps can do what map and filter do.
+</p>
+
+<p>
+  <code>reduce</code> is in the <code>functools</code> module. It is good practice to include the initializer value as the third argument. It is returned if the sequence is empty and is used as the first argument in the reducing loop. Usually it's the identity value of the operation (0 for sums, 1 for products). For example:
+</p>
+
+<pre>
+from functools import reduce
+from operator import add
+
+reduce(add, range(100), 0)
+</pre>
+
+<p>
+  all(iterable) returns True if there are no falsy elements in the iterable. all([]) is True.
+</p>
+
+<p>
+  any(iterable) returns True if any element is truthy. any([]) returns False.
+</p>
+
+<h3>Anonymous functions</h3>
+
+<p>
+  <code>lambda</code> creates an anonymous function within an expression. The body of a lambda cannot contain statements such as while, try, assignments, etc. Although <code>:=</code> can be used, it may be hard to read.
+</p>
+
+<h3>The nine kinds of callable objects</h3>
+
+<p>
+  The <code>callable()</code> function determines whether an object is callable.
+</p>
+
+<ul>
+  <li>built-in functions</li>
+  <li>built-in methods</li>
+  <li>user-defined functions</li>
+  <li>user-defined methods</li>
+  <li>classes (constructors)</li>
+  <li>class instances that define __call__</li>
+  <li>generator functions (use the yield keyword)</li>
+  <li>native coroutine functions (defined with async def)</li>
+  <li>asynchronous generator functions (defined with async def and have the yield keyword)</li>
+</ul>
+
+<p>
+  Generators, native coroutines and asynchronous generator functions return objects that require further processing to be useful.
+</p>
+
+<p>
+  Implementing a __call__ instance method allows an object to behave like a function. A good use case is implementing decorators, which must be callable.
+</p>
+
+<p>
+  The functional approach to creating functions with internal state is to use closures.
+</p>
+
+<p>
+  To specify keyword-only parameters when defining a function, name them after the argument prefixed with *. Keyword-only arguments do not need to have a default value.:
+</p>
+
+<pre>
+def f(a, *, b):
+    return a, b
+
+f(1, b=2)
+</pre>
+
+<p>
+  To specify positional-only parameters, use / in the parameter list. All arguments to the left of / are positional-only. After /, you may specify other arguments, which work as usual:
+</p>
+
+<pre>
+def divmod(a, b, /):
+    return (a // b, a % b)
+
+def tag(name, /, *content, class_=None, **attrs):
+    ...
+</pre>
+</pre>
+
+<h3>Packages for functional programming</h3>
+
+<h4>The operator module</h4>
+
+<p>
+  The operator module provides function equivalents for dozens of operators, such as <code>mul</code>, that replaces trivial functions like <code>lambda a, b: a * b</code>.
+</p>
+
+<p>
+  itemgetter and attrgetter are factories that build functions to pick items from sequences or read attributes from objects. itemgetter(1) gets the item at index 1. attrgetter('name', 'coord.lat') retrieves name and the coord.lat nested attribute as a tuple.
+</p>
+
+<p>
+  Functions starting with 'i', like iadd and iand, correspond to the augmented assignment operators: +=, &=, etc.
+</p>
+
+<p>
+  methodcaller creates a function that calls a method by name on the object given as an argument:
+</p>
+
+<pre>
+s = 'Hello'
+upcase = methodcaller('upper')
+upcase(s)
+
+hyphenate = methodcaller('replace', ' ', '-')
+</pre>
+
+<p>
+  functools.partial freezes arguments of an existing function. functools.partialmethod works with methods.
+</p>
+
+<pre>
+triple = partial(mul, 3)
+</pre>
+
+<h2 id="ch8">8. Type Hints in Functions</h2>
+
+<p>
+  The main beneficiaries of type hints are professional software engineers using IDEs and CI (Continuous Integration).
+</p>
+
+<p>
+  Mypy is a type checker for annotated Python code.
+</p>
+
+<p>
+  The <code>Any</code> type is assumed when a type checker cannot determine the type of an object. <code>Any</code> is compatible with all other types.
+</p>
+
+<p>
+  Type checkers do not prevent inconsistencies at runtime, nor affect performance (so far).
+</p>
+
+<p>
+  An example of a typed function:
+</p>
+
+<pre>
+from typing import Optional
+
+def show_count(count: int, singular: str, plural: Optional[str] = None) -> str:
+    if count == 1:
+        return f'1 {singular}'
+    count_str = str(count) if count else 'no'
+    if plural is None:
+        plural = singular + 's'
+    return f'{count_str} {plural}'
+</pre>
+
+<p>
+  <em>blue</em> is a tool that formats your code according to its coding style.
+</p>
+
+<p>
+  <em>Duck typing</em> is the view adopted by standard Python. Objects have types, but variables and parameters are untyped. Duck typing is only enforced at runtime, when operations on objects are attempted.
+</p>
+
+<p>
+  <em>Nominal typing</em> is the view where objects, variables, and parameters have types. The type checker only cares about the source code, where variables and parameters are annotated with type hints.
+</p>
+
+<p>
+  A type checker might reject code that actually runs. For example, if a function expects a superclass Bird and in the body, the bird quacks, the type checker will say that Bird does not define quack. However, a Duck passed to this function will work correctly (it will quack).
+</p>
+
+<h3>Types usable in annotations</h3>
+
+<p>
+  Pretty much any Python type can be used in type hints. Here are the major ones:</p>
+
+<ul>
+  <li>typing.Any</li>
+  <li>Simple types and classes</li>
+  <li>typing.Optional, typing.Union</li>
+  <li>Generic collections, tuples, mappings</li>
+  <li>Abstract Base Classes</li>
+  <li>Generic iterables</li>
+  <li>Parameterized generics and TypeVar</li>
+  <li>typing.Protocols (the key to static duck typing)</li>
+  <li>typing.Callable</li>
+  <li>typing.NoReturn</li>
+</ul>
+
+<h4>The Any Type</h4>
+
+<p>
+  The Any type is also called the "dynamic type". <code>Any</code> is assumed to support every possible operation.
+</p>
+
+<p>
+  If <code>object</code> is used, while every type is a subtype of object, the type checker will reject code like <code>x * 2</code> because object does not support the __mul__ operation.
+</p>
+
+<h4>Subtype-of versus consistent-with</h4>
+
+<p>
+  Traditional object-oriented nominal type systems rely on the <em>is subtype-of</em> relationship. If you have T1 and a subclass T2, then T2 is subtype-of T1. Consider:
+</p>
+
+<pre>
+class T1:
+    ...
+
+class T2(T1):
+    ...
+
+def f1(p: T1) -> None:
+    ...
+
+o2 = T2()
+f1(o2) # works
+</pre>
+
+<p>
+  f1(o2) is an application of the Liskov Substitution Principle (LSP). If T2 substitutes an object of type T1 and the program still behaves correctly, then T2 is subtype-of T1. The term <em>behavioral subtyping</em> is also used to refer to the LSP.
+</p>
+
+<p>
+  The following is a violation of the LSP:
+</p>
+
+<pre>
+def f2(p: T2) -> None:
+    ...
+
+o1 = T1
+f2(o1) # type error
+</pre>
+
+<p>
+  T2 is more specific than T1, and may implement methods not found in T1.
+</p>
+
+<p>
+  Another relationship is <em>consistent-with</em>, which applies wherever subtype-of applies, with special provisions for type Any:
+</p>
+
+<ul>
+  <li>Given T1 and a subtype T2, T2 is consistent-with T1 (Liskov substitution).</li>
+  <li>Every type is consistent-with Any.</li>
+  <li>Any is consistent-with every type.</li>
+</ul>
+
+<h4>Simple types and classes</h4>
+
+<p>
+  Simple types and classes (including user-defined ones) may be used directly: str, int, float, Vector2d, Duck.
+</p>
+
+<p>
+  A subclass is consistent-with all its superclasses. int is consistent-with float, and float is consistent-with complex. Therefore, int is consistent-with complex.
+</p>
+
+<h4>Optional and Union Types</h4>
+
+<p>
+  Optional allows for a variable or parameter to be None. For example, <code>x: Optional[str] = None</code>. Optional[str] is a shortcut for Union[str, None].
+</p>
+
+<p>
+  New syntax in Python 3.10 allows you to write <code>str | None</code> instead of using Optional.
+</p>
+
+<h4>Generic collections</h4>
+
+<p>
+  Generic types can be declared with type parameters to specify the type of the items they can handle:
+</p>
+
+<pre>
+def tokenize(text: str) -> list[str]:
+    ...
+</pre>
+
+<p>
+  As of Python 3.10, there's no good way to annotate array.array, because the typecode may restrict the bounds of the values (for example, an integer from 0 to 255).
+</p>
+
+<h4>Tuple types</h4>
+
+<p>
+  Tuples may be annotated as:
+</p>
+
+<ul>
+  <li>records: tuple[str, float, str]</li>
+  <li>records with named fields: use typing.NamedTuple</li>
+  <li>immutable sequences: tuple[int, ...]. The ellipsis indicates that any number of elements >= 1 is acceptable.</li>
+</ul>
+
+<h4>Generic mappings</h4>
+
+<p>
+  Generic mapping types are annotated as MappingType[KeyType, ValueType], for example, dict[str, set[str]].
+</p>
+
+<h4>Abstract base classes</h4>
+
+<p>
+  In general, it's better to use an ABC instead of a specific class. For example, collections.abc.Mapping[str, int] instead of dict[str, int]. This way, a UserDict may also be used.
+</p>
+
+<p>
+  Postel's law (the Robustness Principle) says: "Be conservative in what you send, and be liberal in what you accept."
+</p>
+
+<p>
+  Generic versions of built-in collections are: typing.List, typing.Dict, typing.Set (needed in Python 3.8 or earlier).
+</p>
+
+<h4>Iterable</h4>
+
+<p>
+  It is recommended to use Sequence and Iterable for function parameter type hints. However, they are too vague as a return type:
+</p>
+
+<pre>
+def fsum(__seq: Iterable[float]) -> float:
+    ...
+</pre>
+
+<h4>TypeAlias</h4>
+
+<p>
+  TypeAlias is a special type to make assignments that create type aliases more visible and easier to type check:
+</p>
+
+<pre>
+from typing import TypeAlias
+
+FromTo: TypeAlias = tuple[str, str]
+</pre>
+
+<h4>Parameterized generics and TypeVar</h4>
+
+<p>
+  A parameterized generic is a generic type such as list[T], where T is a type variable.
+</p>
+
+<pre>
+from collections.abc import Sequence
+from random import shuffle
+from typing import TypeVar
+
+T = TypeVar('T')
+
+def sample(population: Sequence[T], size: int) -> list[T]
+    ... # shuffle and take 'size' items
+</pre>
+
+<p>
+  TypeVar is needed because the name of the T variable needs to be defined somewhere.
+</p>
+
+<h4>Restricted TypeVar</h4>
+
+<p>
+  TypeVar accepts extra positional arguments to restrict the type parameter:
+</p>
+
+<pre>
+NumberT = TypeVar('NumberT', float, Decimal, Fraction)
+</pre>
+
+<h4>Bounded TypeVar</h4>
+
+<p>
+  A bounded type variable will be set to the inferred type of the expression, as long as the inferred type is consistent-with the upper boundary declared in <code>bound=keyword</code>. The type parameter may be Hashable or any subtype of it.
+</p>
+
+<pre>
+from collections.abc import Hashable
+
+HashableT = TypeVar('HashableT', bound=Hashable)
+</pre>
+
+<h4>The AnyStr predefined type variable</h4>
+
+<p>
+  AnyStr is <code>TypeVar('AnyStr', bytes, str)</code>.
+</p>
+
+<h4>Static Protocols</h4>
+
+<p>
+  The Protocol type is used to define one or more methods, so that the type checker can verify that these methods are implemented where that protocol type is required.
+</p>
+
+<p>
+  Classes that implement a protocol don't need to inherit, register, or declare any relationship with the class that defines the protocol.
+</p>
+
+<p>
+  Protocols work as a form of static duck typing&mdash;we don't care what the nominal type of the variable is, as long as it implements a desired method.
+</p>
+
+<pre>
+from typing import Protocol, Any
+
+class SupportsLessThan(Protocol):
+    def __lt__(self, other: Any) -> bool: ... # ... really is the method's body
+</pre>
+
+<p>
+  Mypy has a special <code>reveal_type()</code> function that prints a debugging message when Mypy is run. It is not imported like a normal function.
+</p>
+
+<h4>Callable</h4>
+
+<p>
+  To annotate callback parameters or callable objects returned by higher-order functions, use collections.abc.Callable:
+</p>
+
+<pre>
+Callable[[ParamType1, ParamType2], ReturnType]
+</pre>
+
+<p>
+  If you need a type hint to match a function with a flexible signature, write:
+</p>
+
+<pre>
+Callable[..., ReturnType]
+</pre>
+
+<h4>Variance in Callable types</h4>
+
+<p>
+  Callable[[], int] is subtype-of Callable[[], float] because int is subtype-of float. It is said that Callable is covariant on the return type because the subtype-of relationship of int and float is in the same direction as the relationship of the Callable types that use them as return types.
+</p>
+
+<p>
+  In the parameterized Callable type, the relationship between int and float in the declared parameter types is reversed: Callable[[float], None] is subtype-of Callable[[int], None]. Callable is contravariant on the declared parameter types.
+</p>
+
+<h4>NoReturn</h4>
+
+<p>
+  NoReturn is a special type used only to annotate the return type of functions that never return. Usually, they exist to raise exceptions.
+</p>
+
+<h3>Annotating positional-only and variadic parameters</h3>
+
+<pre>
+from typing import Optional
+
+def tag(
+    __name: str, # a convention for positional-only parameters is to prefix __
+    /,
+    *content: str, # the type will be tuple[str, ...]
+    class_: Optional[str] = None,
+    **attrs: float, # dict[str, float]
+) -> str
+</pre>
+
+<h3>Limitations of type checkers</h3>
+
+<ul>
+  <li>False positives: reports of errors on correct code</li>
+  <li>False negatives: lack of reports on incorrect code</li>
+  <li>Loss of expressive power, especially on advanced features like descriptors and metaprogramming</li>
+  <li>Inability to catch errors in business logic (such as the length of a string)</li>
+</ul>
+
+<p>
+  In general, strong testing is superior to broadly typing your code.
+</p>
+
+<h2 id="ch9">9. Decorators and Closures</h2>
+
+<p>
+  Function decorators are meant to enhance their behavior. They use closures, which is what we get when a function captures variables defined outside its body.
+</p>
+
+<p>
+  A decorator is a callable that takes another function as an argument (the decorated function).
+</p>
+
+<p>
+  A decorator may perform some processing, then return it or replace it with another function or callable object.
+</p>
+
+<pre>
+@decorate
+def target():
+    print('Running target...')
+
+# is the same as
+def target():
+    print('Running target...')
+
+target = decorate(target)
+</pre>
+
+<p>
+  Here is a decorator that simply replaces a function with a different one:
+</p>
+
+<pre>
+def deco(func):
+    def inner():
+        print('Running inner...')
+    return inner
+
+@deco
+def target():
+    print('Running target...')
+
+# target() prints 'Running inner...'
+</pre>
+
+<p>
+  Decorators are just syntactic sugar. The alternative, of calling the decorator like a regular function, works just as well.
+</p>
+
+<p>
+  Decorators run right after the decorated function is defined. This is usually at <em>import time</em>.
+</p>
+
+<h3>Registration decorators</h3>
+
+<p>
+  In practice, decorators are usually defined in one module and applied to functions in other modules.
+</p>
+
+<p>
+  Most decorators define an inner function or change the decorated function, then return it.
+</p>
+
+<h3>Variable scope rules</h3>
+
+<p>
+  An assignment within a function will lead the interpreter to think that the variable is local to the function. So the following raises an error:
+</p>
+
+<pre>
+b = 2
+def f2(a):
+    print(a)
+    print(b)
+    b = 3
+f2(1)
+</pre>
+
+<p>
+  In order to treat <code>b</code> as a global variable, it must be declared global:
+</p>
+
+<pre>
+b = 6
+def f3(a):
+    global b
+    print(a)
+    print(b)
+    b = 9
+</pre>
+
+<p>
+  The three scopes where variables can come from are:
+</p>
+
+<ul>
+  <li>Module global scope: names assigned to values outside any class or function</li>
+  <li>Function local scope: names assigned to values as parameters or in the body of the function</li>
+  <li>Nonlocal scope: names in the local scope of an outer function, but not global</li>
+</ul>
+
+<h3>Closures</h3>
+
+<p>
+  A closure is a function (let's say, f) with an extended scope that encompasses variables referenced in the body of f that are not global variables or local variables of f. These variables come from the local scope of an outer function that encompasses f.
+</p>
+
+<p>
+  Here is a class-based implementation of an Averager (a callable that keeps track of values added and returns the current average):
+</p>
+
+<pre>
+class Averager():
+    def __init__(self):
+        self.series = []
+
+    def __call__(self, new_value):
+        self.series.append(new_value)
+        total = sum(self.series)
+        return total / len(self.series)
+</pre>
+
+<p>
+  A functional implementation may be:
+</p>
+
+<pre>
+def make_averager():
+    series = []
+
+    def averager(new_value)
+        series.append(new_value)
+        total = sum(series)
+        return total / len(series)
+
+    return averager
+</pre>
+
+<p>
+  Within averager, series is a <em>free variable</em>. It means that series is not bound in the local scope. The averager object has a __code__ attribute that shows the local and free variables in co_varnames and co_freevars. There is also a __closure__ attribute.
+</p>
+
+<h3>The nonlocal declaration</h3>
+
+<p>
+  In the preceding example, series was never reassigned, so there was no need to declare it nonlocal. If we were to use a simple variable, <code>count</code>, and tried reassigning it with <code>count += 1</code>, the interpreter would consider <code>count</code> a local variable and the code would not work. To solve this problem, <code>count</code> must be declared <code>nonlocal</code>.
+</p>
+
+<pre>
+def make_averager():
+    count = 0 # store the number of items
+    total = 0 # keep track of the running total
+
+    def averager(new_value):
+        nonlocal count, total
+        count += 1
+        total += new_value
+        return total / cound
+
+    return averager
+</pre>
+
+<h4>Variable lookup logic</h4>
+
+<p>
+  The rules for fetching a variable x from a function definition are:
+</p>
+
+<ul>
+  <li>If there's a global x declaration, x comes from the module global scope</li>
+  <li>If there is a nonlocal x declaration, x comes from the x local variable of the nearest surrounding function where x is defined</li>
+  <li>If x is a parameter or is assigned a value in the function body, x is the local variable</li>
+  <li>
+    If x is referenced but not assigned, nor a parameter:
+    <ul>
+      <li>x will be looked up in the local scopes of surrounding function bodies (nonlocal scopes)</li>
+      <li>if it is not found, then it will be searched in the module global scope</li>
+      <li>if it is still not found, it will be read from __builtins__.__dict__</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>Implementing a simple decorator</h3>
+
+<p>
+  <code>clock</code> is a decorator that clocks every invocation of the decorated function, displaying the elapsed time, the arguments passed, and the result of the call:
+</p>
+
+<pre>
+import time
+import functools
+
+def clock(func):
+    @functools.wraps(func)
+    def clocked(*args):
+        t0 = time.perf_counter()
+        result = func(*args)
+        elapsed = time.perf_counter() - t0
+        name = func.__name__
+        arg_str = ', '.join(repr(arg) for arg in args)
+        print(f'[{elapsed:0.8f}s] {name}({arg_str}) -> {result!r}')
+        return result
+    return clocked
+</pre>
+
+<p>
+  functools.wraps is a convenience function that copies attributes such as __name__ and __doc__ to the decorated function:
+</p>
+
+<h3>Decorators in the standard library</h3>
+
+<p>
+  There are three built-in functions that are designed to decorate methods: property, classmethod, and staticmethod.
+</p>
+
+<h4>Memoization with functools.cache</h4>
+
+<p>
+  The cache decorator implements memoization (an optimization technique that works by saving the results of previous invocations of an expensive function, avoiding repeat computations when encountering the same arguments.
+</p>
+
+<p>
+  If stacking decorators, the top decorator is applied on the one below it:
+</p>
+
+<pre>
+@functools.cache
+@clock
+def fibonacci(n):
+    if n < 2:
+        return n
+    return fibonacci(n - 2) + fibonacci(n - 1)
+</pre>
+
+<p>
+  @cache is applied on the function returned by @clock.
+</p>
+
+<p>
+  All the arguments taken by the cached function must be hashable.
+</p>
+
+<h4>Using lru_cache</h4>
+
+<p>
+  cache is just a wrapper around <code>lru_cache</code> (Least Recently Used). This means that older entries that have not been read for a while are discarded to make room for new ones.
+</p>
+
+<p>
+  It accepts two parameters: maxsize and typed. functools.cache uses maxsize=None, so entries are never discarded (this setting may consume a lot of memory). If typed=True, f(1) and f(1.0) would be stored separately. By default, typed=False.
+</p>
+
+<h4>Single dispatch generic functions</h4>
+
+<p>
+  Method overloading does not exist in Python, so we cannot create multiple signatures with the same function name. The functools.singledispatch decorator allows different modules to contribute to the overall solution, and lets you provide specialized functions even for third-party types.
+</p>
+
+<p>
+  Decorating a plain function with @singledispatch makes it the entry point for a <em>generic function</em>, a group of functions to perform the same operation in different ways, depending on the type of the first argument. If more arguments were used to select a specific function, it would be called <em>multiple dispatch</em>.
+</p>
+
+<pre>
+from functools import singledispatch
+from collections import abc
+import fractions
+import decimal
+import html
+import numbers
+
+@singledispatch
+def htmlize(obj: object) -> str:
+    content = html.escape(repr(obj))
+    return f'<pre>{content}</pre>'
+
+@htmlize.register
+def _(text: str) -> str:
+    content = html.escape(text).replace('\n', '<br>\n')
+    return f'<p>{content}</p>'
+
+@htmlize.register
+def _(n: numbers.Integral) -> str:
+    return f'<pre>{n} (0x{n:x})</pre>'
+
+@htmlize.register
+def _(seq: abc.Sequence) -> str:
+    inner = '&lt;/li&gt;\n&lt;li&gt;'.join(htmlize(item) for item in seq)
+    return '&lt;ul&gt;\n&lt;li&gt;' + inner + '&lt;li&gt;\n&lt;/ul&gt;'
+
+# register multiple types without type hints
+@htmlize.register(decimal.Decimal)
+@htmlize.register(float)
+def _(x) -> str:
+    frac = fractions.Fraction(x).limit_denominator()
+    return f'<pre>{x} ({frac.numerator}/{frac.denominator})</pre>'
+</pre>
+
+<p>
+  If possible, register the specialized functions to handle ABCs or typing.Protocol.
+</p>
+
+<h3>Parameterized decorators</h3>
+
+<p>
+  To make a decorator accept other arguments, make a decorator factory that takes those arguments and returns a decorator, which is then applied to the function to be decorated.
+</p>
+
+<pre>
+registry = set()
+
+def register(active=True):
+    def decorate(func):
+        print('running register'
+              f'(active={active})->decorate({func})')
+        if active:
+            registry.add(func)
+        else:
+            registry.discard(func)
+
+        return func
+    return decorate
+
+@register(active=False)
+def f1():
+    print('running f1()')
+
+@register()
+def f2():
+    print('running f2()')
+
+def f3():
+    print('running f3()')
+</pre>
+
+<p>
+  If register were used as a regular function, it would be: <code>register()(f)</code> or <code>register(active=False)(f)</code>.
+</p>
+
+<p>
+  Another way of coding decorators is to write classes that implement __call__.
+</p>
+
+<pre>
+import time
+
+DEFAULT_FMT = '[{elapsed:0.8f}s] {name}({args}) -> {result}'
+
+class clock:
+
+    def __init__(self, fmt=DEFAULT_FMT):
+        self.fmt = fmt
+
+    def __call__(self, func):
+        def clocked(*_args):
+            t0 = time.perf_counter()
+            _result = func(*_args)
+            elapsed = time.perf_counter() - t0
+            name = func.__name__
+            args = ', '.join(repr(arg) for arg in _args)
+            result = repr(_result)
+            print(self.fmt.format(**locals()))
+            return _result
+        return clocked
+</pre>
+
+<p>
+  <strong>Note:</strong> clock is written with a lowercase c to make it a drop-in replacement for the function-based decorator.
+</p>
+
+<p>
+  <strong>Side note:</strong> in dynamic scope, free variables are evaluated by looking into the environment where the function is invoked (for example, reassigning a free variable in an interactive session right before calling a function will cause the function to use this new value).
+</p>
+
+<h2 id="ch10">10. Design Patterns with First-Class Functions</h2>
+
+<p>
+  A <em>design pattern</em> is a general recipe for solving a common design problem. Their use has been popularized by the Design Patterns book, written by Gamma, Helm, Johnson, and Vlissides (the Gang of Four).
+</p>
+
+<h3>Refactoring the Strategy pattern</h3>
+
+<p>
+  If you leverage functions as first-class objects, the Strategy pattern is simpler than the classic structure described in the Design Patterns book.
+</p>
+
+<p>
+  The Strategy pattern is defining a family of algorithms. Each is encapsulated and interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+</p>
+
+<p>
+  An example is computing discounts to orders according to the attributes of the customer or the items selected:
+</p>
+
+<ul>
+  <li>Customers with 1,000 or more fidelity points get a global 5% discount</li>
+  <li>Items with 20 or more units in a single order get a 10% discount</li>
+  <li>Orders with 10 or more distinct items get a 7% discount</li>
+</ul>
+
+<p>
+  Assume only one discount may be applied to an order.
+</p>
+
+<p>
+  There are three classes relevant to Strategy:
+</p>
+
+<ul>
+  <li>Context: provides a service by delegating some computation to the alternative algorithms. In this example, the context is a customer <code>Order</code></li>
+  <li>Strategy: the interface common to the components that implement the discount algorithms. Here, the Strategy is an abstract class called <code>Promotion</code></li>
+  <li>Concrete strategy: a concrete subclass of Strategy. Here, they are: FidelityPromo, BulkPromo, and LargeOrderPromo.
+  </li>
+</ul>
+
+<p>
+  In a function-oriented Strategy, the concrete strategies may be implemented as plain functions.
+</p>
+
+<p>
+  The built-in <code>globals()</code> returns a dictionary representing the global symbol table. A promotion may be found by checking all function names:
+</p>
+
+<pre>
+promos = [promo for name, promo in globals().items()
+                if name.endswith('_promo') and name != 'best_promo'
+         ]
+</pre>
+
+<p>
+  An alternative is using <code>inspect.getmembers(promotions, inspect.isfunction)</code> in the separate <code>promotions</code> module, that contains the promotion functions.
+</p>
+
+<h4>Decorator-enhanced Strategy pattern</h4>
+
+<p>
+  A better solution for keeping track of promotions is using a registration decorator that is applied to each promotion.
+</p>
+
+<h3>The Command pattern</h3>
+
+<p>
+  The goal of Command is to decouple an object that invokes an operation (the invoker) from the provider object that implements it (the receiver). For example, in a graphical application, each invoker is a menu item, and the receivers are the document being edited or the application itself.
+</p>
+
+<p>
+  A Command object goes in between the two, implementing an interface with a single method, execute, which calls a method in the receiver.
+</p>
+
+<p>
+  Since functions are first-class objects, instead of giving the invoker a Command instance, we can simply give it a function. For example:
+</p>
+
+<pre>
+class MacroCommand:
+    """A command that executes a list of commands."""
+    def __init__(self, commands):
+        self.commands = list(commands)
+
+    def __call__(self):
+        for command in self.commands:
+            command()
+</pre>
+
+<h2 id="ch11">11. A Pythonic Object</h2>
+
+<p>
+  Instead of relying on inheritance, Python classes can take advantage of <em>duck typing</em>&mdash;you just implement the methods needed for your objects to behave as expected.
+</p>
+
+<h3>Object representations</h3>
+
+<ul>
+  <li>repr() returns a string representing the object as the developer wants to see it. It's what the interpreter shows to represent an object.</li>
+  <li>str() returns a string representing the object as the user wants to see it. It's what print(obj) displays.</li>
+</ul>
+
+<p>
+  __repr__ and __str__ support repr() and str(). There are also __bytes__ and __format__ (used by f-strings, format(), and str.format()).
+</p>
+
+<h3>The Vector2d class</h3>
+
+<pre>
+from array import array
+import math
+
+class Vector2d:
+    # makes Vector2d work with positional patterns, in the order defined
+    # for example, case Vector2d(_, 0): 'vector is horizontal'
+    __match_args__ = ('x', 'y')
+
+    typecode = 'd'
+
+    def __init__(self, x, y):
+        self.__x = float(x)
+        self.__y = float(y)
+
+    # the @property decorator makes the method a getter method
+    @property
+    def x(self):
+        return self.__x
+
+    @property
+    def y(self):
+        return self.__y
+
+    def __iter__(self):
+        return (i for i in (self.x, self.y)) # allows unpacking, using *self
+
+    def __repr__(self):
+        class_name = type(self).__name__ # inherited class names are
+                                         # automatically computed
+        return '{}({!r}, {!r})'.format(class_name, *self)
+
+    def __str__(self):
+        return str(tuple(self))
+
+    def __bytes__(self):
+        return (bytes([ord(self.typecode)]) +
+                bytes(array(self.typecode, self)))
+
+    def __eq__(self, other):
+        return tuple(self) == tuple(other)
+
+    # make Vector2d instances hashable
+    # it is recommended to hash a tuple of the components
+    def __hash__(self):
+        return hash((self.x, self.y))
+
+    def __abs__(self):
+        return math.hypot(self.x, self.y)
+
+    def __bool__(self):
+        return bool(abs(self))
+
+    def angle(self):
+        return math.atan2(self.y, self.x)
+
+    # custom code for the formatting specifier
+    def __format__(self, fmt_spec=''):
+        if fmt_spec.endswith('p'): # polar coordinates
+            fmt_spec = fmt_spec[:-1]
+            coords = (abs(self), self.angle())
+            outer_fmt = '<{}, {}>'
+        else:
+            coords = self
+            outer_fmt = '({}, {})'
+        components = (format(c, fmt_spec) for c in coords)
+        return outer_fmt.format(*components)
+
+    # this method can be called directly on the class; use cls instead of self
+    @classmethod
+    def frombytes(cls, octets):
+        typecode = chr(octets[0])
+        memv = memoryview(octets[1:]).cast(typecode)
+        return cls(*memv)
+</pre>
+
+<h3>classmethod versus staticmethod</h3>
+
+<p>
+  classmethod defines a method that operates on the class and not on instances. It receives the class itself as the first argument.
+</p>
+
+<p>
+  The staticmethod decorator changes a method so that it receives no special first argument. It behaves just like a plain function (that happens to exist in a class body). In practice, staticmethod is not very useful, because the function can simply be defined outside the class.
+</p>
+
+<h3>Formatted displays</h3>
+
+<p>
+  f-strings, format(), and str.format() delegate to __format__(format_spec). The format_spec is a specifier that describe how to display the value, such as <code>0.4f</code>.
+</p>
+
+<p>
+  In the format string <code>{0.mass:5.3e}</code>, 0.mass is the "field_name" and 5.3e is the formatting specifier.
+</p>
+
+<p>
+  The notation of the formatting specifier is called the <em>Format Specification Mini-Language</em>. Each class gets to interpret the format_spec as it likes.
+</p>
+
+<p>
+  If a class has no __format__ defined, the method inherited from <code>object</code> returns str(obj).
+</p>
+
+<h3>Private and "protected" attributes in Python</h3>
+
+<p>
+  Prefixing an attribute name with two underscores, such as __mood in a Dog class, causes the name in the instance __dict__ to be prefixed with an underscore and the class name (becoming _Dog__mood). This process is called <em>name mangling</em>. It is done to prevent accidental overwriting of attributes by an end user.
+</p>
+
+<p>
+  Some programmers prefer to write a single underscore, which will not trigger the mangling. It's an accepted convention that you should not access such attributes from outside the class.
+</p>
+
+<p>
+  Another convention is writing constant names in ALL_CAPS.
+</p>
+
+<h3>Saving memory with __slots__</h3>
+
+<p>
+  If you define a class attribute named __slots__ holding a sequence of attribute names, Python uses an alternative storage model for the instance attributes. They are stored in a hidden array or references that use less memory than a dict.
+</p>
+
+<pre>
+class Pixel:
+    __slots__ = ('x', 'y')
+</pre>
+
+<p>
+  <strong>Warning:</strong> __slots__ is only partially inherited by a subclass. Subclasses must declare __slots__ again.
+</p>
+
+<p>
+  By declaring __slots__ = (), the instances of the subclass will have no __dict__ and will only accept the attributes named in the base class' __slots__. Declaring __slots__('color',) in a subclass of Pixel adds the extra attribute 'color'.
+</p>
+
+<p>
+  Implementing __weakref__ is necessary for an object to support weak references. It will exist by default in user-defined classes; however, if __slots__ is defined, and you need the instances to be targets of weak references, you need to include <code>'__weakref__'</code> among the attributes of __slots__.
+</p>
+
+<h3>Overriding class attributes</h3>
+
+<p>
+  Class attributes are used as default values for instance attributes. If a new instance attribute has the same name as a class attribute, the class attribute is untouched (the instance attribute shadows the class attribute). It is possible to change a class attribute directly: <code>MyClass.attr = 'new value'</code>.
+</p>
+
+<p>
+  A common technique is to subclass just to customize a class data attribute:
+</p>
+
+<pre>
+class ShortVector2d(Vector2d):
+    typecode = 'f'
+</pre>
+
+<h2 id="ch12">12. Special Methods for Sequences</h2>
+
+<p>
+  The multidimensional Vector implementation below will use composition, not inheritance. The components will be stored in an array of floats. It will behave like an immutable flat sequence.
+</p>
+
+<pre>
+from array import array
+import reprlib
+import math
+import functools
+import operator
+import itertools
+
+class Vector:
+    typecode = 'd'
+
+    def __init__(self, components):
+        """Take the data as an iterable argument, like all built-in
+        sequence types do.
+        """
+        self._components = array(self.typecode, components)
+
+    def __iter__(self):
+        return iter(self._components)
+
+    def __repr__(self):
+        # limit output and show ... after the first five components
+        components = reprlib.repr(self._components)
+        components = components[components.find('['):-1]
+        return f'Vector({components})'
+
+    def __str__(self):
+        return str(tuple(self))
+
+    def __bytes__(self):
+        return (bytes([ord(self.typecode)]) +
+                bytes(self._components))
+
+    def __eq__(self, other):
+        return (len(self) == len(other) and
+                all(a == b for a, b in zip(self, other)))
+
+    def __hash__(self):
+        hashes = (hash(x) for x in self)
+        return functools.reduce(operator.xor, hashes, 0)
+
+    def __abs__(self):
+        return math.hypot(*self)
+
+    def __bool__(self):
+        return bool(abs(self))
+
+    def __len__(self):
+        return len(self._components)
+
+    def __getitem__(self, key):
+        if isinstance(key, slice):
+            cls = type(self)
+            return cls(self._components[key]) # invoke the class constructor
+                                              # to get back a Vector
+        index = operator.index(key) # allows ints only
+        return self._components[index]
+
+    __match_args__ = ('x', 'y', 'z', 't')
+
+    def __getattr__(self, name):
+        """Allow getting the first four components with v.x, v.y, v.z, v.t"""
+        cls = type(self)
+        try:
+            pos = cls.__match_args__.index(name)
+        except ValueError:
+            pos = -1
+        if 0 <= pos < len(self._components):
+            return self._components[pos]
+        msg = f'{cls.__name__!r} object has no attribute {name!r}'
+        raise AttributeError(msg)
+
+    def __setattr__(self, name, value):
+        cls = type(self)
+        if len(name) == 1:
+            if name in cls.__match_args__:
+                error = 'Read-only attribute {attr_name!r}'
+            elif name.islower():
+                error = "Can't set attributes 'a' to 'z' in {cls_name!r}"
+            else:
+                error = ''
+            if error:
+                msg = error.format(cls_name=cls.__name__, attr_name=name)
+                raise AttributeError(mst)
+        super().__setattr__(name, value)
+
+    def angle(self, n):
+        """Compute one of the angular coordinates."""
+        r = math.hypot(*self[n:])
+        a = math.atan2(r, self[n-1])
+        if (n == len(self) - 1) and (self[-1] < 0):
+            return math.pi * 2 - a
+        else:
+            return a
+
+    def angles(self):
+        return (self.angle(n) for n in range(1, len(self)))
+
+    def __format__(self, fmt_spec=''):
+        if fmt_spec.endswith('h'): # hyperspherical coordinates
+            fmt_spec = fmt_spec[:-1]
+            coords = itertools.chain([abs(self)], self.angles())
+            outer_fmt = '<{}>'
+        else:
+            coords = self
+            outer_fmt = '({})'
+        components = (format(c, fmt_spec) for c in coords)
+        return outer_fmt.format(', '.join(components))
+
+    @classmethod
+    def frombytes(cls, octets):
+        typecode = chr(octets[0])
+        memv = memoryview(octets[1:]).cast(typecode)
+        return cls(memv)
+</pre>
+
+<h3>Protocols and duck typing</h3>
+
+<p>
+  A fully functional sequence type in Python does not need be a subclass of any special class. You just implement the methods that fulfill the sequence protocol (__len__ and __getitem__).
+</p>
+
+<p>
+  In the context of object-oriented programming, a protocol is an informal interface (defined in documentation but not in code).
+</p>
+
+<p>
+  Static protocol implementations (defined in classes) must provide all methods defined in the protocol class (a <code>typing</code> construct).
+</p>
+
+<h4>How slicing sorks</h4>
+
+<p>
+  The behavior of __getitem__ can be seen with the following class:
+</p>
+
+<pre>
+class MySeq:
+    def __getitem__(self, index):
+        return index
+
+s = MySeq()
+s[1] # 1
+s[1:4] # slice(1, 4, None)
+s[1:4:2] # slice(1, 4, 2)
+s[1:4:2, 7:9] # (slice(1, 4, 2), slice(7, 9, None))
+s[1:-1] # slice(1, -1, None)
+</pre>
+
+<p>
+  a_slice.indices(n) assumes a sequence of length n and calculates the start and stop indices. Out-of-bounds indices are clipped.
+</p>
+
+<p>
+  Generally, if __getattr__ is implemented, __setattr__ should be as well.
+</p>
+
+<p>
+  The super() function provides a way to access methods of superclasses dynamically.
+</p>
+
+<p>
+  zip() has an optional argument <code>strict=True</code> to raise an error if the sequences are of different length.
+</p>
+
+<p>
+  <code>enumerate(a_sequence, optional_start_index)</code> generates tuples (index, value) for the given sequence.
+</p>
+
+<p>
+  Format strings for built-in types use <code>'eEfFgGn%'</code> for floats, <code>'bcdoxXn'</code> for integers, and <code>'s'</code> for strings. They should be avoided in custom formatting specifiers.
+</p>
+
+<h2 id="ch13">13. Interfaces, Protocols, and ABCs (Abstract Base Classes)</h2>
+
+<p>
+  Since Python 3.8, there are four ways of defining interfaces:
+</p>
+
+<ul>
+  <li>Duck typing: enforced when operations on objects are attempted.</li>
+  <li>Goose typing: runtime checks of objects against ABCs (using isinstance).</li>
+  <li>Static typing: enforced by external type checkers.</li>
+  <li>Static duck typing: also enforced by external type checkers. Related to static protocols.</li>
+</ul>
+
+<h3>Two kinds of protocols</h3>
+
+<p>
+  A <em>Protocol</em> can mean several things. A network protocol such as HTTP specifies commands that a client can send to a server, such as GET and POST.
+</p>
+
+<p>
+  An object protocol specifies methods which an object must provide to fulfill a role.
+</p>
+
+<p>
+  In Python, a protocol may be considered a informal interface.
+</p>
+
+<p>
+  By subclassing <code>typing.Protocol</code>, we define one or more methods that a class must implement or inherit to satisfy a static type checker. Such a protocol is a static protocol.
+</p>
+
+<p>
+  A dynamic protocol is an informal protocol that Python always had. They are implicit. It cannot be checked by a static type checker.
+</p>
+
+<p>
+  Defining an ABC is another way to define an explicit interface.
+</p>
+
+<p>
+  The Sequence ABC shows what a full-fledged Sequence is expected to support. Note that built-ins such as list and str do not rely on this ABC.
+</p>
+
+<h4>Monkey patching: implementing a protocol at runtime</h4>
+
+<p>
+  Monkey patching is dynamically changing a module, class, or function at runtime, to add features or fix bugs. For example, to allow random.shuffle to be used on a FrenchDeck, __setitem__ must be implemented:
+</p>
+
+<pre>
+def set_card(deck, position, card):
+    # Note: deck is replacing the conventional 'self'
+    deck._cards[position] = card
+
+FrenchDeck.__setitem__ = set_card
+</pre>
+
+<h4>Defensive programming and "fail fast"</h4>
+
+<p>
+  Defensive programming is a set of practices to enhance safety (such as when facing careless programmers).
+</p>
+
+<p>
+  Failing fast is raising runtime errors as soon as possible, such as rejecting invalid arguments right at the beginning of a function body. One example is immediately copying an iterable argument to a list with <code>self.my_list = list(iterable)</code>
+</p>
+
+<p>
+  If making a copy of the iterable isn't feasible, use <code>isinstance(iterable, abc.MutableSequence)</code>, <code>len(iterable)</code>, or call <code>iter(iterable)</code> as soon as possible.
+</p>
+
+<p>
+  With ABCs, it is possible to use the ABC's <code>register</code> method to declare that a certain class becomes a virtual subclass of an ABC.
+</p>
+
+<pre>
+from collections.abc import Sequence
+Sequence.register(FrenchDeck)
+</pre>
+
+<h4>Defining and using an ABC</h4>
+
+<p>
+  The example ABC is <code>Tombola</code>.
+</p>
+
+<h2 id="ch14">14. Inheritance: For Better or for Worse</h2>
+<h2 id="ch15">15. More About Type Hints</h2>
+<h2 id="ch16">16. Operator Overloading</h2>
+
+<h2 id="ch17">17. Iterators, Generators, and Classic Coroutines</h2>
+<h2 id="ch18">18. with, match, and else Blocks</h2>
+<h2 id="ch19">19. Concurrency Models in Python</h2>
+<h2 id="ch20">20. Concurrent Executors</h2>
+
+<h2 id="ch21">21. Asynchronous Programming</h2>
+
+</div>
+<br>
+<hr>
+<div style="padding-left: 0.5em; background-color: #fff;">
+  <a href="javascript:history.back()">&#x1F519; Back</a>&nbsp;&nbsp;&nbsp;
+  <a href="index.html">&#x1F4C2; Dir list</a>&nbsp;&nbsp;&nbsp;
+  <a href="#top">&#x1F51D; Top</a>&nbsp;&nbsp;&nbsp;
+</div>
+<br><br><br>
+    </body>
+</html>
+

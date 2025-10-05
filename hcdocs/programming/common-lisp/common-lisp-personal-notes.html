@@ -83,14 +83,26 @@
       <div class="content">
 
 
-    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">python</a> / <a href="index.html">obsolete</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">common-lisp</a></h3>
     
-<a class="index" href="Fluent_Python_2.html">&#x1F4D8; Fluent_Python_2.html</a><br>
-<a class="index" href="Python_Distilled_code_ch01.py.txt" target="_blank">&#x1F4C3; Python_Distilled_code_ch01.py.txt</a><br>
-<a class="index" href="Python_Distilled_interactive.html">&#x1F4D8; Python_Distilled_interactive.html</a><br>
-<a class="index" href="Python_Distilled_notes.txt" target="_blank">&#x1F4C3; Python_Distilled_notes.txt</a><br>
-<a class="index" href="Python_Distilled_upto_ch2.html">&#x1F4D8; Python_Distilled_upto_ch2.html</a><br>
-<a class="index" href="Python_Distilled_wrapper.html">&#x1F4D8; Python_Distilled_wrapper.html</a><br>
+<h1>Common Lisp personal notes</h1>
+<h2>DEFVAR vs. DEFPARAMETER</h2>
+<p><em>(source: Practical Common Lisp)</em></p>
+<p>Both <code>DEFVAR</code> and <code>DEFPARAMETER</code> create global variables. <code>DEFPARAMETER</code> always re-assigns the variable's value, but <code>DEFVAR</code> only does so for an undefined variable.</p>
+<p>For example, <code>*count*</code> should be defined with <code>DEFVAR</code> because if the code is changed, you wouldn't want the count to be reset.</p>
+<h2>PLISTs (property lists)</h2>
+<p><em>(source: Practical Common Lisp)</em></p>
+<p><code>(list :a 1 :b 2 :c 3)</code> uses keyword symbols as property names.</p>
+<p>To access a value:</p>
+<p><code>(getf (list :a 1 :b 2 :c 3) :a)</code></p>
+<p>To change a value:</p>
+<p><code>(setf (getf plist :a) 100)</code></p>
+<h2>Objects made with QUOTE should not be modified</h2>
+<p><em>(source: Common Lisp HyperSpec: QUOTE)</em></p>
+<p><em>The consequences are undefined if literal objects (including quoted objects) are destructively modified.</em></p>
+
+
+
 </div>
 <br>
 <hr>

@@ -1011,21 +1011,244 @@ fn main() {
 <li>Shared access is required and runtime performance is paramount.</li>
 </ul>
 <h4>6.2.2 Rust's pointer ecosystem</h4>
-<p>The safe alternative is <em>smart pointers</em>.</p>
-<p>STOP 185</p>
+<p>The safe alternative is <em>smart pointers</em>. They have additional "superpowers" beyond the ability to dereference a memory address. There are also <em>wrapper types</em>.</p>
+<p>A <em>fat pointer</em> refers to memory layout. They are usually two <em>usize</em> wide, but sometimes more.</p>
+<p>With interior mutability, you may want to provide an argument to a method that takes immutable values, yet need to retain mutability. It is possible to fake immutability (for a performance cost).</p>
+<p>If a method requires an owned value, wrap it in a <code>Cell&lt;T&gt;</code>. References can be wrapped in <code>RefCell&lt;T&gt;</code>.</p>
+<p>It's common, when using the reference counted types <code>Rc&lt;T&gt;</code> and <code>Arc&lt;T&gt;</code>, which only accept immutable arguments, to also wrap those in <code>Cell&lt;T&gt;</code> or <code>RefCell&lt;T&gt;</code>. For example, you may have <code>Rc&lt;RefCell&lt;T&gt;&gt;</code>.</p>
+<h4>6.2.3 Smart pointer building blocks</h4>
+<ul>
+<li><code>core::ptr::Unique</code> is the basis for types such as <code>String</code>, <code>Box&lt;T&gt;</code>, and the pointer field <code>Vec&lt;T&gt;</code>.</li>
+<li><code>core::ptr::Shared</code> is the basis for <code>Rc&lt;T&gt;</code> and <code>Arc&lt;T&gt;</code>. It can handle situations where shared access is desired.</li>
+</ul>
+<p>Deeply interlinked data structures can benefit from <code>std::rc::Weak</code> and <code>std::arc::Weak</code>, which allow access to data without incrementing the reference count. It prevents never-ending cycles of pointers.</p>
+<p><code>alloc::raw_vec::RawVec</code> underlies <code>Vec&lt;T&gt;</code> and <code>VecDeq&lt;T&gt;</code>.</p>
+<p><code>std::cell::UnsafeCell</code> sits behind <code>Cell&lt;T&gt;</code> and <code>RefCell&lt;T&gt;</code>.</p>
+<h3>6.3 Providing programs with memory for their data</h3>
+<p>The most important difference between the stack and the heap is that the stack is fast, and the heap is slow.</p>
+<p><em>"When in doubt, prefer the stack."</em> To place data onto the stack, the compiler must know the type's size at compile time. In Rust, use types that implement <code>Sized</code>.</p>
+<p>Entries in the stack are called <em>stack frames</em>. A cursor that moves as the program progresses is the <em>stack pointer</em>.</p>
+<h5>Improving the ergonomics of functions that can only accept <code>String</code> or <code>&amp;str</code></h5>
+<p>It's possible to write the signature as:</p>
+<pre><code>fn is_strong&lt;T: Into&lt;String&gt;&gt;(password: T) -&gt; bool {
+    password.into().len() &gt; 5
+}
+</code></pre>
+<p>However, there is a significant risk: if the string-ified version of <code>password</code> needs to be created multiple times in the pipeline, it would be much more efficient to require an explicit conversion in the calling application.</p>
+<h4>6.3.2 The heap</h4>
+<p>The heap is the area of program memory for types that don't have a known size at compile time.</p>
+<p>Slices have no compile-time length.</p>
+<p><em>Trait objects</em> also don't have a known size at compile time. They allow programmers to mimic some features of dynamic languages by allowing multiple types to be wedged into the same container.</p>
+<p>To access data in the heap, a pointer is needed.</p>
+<p><em>Listing 6.6</em> Variables in the heap</p>
+<pre><code>fn main() {
+    let a: i32 = 40;
+    let b: Box&lt;i32&gt; = Box::new(60);
+
+    println!("{} + {} = {}", a, b, a + *b);
+}
+</code></pre>
+<p><code>Box::new(...)</code> allocates values on the heap.</p>
+<p><code>drop()</code> deletes objects before their scope ends (needs <code>use std::mem::drop;</code>)</p>
+<h4>6.3.3 Dynamic memory allocation</h4>
+<p>In Unix, <code>alloc()</code> and <code>free()</code> controls heap memory.</p>
+<p><em>Listing 6.9</em> A graphical application to create and destroy objects on the heap</p>
+<pre><code>use graphics::math::{Vec2d, add, mul_scalar};
+use piston_window::*;
+use rand::prelude::*;
+
+use std::alloc::{GlobalAlloc, System, Layout};
+use std::time::Instant;
+
+#[global_allocator]
+static ALLOCATOR: ReportingAllocator = ReportingAllocator;
+
+struct ReportingAllocator;
+
+unsafe impl GlobalAlloc for ReportingAllocator {
+    unsafe fn alloc(&amp;self, layout: Layout) -&gt; *mut u8 {
+        let start = Instant::now();
+        let ptr = System.alloc(layout);
+        let end = Instant::now();
+        let time_taken = end - start;
+        let bytes_requested = layout.size();
+
+        eprintln!("{}\t{}", bytes_requested, time_taken.as_nanos());
+        ptr
+    }
+
+    unsafe fn dealloc(&amp;self, ptr: *mut u8, layout: Layout) {
+        System.dealloc(ptr, layout);
+    }
+}
+
+struct World {
+    current_turn: u64,
+    particles: Vec&lt;Box&lt;Particle&gt;&gt;,
+    height: f64,
+    width: f64,
+    rng: ThreadRng,
+}
+
+struct Particle {
+    height: f64,
+    width: f64,
+    position: Vec2d&lt;f64&gt;,
+    velocity: Vec2d&lt;f64&gt;,
+    acceleration: Vec2d&lt;f64&gt;,
+    color: [f32; 4],
+}
+
+impl Particle {
+    fn new(world: &amp;World) -&gt; Particle {
+        let mut rng = thread_rng();
+        let x = rng.gen_range(0.0..=world.width);
+        let y = world.height;
+        let x_velocity = 0.0;
+        let y_velocity = rng.gen_range(-2.0..0.0);
+        let x_acceleration = 0.0;
+        let y_acceleration = rng.gen_range(0.0..0.15);
+
+        Particle {
+            height: 4.0,
+            width: 4.0,
+            position: [x, y].into(),  // converts these [f64; 2] into Vec2d
+            velocity: [x_velocity, y_velocity].into(),
+            acceleration: [x_acceleration, y_acceleration].into(),
+            color: [1.0, 1.0, 1.0, 0.99],
+        }
+    }
+
+    fn update(&amp;mut self) {
+        self.velocity = add(self.velocity, self.acceleration);
+        self.position = add(self.position, self.velocity);
+        self.acceleration = mul_scalar(self.acceleration, 0.7);
+        self.color[3] *= 0.995;
+    }
+}
+
+impl World {
+    fn new(width: f64, height: f64) -&gt; World {
+        World {
+            current_turn: 0,
+            particles: Vec::&lt;Box&lt;Particle&gt;&gt;::new(),  // incurs an extra allocation
+            height: height,
+            width: width,
+            rng: thread_rng(),
+        }
+    }
+
+    fn add_shapes(&amp;mut self, n: i32) {
+        for _ in 0..n.abs() {
+            let particle = Particle::new(&amp;self);
+            let boxed_particle = Box::new(particle);
+            self.particles.push(boxed_particle);
+        }
+    }
+
+    fn remove_shapes(&amp;mut self, n: i32) {
+        for _ in 0..n.abs() {
+            let mut to_delete = None;
+
+            let particle_iter = self.particles
+                .iter()
+                .enumerate();
+
+            for (i, particle) in particle_iter {
+                if particle.color[3] &lt; 0.02 {
+                    to_delete = Some(i);
+                }
+                break;
+            }
+
+            if let Some(i) = to_delete {
+                self.particles.remove(i);
+            } else {
+                self.particles.remove(0);
+            }
+        }
+    }
+
+    fn update(&amp;mut self) {
+        let n = self.rng.gen_range(-3..=3);
+
+        if n &gt; 0 {
+            self.add_shapes(n);
+        } else {
+            self.remove_shapes(n);
+        }
+
+        self.particles.shrink_to_fit();
+        for shape in &amp;mut self.particles {
+            shape.update();
+        }
+        self.current_turn += 1;
+    }
+}
+
+fn main() {
+    let (width, height) = (1280.0, 960.0);
+    let mut window: PistonWindow = WindowSettings::new(
+        "particles", [width, height]
+    )
+        .exit_on_esc(true)
+        .build()
+        .expect("Could not create a window");
+
+    let mut world = World::new(width, height);
+    world.add_shapes(1000);
+
+    while let Some(event) = window.next() {
+        world.update();
+
+        window.draw_2d(&amp;event, |ctx, renderer, _device| {
+            clear([0.15, 0.17, 0.17, 0.9], renderer);
+
+            for s in &amp;mut world.particles {
+                let size = [s.position[0], s.position[1], s.width, s.height];
+                rectangle(s.color, size, ctx.transform, renderer);
+            }
+        });
+    }
+}
+</code></pre>
+<h3>6.4 Virtual memory</h3>
+<h5>Terms related to virtual memory</h5>
+<ul>
+<li><strong>word</strong>: any type that is the size of a pointer (<code>usize</code> and <code>isize</code>).</li>
+<li><strong>page</strong>: a fixed-size block of words of real memory. In 64-bit operating systems, typically 4 kB.</li>
+<li><strong>page fault</strong>: an error raised by the CPU when a valid memory address is requested that is not currently in physical RAM.</li>
+<li><strong>swapping</strong>: migrating a page of memory stored temporarily on disk from main memory upon request.</li>
+<li><strong>virtual memory</strong>: the program's view of its memory. All data accessible to a program is provided in its address space by the OS.</li>
+<li><strong>real memory</strong>: the OS's view of the physical memory available on the system.</li>
+<li><strong>page table</strong>: the data structure maintained by the OS to manage translating virtual to real memory</li>
+<li><strong>segment</strong>: a block within virtual memory. Virtual memory is divided into blocks to minimize the space required to translate between virtual and physical addresses.</li>
+<li><strong>segmentation fault</strong>: an error raised by the CPU when an illegal memory address is requested</li>
+<li><strong>MMU</strong>: Memory Management Unit. A component of the CPU that manages memory address translation. Maintains a cache of recently translated address (called the TLB, "translation lookaside buffer")</li>
+</ul>
+<p><em>Listing 6.12</em> Attempting to scan a running program's memory</p>
+<p>A <code>NULL</code> pointer cannot be dereferenced.</p>
+<p>General guidelines:</p>
+<ul>
+<li>Keep hot working portions of the program within 4 kB. At worst, 4 kB * 100.</li>
+<li>Avoid deeply nested data structures with pointer spaghetti.</li>
+<li>Test the ordering of your nested loops. CPUs read small blocks of bytes, known as a <em>cache line</em>, from the RAM hardware. When processing an array, investigate whether you are doing column-wise or row-wise operations.</li>
+</ul>
+<p>Virtualization makes the situation worse. Also, containers add another layer of indirection.</p>
 <h2 id="ch7">7. Files and storage</h2>
+<p>STOP 212</p>
 <h2 id="ch8">8. Networking</h2>
 <h2 id="ch9">9. Time and timekeeping</h2>
 <h2 id="ch10">10. Processes, threads, and containers</h2>
 <h2 id="ch11">11. Kernel</h2>
 <h2 id="ch12">12. Signals, interrupts, and exceptions</h2>
 <h1>Progress</h1>
-<p>2025-09-03 185
+<p>2025-09-03 212
 2025-09-02 176
 2025-08-30 137
-2025-08-29 98
-2025-08-28 77
-2025-08-27 54</p>
+2025-08-29  98
+2025-08-28  77
+2025-08-27  54</p>
 
 
 
