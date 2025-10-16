@@ -85,13 +85,35 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">common-lisp</a></h3>
     
-<a class="index" href="common-lisp-personal-notes.html">&#x1F4D8; common-lisp-personal-notes.html</a><br>
-<a class="index" href="hunchentoot.html">&#x1F4D8; hunchentoot.html</a><br>
-<a class="index" href="paip-6th.html">&#x1F4D8; paip-6th.html</a><br>
-<a class="index" href="postmodern.html">&#x1F4D8; postmodern.html</a><br>
-<a class="index" href="practical-common-lisp/index.html">&#x1F4C1; practical-common-lisp</a><br>
-<a class="index" href="sbclrc.txt" target="_blank">&#x1F4C3; sbclrc.txt</a><br>
-<a class="index" href="windows_setup.html">&#x1F4D8; windows_setup.html</a><br>
+<h1>Paradigms of Artificial Intelligence Programming, 6th ed.</h1>
+<h2>Chapter 1: Introduction to Lisp</h2>
+<h3>1.9 Summary: The Lisp evaluation rule</h3>
+<ul>
+<li>
+<p>Every expression is either a <em>list</em> or an <em>atom</em>.</p>
+</li>
+<li>
+<p>Every list to be evaluated is either a <em>special form expression</em> or a <em>function application</em>.</p>
+</li>
+<li>
+<p><code>'x</code> is <code>(quote x)</code>, and <code>#'f</code> is <code>(function f)</code>.</p>
+</li>
+<li>
+<p>A <em>function application</em> is evaluated by first evaluating the arguments, then applying the function to the evaluated arguments.</p>
+</li>
+<li>
+<p>Every atom is either a <em>symbol</em> or a <em>nonsymbol</em>.</p>
+</li>
+<li>
+<p>A <em>symbol</em> evaluates to the most recent value that has been assigned to the variable named by that symbol.</p>
+</li>
+<li>
+<p>A <em>nonsymbol atom</em> evaluates to itself.</p>
+</li>
+</ul>
+
+
+
 </div>
 <br>
 <hr>
