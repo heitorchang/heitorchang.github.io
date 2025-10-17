@@ -97,12 +97,14 @@
                     "Python. "
                     "Intermediate knowledge of "
                     "JavaScript, "
+                    "PostgreSQL, "
                     "Django, "
                     "and "
-                    "PostgreSQL.")
+                    "Common Lisp.")
                (:li "Fluent in "
                     "English "
                     "and "
                     "Brazilian Portuguese. "
                     "Intermediate knowledge of "
-                    "Italian."))))))))
+                    "Italian. "
+                    "Basic knowledge of Mandarin."))))))))
