@@ -107,4 +107,4 @@
                     "Brazilian Portuguese. "
                     "Intermediate knowledge of "
                     "Italian. "
-                    "Basic knowledge of Mandarin."))))))))
+                    "Basic knowledge of Mandarin Chinese."))))))))
