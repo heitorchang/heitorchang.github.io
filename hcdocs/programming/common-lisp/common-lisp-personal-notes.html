@@ -92,6 +92,10 @@
 <p>Loading a file also enables "jumping to the definition".</p>
 <p><code>M-.</code> jumps to definition
 <code>M-,</code> jumps back to where you were</p>
+<p>To find usages (where a function is called)</p>
+<p><code>C-c C-w C-c</code> (<code>slime-who-calls</code>)</p>
+<h2>Debugging</h2>
+<p>When an error occurs, typing <code>v</code> in a debugger frame jumps to the source code location. The function must have been compiled first, though with <code>C-c C-c</code></p>
 <h2>DEFVAR vs. DEFPARAMETER</h2>
 <p><em>(source: Practical Common Lisp)</em></p>
 <p>Both <code>DEFVAR</code> and <code>DEFPARAMETER</code> create global variables. <code>DEFPARAMETER</code> always re-assigns the variable's value, but <code>DEFVAR</code> only does so for an undefined variable.</p>
@@ -147,6 +151,7 @@
     :version "0.0.1"
     :author "Heitor Chang"
     :license "MIT"
+    :depends-on (:3bmd :local-time)
     :components ((:file "hello")))
 </code></pre>
 <p><code>~/common-lisp/template/hello.lisp</code></p>
@@ -158,6 +163,54 @@
 <p>To run:</p>
 <pre><code>(asdf:load-system "template")
 (in-package :com.heitorchang.template)
+</code></pre>
+<h2>CL-WHO</h2>
+<p>The project <code>cl-heiapps</code> includes a few common scenarios:</p>
+<pre><code>(defun html-header (title)
+  (cl-who:with-html-output-to-string (dummy)
+    (:div
+     (:p (cl-who:str (format nil "Header: ~A" title))))))
+
+(defun html-card (content)
+  (cl-who:with-html-output-to-string (dummy)
+    (:div :style "display: inline-block; border: 1px solid #ccc; padding: 1rem;"
+          (:span (cl-who:str content)))))
+
+(defmacro html-page (title &amp;rest body)
+  `(cl-who:with-html-output-to-string (dummy)
+     (cl-who:str cl-who:*prologue*)
+     (:html
+      :lang "en"
+      (:head
+       (:meta :charset "UTF-8")
+       (:meta :name "viewport" :content "width=device-width, initial-scale=1")
+       (:title (cl-who:str ,title)))
+      (:body
+       ,@body))))
+
+(easy-routes:defroute home "/" ()
+  (let ((username (get-username)))
+    (cl-who:with-html-output-to-string (dummy)
+      (:div "Welcome to CL-Heiapps!"
+            (if (string= username "")
+                (cl-who:htm (:p
+                             (:a :href "/login" "Login")))
+                (cl-who:htm (:p
+                             (:a :href "/user-home" "User home"))))))))
+
+(easy-routes:defroute template "/template" ()
+  (html-page
+   "Title: Template"
+   (cl-who:str (html-header "Template"))
+   (:div "Body Content")))
+
+(easy-routes:defroute reciprocal "/reciprocal/:n" ()
+  (let ((value (parse-integer n)))
+    (cl-who:with-html-output-to-string (dummy)
+      (cl-who:str (html-header "Reciprocal"))
+      (:div
+       (:p (cl-who:str (html-card "Card: Reciprocal")))
+       (:p (cl-who:str (format nil "Inverse of ~A is ~A" value (/ 1 (* 1.0 value)))))))))
 </code></pre>
 
 
