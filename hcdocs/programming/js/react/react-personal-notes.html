@@ -83,22 +83,41 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">js</a></h3>
+    <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">js</a> / <a href="index.html">react</a></h3>
     
-<a class="index" href="biwascheme-0.8.0-custom.min.js">&#x1F4F0; biwascheme-0.8.0-custom.min.js</a><br>
-<a class="index" href="data_structures_common_crud.html">&#x1F4D8; data_structures_common_crud.html</a><br>
-<a class="index" href="Eloquent_JavaScript_4.html">&#x1F4D8; Eloquent_JavaScript_4.html</a><br>
-<a class="index" href="functional_light_js.html">&#x1F4D8; functional_light_js.html</a><br>
-<a class="index" href="js-tricks.html">&#x1F4D8; js-tricks.html</a><br>
-<a class="index" href="js_files/index.html">&#x1F4C1; js_files</a><br>
-<a class="index" href="js_language_notes.html">&#x1F4D8; js_language_notes.html</a><br>
-<a class="index" href="modern_javascript_for_the_impatient_2020.html">&#x1F4D8; modern_javascript_for_the_impatient_2020.html</a><br>
-<a class="index" href="modern_javascript_for_the_impatient_code_snippets.html">&#x1F4D8; modern_javascript_for_the_impatient_code_snippets.html</a><br>
-<a class="index" href="obsolete/index.html">&#x1F4C1; obsolete</a><br>
-<a class="index" href="react/index.html">&#x1F4C1; react</a><br>
-<a class="index" href="site-opener-page.html.txt" target="_blank">&#x1F4C3; site-opener-page.html.txt</a><br>
-<a class="index" href="site-opener.html">&#x1F4D8; site-opener.html</a><br>
-<a class="index" href="svelte/index.html">&#x1F4C1; svelte</a><br>
+<h1>React (Personal notes)</h1>
+<p><em>As of Oct. 2025</em>, the latest React version is <code>v19.2</code>.</p>
+<h2>Vite and React</h2>
+<p><code>nvm use v24.11.0</code> (maybe replace with newer version)</p>
+<p><code>npm create vite@latest my-app -- --template react</code></p>
+<p>To run locally:</p>
+<p><code>npm run dev</code></p>
+<h3>Entry point</h3>
+<p><code>/my-app/index.html</code></p>
+<h3>JSX files</h3>
+<p><code>src/main.jsx</code> imports <code>App</code> from <code>./App.jsx</code>.</p>
+<h3>Styles</h3>
+<p>Specify a CSS class with <code>className</code></p>
+<p><code>&lt;img className="avatar" /&gt;</code></p>
+<p>Add to a separate CSS file:</p>
+<pre><code>.avatar {
+  border-radius: 50%;
+}
+</code></pre>
+<p>With Vite setup:</p>
+<p>In <code>App.jsx</code>:</p>
+<pre><code>import './App.css'
+</code></pre>
+<p>In <code>App.css</code>:</p>
+<pre><code>#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  ...
+}
+</code></pre>
+
+
+
 </div>
 <br>
 <hr>
