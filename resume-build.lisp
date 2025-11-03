@@ -94,13 +94,12 @@
               (:h2 :class "skills" "Skills")
               (:ul
                (:li "Advanced knowledge of "
-                    "Python. "
+                    "Python and JavaScript. "
                     "Intermediate knowledge of "
-                    "JavaScript, "
                     "PostgreSQL, "
                     "Django, "
                     "and "
-                    "Common Lisp.")
+                    "React.")
                (:li "Fluent in "
                     "English "
                     "and "
