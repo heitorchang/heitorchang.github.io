@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Image + Grid Overlay</title>
+    <style>
+    body { font-family: sans-serif; margin: 16px; background: #fafafa; }
+    input { margin-bottom: 10px; }
+    canvas { border: 1px solid #ccc; display: block; }
+    </style>
+  </head>
+  <body>
+    <input type="file" id="fileInput" accept="image/*"><br>
+    Line color: <input id="linecolor" value="#000">;
+    Grid spacing: <input id="gridspacing" onkeyup="updategridspacing()" value="32"><br>
+    <button onclick="draw()">Redraw</button><br>
+    <canvas id="canvas"></canvas>
+
+    <script>
+
+    let GRID_SPACING = parseInt(document.getElementById("gridspacing").value); // pixels between grid lines
+
+    function updategridspacing() {
+      GRID_SPACING = parseInt(document.getElementById("gridspacing").value);
+    }
+
+    const MARGIN = 40;       // extra space for labels
+
+    const fileInput = document.getElementById('fileInput');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let img = new Image();
+
+    function colLabel(i) { return (i + 1).toString(); }
+
+    function rowLabel(i) {
+      let s = '', n = i + 1;
+      while (n > 0) {
+        n--; s = String.fromCharCode(65 + (n % 26)) + s;
+        n = Math.floor(n / 26);
+      }
+      return s;
+    }
+
+    function draw() {
+      if (!img.complete) return;
+      const iw = img.naturalWidth;
+      const ih = img.naturalHeight;
+
+      const cw = iw + MARGIN;
+      const ch = ih + MARGIN;
+      canvas.width = cw;
+      canvas.height = ch;
+
+      // draw background
+      ctx.fillStyle = '#eee';
+      ctx.fillRect(0, 0, cw, ch);
+
+      // draw image offset by margins
+      ctx.drawImage(img, MARGIN, MARGIN);
+
+      // grid lines
+      ctx.strokeStyle = document.getElementById('linecolor').value;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+
+      for (let x = MARGIN; x <= MARGIN + iw; x += GRID_SPACING) {
+        ctx.moveTo(x + 0.5, MARGIN);
+        ctx.lineTo(x + 0.5, MARGIN + ih);
+      }
+      for (let y = MARGIN; y <= MARGIN + ih; y += GRID_SPACING) {
+        ctx.moveTo(MARGIN, y + 0.5);
+        ctx.lineTo(MARGIN + iw, y + 0.5);
+      }
+      ctx.stroke();
+
+      // labels
+      ctx.font = '14px sans-serif';
+      ctx.fillStyle = 'black';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      const cols = Math.ceil(iw / GRID_SPACING);
+      const rows = Math.ceil(ih / GRID_SPACING);
+
+      // top numeric labels
+      for (let c = 0; c < cols; c++) {
+        const x = MARGIN + c * GRID_SPACING + GRID_SPACING / 2;
+        ctx.fillText(colLabel(c), x, MARGIN / 2);
+      }
+
+      // left alphabetic labels
+      ctx.textAlign = 'right';
+      for (let r = 0; r < rows; r++) {
+        const y = MARGIN + r * GRID_SPACING + GRID_SPACING / 2;
+        ctx.fillText(rowLabel(r), MARGIN - 8, y);
+      }
+    }
+
+    fileInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        draw();
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    });
+    </script>
+  </body>
+</html>
