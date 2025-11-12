@@ -13,7 +13,8 @@
     <input type="file" id="fileInput" accept="image/*"><br>
     Line color: <input id="linecolor" value="#000">;
     Grid spacing: <input id="gridspacing" onkeyup="updategridspacing()" value="32"><br>
-    <button onclick="draw()">Redraw</button><br>
+    <button onclick="draw(true)">Redraw</button> &nbsp;&nbsp;&nbsp;
+    <button onclick="draw(false)">Clear grid</button><br>
     <canvas id="canvas"></canvas>
 
     <script>
@@ -42,7 +43,7 @@
       return s;
     }
 
-    function draw() {
+    function draw(hasgrid) {
       if (!img.complete) return;
       const iw = img.naturalWidth;
       const ih = img.naturalHeight;
@@ -58,6 +59,10 @@
 
       // draw image offset by margins
       ctx.drawImage(img, MARGIN, MARGIN);
+
+      if (!hasgrid) {
+        return;
+      }
 
       // grid lines
       ctx.strokeStyle = document.getElementById('linecolor').value;
@@ -102,7 +107,7 @@
       if (!file) return;
       const url = URL.createObjectURL(file);
       img.onload = () => {
-        draw();
+        draw(true);
         URL.revokeObjectURL(url);
       };
       img.src = url;
