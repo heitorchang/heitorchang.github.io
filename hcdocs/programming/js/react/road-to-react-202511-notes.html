@@ -85,9 +85,55 @@
 
     <h3><a href="../../../index.html">home</a> / <a href="../../index.html">programming</a> / <a href="../index.html">js</a> / <a href="index.html">react</a></h3>
     
-<a class="index" href="react-next-js.html">&#x1F4D8; react-next-js.html</a><br>
-<a class="index" href="react-personal-notes.html">&#x1F4D8; react-personal-notes.html</a><br>
-<a class="index" href="road-to-react-202511-notes.html">&#x1F4D8; road-to-react-202511-notes.html</a><br>
+<h1>Road to React (2025-11) Notes</h1>
+<p><em>04.html</em> (Setting up)</p>
+<p>Run:</p>
+<p><code>nvm use v24.11.0</code></p>
+<p><code>npm create vite@latest hacker-stories -- --template react</code></p>
+<p>Choose <code>No</code> for rolldown-vite and <code>Yes</code> for Install with npm and start now.</p>
+<p><em>14.html</em> (React state)</p>
+<p>Props are used to pass information down the component hierarchy.</p>
+<p>State is used to modify information over time.</p>
+<p><code>useState</code> indicates we wish to have a stateful value that changes over time.</p>
+<p><code>const [current_state, state_updater_function] = useState(initial_state);</code></p>
+<p><code>useState</code> is a <strong>React hook</strong>.</p>
+<p><em>15.html</em> (Callback handlers)</p>
+<p>Information passed with props only go downwards. To pass information up, we use a <strong>callback handler</strong>.</p>
+<p><em>16.html</em></p>
+<p>State should always be where all components which depend on it can read (via props) and update (via a callback handler) it.</p>
+<p><em>18.html</em></p>
+<p>React props are just a JavaScript object.</p>
+<p><strong>Object destructuring</strong>:</p>
+<pre><code>const user = {
+  firstName: 'Robin',
+  lastName: 'Wieruch',
+};
+
+const { firstName, lastName } = user;
+</code></pre>
+<p>Transform <code>const Search = (props) =&gt; { ... }</code> to <code>const Search = ({ search, onSearch }) =&gt; ( ... )</code></p>
+<p><strong>Nested destructuring</strong>:</p>
+<pre><code>const user = {
+  firstName: 'Robin',
+  pet: {
+    name: 'Trixi',
+  },
+};
+
+const {
+  firstName,
+  pet: {
+    name,
+  },
+} = user;
+</code></pre>
+<p>It is not always the best (readable) solution, though.</p>
+<p><strong>Rest and spread operators</strong></p>
+<p>The rest operator happens on the left side of an assignment (<code>const { id, ...userWithoutAddress } = user</code>), while the spread operator happens on the right side.</p>
+<p>Use the spread operator to pass the props object to the next component.</p>
+
+
+
 </div>
 <br>
 <hr>
