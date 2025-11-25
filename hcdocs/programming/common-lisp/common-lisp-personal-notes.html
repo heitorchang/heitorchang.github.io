@@ -145,7 +145,8 @@
 </code></pre>
 <h2>New project template</h2>
 <p><code>~/common-lisp/template/template.asd</code></p>
-<pre><code>(defpackage :com.heitorchang.template (:use :asdf :cl))
+<pre><code>(defpackage :com.heitorchang.template
+  (:use :asdf :cl))
 (in-package :com.heitorchang.template)
 
 (defsystem "template"
@@ -165,6 +166,113 @@
 <p>To run:</p>
 <pre><code>(asdf:load-system "template")
 (in-package :com.heitorchang.template)
+</code></pre>
+<h2>hcutils</h2>
+<pre><code>;;;; hcutils.asd
+(defpackage :hcutils
+  (:use :asdf :cl)
+  (:export
+   :join
+   :with-stream-to-write
+   :backup-dir))
+
+(in-package :hcutils)
+
+(defsystem "hcutils"
+  :description "hcutils: shortcuts and utilities"
+  :version "0.0.1"
+  :author "Heitor Chang"
+  :license "MIT"
+  :components ((:file "hcutils")))
+
+;;;; hcutils.lisp
+(in-package :hcutils)
+
+(defun join (&amp;rest names)
+  "Concatenate names."
+  (apply #'concatenate 'string names))
+
+(defun md5sum (filename)
+  "Compute the checksum of the file."
+  (car (uiop:split-string (uiop:run-program (list "md5sum" (namestring (truename filename))) :output :string))))
+
+(defmacro with-stream-to-write (stream filename &amp;body body)
+  "Pass a variable name to serve as the output stream (for example, out) and a filename.
+The body may include calls such as (format out a-string)"
+  (let ((fname (gensym "FILENAME"))
+        (backup-fname (gensym "BACKUP-FILENAME")))
+    `(let* ((,fname ,filename)
+            (,backup-fname (format nil "~A.backup.~A" ,fname (get-universal-time))))
+       (when (probe-file ,fname)
+         (uiop:copy-file ,fname ,backup-fname))
+       (ensure-directories-exist ,fname)
+       (with-open-file (,stream ,fname
+                                :direction :output
+                                :if-exists :supersede)
+         ,@body)
+       ;; check if backup and newly created files are the same
+       (when (and (probe-file ,backup-fname)
+                  (equal (md5sum ,fname) (md5sum ,backup-fname)))
+         (uiop:delete-file-if-exists ,backup-fname))
+       t)))
+</code></pre>
+<h2>Full example: basic-web-page</h2>
+<pre><code>;;;; basic-web-page.asd
+(defpackage :basic-web-page
+  (:use :asdf :cl :hcutils)
+  (:export :build-web-page))
+
+(in-package :basic-web-page)
+
+(defsystem "basic-web-page"
+  :description "basic web page: HTML, CSS, JS"
+  :version "0.0.1"
+  :author "Heitor Chang"
+  :license "MIT"
+  :depends-on (:hcutils)
+  :components ((:file "basic-web-page")))
+
+;;;; basic-web-page.lisp
+(in-package :basic-web-page)
+
+(defparameter *web-root* "~/tmp_hcbel/basic-web-root/") ; add a trailing slash
+
+(defun write-css ()
+  (with-stream-to-write out (join *web-root* "style.css")
+    (format out "
+body {
+  font-family: sans-serif;
+  background-color: #cfd;
+  color: #228;
+}")))
+
+(defun write-script ()
+  (with-stream-to-write out (join *web-root* "script.js")
+    (format out "
+console.log('Written by basic-web-page.lisp');
+")))
+
+(defun write-home-page ()
+  (with-stream-to-write out (join *web-root* "index.html")
+    (format out "&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel='stylesheet' href='style.css'&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Welcome to my site!&lt;/h1&gt;
+    &lt;script src='script.js'&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;")))
+
+(defun build-web-page ()
+  (write-css)
+  (write-script)
+  (write-home-page))
+</code></pre>
+<p>To run:</p>
+<pre><code>(asdf:load-system "basic-web-page")
+(basic-web-page:build-web-page)
 </code></pre>
 <h2>CL-WHO</h2>
 <p>The project <code>cl-heiapps</code> includes a few common scenarios:</p>
