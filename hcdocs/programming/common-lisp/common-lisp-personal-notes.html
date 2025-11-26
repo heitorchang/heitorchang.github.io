@@ -322,6 +322,8 @@ console.log('Written by basic-web-page.lisp');
        (:p (cl-who:str (html-card "Card: Reciprocal")))
        (:p (cl-who:str (format nil "Inverse of ~A is ~A" value (/ 1 (* 1.0 value)))))))))
 </code></pre>
+<h2>Markdown and loading a file as a string (see <code>common-lisp-blog</code> as an example)</h2>
+<p><code>(3bmd:parse-string-and-print-to-stream (uiop:read-file-string filename) out)</code></p>
 
 
 
