@@ -183,6 +183,7 @@
   :version "0.0.1"
   :author "Heitor Chang"
   :license "MIT"
+  :depends-on (:str)
   :components ((:file "hcutils")))
 
 ;;;; hcutils.lisp
@@ -196,7 +197,7 @@
   "Compute the checksum of the file."
   (car (uiop:split-string (uiop:run-program (list "md5sum" (namestring (truename filename))) :output :string))))
 
-(defmacro with-stream-to-write (stream filename &amp;body body)
+(defmacro with-stream-to-write ((stream filename) &amp;body body)
   "Pass a variable name to serve as the output stream (for example, out) and a filename.
 The body may include calls such as (format out a-string)"
   (let ((fname (gensym "FILENAME"))
@@ -324,6 +325,8 @@ console.log('Written by basic-web-page.lisp');
 </code></pre>
 <h2>Markdown and loading a file as a string (see <code>common-lisp-blog</code> as an example)</h2>
 <p><code>(3bmd:parse-string-and-print-to-stream (uiop:read-file-string filename) out)</code></p>
+<h2>JSON library</h2>
+<p><code>jzon</code> (<code>com.inuoe.jzon</code>) seems to be a reliable choice.</p>
 
 
 
