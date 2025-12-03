@@ -1,0 +1,50 @@
+import { readFileSync } from "fs";
+
+let lines = readFileSync("i0").toString().split("\n");
+
+// Sample data
+// let lines = ["L68", "L30", "R48", "L5", "R60", "L55", "L1", "L99", "R14", "L82"];
+
+function countPart2() {
+  let dial_position = 50;
+  let count = 0;
+  lines = lines.map((line) => line.trim());
+
+  lines.forEach((line) => {
+    if (line.length > 1) {
+      const direction = line.substring(0, 1);
+      const num = parseInt(line.substring(1)); //convert to int?
+
+      // thinking of using 1 or -1 then multiplying that by the ticks YES
+      let crosses = Math.floor(num / 100); // how's it handle negative?  Not sure what the integer division is in js.
+
+      let remainder = num % 100;
+      let direction_multiplier = null; // maybe it's clearer like this, that it's undefined to start with
+      if (direction == "L") {
+        direction_multiplier = -1;
+        // Ensure dial_position is not 0
+        if (dial_position && dial_position - remainder <= 0) {
+          crosses += 1;
+        }
+      } else {
+        direction_multiplier = 1;
+        if (dial_position && dial_position + remainder >= 100) {
+          crosses += 1; // seem right?
+        }
+      }
+
+      count += crosses;
+
+      dial_position += direction_multiplier * remainder;
+      dial_position %= 100;
+      if (dial_position < 0) {
+        dial_position += 100;
+      }
+      console.log(`${dial_position} ${dial_position + 100} ${count}`);
+    }
+  });
+
+  console.log(count);
+}
+
+countPart2();
