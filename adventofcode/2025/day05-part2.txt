@@ -1,0 +1,82 @@
+def range_tuple(range_str):
+    """Convert a string "A-B" to tuple (A, B). From Day 02"""
+    return tuple(int(value) for value in range_str.split("-"))
+
+
+def parse_database(filename):
+    file_contents = open(filename).read()
+    fresh_block, ingredients_block = file_contents.split("\n\n")
+    return fresh_block.strip(), ingredients_block.strip()
+
+
+def main(data_file="data-day05-sample.txt"):
+    fresh, _ = parse_database(data_file)
+    fresh_ranges = sorted(range_tuple(line) for line in fresh.split())
+
+    list_of_ranges = []
+    for r in fresh_ranges:
+        print(r)
+        combine(r, list_of_ranges)
+        print(f"combined {list_of_ranges}")
+        print()
+
+    print(list_of_ranges)
+
+    # calculate sum of ranges' coverage
+    total = 0
+    for rng in list_of_ranges:
+        total += rng[1] - rng[0] + 1
+    print(total)
+
+
+
+def combine(new_range, list_of_ranges):
+    """Should be the union of new_range relative to existing list_of_ranges"""
+    new_start, new_end = new_range
+
+    # Assume list_of_ranges is already optimal
+    # Visualize a number line and the ranges as line segments in this number line
+
+    colliding_ranges = []
+    colliding_indices = []  # to remove before combining
+    initial_index = None
+    for i in range(len(list_of_ranges)):
+        current_range = list_of_ranges[i]
+        if new_start >= current_range[0] and new_end <= current_range[1]:
+            # new contained in old
+            print("new contained in old")
+            return list_of_ranges
+        if new_start <= current_range[0] <= new_end or new_start <= current_range[1] <= new_end:
+            print(f"appending colliding {i}")
+            colliding_ranges.append(current_range)
+            colliding_indices.append(i)
+            if not initial_index:
+                initial_index = i
+
+    # Remove colliding ranges and add combined
+    for col_idx in reversed(colliding_indices):
+        print(f"deleting {col_idx}")
+        del list_of_ranges[col_idx]
+
+    # Consider positions of new range
+    colliding_ranges.append(new_range)
+    combined_start = min(rng[0] for rng in colliding_ranges)
+    combined_end = max(rng[1] for rng in colliding_ranges)
+
+    print(f"comb start end {combined_start} {combined_end}")
+    combined = (combined_start, combined_end)
+
+    # had collision
+    if initial_index is not None:
+        print(f"initial_index {initial_index}")
+        list_of_ranges.insert(initial_index, combined)
+    else:
+        # find where to put non-colliding range
+        for i in range(len(list_of_ranges) - 1, -1, -1):
+            rng = list_of_ranges[i]
+            if rng[1] < new_range[0]:
+                list_of_ranges.insert(i + 1, new_range)
+                break
+        else:
+            list_of_ranges.insert(0, new_range)
+    return list_of_ranges
