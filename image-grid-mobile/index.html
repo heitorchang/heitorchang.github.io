@@ -6,18 +6,29 @@
     <title>Image + Grid Overlay (Mobile)</title>
 
     <style>
-      body {
-        font-family: sans-serif;
-        margin: 16px;
-        background: #fafafa;
-      }
-      input { margin-bottom: 10px; }
-      canvas {
-        border: 1px solid #ccc;
-        display: block;
-        max-width: 100%;
-        height: auto;
-      }
+    body {
+      font-family: sans-serif;
+      margin: 16px;
+      background: #fafafa;
+    }
+    input { margin-bottom: 10px; }
+    canvas {
+      border: 1px solid #ccc;
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    #cellPopup {
+      position: fixed;
+      padding: 4px 6px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      border-radius: 6px;
+      font-size: 10px;
+      pointer-events: none;
+      z-index: 9999;
+      display: none;
+    }
     </style>
   </head>
 
@@ -28,6 +39,7 @@
     <button onclick="draw(true)">Redraw</button> &nbsp;&nbsp;&nbsp;
     <button onclick="draw(false)">Clear grid</button><br>
     <canvas id="canvas"></canvas>
+    <div id="cellPopup"></div>
 
     <script>
     let GRID_SPACING = parseInt(document.getElementById("gridspacing").value);
@@ -41,6 +53,7 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     let img = new Image();
+    const popup = document.getElementById("cellPopup");
 
     function colLabel(i) { return (i + 1).toString(); }
 
@@ -121,6 +134,30 @@
         ctx.fillText(rowLabel(r), MARGIN - 8, y);
       }
     }
+
+    // Click / tap handler
+    canvas.addEventListener("click", e => {
+      if (!img.complete) return;
+      const x = e.offsetX - MARGIN;
+      const y = e.offsetY - MARGIN;
+
+      if (x < 0 || y < 0 || x > canvas.width || y > canvas.height) return;
+
+      const col = Math.floor(x / GRID_SPACING);
+      const row = Math.floor(y / GRID_SPACING);
+
+      const label = rowLabel(row) + colLabel(col);
+
+      popup.textContent = label;
+      popup.style.left = e.clientX - 25 + "px";
+      popup.style.top = e.clientY - 45 + "px";
+      popup.style.display = "block";
+
+      clearTimeout(popup._t);
+      popup._t = setTimeout(() => {
+        popup.style.display = "none";
+      }, 1500);
+    });
 
     fileInput.addEventListener('change', e => {
       const file = e.target.files[0];
