@@ -135,29 +135,33 @@
       }
     }
 
-    // Click / tap handler
-    canvas.addEventListener("click", e => {
-      if (!img.complete) return;
-      const x = e.offsetX - MARGIN;
-      const y = e.offsetY - MARGIN;
 
-      if (x < 0 || y < 0 || x > canvas.width || y > canvas.height) return;
+    /*
+       // There's some bug with mobile, use image-grid-popup
+       // Click / tap handler
+       canvas.addEventListener("click", e => {
+       if (!img.complete) return;
+       const x = e.offsetX - MARGIN;
+       const y = e.offsetY - MARGIN;
 
-      const col = Math.floor(x / GRID_SPACING);
-      const row = Math.floor(y / GRID_SPACING);
+       if (x < 0 || y < 0 || x > canvas.width || y > canvas.height) return;
 
-      const label = rowLabel(row) + colLabel(col);
+       const col = Math.floor(x / GRID_SPACING);
+       const row = Math.floor(y / GRID_SPACING);
 
-      popup.textContent = label;
-      popup.style.left = e.clientX - 25 + "px";
-      popup.style.top = e.clientY - 45 + "px";
-      popup.style.display = "block";
+       const label = rowLabel(row) + colLabel(col);
 
-      clearTimeout(popup._t);
-      popup._t = setTimeout(() => {
-        popup.style.display = "none";
-      }, 1500);
-    });
+       popup.textContent = label;
+       popup.style.left = e.clientX - 25 + "px";
+       popup.style.top = e.clientY - 45 + "px";
+       popup.style.display = "block";
+
+       clearTimeout(popup._t);
+       popup._t = setTimeout(() => {
+       popup.style.display = "none";
+       }, 1500);
+       });
+     */
 
     fileInput.addEventListener('change', e => {
       const file = e.target.files[0];

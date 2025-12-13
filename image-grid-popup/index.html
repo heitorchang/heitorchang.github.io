@@ -130,8 +130,8 @@
       const label = rowLabel(row) + colLabel(col);
 
       popup.textContent = label;
-      popup.style.left = e.clientX + 10 + "px";
-      popup.style.top = e.clientY + 10 + "px";
+      popup.style.left = e.clientX - 25 + "px";
+      popup.style.top = e.clientY + 50 + "px";
       popup.style.display = "block";
 
       clearTimeout(popup._t);
