@@ -83,80 +83,30 @@
       <div class="content">
 
 
-    <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">common-lisp</a></h3>
+    <h3><a href="../../index.html">home</a> / <a href="../index.html">cooking</a> / <a href="index.html">recipes</a></h3>
     
-<h1>cl-projects</h1>
-<p>Generate an ASDF file and placeholder source file.</p>
-<pre><code>(asdf:load-system "cl-projects")
-(cl-projects:create-project "project-name" "The project description.")
-</code></pre>
-<p>Evaluate <code>(clear-source-registry)</code> to be able to load the new project.</p>
-<pre><code>;;;; cl-projects.asd
-(defpackage :cl-projects
-  (:use :asdf :cl :hcutils)
-  (:export :create-project))
-
-(in-package :cl-projects)
-
-(defsystem "cl-projects"
-  :description "Manage common-lisp projects"
-  :version "0.0.1"
-  :author "Heitor Chang"
-  :license "MIT"
-  :depends-on (:hcutils)
-  :components ((:file "cl-projects")))
-
-;;;; cl-projects.lisp
-(in-package :cl-projects)
-
-(defparameter *project-name* "")
-(defparameter *output-directory* "")
-
-(defun write-asd (description)
-  (with-stream-to-write (out (join *output-directory* *project-name* ".asd"))
-    (format out "(defpackage :~A
-  (:use :asdf :cl :hcutils)
-  (:export :main))
-
-(in-package :~A)
-
-(defsystem \"~A\"
-  :description \"~A\"
-  :version \"0.0.1\"
-  :author \"Heitor Chang\"
-  :license \"MIT\"
-  :depends-on (:hcutils)
-  :components ((:file \"~A\")))
-"
-            *project-name*
-            *project-name*
-            *project-name*
-            description
-            *project-name*)))
-
-(defun write-main-lisp ()
-  (with-stream-to-write (out (join *output-directory* *project-name* ".lisp"))
-    (format out ";;;; Main functions
-(in-package :~A)
-
-(defun main ()
-  (format t \"Main ~A~~%\"))
-"
-            *project-name*
-            *project-name*)))
-
-(defun write-gitignore ()
-  (with-stream-to-write (out (join *output-directory* ".gitignore"))
-    (format out "*.fasl
-")))
-
-(defun create-project (project-name description)
-  (setf *project-name* project-name)
-  (setf *output-directory* (join "~/common-lisp/" *project-name* "/"))
-  (write-asd description)
-  (write-main-lisp)
-  (write-gitignore))
-</code></pre>
+<h1>Ciambellone al cocco</h1>
+<h3>Source: Tutti a tavola YouTube (adapted)</h3>
+<h3>Ingredients</h3>
+<ul>
+<li>50 g coco ralado</li>
+<li>200 mL leite de coco</li>
+<li>150 g sugar</li>
+<li>3 eggs</li>
+<li>40 mL sunflower oil</li>
+<li>325 g flour</li>
+<li>20 g baking powder</li>
+</ul>
+<h3>Procedure</h3>
+<ol>
+<li>Mix coco ralado and leite de coco. Rest for 10 mins.</li>
+<li>Add sugar, mix.</li>
+<li>Add eggs one by one.</li>
+<li>Add oil.</li>
+<li>Mix flour and baking powder in a separate bowl.</li>
+<li>Sift over mixture.</li>
+<li>Grease donut-shaped pan and bake at 180 deg. C for 25-30 mins.</li>
+</ol>
 
 
 

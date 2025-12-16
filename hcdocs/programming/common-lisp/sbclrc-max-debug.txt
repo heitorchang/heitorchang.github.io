@@ -1,0 +1,10 @@
+(declaim (optimize (debug 3) (safety 3) (space 0) (speed 0)))
+(declaim (sb-ext:muffle-conditions sb-kernel:redefinition-warning))
+(require 'uiop)
+
+(load "~/code/japanese-vocab/japanese-vocab.lisp")
+
+(defpackage :my-common-lisp
+  (:use :cl :japanese-vocab)
+  (:import-from :uiop :quit))
+(in-package :my-common-lisp)
