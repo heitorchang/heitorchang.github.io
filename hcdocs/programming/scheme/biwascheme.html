@@ -113,6 +113,16 @@
   For improved productivity, install npm and <code>live-server</code>. Then, run it in the directory where the HTML and Scheme files are located. In Windows, I have installed it in <code>C:/Users/USERNAME/node_modules/live-server/</code>.
 </p>
 
+<p>
+  If loading a script from the main page, after saving the Scheme script, reloading the page will reload the script as well.
+</p>
+
+<pre>
+  &lt;script type="text/biwascheme"&gt;
+    (load "script.scm")
+  &lt;/script&gt;
+</pre>
+
 <pre>
 # using Git Bash
 ~/node_modules/live-server/live-server.js
@@ -154,9 +164,20 @@
 
 <h4>Custom functions</h4>
 
+<p>
+  See <code>heitorchang.github.io/biwa-custom</code> for the custom BiwaScheme file.
+</p>
+
 <ul>
   <li><code>(element-set-value! selector value)</code> sets the value of the selected element.</li>
 </ul>
+
+<pre>
+;; add after element-update!
+define_libfunc("element-set-value!", 2, 2, function (e) {
+  return $$1(e[0]).val(e[1]);
+}),
+</pre>
 
 <h3>REPL</h3>
 

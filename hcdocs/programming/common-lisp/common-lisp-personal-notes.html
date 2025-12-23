@@ -327,6 +327,11 @@ console.log('Written by basic-web-page.lisp');
 <p><code>(3bmd:parse-string-and-print-to-stream (uiop:read-file-string filename) out)</code></p>
 <h2>JSON library</h2>
 <p><code>jzon</code> (<code>com.inuoe.jzon</code>) seems to be a reliable choice.</p>
+<h2>UIOP shell commands</h2>
+<p>Interactive directory commands have the same name as Python's <code>os</code>. <code>uiop:getcwd</code> and <code>uiop:chdir</code>.</p>
+<p>To run a command and view output: <code>(uiop:run-program '("ls" "-l") :output :string)</code>.</p>
+<p>Ignore errors (such as <code>ls</code> not finding a file)</p>
+<p><code>(uiop:run-program '("ls" "-l" "abc.txt") :output :string :ignore-error-status t)</code></p>
 
 
 
