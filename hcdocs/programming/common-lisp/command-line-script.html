@@ -85,33 +85,53 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">common-lisp</a></h3>
     
-<h1>Command-line script</h1>
+<h1>Command-line script (cli-utils)</h1>
 <p>Use <code>:output t</code>, <code>:error-output t</code> to redirect the streams (instead of saving in a string).</p>
+<h2>ASDF definition</h2>
+<pre><code>(defpackage :cli-utils
+  (:use :asdf :cl)
+  (:export
+   :program-out-err))
+
+(in-package :cli-utils)
+
+(defsystem "cli-utils"
+  :description "CLI Utils"
+  :version "0.0.1"
+  :author "Heitor Chang"
+  :license "MIT"
+  :components ((:file "cli-utils")))
+</code></pre>
+<h2>Helper</h2>
+<pre><code>(in-package :cli-utils)
+
+(defun program-out-err (program-list)
+  (multiple-value-bind (out err return-code)
+      (uiop:run-program program-list
+                        :output :string
+                        :error-output :string
+                        :ignore-error-status t)
+    (format t "PROGRAM: ~A~%" program-list)
+    (when err (format t "ERROR: ~A~%~%" err))
+    (format t "OUT:~%~A~%" out)
+    (format t "RETURN CODE: ~A~%" return-code)))
+</code></pre>
+<h2>Usage</h2>
 <pre><code>#!/usr/bin/env -S sbcl --script
 
-(require 'uiop)
+(require 'asdf)
+(asdf:load-system "cli-utils")
 
-(format t "CL ls~%~%")
+(let ((args (uiop:command-line-arguments)))
+  (cli-utils:program-out-err (list "echo" (first args))))
+</code></pre>
+<pre><code>#!/usr/bin/env -S sbcl --script
 
-(defparameter *args* (uiop:command-line-arguments))
+(require 'asdf)
+(asdf:load-system "cli-utils")
 
-(defparameter *first-arg* (first *args*))
-
-(defparameter *program-list* `("ls"
-                               ,@*args*
-                               "-l"
-                               "-a"))
-
-(format t "Received first arg: ~A~%" *first-arg*)
-
-(multiple-value-bind (out err return-code)
-    (uiop:run-program *program-list*
-                      :output :string
-                      :error-output :string
-                      :ignore-error-status t)
-  (when err (format t "ERROR: ~A~%" err))
-  (format t "OUT:~%~A~%" out)
-  (format t "RETURN CODE: ~A~%" return-code))
+(let ((args (uiop:command-line-arguments)))
+  (cli-utils:program-out-err `("echo" ,(first args) ,@ (subseq args 2))))
 </code></pre>
 
 
