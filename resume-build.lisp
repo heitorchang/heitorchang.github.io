@@ -5,43 +5,50 @@
 (setf (cl-who:html-mode) :html5)
 (setf cl-who:*attribute-quote-char* #\")
 
-(defparameter *output-file* #P"/home/hcbel/code/heitorchang.github.io/resume.html")
+(defparameter *output-file* #P"/home/hcbel/code/heitorchang.github.io/resume-staging.html")
 (defparameter *professional-items*
   '((:company "Belgingur, LLC., Reykjavik, Iceland (Remote)"
      :id "belgingur"
      :roles ((:title "Senior Back-End Engineer"
               :period "Jan. 2024 &ndash; present"
               :responsibilities
-              ("Developed an automated Python system that processes raw radar data to be assimilated into wind and precipitation forecasts."
-               "Implemented a closest points linear regression model to reduce bias and statistical error."
-               "Converted scientific Fortran code that models volcanic activity to Python modules that leverage NumPy and NetCDF libraries."))))
+                     ("Modernized a meteogram chart and map widget by refactoring it as a Lit-based web component with TypeScript, improving maintainability and reusability."
+                      "Developed and implemented an automated Python pipeline to process raw radar data and assimilate it with wind and precipitation forecasts."
+                      "Implemented a closest points linear regression model with SciPy in Python to reduce bias and statistical error."
+                      "Migrated critical portions of a Fortran library for volcanic activity modeling into the main Python application, leveraging NumPy and NetCDF functionalities."))))
+
+    (:company "Freelance Software Developer, São Paulo, SP"
+     :id "freelance-2024"
+     :roles ((:title "Senior Full-Stack Developer"
+              :period "Mar. 2023 &ndash; Dec. 2023"
+              :responsibilities
+                     ("Created REST APIs in Python with FastAPI, backed by PostgreSQL, and deployed to Google Cloud to compare time series data between observed and forecasted precipitation."
+                      "Developed a static site generator in Python to render and display documents with a practical navigation system."))))
 
     (:company "Mediafly, Inc., Chicago, IL (Remote)"
      :id "mediafly"
      :roles ((:title "Senior Software Engineer, Data and Client Squad"
               :period "Aug. 2022 &ndash; Feb. 2023"
               :responsibilities
-              ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new objects with custom metadata."
-               "Corrected data inconsistencies in the Python pipeline code and upgraded the audio processor to attenuate noise and remove segments of silence."))))
+                     ("Extended a Python back-end service handling customer integration with Salesforce's API to allow the creation of new objects with custom metadata."
+                      "Corrected data inconsistencies in the Python pipeline code and upgraded the audio processor to attenuate noise and remove segments of silence."))))
 
     (:company "Tempo OK Tecnologia em Meteorologia Ltd., São Paulo, SP"
      :id "tempook"
      :roles ((:title "Senior Full-Stack Developer"
               :period "Jun. 2020 &ndash; Aug. 2022"
               :responsibilities
-              ("Architected the company website in Django with custom user management and JWT authentication."
-               "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and cloud Continuous Deployment."
-               "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."))))
+                     ("Architected the company website in Django with custom user management and JWT authentication."
+                      "Built FastAPI endpoints to communicate with a PostgreSQL database using Google Cloud Functions and Cloud Run, leveraging Docker containers and cloud Continuous Deployment."
+                      "Created a geospatial dashboard containing satellite imagery overlays computed from NASA's scientific data and weather stations' historical data, obtained by accessing their public APIs."))))
 
     (:company "Pontual Export &amp; Import Ltd., São Paulo, SP"
      :id "pontual_update"
      :roles ((:title "Full-Stack Developer"
               :period "Jan. 2014 &ndash; Jun. 2020"
               :responsibilities
-              ("Used MA (Moving Average) indicators in a Django project to predict the demand for 600 products and calculate ideal amounts for restocking."
-               "Created a REST API with the PHP Slim micro framework to be consumed by a React app for the public website."
-               "Visualized historical sales with NumPy and Pandas, reporting totals and outliers for each product."
-               "Created a SPA (Single-Page App) with AngularJS and Firebase to organize product reservations by clients and their assigned salesperson in real-time."))))))
+                     ("Used MA (Moving Average) indicators in a Django project to predict the demand for 600 products and calculate ideal amounts for restocking."
+                      "Created a REST API with the PHP Slim framework for consumption by a React app in the client-facing website."))))))
 
 (defun build-resume ()
   (with-open-file (out *output-file*
@@ -87,23 +94,6 @@
         (:div :id "education"
               (:h2 "Education")
               (:div
-               (:h3 :class "education" "Stanford University, Stanford, CA")
-               (:div :class "major" "M.S. in Materials Science and Engineering, B.S. in Mathematical and Computational Science")))
-
-        (:div :id "languages"
-              (:h2 :class "skills" "Skills")
-              (:ul
-               (:li "Advanced knowledge of "
-                    "Python and JavaScript. "
-                    "Intermediate knowledge of "
-                    "PostgreSQL, "
-                    "Django, "
-                    "and "
-                    "React.")
-               (:li "Fluent in "
-                    "English "
-                    "and "
-                    "Brazilian Portuguese. "
-                    "Intermediate knowledge of "
-                    "Italian. "
-                    "Basic knowledge of Mandarin Chinese."))))))))
+               (:ul
+                (:li "B.S. in Mathematical and Computational Science &mdash; Stanford University, CA.")
+                (:li "Fluent in English and Brazilian Portuguese. Intermediate knowledge of Italian.")))))))))
