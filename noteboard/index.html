@@ -33,6 +33,22 @@
       width: 98%;
       height: 5rem;
     }
+
+    .unsaved {
+      color: #922;
+      background-color: #fcd;
+    }
+
+    .hideunsaved {
+      color: white;
+      background-color: white;
+    }
+
+    #unsaveddiv {
+      width: 95%;
+      position: absolute;
+      bottom: 0;
+    }
     </style>
   </head>
   <body>
@@ -48,27 +64,28 @@
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       Delete (re-type): <input id="deletename" length="6"> <button onclick="deleteItem()">Delete</button>
     </div>
-    <div class="card" id="c0" draggable="true"><textarea class="cardtext" id="c0t"></textarea></div>
-    <div class="card" id="c1" draggable="true"><textarea class="cardtext" id="c1t"></textarea></div>
-    <div class="card" id="c2" draggable="true"><textarea class="cardtext" id="c2t"></textarea></div>
-    <div class="card" id="c3" draggable="true"><textarea class="cardtext" id="c3t"></textarea></div>
-    <div class="card" id="c4" draggable="true"><textarea class="cardtext" id="c4t"></textarea></div>
-    <div class="card" id="c5" draggable="true"><textarea class="cardtext" id="c5t"></textarea></div>
-    <div class="card" id="c6" draggable="true"><textarea class="cardtext" id="c6t"></textarea></div>
-    <div class="card" id="c7" draggable="true"><textarea class="cardtext" id="c7t"></textarea></div>
-    <div class="card" id="c8" draggable="true"><textarea class="cardtext" id="c8t"></textarea></div>
-    <div class="card" id="c9" draggable="true"><textarea class="cardtext" id="c9t"></textarea></div>
-    <div class="card" id="c10" draggable="true"><textarea class="cardtext" id="c10t"></textarea></div>
-    <div class="card" id="c11" draggable="true"><textarea class="cardtext" id="c11t"></textarea></div>
-    <div class="card" id="c12" draggable="true"><textarea class="cardtext" id="c12t"></textarea></div>
-    <div class="card" id="c13" draggable="true"><textarea class="cardtext" id="c13t"></textarea></div>
-    <div class="card" id="c14" draggable="true"><textarea class="cardtext" id="c14t"></textarea></div>
-    <div class="card" id="c15" draggable="true"><textarea class="cardtext" id="c15t"></textarea></div>
-    <div class="card" id="c16" draggable="true"><textarea class="cardtext" id="c16t"></textarea></div>
-    <div class="card" id="c17" draggable="true"><textarea class="cardtext" id="c17t"></textarea></div>
-    <div class="card" id="c18" draggable="true"><textarea class="cardtext" id="c18t"></textarea></div>
-    <div class="card" id="c19" draggable="true"><textarea class="cardtext" id="c19t"></textarea></div>
+    <div class="card" id="c0" draggable="true"><textarea class="cardtext" id="c0t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c1" draggable="true"><textarea class="cardtext" id="c1t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c2" draggable="true"><textarea class="cardtext" id="c2t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c3" draggable="true"><textarea class="cardtext" id="c3t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c4" draggable="true"><textarea class="cardtext" id="c4t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c5" draggable="true"><textarea class="cardtext" id="c5t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c6" draggable="true"><textarea class="cardtext" id="c6t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c7" draggable="true"><textarea class="cardtext" id="c7t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c8" draggable="true"><textarea class="cardtext" id="c8t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c9" draggable="true"><textarea class="cardtext" id="c9t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c10" draggable="true"><textarea class="cardtext" id="c10t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c11" draggable="true"><textarea class="cardtext" id="c11t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c12" draggable="true"><textarea class="cardtext" id="c12t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c13" draggable="true"><textarea class="cardtext" id="c13t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c14" draggable="true"><textarea class="cardtext" id="c14t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c15" draggable="true"><textarea class="cardtext" id="c15t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c16" draggable="true"><textarea class="cardtext" id="c16t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c17" draggable="true"><textarea class="cardtext" id="c17t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c18" draggable="true"><textarea class="cardtext" id="c18t" onclick="unsave()"></textarea></div>
+    <div class="card" id="c19" draggable="true"><textarea class="cardtext" id="c19t" onclick="unsave()"></textarea></div>
 
+    <div id="unsaveddiv" class="hideunsaved">Unsaved changes</div>
     <script src="jquery-ui/external/jquery/jquery.js"></script>
     <script src="jquery-ui/jquery-ui.min.js"></script>
     <script>
@@ -140,6 +157,7 @@
       stop: function (event) {
         carddata[event.target.id + 'X'] = event.clientX - event.offsetX;
         carddata[event.target.id + 'Y'] = event.clientY - event.offsetY;
+        unsave();
       },
     });
 
@@ -151,6 +169,13 @@
       const boardname = 'board_' + $("#saveasname").val()
       localStorage.setItem(boardname, carddatastr);
       populateLoadSelect();
+      $("#unsaveddiv").addClass("hideunsaved");
+      $("#unsaveddiv").removeClass("unsaved");
+    }
+
+    function unsave() {
+      $("#unsaveddiv").addClass("unsaved");
+      $("#unsaveddiv").removeClass("hideunsaved");
     }
 
     function load() {
@@ -169,6 +194,8 @@
       }
 
       $("#saveasname").val(boardname.substring(6));
+      $("#unsaveddiv").addClass("hideunsaved");
+      $("#unsaveddiv").removeClass("unsaved");
     }
 
     function reset() {
