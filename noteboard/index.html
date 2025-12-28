@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Title</title>
+    <style>
+    .card {
+      display: inline-block;
+      padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+      border: 1px solid #ccc;
+      cursor: move;
+      width: 15rem;
+      height: 4rem;
+      background-color: #eef;
+      position: absolute;
+    }
+
+    .cardtext {
+      border: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #saveload {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+    }
+
+    #saveloadtext {
+      width: 98%;
+      height: 5rem;
+    }
+    </style>
+  </head>
+  <body>
+    <div>
+      Save as: <input id="saveasname" length="6"> <button onclick="save()">Save</button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Load:
+      <select id="loadselect" onchange="load()">
+        <option value="board_reset">New board</option>
+      </select>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button onclick="reset()">Reset</button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Delete (re-type): <input id="deletename" length="6"> <button onclick="deleteItem()">Delete</button>
+    </div>
+    <div class="card" id="c0" draggable="true"><textarea class="cardtext" id="c0t"></textarea></div>
+    <div class="card" id="c1" draggable="true"><textarea class="cardtext" id="c1t"></textarea></div>
+    <div class="card" id="c2" draggable="true"><textarea class="cardtext" id="c2t"></textarea></div>
+    <div class="card" id="c3" draggable="true"><textarea class="cardtext" id="c3t"></textarea></div>
+    <div class="card" id="c4" draggable="true"><textarea class="cardtext" id="c4t"></textarea></div>
+    <div class="card" id="c5" draggable="true"><textarea class="cardtext" id="c5t"></textarea></div>
+    <div class="card" id="c6" draggable="true"><textarea class="cardtext" id="c6t"></textarea></div>
+    <div class="card" id="c7" draggable="true"><textarea class="cardtext" id="c7t"></textarea></div>
+    <div class="card" id="c8" draggable="true"><textarea class="cardtext" id="c8t"></textarea></div>
+    <div class="card" id="c9" draggable="true"><textarea class="cardtext" id="c9t"></textarea></div>
+    <div class="card" id="c10" draggable="true"><textarea class="cardtext" id="c10t"></textarea></div>
+    <div class="card" id="c11" draggable="true"><textarea class="cardtext" id="c11t"></textarea></div>
+    <div class="card" id="c12" draggable="true"><textarea class="cardtext" id="c12t"></textarea></div>
+    <div class="card" id="c13" draggable="true"><textarea class="cardtext" id="c13t"></textarea></div>
+    <div class="card" id="c14" draggable="true"><textarea class="cardtext" id="c14t"></textarea></div>
+    <div class="card" id="c15" draggable="true"><textarea class="cardtext" id="c15t"></textarea></div>
+    <div class="card" id="c16" draggable="true"><textarea class="cardtext" id="c16t"></textarea></div>
+    <div class="card" id="c17" draggable="true"><textarea class="cardtext" id="c17t"></textarea></div>
+    <div class="card" id="c18" draggable="true"><textarea class="cardtext" id="c18t"></textarea></div>
+    <div class="card" id="c19" draggable="true"><textarea class="cardtext" id="c19t"></textarea></div>
+
+    <script src="jquery-ui/external/jquery/jquery.js"></script>
+    <script src="jquery-ui/jquery-ui.min.js"></script>
+    <script>
+    const YOFFSET = 40;
+    let carddata = {
+      c0X: 0,
+      c1X: 0,
+      c2X: 0,
+      c3X: 0,
+      c4X: 0,
+      c5X: 0,
+      c6X: 0,
+      c7X: 0,
+      c8X: 0,
+      c9X: 0,
+      c10X: 0,
+      c11X: 0,
+      c12X: 0,
+      c13X: 0,
+      c14X: 0,
+      c15X: 0,
+      c16X: 0,
+      c17X: 0,
+      c18X: 0,
+      c19X: 0,
+      c0Y: YOFFSET,
+      c1Y: YOFFSET,
+      c2Y: YOFFSET,
+      c3Y: YOFFSET,
+      c4Y: YOFFSET,
+      c5Y: YOFFSET,
+      c6Y: YOFFSET,
+      c7Y: YOFFSET,
+      c8Y: YOFFSET,
+      c9Y: YOFFSET,
+      c10Y: YOFFSET,
+      c11Y: YOFFSET,
+      c12Y: YOFFSET,
+      c13Y: YOFFSET,
+      c14Y: YOFFSET,
+      c15Y: YOFFSET,
+      c16Y: YOFFSET,
+      c17Y: YOFFSET,
+      c18Y: YOFFSET,
+      c19Y: YOFFSET,
+      c0t: '',
+      c1t: '',
+      c2t: '',
+      c3t: '',
+      c4t: '',
+      c5t: '',
+      c6t: '',
+      c7t: '',
+      c8t: '',
+      c9t: '',
+      c10t: '',
+      c11t: '',
+      c12t: '',
+      c13t: '',
+      c14t: '',
+      c15t: '',
+      c16t: '',
+      c17t: '',
+      c18t: '',
+      c19t: '',
+    };
+
+    $(".card").draggable({
+      stop: function (event) {
+        carddata[event.target.id + 'X'] = event.clientX - event.offsetX;
+        carddata[event.target.id + 'Y'] = event.clientY - event.offsetY;
+      },
+    });
+
+    function save() {
+      for (let i = 0; i < 20; i++) {
+        carddata["c" + i + "t"] = $("#c" + i + "t").val();
+      }
+      carddatastr = JSON.stringify(carddata);
+      const boardname = 'board_' + $("#saveasname").val()
+      localStorage.setItem(boardname, carddatastr);
+      populateLoadSelect();
+    }
+
+    function load() {
+      const boardname = $("#loadselect").val();
+      if (localStorage.getItem(boardname)) {
+        carddata = JSON.parse(localStorage.getItem(boardname));
+      } else {
+        console.log("Could not load from localStorage.");
+        return;
+      }
+
+      // set data
+      for (let i = 0; i < 20; i++) {
+        $("#c" + i).css({top: carddata["c" + i + "Y"], left: carddata["c" + i + "X"]});
+        $("#c" + i + "t").val(carddata["c" + i + "t"]);
+      }
+
+      $("#saveasname").val(boardname.substring(6));
+    }
+
+    function reset() {
+      $("#saveasname").val("reset");
+      for (let i = 0; i < 20; i++) {
+        carddata["c" + i + "X"] = 0;
+        carddata["c" + i + "Y"] = YOFFSET;
+        $("#c" + i + "t").val('');
+        carddata["c" + i + "t"] = '';
+      }
+      save();
+      $("#loadselect").val("board_reset");
+      load();
+      $("#saveasname").val("");
+    }
+
+    function deleteItem() {
+      localStorage.removeItem("board_" + $("#deletename").val());
+      localStorage.removeItem($("#deletename").val());
+      populateLoadSelect();
+    }
+
+    function populateLoadSelect() {
+      $("#loadselect").html('<option value="board_reset">New board</option>');
+      Object.keys(localStorage).sort().forEach((key) => {
+        if (key.startsWith("board_")) {
+          $("#loadselect").append($("<option>", {
+            value: key,
+            text: key,
+          }));
+        }
+      });
+    }
+
+    populateLoadSelect();
+    </script>
+  </body>
+</html>
