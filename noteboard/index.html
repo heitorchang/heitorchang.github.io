@@ -98,11 +98,14 @@
       $("#c" + i).css({top: YOFFSET, left: 0});
       carddata["c" + i + "X"] = 0;
       carddata["c" + i + "Y"] = YOFFSET;
+      carddata["c" + i + "Z"] = i;
       carddata["c" + i + "t"] = '';
       unsave();
     }
 
     const YOFFSET = 40;
+    let CURRENTZ = 20;  // increase by 1 every time a card is dragged
+
     let carddata = {
       c0X: 0,
       c1X: 0,
@@ -144,6 +147,26 @@
       c17Y: YOFFSET,
       c18Y: YOFFSET,
       c19Y: YOFFSET,
+      c0Z: 0,
+      c1Z: 1,
+      c2Z: 2,
+      c3Z: 3,
+      c4Z: 4,
+      c5Z: 5,
+      c6Z: 6,
+      c7Z: 7,
+      c8Z: 8,
+      c9Z: 9,
+      c10Z: 10,
+      c11Z: 11,
+      c12Z: 12,
+      c13Z: 13,
+      c14Z: 14,
+      c15Z: 15,
+      c16Z: 16,
+      c17Z: 17,
+      c18Z: 18,
+      c19Z: 19,
       c0t: '',
       c1t: '',
       c2t: '',
@@ -168,8 +191,11 @@
 
     $(".card").draggable({
       stop: function (event) {
+        CURRENTZ++;
         carddata[event.target.id + 'X'] = event.clientX - event.offsetX;
         carddata[event.target.id + 'Y'] = event.clientY - event.offsetY;
+        carddata[event.target.id + 'Z'] = CURRENTZ;
+        $("#" + event.target.id).css({zIndex: CURRENTZ});
         unsave();
       },
     });
@@ -202,7 +228,7 @@
 
       // set data
       for (let i = 0; i < 20; i++) {
-        $("#c" + i).css({top: carddata["c" + i + "Y"], left: carddata["c" + i + "X"]});
+        $("#c" + i).css({top: carddata["c" + i + "Y"], left: carddata["c" + i + "X"], zIndex: carddata["c" + i + "Z"]});
         $("#c" + i + "t").val(carddata["c" + i + "t"]);
       }
 
@@ -216,6 +242,7 @@
       for (let i = 0; i < 20; i++) {
         carddata["c" + i + "X"] = 0;
         carddata["c" + i + "Y"] = YOFFSET;
+        carddata["c" + i + "Z"] = i;
         $("#c" + i + "t").val('');
         carddata["c" + i + "t"] = '';
       }
