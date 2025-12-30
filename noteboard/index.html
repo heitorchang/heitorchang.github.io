@@ -96,6 +96,10 @@
     function clr(i) {
       $("#c" + i + "t").val('');
       $("#c" + i).css({top: YOFFSET, left: 0});
+      carddata["c" + i + "X"] = 0;
+      carddata["c" + i + "Y"] = YOFFSET;
+      carddata["c" + i + "t"] = '';
+      unsave();
     }
 
     const YOFFSET = 40;
