@@ -49,16 +49,14 @@
     }
 
     #unsaveddiv {
-      width: 95%;
-      position: absolute;
-      bottom: 0;
+      display: inline-block;
     }
     </style>
   </head>
   <body>
     <div>
       Save as: <input id="saveasname" length="6"> <button onclick="save()">Save</button>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div id="unsaveddiv" class="hideunsaved">*unsaved*</div>
       Load:
       <select id="loadselect" onchange="load()">
         <option value="board_reset">New board</option>
@@ -89,7 +87,6 @@
     <div class="card" id="c18" draggable="true"><span class="spanx" onclick="clr(18)">&times;</span><textarea class="cardtext" id="c18t" onclick="unsave()"></textarea></div>
     <div class="card" id="c19" draggable="true"><span class="spanx" onclick="clr(19)">&times;</span><textarea class="cardtext" id="c19t" onclick="unsave()"></textarea></div>
 
-    <div id="unsaveddiv" class="hideunsaved">Unsaved changes</div>
     <script src="jquery-ui/external/jquery/jquery.js"></script>
     <script src="jquery-ui/jquery-ui.min.js"></script>
     <script>
