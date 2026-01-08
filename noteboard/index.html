@@ -280,7 +280,7 @@
       let text = "";
       Object.keys(localStorage).sort().forEach((key) => {
         if (key.startsWith("board_")) {
-          text += `localStorage.setItem("${key}", \`${localStorage.getItem(key)}\`);\n\n`;
+          text += `localStorage.setItem("${key}", ${JSON.stringify(localStorage.getItem(key))});\n\n`;
         }
       });
       const type = "text/plain";
