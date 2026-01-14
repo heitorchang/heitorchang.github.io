@@ -118,7 +118,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
  '(custom-safe-themes
    '("e705c379b87e67da2fd9f9fca9e0bf1b26314421c18b0e04515ed3ae5f2b8c25" "0dc6afd6c1f6b0f5a6c6429e4ac4344f4d9658316cf6d73c1f858321dbd03fe4" "fef2b72443b493d8b4b3e9363c3a7a89aec1b9a8ac296f0bfe2bf20ed21d3955" "b4b68ba76ae0d83018fd14556eeb72a0fe61cea1ae946433fabaeacb16134a2a" default))
  '(default-tab-width 2 t)
- '(fill-column 72)
+ '(fill-column 118)
  '(global-visual-line-mode nil)
  '(indent-tabs-mode nil)
  '(ispell-personal-dictionary (expand-file-name "~/.aspell"))
@@ -185,8 +185,6 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (setq ac-delay 0.0001)
 (setq ac-disable-faces nil)
 (setq ac-auto-show-menu 0.0001)
-
-(setq cider-clojure-cli-aliases ":dev")
 
 ;; globals
 (defun my-indent-whole-buffer ()
@@ -492,6 +490,16 @@ they line up with the line containing the corresponding opening bracket."
           (lambda ()
             (auto-complete-mode 1)
             (electric-indent-mode 1)))
+
+(use-package go-mode
+  :ensure t
+  :hook ((go-mode . my-go-mode-setup)))
+
+(defun my-go-mode-setup ()
+  (auto-complete-mode 1)
+  (setq indent-tabs-mode 1)
+  (setq tab-width 4)
+  (electric-indent-mode 1))
 
 (add-hook 'java-mode-hook
           (lambda ()

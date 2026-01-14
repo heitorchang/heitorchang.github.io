@@ -88,7 +88,7 @@
 <h1>cl-projects</h1>
 <p>Generate an ASDF file and placeholder source file.</p>
 <pre><code>(asdf:load-system "cl-projects")
-(cl-projects:create-project "project-name" "The project description.")
+(cl-projects:new-project "project-name" "The project description.")
 </code></pre>
 <p>Evaluate <code>(clear-source-registry)</code> to be able to load the new project.</p>
 <pre><code>;;;; cl-projects.asd
