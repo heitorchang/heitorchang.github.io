@@ -85,8 +85,48 @@
 
     <h3><a href="../../index.html">home</a> / <a href="../index.html">programming</a> / <a href="index.html">go</a></h3>
     
-<a class="index" href="net-http-server.html">&#x1F4D8; net-http-server.html</a><br>
-<a class="index" href="new-project.html">&#x1F4D8; new-project.html</a><br>
+<h1>net/http server</h1>
+<pre><code>package main
+
+import (
+    "fmt"
+    "strconv"
+    "net/http"
+)
+
+func actualDouble(nstr string) string {
+    nint, _ := strconv.Atoi(nstr)
+    dbl := nint * 2
+    return strconv.Itoa(dbl)
+}
+
+func main() {
+    fmt.Println("server")
+    mux := http.NewServeMux()
+
+    mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        w.Write([]byte("hello 世界"))
+    })
+
+    mux.HandleFunc("GET /double/{n}", func(w http.ResponseWriter, r *http.Request) {
+        dblstr := actualDouble(r.PathValue("n"))
+        w.Write([]byte(dblstr))
+    })
+
+    s := http.Server{
+        Addr: ":8000",
+        Handler: mux,
+    }
+
+    err := s.ListenAndServe()
+    if err != nil {
+        panic(err)
+    }
+}
+</code></pre>
+
+
+
 </div>
 <br>
 <hr>
