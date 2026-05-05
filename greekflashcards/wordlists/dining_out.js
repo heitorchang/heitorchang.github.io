@@ -1,0 +1,17 @@
+const defaultwords = [
+  ["μπαρ", "bar"],
+  ["ουζερί", "ouzo bar"],
+  ["ταβέρνα", "tavern / taverna"],
+  ["εστιατόριο", "restaurant"],
+  ["ζαχαροπλαστείο", "pastry shop / patisserie"],
+  ["καφετερία", "coffee shop"],
+  ["πρωινό", "breakfast"],
+  ["γεύμα", "lunch"],
+  ["δείπνο / βραδινό", "dinner"],
+  ["τρώω", "eat / I eat"],
+  ["μενού", "menu"],
+  ["φαγητό σε πακέτο", "takeout / to go / to-go"],
+  ["κλείνω / να κλείσω", "reserve / I reserve (a table)"],
+  ["για πόσα άτομα", "how many people"],
+  ["κράτηση", "reservation"],
+];

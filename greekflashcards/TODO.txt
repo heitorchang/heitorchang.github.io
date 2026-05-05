@@ -1,0 +1,2 @@
+   greek-only html page (for safari read out loud)
+   replace js history back with real link

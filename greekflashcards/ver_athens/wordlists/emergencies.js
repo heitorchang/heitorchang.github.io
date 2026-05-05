@@ -1,0 +1,15 @@
+const defaultwords = [
+  ["αστυνομία", "police"],
+  ["ασθενοφόρο", "ambulance"],
+  ["πυροσβεστική υπηρεσία", "fire brigade / fire department"],
+  ["βοήθεια", "help"],
+  ["φωτιά", "fire"],
+  ["ατύχημα", "accident"],
+  ["τραυματίζω", "injure / wound"],
+  ["φωνάζω / καλώ", "call / shout"],
+  ["αστυνομικό τμήμα", "police station"],
+  ["κλέβω", "steal"],
+  ["κλοπή", "theft"],
+  ["αναφορά", "report"],
+  ["ασφαλιστική εταιρεία", "insurance / insurance company"],
+];

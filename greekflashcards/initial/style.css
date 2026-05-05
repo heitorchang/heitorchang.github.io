@@ -1,0 +1,47 @@
+body {
+    font-family: sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+    border: none;
+}
+
+#tableelem tr:nth-child(2n) {
+    background-color: #dee;
+}
+
+#tableelem .greektd {
+    color: blue;
+}
+
+#tableelem .englishtd {
+    color: #372;
+}
+
+#tableelem td {
+    padding: 0.5rem;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.white {
+    visibility: hidden;
+}
+
+#greeksection {
+    margin: 1.0rem;
+    padding: 0.5rem;
+}
+
+#englishsection {
+    margin: 1.0rem;
+    padding: 0.5rem;
+    background-color: #ffa;
+}
+
+#flashcard {
+    margin: 1.0rem;
+}

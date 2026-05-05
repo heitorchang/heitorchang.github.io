@@ -1,0 +1,16 @@
+const defaultwords = [
+  ["τι θα θέλατε", "what would you like / would you like"],
+  ["έχετε", "do you have / you have"],
+  ["πού είναι", "where is"],
+  ["δώρο / δώρα", "gift / gifts"],
+  ["αρτοποιείο", "bakery"],
+  ["βιβλιοπωλείο", "bookstore / books"],
+  ["ζαχαροπλαστείο", "pastry shop / patisserie / cake"],
+  ["ενδύματα", "clothing / clothes"],
+  ["παντοπωλείο", "grocery store / grocer"],
+  ["φαρμακείο", "pharmacy"],
+  ["κατάστημα υποδημάτων", "shoe store / shoe shop / shoe"],
+  ["χαρτοπωλείο", "stationery / stationery store"],
+  ["σούπερ μάρκετ", "supermarket"],
+  ["παιχνίδια", "toy / toy store"],
+];

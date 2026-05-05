@@ -1,0 +1,18 @@
+const defaultwords = [
+  ["τουαλέτα / μπάνιο", "toilet / bathroom"],
+  ["τράπεζα", "bank"],
+  ["φαρμακείο", "pharmacy / drugstore"],
+  ["νοσοκομείο", "hospital"],
+  ["οδοντίατρος", "dentist"],
+  ["ιατρός", "doctor"],
+  ["καθαριστήριο", "dry cleaner"],
+  ["θέατρο", "theater"],
+  ["παραλία", "beach"],
+  ["αεροδρόμιο", "airport"],
+  ["πλοίο", "ship / ferry"],
+  ["τρένο", "train"],
+  ["μετρό", "metro / subway"],
+  ["σταθμός", "station"],
+  ["λεωφορείο", "bus"],
+  ["στάση", "stop / bus stop"],
+];

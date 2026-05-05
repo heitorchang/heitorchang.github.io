@@ -1,0 +1,62 @@
+body {
+    font-family: sans-serif;
+}
+
+li {
+    margin-bottom: 1.0rem;
+}
+
+table {
+    border-collapse: collapse;
+    border: none;
+}
+
+#tableelem tr:nth-child(2n) {
+    background-color: #dee;
+}
+
+#tableelem .greektd {
+    color: blue;
+}
+
+#tableelem .englishtd {
+    color: #372;
+}
+
+#tableelem td {
+    padding: 0.5rem;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.white {
+    visibility: hidden;
+}
+
+#greeksection {
+    margin: 0.5rem;
+    padding: 0.3rem;
+}
+
+#englishsection {
+    margin: 0.5rem;
+    padding: 0.3rem;
+}
+
+.yellowbg {
+    background-color: #ffa;
+}
+
+.greenbg {
+    background-color: #cfc;
+}
+
+#flashcard {
+    margin: 0.6rem;
+}
+
+button {
+    padding: 0.35rem;
+}

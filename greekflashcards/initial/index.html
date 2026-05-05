@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <title>Greek Flashcards</title>
+  </head>
+  <body>
+
+    <!-- <h1><a href="table.html">Review all words</a></h1> -->
+
+    <h3>Vocabulary translation practice</h3>
+    <p>
+      <strong>Instructions:</strong>
+    </p>
+
+    <p>
+      The words used are <a href="table.html">shown here</a>.
+    </p>
+
+    <p>Type your translation (it must match the hidden value exactly) or click on the "Reveal" button.
+    </p>
+
+    <p>
+      Your device must have the Greek keyboard installed in order to have your answers checked correctly (accents are ignored).
+    </p>
+
+    <form id="settings">
+      <input type="radio" name="showlanguage" id="grenid" value="gren" onchange="replay()"><label for="grenid">Greek to English</label></div>
+      <input type="radio" name="showlanguage" id="engrid" value="engr" onchange="replay()"><label for="engrid">English to Greek</label></div>
+    </form>
+
+    <div id="flashcard">
+      <div id="greeksection" style="margin-right: 2rem;">
+        Choose which direction to practice
+      </div>
+      <div id="englishsection" class="white"></div>
+
+
+      <div id="ui" class="hidden">
+        <div style="margin-top: 1rem;">
+          Your translation:
+          <input type="text" id="guess" size="10" onkeyup="checkguess()">
+          <br>
+          <span id="message">&nbsp;</span>
+        </div>
+
+        <div style="margin-top: 1rem;">
+          <button id="revealbutton" onclick="reveal()">Reveal hidden translation</button>
+        </div>
+      </div>
+    </div>
+    <span id="ansholder" style="color: white;"></span>
+    <script src="app.js"></script>
+    <script>
+    let words = setuppractice();
+    const seen = JSON.parse(window.localStorage.getItem('greekflashcards_seen')) || [];
+    let answeredCorrectly = false;
+
+    seen.push('due');
+    seen.push('tre');
+
+    // practice(words, seen, langsvalue);
+
+    function replay() {
+      const form = document.getElementById("settings");
+      const langs = form.elements["showlanguage"];
+      const langsvalue = langs.value;
+      words = setuppractice();
+      window.localStorage.setItem("greekflashcards_langsvalue", langsvalue);
+      document.getElementById("ui").classList.remove("hidden");
+      practice(words, seen, langsvalue);
+    }
+
+    function normalize(s) {
+      return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function checkguess() {
+      if (answeredCorrectly) return;
+
+      const yourguess = document.getElementById("guess").value;
+
+      if (yourguess.trim() === "") return;
+
+      if (normalize(yourguess).toLowerCase().trim() === normalize(document.getElementById("ansholder").innerText).toLowerCase().trim()) {
+        console.log("guess is correct");
+        document.getElementById("message").innerText = "That's right! Wait one second";
+        answeredCorrectly = true;
+        document.getElementById("revealbutton").disabled = true;
+        window.setTimeout(() => {
+          document.getElementById("guess").value = "";
+          answeredCorrectly = false;
+          document.getElementById("revealbutton").disabled = false;
+          const form = document.getElementById("settings");
+          const langs = form.elements["showlanguage"];
+          const langsvalue = langs.value;
+
+          practice(words, seen, langsvalue);
+          document.getElementById("message").innerHTML = "&nbsp;";
+        }, 1500);
+      }
+    }
+
+    function reveal() {
+      document.getElementById("englishsection").classList.remove("white");
+      document.getElementById("message").innerText = "Wait three seconds";
+      document.getElementById("revealbutton").disabled = true;
+
+      answeredCorrectly = true;
+      window.setTimeout(() => {
+        document.getElementById("guess").value = "";
+        answeredCorrectly = false;
+        document.getElementById("englishsection").classList.add("white");
+        const form = document.getElementById("settings");
+        const langs = form.elements["showlanguage"];
+        const langsvalue = langs.value;
+
+        practice(words, seen, langsvalue);
+        document.getElementById("message").innerHTML = "&nbsp;";
+        document.getElementById("revealbutton").disabled = false;
+      }, 3000);
+    }
+    </script>
+  </body>
+</html>

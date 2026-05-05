@@ -1,0 +1,15 @@
+const defaultwords = [
+  ["σήμερα", "today"],
+  ["χθες / χτες", "yesterday"],
+  ["αύριο", "tomorrow"],
+  ["Κυριακή", "Sunday"],
+  ["Δευτέρα", "Monday"],
+  ["Τρίτη", "Tuesday"],
+  ["Τετάρτη", "Wednesday"],
+  ["Πέμπτη", "Thursday"],
+  ["Παρασκευή", "Friday"],
+  ["Σάββατο", "Saturday"],
+  ["Μάιος", "May"],
+  ["Ιούνιος", "June"],
+  ["δύο η ώρα (time)", "2 o'clock / 2:00 / 2 AM / 2 PM"],
+];
